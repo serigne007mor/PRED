@@ -1,0 +1,635 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (BounceSMTP1.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 027F514017C2
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Tue, 15 Dec 2020 18:43:46 +0100 (CET)
+Received: from mx3.d101.univ-nantes.fr (MX3.univ-nantes.fr [193.52.101.137])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id F33586D19C4
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Tue, 15 Dec 2020 18:43:45 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTP id EE1EC4965E78
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 15 Dec 2020 18:43:45 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=univ-nantes.fr header.b=C8R7R8oj; dkim=pass (2048-bit key)
+	header.d=univ-nantes.fr header.b=C8R7R8oj
+Received: from mx3.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id RS_9pVQWiTOO for <liste-egc@polytech.univ-nantes.fr>;
+	Tue, 15 Dec 2020 18:43:45 +0100 (CET)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from smtp-tls.univ-nantes.fr (smtptls1-lmb.cpub.univ-nantes.fr [IPv6:2001:660:7220:385:193:52:103:110])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTPS id C54E04965E73
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 15 Dec 2020 18:43:45 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by smtp-tls.univ-nantes.fr (Postfix) with ESMTP id A93C448360
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 15 Dec 2020 18:43:45 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-nantes.fr;
+	s=mailv2; t=1608054225;
+	bh=34hat603v15wDR2xhSD+cG4w31DRMqlr4lkYg1EexnI=;
+	h=Subject:References:To:From:Date:In-Reply-To:From;
+	b=C8R7R8ojwh7uiXl2RIPYfW4u20XfBJ6pFphNumlFaAhnGcxsIXOmmsvwwkfRN4UqN
+	 tKUxh3Rnro5pKlijP4HLynluKTyW9IA4yTQig/pJToy6iEEGNovJh7bWT3zFsrdIck
+	 6YUAH4Rz1BKncAv/Et0NGLnIVpQtDohjCQN1qKSOO1I0pT4s0+g8XSrK5fuWaJ32dN
+	 GFUmHwumdCRyItM9P5FRGYBzfQy3xmKwFNPVxNvDPpzj3iMLkYyDSIKh7Wp7zY5bZF
+	 iJ+1nmCOUt6tiOQEd2Z/nvlOflG5KKkcXTpFs+nEn69INUX8GMWWd4TtHkHdbg9iYG
+	 hb1gHb6l8hIVQ==
+X-Virus-Scanned: Debian amavisd-new at smtptls1-lmb.cpub.univ-nantes.fr
+Received: from smtp-tls.univ-nantes.fr ([127.0.0.1])
+	by localhost (smtptls1-lmb.cpub.univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id l3qVXpWdX3AC for <liste-egc@polytech.univ-nantes.fr>;
+	Tue, 15 Dec 2020 18:43:45 +0100 (CET)
+Received: from [192.168.1.1] (5-49-106-48.hfc.dyn.abo.bbox.fr [5.49.106.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp-tls.univ-nantes.fr (Postfix) with ESMTPSA id 63F2D48361
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 15 Dec 2020 18:43:45 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-nantes.fr;
+	s=mailv2; t=1608054225;
+	bh=34hat603v15wDR2xhSD+cG4w31DRMqlr4lkYg1EexnI=;
+	h=Subject:References:To:From:Date:In-Reply-To:From;
+	b=C8R7R8ojwh7uiXl2RIPYfW4u20XfBJ6pFphNumlFaAhnGcxsIXOmmsvwwkfRN4UqN
+	 tKUxh3Rnro5pKlijP4HLynluKTyW9IA4yTQig/pJToy6iEEGNovJh7bWT3zFsrdIck
+	 6YUAH4Rz1BKncAv/Et0NGLnIVpQtDohjCQN1qKSOO1I0pT4s0+g8XSrK5fuWaJ32dN
+	 GFUmHwumdCRyItM9P5FRGYBzfQy3xmKwFNPVxNvDPpzj3iMLkYyDSIKh7Wp7zY5bZF
+	 iJ+1nmCOUt6tiOQEd2Z/nvlOflG5KKkcXTpFs+nEn69INUX8GMWWd4TtHkHdbg9iYG
+	 hb1gHb6l8hIVQ==
+References: <d93fba32-0d47-9150-b152-ac45c059a5d6@univ-nantes.fr>
+To: liste-egc@polytech.univ-nantes.fr
+From: Claudia Marinica <claudia.marinica@univ-nantes.fr>
+X-Forwarded-Message-Id: <d93fba32-0d47-9150-b152-ac45c059a5d6@univ-nantes.fr>
+Message-ID: <e5ea85b9-ddef-8c20-f7b0-32940a432248@univ-nantes.fr>
+Date: Tue, 15 Dec 2020 18:43:43 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.1
+MIME-Version: 1.0
+In-Reply-To: <d93fba32-0d47-9150-b152-ac45c059a5d6@univ-nantes.fr>
+Content-Type: multipart/alternative;
+ boundary="------------4495C764B3A8CDA65FB8231F"
+Content-Language: fr
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] EXTENSION Appel =?UTF-8?Q?=C3=A0?= Soumission - Atelier
+ DAHLIA (Digital Humanities and Cultural HerItage) @EGC2021
+
+This is a multi-part message in MIME format.
+--------------4495C764B3A8CDA65FB8231F
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+
+*DATE LIMITE DE SOUMISSION ÉTENDUE au 20/12/2020*
+
+APPEL A SOUMISSIONS
+
+
+==============================================
+
+Atelier DAHLIA (DigitAl Humanities and cuLtural herItAge: data and 
+knowledge management and analysis) @EGC2021
+26 Janvier 2021, Montpellier - l'atelier aura lieu virtuellement pour 
+cause de la Covid-19
+http://dahlia.egc.asso.fr/atelierDAHLIA-EGC2021.html
+Contact : claudia.marinica@univ-nantes.fr
+
+==============================================
+
+L’atelier DAHLIA, à sa troisième édition, est organisé par le groupe de 
+travail DAHLIA qui est soutenu par l’Association EGC et il a pour 
+objectif de permettre à la communauté cartographiée dans le cadre du 
+groupe de travail de se retrouver, mais aussi de donner la parole aux 
+étudiants en thèse afin d’exposer leurs thématiques. Dans le cadre de 
+cet atelier, des travaux autours des humanités numériques et du 
+patrimoine culturel seront présentés ; ces travaux devraient s’encadrer 
+dans les thématiques d’EGC, notamment la gestion et l’analyse de données 
+ou des connaissances provenant des SHS/patrimoine.
+
+
+DATES IMPORTANTES
+
+Date limite de soumission des articles : 04/12/2020 14/12/2020
+Notification aux auteurs : 18/12/2020
+Version finale : 08/01/2021
+
+
+INSTRUCTIONS AUX AUTEURS, SOUMISSIONS, INSCRIPTIONS
+
+Dans le cadre de l'atelier DAHLIA, nous espérons des soumissions qui 
+lancent les discussions parmi les participants ; des soumissions autours 
+des travaux passés, en cours ou très récents présentant des idées mises 
+en pratique et/ou validées, des prises de position argumentées, ou des 
+problématiques applicatives seront appréciées.
+Les auteurs sont invités à soumettre des travaux sous la forme suivante :
+•    résumés étendus de 2 pages ;
+•    papiers courts de 6 pages ;
+•    papiers longs de 12 pages.
+
+Les soumissions devront être réalisées au format pdf et devront utiliser 
+le format RNTI disponible en téléchargement à l'adresse :
+•    latex : www.editions-rnti.fr/files/RNTI-X-Y2.1.zip
+•    word : http://dahlia.egc.asso.fr/RNTI.doc
+
+Pour soumettre un papier, vous devez suivre le lien suivant : 
+https://easychair.org/conferences/?conf=egc2021 en choisissant lors de 
+la soumission le track DAHLIA correspondant à l'atelier. Si vous avez 
+des difficultés, n'hésitez pas à nous contacter par mail.
+Suite à l'atelier, une publication d'un numéro spécial de revue est 
+envisagée en invitant les publications des autres actions (pour les 
+habitués, cette publication devait avoir lieu après les journées de 
+juin, mais vu le contexte nous avons annulé les journées et la publication).
+
+Les inscriptions peuvent se réaliser à l'atelier seul ou à tout 
+l'événement (atelier + conférence principale). Le tarif d'inscription et 
+la procédure d'inscription sont disponibles sur le site de la conférence 
+EGC : https://egc2021.sciencesconf.org/resource/page/id/22 .
+
+
+DESCRIPTION
+
+Le groupe de travail DAHLIA (DigitAl Humanities and cuLtural herItAge: 
+data and knowledge management and analysis) est soutenu par 
+l’Association EGC et il a pour but de réunir les acteurs (chercheurs ou 
+institutions) qui s’intéressent, dans le cadre des humanités numériques, 
+voire le patrimoine culturel, à la gestion des données mais aussi à leur 
+analyse afin de produire des connaissances.
+
+Le groupe de travail DAHLIA a déjà organisé trois événements : un 
+atelier DAHLIA à EGC2019 (22 janvier 2019), une journée DAHLIA le 28 
+juin 2019 et un atelier DAHLIA à EGC2020 (28 janvier 2020) – les 
+journées DAHLIA prévues en le 2-3 juin 2020 ont dû être annulées pour 
+cause de Covid-19. Ces trois événements ont été un franc succès, ont 
+accueilli autour de 35 participants chacune, et ont donné lieu à des 
+échanges soutenus. Cette nouvelle action souhaite permettre la 
+continuation de ces échanges, mais elle se propose comme défi de 
+produire une première version finalisée de la cartographie des équipes 
+travaillant sur ces sujets en France.
+
+En effet, de nos jours, les acteurs des SHS en général et les 
+institutions culturelles en particulier, peuvent gérer des données et 
+connaissances sous différents formats : documents textuels, documents 
+structurés, bases de données, base de connaissances, images, 
+représentation 3D, etc. De plus, ces données peuvent être distribuées 
+sur plusieurs sites ou non, voir ouvertes et liées (open data).
+
+Pour pouvoir accéder à ces informations, ou, voire plus, mettre en lien 
+ses données avec celles d’un partenaire, un acteur doit mettre en place 
+des systèmes d’information complexes qui soulèvent des réels 
+questionnements car il faut prendre en considération la variété des 
+données : sources, contenu, type de documents, mais aussi leur 
+disponibilité, leur sémantique et leur stockage.
+
+De plus, une fois l’accès aux données mis en place, que peuvent-elles 
+nous dire, quelles sont les connaissances qu’elles pourront apporter aux 
+différentes institutions ? Cette question pratique soulève des nombreux 
+défis : comment identifier et extraire les connaissances des données 
+disponibles ? Quelle sémantique leur accorder ? Comment rendre ces 
+connaissances disponibles et compréhensibles par les institutions ? Il y 
+a-t-il des problèmes liés à la protection de la vie privée des 
+individus, des objets ?
+
+L’atelier DAHLIA se propose de traiter, via les travaux présentés et les 
+invités, ces questionnements et y répondre en partie.
+
+
+PRINCIPAUX THEMES DE L’ATELIER (LISTE NON EXHAUSTIVE)
+
+•    acquisition de données lors d’un processus d’étude et d’analyse du 
+domaine SHS et du cas d’étude précis en collaboration étroite avec les 
+experts du domaine ;
+•    acquisition et analyse de connaissances métier/expert SHS 
+concernant les processus/tâches ;
+•    intéroperabilité des données provenant de plusieurs sources SHS ;
+•    extraction des connaissances à partir des données SHS : fouille, 
+apprentissage ;
+•    annotation sémantique de données du patrimoine ;
+•    restitution par visualisation de données (principalement du 
+patrimoine) en vue de compréhension, analyse, etc. ;
+•    visualisation d’œuvres, immeubles, etc. en 2D/3D ;
+•    extraction et analyse des interactions du public lors des 
+événements culturels ;
+•    étude des processus de diffusion des informations dans les réseaux 
+sociaux.
+
+
+COMITE D’ORGANISATION
+
+Claudia Marinica
+Laboratoire LS2N, équipe DUKe - Polytech'Nantes
+email : claudia.marinica@univ-nantes.fr
+
+Fabrice Guillet
+Laboratoire LS2N, équipe DUKe - Polytech'Nantes
+email : fabrice.guillet@univ-nantes.fr
+
+Florent Laroche
+Laboratoire LS2N, équipe IS3P - Ecole Centrale de Nantes
+email : florent.laroche@ec-nantes.fr
+
+Julien Velcin
+Laboratoire ERIC - Université Lyon 2
+email : julien.velcin@univ-lyon2.fr
+
+
+
+Université de Nantes
+*Claudia MARINICA*
+Assistant Professor
+Computer Science department
+Polytech'Nantes, University of Nantes
+
+email: Claudia.Marinica@univ-nantes.fr 
+<mailto:Claudia.Marinica@univ-nantes.fr>
+
+rue Christian Pauc CS 50609
+44306 Nantes cedex 3
+office: D210 - Ireste
+
+web.polytech.univ-nantes.fr <http://web.polytech.univ-nantes.fr>
+<https://www.facebook.com/PolytechNantes/?ref=aymt_homepage_panel><https://twitter.com/PolytechNantes><https://www.instagram.com/polytechnantes/?hl=fr><https://www.linkedin.com/school/3848702/> 
+
+
+*_Adoptez l'éco-attitude_ : n'imprimez ce mail que si cela est vraiment 
+nécessaire*
+-- 
+
+Université de Nantes
+*Claudia MARINICA*
+Assistant Professor
+Computer Science department
+Polytech'Nantes, University of Nantes
+
+email: Claudia.Marinica@univ-nantes.fr 
+<mailto:Claudia.Marinica@univ-nantes.fr>
+
+rue Christian Pauc CS 50609
+44306 Nantes cedex 3
+office: D210 - Ireste
+
+web.polytech.univ-nantes.fr <http://web.polytech.univ-nantes.fr>
+<https://www.facebook.com/PolytechNantes/?ref=aymt_homepage_panel><https://twitter.com/PolytechNantes><https://www.instagram.com/polytechnantes/?hl=fr><https://www.linkedin.com/school/3848702/> 
+
+
+*_Adoptez l'éco-attitude_ : n'imprimez ce mail que si cela est vraiment 
+nécessaire*
+
+--------------4495C764B3A8CDA65FB8231F
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <b>DATE LIMITE DE SOUMISSION ÉTENDUE au 20/12/2020</b><br>
+    <div class="moz-forward-container">
+      <div class="moz-forward-container">
+        <div class="moz-signature">
+          <div class="moz-forward-container"> <br>
+            <meta http-equiv="content-type" content="text/html;
+              charset=UTF-8">
+            APPEL A SOUMISSIONS<br>
+            <div class="moz-forward-container">
+              <p> <br>
+                ==============================================<br>
+                <br>
+                Atelier DAHLIA (DigitAl Humanities and cuLtural
+                herItAge: data and knowledge management and analysis)
+                @EGC2021<br>
+                26 Janvier 2021, Montpellier - l'atelier aura lieu
+                virtuellement pour cause de la Covid-19<br>
+                <a class="moz-txt-link-freetext"
+                  href="http://dahlia.egc.asso.fr/atelierDAHLIA-EGC2021.html"
+                  moz-do-not-send="true">http://dahlia.egc.asso.fr/atelierDAHLIA-EGC2021.html</a>
+                <br>
+                Contact : <a class="moz-txt-link-abbreviated"
+                  href="mailto:claudia.marinica@univ-nantes.fr"
+                  moz-do-not-send="true">claudia.marinica@univ-nantes.fr</a>
+                <br>
+                <br>
+                ==============================================<br>
+                <br>
+                L’atelier DAHLIA, à sa troisième édition, est organisé
+                par le groupe de travail DAHLIA qui est soutenu par
+                l’Association EGC et il a pour objectif de permettre à
+                la communauté cartographiée dans le cadre du groupe de
+                travail de se retrouver, mais aussi de donner la parole
+                aux étudiants en thèse afin d’exposer leurs thématiques.
+                Dans le cadre de cet atelier, des travaux autours des
+                humanités numériques et du patrimoine culturel seront
+                présentés ; ces travaux devraient s’encadrer dans les
+                thématiques d’EGC, notamment la gestion et l’analyse de
+                données ou des connaissances provenant des
+                SHS/patrimoine.<br>
+                <br>
+                <br>
+                DATES IMPORTANTES<br>
+                <br>
+                Date limite de soumission des articles : <strike>04/12/2020</strike>
+                14/12/2020<br>
+                Notification aux auteurs : 18/12/2020<br>
+                Version finale : 08/01/2021<br>
+                <br>
+                <br>
+                INSTRUCTIONS AUX AUTEURS, SOUMISSIONS, INSCRIPTIONS<br>
+                <br>
+                Dans le cadre de l'atelier DAHLIA, nous espérons des
+                soumissions qui lancent les discussions parmi les
+                participants ; des soumissions autours des travaux
+                passés, en cours ou très récents présentant des idées
+                mises en pratique et/ou validées, des prises de position
+                argumentées, ou des problématiques applicatives seront
+                appréciées.<br>
+                Les auteurs sont invités à soumettre des travaux sous la
+                forme suivante :<br>
+                •    résumés étendus de 2 pages ;<br>
+                •    papiers courts de 6 pages ;<br>
+                •    papiers longs de 12 pages.<br>
+                <br>
+                Les soumissions devront être réalisées au format pdf et
+                devront utiliser le format RNTI disponible en
+                téléchargement à l'adresse :<br>
+                •    latex : <a class="moz-txt-link-abbreviated"
+                  href="http://www.editions-rnti.fr/files/RNTI-X-Y2.1.zip"
+                  moz-do-not-send="true">www.editions-rnti.fr/files/RNTI-X-Y2.1.zip</a><br>
+                •    word : <a class="moz-txt-link-freetext"
+                  href="http://dahlia.egc.asso.fr/RNTI.doc"
+                  moz-do-not-send="true">http://dahlia.egc.asso.fr/RNTI.doc</a><br>
+                <br>
+                Pour soumettre un papier, vous devez suivre le lien
+                suivant : <a class="moz-txt-link-freetext"
+                  href="https://easychair.org/conferences/?conf=egc2021"
+                  moz-do-not-send="true">https://easychair.org/conferences/?conf=egc2021</a>
+                en choisissant lors de la soumission le track DAHLIA
+                correspondant à l'atelier. Si vous avez des difficultés,
+                n'hésitez pas à nous contacter par mail.<br>
+                Suite à l'atelier, une publication d'un numéro spécial
+                de revue est envisagée en invitant les publications des
+                autres actions (pour les habitués, cette publication
+                devait avoir lieu après les journées de juin, mais vu le
+                contexte nous avons annulé les journées et la
+                publication).<br>
+                <br>
+                Les inscriptions peuvent se réaliser à l'atelier seul ou
+                à tout l'événement (atelier + conférence principale). Le
+                tarif d'inscription et la procédure d'inscription sont
+                disponibles sur le site de la conférence EGC : <a
+                  class="moz-txt-link-freetext"
+                  href="https://egc2021.sciencesconf.org/resource/page/id/22"
+                  moz-do-not-send="true">https://egc2021.sciencesconf.org/resource/page/id/22</a>
+                .<br>
+                <br>
+                <br>
+                DESCRIPTION<br>
+                <br>
+                Le groupe de travail DAHLIA (DigitAl Humanities and
+                cuLtural herItAge: data and knowledge management and
+                analysis) est soutenu par l’Association EGC et il a pour
+                but de réunir les acteurs (chercheurs ou institutions)
+                qui s’intéressent, dans le cadre des humanités
+                numériques, voire le patrimoine culturel, à la gestion
+                des données mais aussi à leur analyse afin de produire
+                des connaissances.<br>
+                <br>
+                Le groupe de travail DAHLIA a déjà organisé trois
+                événements : un atelier DAHLIA à EGC2019 (22 janvier
+                2019), une journée DAHLIA le 28 juin 2019 et un atelier
+                DAHLIA à EGC2020 (28 janvier 2020) – les journées DAHLIA
+                prévues en le 2-3 juin 2020 ont dû être annulées pour
+                cause de Covid-19. Ces trois événements ont été un franc
+                succès, ont accueilli autour de 35 participants chacune,
+                et ont donné lieu à des échanges soutenus. Cette
+                nouvelle action souhaite permettre la continuation de
+                ces échanges, mais elle se propose comme défi de
+                produire une première version finalisée de la
+                cartographie des équipes travaillant sur ces sujets en
+                France.<br>
+                <br>
+                En effet, de nos jours, les acteurs des SHS en général
+                et les institutions culturelles en particulier, peuvent
+                gérer des données et connaissances sous différents
+                formats : documents textuels, documents structurés,
+                bases de données, base de connaissances, images,
+                représentation 3D, etc. De plus, ces données peuvent
+                être distribuées sur plusieurs sites ou non, voir
+                ouvertes et liées (open data).<br>
+                <br>
+                Pour pouvoir accéder à ces informations, ou, voire plus,
+                mettre en lien ses données avec celles d’un partenaire,
+                un acteur doit mettre en place des systèmes
+                d’information complexes qui soulèvent des réels
+                questionnements car il faut prendre en considération la
+                variété des données : sources, contenu, type de
+                documents, mais aussi leur disponibilité, leur
+                sémantique et leur stockage.<br>
+                <br>
+                De plus, une fois l’accès aux données mis en place, que
+                peuvent-elles nous dire, quelles sont les connaissances
+                qu’elles pourront apporter aux différentes institutions
+                ? Cette question pratique soulève des nombreux défis :
+                comment identifier et extraire les connaissances des
+                données disponibles ? Quelle sémantique leur accorder ?
+                Comment rendre ces connaissances disponibles et
+                compréhensibles par les institutions ? Il y a-t-il des
+                problèmes liés à la protection de la vie privée des
+                individus, des objets ?<br>
+                <br>
+                L’atelier DAHLIA se propose de traiter, via les travaux
+                présentés et les invités, ces questionnements et y
+                répondre en partie.<br>
+                <br>
+                <br>
+                PRINCIPAUX THEMES DE L’ATELIER (LISTE NON EXHAUSTIVE)<br>
+                <br>
+                •    acquisition de données lors d’un processus d’étude
+                et d’analyse du domaine SHS et du cas d’étude précis en
+                collaboration étroite avec les experts du domaine ;<br>
+                •    acquisition et analyse de connaissances
+                métier/expert SHS concernant les processus/tâches ;<br>
+                •    intéroperabilité des données provenant de plusieurs
+                sources SHS ;<br>
+                •    extraction des connaissances à partir des données
+                SHS : fouille, apprentissage ;<br>
+                •    annotation sémantique de données du patrimoine ;<br>
+                •    restitution par visualisation de données
+                (principalement du patrimoine) en vue de compréhension,
+                analyse, etc. ;<br>
+                •    visualisation d’œuvres, immeubles, etc. en 2D/3D ;<br>
+                •    extraction et analyse des interactions du public
+                lors des événements culturels ;<br>
+                •    étude des processus de diffusion des informations
+                dans les réseaux sociaux.<br>
+                <br>
+                <br>
+                COMITE D’ORGANISATION<br>
+                <br>
+                Claudia Marinica<br>
+                Laboratoire LS2N, équipe DUKe - Polytech'Nantes<br>
+                email : <a class="moz-txt-link-abbreviated"
+                  href="mailto:claudia.marinica@univ-nantes.fr"
+                  moz-do-not-send="true">claudia.marinica@univ-nantes.fr</a><br>
+                <br>
+                Fabrice Guillet<br>
+                Laboratoire LS2N, équipe DUKe - Polytech'Nantes<br>
+                email : <a class="moz-txt-link-abbreviated"
+                  href="mailto:fabrice.guillet@univ-nantes.fr"
+                  moz-do-not-send="true">fabrice.guillet@univ-nantes.fr</a><br>
+                <br>
+                Florent Laroche<br>
+                Laboratoire LS2N, équipe IS3P - Ecole Centrale de Nantes<br>
+                email : <a class="moz-txt-link-abbreviated"
+                  href="mailto:florent.laroche@ec-nantes.fr"
+                  moz-do-not-send="true">florent.laroche@ec-nantes.fr</a><br>
+                <br>
+                Julien Velcin<br>
+                Laboratoire ERIC - Université Lyon 2<br>
+                email : <a class="moz-txt-link-abbreviated"
+                  href="mailto:julien.velcin@univ-lyon2.fr"
+                  moz-do-not-send="true">julien.velcin@univ-lyon2.fr</a></p>
+            </div>
+            <div class="moz-signature">
+              <meta content="text/html; charset=UTF-8"
+                http-equiv="content-type">
+              <style>
+            DIV.TagHeader { background-color:#009ee0; height:2px; width:520px; }
+            DIV.Tag { border:0px dotted grey; width: 518px;}
+            DIV.TagFooter { font-family:Trebuchet MS, sans-serif; font-size:8pt; size:1; color:#36a629; height:2em; text-align:center; width:520px;}
+            DIV.NomTitre { font-family:Trebuchet MS, sans-serif; font-size:10pt; size:1; color:#00305E; margin-left: 170px; }
+            DIV.Contact { font-family:Trebuchet MS, sans-serif; font-size:8pt; size:1; color:#777777; margin-left:170px;}
+            DIV.Adresse { font-family:Trebuchet MS, sans-serif; font-size:8pt; size:1; color:#777777; margin-left:170px;}
+
+            img.Logo {border: 0px solid ; width: 138px; height: 57px; left: 25px; position:absolute; z-index:-1; moz-do-not-send:true;}
+            body { bgcolor:#FFFFFF; text:#000000; }
+            a { text-decoration:none; color:#777777;}</style>
+              <div class="moz-signature">
+                <div class="TagHeader"> <br>
+                </div>
+              </div>
+            </div>
+          </div>
+          <meta content="text/html; charset=UTF-8"
+            http-equiv="content-type">
+          <style>
+            DIV.TagHeader { background-color:#009ee0; height:2px; width:520px; }
+            DIV.Tag { border:0px dotted grey; width: 518px;}
+            DIV.TagFooter { font-family:Trebuchet MS, sans-serif; font-size:8pt; size:1; color:#36a629; height:2em; text-align:center; width:520px;}
+            DIV.NomTitre { font-family:Trebuchet MS, sans-serif; font-size:10pt; size:1; color:#00305E; margin-left: 170px; }
+            DIV.Contact { font-family:Trebuchet MS, sans-serif; font-size:8pt; size:1; color:#777777; margin-left:170px;}
+            DIV.Adresse { font-family:Trebuchet MS, sans-serif; font-size:8pt; size:1; color:#777777; margin-left:170px;}
+
+            img.Logo {border: 0px solid ; width: 138px; height: 57px; left: 25px; position:absolute; z-index:-1; moz-do-not-send:true;}
+            body { bgcolor:#FFFFFF; text:#000000; }
+            a { text-decoration:none; color:#777777;}</style>
+          <div class="moz-signature">
+            <div class="TagHeader"> </div>
+            <div class="Tag"><br>
+              <img class="Logo"
+src="http://web.polytech.univ-nantes.fr/medias/photo/polytech-nantes-p-univ_1516179753112-jpg?ID_FICHE=540435"
+                alt="Université de Nantes" moz-do-not-send="true">
+              <div class="NomTitre"> <b>Claudia MARINICA</b><br>
+                Assistant Professor<br>
+                Computer Science department<br>
+                Polytech'Nantes, University of Nantes<br>
+              </div>
+              <div class="Contact"><br>
+                <!-- tél : <br> --> email: <a
+                  href="mailto:Claudia.Marinica@univ-nantes.fr"
+                  moz-do-not-send="true">Claudia.Marinica@univ-nantes.fr</a><br>
+                <!--web site: <a href="mailto:Claudia.Marinica@univ-nantes.fr">Claudia.Marinica@univ-nantes.fr</a><br>--><br>
+                rue Christian Pauc CS 50609 <br>
+                44306 Nantes cedex 3<br>
+                office: D210 - Ireste<br>
+                <br>
+                <a href="http://web.polytech.univ-nantes.fr"
+                  moz-do-not-send="true">web.polytech.univ-nantes.fr</a>
+                <br>
+                <a
+                  href="https://www.facebook.com/PolytechNantes/?ref=aymt_homepage_panel"
+                  target="_blank" alt="Facebook" moz-do-not-send="true"><img
+src="http://www.polytech.univ-nantes.fr/com/signature/nouveau/reseaux_sociaux_01.jpg"
+                    moz-do-not-send="true" width="32" height="30"></a><a
+                  href="https://twitter.com/PolytechNantes"
+                  target="_blank" alt="Twitter" moz-do-not-send="true"><img
+src="http://www.polytech.univ-nantes.fr/com/signature/nouveau/reseaux_sociaux_02.jpg"
+                    moz-do-not-send="true" width="32" height="30"></a><a
+                  href="https://www.instagram.com/polytechnantes/?hl=fr"
+                  target="_blank" alt="Instagram" moz-do-not-send="true"><img
+src="http://www.polytech.univ-nantes.fr/com/signature/nouveau/reseaux_sociaux_03.jpg"
+                    moz-do-not-send="true" width="32" height="30"></a><a
+                  href="https://www.linkedin.com/school/3848702/"
+                  target="_blank" alt="LinkedIn" moz-do-not-send="true"><img
+src="http://www.polytech.univ-nantes.fr/com/signature/nouveau/reseaux_sociaux_04.jpg"
+                    moz-do-not-send="true" width="32" height="30"></a> </div>
+            </div>
+            <div class="TagFooter"> <br>
+              <b><u>Adoptez l'éco-attitude</u> : n'imprimez ce mail que
+                si cela est vraiment nécessaire</b><br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="moz-signature">-- <br>
+      <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+      <style>
+            DIV.TagHeader { background-color:#009ee0; height:2px; width:520px; }
+            DIV.Tag { border:0px dotted grey; width: 518px;}
+            DIV.TagFooter { font-family:Trebuchet MS, sans-serif; font-size:8pt; size:1; color:#36a629; height:2em; text-align:center; width:520px;}
+            DIV.NomTitre { font-family:Trebuchet MS, sans-serif; font-size:10pt; size:1; color:#00305E; margin-left: 170px; }
+            DIV.Contact { font-family:Trebuchet MS, sans-serif; font-size:8pt; size:1; color:#777777; margin-left:170px;}
+            DIV.Adresse { font-family:Trebuchet MS, sans-serif; font-size:8pt; size:1; color:#777777; margin-left:170px;}
+
+            img.Logo {border: 0px solid ; width: 138px; height: 57px; left: 25px; position:absolute; z-index:-1; moz-do-not-send:true;}
+            body { bgcolor:#FFFFFF; text:#000000; }
+            a { text-decoration:none; color:#777777;}
+        </style>
+      <div class="moz-signature">
+        <div class="TagHeader"> </div>
+        <div class="Tag"><br>
+          <img class="Logo"
+src="http://web.polytech.univ-nantes.fr/medias/photo/polytech-nantes-p-univ_1516179753112-jpg?ID_FICHE=540435"
+            alt="Université de Nantes" moz-do-not-send="true">
+          <div class="NomTitre"> <b>Claudia MARINICA</b><br>
+            Assistant Professor<br>
+            Computer Science department<br>
+            Polytech'Nantes, University of Nantes<br>
+          </div>
+          <div class="Contact"><br>
+            <!-- tél : <br> --> email: <a
+              href="mailto:Claudia.Marinica@univ-nantes.fr">Claudia.Marinica@univ-nantes.fr</a><br>
+            <!--web site: <a href="mailto:Claudia.Marinica@univ-nantes.fr">Claudia.Marinica@univ-nantes.fr</a><br>--><br>
+            rue Christian Pauc CS 50609
+            <br>
+            44306 Nantes cedex 3<br>
+            office: D210 - Ireste<br>
+            <br>
+            <a href="http://web.polytech.univ-nantes.fr">web.polytech.univ-nantes.fr</a>
+            <br>
+            <a
+              href="https://www.facebook.com/PolytechNantes/?ref=aymt_homepage_panel"
+              target="_blank" alt="Facebook"><img
+src="http://www.polytech.univ-nantes.fr/com/signature/nouveau/reseaux_sociaux_01.jpg"
+                width="32" height="30"></a><a
+              href="https://twitter.com/PolytechNantes" target="_blank"
+              alt="Twitter"><img
+src="http://www.polytech.univ-nantes.fr/com/signature/nouveau/reseaux_sociaux_02.jpg"
+                width="32" height="30"></a><a
+              href="https://www.instagram.com/polytechnantes/?hl=fr"
+              target="_blank" alt="Instagram"><img
+src="http://www.polytech.univ-nantes.fr/com/signature/nouveau/reseaux_sociaux_03.jpg"
+                width="32" height="30"></a><a
+              href="https://www.linkedin.com/school/3848702/"
+              target="_blank" alt="LinkedIn"><img
+src="http://www.polytech.univ-nantes.fr/com/signature/nouveau/reseaux_sociaux_04.jpg"
+                width="32" height="30"></a> </div>
+        </div>
+        <div class="TagFooter"> <br>
+          <b><u>Adoptez l'éco-attitude</u> : n'imprimez ce mail que si
+            cela est vraiment nécessaire</b><br>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+--------------4495C764B3A8CDA65FB8231F--

@@ -1,0 +1,855 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (BounceSMTP2.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 2DDA114014F2
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon,  3 Jan 2022 09:46:31 +0100 (CET)
+Received: from mx3.d101.univ-nantes.fr (MX3.univ-nantes.fr [193.52.101.137])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id 29D9A5EB4
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon,  3 Jan 2022 09:46:31 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTP id 215AE21053
+	for <liste-egc@polytech.univ-nantes.fr>; Mon,  3 Jan 2022 09:46:31 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 0.023
+X-Spam-Level:
+X-Spam-Status: No, score=0.023 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+	HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_WSFF=0.01,
+	SPF_HELO_NONE=0.001, SPF_PASS=-0.001, T_KAM_HTML_FONT_INVALID=0.01,
+	UN_PHISHING_PW=0.1, URIBL_BLOCKED=0.001] autolearn=disabled
+X-CRM114-Status: UNSURE ( 1.5153 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=gmail.com
+Received: from mx3.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 6bhHImBHt9QN for <liste-egc@polytech.univ-nantes.fr>;
+	Mon,  3 Jan 2022 09:46:28 +0100 (CET)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTPS id 3FA8821054
+	for <liste-egc@polytech.univ-nantes.fr>; Mon,  3 Jan 2022 09:46:28 +0100 (CET)
+Received: by mail-yb1-xb33.google.com with SMTP id p15so46848648ybk.10
+        for <liste-egc@polytech.univ-nantes.fr>; Mon, 03 Jan 2022 00:46:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=mFmpLdV5xd3MQyXFm1QVkO9ZKdCsZgJXKqcTFmubjKQ=;
+        b=XO3N8bKQDhPNpgibW2LqIOHQSUHNBqhmq7HdFgsgAKOKHpqo/GqQk+DBlcgbJ9yoUR
+         rQ/a8ptwchwEndmLP9V7LeFb+7Mpc9oH5ZQj7/T5tkXgy4PEmYg0OjdtnsDUu+ILPmmF
+         9Fwajx+7RKrcV27OrXHQT+39CmSGx5lUZjRqtWL1nkPa5hJN0sXNw2w6dRBP6gCgbusq
+         oKlNbJINJdVpSzos3sYPIxGb10cJpQwfe8yE360ezGsbhHBwE0rdQAr/OMEFmDjTU53F
+         beQrsbKpjKXT80OFtrnT+/xxFMczWZ5JnoyFRqpCgLJSrefAvuERSvr3l+i+aN1yFeFG
+         /QzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=mFmpLdV5xd3MQyXFm1QVkO9ZKdCsZgJXKqcTFmubjKQ=;
+        b=5fBkWvq8DZl1Wo0HejFHcGg3GRjr5WnJEc9+cJs617pP19X2d4cnBIZYbXAOnRdTwW
+         3IcA1J60r5ZDl4S+lEhYlktQyJ5O/tKIIudENtJCwtIucvJxh0TJm0MMh3Ohpu/SrWZR
+         SXdXBK1hEGtuDEnCqctaliEU25OcmldD5ebi+TKTRnsVPB0+W0c4jN/8xKMqVPmJ4ycy
+         9yJWpWjuKEQVtK6g2QcfEJHFfMOtmi+AIBT1f6tQYCw9LvwfUE/Or3tKMeSNSIx/sxdW
+         dC5kjNf+Y+77wajVOv8HzpS5JJsayJK+DgjZ+w1Ak0i9TXjLJXZhX/TOzhUxq3ybB2hI
+         ss/w==
+X-Gm-Message-State: AOAM531CvKTC+22z+csxkp0zR228dqfgv0EVgoyn3L37uyPUnX8m0EdX
+	SNJbHuA/zBTx122GZ4dKIztRJBnUHBfGnMSZwPc=
+X-Google-Smtp-Source: ABdhPJywgm5t9ABF9lfKF4BiunEVxaJuD2iabrGNmsmcMgML374xllXn3FS1ngN/6UkvM7SDNInvXTwt4oAYZ/YQIB8=
+X-Received: by 2002:a05:6902:4ac:: with SMTP id r12mr43340187ybs.437.1641199587218;
+ Mon, 03 Jan 2022 00:46:27 -0800 (PST)
+MIME-Version: 1.0
+From: Rim Hantach <rim.hantach@gmail.com>
+Date: Mon, 3 Jan 2022 09:46:16 +0100
+Message-ID: <CAPD0GtKgXtswxFDW53KauXAm+R3Y3L3rvmbsn2hX=L6vnMWg_Q@mail.gmail.com>
+To: "Event@CIG" <event@in.tu-clausthal.de>, Liste-proml@lri.fr, agents@cs.umbc.edu, 
+	bull-i3@irit.fr, bull-ia@gdria.fr, dl@dl.kr.org, 
+	eda-liste <eda-liste@listes.univ-lyon2.fr>, info-ic@inria.fr, 
+	liste-egc@polytech.univ-nantes.fr, ln@groupes.renater.fr, sma@loria.fr, 
+	web.semantique@inria.fr
+Content-Type: multipart/alternative; boundary="00000000000066d77605d4a98ec1"
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] [CFP] 3rd International workshop on Deep Learning meets
+ Ontologies and Natural Language Processing @ESWC-2022
+
+--00000000000066d77605d4a98ec1
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Dear colleagues and researchers,
+
+Please consider to contribute to the 3rd edition of the
+international workshop  "*Deep Learning meets Ontologies and Natural
+Language Processing*"  which will be held online or in Hersonissos, Greece
+- May 29 - June 2, 2022.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+                           The deadline for paper submissions is *March
+18th, 2022*
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+*DeepOntoNLP-2022*
+
+3rd International workshop on Deep Learning meets Ontologies and Natural
+Language Processing at ESWC 2022 <https://2022.eswc-conferences.org/>,
+Hersonissos,
+Greece - May 29 - June 2, 2022
+Workshop website: https://sites.google.com/view/deepontonlp2022/
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+*Context*
+
+In recent years, deep learning has been applied successfully and achieved
+state-of-the-art  performance in a variety of domains, such as image
+analysis. Despite this success, deep learning models remain hard to analyze
+data and understand what knowledge is represented in them, and how they
+generate decisions.
+
+Deep Learning (DL) meets Natural Language Processing (NLP) to solve human
+language problems for further applications, such as information extraction,
+machine translation, search, and summarization. Previous works have atteste=
+d
+the positive impact of domain knowledge on data analysis and vice versa,
+for example pre-processing data, searching data, redundancy and
+inconsistency data, knowledge engineering, domain concepts, and
+relationships extraction, etc. Ontology is a structured knowledge
+representation that facilitates data access (data sharing and reuse) and
+assists the DL process as well. DL meets recent ontologies and tries to
+model data representations with many layers of non-linear transformations.
+
+The combination of DL, ontologies, and NLP might be beneficial for
+different tasks:
+
+   -
+
+   Deep Learning for Ontologies: ontology population, ontology extension,
+   ontology learning, ontology alignment, and integration,
+   -
+
+   Ontologies for Deep Learning: semantic graph embeddings, latent semantic
+   representation, hybrid embeddings (symbolic and semantic representations=
+),
+   -
+
+   Deep Learning for NLP: summarization, translation, named entity
+   recognition, question answering, document classification, etc.
+   -
+
+   NLP for Deep Learning: parsing (part-of-speech tagging), tokenization,
+   sentence detection, dependency parsing, semantic role labeling, semantic
+   dependency parsing, etc.
+
+*Objective*
+
+This workshop aims at demonstrating recent and future advances in semantic
+rich deep learning by using Semantic Web and NLP techniques which can
+reduce the semantic gap between the data, applications, machine learning
+process, in order to obtain semantic-aware approaches. In addition, the
+goal of this workshop is to bring together an area for experts from
+industry, science, and academia to exchange ideas and discuss the results
+of ongoing research in natural language processing, structured knowledge, a=
+nd
+deep learning approaches.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+
+We invite the submission of original works that are related -- but are not
+limited to -- the topics below.
+Topics of interest:
+
+   -
+
+   Construction ontology embeddings
+   -
+
+   Ontology-based text classification
+   -
+
+   Learning ontology embeddings
+   -
+
+   Semantic role labeling
+   -
+
+   Ontology reasoning with Deep Neural Networks
+   -
+
+   Deep learning for ontological semantic annotations
+   -
+
+   Spatial and temporal ontology embeddings
+   -
+
+   Ontology alignment and matching based on deep learning models
+   -
+
+   Ontology learning from text using deep learning models
+   -
+
+   Unsupervised Learning
+   -
+
+   Text classification using deep models
+   -
+
+   Neural machine translation
+   -
+
+   Deep question answering
+   -
+
+   Deep text summarization
+   -
+
+   Deep speech recognition
+   -
+
+   and so on.
+
+Submission:
+
+The workshop is open to submit unpublished work resulting from research
+that presents original scientific results, methodological aspects,
+concepts, and approaches. All submissions must be PDF documents written in
+English and formatted according to LNCS instructions for authors
+<https://www.springer.com/fr/computer-science/lncs/conference-proceedings-g=
+uidelines>.
+Papers are to be submitted through the workshop's EasyChair
+<https://easychair.org/conferences/?conf=3Ddeepontonlp2022> submission page=
+.
+
+We welcome the following types of contributions:
+
+   -
+
+   Full research papers (8-10 pages): Finished or consolidated R&D works,
+   to be included in one of the Workshop topics
+   -
+
+   Short papers (4-6 pages): Ongoing works with relevant preliminary
+   results, opened to discussion.
+
+At least one author of each accepted paper must register for the workshop,
+in order to present the paper, there, and at the conference. For further
+instructions please refer to the ESWC 2022
+<https://2022.eswc-conferences.org/> page.
+Important dates:
+
+   -
+
+   Workshop paper submission due: March 18th, 2022
+   -
+
+   Workshop paper notifications: April 15th, 2022
+   -
+
+   Workshop paper camera-ready versions due: April 22th, 2022
+   -
+
+   Workshop: 28th or the 29th of May, 2022 (Half-Day)
+
+All deadlines are 23:59 anywhere on earth (UTC-12).
+Publication:
+
+The best papers from this workshop may be included in the supplementary
+proceedings of ESWC 2022.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Workshop Chairs
+
+    Sarra Ben Abb=C3=A8s, Engie, France
+
+    Rim Hantach, Engie, France
+
+    Philippe Calvez, Engie, France
+
+
+<https://drive.google.com/u/0/settings/storage?hl=3Dfr&utm_medium=3Dweb&utm=
+_source=3Dgmail&utm_campaign=3Dstorage_meter&utm_content=3Dstorage_normal>
+
+
+Program Committee     Nada Mimouni, CNAM, France
+
+Lynda Temal, Engie, France
+
+Davide Buscaldi, LIPN, Universit=C3=A9 Sorbonne Paris Nord, France
+
+Valentina Janev, Mihajlo Pupin Institute, Serbia
+
+Mohamed Hedi Karray, LGP-INP-ENIT, Universit=C3=A9 de Toulouse, France
+
+--00000000000066d77605d4a98ec1
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div><div><div><div id=3D"gmail-m_-7667631491332845483m_87=
+5248122562174771gmail-m_-3403197151848712639gmail-m_4226277856547495074gmai=
+l-m_-6287391162320206889gmail-m_1771340814683082616gmail-m_-350952283622654=
+0093gmail-:7ub"><div id=3D"gmail-m_-7667631491332845483m_875248122562174771=
+gmail-m_-3403197151848712639gmail-m_4226277856547495074gmail-m_-62873911623=
+20206889gmail-m_1771340814683082616gmail-m_-3509522836226540093gmail-:7uc">=
+<div dir=3D"ltr">Dear colleagues and researchers,<div><div dir=3D"ltr"><p>P=
+lease consider to contribute to the 3rd edition of the international=C2=A0w=
+orkshop=C2=A0 &quot;<b>Deep Learning meets Ontologies and Natural Language =
+Processing</b>&quot;=C2=A0 which will be held online or in Hersonissos, Gre=
+ece - May 29 - June 2, 2022.</p><p>=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<br></p><p>=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 The deadline for paper sub=
+missions is=C2=A0<span style=3D"background-color:rgb(255,255,0)"><b>March 1=
+8th, 2022</b></span></p><p>=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D</p><p><b>DeepOntoNLP-2022</b><br></p><p>3rd=C2=A0Inte=
+rnational=C2=A0workshop on Deep Learning meets Ontologies and Natural Langu=
+age Processing at=C2=A0<a href=3D"https://2022.eswc-conferences.org/" targe=
+t=3D"_blank">ESWC 2022</a>,=C2=A0Hersonissos, Greece - May 29 - June 2, 202=
+2<br>Workshop website:=C2=A0<a href=3D"https://sites.google.com/view/deepon=
+tonlp2022/" rel=3D"noreferrer" target=3D"_blank">https://sites.google.com/v=
+iew/deepontonlp2022/</a><br></p><p>=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=C2=A0=C2=A0=C2=A0<br></p><h3 id=3D"gmail-m_-=
+7667631491332845483m_875248122562174771gmail-m_-3403197151848712639gmail-m_=
+4226277856547495074gmail-m_-6287391162320206889gmail-m_1771340814683082616g=
+mail-m_-3509522836226540093gmail-m_3341920362080817614gmail-h.j64uk84laxfd"=
+ dir=3D"ltr" style=3D"background-color:transparent;border-color:currentcolo=
+r;border-style:none;border-width:medium;line-height:1.38;margin-bottom:4pt;=
+margin-top:14pt;padding:0px"><div><font size=3D"2"><span style=3D"font-fami=
+ly:arial,sans-serif"><span style=3D"color:rgb(0,0,0);font-variant-numeric:n=
+ormal;font-variant-east-asian:normal;vertical-align:baseline"><strong>Conte=
+xt</strong></span></span></font></div></h3><p dir=3D"ltr" style=3D"backgrou=
+nd-color:transparent;border-color:currentcolor;border-style:none;border-wid=
+th:medium;line-height:1.38;margin-bottom:12pt;margin-top:12pt;padding:0px">=
+<font size=3D"2"><span style=3D"font-family:arial,sans-serif"><span style=
+=3D"color:rgb(0,0,0);font-variant-numeric:normal;font-variant-east-asian:no=
+rmal;vertical-align:baseline">In recent years, deep learning has been appli=
+ed successfully and achieved state-of-the-art=C2=A0 performance in a variet=
+y of domains, such as image analysis. Despite this success, deep learning m=
+odels remain hard to analy</span><span style=3D"color:rgb(0,0,0);vertical-a=
+lign:baseline">z</span><span style=3D"color:rgb(0,0,0);font-variant-numeric=
+:normal;font-variant-east-asian:normal;vertical-align:baseline">e data and =
+understand what knowledge is represented in them, and how they generate dec=
+isions.</span></span></font></p><p dir=3D"ltr" style=3D"background-color:tr=
+ansparent;border-color:currentcolor;border-style:none;border-width:medium;l=
+ine-height:1.38;margin-bottom:12pt;margin-top:12pt;padding:0px"><font size=
+=3D"2"><span style=3D"font-family:arial,sans-serif"><span style=3D"color:rg=
+b(0,0,0);font-variant-numeric:normal;font-variant-east-asian:normal;vertica=
+l-align:baseline">Deep Learning (DL) meets Natural Language Processing (NLP=
+) to solve human language problems for further applications, such as inform=
+ation extraction, machine translation, search</span><span style=3D"color:rg=
+b(0,0,0);vertical-align:baseline">,=C2=A0</span><span style=3D"color:rgb(0,=
+0,0);font-variant-numeric:normal;font-variant-east-asian:normal;vertical-al=
+ign:baseline">and summarization. Previous works ha</span><span style=3D"col=
+or:rgb(0,0,0);vertical-align:baseline">ve</span><span style=3D"color:rgb(0,=
+0,0);font-variant-numeric:normal;font-variant-east-asian:normal;vertical-al=
+ign:baseline">=C2=A0attested the positive impact of domain knowledge on dat=
+a analysis and vice versa, for example pre-processing data, searching data,=
+ redundancy and inconsistency data, knowledge engineering, domain concepts<=
+/span><span style=3D"color:rgb(0,0,0);vertical-align:baseline">,=C2=A0</spa=
+n><span style=3D"color:rgb(0,0,0);font-variant-numeric:normal;font-variant-=
+east-asian:normal;vertical-align:baseline">and relationships extraction, et=
+c. Ontology is a structured knowledge representation that facilitates data =
+access (data sharing and reuse) and assists the DL process as well. DL meet=
+s recent</span><span style=3D"color:rgb(0,0,0);vertical-align:baseline">=C2=
+=A0</span><span style=3D"color:rgb(0,0,0);font-variant-numeric:normal;font-=
+variant-east-asian:normal;vertical-align:baseline">ontologies and tries to =
+model data representations with many layers of non-linear transformations.<=
+/span></span></font></p><p dir=3D"ltr" style=3D"background-color:transparen=
+t;border-color:currentcolor;border-style:none;border-width:medium;line-heig=
+ht:1.38;margin-bottom:12pt;margin-top:12pt;padding:0px"><font size=3D"2"><s=
+pan style=3D"font-family:arial,sans-serif"><span style=3D"color:rgb(0,0,0);=
+font-variant-numeric:normal;font-variant-east-asian:normal;vertical-align:b=
+aseline">The combination of DL, ontologies</span><span style=3D"color:rgb(0=
+,0,0);vertical-align:baseline">,=C2=A0</span><span style=3D"color:rgb(0,0,0=
+);font-variant-numeric:normal;font-variant-east-asian:normal;vertical-align=
+:baseline">and NLP might be beneficial for different tasks:</span></span></=
+font></p><ul style=3D"list-style-type:square;margin-left:0px;margin-right:0=
+px;padding:0px"><li dir=3D"ltr" style=3D"margin-left:30pt"><p dir=3D"ltr" s=
+tyle=3D"background-color:transparent;border-color:currentcolor;border-style=
+:none;border-width:medium;line-height:1.38;margin-bottom:12pt;margin-left:0=
+px;margin-top:12pt;padding:0px"><font size=3D"2"><span style=3D"font-family=
+:arial,sans-serif"><span style=3D"color:rgb(0,0,0);font-variant-numeric:nor=
+mal;font-variant-east-asian:normal;vertical-align:baseline">Deep Learning f=
+or Ontologies: ontology population, ontology extension, ontology learning, =
+ontology alignment</span><span style=3D"color:rgb(0,0,0);vertical-align:bas=
+eline">,=C2=A0</span><span style=3D"color:rgb(0,0,0);font-variant-numeric:n=
+ormal;font-variant-east-asian:normal;vertical-align:baseline">and integrati=
+on,</span></span></font></p></li><li dir=3D"ltr" style=3D"margin-left:30pt"=
+><p dir=3D"ltr" style=3D"background-color:transparent;border-color:currentc=
+olor;border-style:none;border-width:medium;line-height:1.38;margin-bottom:1=
+2pt;margin-left:0px;margin-top:12pt;padding:0px"><font size=3D"2"><span sty=
+le=3D"font-family:arial,sans-serif"><span style=3D"color:rgb(0,0,0);font-va=
+riant-numeric:normal;font-variant-east-asian:normal;vertical-align:baseline=
+">Ontologies for Deep Learning: semantic graph embeddings, latent semantic =
+representation, hybrid embeddings (symbolic and semantic representations),<=
+/span></span></font></p></li><li dir=3D"ltr" style=3D"margin-left:30pt"><p =
+dir=3D"ltr" style=3D"background-color:transparent;border-color:currentcolor=
+;border-style:none;border-width:medium;line-height:1.38;margin-bottom:12pt;=
+margin-left:0px;margin-top:12pt;padding:0px"><font size=3D"2"><span style=
+=3D"font-family:arial,sans-serif"><span style=3D"color:rgb(0,0,0);font-vari=
+ant-numeric:normal;font-variant-east-asian:normal;vertical-align:baseline">=
+Deep Learning for NLP: summarization, translation, named entity recognition=
+, question answering, document classification, etc.</span></span></font></p=
+></li><li dir=3D"ltr" style=3D"margin-left:30pt"><p dir=3D"ltr" style=3D"ba=
+ckground-color:transparent;border-color:currentcolor;border-style:none;bord=
+er-width:medium;line-height:1.38;margin-bottom:12pt;margin-left:0px;margin-=
+top:12pt;padding:0px"><font size=3D"2"><span style=3D"font-family:arial,san=
+s-serif"><span style=3D"color:rgb(0,0,0);font-variant-numeric:normal;font-v=
+ariant-east-asian:normal;vertical-align:baseline">NLP for Deep Learning: pa=
+rsing (part-of-speech tagging), tokenization, sentence detection, dependenc=
+y parsing, semantic role labeling, semantic dependency parsing, etc.</span>=
+</span></font></p></li></ul><h3 id=3D"gmail-m_-7667631491332845483m_8752481=
+22562174771gmail-m_-3403197151848712639gmail-m_4226277856547495074gmail-m_-=
+6287391162320206889gmail-m_1771340814683082616gmail-m_-3509522836226540093g=
+mail-m_3341920362080817614gmail-h.ki5gqz7ttpbz" dir=3D"ltr" style=3D"backgr=
+ound-color:transparent;border-color:currentcolor;border-style:none;border-w=
+idth:medium;line-height:1.38;margin-bottom:4pt;margin-top:14pt;padding:0px"=
+><div><font size=3D"2"><span style=3D"font-family:arial,sans-serif"><span s=
+tyle=3D"color:rgb(0,0,0);font-variant-numeric:normal;font-variant-east-asia=
+n:normal;vertical-align:baseline"><strong>Objective</strong></span></span><=
+/font></div></h3><p dir=3D"ltr" style=3D"background-color:transparent;borde=
+r-color:currentcolor;border-style:none;border-width:medium;line-height:1.38=
+;margin-bottom:12pt;margin-top:12pt;padding:0px"><font size=3D"2"><span sty=
+le=3D"font-family:arial,sans-serif"><span style=3D"color:rgb(0,0,0);font-va=
+riant-numeric:normal;font-variant-east-asian:normal;vertical-align:baseline=
+">This</span><span style=3D"color:rgb(0,0,0);font-variant-numeric:normal;fo=
+nt-variant-east-asian:normal;vertical-align:baseline">=C2=A0</span><span st=
+yle=3D"color:rgb(0,0,0);font-variant-numeric:normal;font-variant-east-asian=
+:normal;vertical-align:baseline">workshop aims at demonstrating recent and =
+future advances in semantic rich deep learning by using Semantic Web and NL=
+P techniques which can reduce the semantic gap between the data, applicatio=
+ns, machine learning process, in order to obtain semantic-aware approaches.=
+ In addition, the goal of this workshop is to bring together an area for ex=
+perts from industry, science</span><span style=3D"color:rgb(0,0,0);vertical=
+-align:baseline">,=C2=A0</span><span style=3D"color:rgb(0,0,0);font-variant=
+-numeric:normal;font-variant-east-asian:normal;vertical-align:baseline">and=
+ academia to exchange ideas and discuss the results of ongoing research in =
+natural language processing, structured knowledge</span><span style=3D"colo=
+r:rgb(0,0,0);vertical-align:baseline">,=C2=A0</span><span style=3D"color:rg=
+b(0,0,0);font-variant-numeric:normal;font-variant-east-asian:normal;vertica=
+l-align:baseline">and deep learning approaches.</span></span></font></p><p =
+dir=3D"ltr" style=3D"background-color:transparent;border-color:currentcolor=
+;border-style:none;border-width:medium;line-height:1.38;margin-bottom:12pt;=
+margin-top:12pt;padding:0px"><font size=3D"2"><span style=3D"font-family:ar=
+ial,sans-serif"><span style=3D"color:rgb(0,0,0);font-variant-numeric:normal=
+;font-variant-east-asian:normal;vertical-align:baseline">=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<br></span></span></font></=
+p><p></p></div></div></div><div></div></div></div></div></div></div><div><d=
+iv><div><div id=3D"gmail-m_-7667631491332845483m_875248122562174771gmail-m_=
+-3403197151848712639gmail-m_4226277856547495074gmail-m_-6287391162320206889=
+gmail-m_1771340814683082616gmail-m_-3509522836226540093gmail-:7ua"><table r=
+ole=3D"presentation"><tbody><tr><td><br></td><td><p dir=3D"ltr" style=3D"li=
+ne-height:1.38;margin-top:0pt;margin-bottom:12pt"><font size=3D"2"><span st=
+yle=3D"font-family:arial,sans-serif"><span style=3D"color:rgb(0,0,0);backgr=
+ound-color:transparent;font-variant-numeric:normal;font-variant-east-asian:=
+normal;vertical-align:baseline;white-space:pre-wrap">We invite the submissi=
+on of original works that are related -- but are not limited to -- the topi=
+cs below.</span></span></font></p><h3 dir=3D"ltr" style=3D"line-height:1.38=
+;margin-top:14pt;margin-bottom:4pt"><font size=3D"2"><span style=3D"font-fa=
+mily:arial,sans-serif"><span style=3D"color:rgb(0,0,0);background-color:tra=
+nsparent;font-variant-numeric:normal;font-variant-east-asian:normal;vertica=
+l-align:baseline;white-space:pre-wrap">Topics of interest:</span></span></f=
+ont></h3><ul style=3D"margin-top:0px;margin-bottom:0px"><li dir=3D"ltr" sty=
+le=3D"margin-left:22.5pt;list-style-type:square;color:rgb(0,0,0);background=
+-color:transparent;font-variant-numeric:normal;font-variant-east-asian:norm=
+al;vertical-align:baseline;white-space:pre-wrap"><p dir=3D"ltr" role=3D"pre=
+sentation" style=3D"line-height:1.38;margin-top:12pt;margin-bottom:12pt"><f=
+ont size=3D"2"><span style=3D"font-family:arial,sans-serif"><span style=3D"=
+background-color:transparent;font-variant-numeric:normal;font-variant-east-=
+asian:normal;vertical-align:baseline">Construction ontology embeddings</spa=
+n></span></font></p></li><li dir=3D"ltr" style=3D"margin-left:22.5pt;list-s=
+tyle-type:square;color:rgb(0,0,0);background-color:transparent;font-variant=
+-numeric:normal;font-variant-east-asian:normal;vertical-align:baseline;whit=
+e-space:pre-wrap"><p dir=3D"ltr" role=3D"presentation" style=3D"line-height=
+:1.38;margin-top:12pt;margin-bottom:12pt"><font size=3D"2"><span style=3D"f=
+ont-family:arial,sans-serif"><span style=3D"background-color:transparent;fo=
+nt-variant-numeric:normal;font-variant-east-asian:normal;vertical-align:bas=
+eline">Ontology-based text classification</span></span></font></p></li><li =
+dir=3D"ltr" style=3D"margin-left:22.5pt;list-style-type:square;color:rgb(0,=
+0,0);background-color:transparent;font-variant-numeric:normal;font-variant-=
+east-asian:normal;vertical-align:baseline;white-space:pre-wrap"><p dir=3D"l=
+tr" role=3D"presentation" style=3D"line-height:1.38;margin-top:12pt;margin-=
+bottom:12pt"><font size=3D"2"><span style=3D"font-family:arial,sans-serif">=
+<span style=3D"background-color:transparent;font-variant-numeric:normal;fon=
+t-variant-east-asian:normal;vertical-align:baseline">Learning ontology embe=
+ddings</span></span></font></p></li><li dir=3D"ltr" style=3D"margin-left:22=
+.5pt;list-style-type:square;color:rgb(0,0,0);background-color:transparent;f=
+ont-variant-numeric:normal;font-variant-east-asian:normal;vertical-align:ba=
+seline;white-space:pre-wrap"><p dir=3D"ltr" role=3D"presentation" style=3D"=
+line-height:1.38;margin-top:12pt;margin-bottom:12pt"><font size=3D"2"><span=
+ style=3D"font-family:arial,sans-serif"><span style=3D"background-color:tra=
+nsparent;font-variant-numeric:normal;font-variant-east-asian:normal;vertica=
+l-align:baseline">Semantic role labeling</span></span></font></p></li><li d=
+ir=3D"ltr" style=3D"margin-left:22.5pt;list-style-type:square;color:rgb(0,0=
+,0);background-color:transparent;font-variant-numeric:normal;font-variant-e=
+ast-asian:normal;vertical-align:baseline;white-space:pre-wrap"><p dir=3D"lt=
+r" role=3D"presentation" style=3D"line-height:1.38;margin-top:12pt;margin-b=
+ottom:12pt"><font size=3D"2"><span style=3D"font-family:arial,sans-serif"><=
+span style=3D"background-color:transparent;font-variant-numeric:normal;font=
+-variant-east-asian:normal;vertical-align:baseline">Ontology reasoning with=
+ Deep Neural Networks</span></span></font></p></li><li dir=3D"ltr" style=3D=
+"margin-left:22.5pt;list-style-type:square;color:rgb(0,0,0);background-colo=
+r:transparent;font-variant-numeric:normal;font-variant-east-asian:normal;ve=
+rtical-align:baseline;white-space:pre-wrap"><p dir=3D"ltr" role=3D"presenta=
+tion" style=3D"line-height:1.38;margin-top:12pt;margin-bottom:12pt"><font s=
+ize=3D"2"><span style=3D"font-family:arial,sans-serif"><span style=3D"backg=
+round-color:transparent;font-variant-numeric:normal;font-variant-east-asian=
+:normal;vertical-align:baseline">Deep learning for ontological semantic ann=
+otations</span></span></font></p></li><li dir=3D"ltr" style=3D"margin-left:=
+22.5pt;list-style-type:square;color:rgb(0,0,0);background-color:transparent=
+;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-align:=
+baseline;white-space:pre-wrap"><p dir=3D"ltr" role=3D"presentation" style=
+=3D"line-height:1.38;margin-top:12pt;margin-bottom:12pt"><font size=3D"2"><=
+span style=3D"font-family:arial,sans-serif"><span style=3D"background-color=
+:transparent;font-variant-numeric:normal;font-variant-east-asian:normal;ver=
+tical-align:baseline">Spatial and temporal ontology embeddings</span></span=
+></font></p></li><li dir=3D"ltr" style=3D"margin-left:22.5pt;list-style-typ=
+e:square;color:rgb(0,0,0);background-color:transparent;font-variant-numeric=
+:normal;font-variant-east-asian:normal;vertical-align:baseline;white-space:=
+pre-wrap"><p dir=3D"ltr" role=3D"presentation" style=3D"line-height:1.38;ma=
+rgin-top:12pt;margin-bottom:12pt"><font size=3D"2"><span style=3D"font-fami=
+ly:arial,sans-serif"><span style=3D"background-color:transparent;font-varia=
+nt-numeric:normal;font-variant-east-asian:normal;vertical-align:baseline">O=
+ntology alignment and matching based on deep learning models</span></span><=
+/font></p></li><li dir=3D"ltr" style=3D"margin-left:22.5pt;list-style-type:=
+square;color:rgb(0,0,0);background-color:transparent;font-variant-numeric:n=
+ormal;font-variant-east-asian:normal;vertical-align:baseline;white-space:pr=
+e-wrap"><p dir=3D"ltr" role=3D"presentation" style=3D"line-height:1.38;marg=
+in-top:12pt;margin-bottom:12pt"><font size=3D"2"><span style=3D"font-family=
+:arial,sans-serif"><span style=3D"background-color:transparent;font-variant=
+-numeric:normal;font-variant-east-asian:normal;vertical-align:baseline">Ont=
+ology learning from text using deep learning models</span></span></font></p=
+></li><li dir=3D"ltr" style=3D"margin-left:22.5pt;list-style-type:square;co=
+lor:rgb(0,0,0);background-color:transparent;font-variant-numeric:normal;fon=
+t-variant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap"><=
+p dir=3D"ltr" role=3D"presentation" style=3D"line-height:1.38;margin-top:12=
+pt;margin-bottom:12pt"><font size=3D"2"><span style=3D"font-family:arial,sa=
+ns-serif"><span style=3D"background-color:transparent;font-variant-numeric:=
+normal;font-variant-east-asian:normal;vertical-align:baseline">Unsupervised=
+ Learning</span></span></font></p></li><li dir=3D"ltr" style=3D"margin-left=
+:22.5pt;list-style-type:square;color:rgb(0,0,0);background-color:transparen=
+t;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-align=
+:baseline;white-space:pre-wrap"><p dir=3D"ltr" role=3D"presentation" style=
+=3D"line-height:1.38;margin-top:12pt;margin-bottom:12pt"><font size=3D"2"><=
+span style=3D"font-family:arial,sans-serif"><span style=3D"background-color=
+:transparent;font-variant-numeric:normal;font-variant-east-asian:normal;ver=
+tical-align:baseline">Text classification using deep models</span></span></=
+font></p></li><li dir=3D"ltr" style=3D"margin-left:22.5pt;list-style-type:s=
+quare;color:rgb(0,0,0);background-color:transparent;font-variant-numeric:no=
+rmal;font-variant-east-asian:normal;vertical-align:baseline;white-space:pre=
+-wrap"><p dir=3D"ltr" role=3D"presentation" style=3D"line-height:1.38;margi=
+n-top:12pt;margin-bottom:12pt"><font size=3D"2"><span style=3D"font-family:=
+arial,sans-serif"><span style=3D"background-color:transparent;font-variant-=
+numeric:normal;font-variant-east-asian:normal;vertical-align:baseline">Neur=
+al machine translation</span></span></font></p></li><li dir=3D"ltr" style=
+=3D"margin-left:22.5pt;list-style-type:square;color:rgb(0,0,0);background-c=
+olor:transparent;font-variant-numeric:normal;font-variant-east-asian:normal=
+;vertical-align:baseline;white-space:pre-wrap"><p dir=3D"ltr" role=3D"prese=
+ntation" style=3D"line-height:1.38;margin-top:12pt;margin-bottom:12pt"><fon=
+t size=3D"2"><span style=3D"font-family:arial,sans-serif"><span style=3D"ba=
+ckground-color:transparent;font-variant-numeric:normal;font-variant-east-as=
+ian:normal;vertical-align:baseline">Deep question answering</span></span></=
+font></p></li><li dir=3D"ltr" style=3D"margin-left:22.5pt;list-style-type:s=
+quare;color:rgb(0,0,0);background-color:transparent;font-variant-numeric:no=
+rmal;font-variant-east-asian:normal;vertical-align:baseline;white-space:pre=
+-wrap"><p dir=3D"ltr" role=3D"presentation" style=3D"line-height:1.38;margi=
+n-top:12pt;margin-bottom:12pt"><font size=3D"2"><span style=3D"font-family:=
+arial,sans-serif"><span style=3D"background-color:transparent;font-variant-=
+numeric:normal;font-variant-east-asian:normal;vertical-align:baseline">Deep=
+ text summarization</span></span></font></p></li><li dir=3D"ltr" style=3D"m=
+argin-left:22.5pt;list-style-type:square;color:rgb(0,0,0);background-color:=
+transparent;font-variant-numeric:normal;font-variant-east-asian:normal;vert=
+ical-align:baseline;white-space:pre-wrap"><p dir=3D"ltr" role=3D"presentati=
+on" style=3D"line-height:1.38;margin-top:12pt;margin-bottom:12pt"><font siz=
+e=3D"2"><span style=3D"font-family:arial,sans-serif"><span style=3D"backgro=
+und-color:transparent;font-variant-numeric:normal;font-variant-east-asian:n=
+ormal;vertical-align:baseline">Deep speech recognition</span></span></font>=
+</p></li><li dir=3D"ltr" style=3D"margin-left:22.5pt;list-style-type:square=
+;color:rgb(0,0,0);background-color:transparent;font-variant-numeric:normal;=
+font-variant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap=
+"><p dir=3D"ltr" role=3D"presentation" style=3D"line-height:1.38;margin-top=
+:12pt;margin-bottom:12pt"><font size=3D"2"><span style=3D"font-family:arial=
+,sans-serif"><span style=3D"background-color:transparent;font-variant-numer=
+ic:normal;font-variant-east-asian:normal;vertical-align:baseline">and so on=
+.</span></span></font></p></li></ul><h3 dir=3D"ltr" style=3D"line-height:1.=
+38;margin-top:14pt;margin-bottom:4pt"><font size=3D"2"><span style=3D"font-=
+family:arial,sans-serif"><span style=3D"color:rgb(0,0,0);background-color:t=
+ransparent;font-variant-numeric:normal;font-variant-east-asian:normal;verti=
+cal-align:baseline;white-space:pre-wrap">Submission:</span></span></font></=
+h3><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:12pt;margin-bottom:1=
+2pt"><font size=3D"2"><span style=3D"font-family:arial,sans-serif"><span st=
+yle=3D"color:rgb(0,0,0);background-color:transparent;font-variant-numeric:n=
+ormal;font-variant-east-asian:normal;vertical-align:baseline;white-space:pr=
+e-wrap">The workshop is open to submit unpublished work resulting from rese=
+arch that presents original scientific results, methodological aspects, con=
+cepts, and approaches. All submissions must be PDF documents written in Eng=
+lish and formatted according to</span><a href=3D"https://www.springer.com/f=
+r/computer-science/lncs/conference-proceedings-guidelines" target=3D"_blank=
+" style=3D"text-decoration-line:none"><span style=3D"color:rgb(0,0,0);backg=
+round-color:transparent;font-variant-numeric:normal;font-variant-east-asian=
+:normal;vertical-align:baseline;white-space:pre-wrap"> </span><span style=
+=3D"color:rgb(0,101,128);background-color:transparent;font-variant-numeric:=
+normal;font-variant-east-asian:normal;text-decoration-line:underline;vertic=
+al-align:baseline;white-space:pre-wrap">LNCS instructions for authors</span=
+></a><span style=3D"color:rgb(0,0,0);background-color:transparent;font-vari=
+ant-numeric:normal;font-variant-east-asian:normal;vertical-align:baseline;w=
+hite-space:pre-wrap">. Papers are to be submitted through </span><span styl=
+e=3D"color:rgb(33,33,33);background-color:transparent;font-variant-numeric:=
+normal;font-variant-east-asian:normal;vertical-align:baseline;white-space:p=
+re-wrap">the workshop&#39;s</span><a href=3D"https://easychair.org/conferen=
+ces/?conf=3Ddeepontonlp2022" target=3D"_blank" style=3D"text-decoration-lin=
+e:none"><span style=3D"color:rgb(0,101,128);background-color:transparent;fo=
+nt-variant-numeric:normal;font-variant-east-asian:normal;text-decoration-li=
+ne:underline;vertical-align:baseline;white-space:pre-wrap"> EasyChair</span=
+></a><span style=3D"color:rgb(33,33,33);background-color:transparent;font-v=
+ariant-numeric:normal;font-variant-east-asian:normal;vertical-align:baselin=
+e;white-space:pre-wrap"> submission page</span><span style=3D"color:rgb(0,0=
+,0);background-color:transparent;font-variant-numeric:normal;font-variant-e=
+ast-asian:normal;vertical-align:baseline;white-space:pre-wrap">.</span></sp=
+an></font></p><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:12pt;marg=
+in-bottom:12pt"><font size=3D"2"><span style=3D"font-family:arial,sans-seri=
+f"><span style=3D"color:rgb(0,0,0);background-color:transparent;font-varian=
+t-numeric:normal;font-variant-east-asian:normal;vertical-align:baseline;whi=
+te-space:pre-wrap">We welcome the following types of contributions:</span><=
+/span></font></p><ul style=3D"margin-top:0px;margin-bottom:0px"><li dir=3D"=
+ltr" style=3D"margin-left:22.5pt;list-style-type:square;color:rgb(0,0,0);ba=
+ckground-color:transparent;font-variant-numeric:normal;font-variant-east-as=
+ian:normal;vertical-align:baseline;white-space:pre-wrap"><p dir=3D"ltr" rol=
+e=3D"presentation" style=3D"line-height:1.38;margin-top:12pt;margin-bottom:=
+12pt"><font size=3D"2"><span style=3D"font-family:arial,sans-serif"><span s=
+tyle=3D"background-color:transparent;font-variant-numeric:normal;font-varia=
+nt-east-asian:normal;vertical-align:baseline">Full research papers (8-10 pa=
+ges): Finished or consolidated R&amp;D works, to be included in one of the =
+Workshop topics</span></span></font></p></li><li dir=3D"ltr" style=3D"margi=
+n-left:22.5pt;list-style-type:square;color:rgb(0,0,0);background-color:tran=
+sparent;font-variant-numeric:normal;font-variant-east-asian:normal;vertical=
+-align:baseline;white-space:pre-wrap"><p dir=3D"ltr" role=3D"presentation" =
+style=3D"line-height:1.38;margin-top:12pt;margin-bottom:12pt"><font size=3D=
+"2"><span style=3D"font-family:arial,sans-serif"><span style=3D"background-=
+color:transparent;font-variant-numeric:normal;font-variant-east-asian:norma=
+l;vertical-align:baseline">Short papers (4-6 pages): Ongoing works with rel=
+evant preliminary results, opened to discussion.</span></span></font></p></=
+li></ul><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:12pt;margin-bot=
+tom:12pt"><font size=3D"2"><span style=3D"font-family:arial,sans-serif"><sp=
+an style=3D"color:rgb(0,0,0);background-color:transparent;font-variant-nume=
+ric:normal;font-variant-east-asian:normal;vertical-align:baseline;white-spa=
+ce:pre-wrap">At least one author of each accepted paper must register for t=
+he workshop, in order to present the paper, there, and at the conference. F=
+or further instructions please refer to the</span><a href=3D"https://2022.e=
+swc-conferences.org/" target=3D"_blank" style=3D"text-decoration-line:none"=
+><span style=3D"color:rgb(0,101,128);background-color:transparent;font-vari=
+ant-numeric:normal;font-variant-east-asian:normal;text-decoration-line:unde=
+rline;vertical-align:baseline;white-space:pre-wrap"> ESWC 2022</span></a><s=
+pan style=3D"color:rgb(0,0,0);background-color:transparent;font-variant-num=
+eric:normal;font-variant-east-asian:normal;vertical-align:baseline;white-sp=
+ace:pre-wrap"> page.</span></span></font></p><h3 dir=3D"ltr" style=3D"line-=
+height:1.38;margin-top:14pt;margin-bottom:4pt"><font size=3D"2"><span style=
+=3D"font-family:arial,sans-serif"><span style=3D"color:rgb(0,0,0);backgroun=
+d-color:transparent;font-variant-numeric:normal;font-variant-east-asian:nor=
+mal;vertical-align:baseline;white-space:pre-wrap">Important dates:</span></=
+span></font></h3><ul style=3D"margin-top:0px;margin-bottom:0px"><li dir=3D"=
+ltr" style=3D"margin-left:22.5pt;list-style-type:square;color:rgb(0,0,0);ba=
+ckground-color:transparent;font-variant-numeric:normal;font-variant-east-as=
+ian:normal;vertical-align:baseline;white-space:pre-wrap"><p dir=3D"ltr" rol=
+e=3D"presentation" style=3D"line-height:1.38;margin-top:12pt;margin-bottom:=
+12pt"><font size=3D"2"><span style=3D"font-family:arial,sans-serif"><span s=
+tyle=3D"background-color:transparent;font-variant-numeric:normal;font-varia=
+nt-east-asian:normal;vertical-align:baseline">Workshop paper submission due=
+: March 18th, 2022</span></span></font></p></li><li dir=3D"ltr" style=3D"ma=
+rgin-left:22.5pt;list-style-type:square;color:rgb(0,0,0);background-color:t=
+ransparent;font-variant-numeric:normal;font-variant-east-asian:normal;verti=
+cal-align:baseline;white-space:pre-wrap"><p dir=3D"ltr" role=3D"presentatio=
+n" style=3D"line-height:1.38;margin-top:12pt;margin-bottom:12pt"><font size=
+=3D"2"><span style=3D"font-family:arial,sans-serif"><span style=3D"backgrou=
+nd-color:transparent;font-variant-numeric:normal;font-variant-east-asian:no=
+rmal;vertical-align:baseline">Workshop paper notifications: April 15th, 202=
+2</span></span></font></p></li><li dir=3D"ltr" style=3D"margin-left:22.5pt;=
+list-style-type:square;color:rgb(0,0,0);background-color:transparent;font-v=
+ariant-numeric:normal;font-variant-east-asian:normal;vertical-align:baselin=
+e;white-space:pre-wrap"><p dir=3D"ltr" role=3D"presentation" style=3D"line-=
+height:1.38;margin-top:12pt;margin-bottom:12pt"><font size=3D"2"><span styl=
+e=3D"font-family:arial,sans-serif"><span style=3D"background-color:transpar=
+ent;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-ali=
+gn:baseline">Workshop paper camera-ready versions due: April 22th, 2022</sp=
+an></span></font></p></li><li dir=3D"ltr" style=3D"margin-left:22.5pt;list-=
+style-type:square;color:rgb(0,0,0);background-color:transparent;font-varian=
+t-numeric:normal;font-variant-east-asian:normal;vertical-align:baseline;whi=
+te-space:pre-wrap"><p dir=3D"ltr" role=3D"presentation" style=3D"line-heigh=
+t:1.38;margin-top:12pt;margin-bottom:12pt"><font size=3D"2"><span style=3D"=
+font-family:arial,sans-serif"><span style=3D"background-color:transparent;f=
+ont-variant-numeric:normal;font-variant-east-asian:normal;vertical-align:ba=
+seline">Workshop: 28th or the 29th of May, 2022 (Half-Day)</span></span></f=
+ont></p></li></ul><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:12pt;=
+margin-bottom:12pt"><font size=3D"2"><span style=3D"font-family:arial,sans-=
+serif"><span style=3D"color:rgb(0,0,0);background-color:transparent;font-va=
+riant-numeric:normal;font-variant-east-asian:normal;vertical-align:baseline=
+;white-space:pre-wrap">All deadlines are 23:59 anywhere on earth (UTC-12).<=
+/span></span></font></p><h3 dir=3D"ltr" style=3D"line-height:1.38;margin-to=
+p:14pt;margin-bottom:4pt"><font size=3D"2"><span style=3D"font-family:arial=
+,sans-serif"><span style=3D"color:rgb(0,0,0);background-color:transparent;f=
+ont-variant-numeric:normal;font-variant-east-asian:normal;vertical-align:ba=
+seline;white-space:pre-wrap">Publication:</span></span></font></h3><p dir=
+=3D"ltr" style=3D"line-height:1.38;margin-top:12pt;margin-bottom:12pt"><fon=
+t size=3D"2"><span style=3D"font-family:arial,sans-serif"><span style=3D"co=
+lor:rgb(0,0,0);background-color:transparent;font-variant-numeric:normal;fon=
+t-variant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap">T=
+he best papers from this workshop may be included in the supplementary proc=
+eedings of ESWC 2022.</span></span></font></p><p dir=3D"ltr" style=3D"line-=
+height:1.38;margin-top:12pt;margin-bottom:12pt"><font size=3D"2"><span styl=
+e=3D"font-family:arial,sans-serif"><span style=3D"color:rgb(0,0,0);backgrou=
+nd-color:transparent;font-variant-numeric:normal;font-variant-east-asian:no=
+rmal;vertical-align:baseline;white-space:pre-wrap">=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</span></span></font></p><h3 dir=
+=3D"ltr" style=3D"line-height:1.38;margin-top:14pt;margin-bottom:4pt"><font=
+ size=3D"2"><span style=3D"font-family:arial,sans-serif"><span style=3D"col=
+or:rgb(0,0,0);background-color:transparent;font-variant-numeric:normal;font=
+-variant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap">Wo=
+rkshop Chairs</span></span></font></h3><p dir=3D"ltr" style=3D"line-height:=
+1.38;margin-top:12pt;margin-bottom:12pt"><font size=3D"2"><span style=3D"fo=
+nt-family:arial,sans-serif"><span style=3D"color:rgb(0,0,0);background-colo=
+r:transparent;font-weight:700;font-variant-numeric:normal;font-variant-east=
+-asian:normal;vertical-align:baseline;white-space:pre-wrap">=C2=A0=C2=A0=C2=
+=A0  Sarra Ben Abb=C3=A8s</span><span style=3D"color:rgb(0,0,0);background-=
+color:transparent;font-variant-numeric:normal;font-variant-east-asian:norma=
+l;vertical-align:baseline;white-space:pre-wrap">, </span><span style=3D"col=
+or:rgb(0,0,0);background-color:transparent;font-variant-numeric:normal;font=
+-variant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap">En=
+gie, France</span></span></font></p><p dir=3D"ltr" style=3D"line-height:1.3=
+8;margin-top:12pt;margin-bottom:12pt"><font size=3D"2"><span style=3D"font-=
+family:arial,sans-serif"><span style=3D"color:rgb(0,0,0);background-color:t=
+ransparent;font-weight:700;font-variant-numeric:normal;font-variant-east-as=
+ian:normal;vertical-align:baseline;white-space:pre-wrap">=C2=A0=C2=A0  =C2=
+=A0Rim Hantach</span><span style=3D"color:rgb(0,0,0);background-color:trans=
+parent;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-=
+align:baseline;white-space:pre-wrap">, </span><span style=3D"color:rgb(0,0,=
+0);background-color:transparent;font-variant-numeric:normal;font-variant-ea=
+st-asian:normal;vertical-align:baseline;white-space:pre-wrap">Engie, France=
+</span></span></font></p><p dir=3D"ltr" style=3D"line-height:1.38;margin-to=
+p:12pt;margin-bottom:12pt"><font size=3D"2"><span style=3D"font-family:aria=
+l,sans-serif"><span style=3D"color:rgb(0,0,0);background-color:transparent;=
+font-weight:700;font-variant-numeric:normal;font-variant-east-asian:normal;=
+vertical-align:baseline;white-space:pre-wrap">=C2=A0=C2=A0=C2=A0  Philippe =
+Calvez</span><span style=3D"color:rgb(0,0,0);background-color:transparent;f=
+ont-variant-numeric:normal;font-variant-east-asian:normal;vertical-align:ba=
+seline;white-space:pre-wrap">, </span><span style=3D"color:rgb(0,0,0);backg=
+round-color:transparent;font-variant-numeric:normal;font-variant-east-asian=
+:normal;vertical-align:baseline;white-space:pre-wrap">Engie, France</span><=
+/span></font></p><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:12pt;m=
+argin-bottom:12pt"><font size=3D"2"><span style=3D"font-family:arial,sans-s=
+erif"><span style=3D"color:rgb(0,0,0);background-color:transparent;font-var=
+iant-numeric:normal;font-variant-east-asian:normal;vertical-align:baseline;=
+white-space:pre-wrap"></span></span></font></p></td></tr></tbody></table></=
+div></div></div></div><div style=3D"width:1437px"><div><div><div><div><div>=
+<div id=3D"gmail-m_-7667631491332845483m_875248122562174771gmail-m_-3403197=
+151848712639gmail-m_4226277856547495074gmail-m_-6287391162320206889gmail-m_=
+1771340814683082616gmail-m_-3509522836226540093gmail-:3" style=3D"height:77=
+2px"><div id=3D"gmail-m_-7667631491332845483m_875248122562174771gmail-m_-34=
+03197151848712639gmail-m_4226277856547495074gmail-m_-6287391162320206889gma=
+il-m_1771340814683082616gmail-m_-3509522836226540093gmail-:1" style=3D"min-=
+height:582px"><div><div role=3D"main"><div><table role=3D"presentation" cel=
+lpadding=3D"0"><tbody><tr><td><div><div><div><div role=3D"list"><div role=
+=3D"listitem"><div><div><div><div id=3D"gmail-m_-7667631491332845483m_87524=
+8122562174771gmail-m_-3403197151848712639gmail-m_4226277856547495074gmail-m=
+_-6287391162320206889gmail-m_1771340814683082616gmail-m_-350952283622654009=
+3gmail-:7ue"><div><div><div><div id=3D"gmail-m_-7667631491332845483m_875248=
+122562174771gmail-m_-3403197151848712639gmail-m_4226277856547495074gmail-m_=
+-6287391162320206889gmail-m_1771340814683082616gmail-m_-3509522836226540093=
+gmail-:7ua"><table role=3D"presentation"><tbody><tr><td><font size=3D"2"><s=
+pan style=3D"font-family:arial,sans-serif"><br></span></font></td></tr></tb=
+ody></table></div></div></div></div></div></div></div></div></div></div></d=
+iv></div><div><div role=3D"contentinfo" style=3D"padding-bottom:0px"><div i=
+d=3D"gmail-m_-7667631491332845483m_875248122562174771gmail-m_-3403197151848=
+712639gmail-m_4226277856547495074gmail-m_-6287391162320206889gmail-m_177134=
+0814683082616gmail-m_-3509522836226540093gmail-:7um"><div><div><font size=
+=3D"2"><span style=3D"font-family:arial,sans-serif"><a href=3D"https://driv=
+e.google.com/u/0/settings/storage?hl=3Dfr&amp;utm_medium=3Dweb&amp;utm_sour=
+ce=3Dgmail&amp;utm_campaign=3Dstorage_meter&amp;utm_content=3Dstorage_norma=
+l" target=3D"_blank"><div><div><span dir=3D"ltr"></span><span dir=3D"ltr"><=
+/span></div></div></a></span></font></div></div></div><div><div id=3D"gmail=
+-m_-7667631491332845483m_875248122562174771gmail-m_-3403197151848712639gmai=
+l-m_4226277856547495074gmail-m_-6287391162320206889gmail-m_1771340814683082=
+616gmail-m_-3509522836226540093gmail-:7un"><div><div></div></div></div></di=
+v><div id=3D"gmail-m_-7667631491332845483m_875248122562174771gmail-m_-34031=
+97151848712639gmail-m_4226277856547495074gmail-m_-6287391162320206889gmail-=
+m_1771340814683082616gmail-m_-3509522836226540093gmail-:7up"><div><div><fon=
+t size=3D"2"><span style=3D"font-family:arial,sans-serif"><span id=3D"gmail=
+-m_-7667631491332845483m_875248122562174771gmail-m_-3403197151848712639gmai=
+l-m_4226277856547495074gmail-m_-6287391162320206889gmail-m_1771340814683082=
+616gmail-m_-3509522836226540093gmail-:7ui" role=3D"link"></span></span></fo=
+nt></div></div></div></div></div></div><font size=3D"2"><span style=3D"font=
+-family:arial,sans-serif"><br></span></font></td><td><font size=3D"2"><span=
+ style=3D"font-family:arial,sans-serif"><br></span></font></td><td><h3 dir=
+=3D"ltr" style=3D"line-height:1.38;margin-top:14pt;margin-bottom:4pt"><font=
+ size=3D"2"><span style=3D"font-family:arial,sans-serif"><span style=3D"col=
+or:rgb(0,0,0);background-color:transparent;font-variant-numeric:normal;font=
+-variant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap">Pr=
+ogram Committee</span></span></font><font size=3D"2"><span style=3D"font-fa=
+mily:arial,sans-serif"><span style=3D"color:rgb(0,0,0);background-color:tra=
+nsparent;font-variant-numeric:normal;font-variant-east-asian:normal;vertica=
+l-align:baseline;white-space:pre-wrap"></span></span></font></h3><h3 dir=3D=
+"ltr" style=3D"line-height:1.38;margin-top:14pt;margin-bottom:4pt">=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0<font size=3D"2"><span style=3D"font-family:arial,s=
+ans-serif"><span style=3D"color:rgb(0,0,0);background-color:transparent;fon=
+t-variant-numeric:normal;font-variant-east-asian:normal;vertical-align:base=
+line;white-space:pre-wrap">Nada Mimouni</span><span style=3D"color:rgb(0,0,=
+0);background-color:transparent;font-weight:400;font-variant-numeric:normal=
+;font-variant-east-asian:normal;vertical-align:baseline;white-space:pre-wra=
+p">, CNAM, France</span><span style=3D"color:rgb(0,0,0);background-color:tr=
+ansparent;font-variant-numeric:normal;font-variant-east-asian:normal;vertic=
+al-align:baseline;white-space:pre-wrap"><br></span></span></font></h3><p di=
+r=3D"ltr" style=3D"line-height:1.38;margin-left:15pt;margin-top:12pt;margin=
+-bottom:12pt"><font size=3D"2"><span style=3D"font-family:arial,sans-serif"=
+><span style=3D"color:rgb(0,0,0);background-color:transparent;font-weight:7=
+00;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-alig=
+n:baseline;white-space:pre-wrap">Lynda Temal</span><span style=3D"color:rgb=
+(0,0,0);background-color:transparent;font-variant-numeric:normal;font-varia=
+nt-east-asian:normal;vertical-align:baseline;white-space:pre-wrap">, Engie,=
+ France</span></span></font></p><p dir=3D"ltr" style=3D"line-height:1.38;ma=
+rgin-left:15pt;margin-top:12pt;margin-bottom:12pt"><font size=3D"2"><span s=
+tyle=3D"font-family:arial,sans-serif"><span style=3D"color:rgb(0,0,0);backg=
+round-color:transparent;font-weight:700;font-variant-numeric:normal;font-va=
+riant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap">David=
+e Buscaldi</span><span style=3D"color:rgb(0,0,0);background-color:transpare=
+nt;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-alig=
+n:baseline;white-space:pre-wrap">, LIPN, Universit=C3=A9 Sorbonne Paris Nor=
+d, France</span></span></font></p><p dir=3D"ltr" style=3D"line-height:1.38;=
+margin-left:15pt;margin-top:12pt;margin-bottom:12pt"><font size=3D"2"><span=
+ style=3D"font-family:arial,sans-serif"><span style=3D"color:rgb(0,0,0);bac=
+kground-color:transparent;font-weight:700;font-variant-numeric:normal;font-=
+variant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap">Val=
+entina Janev</span><span style=3D"color:rgb(0,0,0);background-color:transpa=
+rent;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-al=
+ign:baseline;white-space:pre-wrap">, Mihajlo Pupin Institute, Serbia</span>=
+</span></font></p><p dir=3D"ltr" style=3D"line-height:1.38;margin-left:15pt=
+;margin-top:12pt;margin-bottom:12pt"><font size=3D"2"><span style=3D"font-f=
+amily:arial,sans-serif"><span style=3D"color:rgb(0,0,0);background-color:tr=
+ansparent;font-weight:700;font-variant-numeric:normal;font-variant-east-asi=
+an:normal;vertical-align:baseline;white-space:pre-wrap">Mohamed Hedi Karray=
+, </span><span style=3D"color:rgb(0,0,0);background-color:transparent;font-=
+variant-numeric:normal;font-variant-east-asian:normal;vertical-align:baseli=
+ne;white-space:pre-wrap">LGP-INP-ENIT, Universit=C3=A9 de Toulouse, France<=
+/span></span></font></p></td></tr></tbody></table></div></div></div></div><=
+/div></div></div></div></div></div></div></div>
+
+--00000000000066d77605d4a98ec1--

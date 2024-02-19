@@ -1,0 +1,692 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (BounceSMTP2.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id B4DBB14017CD
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Fri, 12 Jun 2020 18:51:47 +0200 (CEST)
+Received: from mx3.d101.univ-nantes.fr (MX3.univ-nantes.fr [193.52.101.137])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id B365361F0E8
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Fri, 12 Jun 2020 18:51:47 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTP id AECEE41466C7
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 12 Jun 2020 18:51:47 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -14.981
+X-Spam-Level:
+X-Spam-Status: No, score=-14.981 tagged_above=-1000 required=5
+	tests=[CRM114_GOOD=-5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	RCVD_IN_DNSWL_MED=-10, RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_WSFF=0.01,
+	SPF_HELO_PASS=-0.001, SPF_PASS=-0.001, UN_PHISHING_COMPTE=0.1,
+	UN_PHISHING_PW=0.1, UN_PNG_ATTACH=0.01, URIBL_BLOCKED=0.001]
+	autolearn=disabled
+X-CRM114-Status: GOOD ( 18.4815 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=univ-lyon2.fr
+Received: from mx3.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id de1ZcY8OgWfQ for <liste-egc@polytech.univ-nantes.fr>;
+	Fri, 12 Jun 2020 18:51:45 +0200 (CEST)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from smtp.univ-lyon2.fr (smtp.univ-lyon2.fr [159.84.182.45])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTPS id 0CC604114782
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 12 Jun 2020 18:51:45 +0200 (CEST)
+Received: from ru.univ-lyon2.fr (localhost [127.0.0.1])
+	by smtp.univ-lyon2.fr (Postfix) with ESMTP id A9C9E1398C4
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 12 Jun 2020 18:51:44 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=univ-lyon2.fr;
+	s=201509-490482f6; t=1591980704;
+	bh=ma5ARq6jmUtRsArxM4dQq1Ewl4uHPK6Zewq6v5Jxzhg=;
+	h=From:To:Subject:Date;
+	b=WScE2kCtsDyLCEjfy1whEe+JuvNldS0Tz1xrxtFylU45ypUB1hoSfANzRYQjAJD8A
+	 UvDL4wta4qnTPLtkDS8KiavMima5wyleURq92nmlL4rQLKbofvcthZC+VKws8T0XTt
+	 B2rRrylG9xPVcR/xmwOQY97YjLFNxU9qTq4fc//y8Ycn2P4+5j4n642CKjWVY6NmyT
+	 WXxrdBo9bgQDcl2ql6hIYCQo6UBJYSH3QQFqe1EXjeige2RDOPY8ArV47NVtojGeIz
+	 8pZefyq7OahNrgnHxUi/gY+kSv5WOccXNEAEg9jTUGkKVs+izMf50u4sVkK2ZozGhX
+	 4ndswNYw76Z7w==
+X-Virus-Scanned: amavisd-new at univ-lyon2.fr
+Received: from amavis.at.univ-lyon2.fr ([127.0.0.1])
+	by ru.univ-lyon2.fr (smtp.univ-lyon2.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id rLc_YFrnevVz for <liste-egc@polytech.univ-nantes.fr>;
+	Fri, 12 Jun 2020 18:51:44 +0200 (CEST)
+Received: from EXCHG-5-Q.ADLYON2.UNIV-LYON2.FR (exchg-5-q.univ-lyon2.fr [159.84.182.196])
+	by smtp.univ-lyon2.fr (Postfix) with ESMTP
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 12 Jun 2020 18:51:44 +0200 (CEST)
+Received: from EXCHG-5-Q.ADLYON2.UNIV-LYON2.FR (159.84.182.196) by
+ EXCHG-5-Q.ADLYON2.UNIV-LYON2.FR (159.84.182.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1913.5; Fri, 12 Jun 2020 18:51:44 +0200
+Received: from EXCHG-5-Q.ADLYON2.UNIV-LYON2.FR ([fe80::edd0:9567:7f47:3c32])
+ by EXCHG-5-Q.ADLYON2.UNIV-LYON2.FR ([fe80::edd0:9567:7f47:3c32%2]) with mapi
+ id 15.01.1913.010; Fri, 12 Jun 2020 18:51:43 +0200
+From: Sabine Loudcher <sabine.loudcher@univ-lyon2.fr>
+To: "liste-egc@polytech.univ-nantes.fr" <liste-egc@polytech.univ-nantes.fr>
+Thread-Topic: =?iso-8859-1?Q?GDR_MaDICS_:_atelier_Humanit=E9s_num=E9riques?=
+Thread-Index: AdZA2RyFNnkubG5ARLmb28kmJlSTRgAAMI4w
+Date: Fri, 12 Jun 2020 16:51:43 +0000
+Message-ID: <f50df585d87a42a990a0d7d8c104a15d@univ-lyon2.fr>
+Accept-Language: fr-FR, en-US
+Content-Language: fr-FR
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator:
+Content-Type: multipart/related;
+	boundary="_005_f50df585d87a42a990a0d7d8c104a15dunivlyon2fr_";
+	type="multipart/alternative"
+MIME-Version: 1.0
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] GDR MaDICS : atelier =?ISO-8859-1?Q?Humanit=E9s_num?=
+ =?ISO-8859-1?Q?=E9riques?=
+
+--_005_f50df585d87a42a990a0d7d8c104a15dunivlyon2fr_
+Content-Type: multipart/alternative;
+	boundary="_000_f50df585d87a42a990a0d7d8c104a15dunivlyon2fr_"
+
+--_000_f50df585d87a42a990a0d7d8c104a15dunivlyon2fr_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+
+Des SHS au traitement de donn=E9es
+Mardi 07-07-2020 de 14h00-16h00 (en visioconf=E9rence, lien =E0 venir)
+
+Le nouvel atelier Humanit=E9s num=E9riques du GDR MaDICS (Masses de Donn=E9=
+es, Informations et Connaissances en Sciences) vise =E0 contribuer au rappr=
+ochement des communaut=E9s de la science des donn=E9es de celles des scienc=
+es humaines et sociales (SHS) impliqu=E9es dans les Humanit=E9s num=E9rique=
+s. Il a pour objectif d'incorporer des =E9l=E9ments m=E9thodologiques utili=
+s=E9s en SHS (par exemple, processus de constitution de corpus et de mise e=
+n relation de donn=E9es, m=E9thodologies d'analyse de corpus...) dans les p=
+rocessus informatiques (par exemple, int=E9gration des donn=E9es, navigatio=
+n et visualisation des donn=E9es...), et vice versa.
+Pour engager le dialogue entre ces communaut=E9s scientifiques, l'atelier M=
+ADICS-HN organisera une premi=E8re conversation le mardi 7 juillet 2020 en =
+visioconf=E9rence dans le cadre du symposium annuel du GDR MaDICS. Cette pr=
+emi=E8re table ronde visera l'=E9change entre les communaut=E9s de la scien=
+ce des donn=E9es et celles des sciences humaines et sociales autour de la n=
+otion de =AB donn=E9e =BB.
+
+Probl=E9matique
+Depuis que les SHS int=E8grent des approches informatiques =E0 leurs travau=
+x, elles constituent des donn=E9es selon des protocoles aussi standardis=E9=
+s et ouverts que possible afin que les donn=E9es puissent =EAtre utilis=E9e=
+s par les machines. Toutefois, les SHS gardent des r=E9flexes dans la const=
+itution de celles-ci qui visent avant tout des utilisateurs =AB humains =BB=
+. L'exploration et l'exploitation des donn=E9es par les machines requi=E8re=
+nt alors des adaptations (filtrage, nettoyage, formatage...) suppl=E9mentai=
+res. La table ronde discutera des attendus des machines en lien avec les pr=
+ocessus m=E9thodologiques utilis=E9s par les SHS pour constituer leurs corp=
+us et mettre en relation les donn=E9es. Quelles sont les m=E9thodologies de=
+s analyses de corpus attendues ou vis=E9es par les SHS ? Dans quelles mesur=
+es les processus informatiques contredisent ou accompagnent ces analyses (p=
+ar exemple, int=E9gration des donn=E9es, navigation et visualisation des do=
+nn=E9es) ?
+L'objectif sera d'ouvrir le dialogue entre les chercheurs (dont les doctora=
+nts et post-doctorants) des diff=E9rentes communaut=E9s et les ing=E9nieurs=
+ de celles-ci =E0 partir d'exemples ou d'exp=E9riences. Cette premi=E8re re=
+ncontre concernera principalement les =E9l=E9ments de vocabulaire utilis=E9=
+s par chaque communaut=E9, l'une des premi=E8res difficult=E9s rencontr=E9e=
+ dans tout projet de recherche pluridisciplinaire. L'exemple choisi pour la=
+ discussion concerne le mot =AB donn=E9e =BB. La notion renvoie-t-elle bien=
+ =E0 la m=EAme r=E9alit=E9 dans les communaut=E9s des SHS et des SI ? Qu'es=
+t-ce qu'une donn=E9e ? Parle-t-on de =AB donn=E9e =BB ou de =AB donn=E9es =
+=BB ? Qu'est-ce qu'une =AB donn=E9e propre =BB ? Utilisable par un ordinate=
+ur ? Quels sont les pr=E9-requis des donn=E9es exploitables automatiquement=
+ ?
+
+La table ronde est ouverte =E0 tous, les participants sont invit=E9s =E0 ve=
+nir avec des exemples concrets de jeux de donn=E9es, de m=E9thodes de colle=
+ctes de donn=E9es et d'exp=E9riences.
+
+Responsables de l'atelier
+- Natalia GRABAR (Charg=E9e de recherche en traitement automatique de langu=
+es, CNRS, Lille)
+- Cyril GROUIN (Ing=E9nieur d'=E9tude, CNRS, LIMSI)
+- Fatiha IDMHAND (Professeure de lettres et de litt=E9ratures hispaniques, =
+Universit=E9 de Poitiers)
+- Sabine LOUDCHER (Professeure d'informatique, Universit=E9 Lyon 2)
+
+
+Sabine Loudcher
+Professeure d'informatique =E0 l'universit=E9 Lyon 2
+Responsable du master humanit=E9s num=E9riques de Lyon
+Membre du Laboratoire ERIC et Institut de la Communication (UFR ICOM)
+T=E9l : +33 478 772 320
+Bureau K73
+Campus Porte des Alpes
+5, avenue Pierre Mend=E8s-France
+69676 BRON Cedex
+
+http://eric.univ-lyon2.fr/~sabine/
+[Loco Composante] [Logo Laboratoire Eric]
+
+
+--_000_f50df585d87a42a990a0d7d8c104a15dunivlyon2fr_
+Content-Type: text/html; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1">
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<!--[if !mso]><style>v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style><![endif]--><style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-fareast-language:EN-US;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+p.msonormal0, li.msonormal0, div.msonormal0
+	{mso-style-name:msonormal;
+	mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	font-size:12.0pt;
+	font-family:"Times New Roman",serif;}
+span.EmailStyle18
+	{mso-style-type:personal;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+span.EmailStyle19
+	{mso-style-type:personal;
+	font-family:"Calibri",sans-serif;
+	color:#1F497D;}
+span.EmailStyle20
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-size:10.0pt;}
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:70.85pt 70.85pt 70.85pt 70.85pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"FR" link=3D"#0563C1" vlink=3D"#954F72">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center"><b><spa=
+n style=3D"color:#2E74B5">Des SHS au traitement de donn=E9es<o:p></o:p></sp=
+an></b></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center"><b><spa=
+n style=3D"color:#2E74B5">Mardi 07-07-2020 de 14h00-16h00 (en visioconf=E9r=
+ence, lien =E0 venir)<o:p></o:p></span></b></p>
+<p class=3D"MsoNormal" style=3D"text-align:justify"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal" style=3D"text-align:justify">Le nouvel atelier Human=
+it=E9s num=E9riques du GDR MaDICS (Masses de Donn=E9es, Informations et Con=
+naissances en Sciences) vise =E0 contribuer au rapprochement des communaut=
+=E9s de la science des donn=E9es de celles des sciences
+ humaines et sociales (SHS) impliqu=E9es dans les Humanit=E9s num=E9riques.=
+ Il a pour objectif d&#8217;incorporer des =E9l=E9ments m=E9thodologiques u=
+tilis=E9s en SHS (par exemple, processus de constitution de corpus et de mi=
+se en relation de donn=E9es, m=E9thodologies d&#8217;analyse de
+ corpus&#8230;) dans les processus informatiques (par exemple, int=E9gratio=
+n des donn=E9es, navigation et visualisation des donn=E9es&#8230;), et vice=
+ versa.<o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"text-align:justify">Pour engager le dialogu=
+e entre ces communaut=E9s scientifiques, l&#8217;atelier MADICS-HN organise=
+ra une premi=E8re conversation le mardi 7 juillet 2020 en visioconf=E9rence=
+ dans le cadre du symposium annuel du GDR MaDICS.
+ Cette premi=E8re table ronde visera l&#8217;=E9change entre les communaut=
+=E9s de la science des donn=E9es et celles des sciences humaines et sociale=
+s autour de la notion de =AB donn=E9e =BB.<o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"text-align:justify"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal" style=3D"text-align:justify"><span style=3D"color:#2=
+E74B5">Probl=E9matique<o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"text-align:justify">Depuis que les SHS int=
+=E8grent des approches informatiques =E0 leurs travaux, elles constituent d=
+es donn=E9es selon des protocoles aussi standardis=E9s et ouverts que possi=
+ble afin que les donn=E9es puissent =EAtre utilis=E9es
+ par les machines. Toutefois, les SHS gardent des r=E9flexes dans la consti=
+tution de celles-ci qui visent avant tout des utilisateurs =AB humains =BB.=
+ L&#8217;exploration et l&#8217;exploitation des donn=E9es par les machines=
+ requi=E8rent alors des adaptations (filtrage, nettoyage,
+ formatage...) suppl=E9mentaires. La table ronde discutera des attendus des=
+ machines en lien avec les processus m=E9thodologiques utilis=E9s par les S=
+HS pour constituer leurs corpus et mettre en relation les donn=E9es. Quelle=
+s sont les m=E9thodologies des analyses de
+ corpus attendues ou vis=E9es par les SHS ? Dans quelles mesures les proces=
+sus informatiques contredisent ou accompagnent ces analyses (par exemple, i=
+nt=E9gration des donn=E9es, navigation et visualisation des donn=E9es) ?
+<o:p></o:p></p>
+<p class=3D"MsoNormal">L&#8217;objectif sera d&#8217;ouvrir le dialogue ent=
+re les chercheurs (dont les doctorants et post-doctorants) des diff=E9rente=
+s communaut=E9s et les ing=E9nieurs de celles-ci =E0 partir d&#8217;exemple=
+s ou d&#8217;exp=E9riences. Cette premi=E8re rencontre concernera principal=
+ement
+ les =E9l=E9ments de vocabulaire utilis=E9s par chaque communaut=E9, l&#821=
+7;une des premi=E8res difficult=E9s rencontr=E9e dans tout projet de recher=
+che pluridisciplinaire. L&#8217;exemple choisi pour la discussion concerne =
+le mot =AB donn=E9e =BB. La notion renvoie-t-elle bien =E0 la m=EAme
+ r=E9alit=E9 dans les communaut=E9s des SHS et des SI ? Qu&#8217;est-ce qu&=
+#8217;une donn=E9e ? Parle-t-on de =AB donn=E9e =BB ou de =AB donn=E9es =BB=
+ ? Qu&#8217;est-ce qu&#8217;une =AB donn=E9e propre =BB ? Utilisable par un=
+ ordinateur ? Quels sont les pr=E9-requis des donn=E9es exploitables automa=
+tiquement ?<o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"text-align:justify"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal" style=3D"text-align:justify">La table ronde est ouve=
+rte =E0 tous, les participants sont invit=E9s =E0 venir avec des exemples c=
+oncrets de jeux de donn=E9es, de m=E9thodes de collectes de donn=E9es et d&=
+#8217;exp=E9riences.<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal" style=3D"text-align:justify"><span style=3D"color:#2=
+E74B5">Responsables de l&#8217;atelier<o:p></o:p></span></p>
+<p class=3D"MsoNormal">- Natalia GRABAR (Charg=E9e de recherche en traiteme=
+nt automatique de langues, CNRS, Lille)
+<o:p></o:p></p>
+<p class=3D"MsoNormal">- Cyril GROUIN (Ing=E9nieur d'=E9tude, CNRS, LIMSI)<=
+o:p></o:p></p>
+<p class=3D"MsoNormal">- Fatiha IDMHAND (Professeure de lettres et de litt=
+=E9ratures hispaniques, Universit=E9 de Poitiers)<o:p></o:p></p>
+<p class=3D"MsoNormal">- Sabine LOUDCHER (Professeure d&#8217;informatique,=
+ Universit=E9 Lyon 2)<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal" style=3D"background:white"><i><span style=3D"font-si=
+ze:12.0pt;font-family:&quot;Trebuchet MS&quot;,sans-serif;color:#2E74B5;mso=
+-fareast-language:FR">Sabine Loudcher<br>
+Professeure d'informatique =E0 l&#8217;universit=E9 Lyon 2<br>
+Responsable du master humanit=E9s num=E9riques de Lyon<o:p></o:p></span></i=
+></p>
+<p class=3D"MsoNormal" style=3D"background:white"><span style=3D"font-size:=
+12.0pt;font-family:&quot;Trebuchet MS&quot;,sans-serif;mso-fareast-language=
+:FR">Membre du Laboratoire ERIC et Institut de la Communication (UFR ICOM)<=
+span style=3D"color:#212529"><br>
+T=E9l : &#43;33 478 772&nbsp;320 <o:p></o:p></span></span></p>
+<p class=3D"MsoNormal" style=3D"background:white"><span style=3D"font-size:=
+12.0pt;font-family:&quot;Trebuchet MS&quot;,sans-serif;color:#212529;mso-fa=
+reast-language:FR">Bureau K73<br>
+<b>Campus Porte des Alpes</b><br>
+5, avenue Pierre Mend=E8s-France<br>
+69676 BRON Cedex<o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"background:white"><span style=3D"font-size:=
+12.0pt;font-family:&quot;Trebuchet MS&quot;,sans-serif;color:#212529;mso-fa=
+reast-language:FR"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal" style=3D"background:white"><span style=3D"font-size:=
+12.0pt;font-family:&quot;Trebuchet MS&quot;,sans-serif;color:#212529;mso-fa=
+reast-language:FR"><a href=3D"http://eric.univ-lyon2.fr/~sabine/">http://er=
+ic.univ-lyon2.fr/~sabine/</a><br>
+<img border=3D"0" width=3D"253" height=3D"50" style=3D"width:2.6333in;heigh=
+t:.525in" id=3D"Image_x0020_1" src=3D"cid:image001.png@01D640E9.F72A23E0" a=
+lt=3D"Loco Composante">&nbsp;<img border=3D"0" width=3D"130" height=3D"103"=
+ style=3D"width:1.3583in;height:1.075in" id=3D"Image_x0020_2" src=3D"cid:im=
+age002.png@01D640E9.F72A23E0" alt=3D"Logo Laboratoire Eric"><o:p></o:p></sp=
+an></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+</body>
+</html>
+
+--_000_f50df585d87a42a990a0d7d8c104a15dunivlyon2fr_--
+
+--_005_f50df585d87a42a990a0d7d8c104a15dunivlyon2fr_
+Content-Type: image/png; name="image001.png"
+Content-Description: image001.png
+Content-Disposition: inline; filename="image001.png"; size=5388;
+	creation-date="Fri, 12 Jun 2020 16:51:43 GMT";
+	modification-date="Fri, 12 Jun 2020 16:51:43 GMT"
+Content-ID: <image001.png@01D640E9.F72A23E0>
+Content-Transfer-Encoding: base64
+
+iVBORw0KGgoAAAANSUhEUgAAAP0AAAAyCAMAAACgVS2vAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJ
+bWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdp
+bj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6
+eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0
+NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJo
+dHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlw
+dGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAv
+IiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RS
+ZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpD
+cmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFu
+Y2VJRD0ieG1wLmlpZDpGMDU1QUQ3REQyMEYxMUU5QTlGNzk5NTU0RUE1REI1MSIgeG1wTU06RG9j
+dW1lbnRJRD0ieG1wLmRpZDpGMDU1QUQ3RUQyMEYxMUU5QTlGNzk5NTU0RUE1REI1MSI+IDx4bXBN
+TTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkYwNTVBRDdCRDIwRjExRTlB
+OUY3OTk1NTRFQTVEQjUxIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkYwNTVBRDdDRDIwRjEx
+RTlBOUY3OTk1NTRFQTVEQjUxIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4
+bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+zIXCOQAAAYBQTFRFRUVF29vbvtMA6fChZ2dnvNIA
+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
+
+--_005_f50df585d87a42a990a0d7d8c104a15dunivlyon2fr_
+Content-Type: image/png; name="image002.png"
+Content-Description: image002.png
+Content-Disposition: inline; filename="image002.png"; size=12307;
+	creation-date="Fri, 12 Jun 2020 16:51:43 GMT";
+	modification-date="Fri, 12 Jun 2020 16:51:43 GMT"
+Content-ID: <image002.png@01D640E9.F72A23E0>
+Content-Transfer-Encoding: base64
+
+iVBORw0KGgoAAAANSUhEUgAAAIIAAABnCAYAAADMiprMAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJ
+bWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdp
+bj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6
+eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0
+NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJo
+dHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlw
+dGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAv
+IiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RS
+ZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpD
+cmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFu
+Y2VJRD0ieG1wLmlpZDoyOUMwQjlCNDE5Q0MxMUU2QTEwRkQ2QkM5MEU1OUI1RSIgeG1wTU06RG9j
+dW1lbnRJRD0ieG1wLmRpZDoyOUMwQjlCNTE5Q0MxMUU2QTEwRkQ2QkM5MEU1OUI1RSI+IDx4bXBN
+TTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjI5QzBCOUIyMTlDQzExRTZB
+MTBGRDZCQzkwRTU5QjVFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjI5QzBCOUIzMTlDQzEx
+RTZBMTBGRDZCQzkwRTU5QjVFIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4
+bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+zgHjyQAALIVJREFUeNrsXQd8FNXWPzPb0nshpFES
+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
+
+--_005_f50df585d87a42a990a0d7d8c104a15dunivlyon2fr_--
+
+

@@ -1,0 +1,794 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (BounceSMTP2.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 7A8EB1401E38
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon, 28 Mar 2022 13:33:37 +0200 (CEST)
+Received: from mx2.d101.univ-nantes.fr (MX2.univ-nantes.fr [193.52.101.136])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id 76BD95F9B
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon, 28 Mar 2022 13:33:37 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTP id 6DF16100E43
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 28 Mar 2022 13:33:37 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 2.508
+X-Spam-Level: **
+X-Spam-Status: No, score=2.508 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	MANGLED_LIMITD=2.3, MR_NOT_ATTRIBUTED_IP=0.2,
+	RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+	RCVD_IN_WSFF=0.01, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+	UN_PHISHING_PW=0.1] autolearn=disabled
+X-CRM114-Status: UNSURE ( 4.9675 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=devinci.fr
+Received: from mx2.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id USJj9JBgDuYB for <liste-egc@polytech.univ-nantes.fr>;
+	Mon, 28 Mar 2022 13:33:31 +0200 (CEST)
+X-Greylist: whitelisted by SQLgrey-1.6.7
+Received: from EUR04-DB3-obe.outbound.protection.outlook.com (mail-eopbgr60062.outbound.protection.outlook.com [40.107.6.62])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTPS id 145E410064A
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 28 Mar 2022 13:33:31 +0200 (CEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=IVc3/YNPTuArYGREM5Y5hprsOCL/mHAJmRl0PTDcKxz275Lv0XnvwlL5PkPNlesj1R+uIhv6I6x4bJeGKl7YtYSQeDPea727N4gamJPiyJiV7gcKwrUEISb00pWAf+0FjPtXm1tYo+0fqtuCeLOi8B0JFO3CLwnuD9zMi7kWJlGQW5NqEO9Sdv3yTeebqqPdGWRkoWIycWgPnuch44m+RSC3GmDoMGZwd5clKl1szlHp6ngNXMW53emoxBxTYYeaEc6J3zDky34nAp9u35oB88M2paF5rkmKRbwlEs52JWRpufdhV47IhllpDcB6a7PAfglQhiEUy7pM4CJUHEYpWQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=rRi1rea3WIS6ed9ZYkNtIlVsZKf0hGlhPw8bQBG0Irg=;
+ b=kZJ/jq+6IdW68rV2u0hy/1hkr53yT4akkOpBBKYGzvTJ0Brv49qLGV5JYFlL+1AvxVTQOaT/l1srlRw+rIsbkaOT5c1WHS3j9TbructhSCN+ABT50VnK5woK8ZKv7HW6X270+44/o4bkgKqw+3do642Yx2wzBNOVGQFMoe8yZG96C/1CHyIZPgvnf9iynhV8QjHVLw5LxvEix8TI+C+hJqdwYye6sU/JHzUOv/KdgerhiyVDkUGUZjGwbqC1MU7cfyNTyauQgNvg0HKhdIW6KrYw8xgsvP6u85lL90mUDFoCyjaQDEZVp4NBCdF69mdsW+7Al+UiqYUX419bSfITng==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=devinci.fr; dmarc=pass action=none header.from=devinci.fr;
+ dkim=pass header.d=devinci.fr; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=devinci.fr;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rRi1rea3WIS6ed9ZYkNtIlVsZKf0hGlhPw8bQBG0Irg=;
+ b=kAEuVeSb8uJ6h+BXsAdCi0K4h/nifmL4qtWnAaSXhxLHYcLeK52sBZQnf6nSb6X3LBwJ/4dRkghcYteuBuIWDjvGZW8PZdhzeiQZUI9r/JdAjsMxkyGtAzGYvK8PG1jPmuQrE6yMD0QeaSxU1073NAnSfQ18hrsTSEFBi3IxebdkUgaP08MNH3SubhjyDyqlbcGFi2x6AgQHL44FMwwtiiMSCDMQnegW6uujwD/ksxxa0C1kN/2W54g0QisW+nFVPdtB9aOcMQpXoblHYpRQxwGTf0znbreGsCt7EJKZibshPArtqxkYTUE8KqXGa0yG3Md4/1X9mYHOtkM4l6S+KA==
+Received: from PA4PR02MB6896.eurprd02.prod.outlook.com (2603:10a6:102:fe::19)
+ by VI1PR02MB3053.eurprd02.prod.outlook.com (2603:10a6:802:18::24) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5102.22; Mon, 28 Mar
+ 2022 11:33:29 +0000
+Received: from PA4PR02MB6896.eurprd02.prod.outlook.com
+ ([fe80::5490:5c00:51b2:a50c]) by PA4PR02MB6896.eurprd02.prod.outlook.com
+ ([fe80::5490:5c00:51b2:a50c%6]) with mapi id 15.20.5102.022; Mon, 28 Mar 2022
+ 11:33:29 +0000
+From: TRAVERS Nicolas <nicolas.travers@devinci.fr>
+To: "Liste-egc@polytech.univ-nantes.fr" <liste-egc@polytech.univ-nantes.fr>
+Thread-Topic:
+ =?Windows-1252?Q?[Inscriptions]_=C9COLE_TH=C9MATIQUE_DU_CNRS_:_BDA_MDD?=
+Thread-Index: AQHYP72q0I3VwWlVF0iW6Vnnf4nDIqzUr5j6
+Date: Mon, 28 Mar 2022 11:33:29 +0000
+Message-ID:
+ <PA4PR02MB6896B4CDE65F7EC76E8676D6941D9@PA4PR02MB6896.eurprd02.prod.outlook.com>
+References: <67337463-A410-459E-B4AA-8221F804B125@gmail.com>
+In-Reply-To: <67337463-A410-459E-B4AA-8221F804B125@gmail.com>
+Accept-Language: fr-FR, en-US
+Content-Language: fr-FR
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=devinci.fr;
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 57425573-6d79-44ba-6e72-08da10aec857
+x-ms-traffictypediagnostic: VI1PR02MB3053:EE_
+x-microsoft-antispam-prvs:
+ <VI1PR02MB3053FD954E6B5CE81D6B035C941D9@VI1PR02MB3053.eurprd02.prod.outlook.com>
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:
+ FTlL2aP5o13rmJlJKml7dYc1bZAG94TviLqADVF58eJdjL87ujDVeaF+6hdGgC+OiLTeNTKmWnxy6BvrRdbHs/PZUpbzXYy9z/IzYW3Okdmv6Nbf+OdrDSogM9DiYR89kvvH/y6u8/REU6mgYU8r9XTLsW9zuUB0qa0sjKgtGjHJRxPJDVvpJWlT1nHqCjMPNu1erVo9W+4zXmAw8+IbEFBisLaAPecoDmEAPS4pMHEs4UuuC24UgVIYyUoNJKjnEn6lpBM91NjEB8cZN4uNQrODsd6hPeLt/XX9tVaQPSJ6nGtYG49kfBdiVmbMzMGe1eUlQMzZZzJnG+5y9VMzzoyxh5e5SS8poKSfwPIWOjIRRLsAj0CpzpTjOt927wqWu2eykPV1tcyi7z6UBllCe42A9DnIjGE5ffIxCAMlH2Qdrz9ydjkt8UvuL4VU0MWrapIjoRkB7HLd42NMsJjKt+W8lYWEQEYHrmvl9ligjtrH/Cvb4RKNz4EayeoPgu2MKH3bxzZ+CtxN9QVK8NPJ8JsuMkvTBPQSpaR6imqL/SlmvfRxTnzRqTpdNbYeXGewKAfMeRC7KEdgafFOYQVzLMBQxhlgwOVKud7cHlEPZXYT78e5skIroswCk2NJ+1j2mVrm4bdKQBj9T1T9YKMkttbfczuw7bpFBI+CcM2rNAAMwJmejcjn3u2Hxsnh5lO/Npf1exX+UPrmHKMv/l61Ncp8TagB+XFsUN3gWWdTi5sDF89WkQxROW6Mzd5S6UlbJ+jToFSJkgBD/9Se8YE1mImINfaj7a9m7tuPODtM7+0=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:fr;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PA4PR02MB6896.eurprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(366004)(66946007)(186003)(26005)(224303003)(64756008)(66446008)(76116006)(52536014)(83380400001)(122000001)(66574015)(66556008)(66476007)(7696005)(9686003)(8936002)(6506007)(55016003)(33656002)(6916009)(38070700005)(5660300002)(508600001)(38100700002)(166002)(786003)(316002)(71200400001)(2906002)(86362001)(966005);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?Windows-1252?Q?QRLidrp105Gwzk6aGDYz4TwZKb4/QicXol5L0y5CGulKv/KppbMvYo1T?=
+ =?Windows-1252?Q?MgGU9hXwyayVnEXP3ty1xsdLxHMZhQP8XpIJg6Z8s1sHNw8B2J8XqsUY?=
+ =?Windows-1252?Q?C7m0U2qhpd3Q3lBKBwZlnxWoIlol9rbS8ozMotOW3aPUVjAVyp5tI7hW?=
+ =?Windows-1252?Q?yTmh0oFYSxz13R1QFiIopbhMIFuOOLuWzvF5f6MXasIKNNzu0nnoMRS2?=
+ =?Windows-1252?Q?wADQq1wACsT0/kX9sQrQ2i+CZdWKiys0Wx7VnRa9m34+yC5BYG8s8Rak?=
+ =?Windows-1252?Q?/Q+GkLH3TdS3gSalcVgeaSJxGESnD0NrJ1iUfD4vIogad/Bb1KNboENH?=
+ =?Windows-1252?Q?eCszS0w9ERQBVAHrrLRiC+veWZz8g1M4lvn/hgDunmE0DT2fJmSQvROP?=
+ =?Windows-1252?Q?683wuJlWA7JuBD9RcpTQ+kMsELqxn8M/OeYa51S9/NLzmIK8lTF0aWQH?=
+ =?Windows-1252?Q?kh6xXElvd+g4n0D19/ttMPMAzg7NEMtJlVxtTHbCjggDzBocUNAJ4YnK?=
+ =?Windows-1252?Q?oSf4wWaY0aVI88xx5CHxzOtEN8Flnul6199J0w+3U5jE67mJItfFmcU1?=
+ =?Windows-1252?Q?3A/53G1iujs0/8uwwPX/NVBjyB12dN87fJdrXbfu0nkK+vhxbTzPCbbK?=
+ =?Windows-1252?Q?ovdK/c+juV4Z1QvYGe+16kgX6ZArxv0nUDoj5UIh3Jm1P6JByceeEr5H?=
+ =?Windows-1252?Q?s2Z7FfBEO94ySRfQDlVowBYKStg9BqGOaaDQFMEaiDJHFgoM713RSwXO?=
+ =?Windows-1252?Q?KLcg6Yh1/0z4l0SbaGa0C3kl5hCoOLzXoDbqiP2jUKHGtpLd38Yc6IQ9?=
+ =?Windows-1252?Q?yAewSe9ItSAJ2HeRir2aSzjkXJASCXl6pQLYdYBH9KSSZtwMupHmTy9m?=
+ =?Windows-1252?Q?CrJs44DK6twYCyeDvOy0SsuKova6ELJDgzbVYlL8NNG1HNF20FqbMDFd?=
+ =?Windows-1252?Q?aA0bMjYET5dr+hvqv1LbK52QEWzkc6guojDxhG7L4NUarEdvLlJSgL51?=
+ =?Windows-1252?Q?cVBiv1d/+7uo3Xsx66SOollzeqxNdkfcY6Xq0rTxMQYD99EIZ2qKY/4T?=
+ =?Windows-1252?Q?4qbd5px+Czpela9kuhl+n3fkEC4ocLpWd3COrXicQWeuC5vYxjSX+uIY?=
+ =?Windows-1252?Q?FEXs9rNyPYJ7d8fcNiGvqo2uxCYsBEqW8vGudIGdqWCB6Bw2vqrLSdvO?=
+ =?Windows-1252?Q?p4iRR89MBotovUNsULMBHDOLstUoQZtpVM9nuMddCahGo9Y9UQz/+0uU?=
+ =?Windows-1252?Q?9yz4X7NxclTh/Q64Kx1PyNOfFZTHVIg+LuQe5OAnbj1ib75Hy+Mz0xni?=
+ =?Windows-1252?Q?Aw4NSWV0EzM/VnoHkafi/YZb/PooD5e2aDleU5no029gvMLBm2VKg+kK?=
+ =?Windows-1252?Q?4QFOkvDFo0CeFckZNVa8jrZer+gqFcXVEQX8e2dXx7Exy2iK9AaRt7Vv?=
+ =?Windows-1252?Q?dMHzcgJ0ZJ3Ms5UHQ/uTWhuEpuMRSaqKch/HFV2pFBFF79NGV5MBjLwr?=
+ =?Windows-1252?Q?iz9CSKXbILK1gRmP7C8FKo4wwDQWzmbkKOFM3nyjDbZNR3h+/I3GT45k?=
+ =?Windows-1252?Q?I7pUaMLGDjV9baP75cv9Z0XAo1PWT1m2EEiRpG+z7oWmhziJ0MJ41Vuh?=
+ =?Windows-1252?Q?WlaXyRz2ryLasILlIZg4MvkCVilw2OGgtgzWLRi/NAcJNDQSqfV2nWCz?=
+ =?Windows-1252?Q?EbAx33J7kzIkEpCmhxxhJyRzSHvtPgPYJuAb1TS3kgQ7H4ZJOmqsEOGO?=
+ =?Windows-1252?Q?z7TB77FRrpKCB71vpLNowetrymgFw5UpXITEu0boUPkzLRFyWM6WNaIs?=
+ =?Windows-1252?Q?tUE0A8R9cGW4B4fhlILrAbQSYFZDbgwLjobSdjPRDFABChY7UzYx+8er?=
+ =?Windows-1252?Q?ujY688HtXzY8NARf+uBFNojfLDpMWMUHRHYMkyE846Mv3r1lPIMimdos?=
+Content-Type: multipart/alternative;
+	boundary="_000_PA4PR02MB6896B4CDE65F7EC76E8676D6941D9PA4PR02MB6896eurp_"
+MIME-Version: 1.0
+X-OriginatorOrg: devinci.fr
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PA4PR02MB6896.eurprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 57425573-6d79-44ba-6e72-08da10aec857
+X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Mar 2022 11:33:29.7404
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 88eebcae-d6e6-4ef7-bba4-4c34f4c2d5e0
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: +EY3UJislX6KQc4OUHhKa6FBaeiVnZruoLuTN1tm1D1A3im8GI84x4MpM3bXnyteZKmOkEIf3BiZlbG3PzTMcVepLJ0/pS+5hGvkLEHAm2o=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR02MB3053
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] [Inscriptions] =?WINDOWS-1252?Q?=C9COLE_TH=C9MATIQUE?=
+ DU CNRS : BDA MDD
+
+--_000_PA4PR02MB6896B4CDE65F7EC76E8676D6941D9PA4PR02MB6896eurp_
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+...........................       ENGLISH VERSION BELOW    ................=
+...
+
+***************************************************************************=
+*****************
+=C9COLE TH=C9MATIQUE DU CNRS : BDA MDD
+19 - 24 juin 2022, Bastia, Corse, France
+              https://cedric.cnam.fr/lab/confs/mdd2022/
+***************** LES INSCRIPTIONS SONT OUVERTES **************************=
+**
+
+Date limite d'inscription: 15 mai 2022
+Le nombre de participants est limit=E9 (la priorit=E9 sera donn=E9e aux doc=
+torants).
+
+Venez surfer sur les vagues de donn=E9es avec nous !
+***************************************************************************=
+****************
+
+L'=E8re des donn=E9es est ici et maintenant. Dans une soci=E9t=E9 et un env=
+ironnement ax=E9s sur les donn=E9es, les solutions d'int=E9gration, d'analy=
+se et de mod=E9lisation des donn=E9es doivent fonctionner au-dessus de diff=
+=E9rentes architectures cibles. Les solutions, protocoles et technologies d=
+e base de donn=E9es =E9voluent =E0 un rythme =E9lev=E9, ce qui ouvre des d=
+=E9fis passionnants =E0 relever par des approches de recherche et de d=E9ve=
+loppement.
+
+L=92=E9cole th=E9matique CNRS MDD =AB Masses de donn=E9es distribu=E9es =BB=
+ est une =E9cole th=E9matique r=E9currente ayant lieu tous les deux ans dep=
+uis 2010. Cette =E9cole est une =E9manation de la communaut=E9 des bases de=
+ donn=E9es en France, structur=E9e autour de la conf=E9rence BDA : Gestion =
+de donn=E9es =96 principes et applications, qui a f=EAt=E9 ses 30 ans d=92e=
+xistence en 2016. Si notre conf=E9rence est le lieu de rencontre de notre c=
+ommunaut=E9, l=92=E9cole th=E9matique MDD permet d=92exposer en d=E9tails d=
+es th=E8mes fondamentaux pour la compr=E9hension de l=92=E9volution de notr=
+e domaine de recherche, et de pr=E9parer les doctorant(e)s =E0 suivre =96 e=
+t provoquer =96 ses =E9volutions.
+
+L=92=E9cole MDD s=92est attach=E9e lors des cinq premi=E8res sessions =E0 a=
+border des th=E8mes li=E9s =E0 ces d=E9fis. La premi=E8re session (2010), a=
+ ainsi trait=E9 des syst=E8mes distribu=E9s de gestion de donn=E9es et du W=
+eb s=E9mantique ; la seconde session (2012) s=92est consacr=E9e aux op=E9ra=
+teurs de traitement de requ=EAtes =E0 l=92=E9chelle du P=E9taoctet, aux nou=
+velles sources d=92information (r=E9seaux sociaux), =E0 l=92int=E9gration d=
+e donn=E9es issues d=92environnement ind=E9pendants ; la session de 2014 a =
+=E9t=E9 d=E9di=E9e =E0 la visualisation analytique de donn=E9es, =E0 la qua=
+lit=E9 des donn=E9es et au crowdsourcing ; la session de 2016 a port=E9 sur=
+ les processus int=E9gr=E9s d=92analyse de donn=E9es massives respectueux d=
+e la vie priv=E9e. En 2018, la session a trait=E9 du =AB Scalable Data Anal=
+ytics =BB avec les moyens d=92analyser les donn=E9es =E0 large =E9chelle. L=
+a session de 2020 a malheureusement =E9t=E9 suspendue durant la pand=E9mie =
+et report=E9e =E0 2022.
+
+L'=E9cole MDD offrira un programme intensif et passionnant et un environnem=
+ent de travail avec des expert.e.s qui donneront des cours et mettront en p=
+ratique les probl=E8mes qui font avancer le domaine. Les activit=E9s scient=
+ifiques seront combin=E9es =E0 des discussions et activit=E9s informelles q=
+ui favoriseront l'=E9mergence d'id=E9es, de projets et d'exp=E9rimentations=
+ qui aideront les doctorants et les chercheurs =E0 compl=E9ter leurs recher=
+ches actuelles.
+
+--- PROGRAMME ---
+
+19/6 : Dimanche apr=E8s-midi : arriv=E9
+
+6/20 : Lundi : Int=E9gration de donn=E9es h=E9t=E9rog=E8nes : S=E9mantique =
+et polystores, Ioana Manolescu, Fran=E7ois Goasdou=E9, Maxime Buron
+
+21/06 : Mardi : Matin : Syst=E8mes de traitement des grands graphes
+       Angela Bonifati, Chao  Zhang
+
+Apr=E8s-midi : Comment mener des exp=E9riences ?
+Nicolas Travers
+
+6/22 : Mercredi  Matin : D=E9ployer des applications de Deep Learning =E0 l=
+'=E9chelle : le d=E9fi des bases de donn=E9es,
+ Genoveva Vargas-Solar et Javier Espinosa
+
+Apr=E8s-midi : Ev=E9nement social
+
+6/23 : Jeudi :  S=E9curit=E9 des donn=E9es et confidentialit=E9 des donn=E9=
+es externalis=E9es dans le Cloud
+Amr el Abbadi, Tristan Allard
+
+Tutorial le matin et session pratique l'apr=E8s-midi.
+
+6/24 : Vendredi : D=E9part le matin
+
+Le public cible de cette =E9cole est principalement constitu=E9 de jeunes c=
+hercheurs dans le domaine des bases de donn=E9es ainsi que dans des domaine=
+s connexes ou multidisciplinaires (gestion de grandes quantit=E9s de donn=
+=E9es pour des applications scientifiques par exemple). Par jeunes chercheu=
+rs, nous entendons les doctorants et post-doctorants. L'=E9cole est =E9gale=
+ment ouverte aux enseignants-chercheurs et chercheurs plus exp=E9riment=E9s=
+ dans un but d'ouverture th=E9matique, de cr=E9ation d'un r=E9seau d'=E9cha=
+nge ou de reconversion. L'=E9cole s'adresse =E9videmment aux ing=E9nieurs d=
+e recherche du secteur priv=E9 (R&D, startup, etc.).
+
+
+***************************************************************************=
+*****************
+CNRS THEMATIC SCHOOL: BDA MDD
+19 - 24 June 2022, Bastia, Corsica, France
+              https://cedric.cnam.fr/lab/confs/mdd2022/
+
+*************************    REGISTRATION IS OPEN       *******************=
+********************
+Inscription deadline: 15 mai 2022
+The number of attendees is limited (priority will be given to PhD students)
+
+Come to surf the waves of data with us!
+***************************************************************************=
+*****************
+
+The era of data is not over. Data integration, analytics, and modelling sol=
+utions should run on top of different target architectures in a data-driven=
+ society and environment. Database solutions, protocols and technology are =
+evolving at a high pace, and this opens exciting challenges to be addressed=
+ through research and development approaches.
+
+The CNRS MDD thematic school "Masses of distributed data" is a recurrent th=
+ematic school taking place every two years since 2010. This school is an em=
+anation of the database community in France, structured around the BDA conf=
+erence: Data Management - Principles and Applications, which celebrated its=
+ 30th anniversary in 2016. If our conference is the meeting place of our co=
+mmunity, the MDD thematic school allows us to expose in detail fundamental =
+themes for the understanding of the evolution of our research field, and to=
+ prepare PhD students to follow - and provoke - its evolutions.
+
+The MDD school has focused on themes related to these challenges in its fir=
+st five sessions. The first session (2010) dealt with distributed data mana=
+gement systems and the Semantic Web; the second session (2012) focused on q=
+uery processing operators at the Petabyte scale, new information sources (s=
+ocial networks), and the integration of data from independent environments;=
+ the 2014 session was dedicated to analytical data visualization, data qual=
+ity, and crowdsourcing; and the 2016 session focused on integrated privacy-=
+friendly processes for massive data analysis. In 2018, the session covered =
+"Scalable Data Analytics" with ways to analyze data at large scale. The 202=
+0 session was unfortunately suspended during the pandemic and postponed to =
+2022.
+
+The MDD school will provide an intensive and exciting program and working e=
+nvironment with expert scientists who will lecture and practice the problem=
+s driving the domain. Scientific activities will be combined by informal di=
+scussion and activities that will promote the emergence of ideas, projects =
+and experiments that will help PhD students and researchers complement thei=
+r current research.
+
+------- PROGRAM -------
+
+6/19: Sunday afternoon : arrival
+
+6/20: Monday : Heterogeneous Data Integration: Semantics and Polystores
+Ioana Manolescu, Fran=E7ois Goasdou=E9, Maxime Buron
+
+6/21: Tuesday : Morning: Big Graph Processing Systems
+Angela Bonifati, Chao Zhang
+
+Afternoon: How to conduct experiments?
+  Nicolas Travers
+
+6/22: Wednesday : Morning : Deploying Deep Learning applications at scale: =
+the database challenge
+   Genoveva Vargas-Solar and Javier Espinosa
+
+ Afternoon : Social event
+
+6/23: Thursday : Data Security and Privacy for Outsourced Data in the Cloud
+Amr el Abbadi, Tristan Allard
+
+Tutorial in the morning and practical session in the afternoon
+
+6/24: Friday : Departure in the morning
+
+The target audience of this school consists primarily of young researchers =
+in the field of databases as well as in related or multidisciplinary fields=
+ (management of large amounts of data for scientific applications for examp=
+le). By young researchers, we mean doctoral and post-doctoral students. The=
+ school is also open to more experienced teachers/researchers with the aim =
+of thematic opening, the creation of an exchange network or retraining. The=
+ school is obviously aimed at research engineers from the private sector (R=
+&D, startup, etc.).
+
+
+--_000_PA4PR02MB6896B4CDE65F7EC76E8676D6941D9PA4PR02MB6896eurp_
+Content-Type: text/html; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:o=3D"urn:schemas-microsoft-com:office:office" xmlns:w=3D"urn:sc=
+hemas-microsoft-com:office:word" xmlns:m=3D"http://schemas.microsoft.com/of=
+fice/2004/12/omml" xmlns=3D"http://www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DWindows-1=
+252">
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Times New Roman \(Corps CS\)";
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:blue;
+	text-decoration:underline;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-size:10.0pt;}
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:70.85pt 70.85pt 70.85pt 70.85pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style>
+</head>
+<body lang=3D"FR" link=3D"blue" vlink=3D"purple" style=3D"word-wrap:break-w=
+ord;-webkit-nbsp-mode: space;line-break:after-white-space">
+<div class=3D"WordSection1">
+<div>
+<p class=3D"MsoNormal">........................... &nbsp; &nbsp; &nbsp; ENG=
+LISH VERSION BELOW &nbsp; &nbsp;...................<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">****************************************************=
+****************************************<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">=C9COLE TH=C9MATIQUE DU CNRS : BDA MDD<o:p></o:p></p=
+>
+</div>
+<div>
+<p class=3D"MsoNormal">19 - 24 juin 2022, Bastia, Corse, France&nbsp;<o:p><=
+/o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a =
+href=3D"https://cedric.cnam.fr/lab/confs/mdd2022/">
+https://cedric.cnam.fr/lab/confs/mdd2022/</a><o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">***************** LES INSCRIPTIONS SONT OUVERTES ***=
+*************************<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Date limite d'inscription: 15 mai 2022<o:p></o:p></p=
+>
+</div>
+<div>
+<p class=3D"MsoNormal">Le nombre de participants est limit=E9 (la priorit=
+=E9 sera donn=E9e aux doctorants).&nbsp;<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">&nbsp;<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Venez surfer sur les vagues de donn=E9es avec nous !=
+<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">****************************************************=
+***************************************<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">L'=E8re des donn=E9es est ici et maintenant. Dans un=
+e soci=E9t=E9 et un environnement ax=E9s sur les donn=E9es, les solutions d=
+'int=E9gration, d'analyse et de mod=E9lisation des donn=E9es doivent foncti=
+onner au-dessus de diff=E9rentes architectures cibles.
+ Les solutions, protocoles et technologies de base de donn=E9es =E9voluent =
+=E0 un rythme =E9lev=E9, ce qui ouvre des d=E9fis passionnants =E0 relever =
+par des approches de recherche et de d=E9veloppement.&nbsp;<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">L=92=E9cole th=E9matique CNRS MDD =AB Masses de donn=
+=E9es distribu=E9es =BB est une =E9cole th=E9matique r=E9currente ayant lie=
+u tous les deux ans depuis 2010. Cette =E9cole est une =E9manation de la co=
+mmunaut=E9 des bases de donn=E9es en France, structur=E9e autour
+ de la conf=E9rence BDA : Gestion de donn=E9es =96 principes et application=
+s, qui a f=EAt=E9 ses 30 ans d=92existence en 2016. Si notre conf=E9rence e=
+st le lieu de rencontre de notre communaut=E9, l=92=E9cole th=E9matique MDD=
+ permet d=92exposer en d=E9tails des th=E8mes fondamentaux pour
+ la compr=E9hension de l=92=E9volution de notre domaine de recherche, et de=
+ pr=E9parer les doctorant(e)s =E0 suivre =96 et provoquer =96 ses =E9voluti=
+ons.<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">L=92=E9cole MDD s=92est attach=E9e lors des cinq pre=
+mi=E8res sessions =E0 aborder des th=E8mes li=E9s =E0 ces d=E9fis. La premi=
+=E8re session (2010), a ainsi trait=E9 des syst=E8mes distribu=E9s de gesti=
+on de donn=E9es et du Web s=E9mantique ; la seconde session (2012)
+ s=92est consacr=E9e aux op=E9rateurs de traitement de requ=EAtes =E0 l=92=
+=E9chelle du P=E9taoctet, aux nouvelles sources d=92information (r=E9seaux =
+sociaux), =E0 l=92int=E9gration de donn=E9es issues d=92environnement ind=
+=E9pendants ; la session de 2014 a =E9t=E9 d=E9di=E9e =E0 la visualisation =
+analytique
+ de donn=E9es, =E0 la qualit=E9 des donn=E9es et au crowdsourcing ; la sess=
+ion de 2016 a port=E9 sur les processus int=E9gr=E9s d=92analyse de donn=E9=
+es massives respectueux de la vie priv=E9e. En 2018, la session a trait=E9 =
+du =AB Scalable Data Analytics =BB avec les moyens d=92analyser
+ les donn=E9es =E0 large =E9chelle. La session de 2020 a malheureusement =
+=E9t=E9 suspendue durant la pand=E9mie et report=E9e =E0 2022.&nbsp;<o:p></=
+o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">L'=E9cole MDD offrira un programme intensif et passi=
+onnant et un environnement de travail avec des expert.e.s qui donneront des=
+ cours et mettront en pratique les probl=E8mes qui font avancer le domaine.=
+ Les activit=E9s scientifiques seront combin=E9es
+ =E0 des discussions et activit=E9s informelles qui favoriseront l'=E9merge=
+nce d'id=E9es, de projets et d'exp=E9rimentations qui aideront les doctoran=
+ts et les chercheurs =E0 compl=E9ter leurs recherches actuelles.<o:p></o:p>=
+</p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">--- PROGRAMME ---<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">19/6 : Dimanche apr=E8s-midi : arriv=E9<o:p></o:p></=
+p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">6/20 : Lundi : Int=E9gration de donn=E9es h=E9t=E9ro=
+g=E8nes : S=E9mantique et polystores, Ioana Manolescu, Fran=E7ois Goasdou=
+=E9, Maxime Buron<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">21/06 : Mardi : Matin : Syst=E8mes de traitement des=
+ grands graphes<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">&nbsp; &nbsp; &nbsp; &nbsp;Angela Bonifati, Chao &nb=
+sp;Zhang<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Apr=E8s-midi : Comment mener des exp=E9riences ?&nbs=
+p;<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Nicolas Travers<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">6/22 : Mercredi &nbsp;Matin : D=E9ployer des applica=
+tions de Deep Learning =E0 l'=E9chelle : le d=E9fi des bases de donn=E9es,&=
+nbsp;<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">&nbsp;Genoveva Vargas-Solar et Javier Espinosa &nbsp=
+; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nb=
+sp; &nbsp; &nbsp; &nbsp; &nbsp;<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nb=
+sp; &nbsp;&nbsp;<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Apr=E8s-midi : Ev=E9nement social<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">6/23 : Jeudi : &nbsp;S=E9curit=E9 des donn=E9es et c=
+onfidentialit=E9 des donn=E9es externalis=E9es dans le Cloud<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Amr el Abbadi, Tristan Allard<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">&nbsp; &nbsp; &nbsp;&nbsp;<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Tutorial le matin et session pratique l'apr=E8s-midi=
+.<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">6/24 : Vendredi : D=E9part le matin<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Le public cible de cette =E9cole est principalement =
+constitu=E9 de jeunes chercheurs dans le domaine des bases de donn=E9es ain=
+si que dans des domaines connexes ou multidisciplinaires (gestion de grande=
+s quantit=E9s de donn=E9es pour des applications
+ scientifiques par exemple). Par jeunes chercheurs, nous entendons les doct=
+orants et post-doctorants. L'=E9cole est =E9galement ouverte aux enseignant=
+s-chercheurs et chercheurs plus exp=E9riment=E9s dans un but d'ouverture th=
+=E9matique, de cr=E9ation d'un r=E9seau d'=E9change
+ ou de reconversion. L'=E9cole s'adresse =E9videmment aux ing=E9nieurs de r=
+echerche du secteur priv=E9 (R&amp;D, startup, etc.).&nbsp;<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">****************************************************=
+****************************************<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">CNRS THEMATIC SCHOOL: BDA MDD<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">19 - 24 June 2022, Bastia, Corsica, France&nbsp;<o:p=
+></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a =
+href=3D"https://cedric.cnam.fr/lab/confs/mdd2022/">
+https://cedric.cnam.fr/lab/confs/mdd2022/</a><o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">************************* &nbsp; &nbsp;REGISTRATION =
+IS OPEN &nbsp; &nbsp; &nbsp; ***************************************<o:p></=
+o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Inscription deadline: 15 mai 2022<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">The number of attendees is limited (priority will be=
+ given to PhD students) &nbsp;<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Come to surf the waves of data with us!<o:p></o:p></=
+p>
+</div>
+<div>
+<p class=3D"MsoNormal">****************************************************=
+****************************************<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">The era of data is not over. Data integration, analy=
+tics, and modelling solutions should run on top of different target archite=
+ctures in a data-driven society and environment. Database solutions, protoc=
+ols and technology are evolving at
+ a high pace, and this opens exciting challenges to be addressed through re=
+search and development approaches.&nbsp;<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">The CNRS MDD thematic school &quot;Masses of distrib=
+uted data&quot; is a recurrent thematic school taking place every two years=
+ since 2010. This school is an emanation of the database community in Franc=
+e, structured around the BDA conference: Data
+ Management - Principles and Applications, which celebrated its 30th annive=
+rsary in 2016. If our conference is the meeting place of our community, the=
+ MDD thematic school allows us to expose in detail fundamental themes for t=
+he understanding of the evolution
+ of our research field, and to prepare PhD students to follow - and provoke=
+ - its evolutions.<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">The MDD school has focused on themes related to thes=
+e challenges in its first five sessions. The first session (2010) dealt wit=
+h distributed data management systems and the Semantic Web; the second sess=
+ion (2012) focused on query processing
+ operators at the Petabyte scale, new information sources (social networks)=
+, and the integration of data from independent environments; the 2014 sessi=
+on was dedicated to analytical data visualization, data quality, and crowds=
+ourcing; and the 2016 session focused
+ on integrated privacy-friendly processes for massive data analysis. In 201=
+8, the session covered &quot;Scalable Data Analytics&quot; with ways to ana=
+lyze data at large scale. The 2020 session was unfortunately suspended duri=
+ng the pandemic and postponed to 2022.&nbsp;<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">The MDD school will provide an intensive and excitin=
+g program and working environment with expert scientists who will lecture a=
+nd practice the problems driving the domain. Scientific activities will be =
+combined by informal discussion and
+ activities that will promote the emergence of ideas, projects and experime=
+nts that will help PhD students and researchers complement their current re=
+search.&nbsp;<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">------- PROGRAM -------<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">6/19: Sunday afternoon : arrival<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">6/20: Monday : Heterogeneous Data Integration: Seman=
+tics and Polystores<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Ioana Manolescu, Fran=E7ois Goasdou=E9, Maxime Buron=
+<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">6/21: Tuesday : Morning: Big Graph Processing System=
+s<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Angela Bonifati, Chao Zhang<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Afternoon: How to conduct experiments?&nbsp;<o:p></o=
+:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">&nbsp; Nicolas Travers<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">6/22: Wednesday : Morning : Deploying Deep Learning =
+applications at scale: the database challenge&nbsp;<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">&nbsp; &nbsp;Genoveva Vargas-Solar and Javier Espino=
+sa &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &n=
+bsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nb=
+sp; &nbsp;&nbsp;<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">&nbsp;Afternoon : Social event<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">6/23: Thursday : Data Security and Privacy for Outso=
+urced Data in the Cloud<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Amr el Abbadi, Tristan Allard<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Tutorial in the morning and practical session in the=
+ afternoon<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">6/24: Friday : Departure in the morning<o:p></o:p></=
+p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">The target audience of this school consists primaril=
+y of young researchers in the field of databases as well as in related or m=
+ultidisciplinary fields (management of large amounts of data for scientific=
+ applications for example). By young
+ researchers, we mean doctoral and post-doctoral students. The school is al=
+so open to more experienced teachers/researchers with the aim of thematic o=
+pening, the creation of an exchange network or retraining. The school is ob=
+viously aimed at research engineers
+ from the private sector (R&amp;D, startup, etc.).<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+</div>
+</body>
+</html>
+
+--_000_PA4PR02MB6896B4CDE65F7EC76E8676D6941D9PA4PR02MB6896eurp_--

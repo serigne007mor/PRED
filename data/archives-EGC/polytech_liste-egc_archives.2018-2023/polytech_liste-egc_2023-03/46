@@ -1,0 +1,1311 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (bouncesmtp2.u12.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id B4F6C14017C0
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed, 15 Mar 2023 15:26:53 +0100 (CET)
+Received: from mx2.localdomain (MX2.univ-nantes.fr [193.52.101.136])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id B0A5E6662
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed, 15 Mar 2023 15:26:53 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.localdomain (Postfix) with ESMTP id A484A1015D5
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 15 Mar 2023 15:26:53 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 2.619
+X-Spam-Level: **
+X-Spam-Status: No, score=2.619 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	IMPRONONCABLE_2=1.5, LONGWORD=0.3, MEGALONGWORD=0.6,
+	MR_NOT_ATTRIBUTED_IP=0.2, RCVD_IN_DNSWL_NONE=-0.0001,
+	RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_WSFF=0.01, SPF_HELO_PASS=-0.001,
+	SPF_PASS=-0.001, T_REMOTE_IMAGE=0.01, UN_PHISHING_PW=0.1,
+	URIBL_BLOCKED=0.001] autolearn=disabled
+X-CRM114-Status: UNSURE ( 4.1897 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=devinci.fr
+Received: from mx2.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id cQw0Jyl0uses for <liste-egc@polytech.univ-nantes.fr>;
+	Wed, 15 Mar 2023 15:26:47 +0100 (CET)
+Received-SPF: Temperror (mailfrom) identity=mailfrom; client-ip=40.107.22.53; helo=eur05-am6-obe.outbound.protection.outlook.com; envelope-from=nicolas.travers@devinci.fr; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=none dis=none) header.from=devinci.fr
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=nicolas.travers@devinci.fr
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (2048-bit key; unprotected) header.d=devinci.fr header.i=@devinci.fr header.b="aSCZd0+x";
+	dkim-atps=neutral
+X-Greylist: whitelisted by SQLgrey-1.6.7
+Received: from EUR05-AM6-obe.outbound.protection.outlook.com (mail-am6eur05on2053.outbound.protection.outlook.com [40.107.22.53])
+	by mx2.localdomain (Postfix) with ESMTPS id 4A2351014C2
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 15 Mar 2023 15:26:27 +0100 (CET)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=FKBC9eRcoRMtaFGWamGTV7HoOc+b2U6koSVdRxh3qGxoRusyKm/xOpaK9aAO0ccV0jlqZy2DpAf465zitlRmIi583cKtklzuLqTKN+X0bUtnDtI7477dCx6LptfVAa2D/AaHeuYTfARG6o1nT2Z/HSswsjfoN1axBLMhQUp+fJKkwSJ7RCIejohBHUrbknXWlrROlWjCu6ECviz45FFLxjM9FqTuqZw9+mCYZzwNwAzFBcNYU8WDDs2EfbZiGlJ6II+rdSOukKB4z/MAjqXXZHTNy06EozB8QPmrcOmb8d2KDWOQF6shgDMcZAOErxoCTmdf/FlN861KMBOv+j4NJA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=0thZ01G1w7hfcUxd3jogmDXc19EVLtayJM3sIhHcgGQ=;
+ b=FM7SYqNaxMQ4D7zLrp8v3fCE5Hhxyju48dh0/vX/aPYUHhUP6ktq7HwFC5eMGOtYn16mRkNe/pUkHiJYFb58RpLocFnUvi5gpe15R2L3oBjJ4uuhn60f2vZGC8Q/luMpdhf/jfQ4qZG6PPtCRN51i6k5yQfmrrzZalCJlbNYFjvdKINDEDlqivtEnUU/AabbKhYVzKm+q1+3G7o0FoRXyB6e05i5A5SY4/RraRHD1fAEasTdI2rFWx40evFiJF/qVhXupZzUayDsfAfHt+VVP+nJJSgutzfBGRFs1O1+T9Hb4x8WE0/UUG1IK8N0UvfcAwoWxL4z+do/AfpJpoRRlg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=devinci.fr; dmarc=pass action=none header.from=devinci.fr;
+ dkim=pass header.d=devinci.fr; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=devinci.fr;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=0thZ01G1w7hfcUxd3jogmDXc19EVLtayJM3sIhHcgGQ=;
+ b=aSCZd0+x2hu+6miIz51XbxSYHQU3H+ATr+YFwbAaLTg6fJ4PDRlt9iOFb1ZaCZ+1dM1cDkPU1zLJraHYJL76NMj23mQqjV4i2EgCf4j2GTh/R/TTLN1qMs5Sr7Q4744phjlB3jgD2JEVLNeAu8xrvVwI8wGG7PrhvXS3ckeMZfpBw8bAEgbueWeeL5bls2efw4JTrjwijKwfllchB0TqyF3yIaSOTVxaI2mucfnQB91GEppASLQk/ASk/97zapt8G//1QxXsht1jh7SIbRcsAOfFq+SZzoXHzsEPl+gFfrNEFeM1YoCCsJHCOZo2lsMFhSJiYp53nbDBWIjtFcI89Q==
+Received: from PA4PR02MB6896.eurprd02.prod.outlook.com (2603:10a6:102:fe::19)
+ by PA4PR02MB8169.eurprd02.prod.outlook.com (2603:10a6:102:272::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6178.29; Wed, 15 Mar
+ 2023 14:26:25 +0000
+Received: from PA4PR02MB6896.eurprd02.prod.outlook.com
+ ([fe80::e6f2:d60b:e5f6:f6e6]) by PA4PR02MB6896.eurprd02.prod.outlook.com
+ ([fe80::e6f2:d60b:e5f6:f6e6%8]) with mapi id 15.20.6178.029; Wed, 15 Mar 2023
+ 14:26:25 +0000
+From: TRAVERS Nicolas <nicolas.travers@devinci.fr>
+To: "liste-egc@polytech.univ-nantes.fr" <liste-egc@polytech.univ-nantes.fr>
+Thread-Topic:
+ =?Windows-1252?Q?[Last_CfP]_E-health_&_Ethics_Research_day_13_April_2023_?=
+ =?Windows-1252?Q?CFC=5FPULV_Campus_de_l'Arche_Paris_La_D=E9fense?=
+Thread-Index: AQHZPHPstsvGn3rxE0SE6vAixVgsCK7GxZJ8gDVUPkM=
+Date: Wed, 15 Mar 2023 14:26:02 +0000
+Message-ID:
+ <PA4PR02MB6896E731F5B0DC837A6E21C794BF9@PA4PR02MB6896.eurprd02.prod.outlook.com>
+References:
+ <PAXPR02MB72964D09D180135933C1789CE1D99@PAXPR02MB7296.eurprd02.prod.outlook.com>
+ <PA4PR02MB68960BB477AD2F0FF162503994D99@PA4PR02MB6896.eurprd02.prod.outlook.com>
+In-Reply-To:
+ <PA4PR02MB68960BB477AD2F0FF162503994D99@PA4PR02MB6896.eurprd02.prod.outlook.com>
+Accept-Language: fr-FR, en-US
+Content-Language: fr-FR
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=devinci.fr;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PA4PR02MB6896:EE_|PA4PR02MB8169:EE_
+x-ms-office365-filtering-correlation-id: 37dc7828-b6b7-4620-c547-08db256141dd
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:
+ x3kMctgT+3zKjdyIzTZFTmkfHJEzuDSTaCLtP75e2ooLfwBR8jAawOQ9HygtUfkuxTqito2cDC0FtB9nLL8v1V2/CS55Y2Du8XDF61c2Z8R456MQY+S7GcifuuOxVzBr5p7xiErM3Cpq5ixatGa7YmLfaT0sCDdoOtmg/ZWhwmQ4gx2hyEyLzk2gw918ulGPgR3w60F/YuJ8NHoubVbHkyP6abcobAYLFz58N9At3pcwLCd2OYS8ywMztAiCW+iiTXCEw3ZeULOZ+cRyfKzUMwUDCwUCmYNfsr9ewGQHA28iJlpA0vU4ReBVTtjju4Hgwrivlyayn6m+hG5n+Tg3QXeRtLxLPK3cD9F2T/EGPjrUaIWZjdx4yhMHC36vZwv8mfu7DNO5XurJJxJcJJE26lhib796qGcKUHB1scV+h0InZndWf0doKrTwluiyRgYBzTeOLaiKO6rwru7PNf+OoVefuP1hFA9AGGdqSnQ9DjiFy1Esj43xYXvay4tRN2ZXwykFls7YxshS6WNTdZR4eh0s7lpMji/EhsMddl+lxkCKvBskJZRBRWplu0KJEs2BRVZPWquf6W9vkLPLXQ1qUt2w0ZmA/SQoW1x5n+w7C12rte4TLSTA5x/yDPxeUzQK4h213lr0qGPEOvirYmkvP6ffjZ17Hm5C6S3xyOTgjlQPfyp5NgSESpb8kB9WrUNfFl7Lz7usvT0Cn1XcZIE/d3pTCfKTBbjag4cvXhKcx9s=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PA4PR02MB6896.eurprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(39860400002)(136003)(376002)(366004)(396003)(346002)(1690799011)(451199018)(66899018)(84970400001)(19627405001)(224303003)(52536014)(8936002)(41300700001)(5660300002)(2906002)(38070700005)(38100700002)(166002)(86362001)(122000001)(33656002)(45080400002)(7696005)(478600001)(66476007)(66446008)(91956017)(66556008)(64756008)(76116006)(966005)(71200400001)(6666004)(66946007)(6916009)(55016003)(41320700001)(6506007)(66574015)(786003)(316002)(9686003)(83380400001)(186003)(26005)(579004);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?Windows-1252?Q?DT8lIeDetuA65n/fGRT9wMrmvTVO7VfrGhw1Yelef1TnY0voYQrmiv+h?=
+ =?Windows-1252?Q?JWgDo28zwVQwZ6ffNqdVA0IvN0AGtiw/vHRqXPTqGdvpBIFm/BZVE3YP?=
+ =?Windows-1252?Q?t0K6VNBZwtZxru5kxNR1QKZ/+aW8FkEU7v3CkqemrWoJXe9y8iAOkrG7?=
+ =?Windows-1252?Q?vEL6DlIGpW/uhIYnPEVQuIUo6LMkAS3uOcK5Jn+zS+Uu8Ep41juTiGJT?=
+ =?Windows-1252?Q?Gfn5ZJyDbfBABSuqvPV9ndU1T0j+vB2Xy+ChByb5JFFnGqJ2l63b0uCM?=
+ =?Windows-1252?Q?B1ToLvY+6oD5u6h19f7vscV2D8qMssBFdRxv9ATkfkcP0qvMHrpYcjnz?=
+ =?Windows-1252?Q?PeyvoId403Mu7GO8q1xaYRHNwMsQaotuGhxGwJ0RiYKneLYKEDSBjJ3N?=
+ =?Windows-1252?Q?YIKzy73cQr5h5EPIbzk190ApZQPsh1aMMDVmLbBvDbpL/TPkHg9CFwEm?=
+ =?Windows-1252?Q?ZCS29tnm4fvqVh84YjUqxqvP9D7iPElJBfBG9wTuNRHCXHGo0+cHH3zN?=
+ =?Windows-1252?Q?qCLw0Dn2X4CKZ0janVN8I/Cgote4E9H+PBlb/Yg75GLYTK5NkhKE857J?=
+ =?Windows-1252?Q?88LEpmMkGm+9l1DSbKp/hEaTZhalZ2UjvAGmi/wV45fENBD7CbGAOyVv?=
+ =?Windows-1252?Q?0ltTFHA9cRqBj5r3lOkalg6lXpSja0rO9DKqPAOywVrxWXjz/Xdx3ILq?=
+ =?Windows-1252?Q?2NXK5N6h/Hmh46vvEKJwFdn6qxPF1bPATpbPNHGa3+JUL8JH5Mw/XxrU?=
+ =?Windows-1252?Q?I8JNMn+7UYo9sUrsl9VXwW9xEHAKaCFYNgUU8VEWgVkBEcnr/QBZsoVJ?=
+ =?Windows-1252?Q?UjBbdtqgwCPsbpWy4Xo8+dfExrIPLTnGAWlB993HLb/8/9ayhkv/iSBq?=
+ =?Windows-1252?Q?deCE86iUnpyUJz9UODsPO8AD8IX1NkGI+npPlkG1Iv+MnA+6kQ4gV9Hm?=
+ =?Windows-1252?Q?Dst+JOBwtj785tXEhhCsHPxRkSQAWz4j9AvSEOpaFwqeqi9moOJzUjWZ?=
+ =?Windows-1252?Q?y6nJGo96jGe6W3qq/X14keunGZM01+cOwvYl4psohDgI38avoRcVdSEH?=
+ =?Windows-1252?Q?mfCycSZKDvbmlpGIT5vFnKMmiv0/zMZ+SFjZEs27OHiUvqDCtLoG1Ehs?=
+ =?Windows-1252?Q?/L9tZRSZAVM4tLAX7FoLojtLW/IzFEXe6NgyYKhHRhHRemxjCFOLJP0U?=
+ =?Windows-1252?Q?xtTqtPCfBioFHp3QZ1/IBM+24nhwDev6E10KnsVUS3qKo06iYTHWi8K9?=
+ =?Windows-1252?Q?2JbSnZo55CtJo57QI2UxgwnXy6xs3dN5zGMuAkXi9ib8c1EShuvzEjlz?=
+ =?Windows-1252?Q?c+QjXz6lh4eAQfDAs5H6sg5ZXRFMC5HXHlNZR/4DjH8wSLmu1H2bXyIE?=
+ =?Windows-1252?Q?1/f5NAHMupsKGAHQstWscvPW5f1oL9HHFbhlYhLZcE4ez3Mu7Jcscqzp?=
+ =?Windows-1252?Q?nmuhfpHNCWvTR6You5/Ux8ernjiroGlPPg6Xdoff4nD1PoERCaHxQ7uq?=
+ =?Windows-1252?Q?grEXEMhDCeYVeMldTLciy1IqHyB4qTGK/inLed92jOGg8Ow/wnyzF9D1?=
+ =?Windows-1252?Q?3Z6ojTqCtaq/In9aHTgryJQK70VkRcYmYXcDGfP7HfvlW2N2U9iQ57Ks?=
+ =?Windows-1252?Q?pK5MXj7bSe77/Q4HEO74+aZFnykqr956ppPjhS/I+8TIUVQIcncp1sXe?=
+ =?Windows-1252?Q?gfwACQsAjGh89jSdzpWR9KcLCSAh1ZHa0XMtj2W4KQ+0KX+eAqaD2w?=
+ =?Windows-1252?Q?=3D=3D?=
+Content-Type: multipart/alternative;
+	boundary="_000_PA4PR02MB6896E731F5B0DC837A6E21C794BF9PA4PR02MB6896eurp_"
+MIME-Version: 1.0
+X-OriginatorOrg: devinci.fr
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PA4PR02MB6896.eurprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 37dc7828-b6b7-4620-c547-08db256141dd
+X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Mar 2023 14:26:25.0009
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 88eebcae-d6e6-4ef7-bba4-4c34f4c2d5e0
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: Nw3ArxlRdOiF2UROIuiiELxhr+05mPIp33GHObrU0Jzr929oolXRYFY+i4UVP4ss8fKvb4D9vb5AvBGlL4c6L18YbzC3AVSQvqeHSOGISCI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR02MB8169
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] [Last CfP] E-health & Ethics Research day 13 April 2023
+ CFC_PULV Campus de l'Arche Paris La =?WINDOWS-1252?Q?D=E9fense?=
+
+--_000_PA4PR02MB6896E731F5B0DC837A6E21C794BF9PA4PR02MB6896eurp_
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+Extended deadline: 20/03/2023 (extended abstracts)
+https://easychair.org/conferences/?conf=3Dehealthethics23
+
+E-health & Ethics: Research Day
+P=F4le Universitaire L=E9onard de Vinci
+13 April 2023
+
+https://conferences.dvrc.fr/eHealth-ethics23/
+
+An increasing trend towards the implementation of digital technologies with=
+in the health care systems has been witnessed during the last 20 years. In =
+its global strategy on digital health for the years 2020=962025, the World =
+Health Organization (WHO) devoted a specific interest to the role played by=
+ digital devices in allowing a larger and more equitable access to health s=
+ervices to all categories of populations, without any distinction regarding=
+ their economic, geopolitical, social or demographic specificities.
+The term e-health encompasses in its broader sense a large array of health =
+care domains supported or enabled by technology. Building on Marent & Henwo=
+od (2021), we can consider a typology including : (1) telemedicine: synchro=
+nous or asynchronous care at a distance, possibly enabled by sociotechnical=
+ platforms; (2) health information: storage, processing, search and exchang=
+e, through information and data management systems ; (3) mHealth: use of mo=
+bile and connected devices for health-related reasons;  and (4) algorithmic=
+ health: incorporating advances in data science and artificial intelligence=
+ (AI) in health care for experimental, predictive, curative, or diagnostic =
+purposes.
+Despite the benefits and considerable advancements made possible by impleme=
+nting digital devices in health and health care, crucial ethical questions =
+have been raised. Bioethics and deontological perspectives cross paths with=
+ all the issues related to Information Technology uses and their implicatio=
+ns on people=92s life (privacy, digital divide, reluctance towards AI). Two=
+ value systems confront each other and concurrently foster a wide range of =
+issues embracing different perspectives (philosophical, moral, normative, t=
+echnical, managerial or legal).
+The aim of this research day is to curate and compare the views of social, =
+human and management sciences and engineering sciences in order to shed lig=
+ht on these issues.
+Thematic axes
+The expected communications could address the following themes (non-exhaust=
+ive list):
+
+  *   Ethical issues related to new e-health business models: health platfo=
+rms, Health Tech, privacy models
+  *   M-health and connected health: usage, adoption, resistance and effect=
+s on well-being, patient empowerment, self-tracking and self-care metrics e=
+fficiency, security hardware devices.
+  *   E-health and privacy: advances and limitations of the jurisdictional =
+arsenal, privacy management systems, privacy-by-design
+  *   E-health and health systems restructuration (public and private secto=
+rs)
+  *   Artificial intelligence and e-health, cognitive science, pattern mini=
+ng, AI/DL models & health/law, ethical & responsible AI.
+  *   Healthcare metaverse: challenges and ethical boundaries
+  *   Sociomateriality of digital health
+
+Submission guidelines
+Authors are invited to submit their extended abstracts (800 - 1000 words, u=
+p to 10 references) electronically via easychair: https://easychair.org/con=
+ferences/?conf=3Dehealthethics23
+
+Language
+English or French
+
+Schedule
+Research day: 13 April 2023
+In P=F4le Universitaire L=E9onard de Vinci, Arche Campus, Paris La D=E9fens=
+e.
+https://conferences.dvrc.fr/eHealth-ethics23/
+
+Publication:
+The proceedings will be published in a white Paper. Selected papers by the =
+scientific committee will also be suggested for publication in The Conversa=
+tion https://theconversation.com/fr
+
+Programme Committee
+
+  *   Tristan ALLARD, Universit=E9 de Rennes, CNRS, IRISA
+  *   Mirian ASFELD FERRARI - LIFO Lab, University of Orl=E9ans
+  *   Pascale BUENO MERINO, EMLV, Paris la D=E9fense
+  *   Raffaele FILIERI, AUDENCIA Business School
+  *   Samuel FOSSO WAMBA, Toulouse Business School
+  *   Thomas GUYET, INRIA
+  *   Antoine HARFOUCHE, Universit=E9 de Nanterre
+  *   Jean-Etienne JOULLIE, EMLV, Paris la D=E9fense
+  *   Benjamin NGUYEN, INSA
+  *   Suprateek SARKER, McIntire School of Commerce, University of Virginia=
+, USA
+  *   Francesco SCHIAVONE, University Parthenope, Naples, Italy
+  *   Nour UL AIN, EMLV, Paris la D=E9fense
+
+Organizing Committee
+
+  *   Mich=E8le KANHOUNOU, ESILV Paris la D=E9fense
+  *   Hajer KEFI, EMLV Paris la D=E9fense
+  *   Insaf KHELLADI, EMLV Paris la D=E9fense
+  *   Clara MANTEY, ILV Paris la D=E9fense
+  *   Nicolas TRAVERS, ESILV Paris la D=E9fense
+
+For any questions regarding the research day, please contact us at the foll=
+owing email address: ehealth.ethics@devinci.onmicrosoft.com
+
+[https://storage.letsignit.com/5bbf3d27229c7c0001b516ac/logo_5bbf3d27229c7c=
+0001b516ac_74cdd4e9ecfda1b8b62de4645eb6b056.png]
+Nicolas TRAVERS
+Enseignant Chercheur - Responsable Groupe Digital
+D=E9partement Informatique, Big Data et Objets Connect=E9s
++33 1 81 00 28 33
+https://www.linkedin.com/in/traversn/
+Retrouvez-nous sur devinci.fr/research-center<https://cloud.letsignit.com/c=
+ollect/bc/5f477b498afa65000aabd321?p=3DnP2-ScO6-vNP5RaGcPvyEKdWgVGNlodC4kLG=
+svUnUpY0qmRs1JsFfkWJSF8ZWmLjziuV1VmS02Lgh9TC4BtYMlMcWETBP8JnIZ84PHKkIFzAVei=
+vnJDMztduWrkaCID-mL-1hN1xDK18wi-o8gS3G2Prg4vze7v-P3S23OEx07I=3D>
+[https://storage.letsignit.com/5bbf3d27229c7c0001b516ac/logo_5bbf3d27229c7c=
+0001b516ac_fa26d4badf2c6377bc99410d39ab3e86.png]<https://cloud.letsignit.co=
+m/collect/bc/5f477b498afa65000aabd321?p=3DnP2-ScO6-vNP5RaGcPvyEKdWgVGNlodC4=
+kLGsvUnUpY0qmRs1JsFfkWJSF8ZWmLjziuV1VmS02Lgh9TC4BtYMlMcWETBP8JnIZ84PHKkIFx0=
+T6tFMYApEhXbZeoXLKRDbLaF7BTQrKKYn0nUrUWQah8hSmJWR2sYE9sYEAhSfrk=3D>[https:/=
+/storage.letsignit.com/5bbf3d27229c7c0001b516ac/logo_5bbf3d27229c7c0001b516=
+ac_30a7735a477788d7833988f38fa47b90.png]<https://cloud.letsignit.com/collec=
+t/bc/5f477b498afa65000aabd321?p=3DnP2-ScO6-vNP5RaGcPvyEKdWgVGNlodC4kLGsvUnU=
+pY0qmRs1JsFfkWJSF8ZWmLjziuV1VmS02Lgh9TC4BtYMlMcWETBP8JnIZ84PHKkIFx3Dw1uAPA-=
+oNIZIuLDKaQPM9epEevAF9WONbx-xxyOug=3D=3D>[https://storage.letsignit.com/5bb=
+f3d27229c7c0001b516ac/logo_5bbf3d27229c7c0001b516ac_959dfa6c5ceef1acde39b48=
+5b1e8493e.png]<https://cloud.letsignit.com/collect/bc/5f477b498afa65000aabd=
+321?p=3DnP2-ScO6-vNP5RaGcPvyEKdWgVGNlodC4kLGsvUnUpY0qmRs1JsFfkWJSF8ZWmLjziu=
+V1VmS02Lgh9TC4BtYMlMcWETBP8JnIZ84PHKkIFwHnZyp88uYMbvJZYe9aL6XkAV7EAuoMYMv--=
+iWCrWIuccvGiw5Yg8yCj-u28eHda17-FGMoeHmazGFAnu9nVbu>
+
+
+
+
+
+--_000_PA4PR02MB6896E731F5B0DC837A6E21C794BF9PA4PR02MB6896eurp_
+Content-Type: text/html; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DWindows-1=
+252">
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<!--[if !mso]><style>v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style><![endif]--><style><!--
+/* Font Definitions */
+@font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Calibri Light";
+	panose-1:2 15 3 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Verdana;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:"Times New Roman \(Corps CS\)";
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+h1
+	{mso-style-priority:9;
+	mso-style-link:"Titre 1 Car";
+	mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	font-size:24.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:blue;
+	text-decoration:underline;}
+span.Titre1Car
+	{mso-style-name:"Titre 1 Car";
+	mso-style-priority:9;
+	mso-style-link:"Titre 1";
+	font-family:"Calibri Light",sans-serif;
+	color:#2F5496;}
+span.contentpasted2
+	{mso-style-name:contentpasted2;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-size:10.0pt;}
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:70.85pt 70.85pt 70.85pt 70.85pt;}
+div.WordSection1
+	{page:WordSection1;}
+/* List Definitions */
+@list l0
+	{mso-list-id:132020293;
+	mso-list-template-ids:2135066542;}
+@list l0:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7 ;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l0:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7 ;
+	mso-level-tab-stop:72.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l0:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7 ;
+	mso-level-tab-stop:108.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l0:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7 ;
+	mso-level-tab-stop:144.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l0:level5
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7 ;
+	mso-level-tab-stop:180.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l0:level6
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7 ;
+	mso-level-tab-stop:216.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l0:level7
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7 ;
+	mso-level-tab-stop:252.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l0:level8
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7 ;
+	mso-level-tab-stop:288.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l0:level9
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7 ;
+	mso-level-tab-stop:324.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l1
+	{mso-list-id:144394844;
+	mso-list-template-ids:-489396460;}
+@list l1:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7 ;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l1:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:72.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-bidi-font-family:"Times New Roman";}
+@list l1:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7 ;
+	mso-level-tab-stop:108.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l1:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7 ;
+	mso-level-tab-stop:144.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l1:level5
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7 ;
+	mso-level-tab-stop:180.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l1:level6
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7 ;
+	mso-level-tab-stop:216.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l1:level7
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7 ;
+	mso-level-tab-stop:252.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l1:level8
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7 ;
+	mso-level-tab-stop:288.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l1:level9
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7 ;
+	mso-level-tab-stop:324.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l2
+	{mso-list-id:647831343;
+	mso-list-template-ids:-265756548;}
+@list l2:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7 ;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l2:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:72.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-bidi-font-family:"Times New Roman";}
+@list l2:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7 ;
+	mso-level-tab-stop:108.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l2:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7 ;
+	mso-level-tab-stop:144.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l2:level5
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7 ;
+	mso-level-tab-stop:180.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l2:level6
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7 ;
+	mso-level-tab-stop:216.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l2:level7
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7 ;
+	mso-level-tab-stop:252.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l2:level8
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7 ;
+	mso-level-tab-stop:288.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l2:level9
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7 ;
+	mso-level-tab-stop:324.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l3
+	{mso-list-id:1051266089;
+	mso-list-template-ids:-2103159972;}
+@list l3:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7 ;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l3:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7 ;
+	mso-level-tab-stop:72.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l3:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7 ;
+	mso-level-tab-stop:108.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l3:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7 ;
+	mso-level-tab-stop:144.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l3:level5
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7 ;
+	mso-level-tab-stop:180.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l3:level6
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7 ;
+	mso-level-tab-stop:216.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l3:level7
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7 ;
+	mso-level-tab-stop:252.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l3:level8
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7 ;
+	mso-level-tab-stop:288.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l3:level9
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7 ;
+	mso-level-tab-stop:324.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l4
+	{mso-list-id:1993364249;
+	mso-list-template-ids:1808139704;}
+@list l4:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7 ;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l4:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:72.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-bidi-font-family:"Times New Roman";}
+@list l4:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7 ;
+	mso-level-tab-stop:108.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l4:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7 ;
+	mso-level-tab-stop:144.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l4:level5
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7 ;
+	mso-level-tab-stop:180.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l4:level6
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7 ;
+	mso-level-tab-stop:216.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l4:level7
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7 ;
+	mso-level-tab-stop:252.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l4:level8
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7 ;
+	mso-level-tab-stop:288.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l4:level9
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7 ;
+	mso-level-tab-stop:324.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l5
+	{mso-list-id:2138837185;
+	mso-list-template-ids:-541962090;}
+@list l5:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7 ;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l5:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7 ;
+	mso-level-tab-stop:72.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l5:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7 ;
+	mso-level-tab-stop:108.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l5:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7 ;
+	mso-level-tab-stop:144.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l5:level5
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7 ;
+	mso-level-tab-stop:180.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l5:level6
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7 ;
+	mso-level-tab-stop:216.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l5:level7
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7 ;
+	mso-level-tab-stop:252.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l5:level8
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7 ;
+	mso-level-tab-stop:288.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l5:level9
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7 ;
+	mso-level-tab-stop:324.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"FR" link=3D"blue" vlink=3D"purple" style=3D"word-wrap:break-w=
+ord">
+<div class=3D"WordSection1">
+<div>
+<h1 style=3D"mso-margin-top-alt:12.0pt;margin-right:0cm;margin-bottom:0cm;m=
+argin-left:0cm;background:white">
+<span lang=3D"EN-US" style=3D"font-size:12.0pt;font-family:&quot;Times New =
+Roman&quot;,serif;color:black;font-weight:normal">Extended deadline: 20/03/=
+2023 (extended abstracts)</span><span lang=3D"EN-US" style=3D"font-size:12.=
+0pt;font-family:&quot;Times New Roman&quot;,serif;font-weight:normal"><o:p>=
+</o:p></span></h1>
+<h1 style=3D"mso-margin-top-alt:12.0pt;margin-right:0cm;margin-bottom:0cm;m=
+argin-left:0cm;background:white">
+<span style=3D"color:black"><a href=3D"https://easychair.org/conferences/?c=
+onf=3Dehealthethics23"><span lang=3D"EN-US" style=3D"font-size:12.0pt;font-=
+family:&quot;Times New Roman&quot;,serif;font-weight:normal">https://easych=
+air.org/conferences/?conf=3Dehealthethics23</span></a></span><span lang=3D"=
+EN-US" style=3D"font-size:12.0pt;font-family:&quot;Times New Roman&quot;,se=
+rif;color:black;font-weight:normal">&nbsp;</span><span lang=3D"EN-US" style=
+=3D"font-size:12.0pt;font-family:&quot;Times New Roman&quot;,serif;font-wei=
+ght:normal"><o:p></o:p></span></h1>
+<h1 style=3D"mso-margin-top-alt:12.0pt;margin-right:0cm;margin-bottom:0cm;m=
+argin-left:0cm;background:white">
+<span lang=3D"EN-US" style=3D"font-size:16.0pt;font-family:&quot;Calibri Li=
+ght&quot;,sans-serif;color:#2F5496;font-weight:normal">&nbsp;</span><span l=
+ang=3D"EN-US"><o:p></o:p></span></h1>
+<h1 align=3D"center" style=3D"mso-margin-top-alt:12.0pt;margin-right:0cm;ma=
+rgin-bottom:0cm;margin-left:0cm;text-align:center;background:white;break-af=
+ter:avoid">
+<span class=3D"contentpasted2"><span lang=3D"EN-US" style=3D"font-size:16.0=
+pt;font-family:&quot;Times New Roman&quot;,serif;color:#2F5496">E-health &a=
+mp; Ethics: Research Day&nbsp;</span></span><span lang=3D"EN-US"><o:p></o:p=
+></span></h1>
+<h1 align=3D"center" style=3D"mso-margin-top-alt:12.0pt;margin-right:0cm;ma=
+rgin-bottom:0cm;margin-left:0cm;text-align:center;background:white;break-af=
+ter:avoid">
+<span class=3D"contentpasted2"><span lang=3D"EN-US" style=3D"font-size:12.0=
+pt;font-family:&quot;Times New Roman&quot;,serif;color:#002060">P=F4le Univ=
+ersitaire L=E9onard de Vinci&nbsp;</span></span><span lang=3D"EN-US"><o:p><=
+/o:p></span></h1>
+<h1 align=3D"center" style=3D"mso-margin-top-alt:12.0pt;margin-right:0cm;ma=
+rgin-bottom:0cm;margin-left:0cm;text-align:center;background:white;break-af=
+ter:avoid">
+<span class=3D"contentpasted2"><span lang=3D"EN-US" style=3D"font-size:12.0=
+pt;font-family:&quot;Times New Roman&quot;,serif;color:#002060">13<sup>
+</sup>April 2023&nbsp;</span></span><span lang=3D"EN-US"><o:p></o:p></span>=
+</h1>
+<p class=3D"MsoNormal" align=3D"center" style=3D"margin-bottom:8.0pt;text-a=
+lign:center;background:white">
+<span lang=3D"EN-US" style=3D"color:black">&nbsp;</span><span lang=3D"EN-US=
+"><o:p></o:p></span></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"margin-bottom:8.0pt;text-a=
+lign:center;background:white">
+<span style=3D"color:black"><a href=3D"https://conferences.dvrc.fr/eHealth-=
+ethics23/"><b><span style=3D"font-size:12.0pt;font-family:&quot;Times New R=
+oman&quot;,serif">https://conferences.dvrc.fr/eHealth-ethics23/</span></b><=
+/a></span><b><span style=3D"font-size:12.0pt;font-family:&quot;Times New Ro=
+man&quot;,serif;color:black">&nbsp;</span></b><o:p></o:p></p>
+<h1 align=3D"center" style=3D"mso-margin-top-alt:12.0pt;margin-right:0cm;ma=
+rgin-bottom:0cm;margin-left:0cm;text-align:center;background:white;break-af=
+ter:avoid">
+<span style=3D"font-size:16.0pt;font-family:&quot;Calibri Light&quot;,sans-=
+serif;color:black;font-weight:normal">&nbsp;</span><o:p></o:p></h1>
+<p class=3D"MsoNormal" style=3D"margin-bottom:8.0pt;text-align:justify;back=
+ground:white">
+<span class=3D"contentpasted2"><span lang=3D"EN-US" style=3D"font-family:&q=
+uot;Times New Roman&quot;,serif;color:black">An increasing trend towards th=
+e implementation of digital technologies within the health care systems has=
+ been witnessed during the last 20 years. In its
+ global strategy on digital health for the years 2020=962025, the World Hea=
+lth Organization (WHO) devoted a specific interest to the role played by di=
+gital devices in allowing a larger and more equitable access to health serv=
+ices to all categories of populations,
+ without any distinction regarding their economic, geopolitical, social or =
+demographic specificities. &nbsp;</span></span><span lang=3D"EN-US"><o:p></=
+o:p></span></p>
+<p class=3D"MsoNormal" style=3D"margin-bottom:8.0pt;text-align:justify;back=
+ground:white">
+<span class=3D"contentpasted2"><span lang=3D"EN-US" style=3D"font-family:&q=
+uot;Times New Roman&quot;,serif;color:black">The term e-health encompasses =
+in its broader sense a large array of health care domains supported or enab=
+led by technology. Building on Marent &amp; Henwood
+ (2021), we can consider a typology including&nbsp;: (1) telemedicine: sync=
+hronous or asynchronous care at a distance, possibly enabled by sociotechni=
+cal platforms; (2) health information: storage, processing, search and exch=
+ange, through information and data management
+ systems ; (3) mHealth: use of mobile and connected devices for health-rela=
+ted reasons;&nbsp; and (4) algorithmic health: incorporating advances in da=
+ta science and artificial intelligence (AI) in health care for experimental=
+, predictive, curative, or diagnostic
+ purposes.&nbsp;</span></span><span lang=3D"EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"margin-bottom:8.0pt;text-align:justify;back=
+ground:white">
+<span class=3D"contentpasted2"><span lang=3D"EN-US" style=3D"font-family:&q=
+uot;Times New Roman&quot;,serif;color:black">Despite the benefits and consi=
+derable advancements made possible by implementing digital devices in healt=
+h and health care, crucial ethical questions have
+ been raised. Bioethics and deontological perspectives cross paths with all=
+ the issues related to Information Technology uses and their implications o=
+n people=92s life (privacy, digital divide, reluctance towards AI). Two val=
+ue systems confront each other and
+ concurrently foster a wide range of issues embracing different perspective=
+s (philosophical, moral, normative, technical, managerial or legal). &nbsp;=
+</span></span><span lang=3D"EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"margin-bottom:8.0pt;text-align:justify;back=
+ground:white">
+<span class=3D"contentpasted2"><span lang=3D"EN-US" style=3D"font-family:&q=
+uot;Times New Roman&quot;,serif;color:black">The aim of this research day i=
+s to curate and compare the views of social, human and management sciences =
+and engineering sciences in order to shed light
+ on these issues. &nbsp;</span></span><span lang=3D"EN-US"><o:p></o:p></spa=
+n></p>
+<p class=3D"MsoNormal" style=3D"margin-bottom:8.0pt;text-align:justify;back=
+ground:white">
+<span class=3D"contentpasted2"><b><span lang=3D"EN-US" style=3D"font-size:1=
+2.0pt;font-family:&quot;Times New Roman&quot;,serif;color:black">Thematic a=
+xes&nbsp;</span></b></span><span lang=3D"EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"margin-bottom:8.0pt;text-align:justify;back=
+ground:white">
+<span class=3D"contentpasted2"><span lang=3D"EN-US" style=3D"font-family:&q=
+uot;Times New Roman&quot;,serif;color:black">The expected communications co=
+uld address the following themes (non-exhaustive list):&nbsp;</span></span>=
+<span lang=3D"EN-US"><o:p></o:p></span></p>
+<ul type=3D"disc">
+<li class=3D"MsoNormal" style=3D"color:black;mso-margin-top-alt:auto;mso-ma=
+rgin-bottom-alt:auto;mso-list:l4 level1 lfo3;background:white">
+<span class=3D"contentpasted2"><span lang=3D"EN-US" style=3D"font-size:12.0=
+pt;font-family:&quot;Times New Roman&quot;,serif">Ethical issues related to=
+ new e-health business models: health platforms, Health Tech, privacy model=
+s&nbsp;</span></span><span lang=3D"EN-US"><o:p></o:p></span></li><li class=
+=3D"MsoNormal" style=3D"color:black;mso-margin-top-alt:auto;mso-margin-bott=
+om-alt:auto;mso-list:l4 level1 lfo3;background:white">
+<span class=3D"contentpasted2"><span lang=3D"EN-US" style=3D"font-size:12.0=
+pt;font-family:&quot;Times New Roman&quot;,serif">M-health and connected he=
+alth: usage, adoption, resistance and effects on well-being, patient empowe=
+rment, self-tracking and self-care metrics efficiency,
+ security hardware devices.&nbsp;</span></span><span lang=3D"EN-US"><o:p></=
+o:p></span></li><li class=3D"MsoNormal" style=3D"color:black;mso-margin-top=
+-alt:auto;mso-margin-bottom-alt:auto;mso-list:l4 level1 lfo3;background:whi=
+te">
+<span class=3D"contentpasted2"><span lang=3D"EN-US" style=3D"font-size:12.0=
+pt;font-family:&quot;Times New Roman&quot;,serif">E-health and privacy: adv=
+ances and limitations of the jurisdictional arsenal, privacy management sys=
+tems, privacy-by-design&nbsp;</span></span><span lang=3D"EN-US"><o:p></o:p>=
+</span></li><li class=3D"MsoNormal" style=3D"color:black;mso-margin-top-alt=
+:auto;mso-margin-bottom-alt:auto;mso-list:l4 level1 lfo3;background:white">
+<span class=3D"contentpasted2"><span lang=3D"EN-US" style=3D"font-size:12.0=
+pt;font-family:&quot;Times New Roman&quot;,serif">E-health and health syste=
+ms restructuration (public and private sectors) &nbsp;</span></span><span l=
+ang=3D"EN-US"><o:p></o:p></span></li><li class=3D"MsoNormal" style=3D"color=
+:black;mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;mso-list:l4 level=
+1 lfo3;background:white">
+<span class=3D"contentpasted2"><span lang=3D"EN-US" style=3D"font-size:12.0=
+pt;font-family:&quot;Times New Roman&quot;,serif">Artificial intelligence a=
+nd e-health, cognitive science, pattern mining, AI/DL models &amp; health/l=
+aw, ethical &amp; responsible AI.&nbsp;</span></span><span lang=3D"EN-US"><=
+o:p></o:p></span></li><li class=3D"MsoNormal" style=3D"color:black;mso-marg=
+in-top-alt:auto;mso-margin-bottom-alt:auto;mso-list:l4 level1 lfo3;backgrou=
+nd:white">
+<span class=3D"contentpasted2"><span lang=3D"EN-US" style=3D"font-size:12.0=
+pt;font-family:&quot;Times New Roman&quot;,serif">Healthcare metaverse: cha=
+llenges and ethical boundaries &nbsp;</span></span><span lang=3D"EN-US"><o:=
+p></o:p></span></li><li class=3D"MsoNormal" style=3D"color:black;mso-margin=
+-top-alt:auto;mso-margin-bottom-alt:auto;mso-list:l4 level1 lfo3;background=
+:white">
+<span class=3D"contentpasted2"><span lang=3D"EN-US" style=3D"font-size:12.0=
+pt;font-family:&quot;Times New Roman&quot;,serif">Sociomateriality of digit=
+al health&nbsp;</span></span><o:p></o:p></li></ul>
+<p class=3D"MsoNormal" style=3D"margin-bottom:8.0pt;text-align:justify;back=
+ground:white">
+<b><span style=3D"font-family:&quot;Times New Roman&quot;,serif;color:black=
+">&nbsp;</span></b><o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"margin-bottom:8.0pt;text-align:justify;back=
+ground:white">
+<span class=3D"contentpasted2"><b><span style=3D"font-family:&quot;Times Ne=
+w Roman&quot;,serif;color:black">Submission guidelines&nbsp;</span></b></sp=
+an><o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"margin-bottom:8.0pt;text-align:justify;back=
+ground:white">
+<span class=3D"contentpasted2"><span lang=3D"EN-US" style=3D"font-family:&q=
+uot;Times New Roman&quot;,serif;color:black">Authors are invited to submit =
+their extended abstracts (800 - 1000 words, up to 10 references) electronic=
+ally via easychair:
+</span></span><span style=3D"color:black"><a href=3D"https://easychair.org/=
+conferences/?conf=3Dehealthethics23"><span lang=3D"EN-US" style=3D"font-fam=
+ily:&quot;Times New Roman&quot;,serif">https://easychair.org/conferences/?c=
+onf=3Dehealthethics23</span></a></span><span lang=3D"EN-US" style=3D"font-f=
+amily:&quot;Times New Roman&quot;,serif;color:black">&nbsp;</span><span lan=
+g=3D"EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"margin-bottom:8.0pt;text-align:justify;back=
+ground:white">
+<span lang=3D"EN-US" style=3D"font-family:&quot;Times New Roman&quot;,serif=
+;color:black">&nbsp;</span><span lang=3D"EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"margin-bottom:8.0pt;text-align:justify;back=
+ground:white">
+<span class=3D"contentpasted2"><b><span lang=3D"EN-US" style=3D"font-size:1=
+2.0pt;font-family:&quot;Times New Roman&quot;,serif;color:black">Language&n=
+bsp;</span></b></span><span lang=3D"EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"margin-bottom:8.0pt;text-align:justify;back=
+ground:white">
+<span class=3D"contentpasted2"><span lang=3D"EN-US" style=3D"font-family:&q=
+uot;Times New Roman&quot;,serif;color:black">English or French&nbsp;</span>=
+</span><span lang=3D"EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"margin-bottom:8.0pt;text-align:justify;back=
+ground:white">
+<b><span lang=3D"EN-US" style=3D"font-size:12.0pt;font-family:&quot;Times N=
+ew Roman&quot;,serif;color:black">&nbsp;</span></b><span lang=3D"EN-US"><o:=
+p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"margin-bottom:8.0pt;text-align:justify;back=
+ground:white">
+<span class=3D"contentpasted2"><b><span lang=3D"EN-US" style=3D"font-size:1=
+2.0pt;font-family:&quot;Times New Roman&quot;,serif;color:black">Schedule&n=
+bsp;</span></b></span><span lang=3D"EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"margin-bottom:8.0pt;text-align:justify;back=
+ground:white">
+<span class=3D"contentpasted2"><span lang=3D"EN-US" style=3D"font-family:&q=
+uot;Times New Roman&quot;,serif;color:black">Research day:
+<b>13 April 2023</b> &nbsp;</span></span><span lang=3D"EN-US"><o:p></o:p></=
+span></p>
+<p class=3D"MsoNormal" style=3D"margin-bottom:8.0pt;text-align:justify;back=
+ground:white">
+<span class=3D"contentpasted2"><span style=3D"font-family:&quot;Times New R=
+oman&quot;,serif;color:black">In P=F4le Universitaire L=E9onard de Vinci, A=
+rche Campus, Paris La D=E9fense. &nbsp;</span></span><o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"margin-bottom:8.0pt;text-align:justify;back=
+ground:white">
+<span style=3D"color:black"><a href=3D"https://conferences.dvrc.fr/eHealth-=
+ethics23/"><span style=3D"font-family:&quot;Times New Roman&quot;,serif">ht=
+tps://conferences.dvrc.fr/eHealth-ethics23/</span></a></span><span style=3D=
+"font-family:&quot;Times New Roman&quot;,serif;color:black">&nbsp;</span><o=
+:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"margin-bottom:8.0pt;text-align:justify;back=
+ground:white">
+<b><span style=3D"font-size:12.0pt;font-family:&quot;Times New Roman&quot;,=
+serif;color:black">&nbsp;</span></b><o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"margin-bottom:8.0pt;text-align:justify;back=
+ground:white">
+<span class=3D"contentpasted2"><b><span lang=3D"EN-US" style=3D"font-size:1=
+2.0pt;font-family:&quot;Times New Roman&quot;,serif;color:black">Publicatio=
+n: &nbsp;</span></b></span><span lang=3D"EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"margin-bottom:8.0pt;text-align:justify;back=
+ground:white">
+<span class=3D"contentpasted2"><span lang=3D"EN-US" style=3D"font-family:&q=
+uot;Times New Roman&quot;,serif;color:black">The proceedings will be publis=
+hed in a white Paper. Selected papers by the scientific committee will also=
+ be suggested for publication in The Conversation
+</span></span><span style=3D"color:black"><a href=3D"https://theconversatio=
+n.com/fr"><span lang=3D"EN-US" style=3D"font-family:&quot;Times New Roman&q=
+uot;,serif">https://theconversation.com/fr</span></a></span><span lang=3D"E=
+N-US" style=3D"font-family:&quot;Times New Roman&quot;,serif;color:black">&=
+nbsp;</span><span lang=3D"EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"margin-bottom:8.0pt;text-align:justify;back=
+ground:white">
+<b><span lang=3D"EN-US" style=3D"font-family:&quot;Times New Roman&quot;,se=
+rif;color:black">&nbsp;</span></b><span lang=3D"EN-US"><o:p></o:p></span></=
+p>
+<p class=3D"MsoNormal" style=3D"margin-bottom:8.0pt;text-align:justify;back=
+ground:white">
+<span class=3D"contentpasted2"><b><span lang=3D"EN-US" style=3D"font-family=
+:&quot;Times New Roman&quot;,serif;color:black">Programme Committee&nbsp;</=
+span></b></span><o:p></o:p></p>
+<ul type=3D"disc">
+<li class=3D"MsoNormal" style=3D"color:black;mso-margin-top-alt:auto;mso-ma=
+rgin-bottom-alt:auto;mso-list:l2 level1 lfo6;background:white">
+<span class=3D"contentpasted2"><span style=3D"font-size:12.0pt;font-family:=
+&quot;Times New Roman&quot;,serif">Tristan ALLARD, Universit=E9 de Rennes, =
+CNRS, IRISA&nbsp;</span></span><o:p></o:p></li><li class=3D"MsoNormal" styl=
+e=3D"color:black;mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;mso-lis=
+t:l2 level1 lfo6;background:white">
+<span class=3D"contentpasted2"><span lang=3D"EN-US" style=3D"font-size:12.0=
+pt;font-family:&quot;Times New Roman&quot;,serif">Mirian ASFELD FERRARI - L=
+IFO Lab, University of Orl=E9ans&nbsp;</span></span><span lang=3D"EN-US"><o=
+:p></o:p></span></li><li class=3D"MsoNormal" style=3D"color:black;mso-margi=
+n-top-alt:auto;mso-margin-bottom-alt:auto;mso-list:l2 level1 lfo6;backgroun=
+d:white">
+<span class=3D"contentpasted2"><span style=3D"font-size:12.0pt;font-family:=
+&quot;Times New Roman&quot;,serif">Pascale BUENO MERINO, EMLV, Paris la D=
+=E9fense&nbsp;</span></span><o:p></o:p></li><li class=3D"MsoNormal" style=
+=3D"color:black;mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;mso-list=
+:l2 level1 lfo6;background:white">
+<span class=3D"contentpasted2"><span lang=3D"EN-US" style=3D"font-size:12.0=
+pt;font-family:&quot;Times New Roman&quot;,serif">Raffaele FILIERI, AUDENCI=
+A Business School&nbsp;</span></span><o:p></o:p></li><li class=3D"MsoNormal=
+" style=3D"color:black;mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;m=
+so-list:l2 level1 lfo6;background:white">
+<span class=3D"contentpasted2"><span lang=3D"EN-US" style=3D"font-size:12.0=
+pt;font-family:&quot;Times New Roman&quot;,serif">Samuel FOSSO WAMBA, Toulo=
+use Business School&nbsp;</span></span><span lang=3D"EN-US"><o:p></o:p></sp=
+an></li><li class=3D"MsoNormal" style=3D"color:black;mso-margin-top-alt:aut=
+o;mso-margin-bottom-alt:auto;mso-list:l2 level1 lfo6;background:white">
+<span class=3D"contentpasted2"><span lang=3D"EN-US" style=3D"font-size:12.0=
+pt;font-family:&quot;Times New Roman&quot;,serif">Thomas GUYET, INRIA&nbsp;=
+</span></span><o:p></o:p></li><li class=3D"MsoNormal" style=3D"color:black;=
+mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;mso-list:l2 level1 lfo6;=
+background:white">
+<span class=3D"contentpasted2"><span style=3D"font-size:12.0pt;font-family:=
+&quot;Times New Roman&quot;,serif">Antoine HARFOUCHE, Universit=E9 de Nante=
+rre&nbsp;</span></span><o:p></o:p></li><li class=3D"MsoNormal" style=3D"col=
+or:black;mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;mso-list:l2 lev=
+el1 lfo6;background:white">
+<span class=3D"contentpasted2"><span style=3D"font-size:12.0pt;font-family:=
+&quot;Times New Roman&quot;,serif">Jean-Etienne JOULLIE, EMLV, Paris la D=
+=E9fense&nbsp;</span></span><o:p></o:p></li><li class=3D"MsoNormal" style=
+=3D"color:black;mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;mso-list=
+:l2 level1 lfo6;background:white">
+<span class=3D"contentpasted2"><span style=3D"font-size:12.0pt;font-family:=
+&quot;Times New Roman&quot;,serif">Benjamin NGUYEN, INSA&nbsp;</span></span=
+><o:p></o:p></li><li class=3D"MsoNormal" style=3D"color:black;mso-margin-to=
+p-alt:auto;mso-margin-bottom-alt:auto;mso-list:l2 level1 lfo6;background:wh=
+ite">
+<span class=3D"contentpasted2"><span lang=3D"EN-US" style=3D"font-size:12.0=
+pt;font-family:&quot;Times New Roman&quot;,serif">Suprateek SARKER, McIntir=
+e School of Commerce, University of Virginia, USA&nbsp;</span></span><span =
+lang=3D"EN-US"><o:p></o:p></span></li><li class=3D"MsoNormal" style=3D"colo=
+r:black;mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;mso-list:l2 leve=
+l1 lfo6;background:white">
+<span class=3D"contentpasted2"><span lang=3D"EN-US" style=3D"font-size:12.0=
+pt;font-family:&quot;Times New Roman&quot;,serif">Francesco SCHIAVONE, Univ=
+ersity Parthenope, Naples, Italy&nbsp;</span></span><span lang=3D"EN-US"><o=
+:p></o:p></span></li><li class=3D"MsoNormal" style=3D"color:black;mso-margi=
+n-top-alt:auto;mso-margin-bottom-alt:auto;mso-list:l2 level1 lfo6;backgroun=
+d:white">
+<span class=3D"contentpasted2"><span style=3D"font-size:12.0pt;font-family:=
+&quot;Times New Roman&quot;,serif">Nour UL AIN, EMLV, Paris la D=E9fense&nb=
+sp;</span></span><o:p></o:p></li></ul>
+<p class=3D"MsoNormal" style=3D"margin-bottom:8.0pt;text-align:justify;back=
+ground:white">
+<b><span style=3D"font-family:&quot;Times New Roman&quot;,serif;color:black=
+">&nbsp;</span></b><o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"margin-bottom:8.0pt;text-align:justify;back=
+ground:white">
+<span class=3D"contentpasted2"><b><span lang=3D"EN-US" style=3D"font-family=
+:&quot;Times New Roman&quot;,serif;color:black">Organizing Committee&nbsp;<=
+/span></b></span><o:p></o:p></p>
+<ul type=3D"disc">
+<li class=3D"MsoNormal" style=3D"color:black;mso-margin-top-alt:auto;mso-ma=
+rgin-bottom-alt:auto;mso-list:l1 level1 lfo9;background:white">
+<span class=3D"contentpasted2"><span style=3D"font-size:12.0pt;font-family:=
+&quot;Times New Roman&quot;,serif">Mich=E8le KANHOUNOU, ESILV Paris la D=E9=
+fense &nbsp;</span></span><o:p></o:p></li><li class=3D"MsoNormal" style=3D"=
+color:black;mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;mso-list:l1 =
+level1 lfo9;background:white">
+<span class=3D"contentpasted2"><span style=3D"font-size:12.0pt;font-family:=
+&quot;Times New Roman&quot;,serif">Hajer KEFI, EMLV Paris la D=E9fense &nbs=
+p;</span></span><o:p></o:p></li><li class=3D"MsoNormal" style=3D"color:blac=
+k;mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;mso-list:l1 level1 lfo=
+9;background:white">
+<span class=3D"contentpasted2"><span style=3D"font-size:12.0pt;font-family:=
+&quot;Times New Roman&quot;,serif">Insaf KHELLADI, EMLV Paris la D=E9fense =
+&nbsp;</span></span><o:p></o:p></li><li class=3D"MsoNormal" style=3D"color:=
+black;mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;mso-list:l1 level1=
+ lfo9;background:white">
+<span class=3D"contentpasted2"><span style=3D"font-size:12.0pt;font-family:=
+&quot;Times New Roman&quot;,serif">Clara MANTEY, ILV Paris la D=E9fense &nb=
+sp;</span></span><o:p></o:p></li><li class=3D"MsoNormal" style=3D"color:bla=
+ck;mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;mso-list:l1 level1 lf=
+o9;background:white">
+<span class=3D"contentpasted2"><span style=3D"font-size:12.0pt;font-family:=
+&quot;Times New Roman&quot;,serif">Nicolas TRAVERS, ESILV Paris la D=E9fens=
+e &nbsp;</span></span><o:p></o:p></li></ul>
+<p class=3D"MsoNormal" style=3D"margin-bottom:8.0pt;text-align:justify;back=
+ground:white">
+<span style=3D"font-family:&quot;Times New Roman&quot;,serif;color:black">&=
+nbsp;</span><o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"margin-bottom:8.0pt;text-align:justify;back=
+ground:white">
+<span class=3D"contentpasted2"><span lang=3D"EN-US" style=3D"font-family:&q=
+uot;Times New Roman&quot;,serif;color:black">For any questions regarding th=
+e research day, please contact us at the following email address:
+</span></span><span lang=3D"EN-US" style=3D"font-family:&quot;Times New Rom=
+an&quot;,serif;color:black">ehealth.ethics@devinci.onmicrosoft.com&nbsp;</s=
+pan><span lang=3D"EN-US"><o:p></o:p></span></p>
+</div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">&nbs=
+p;</span><span lang=3D"EN-US"><o:p></o:p></span></p>
+<table class=3D"MsoNormalTable" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0" width=3D"0">
+<tbody>
+<tr>
+<td style=3D"padding:0cm 0cm 0cm 0cm">
+<table class=3D"MsoNormalTable" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0" width=3D"0">
+<tbody>
+<tr>
+<td style=3D"padding:0cm 0cm 0cm 0cm">
+<table class=3D"MsoNormalTable" border=3D"0" cellspacing=3D"7" cellpadding=
+=3D"0">
+<tbody>
+<tr>
+<td width=3D"70" style=3D"width:52.5pt;padding:0cm 0cm 0cm 0cm">
+<p class=3D"MsoNormal"><img border=3D"0" id=3D"_x0000_i1028" src=3D"https:/=
+/storage.letsignit.com/5bbf3d27229c7c0001b516ac/logo_5bbf3d27229c7c0001b516=
+ac_74cdd4e9ecfda1b8b62de4645eb6b056.png"><o:p></o:p></p>
+</td>
+<td style=3D"padding:0cm 0cm 0cm 0cm">
+<p class=3D"MsoNormal"><b><span style=3D"font-size:9.0pt;font-family:&quot;=
+Verdana&quot;,sans-serif;color:#1C1C1B">Nicolas TRAVERS</span></b><span sty=
+le=3D"font-size:9.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:#1C1=
+C1B"><br>
+</span><b><span style=3D"font-size:9.0pt;font-family:&quot;Verdana&quot;,sa=
+ns-serif;color:black">Enseignant Chercheur - Responsable Groupe Digital</sp=
+an></b><span style=3D"font-size:9.0pt;font-family:&quot;Verdana&quot;,sans-=
+serif;color:black"><br>
+D=E9partement Informatique, Big Data et Objets Connect=E9s<br>
++33 1 81 00 28 33 <br>
+<a href=3D"https://www.linkedin.com/in/traversn/">https://www.linkedin.com/=
+in/traversn/</a></span><span style=3D"font-family:&quot;Verdana&quot;,sans-=
+serif"><o:p></o:p></span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"padding:0cm 0cm 0cm 0cm"></td>
+<td style=3D"padding:0cm 0cm 0cm 0cm">
+<table class=3D"MsoNormalTable" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0">
+<tbody>
+<tr>
+<td style=3D"padding:0cm 0cm 0cm 0cm">
+<p class=3D"MsoNormal"><i><span style=3D"font-size:9.0pt;font-family:&quot;=
+Verdana&quot;,sans-serif;color:black">Retrouvez-nous sur
+<b><a href=3D"https://cloud.letsignit.com/collect/bc/5f477b498afa65000aabd3=
+21?p=3DnP2-ScO6-vNP5RaGcPvyEKdWgVGNlodC4kLGsvUnUpY0qmRs1JsFfkWJSF8ZWmLjziuV=
+1VmS02Lgh9TC4BtYMlMcWETBP8JnIZ84PHKkIFzAVeivnJDMztduWrkaCID-mL-1hN1xDK18wi-=
+o8gS3G2Prg4vze7v-P3S23OEx07I=3D"><span style=3D"color:black;text-decoration=
+:none">devinci.fr/research-center</span></a></b></span></i><b><span style=
+=3D"font-size:9.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:black"=
+>
+</span></b><o:p></o:p></p>
+</td>
+</tr>
+<tr style=3D"height:18.0pt">
+<td style=3D"padding:0cm 0cm 0cm 0cm;height:18.0pt">
+<p class=3D"MsoNormal"><a href=3D"https://cloud.letsignit.com/collect/bc/5f=
+477b498afa65000aabd321?p=3DnP2-ScO6-vNP5RaGcPvyEKdWgVGNlodC4kLGsvUnUpY0qmRs=
+1JsFfkWJSF8ZWmLjziuV1VmS02Lgh9TC4BtYMlMcWETBP8JnIZ84PHKkIFx0T6tFMYApEhXbZeo=
+XLKRDbLaF7BTQrKKYn0nUrUWQah8hSmJWR2sYE9sYEAhSfrk=3D"><span style=3D"text-de=
+coration:none"><img border=3D"0" width=3D"16" height=3D"16" style=3D"width:=
+.1666in;height:.1666in" id=3D"_x0000_i1027" src=3D"https://storage.letsigni=
+t.com/5bbf3d27229c7c0001b516ac/logo_5bbf3d27229c7c0001b516ac_fa26d4badf2c63=
+77bc99410d39ab3e86.png"></span></a><a href=3D"https://cloud.letsignit.com/c=
+ollect/bc/5f477b498afa65000aabd321?p=3DnP2-ScO6-vNP5RaGcPvyEKdWgVGNlodC4kLG=
+svUnUpY0qmRs1JsFfkWJSF8ZWmLjziuV1VmS02Lgh9TC4BtYMlMcWETBP8JnIZ84PHKkIFx3Dw1=
+uAPA-oNIZIuLDKaQPM9epEevAF9WONbx-xxyOug=3D=3D"><span style=3D"text-decorati=
+on:none"><img border=3D"0" width=3D"16" height=3D"16" style=3D"width:.1666i=
+n;height:.1666in" id=3D"_x0000_i1026" src=3D"https://storage.letsignit.com/=
+5bbf3d27229c7c0001b516ac/logo_5bbf3d27229c7c0001b516ac_30a7735a477788d78339=
+88f38fa47b90.png"></span></a><a href=3D"https://cloud.letsignit.com/collect=
+/bc/5f477b498afa65000aabd321?p=3DnP2-ScO6-vNP5RaGcPvyEKdWgVGNlodC4kLGsvUnUp=
+Y0qmRs1JsFfkWJSF8ZWmLjziuV1VmS02Lgh9TC4BtYMlMcWETBP8JnIZ84PHKkIFwHnZyp88uYM=
+bvJZYe9aL6XkAV7EAuoMYMv--iWCrWIuccvGiw5Yg8yCj-u28eHda17-FGMoeHmazGFAnu9nVbu=
+"><span style=3D"text-decoration:none"><img border=3D"0" width=3D"16" heigh=
+t=3D"16" style=3D"width:.1666in;height:.1666in" id=3D"_x0000_i1025" src=3D"=
+https://storage.letsignit.com/5bbf3d27229c7c0001b516ac/logo_5bbf3d27229c7c0=
+001b516ac_959dfa6c5ceef1acde39b485b1e8493e.png"></span></a><o:p></o:p></p>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td style=3D"border:none;border-top:solid #1C1C1B 2.25pt;padding:0cm 0cm 0c=
+m 0cm"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<p class=3D"MsoNormal"><span style=3D"display:none"><o:p>&nbsp;</o:p></span=
+></p>
+<table class=3D"MsoNormalTable" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0" width=3D"0">
+<tbody>
+<tr>
+<td style=3D"padding:0cm 0cm 0cm 0cm">
+<p class=3D"MsoNormal"><span style=3D"font-size:1.0pt">&nbsp;<o:p></o:p></s=
+pan></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+</div>
+</body>
+</html>
+
+--_000_PA4PR02MB6896E731F5B0DC837A6E21C794BF9PA4PR02MB6896eurp_--

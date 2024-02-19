@@ -1,0 +1,568 @@
+Return-Path: <rim.hantach@gmail.com>
+X-Original-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (BounceSMTP2.univ-nantes.prive [172.20.12.67])
+	by sympa6.univ-nantes.prive (Postfix) with ESMTP id B20BA2292950
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Tue, 19 Nov 2019 12:15:51 +0100 (CET)
+Received: from mx3.d101.univ-nantes.fr (MX3.univ-nantes.fr [193.52.101.137])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id B06C061F0E9
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Tue, 19 Nov 2019 12:15:51 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTP id AC7B7414ACB9
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 19 Nov 2019 12:15:51 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 0.744
+X-Spam-Level:
+X-Spam-Status: No, score=0.744 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, FREEMAIL_FROM=0.001, HTML_FONT_LOW_CONTRAST=0.001,
+	HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_WSFF=0.01,
+	SARE_HTML_COLOR_B=0.621, SPF_PASS=-0.001,
+	T_KAM_HTML_FONT_INVALID=0.01, UN_PHISHING_PW=0.1, URIBL_BLOCKED=0.001]
+	autolearn=disabled
+X-CRM114-Status: UNSURE ( 2.0679 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=gmail.com
+Received: from mx3.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id S3yymweUFLcu for <liste-egc@polytech.univ-nantes.fr>;
+	Tue, 19 Nov 2019 12:15:49 +0100 (CET)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mail-il1-x141.google.com (mail-il1-x141.google.com [IPv6:2607:f8b0:4864:20::141])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTPS id C64DB4924CA7
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 19 Nov 2019 12:15:48 +0100 (CET)
+Received: by mail-il1-x141.google.com with SMTP id s75so19267928ilc.3
+        for <liste-egc@polytech.univ-nantes.fr>; Tue, 19 Nov 2019 03:15:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=6o3tBXuEuCPxVcmsmw0N9lo7npTJSimJpXDFN+u1hKk=;
+        b=HofOOV6k8gkExYtIyLebOkcVpH8qPe1tosfZOWdDJSGZ2wbXL+xUKTMqr7RbzRr3hF
+         QLxJmDLKtR0RmVcQFaQglANvRZCUEdQbxbntJkQMyRTuWekKjmSQe0ctTPYIm/DcpND3
+         gDdM7uWLl+LC8gv5ft1CBRubzPaVFIJ1KbZ3qkpaPQwHWZvy7pPMQyLf8NXDCCiL9sYc
+         KLzEKnOqMbxW4RQJbu1bHi29Rdzt3ZsvREy7/fXlf7kNavNOr+2iqWklq1crZpJqkNN6
+         vHg7tcdiuqgLw5S7tSbFSdUiNS5jqIxea21fxPVbQjrBPmrjFWss/Q6TG2lO7RwAsFfx
+         WiLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=6o3tBXuEuCPxVcmsmw0N9lo7npTJSimJpXDFN+u1hKk=;
+        b=OGqsRP63XXOxta2W7rnMpzh2xATxKvXsMfThegE1dyO4ChAzIP8jeSKwpJJOj8YUYn
+         SFseK/bt4ffYP7RXcIJyUFWnZQD/OhzJs6bQEWC5F7SrO8SakIf8aoiGrFutqfHIMWCj
+         gmSiaRQqI9/Z39ZPLXciot/PA9E7PG+5rABIVIAR5Xl33E2rpCUzfnP/Z7NSnZ1FP2Ta
+         lajJ8AbtJsfvb0CXxhH33EQIzOiDfPCr9gj9r5ZYQD9sxFplTHAL8MmY2wIrG8lHMoA1
+         zbfSoLZprCQteRDvgxjNW/ptYkVemDeHpIhGeqVOd4zMarSiET4H1z2ZrwMd9w5VH0s7
+         gnRw==
+X-Gm-Message-State: APjAAAX2wE4NEViwG+nPT+Kx+o9hLSy2FT3ggcZCtcJQommFl74oa33l
+	lpBkhVSztQUhBBU7fcWyc226zBx2MW27Yx8DjqvStBdn
+X-Google-Smtp-Source: APXvYqxZPtvTF+0FC54SdjKAEZdXC5UMFejfuv/qUVwLzUWPgnyu2bj6sHtVSOpSIL6dd7svwe0Mo16DXlojLG1K5Kk=
+X-Received: by 2002:a92:aa48:: with SMTP id j69mr21696098ili.162.1574162147279;
+ Tue, 19 Nov 2019 03:15:47 -0800 (PST)
+MIME-Version: 1.0
+From: Rim Hantach <rim.hantach@gmail.com>
+Date: Tue, 19 Nov 2019 12:15:37 +0100
+Message-ID: <CAPD0Gt+WQf0QeOZN7jjmCZcpw5MMhYy2WPoHAQa79PeqQetMUQ@mail.gmail.com>
+To: liste-egc@polytech.univ-nantes.fr, bull-i3@irit.fr, 
+	info-ic@listes.irisa.fr
+Content-Type: multipart/alternative; boundary="0000000000009b87c30597b12f76"
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] [CFP] Atelier DL for NLP: Deep Learning pour le
+ traitement automatique des langues
+
+--0000000000009b87c30597b12f76
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+************ D=C3=A9sol=C3=A9 pour les r=C3=A9ceptions multiples **********=
+*****
+
+
+Atelier EGC 2020 DL for NLP:
+
+ Deep learning pour le traitement automatique des langues
+
+
+   Bruxelles 28 Janvier 2020
+
+
+
+
+
+Site web:   <https://www.dl-nlp-egc2020.ml/>https://www.dl-nlp-egc2020.ml
+
+Soumission: https://easychair.org/conferences/?conf=3Ddlnlp2020
+
+
+Cet atelier a pour but de r=C3=A9unir des professionnels, chercheurs et exp=
+erts
+en traitement du langage naturel et en apprentissage profond dont les
+travaux de recherches sont ax=C3=A9s sur les techniques du Deep Learning
+appliqu=C3=A9es au TAL. Nous discuterons =C3=A9galement des principaux d=C3=
+=A9fis qui se
+posent dans ce contexte et d=C3=A9finirons les orientations possibles pour =
+les
+futurs progr=C3=A8s.
+
+En r=C3=A9sum=C3=A9, cet atelier est l=E2=80=99occasion de:
+
+   -
+
+   Pr=C3=A9senter les derni=C3=A8res avanc=C3=A9es en mati=C3=A8re du TAL b=
+as=C3=A9s sur
+   l=E2=80=99apprentissage profond.
+   -
+
+   D=C3=A9crire les applications potentielles pouvant inspirer de nouvelles
+   approches d=E2=80=99apprentissage profond.
+   -
+
+   Evaluer et challenger les mod=C3=A8les du TAL
+
+ Th=C3=A8mes de l'atelier (liste non exhaustive) :  _
+
+   -
+
+   Traduction automatique
+   -
+
+   R=C3=A9sum=C3=A9 automatique
+   -
+
+   Classification s=C3=A9mantique de documents
+   -
+
+   Analyse des donn=C3=A9es textuelles
+   -
+
+   Extraction des donn=C3=A9es textuelles =C3=A0 partir des images, PDF, et=
+c
+   -
+
+   Syst=C3=A8me de question-r=C3=A9ponse (Chatbot, etc)
+   -
+
+   Synth=C3=A8se vocale / Reconnaissance audio
+   -
+
+   Recherche d'information
+   -
+
+   Identification des entit=C3=A9s nomm=C3=A9es
+   -
+
+   Transfert d=E2=80=99apprentissage
+   -
+
+   Apprentissage actif
+
+
+ Soumission :  _
+
+Les soumission peuvent =C3=AAtre en fran=C3=A7ais ou anglais et de trois ty=
+pes selon
+leur =C3=A9tat d=E2=80=99avancement :
+
+   -
+
+   Des r=C3=A9sum=C3=A9s =C3=A9tendus (4 pages)
+   -
+
+   Des articles longs (maximum 12 pages)
+   -
+
+   D=C3=A9monstrations logicielles (4 pages)
+
+ Dates importantes :  _
+
+   -
+
+   Date limite de soumission des articles : 06/12/2019
+   -
+
+   Notification aux auteurs : 18/12/2019
+   -
+
+   Version finale : 02/01/2020
+   -
+
+   Atelier : 28/01/2020
+
+
+ Comit=C3=A9 d'organisation :  _
+
+   -
+
+   Rim HANTACH, ing=C3=A9nieur de recherche, ENGIE
+   -
+
+   Philippe CALVEZ, directeur du lab CSAI, ENGIE
+
+--0000000000009b87c30597b12f76
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"=
+gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote" style=3D"color:rgb=
+(80,0,80)"><div dir=3D"ltr"><blockquote style=3D"margin:0px 0px 0px 40px;bo=
+rder:none;padding:0px"><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:=
+0pt;margin-bottom:0pt"><span style=3D"color:rgb(0,0,0);font-family:arial,he=
+lvetica,sans-serif;font-size:16px">************ D=C3=A9sol=C3=A9 pour les r=
+=C3=A9ceptions=C2=A0</span><span style=3D"color:rgb(0,0,0);font-family:aria=
+l,helvetica,sans-serif;font-size:16px">multiples</span><span style=3D"color=
+:rgb(0,0,0);font-family:arial,helvetica,sans-serif;font-size:16px">=C2=A0**=
+*************</span>=C2=A0=C2=A0<span style=3D"background-color:transparent=
+;color:rgb(11,83,148);font-family:Arial;font-size:13.5pt;font-weight:700;wh=
+ite-space:pre-wrap"><br></span></p><p dir=3D"ltr" style=3D"line-height:1.38=
+;margin-top:0pt;margin-bottom:0pt"><span style=3D"background-color:transpar=
+ent;color:rgb(11,83,148);font-family:Arial;font-size:13.5pt;font-weight:700=
+;white-space:pre-wrap"><br></span></p><p dir=3D"ltr" style=3D"line-height:1=
+.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"background-color:trans=
+parent;color:rgb(11,83,148);font-family:Arial;font-size:13.5pt;font-weight:=
+700;white-space:pre-wrap">Atelier EGC 2020 <span class=3D"gmail-il">DL</spa=
+n> for <span class=3D"gmail-il">NLP</span>:=C2=A0=C2=A0</span><br></p><p di=
+r=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><span=
+ style=3D"font-size:13.5pt;font-family:Arial;font-weight:700;font-variant-n=
+umeric:normal;font-variant-east-asian:normal;vertical-align:baseline;white-=
+space:pre-wrap"><font color=3D"#ffffff">    </font></span><span style=3D"fo=
+nt-size:13.5pt;font-family:Arial;color:rgb(255,255,0);background-color:rgb(=
+11,83,148);font-weight:700;font-variant-numeric:normal;font-variant-east-as=
+ian:normal;vertical-align:baseline;white-space:pre-wrap">=C2=A0Deep learnin=
+g pour le traitement automatique des langues </span></p></blockquote><block=
+quote style=3D"margin:0px 0px 0px 40px;border:none;padding:0px"><p style=3D=
+"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><br></p></blockquote></=
+div></div><blockquote style=3D"color:rgb(80,0,80);margin:0px 0px 0px 40px;b=
+order:none;padding:0px"><blockquote style=3D"margin:0px 0px 0px 40px;border=
+:none;padding:0px"><blockquote style=3D"margin:0px 0px 0px 40px;border:none=
+;padding:0px"><blockquote style=3D"margin:0px 0px 0px 40px;border:none;padd=
+ing:0px"><blockquote style=3D"margin:0px 0px 0px 40px;border:none;padding:0=
+px"><blockquote style=3D"margin:0px 0px 0px 40px;border:none;padding:0px"><=
+blockquote style=3D"margin:0px 0px 0px 40px;border:none;padding:0px"><block=
+quote style=3D"margin:0px 0px 0px 40px;border:none;padding:0px"><blockquote=
+ style=3D"margin:0px 0px 0px 40px;border:none;padding:0px"><blockquote styl=
+e=3D"margin:0px 0px 0px 40px;border:none;padding:0px"><div class=3D"gmail_q=
+uote"><div><font color=3D"#ffffff">=C2=A0</font><span style=3D"color:rgb(25=
+5,255,0);background-color:rgb(11,83,148)">=C2=A0=C2=A0Bruxelles 28 Janvier =
+2020 =C2=A0</span></div></div></blockquote></blockquote></blockquote></bloc=
+kquote></blockquote></blockquote></blockquote></blockquote></blockquote></b=
+lockquote></div></div></div></div><blockquote style=3D"margin:0px 0px 0px 4=
+0px;border:none;padding:0px"><blockquote style=3D"margin:0px 0px 0px 40px;b=
+order:none;padding:0px"><blockquote style=3D"margin:0px 0px 0px 40px;border=
+:none;padding:0px"><blockquote style=3D"margin:0px 0px 0px 40px;border:none=
+;padding:0px"><blockquote style=3D"margin:0px 0px 0px 40px;border:none;padd=
+ing:0px"><blockquote style=3D"margin:0px 0px 0px 40px;border:none;padding:0=
+px"><blockquote style=3D"margin:0px 0px 0px 40px;border:none;padding:0px"><=
+blockquote style=3D"margin:0px 0px 0px 40px;border:none;padding:0px"><block=
+quote style=3D"margin:0px 0px 0px 40px;border:none;padding:0px"><blockquote=
+ style=3D"margin:0px 0px 0px 40px;border:none;padding:0px"><blockquote styl=
+e=3D"margin:0px 0px 0px 40px;border:none;padding:0px"><blockquote style=3D"=
+margin:0px 0px 0px 40px;border:none;padding:0px"><blockquote style=3D"margi=
+n:0px 0px 0px 40px;border:none;padding:0px"><div class=3D"gmail_quote"><div=
+><div class=3D"gmail_quote"><div><div class=3D"gmail_quote" style=3D"color:=
+rgb(80,0,80)"><blockquote style=3D"margin:0px 0px 0px 40px;border:none;padd=
+ing:0px"><p style=3D"line-height:1.38;margin-left:252pt;margin-top:0pt;marg=
+in-bottom:0pt"><span style=3D"font-size:11pt;font-family:Arial;font-variant=
+-numeric:normal;font-variant-east-asian:normal;vertical-align:baseline;whit=
+e-space:pre-wrap"><font color=3D"#ffffff"><span style=3D"font-size:11pt;fon=
+t-variant-numeric:normal;font-variant-east-asian:normal;vertical-align:base=
+line"><br></span></font></span></p></blockquote></div></div></div></div></d=
+iv></blockquote></blockquote></blockquote></blockquote></blockquote></block=
+quote></blockquote></blockquote></blockquote></blockquote></blockquote></bl=
+ockquote></blockquote><blockquote style=3D"margin:0px 0px 0px 40px;border:n=
+one;padding:0px"><blockquote style=3D"margin:0px 0px 0px 40px;border:none;p=
+adding:0px"><blockquote style=3D"margin:0px 0px 0px 40px;border:none;paddin=
+g:0px"><blockquote style=3D"margin:0px 0px 0px 40px;border:none;padding:0px=
+"><blockquote style=3D"margin:0px 0px 0px 40px;border:none;padding:0px"><bl=
+ockquote style=3D"margin:0px 0px 0px 40px;border:none;padding:0px"><blockqu=
+ote style=3D"margin:0px 0px 0px 40px;border:none;padding:0px"><blockquote s=
+tyle=3D"margin:0px 0px 0px 40px;border:none;padding:0px">=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0<img src=3D"https://lh6.googleusercontent.com/kaZKwalUluc9hCcVWa5-qpUFIy=
+TZ-f4N8JcQa1Nbi98_Vs4k2wpdX5-Oy3i19TJxwakPl76Xys0m-F8rhucGWrW9fxI5TXBkqonU2=
+SXUfASBsdXAvKPQW0bWDSTbZKP8rbaA9Nh-" width=3D"80" height=3D"80" class=3D"gm=
+ail-CToWUd" style=3D"color: rgb(80, 0, 80); margin-left: 0px; margin-top: 0=
+px;"><br></blockquote></blockquote></blockquote></blockquote></blockquote><=
+/blockquote></blockquote></blockquote><div class=3D"gmail_quote"><div dir=
+=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_qu=
+ote" style=3D"color:rgb(80,0,80)"><blockquote style=3D"margin:0px 0px 0px 4=
+0px;border:none;padding:0px"><p style=3D"line-height:1.38;margin-left:252pt=
+;margin-top:0pt;margin-bottom:0pt"></p></blockquote><div><span id=3D"gmail-=
+m_6778441562866622021gmail-m_-5108622890184021533gmail-m_-58096441452373974=
+82gmail-m_4539363680675249067gmail-m_-3676147969726867669gmail-m_6163268623=
+018493980gmail-m_6968682819526671304m_4213029437939235256m_6448937906607900=
+194gmail-m_-6348856271483300652m_1877174783777536760gmail-docs-internal-gui=
+d-6f312463-7fff-07f1-af56-f9efb6826608"><br><span id=3D"gmail-m_67784415628=
+66622021gmail-m_-5108622890184021533gmail-m_-5809644145237397482gmail-m_453=
+9363680675249067gmail-m_-3676147969726867669gmail-m_6163268623018493980gmai=
+l-docs-internal-guid-519c53cd-7fff-edf6-579b-da3766086f93"><p dir=3D"ltr" s=
+tyle=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"f=
+ont-size:13.5pt;font-family:Arial;color:rgb(11,83,148);background-color:tra=
+nsparent;font-weight:700;font-variant-numeric:normal;font-variant-east-asia=
+n:normal;vertical-align:baseline;white-space:pre-wrap">Site web:</span><spa=
+n style=3D"font-size:13.5pt;font-family:Arial;color:rgb(33,33,33);backgroun=
+d-color:transparent;font-variant-numeric:normal;font-variant-east-asian:nor=
+mal;vertical-align:baseline;white-space:pre-wrap"> </span><a href=3D"https:=
+//www.dl-nlp-egc2020.ml/" target=3D"_blank" style=3D"text-decoration-line:n=
+one"><span style=3D"font-size:13.5pt;font-family:Arial;color:rgb(33,33,33);=
+background-color:transparent;font-variant-numeric:normal;font-variant-east-=
+asian:normal;vertical-align:baseline;white-space:pre-wrap">=C2=A0</span></a=
+><a href=3D"https://www.dl-nlp-egc2020.ml/" target=3D"_blank" style=3D"text=
+-decoration-line:none"><span style=3D"font-size:13.5pt;font-family:Arial;ba=
+ckground-color:transparent;font-variant-numeric:normal;font-variant-east-as=
+ian:normal;text-decoration-line:underline;vertical-align:baseline;white-spa=
+ce:pre-wrap">https://www.<span class=3D"gmail-il">dl</span>-<span class=3D"=
+gmail-il">nlp</span>-egc2020.ml</span></a></p><p dir=3D"ltr" style=3D"line-=
+height:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:13.5=
+pt;font-family:Arial;color:rgb(11,83,148);background-color:transparent;font=
+-weight:700;font-variant-numeric:normal;font-variant-east-asian:normal;vert=
+ical-align:baseline;white-space:pre-wrap">Soumission:</span><span style=3D"=
+font-size:13.5pt;font-family:Arial;color:rgb(33,33,33);background-color:tra=
+nsparent;font-variant-numeric:normal;font-variant-east-asian:normal;vertica=
+l-align:baseline;white-space:pre-wrap"> </span><a href=3D"https://easychair=
+.org/conferences/?conf=3Ddlnlp2020" target=3D"_blank" style=3D"text-decorat=
+ion-line:none"><span style=3D"font-size:13.5pt;font-family:Arial;background=
+-color:transparent;font-variant-numeric:normal;font-variant-east-asian:norm=
+al;text-decoration-line:underline;vertical-align:baseline;white-space:pre-w=
+rap">https://easychair.org/conferences/?conf=3Ddlnlp2020</span></a></p></sp=
+an><br><p dir=3D"ltr" style=3D"line-height:1.2;text-align:justify;margin-to=
+p:11pt;margin-bottom:0pt"><span style=3D"font-size:13.5pt;font-family:Arial=
+;color:rgb(11,83,148);background-color:transparent;font-variant-numeric:nor=
+mal;font-variant-east-asian:normal;vertical-align:baseline;white-space:pre-=
+wrap"><br></span></p><p dir=3D"ltr" style=3D"line-height:1.2;text-align:jus=
+tify;margin-top:11pt;margin-bottom:0pt"><span style=3D"font-size:13.5pt;fon=
+t-family:Arial;color:rgb(11,83,148);background-color:transparent;font-varia=
+nt-numeric:normal;font-variant-east-asian:normal;vertical-align:baseline;wh=
+ite-space:pre-wrap">Cet atelier a pour but de r=C3=A9unir des professionnel=
+s, chercheurs et experts en traitement du langage naturel et en apprentissa=
+ge profond dont les travaux de recherches sont ax=C3=A9s sur les techniques=
+ du Deep Learning appliqu=C3=A9es au TAL. Nous discuterons =C3=A9galement d=
+es principaux d=C3=A9fis qui se posent dans ce contexte et d=C3=A9finirons =
+les orientations possibles pour les futurs progr=C3=A8s.</span></p><p dir=
+=3D"ltr" style=3D"line-height:1.2;text-align:justify;margin-top:11pt;margin=
+-bottom:0pt"><span style=3D"font-size:13.5pt;font-family:Arial;color:rgb(11=
+,83,148);background-color:transparent;font-variant-numeric:normal;font-vari=
+ant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap">En r=C3=
+=A9sum=C3=A9, cet atelier est l=E2=80=99occasion de:</span></p><ul style=3D=
+"margin-top:0px;margin-bottom:0px"><li dir=3D"ltr" style=3D"margin-left:15p=
+x;list-style-type:square;font-size:13.5pt;font-family:Arial;color:rgb(11,83=
+,148);background-color:transparent;font-variant-numeric:normal;font-variant=
+-east-asian:normal;vertical-align:baseline;white-space:pre-wrap"><p dir=3D"=
+ltr" style=3D"line-height:1.2;margin-top:20pt;margin-bottom:0pt"><span styl=
+e=3D"font-size:13.5pt;background-color:transparent;font-variant-numeric:nor=
+mal;font-variant-east-asian:normal;vertical-align:baseline">Pr=C3=A9senter =
+les derni=C3=A8res avanc=C3=A9es en mati=C3=A8re du TAL bas=C3=A9s sur l=E2=
+=80=99apprentissage profond.</span></p></li><li dir=3D"ltr" style=3D"margin=
+-left:15px;list-style-type:square;font-size:13.5pt;font-family:Arial;color:=
+rgb(11,83,148);background-color:transparent;font-variant-numeric:normal;fon=
+t-variant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap"><=
+p dir=3D"ltr" style=3D"line-height:1.2;margin-top:0pt;margin-bottom:0pt"><s=
+pan style=3D"font-size:13.5pt;background-color:transparent;font-variant-num=
+eric:normal;font-variant-east-asian:normal;vertical-align:baseline">D=C3=A9=
+crire les applications potentielles pouvant inspirer de nouvelles approches=
+ d=E2=80=99apprentissage profond.</span></p></li><li dir=3D"ltr" style=3D"m=
+argin-left:15px;list-style-type:square;font-size:13.5pt;font-family:Arial;c=
+olor:rgb(11,83,148);background-color:transparent;font-variant-numeric:norma=
+l;font-variant-east-asian:normal;vertical-align:baseline;white-space:pre-wr=
+ap"><p dir=3D"ltr" style=3D"line-height:1.2;margin-top:0pt;margin-bottom:0p=
+t"><span style=3D"font-size:13.5pt;background-color:transparent;font-varian=
+t-numeric:normal;font-variant-east-asian:normal;vertical-align:baseline">Ev=
+aluer et challenger les mod=C3=A8les du TAL</span></p></li></ul><p dir=3D"l=
+tr" style=3D"line-height:1.86;margin-top:11pt;margin-bottom:0pt"><span styl=
+e=3D"font-size:13.5pt;font-family:Arial;color:rgb(255,255,0);background-col=
+or:rgb(11,83,148);font-weight:700;font-variant-numeric:normal;font-variant-=
+east-asian:normal;vertical-align:baseline;white-space:pre-wrap">=C2=A0Th=C3=
+=A8mes de l&#39;atelier (liste non exhaustive) :=C2=A0 </span><span style=
+=3D"font-size:13.5pt;font-family:Arial;color:rgb(255,255,255);background-co=
+lor:transparent;font-weight:700;font-variant-numeric:normal;font-variant-ea=
+st-asian:normal;vertical-align:baseline;white-space:pre-wrap">_</span></p><=
+ul style=3D"margin-top:0px;margin-bottom:0px"><li dir=3D"ltr" style=3D"marg=
+in-left:15px;list-style-type:square;font-size:13.5pt;font-family:Arial;colo=
+r:rgb(11,83,148);background-color:transparent;font-variant-numeric:normal;f=
+ont-variant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap"=
+><p dir=3D"ltr" style=3D"line-height:1.2;margin-top:20pt;margin-bottom:0pt"=
+><span style=3D"font-size:13.5pt;background-color:transparent;font-variant-=
+numeric:normal;font-variant-east-asian:normal;vertical-align:baseline">Trad=
+uction automatique</span></p></li><li dir=3D"ltr" style=3D"margin-left:15px=
+;list-style-type:square;font-size:13.5pt;font-family:Arial;color:rgb(11,83,=
+148);background-color:transparent;font-variant-numeric:normal;font-variant-=
+east-asian:normal;vertical-align:baseline;white-space:pre-wrap"><p dir=3D"l=
+tr" style=3D"line-height:1.2;margin-top:0pt;margin-bottom:0pt"><span style=
+=3D"font-size:13.5pt;background-color:transparent;font-variant-numeric:norm=
+al;font-variant-east-asian:normal;vertical-align:baseline">R=C3=A9sum=C3=A9=
+ automatique</span></p></li><li dir=3D"ltr" style=3D"margin-left:15px;list-=
+style-type:square;font-size:13.5pt;font-family:Arial;color:rgb(11,83,148);b=
+ackground-color:transparent;font-variant-numeric:normal;font-variant-east-a=
+sian:normal;vertical-align:baseline;white-space:pre-wrap"><p dir=3D"ltr" st=
+yle=3D"line-height:1.2;margin-top:0pt;margin-bottom:0pt"><span style=3D"fon=
+t-size:13.5pt;background-color:transparent;font-variant-numeric:normal;font=
+-variant-east-asian:normal;vertical-align:baseline">Classification s=C3=A9m=
+antique de documents</span></p></li><li dir=3D"ltr" style=3D"margin-left:15=
+px;list-style-type:square;font-size:13.5pt;font-family:Arial;color:rgb(11,8=
+3,148);background-color:transparent;font-variant-numeric:normal;font-varian=
+t-east-asian:normal;vertical-align:baseline;white-space:pre-wrap"><p dir=3D=
+"ltr" style=3D"line-height:1.2;margin-top:0pt;margin-bottom:0pt"><span styl=
+e=3D"font-size:13.5pt;background-color:transparent;font-variant-numeric:nor=
+mal;font-variant-east-asian:normal;vertical-align:baseline">Analyse des don=
+n=C3=A9es textuelles</span></p></li><li dir=3D"ltr" style=3D"margin-left:15=
+px;list-style-type:square;font-size:13.5pt;font-family:Arial;color:rgb(11,8=
+3,148);background-color:transparent;font-variant-numeric:normal;font-varian=
+t-east-asian:normal;vertical-align:baseline;white-space:pre-wrap"><p dir=3D=
+"ltr" style=3D"line-height:1.2;margin-top:0pt;margin-bottom:0pt"><span styl=
+e=3D"font-size:13.5pt;background-color:transparent;font-variant-numeric:nor=
+mal;font-variant-east-asian:normal;vertical-align:baseline">Extraction des =
+donn=C3=A9es textuelles =C3=A0 partir des images, PDF, etc</span></p></li><=
+li dir=3D"ltr" style=3D"margin-left:15px;list-style-type:square;font-size:1=
+3.5pt;font-family:Arial;color:rgb(11,83,148);background-color:transparent;f=
+ont-variant-numeric:normal;font-variant-east-asian:normal;vertical-align:ba=
+seline;white-space:pre-wrap"><p dir=3D"ltr" style=3D"line-height:1.2;margin=
+-top:0pt;margin-bottom:0pt"><span style=3D"font-size:13.5pt;background-colo=
+r:transparent;font-variant-numeric:normal;font-variant-east-asian:normal;ve=
+rtical-align:baseline">Syst=C3=A8me de question-r=C3=A9ponse (Chatbot, etc)=
+</span></p></li><li dir=3D"ltr" style=3D"margin-left:15px;list-style-type:s=
+quare;font-size:13.5pt;font-family:Arial;color:rgb(11,83,148);background-co=
+lor:transparent;font-variant-numeric:normal;font-variant-east-asian:normal;=
+vertical-align:baseline;white-space:pre-wrap"><p dir=3D"ltr" style=3D"line-=
+height:1.2;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:13.5p=
+t;background-color:transparent;font-variant-numeric:normal;font-variant-eas=
+t-asian:normal;vertical-align:baseline">Synth=C3=A8se vocale / Reconnaissan=
+ce audio</span></p></li><li dir=3D"ltr" style=3D"margin-left:15px;list-styl=
+e-type:square;font-size:13.5pt;font-family:Arial;color:rgb(11,83,148);backg=
+round-color:transparent;font-variant-numeric:normal;font-variant-east-asian=
+:normal;vertical-align:baseline;white-space:pre-wrap"><p dir=3D"ltr" style=
+=3D"line-height:1.2;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-s=
+ize:13.5pt;background-color:transparent;font-variant-numeric:normal;font-va=
+riant-east-asian:normal;vertical-align:baseline">Recherche d&#39;informatio=
+n</span></p></li><li dir=3D"ltr" style=3D"margin-left:15px;list-style-type:=
+square;font-size:13.5pt;font-family:Arial;color:rgb(11,83,148);background-c=
+olor:transparent;font-variant-numeric:normal;font-variant-east-asian:normal=
+;vertical-align:baseline;white-space:pre-wrap"><p dir=3D"ltr" style=3D"line=
+-height:1.2;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:13.5=
+pt;background-color:transparent;font-variant-numeric:normal;font-variant-ea=
+st-asian:normal;vertical-align:baseline">Identification des entit=C3=A9s no=
+mm=C3=A9es</span></p></li><li dir=3D"ltr" style=3D"margin-left:15px;list-st=
+yle-type:square;font-size:13.5pt;font-family:Arial;color:rgb(11,83,148);bac=
+kground-color:transparent;font-variant-numeric:normal;font-variant-east-asi=
+an:normal;vertical-align:baseline;white-space:pre-wrap"><p dir=3D"ltr" styl=
+e=3D"line-height:1.2;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-=
+size:13.5pt;background-color:transparent;font-variant-numeric:normal;font-v=
+ariant-east-asian:normal;vertical-align:baseline">Transfert d=E2=80=99appre=
+ntissage</span></p></li><li dir=3D"ltr" style=3D"margin-left:15px;list-styl=
+e-type:square;font-size:13.5pt;font-family:Arial;color:rgb(11,83,148);backg=
+round-color:transparent;font-variant-numeric:normal;font-variant-east-asian=
+:normal;vertical-align:baseline;white-space:pre-wrap"><p dir=3D"ltr" style=
+=3D"line-height:1.2;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-s=
+ize:13.5pt;background-color:transparent;font-variant-numeric:normal;font-va=
+riant-east-asian:normal;vertical-align:baseline">Apprentissage actif</span>=
+</p></li></ul><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margi=
+n-bottom:0pt"><span id=3D"gmail-m_6778441562866622021gmail-m_-5108622890184=
+021533gmail-m_-5809644145237397482gmail-m_4539363680675249067gmail-m_-36761=
+47969726867669gmail-m_6163268623018493980gmail-m_6968682819526671304m_42130=
+29437939235256gmail-docs-internal-guid-2fcdcf54-7fff-5c5e-c0c4-4ab0a3bac20c=
+"><br></span></p><p dir=3D"ltr" style=3D"line-height:1.86;text-align:justif=
+y;margin-top:11pt;margin-bottom:0pt"><span style=3D"font-size:13.5pt;font-f=
+amily:Arial;color:rgb(255,255,0);background-color:rgb(11,83,148);font-weigh=
+t:700;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-a=
+lign:baseline;white-space:pre-wrap">=C2=A0Soumission :=C2=A0 </span><span s=
+tyle=3D"font-size:13.5pt;font-family:Arial;color:rgb(255,255,255);backgroun=
+d-color:transparent;font-weight:700;font-variant-numeric:normal;font-varian=
+t-east-asian:normal;vertical-align:baseline;white-space:pre-wrap">_</span><=
+/p><p dir=3D"ltr" style=3D"line-height:1.2;text-align:justify;margin-top:11=
+pt;margin-bottom:0pt"><span style=3D"font-size:13.5pt;font-family:Arial;col=
+or:rgb(11,83,148);background-color:transparent;font-variant-numeric:normal;=
+font-variant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap=
+">Les soumission peuvent =C3=AAtre en fran=C3=A7ais ou anglais et de trois =
+types selon leur =C3=A9tat d=E2=80=99avancement :</span></p><ul style=3D"ma=
+rgin-top:0px;margin-bottom:0px"><li dir=3D"ltr" style=3D"margin-left:15px;l=
+ist-style-type:square;font-size:13.5pt;font-family:Arial;color:rgb(11,83,14=
+8);background-color:transparent;font-variant-numeric:normal;font-variant-ea=
+st-asian:normal;vertical-align:baseline;white-space:pre-wrap"><p dir=3D"ltr=
+" style=3D"line-height:1.2;margin-top:0pt;margin-bottom:0pt"><span style=3D=
+"font-size:13.5pt;background-color:transparent;font-variant-numeric:normal;=
+font-variant-east-asian:normal;vertical-align:baseline">Des r=C3=A9sum=C3=
+=A9s =C3=A9tendus (4 pages)</span></p></li><li dir=3D"ltr" style=3D"margin-=
+left:15px;list-style-type:square;font-size:13.5pt;font-family:Arial;color:r=
+gb(11,83,148);background-color:transparent;font-variant-numeric:normal;font=
+-variant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap"><p=
+ dir=3D"ltr" style=3D"line-height:1.2;margin-top:0pt;margin-bottom:0pt"><sp=
+an style=3D"font-size:13.5pt;background-color:transparent;font-variant-nume=
+ric:normal;font-variant-east-asian:normal;vertical-align:baseline">Des arti=
+cles longs (maximum 12 pages)</span></p></li><li dir=3D"ltr" style=3D"margi=
+n-left:15px;list-style-type:square;font-size:13.5pt;font-family:Arial;color=
+:rgb(11,83,148);background-color:transparent;font-variant-numeric:normal;fo=
+nt-variant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap">=
+<p dir=3D"ltr" style=3D"line-height:1.2;margin-top:0pt;margin-bottom:0pt"><=
+span style=3D"font-size:13.5pt;background-color:transparent;font-variant-nu=
+meric:normal;font-variant-east-asian:normal;vertical-align:baseline">D=C3=
+=A9monstrations logicielles (4 pages)</span></p></li></ul><p dir=3D"ltr" st=
+yle=3D"line-height:1.86;text-align:justify;margin-top:11pt;margin-bottom:0p=
+t"><span style=3D"font-size:13.5pt;font-family:Arial;color:rgb(255,255,0);b=
+ackground-color:rgb(11,83,148);font-weight:700;font-variant-numeric:normal;=
+font-variant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap=
+">=C2=A0Dates importantes :=C2=A0 </span><span style=3D"font-size:13.5pt;fo=
+nt-family:Arial;color:rgb(255,255,255);background-color:transparent;font-we=
+ight:700;font-variant-numeric:normal;font-variant-east-asian:normal;vertica=
+l-align:baseline;white-space:pre-wrap">_</span></p><ul style=3D"margin-top:=
+0px;margin-bottom:0px"><li dir=3D"ltr" style=3D"margin-left:15px;list-style=
+-type:square;font-size:13.5pt;font-family:Arial;color:rgb(11,83,148);backgr=
+ound-color:transparent;font-variant-numeric:normal;font-variant-east-asian:=
+normal;vertical-align:baseline;white-space:pre-wrap"><p dir=3D"ltr" style=
+=3D"line-height:1.2;margin-top:10pt;margin-bottom:0pt"><span style=3D"font-=
+size:13.5pt;background-color:transparent;font-variant-numeric:normal;font-v=
+ariant-east-asian:normal;vertical-align:baseline">Date limite de soumission=
+ des articles : </span><span style=3D"font-size:13.5pt;background-color:tra=
+nsparent;font-weight:700;font-variant-numeric:normal;font-variant-east-asia=
+n:normal;vertical-align:baseline">06/12/2019</span></p></li><li dir=3D"ltr"=
+ style=3D"margin-left:15px;list-style-type:square;font-size:13.5pt;font-fam=
+ily:Arial;color:rgb(11,83,148);background-color:transparent;font-variant-nu=
+meric:normal;font-variant-east-asian:normal;vertical-align:baseline;white-s=
+pace:pre-wrap"><p dir=3D"ltr" style=3D"line-height:1.2;margin-top:0pt;margi=
+n-bottom:0pt"><span style=3D"font-size:13.5pt;background-color:transparent;=
+font-variant-numeric:normal;font-variant-east-asian:normal;vertical-align:b=
+aseline">Notification aux auteurs : 18/12/2019</span></p></li><li dir=3D"lt=
+r" style=3D"margin-left:15px;list-style-type:square;font-size:13.5pt;font-f=
+amily:Arial;color:rgb(11,83,148);background-color:transparent;font-variant-=
+numeric:normal;font-variant-east-asian:normal;vertical-align:baseline;white=
+-space:pre-wrap"><p dir=3D"ltr" style=3D"line-height:1.2;margin-top:0pt;mar=
+gin-bottom:0pt"><span style=3D"font-size:13.5pt;background-color:transparen=
+t;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-align=
+:baseline">Version finale : 02/01/2020</span></p></li><li dir=3D"ltr" style=
+=3D"margin-left:15px;list-style-type:square;font-size:13.5pt;font-family:Ar=
+ial;color:rgb(11,83,148);background-color:transparent;font-variant-numeric:=
+normal;font-variant-east-asian:normal;vertical-align:baseline;white-space:p=
+re-wrap"><p dir=3D"ltr" style=3D"line-height:1.2;margin-top:0pt;margin-bott=
+om:0pt"><span style=3D"font-size:13.5pt;background-color:transparent;font-v=
+ariant-numeric:normal;font-variant-east-asian:normal;vertical-align:baselin=
+e">Atelier : 28/01/2020</span></p></li></ul><p dir=3D"ltr" style=3D"line-he=
+ight:1.38;margin-top:0pt;margin-bottom:0pt"><br></p><p dir=3D"ltr" style=3D=
+"line-height:1.86;text-align:justify;margin-top:11pt;margin-bottom:0pt"><sp=
+an style=3D"font-size:13.5pt;font-family:Arial;color:rgb(255,255,0);backgro=
+und-color:rgb(11,83,148);font-weight:700;font-variant-numeric:normal;font-v=
+ariant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap">=C2=
+=A0Comit=C3=A9 d&#39;organisation :=C2=A0 </span><span style=3D"font-size:1=
+3.5pt;font-family:Arial;color:rgb(255,255,255);background-color:transparent=
+;font-weight:700;font-variant-numeric:normal;font-variant-east-asian:normal=
+;vertical-align:baseline;white-space:pre-wrap">_</span></p><ul style=3D"mar=
+gin-top:0px;margin-bottom:0px"><li dir=3D"ltr" style=3D"margin-left:15px;li=
+st-style-type:square;font-size:13.5pt;font-family:Arial;color:rgb(11,83,148=
+);background-color:transparent;font-variant-numeric:normal;font-variant-eas=
+t-asian:normal;vertical-align:baseline;white-space:pre-wrap"><p dir=3D"ltr"=
+ style=3D"line-height:1.2;margin-top:10pt;margin-bottom:0pt"><span style=3D=
+"font-size:13.5pt;background-color:transparent;font-weight:700;font-variant=
+-numeric:normal;font-variant-east-asian:normal;vertical-align:baseline">Rim=
+ HANTACH, </span><span style=3D"font-size:13.5pt;background-color:transpare=
+nt;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-alig=
+n:baseline">ing=C3=A9nieur de recherche, ENGIE</span></p></li><li dir=3D"lt=
+r" style=3D"margin-left:15px;list-style-type:square;font-size:13.5pt;font-f=
+amily:Arial;color:rgb(11,83,148);background-color:transparent;font-variant-=
+numeric:normal;font-variant-east-asian:normal;vertical-align:baseline;white=
+-space:pre-wrap"><p dir=3D"ltr" style=3D"line-height:1.2;margin-top:0pt;mar=
+gin-bottom:0pt"><span style=3D"font-size:13.5pt;background-color:transparen=
+t;font-weight:700;font-variant-numeric:normal;font-variant-east-asian:norma=
+l;vertical-align:baseline">Philippe CALVEZ, </span><span style=3D"font-size=
+:13.5pt;background-color:transparent;font-variant-numeric:normal;font-varia=
+nt-east-asian:normal;vertical-align:baseline">directeur du lab CSAI, ENGIE<=
+/span></p></li></ul></span></div></div></div></div></div></div></div>
+
+--0000000000009b87c30597b12f76--

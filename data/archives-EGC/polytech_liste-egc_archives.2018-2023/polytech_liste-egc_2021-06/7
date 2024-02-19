@@ -1,0 +1,567 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (BounceSMTP2.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id EE21214014E3
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed,  2 Jun 2021 12:17:41 +0200 (CEST)
+Received: from mx3.d101.univ-nantes.fr (MX3.univ-nantes.fr [193.52.101.137])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id EC99C61F091
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed,  2 Jun 2021 12:17:41 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTP id E70D9413BDE4
+	for <liste-egc@polytech.univ-nantes.fr>; Wed,  2 Jun 2021 12:17:41 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 1.523
+X-Spam-Level: *
+X-Spam-Status: No, score=1.523 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+	HTML_MESSAGE=0.001, MR_STRANGE_QUESTION=1.5,
+	RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001,
+	SPF_PASS=-0.001, T_KAM_HTML_FONT_INVALID=0.01, UN_PHISHING_PW=0.1,
+	URIBL_BLOCKED=0.001] autolearn=disabled
+X-CRM114-Status: UNSURE ( 1.7194 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=gmail.com
+Received: from mx3.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id ajjKDIkctGED for <liste-egc@polytech.univ-nantes.fr>;
+	Wed,  2 Jun 2021 12:17:39 +0200 (CEST)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTPS id 67BF9412C355
+	for <liste-egc@polytech.univ-nantes.fr>; Wed,  2 Jun 2021 12:17:39 +0200 (CEST)
+Received: by mail-wm1-x333.google.com with SMTP id f20-20020a05600c4e94b0290181f6edda88so3427540wmq.2
+        for <liste-egc@polytech.univ-nantes.fr>; Wed, 02 Jun 2021 03:17:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=17Djpe5NjSo/Yf22YojADl2po7ZaNhLtMzvneuLJ1Tg=;
+        b=js3dtQHcVSN7/I+ZL0gb/3kte++LbB1TTepQ1nXGf5Ls2LEVIjDt/z4m3zG5/FtD4r
+         8nmT8Tn+KNDW78KowOaZExUAv/WXwr1KyswJDkvOK8nse8rHZD2ow3HiJZFuwXakeJ0J
+         kRSdXUlYlJWejScoD2CSMFavjNCn4v3P6J6a0Jk+VFdXzGYFiBioprjkLa67CwoaHipf
+         5lezYd9JlUMSqOLsRCHZGDtbrdVIEESvyFHhdjm2DKAArOiiVLRuKonOWGbRp6Npz7FT
+         hXhH7+Jyvue3XsvIwarwT2HJPHfyhwNS7N0Xcoi0YM3jto6Zywqpj9K4qm9OV+tgQ/1V
+         8WPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=17Djpe5NjSo/Yf22YojADl2po7ZaNhLtMzvneuLJ1Tg=;
+        b=EO8oShhb/Mwmi/aS8g3L213tmZbEabtEzifcly4r5G4GtoEpJ82Esl+GO24alf1DgD
+         +gFHmIK8a/5cd0rEuwmu/axG2MXH74wivtY92BqnWI53A6hTIQzzX3aGGOHCx6xZE45E
+         9SPt+6kd6hkiRgP2YcNYe/3TyhPtuns9m8k44Y03H6S43F2h7aQNqKi0Yc/JjNrz98pN
+         jpBZ2uJ7aTsysqOXckdwQ1FNY5iVDAp+ZYHutmPwtGQIkCio2tnKzQ3dYdRnANMTlbi1
+         zoQ7hZ8qF/4sAyprY2gomwjUQ/rIFhG1CPQmxkdaCZf9l3YYfnFgVOOKS7OBtXMJhImF
+         QEcg==
+X-Gm-Message-State: AOAM531R+iPA4r3QliAulgckmlvZMh/ykdi3fMfWttPnqgD6XOqnrSUX
+	Il3F87nMI36xyow8R7ypwMACJk6edU7vCOXMzvtKopvHNRBcBw==
+X-Google-Smtp-Source: ABdhPJxPU7MTfxMJRtvbcW9vzuCr+wVybizvDFcwlq7PmgVK+++53tLtSDlL4AKUwV/oh/rhduIkZD3IHyrqjocQYNE=
+X-Received: by 2002:a05:600c:410a:: with SMTP id j10mr4268787wmi.6.1622629058608;
+ Wed, 02 Jun 2021 03:17:38 -0700 (PDT)
+MIME-Version: 1.0
+From: Hocine Cherifi <hocine.cherifi@gmail.com>
+Date: Wed, 2 Jun 2021 12:17:27 +0200
+Message-ID: <CAFX-JVug2T-05TRGPnT2_aeX9_Utpn__6z+o5jJeBZNaXxJ4FQ@mail.gmail.com>
+To: "liste-egc@polytech.univ-nantes.fr" <liste-egc@polytech.univ-nantes.fr>
+Content-Type: multipart/alternative; boundary="000000000000a3ff5105c3c5c468"
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] CFP CSS Chapters Workshop 2021 @CCS2021
+
+--000000000000a3ff5105c3c5c468
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+*C*omplex *S*ystems *S*ociety *C*hapters Workshop
+<https://compsysfrance.wixsite.com/chapters>
+
+October 27 - 28, 2021
+
+An Online Workshop Satellite of the
+
+Conference on Complex Systems 2021 <https://ccs2021.univ-lyon1.fr/#HOME>
+
+
+
+Submission deadline: July 05, 2021
+
+Acceptance notification: July 09, 2021
+
+
+
+
+
+The Chapters Workshop is a collaborative space that seeks to integrate the
+knowledge, experience, and diversity of the Complex Systems Community.
+
+
+
+This meeting aims to strengthen the capacities and leadership necessary to
+work on our organizational mission and vision. Based on the CSS
+recommendations to organize local chapters, experiences on how such
+guidelines can be adapted to the different national or regional contexts to
+be as inclusive and efficient as possible. Priorities of actions that could
+be set up will be discussed. Feedback from existing chapters and
+initiatives will be reported.
+
+
+
+*INVITED SPEAKERS (TBU)*
+
+
+
+Guido Calderelli - *Ca' Foscari University of Venice*
+
+Manlio De Domenico - *Bruno Kessler Foundation*
+
+Alfredo Morales =E2=80=93 *MIT Media Lab*
+
+Elisa Omodei =E2=80=93 *UN World Food Programme*
+
+Hiroki Sayama - *Binghamton University*
+
+Samir Suweiss. *- University of Padova*
+
+Sofia Teixeira - *Hospital da Luz Learning Health*
+<https://www.hospitaldaluz.pt/learninghealth/en/>
+
+
+
+*TOPICS*
+
+
+
+Objectives of the workshop are:
+
+=C2=B7       To share national specific issues
+
+=C2=B7       To share best practices on Chapter-specific development and
+governance issues
+
+=C2=B7       To create synergies between Chapters
+
+=C2=B7       To strengthen the community
+
+
+
+*CONTRIBUTIONS*
+
+
+
+Your contribution is welcome. If you want to share ideas, experiences about
+the topics, please submit an extended abstract (1 to 2 pages in pdf format)
+
+
+
+*SUBMISSION WEBSITE*
+
+
+
+
+
+https://easychair.org/conferences/?conf=3Dcsschapters2021.
+
+
+
+
+
+*ORGANIZING COMMITTEE *
+
+
+
+Cyrille Bertelle - *LITIS, Normastic, Le Havre*
+
+David Chavalarias - *ISC PIF, Paris*
+
+Chantal Cherifi - *DISP, Lyon*
+
+Hocine Cherifi - *LIB, Dijon*
+
+Laura Hernandez - *LPTM, Cergy-Pontoise*
+
+Bertrand Jouve - *LISST, Toulouse*
+
+Hamamache Kheddouci - *LIRIS, Lyon*
+
+Benjamin Renoust - *Median Technologies, Sophia Antipolis*
+
+Join us at COMPLEX NETWORKS 2021 Madrid Spain
+<https://www.complexnetworks.org/>
+*-------------------------*
+Hocine CHERIFI
+University of Burgundy Franche-Comt=C3=A9
+Deputy Director LIB EA N=C2=B0 7534
+Editor in Chief Applied Network Science
+<https://appliednetsci.springeropen.com/>
+
+Editorial Board member PLOS One <https://journals.plos.org/plosone/>, IEEE
+ACCESS <https://ieeeaccess.ieee.org/?http%3A%2F%2Fieeeaccess_ieee_org%2F>,
+Scientific
+Reports <https://www.nature.com/srep/>,
+
+Journal of Imaging <https://www.mdpi.com/journal/jimaging>, Quality and
+Quantity <https://www.springer.com/journal/11135/>, Computational Social
+Networks <https://computationalsocialnetworks.springeropen.com/>,
+Complex Systems <https://www.complex-systems.com/> Complexity
+<https://www.hindawi.com/journals/complexity/>
+
+--000000000000a3ff5105c3c5c468
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><p class=3D"MsoNormal" align=3D"center" style=3D"text-alig=
+n:center;margin:0cm;font-size:12pt;font-family:&quot;Times New Roman&quot;,=
+serif"><a href=3D"https://compsysfrance.wixsite.com/chapters" style=3D"colo=
+r:blue"><b><span lang=3D"EN-US" style=3D"font-size:16pt;font-family:&quot;C=
+MU Serif Roman&quot;">C</span></b><span lang=3D"EN-US" style=3D"font-size:1=
+4pt;font-family:&quot;CMU Serif Roman&quot;">omplex </span><b><span lang=3D=
+"EN-US" style=3D"font-size:16pt;font-family:&quot;CMU Serif Roman&quot;">S<=
+/span></b><span lang=3D"EN-US" style=3D"font-size:14pt;font-family:&quot;CM=
+U Serif Roman&quot;">ystems
+</span><b><span lang=3D"EN-US" style=3D"font-size:16pt;font-family:&quot;CM=
+U Serif Roman&quot;">S</span></b><span lang=3D"EN-US" style=3D"font-size:14=
+pt;font-family:&quot;CMU Serif Roman&quot;">ociety </span><b><span lang=3D"=
+EN-US" style=3D"font-size:16pt;font-family:&quot;CMU Serif Roman&quot;">C</=
+span></b><span lang=3D"EN-US" style=3D"font-size:14pt;font-family:&quot;CMU=
+ Serif Roman&quot;">hapters Workshop</span></a><span lang=3D"EN-US" style=
+=3D"font-size:14pt;font-family:&quot;CMU Serif Roman&quot;"></span></p>
+
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;margin:0=
+cm;font-size:12pt;font-family:&quot;Times New Roman&quot;,serif"><span lang=
+=3D"EN-US" style=3D"font-size:14pt;font-family:&quot;CMU Serif Roman&quot;"=
+>October
+27 - 28, 2021</span></p>
+
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;margin:0=
+cm;font-size:12pt;font-family:&quot;Times New Roman&quot;,serif"><span lang=
+=3D"EN-US" style=3D"font-size:14pt;font-family:&quot;CMU Serif Roman&quot;"=
+>An
+Online Workshop Satellite of the</span></p>
+
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;margin:0=
+cm;font-size:12pt;font-family:&quot;Times New Roman&quot;,serif"><a href=3D=
+"https://ccs2021.univ-lyon1.fr/#HOME" style=3D"color:blue"><span lang=3D"EN=
+-US" style=3D"font-size:14pt;font-family:&quot;CMU Serif Roman&quot;">Confe=
+rence on
+Complex Systems 2021</span></a><span lang=3D"EN-US" style=3D"font-size:14pt=
+;font-family:&quot;CMU Serif Roman&quot;"></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11pt;=
+font-family:&quot;CMU Serif Roman&quot;">=C2=A0</span></p>
+
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;margin:0=
+cm;font-size:12pt;font-family:&quot;Times New Roman&quot;,serif"><span lang=
+=3D"EN-US" style=3D"font-size:11pt;font-family:&quot;CMU Serif Roman&quot;"=
+>Submission
+deadline: July 05, 2021</span></p>
+
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;margin:0=
+cm;font-size:12pt;font-family:&quot;Times New Roman&quot;,serif"><span lang=
+=3D"EN-US" style=3D"font-size:11pt;font-family:&quot;CMU Serif Roman&quot;"=
+>Acceptance
+notification: July 09, 2021</span></p>
+
+<p class=3D"MsoNormal" style=3D"text-align:justify;margin:0cm;font-size:12p=
+t;font-family:&quot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=
+=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&quot;">=C2=A0</span></=
+p>
+
+<p class=3D"MsoNormal" style=3D"text-align:justify;margin:0cm;font-size:12p=
+t;font-family:&quot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=
+=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&quot;">=C2=A0</span></=
+p>
+
+<p class=3D"MsoNormal" style=3D"text-align:justify;margin:0cm;font-size:12p=
+t;font-family:&quot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=
+=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&quot;">The
+Chapters Workshop is a collaborative space that seeks to integrate the
+knowledge, experience, and diversity of the Complex Systems Community.</spa=
+n></p>
+
+<p class=3D"MsoNormal" style=3D"text-align:justify;margin:0cm;font-size:12p=
+t;font-family:&quot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=
+=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&quot;">=C2=A0</span></=
+p>
+
+<p class=3D"MsoNormal" style=3D"text-align:justify;margin:0cm;font-size:12p=
+t;font-family:&quot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=
+=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&quot;">This
+meeting aims to strengthen the capacities and leadership necessary to work =
+on
+our organizational mission and vision. Based on the CSS recommendations to
+organize local chapters, experiences on how such guidelines can be adapted =
+to the
+different national or regional contexts to be as inclusive and efficient as
+possible. Priorities of actions that could be set up will be discussed. Fee=
+dback
+from existing chapters and initiatives will be reported.</span></p>
+
+<p class=3D"MsoNormal" style=3D"text-align:justify;margin:0cm;font-size:12p=
+t;font-family:&quot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=
+=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&quot;">=C2=A0</span></=
+p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><b><span lang=3D"EN-US" style=3D"font-size:10=
+pt;font-family:&quot;CMU Serif Roman&quot;">INVITED SPEAKERS (TBU)</span></=
+b></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:5pt;f=
+ont-family:&quot;CMU Serif Roman&quot;">=C2=A0</span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:10pt;=
+font-family:&quot;CMU Serif Roman&quot;">Guido Calderelli - <i>Ca&#39; Fosc=
+ari University of Venice</i></span><span lang=3D"EN-US"></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span style=3D"font-size:10pt;font-family:&qu=
+ot;CMU Serif Roman&quot;">Manlio
+De Domenico - </span><i><span lang=3D"EN-US" style=3D"font-size:10pt;font-f=
+amily:&quot;CMU Serif Roman&quot;">Bruno Kessler Foundation</span></i></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:10pt;=
+font-family:&quot;CMU Serif Roman&quot;">Alfredo Morales =E2=80=93 <i>MIT M=
+edia Lab</i></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:10pt;=
+font-family:&quot;CMU Serif Roman&quot;">Elisa Omodei =E2=80=93 <i>UN World=
+ Food Programme</i></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:10pt;=
+font-family:&quot;CMU Serif Roman&quot;">Hiroki Sayama - <i>Binghamton Univ=
+ersity</i></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:10pt;=
+font-family:&quot;CMU Serif Roman&quot;">Samir Suweiss. <i>- University of =
+Padova</i></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:10pt;=
+font-family:&quot;CMU Serif Roman&quot;">Sofia Teixeira - </span><a href=3D=
+"https://www.hospitaldaluz.pt/learninghealth/en/" style=3D"color:blue"><i><=
+span lang=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;CMU Serif Rom=
+an&quot;;color:windowtext;text-decoration-line:none">Hospital da
+Luz Learning Health</span></i></a><span lang=3D"EN-US"></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:10pt;=
+font-family:&quot;CMU Serif Roman&quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 </span></p>
+
+<p class=3D"MsoNormal" style=3D"text-align:justify;margin:0cm;font-size:12p=
+t;font-family:&quot;Times New Roman&quot;,serif"><b><span lang=3D"EN-US" st=
+yle=3D"font-size:11pt;font-family:&quot;CMU Serif Roman&quot;">TOPICS</span=
+></b><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;CMU Ser=
+if Roman&quot;"></span></p>
+
+<p class=3D"MsoNormal" style=3D"text-align:justify;margin:0cm;font-size:12p=
+t;font-family:&quot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=
+=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&quot;">=C2=A0</span></=
+p>
+
+<p class=3D"MsoNormal" style=3D"text-align:justify;margin:0cm;font-size:12p=
+t;font-family:&quot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=
+=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&quot;">Objectives
+of the workshop are:</span></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpFirst" style=3D"text-align:justify;ma=
+rgin:0cm 0cm 0cm 36pt;font-size:12pt;font-family:&quot;Times New Roman&quot=
+;,serif"><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:Symbol">=
+=C2=B7<span style=3D"font-variant-numeric:normal;font-variant-east-asian:no=
+rmal;font-stretch:normal;font-size:7pt;line-height:normal;font-family:&quot=
+;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+</span></span><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:&quo=
+t;CMU Serif Roman&quot;">To share national
+specific issues</span></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D"text-align:justify;m=
+argin:0cm 0cm 0cm 36pt;font-size:12pt;font-family:&quot;Times New Roman&quo=
+t;,serif"><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:Symbol">=
+=C2=B7<span style=3D"font-variant-numeric:normal;font-variant-east-asian:no=
+rmal;font-stretch:normal;font-size:7pt;line-height:normal;font-family:&quot=
+;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+</span></span><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:&quo=
+t;CMU Serif Roman&quot;">To share best practices
+on Chapter-specific development and governance issues</span></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D"text-align:justify;m=
+argin:0cm 0cm 0cm 36pt;font-size:12pt;font-family:&quot;Times New Roman&quo=
+t;,serif"><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:Symbol">=
+=C2=B7<span style=3D"font-variant-numeric:normal;font-variant-east-asian:no=
+rmal;font-stretch:normal;font-size:7pt;line-height:normal;font-family:&quot=
+;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+</span></span><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:&quo=
+t;CMU Serif Roman&quot;">To create synergies
+between Chapters</span></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpLast" style=3D"text-align:justify;mar=
+gin:0cm 0cm 0cm 36pt;font-size:12pt;font-family:&quot;Times New Roman&quot;=
+,serif"><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:Symbol">=
+=C2=B7<span style=3D"font-variant-numeric:normal;font-variant-east-asian:no=
+rmal;font-stretch:normal;font-size:7pt;line-height:normal;font-family:&quot=
+;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+</span></span><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:&quo=
+t;CMU Serif Roman&quot;">To strengthen the
+community</span></p>
+
+<p class=3D"MsoNormal" style=3D"text-align:justify;margin:0cm;font-size:12p=
+t;font-family:&quot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=
+=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&quot;">=C2=A0</span></=
+p>
+
+<p class=3D"MsoNormal" style=3D"text-align:justify;margin:0cm;font-size:12p=
+t;font-family:&quot;Times New Roman&quot;,serif"><b><span lang=3D"EN-US" st=
+yle=3D"font-size:11pt;font-family:&quot;CMU Serif Roman&quot;">CONTRIBUTION=
+S</span></b><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;=
+CMU Serif Roman&quot;"></span></p>
+
+<p class=3D"MsoNormal" style=3D"text-align:justify;margin:0cm;font-size:12p=
+t;font-family:&quot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=
+=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&quot;">=C2=A0</span></=
+p>
+
+<p class=3D"MsoNormal" style=3D"text-align:justify;margin:0cm;font-size:12p=
+t;font-family:&quot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=
+=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&quot;">Your
+contribution is welcome. If you want to share ideas, experiences about the
+topics, please submit an extended abstract (1 to 2 pages in pdf format)</sp=
+an></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><b><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;">=C2=A0</span></b></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><b><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;">SUBMISSION WEBSITE</span></b></=
+p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><b><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;Calibri Light&quot;,sans-serif">=C2=A0</span></b></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11pt;=
+font-family:&quot;Calibri Light&quot;,sans-serif">=C2=A0</span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><a href=3D"https://easychair.org/conferences/=
+?conf=3Dcsschapters2021" target=3D"_blank" style=3D"color:blue"><span lang=
+=3D"EN-US" style=3D"font-family:&quot;CMU Serif Roman&quot;;color:rgb(17,85=
+,204);background-image:initial;background-position:initial;background-size:=
+initial;background-repeat:initial;background-origin:initial;background-clip=
+:initial">https://easychair.org/conferences/?conf=3Dcsschapters2021</span><=
+/a><span lang=3D"EN-US" style=3D"font-family:&quot;CMU Serif Roman&quot;;ba=
+ckground-image:initial;background-position:initial;background-size:initial;=
+background-repeat:initial;background-origin:initial;background-clip:initial=
+">.</span><span lang=3D"EN-US" style=3D"font-family:&quot;CMU Serif Roman&q=
+uot;"></span></p>
+
+<p class=3D"MsoNormal" style=3D"text-align:justify;margin:0cm;font-size:12p=
+t;font-family:&quot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=
+=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&quot;">=C2=A0</span></=
+p>
+
+<p class=3D"MsoNormal" style=3D"text-align:justify;margin:0cm;font-size:12p=
+t;font-family:&quot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=
+=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&quot;">=C2=A0</span></=
+p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><b><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;">ORGANIZING COMMITTEE </span></b=
+></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><b><span lang=3D"EN-US" style=3D"font-size:10=
+pt;font-family:&quot;CMU Serif Roman&quot;">=C2=A0</span></b></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span style=3D"font-size:10pt;font-family:&qu=
+ot;CMU Serif Roman&quot;">Cyrille
+Bertelle - <i>LITIS, Normastic, Le Havre</i></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span style=3D"font-size:10pt;font-family:&qu=
+ot;CMU Serif Roman&quot;">David
+Chavalarias - <i>ISC PIF, Paris</i></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span style=3D"font-size:10pt;font-family:&qu=
+ot;CMU Serif Roman&quot;">Chantal
+Cherifi - <i>DISP, Lyon</i></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span style=3D"font-size:10pt;font-family:&qu=
+ot;CMU Serif Roman&quot;">Hocine
+Cherifi - <i>LIB, Dijon</i> </span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span style=3D"font-size:10pt;font-family:&qu=
+ot;CMU Serif Roman&quot;">Laura
+Hernandez - <i>LPTM, Cergy-Pontoise</i></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span style=3D"font-size:10pt;font-family:&qu=
+ot;CMU Serif Roman&quot;">Bertrand
+Jouve - <i>LISST, Toulouse</i></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:10pt;=
+font-family:&quot;CMU Serif Roman&quot;">Hamamache Kheddouci - <i>LIRIS, Ly=
+on</i> </span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:10pt;=
+font-family:&quot;CMU Serif Roman&quot;">Benjamin Renoust - <i>Median Techn=
+ologies, Sophia
+Antipolis</i></span></p><div><div dir=3D"ltr" class=3D"gmail_signature" dat=
+a-smartmail=3D"gmail_signature"><div dir=3D"ltr"><div><div dir=3D"ltr"><div=
+><div dir=3D"ltr"><div><div dir=3D"ltr"><div><div dir=3D"ltr"><div><div dir=
+=3D"ltr"><div><div dir=3D"ltr"><div><div dir=3D"ltr"><div dir=3D"ltr"><div =
+dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div><div><d=
+iv><span style=3D"font-size:x-small"><br>Join us=C2=A0at</span><b style=3D"=
+font-size:x-small">=C2=A0</b><a href=3D"https://www.complexnetworks.org/" s=
+tyle=3D"font-size:x-small" target=3D"_blank">COMPLEX NETWORKS 2021 Madrid S=
+pain</a><font size=3D"1"><b><br></b></font></div><div><font size=3D"1"><b>-=
+------------------------</b></font></div><div><font size=3D"1" color=3D"#66=
+6666">Hocine CHERIFI=C2=A0</font></div><div><font size=3D"1" color=3D"#6666=
+66">University of Burgundy Franche-Comt=C3=A9</font></div><div><font size=
+=3D"1" color=3D"#666666">Deputy Director LIB EA N=C2=B0 7534=C2=A0=C2=A0<br=
+></font></div><div><font size=3D"1"><font color=3D"#666666">Editor in Chief=
+=C2=A0</font><a href=3D"https://appliednetsci.springeropen.com/" target=3D"=
+_blank">Applied Network Science</a></font></div></div></div><div><p class=
+=3D"MsoNormal" style=3D"margin:0cm 0cm 0.0001pt;font-size:12pt;font-family:=
+Cambria"><span style=3D"font-size:10pt;font-family:Arial"><font color=3D"#6=
+66666">Editorial Board member </font><a href=3D"https://journals.plos.org/p=
+losone/" style=3D"color:purple" target=3D"_blank">PLOS One</a><font color=
+=3D"#000000">, </font><a href=3D"https://ieeeaccess.ieee.org/?http%3A%2F%2F=
+ieeeaccess_ieee_org%2F" style=3D"color:purple" target=3D"_blank">IEEE ACCES=
+S</a><font color=3D"#000000">, </font><a href=3D"https://www.nature.com/sre=
+p/" style=3D"color:purple" target=3D"_blank">Scientific Reports</a><font co=
+lor=3D"#000000">,</font></span></p><p class=3D"MsoNormal" style=3D"margin:0=
+cm 0cm 0.0001pt;font-size:12pt;font-family:Cambria;color:rgb(0,0,0)"><span =
+style=3D"font-size:10pt;font-family:Arial"><a href=3D"https://www.mdpi.com/=
+journal/jimaging" style=3D"color:purple" target=3D"_blank">Journal of Imagi=
+ng</a>, <a href=3D"https://www.springer.com/journal/11135/" style=3D"color:=
+purple" target=3D"_blank">Quality and Quantity</a>, <a href=3D"https://comp=
+utationalsocialnetworks.springeropen.com/" style=3D"color:purple" target=3D=
+"_blank">Computational Social Networks</a>,</span></p><span style=3D"color:=
+rgb(0,0,0);font-size:10pt;font-family:Arial"><a href=3D"https://www.complex=
+-systems.com/" style=3D"color:purple" target=3D"_blank">Complex Systems</a>=
+=C2=A0<a href=3D"https://www.hindawi.com/journals/complexity/" target=3D"_b=
+lank">Complexity</a></span><span style=3D"color:rgb(0,0,0);font-size:medium=
+"></span><br></div></div></div></div></div></div></div></div></div></div></=
+div></div></div></div></div></div></div></div></div></div></div></div></div=
+></div>
+
+--000000000000a3ff5105c3c5c468--

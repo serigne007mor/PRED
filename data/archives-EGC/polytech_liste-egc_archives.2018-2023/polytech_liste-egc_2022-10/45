@@ -1,0 +1,621 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (bouncesmtp1.u12.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 4B76614017C1
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed, 26 Oct 2022 15:40:36 +0200 (CEST)
+Received: from mx1.localdomain (MX1.univ-nantes.fr [193.52.101.135])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id 4847A7071
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed, 26 Oct 2022 15:40:36 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.localdomain (Postfix) with ESMTP id 40C481213A4
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 26 Oct 2022 15:40:36 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 1.71
+X-Spam-Level: *
+X-Spam-Status: No, score=1.71 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+	RCVD_IN_WSFF=0.01, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+	UN_PHISHING_PW=0.1, VOWEL_FROM_5=0.5, VOWEL_URI_5=1]
+	autolearn=disabled
+X-CRM114-Status: UNSURE ( 4.0542 )
+X-CRM114-CacheID: 
+Received: from mx1.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id grS2i_rVQVQH for <liste-egc@polytech.univ-nantes.fr>;
+	Wed, 26 Oct 2022 15:40:31 +0200 (CEST)
+X-Greylist: whitelisted by SQLgrey-1.6.7
+Received: from EUR05-DB8-obe.outbound.protection.outlook.com (mail-db8eur05olkn2082d.outbound.protection.outlook.com [IPv6:2a01:111:f400:7e1a::82d])
+	by mx1.localdomain (Postfix) with ESMTPS id 6400612139C
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 26 Oct 2022 15:40:28 +0200 (CEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=AS6DDVHafGlWaBEWC7zH34JOiS0NV1hzSSHkjcxWHEfULB274cOuc2FgVJmwZUX7ktYwv/oPKvFihmTjntd5iRdoDnfNqepSEAbqbIxMsoNgJA5LFSCpQy2edKZ3n0Ns2inuBt7UMZtG8dUPBLlU2DzzIsUkchAGyvIlDIzYg0waciDXTP0YZ5GN4SMCU/1/LV+tzUvZTXe0pRN2TvOJnlXETwg3GCs+elIhlf38b1+zQnRxLiTLAIuhhY7/bsK8vYNZYwt61P8248pSTSS31Mu/xyqViJk92UO3orQPLtjL+z1lnrUqyfriwKa89vHduhkHWf2ojo0SYU4wsXQs1g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=7g+3RJjagjdWuTlLDx+F290k7lb6p9wriIDL94fNq6E=;
+ b=eUw/IMx/Cdj4jprVVm0SY++1AkdfAfYyom8bwaSbADXAaJVM7meeeV5p03gYOZBE8w1MNUJUFQ2j2CA6dPiHrb1eIjgEjZR8v5l5NATwOnvPQ5/V/B59WOhXTJqRfRq1znMHp5LjuTFbHjKuMwmJrxIEDM7Le/y3sdkslxSjTZI5/ZXBlgX+9gVMisUvarnIhGSee4lYBuB6EuZfqCJbCe64GfRX3v8Ze96nUS42qsAFlPf01Y5J9u3a+BdtjMdfUS3tnXEKIIugkxKiSlTPwhBSEdDIt/n7UbQ9sS4j6fq27riN6Ujt7bbLGfvyzdmWDL7ICzR2F27m6iL5yoGrqw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+Received: from AS8P194MB1689.EURP194.PROD.OUTLOOK.COM (2603:10a6:20b:376::22)
+ by PR3P194MB0603.EURP194.PROD.OUTLOOK.COM (2603:10a6:102:3e::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5746.28; Wed, 26 Oct
+ 2022 13:24:35 +0000
+Received: from AS8P194MB1689.EURP194.PROD.OUTLOOK.COM
+ ([fe80::dbc6:28b6:a89f:f377]) by AS8P194MB1689.EURP194.PROD.OUTLOOK.COM
+ ([fe80::dbc6:28b6:a89f:f377%9]) with mapi id 15.20.5746.028; Wed, 26 Oct 2022
+ 13:24:35 +0000
+From: Martin Lentschat <M_L_@hotmail.fr>
+To: "liste-egc@polytech.univ-nantes.fr" <liste-egc@polytech.univ-nantes.fr>,
+	"ln@groupes.renater.fr" <ln@groupes.renater.fr>, "corpora@list.elra.info"
+	<corpora@list.elra.info>, "info-aria@liste.lis-lab.fr"
+	<info-aria@liste.lis-lab.fr>
+Thread-Topic: Internship: Training of an entity recognition model for
+ nanobiology using distant supervision.
+Thread-Index: AQHY6T46MiF5W1Gtr0ySZhSDBzxVCA==
+Date: Wed, 26 Oct 2022 13:24:35 +0000
+Message-ID:
+ <AS8P194MB16899789255B7357CB62372DBB309@AS8P194MB1689.EURP194.PROD.OUTLOOK.COM>
+Accept-Language: fr-FR, en-US
+Content-Language: fr-FR
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+x-tmn: [YKhA9itjAF9CGvAHyo1FV2ukru9AVCOLeuEkwvjJqSk=]
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AS8P194MB1689:EE_|PR3P194MB0603:EE_
+x-ms-office365-filtering-correlation-id: 6257c379-2432-4f26-d92f-08dab7556ced
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:
+ fD/l+wceqk2wOrKg3aGu7QuglOfpxhPY/tEOeo8f3svPudrXtdd8DS1+rLGh1BgBRzXJxIVrOLkCHVl5JrSNtgsyEjZIvT4ArgMZqtjfSPhC7Qx61HzRvijds7qHYqsoUO0bvtbSumMKNQZKIyXuOpe4ZON5xm8UPo/9+QBaoxCfaW63le2v/1rhThKsA4rzisXq2nVriVTrblBAoECQgoAPOGMgk6MD/8IoCIitklg/+UwEDV2CxzvHotvTbHU26jW6PrWd1HkJ0RtJbFtIM37+e462p4csncO8pkALBWt/p3Dc6JitUwHES3Da/QS6aizXmBbgE5hHMFbUWjamX+JZVMsZlCr3a/7d5Z6jvBCNeTvsSgkD0jD4eO69yg0nzfXvXPLLyRBIGWtCjx4cqVL+BGE3fB1JE28sHWOkYnpkzXfBW5PlG1evk0lAT/2AGtzSff3Vwkbbifj8ZbNGR4IV0voVoU6bY53q0p3/P4Om8PEoIiaDOA4m6ATOxTz6ed1p6T/Vjsib2TePDBz+d/jPJiaH/nYF1PZOqCK/MfcHv+MM1r18f0blNnLe484n+zYt+1JbrdW6J0r1akeVrg==
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?Windows-1252?Q?6/uwP3IF+dSRAFi+d34AegKfziSyNBobI6ZHqYS0cCUbb3WQrDbzcGaT?=
+ =?Windows-1252?Q?zeOtSl5XxW71Dvxq+WPXTGE0W5MmVL/WcNZuHwIQE32FRIduRgExYIw2?=
+ =?Windows-1252?Q?zTcME0TlMbQCmp2B0woW+fFvsBUf/ZN+/wChOdLWByyw8U+q1O8hYsnZ?=
+ =?Windows-1252?Q?/YZoxZ+OSaxWz1Ef6UFXRO9u2ujQYHUTf2pwfN3Ctx7C1PnKrgMM0yik?=
+ =?Windows-1252?Q?sPL4HLvG6KnTgAn2gkon6QQDAoeyBdHpHsQsFRAk70VQx2aHnTmVXg55?=
+ =?Windows-1252?Q?DiDSjyyXH+vRsRoIns0B7Q6HVYZOj+vQWICjHUIqHjNX92zmVJ/mFsfh?=
+ =?Windows-1252?Q?YTt+eIh6RLPCN07hlIRf3h5h1cx5TSDRBlY19Dl40SKVi+BidZwoO1AD?=
+ =?Windows-1252?Q?ftAAAKMSq5n5XXxlq7ngftybVM7YZYwa3hR0lMgErybns6T0g1jYKCUb?=
+ =?Windows-1252?Q?xPKRG0LMTXRG6maKoPvu82+uWnv0xA/xK/8anmLp/lQ4zU3pVoFYeHsj?=
+ =?Windows-1252?Q?wSsqDP0kYiaAXLjAFnHLVtP7EdlyMyKTJdmisq1WuwCuPIGhDdiCm15o?=
+ =?Windows-1252?Q?QCeK7v/+mJpoow1M1Epvwem5r52LMDq2E5h+lI6QVk9CTKDoauzcFPRK?=
+ =?Windows-1252?Q?epxjphf24BjoM17gR1OMmN3D5vGtrV6VW+57ih0iV0anq/aXwEFBrsnx?=
+ =?Windows-1252?Q?gZQ5OLq0dGHHtQknw4xx6y5KP1AIczKbu+MhUZ88wJoGEvKlxJZw1VZR?=
+ =?Windows-1252?Q?zCnMtDMjiH3S1Pw14fLAS29kF3BWztL5WS9/YOs3TglaJ60etVJoVBMg?=
+ =?Windows-1252?Q?H/CL+7qHCcgfL/o3zQ0JtBGwQi/lirdxF+FNKA1GveQuQuwXCAC+YvJ0?=
+ =?Windows-1252?Q?rPFE/9pHBTW/hxqm/K14tM/pW96PPtyqkcOiimPPS13/BR0c1BFMFDMj?=
+ =?Windows-1252?Q?q/1Xyn7ksTfNxSKOrWeSwlDy112aJfcswqhpl3nhx4LW/hEhCslrfH39?=
+ =?Windows-1252?Q?lpfvWzP15NzLoW7Gl3zklKic47cPrQbwbfIlyVsTN4P2xGkCx19UtqPi?=
+ =?Windows-1252?Q?p1ziHTDEu94QB59+mMIOEDV8bLl//Ug1eTS8j0O1wig2vohdRN6QAnAZ?=
+ =?Windows-1252?Q?Y0xQjj+AQKvIJR3NzHL4WA+EtCJXd1cjCbMj2ZDa0q2whohCBLQnCJwS?=
+ =?Windows-1252?Q?1OKhBlttygrRFvSBKy/Mh4qkr4v4+COgHFDEdozXUijYpZFaevgICtEV?=
+ =?Windows-1252?Q?3H7uHzXsDYycWBzHTc/4+1SfDEb5vp+fAZNfZaMVF2VIHvWfI8RCw4jJ?=
+ =?Windows-1252?Q?1i6Z7P4SLXeHOrHqP+GcffWWwU18ekqE2sFkrizPA1UyN/Yd?=
+Content-Type: multipart/alternative;
+	boundary="_000_AS8P194MB16899789255B7357CB62372DBB309AS8P194MB1689EURP_"
+MIME-Version: 1.0
+X-OriginatorOrg: sct-15-20-4755-11-msonline-outlook-84264.templateTenant
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AS8P194MB1689.EURP194.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6257c379-2432-4f26-d92f-08dab7556ced
+X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Oct 2022 13:24:35.3351
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3P194MB0603
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Internship: Training of an entity recognition model for
+ nanobiology using distant supervision.
+
+--_000_AS8P194MB16899789255B7357CB62372DBB309AS8P194MB1689EURP_
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+Context
+
+The NanoBubbles ERC Synergy project=92s objective (https://nanobubbles.hypo=
+theses.org<https://nanobubbles.hypotheses.%20org>) is to understand how, wh=
+en and why science fails to correct itself. The project focuses on claims m=
+ade within the field of nanobiology. Project members combine approaches fro=
+m the natural sciences, computer science, and the social sciences and human=
+ities (Science and Technology Studies) to understand how error correction i=
+n science works and what obstacles it faces. For this purpose, we aim to tr=
+ace claims and corrections through various channels of scientific communica=
+tion (journals, social media, advertisements, conference programs, etc.) vi=
+a both qualitative and digital methods.
+
+
+Intership objectifs
+
+Entity recognition is an important step for downstream treatment in natural=
+ language processing. It consists in identifying the entities in a corpus b=
+elonging to a specific domain and in their labeling. Training methods relyi=
+ng on large annotated corpora are usually used for this purpose. However, s=
+uch resource are not always available for specific domains, and alternative=
+ methods have to be employed (Hedderich 2020).
+Distant supervision (Mintz 2009) is a technique used to automatically label=
+ textual data using an external resource such as dictionaries (Shang 2018),=
+ gazetteers, ontologies (Wang 2021) and knowledge bases (Sun 2019). This en=
+able the construction of a training corpus without the need of manual annot=
+ation. In specialized domains, this is especially useful in order to annota=
+te complex and discontinuous entities with which human annotators may strug=
+gle (Khandelwal 2022).
+
+The objective of this internship is to implement a method to automatically =
+annotate a corpus of scientific documents, using existing resources, in the=
+ nanobiology domain. After it, they will employ existing deep learning appr=
+oaches (Liang 2020) to train an entity extraction model for entities in the=
+ nanobiology domain.
+
+
+Skills
+
+=95 Being enrolled in a Master in Natural Language Processing, computer sci=
+ence or data science.
+=95 Good programming skills in Python, including experiences with natural l=
+anguage processing tools
+and methods, knowledge of machine learning and deep learning frameworks and=
+ semantic web.
+=95 Ability to communicate and write in English is a plus.
+
+Scientific environment
+
+The work will be conducted within the Sigma team of the LIG laboratory (htt=
+p://sigma.imag.fr). The recruited person will be welcomed within the team w=
+hich offer a stimulating, multinational and pleasant working environment.
+
+
+Instructions for applying
+
+Applications must contain a CV + letter/message of motivation + master grad=
+es + letter(s) of recommendation (or names for potential letters), and be a=
+ddressed to Cyril Labb=E9 (cyril.labbe@imag.fr) and Amira Barhoumi (amira.b=
+arhoumi@univ-grenoble-alpes.fr). Applications will be considered on the fly=
+. It is therefore advisable to apply as soon as possible.
+
+
+References
+
+=95 Mintz, M., Bills, S., Snow, R., & Jurafsky, D. (2009, August). Distant =
+supervision for relation extraction without labeled data. In Proceedings of=
+ the Joint Conference of the 47th Annual Meeting of the ACL and the 4th Int=
+ernational Joint Conference on Natural Language Processing of the AFNLP (pp=
+. 1003-1011).
+=95 Shang, J., Liu, L., Ren, X., Gu, X., Ren, T., & Han, J. (2018). Learnin=
+g named entity tagger using domain-specific dictionary. arXiv preprint arXi=
+v:1809.03599.
+
+=95 Sun, Y., & Loparo, K. (2019, July). Information extraction from free te=
+xt in clinical trials with knowledge-based distant supervision. In 2019 IEE=
+E 43rd Annual Computer Software and Applications Conference (COMPSAC) (Vol.=
+ 1, pp. 954-955). IEEE.
+=95 Wang, X., Hu, V., Song, X., Garg, S., Xiao, J., & Han, J. (2021, Novemb=
+er). CHEMNER: Fine-Grained Chemistry Named Entity Recognition with Ontology=
+-Guided Distant Supervision. In Proceedings of the 2021 Conference on Empir=
+ical Methods in Natural Language Processing (pp. 5227-5240).
+=95 Liang, C., Yu, Y., Jiang, H., Er, S., Wang, R., Zhao, T., & Zhang, C. (=
+2020, August). Bond: Bert-assisted open-domain named entity recognition wit=
+h distant supervision. In Proceedings of the 26th ACM SIGKDD International =
+Conference on Knowledge Discovery & Data Mining (pp. 1054-1064).
+=95 Hedderich, M. A., Lange, L., Adel, H., Str ?otgen, J., & Klakow, D. (20=
+20). A survey on recent approaches for natural language processing in low-r=
+esource scenarios. arXiv preprint arXiv:2010.12309.
+=95 Khandelwal, A., Kar, A., Chikka, V. R., & Karlapalem, K. (2022, May). B=
+iomedical NER using Novel Schema and Distant Supervision. In Proceedings of=
+ the 21st Workshop on Biomedical Language Processing (pp. 155-160)
+
+
+--_000_AS8P194MB16899789255B7357CB62372DBB309AS8P194MB1689EURP_
+Content-Type: text/html; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DWindows-1=
+252">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" class=3D"eleme=
+ntToProof">
+<p><strong><span dir=3D"ltr" style=3D"left:142.149px;top:248.912px;font-siz=
+e:16.6532px;font-family:sans-serif;transform:scaleX(1.17237)" class=3D"Cont=
+entPasted0">Context</span><span dir=3D"ltr" style=3D"left:209.442px;top:248=
+.912px;font-size:16.6532px;font-family:sans-serif" class=3D"ContentPasted0"=
+>&nbsp;</span></strong></p>
+<p><span dir=3D"ltr" style=3D"left:226.098px;top:248.912px;font-size:16.653=
+2px;font-family:sans-serif;transform:scaleX(0.994782)" class=3D"ContentPast=
+ed0">The NanoBubbles ERC Synergy project=92s objective (</span><a href=3D"h=
+ttps://nanobubbles.hypotheses. org" class=3D"ContentPasted0"><span dir=3D"l=
+tr" style=3D"left:609.822px;top:248.357px;font-size:16.6532px;font-family:m=
+onospace;transform:scaleX(0.872837)">https://nanobubbles.hypotheses.</span>=
+<span dir=3D"ltr" style=3D"left:142.149px;top:268.342px;font-size:16.6532px=
+;font-family:monospace;transform:scaleX(0.872837)">org</span></a><span dir=
+=3D"ltr" style=3D"left:168.377px;top:268.897px;font-size:16.6532px;font-fam=
+ily:sans-serif;transform:scaleX(1.06601)" class=3D"ContentPasted0">)
+ is to understand how, when and why science fails to correct itself.</span>=
+<span dir=3D"ltr" style=3D"left:692.497px;top:268.897px;font-size:16.6532px=
+;font-family:sans-serif" class=3D"ContentPasted0">&nbsp;</span><span dir=3D=
+"ltr" style=3D"left:707.685px;top:268.897px;font-size:16.6532px;font-family=
+:sans-serif;transform:scaleX(1.02757)" class=3D"ContentPasted0">The
+ project focuses on</span><span dir=3D"ltr" style=3D"left:707.685px;top:268=
+.897px;transform:scaleX(1.02757)" class=3D"ContentPasted0">&nbsp;</span><sp=
+an dir=3D"ltr" style=3D"left:142.149px;top:288.881px;font-size:16.6532px;fo=
+nt-family:sans-serif;transform:scaleX(1.01027)" class=3D"ContentPasted0">cl=
+aims
+ made within the field of nanobiology. Project members combine approaches f=
+rom the natural</span><span dir=3D"ltr" style=3D"left:142.149px;top:288.881=
+px;transform:scaleX(1.01027)" class=3D"ContentPasted0">&nbsp;</span><span d=
+ir=3D"ltr" style=3D"left:142.149px;top:308.864px;font-size:16.6532px;font-f=
+amily:sans-serif;transform:scaleX(0.971854)" class=3D"ContentPasted0">scien=
+ces,
+ computer science, and the social sciences and humanities (Science and Tech=
+nology Studies)</span><span dir=3D"ltr" style=3D"left:142.149px;top:308.864=
+px;transform:scaleX(0.971854)" class=3D"ContentPasted0">&nbsp;</span><span =
+dir=3D"ltr" style=3D"left:142.149px;top:328.848px;font-size:16.6532px;font-=
+family:sans-serif;transform:scaleX(0.989871)" class=3D"ContentPasted0">to
+ understand how error correction in science works and what obstacles it fac=
+es. For this purpose, we</span><span dir=3D"ltr" style=3D"left:142.149px;to=
+p:328.848px;transform:scaleX(0.989871)" class=3D"ContentPasted0">&nbsp;</sp=
+an><span dir=3D"ltr" style=3D"left:142.149px;top:348.831px;font-size:16.653=
+2px;font-family:sans-serif;transform:scaleX(1.01904)" class=3D"ContentPaste=
+d0">aim
+ to trace claims and corrections through various channels of scientific com=
+munication (journals,</span><span dir=3D"ltr" style=3D"left:142.149px;top:3=
+48.831px;transform:scaleX(1.01904)" class=3D"ContentPasted0">&nbsp;</span><=
+span dir=3D"ltr" style=3D"left:142.149px;top:368.817px;font-size:16.6532px;=
+font-family:sans-serif;transform:scaleX(0.995549)" class=3D"ContentPasted0"=
+>social
+ media, advertisements, conference programs, etc.) via both qualitative and=
+ digital methods.</span></p>
+<p><span dir=3D"ltr" style=3D"left:142.149px;top:368.817px;font-size:16.653=
+2px;font-family:sans-serif;transform:scaleX(0.995549)" class=3D"ContentPast=
+ed0"><br>
+</span></p>
+<p><strong><span dir=3D"ltr" style=3D"left:142.149px;top:412.102px;font-siz=
+e:16.6532px;font-family:sans-serif;transform:scaleX(1.18505)" class=3D"Cont=
+entPasted0">Intership objectifs</span><span dir=3D"ltr" style=3D"left:295.7=
+71px;top:412.102px;font-size:16.6532px;font-family:sans-serif" class=3D"Con=
+tentPasted0">&nbsp;</span></strong></p>
+<p><span dir=3D"ltr" style=3D"left:312.43px;top:412.102px;font-size:16.6532=
+px;font-family:sans-serif;transform:scaleX(1.04215)" class=3D"ContentPasted=
+0">Entity recognition is an important step for downstream treatment in natu=
+ral</span><span dir=3D"ltr" style=3D"left:312.43px;top:412.102px;transform:=
+scaleX(1.04215)" class=3D"ContentPasted0">&nbsp;</span><span dir=3D"ltr" st=
+yle=3D"left:142.149px;top:432.087px;font-size:16.6532px;font-family:sans-se=
+rif;transform:scaleX(1.00594)" class=3D"ContentPasted0">language
+ processing. It consists in identifying the entities in a corpus belonging =
+to a specific domain</span><span dir=3D"ltr" style=3D"left:142.149px;top:43=
+2.087px;transform:scaleX(1.00594)" class=3D"ContentPasted0">&nbsp;</span><s=
+pan dir=3D"ltr" style=3D"left:142.149px;top:452.071px;font-size:16.6532px;f=
+ont-family:sans-serif;transform:scaleX(1.02474)" class=3D"ContentPasted0">a=
+nd
+ in their labeling. Training methods relying on large annotated corpora are=
+ usually used for this</span><span dir=3D"ltr" style=3D"left:142.149px;top:=
+452.071px;transform:scaleX(1.02474)" class=3D"ContentPasted0">&nbsp;</span>=
+<span dir=3D"ltr" style=3D"left:142.149px;top:472.054px;font-size:16.6532px=
+;font-family:sans-serif;transform:scaleX(0.960103)" class=3D"ContentPasted0=
+">purpose.
+ However, such resource are not always available for specific domains, and =
+alternative methods</span><span dir=3D"ltr" style=3D"left:142.149px;top:472=
+.054px;transform:scaleX(0.960103)" class=3D"ContentPasted0">&nbsp;</span><s=
+pan dir=3D"ltr" style=3D"left:142.149px;top:492.038px;font-size:16.6532px;f=
+ont-family:sans-serif;transform:scaleX(0.972314)" class=3D"ContentPasted0">=
+have
+ to be employed (Hedderich 2020).</span><br class=3D"ContentPasted0">
+<span dir=3D"ltr" style=3D"left:167.128px;top:512.022px;font-size:16.6532px=
+;font-family:sans-serif;transform:scaleX(1.01281)" class=3D"ContentPasted0"=
+>Distant supervision (Mintz 2009) is a technique used to automatically labe=
+l textual data using an</span><span dir=3D"ltr" style=3D"left:167.128px;top=
+:512.022px;transform:scaleX(1.01281)" class=3D"ContentPasted0">&nbsp;</span=
+><span dir=3D"ltr" style=3D"left:142.149px;top:532.005px;font-size:16.6532p=
+x;font-family:sans-serif;transform:scaleX(0.953774)" class=3D"ContentPasted=
+0">external
+ resource such as dictionaries (Shang 2018), gazetteers, ontologies (Wang 2=
+021) and knowledge</span><span dir=3D"ltr" style=3D"left:142.149px;top:532.=
+005px;transform:scaleX(0.953774)" class=3D"ContentPasted0">&nbsp;</span><sp=
+an dir=3D"ltr" style=3D"left:142.149px;top:551.991px;font-size:16.6532px;fo=
+nt-family:sans-serif;transform:scaleX(0.988344)" class=3D"ContentPasted0">b=
+ases
+ (Sun 2019). This enable the construction of a training corpus without the =
+need of manual anno</span><span dir=3D"ltr" style=3D"left:142.149px;top:571=
+.974px;font-size:16.6532px;font-family:sans-serif;transform:scaleX(0.98242)=
+" class=3D"ContentPasted0">tation. In
+ specialized domains, this is especially useful in order to annotate comple=
+x and discontinuous</span><span dir=3D"ltr" style=3D"left:142.149px;top:571=
+.974px;transform:scaleX(0.98242)" class=3D"ContentPasted0">&nbsp;</span><sp=
+an dir=3D"ltr" style=3D"left:142.149px;top:591.958px;font-size:16.6532px;fo=
+nt-family:sans-serif;transform:scaleX(1.0034)" class=3D"ContentPasted0">ent=
+ities
+ with which human annotators may struggle (Khandelwal 2022).</span></p>
+<p><span dir=3D"ltr" style=3D"left:167.128px;top:611.941px;font-size:16.653=
+2px;font-family:sans-serif;transform:scaleX(1.03036)" class=3D"ContentPaste=
+d0">The objective of this internship is to implement a method to automatica=
+lly annotate a corpus of</span><span dir=3D"ltr" style=3D"left:167.128px;to=
+p:611.941px;transform:scaleX(1.03036)" class=3D"ContentPasted0">&nbsp;</spa=
+n><span dir=3D"ltr" style=3D"left:142.149px;top:631.925px;font-size:16.6532=
+px;font-family:sans-serif;transform:scaleX(1.01766)" class=3D"ContentPasted=
+0">scientific
+ documents, using existing resources, in the nanobiology domain. After it, =
+they will employ</span><span dir=3D"ltr" style=3D"left:142.149px;top:631.92=
+5px;transform:scaleX(1.01766)" class=3D"ContentPasted0">&nbsp;</span><span =
+dir=3D"ltr" style=3D"left:142.149px;top:651.91px;font-size:16.6532px;font-f=
+amily:sans-serif;transform:scaleX(1.01342)" class=3D"ContentPasted0">existi=
+ng
+ deep learning approaches (Liang 2020) to train an entity extraction model =
+for entities in the</span><span dir=3D"ltr" style=3D"left:142.149px;top:651=
+.91px;transform:scaleX(1.01342)" class=3D"ContentPasted0">&nbsp;</span><spa=
+n dir=3D"ltr" style=3D"left:142.149px;top:671.894px;font-size:16.6532px;fon=
+t-family:sans-serif;transform:scaleX(0.983842)" class=3D"ContentPasted0">na=
+nobiology
+ domain.</span></p>
+<p><span dir=3D"ltr" style=3D"left:142.149px;top:671.894px;font-size:16.653=
+2px;font-family:sans-serif;transform:scaleX(0.983842)" class=3D"ContentPast=
+ed0"><br>
+</span></p>
+<p><strong><span dir=3D"ltr" style=3D"left:142.149px;top:715.181px;font-siz=
+e:16.6532px;font-family:sans-serif;transform:scaleX(1.13968)" class=3D"Cont=
+entPasted0">Skills</span></strong></p>
+<p><span dir=3D"ltr" style=3D"left:167.13px;top:747.932px;font-size:16.6532=
+px;font-family:monospace" class=3D"ContentPasted0">=95</span><span dir=3D"l=
+tr" style=3D"left:175.455px;top:747.932px;font-size:16.6532px;font-family:m=
+onospace" class=3D"ContentPasted0">&nbsp;</span><span dir=3D"ltr" style=3D"=
+left:183.782px;top:748.487px;font-size:16.6532px;font-family:sans-serif;tra=
+nsform:scaleX(0.982608)" class=3D"ContentPasted0">Being
+ enrolled in a Master in Natural Language Processing, computer science or d=
+ata science.</span><br class=3D"ContentPasted0">
+<span dir=3D"ltr" style=3D"left:167.13px;top:781.238px;font-size:16.6532px;=
+font-family:monospace" class=3D"ContentPasted0">=95</span><span dir=3D"ltr"=
+ style=3D"left:175.455px;top:781.238px;font-size:16.6532px;font-family:mono=
+space" class=3D"ContentPasted0">&nbsp;</span><span dir=3D"ltr" style=3D"lef=
+t:183.782px;top:781.793px;font-size:16.6532px;font-family:sans-serif;transf=
+orm:scaleX(0.973899)" class=3D"ContentPasted0">Good
+ programming skills in Python, including experiences with natural language =
+processing tools</span><br class=3D"ContentPasted0">
+<span dir=3D"ltr" style=3D"left:183.782px;top:801.776px;font-size:16.6532px=
+;font-family:sans-serif;transform:scaleX(0.976189)" class=3D"ContentPasted0=
+">and methods, knowledge of machine learning and deep learning frameworks a=
+nd semantic web.</span><br class=3D"ContentPasted0">
+<span dir=3D"ltr" style=3D"left:167.13px;top:834.529px;font-size:16.6532px;=
+font-family:monospace" class=3D"ContentPasted0">=95</span><span dir=3D"ltr"=
+ style=3D"left:175.455px;top:834.529px;font-size:16.6532px;font-family:mono=
+space" class=3D"ContentPasted0">&nbsp;</span><span dir=3D"ltr" style=3D"lef=
+t:183.782px;top:835.084px;font-size:16.6532px;font-family:sans-serif;transf=
+orm:scaleX(1.0271)" class=3D"ContentPasted0">Ability
+ to communicate and write in English is a plus.</span></p>
+<p><br class=3D"ContentPasted0">
+<strong><span dir=3D"ltr" style=3D"left:142.149px;top:878.371px;font-size:1=
+6.6532px;font-family:sans-serif;transform:scaleX(1.1551)" class=3D"ContentP=
+asted0">Scientific environment</span><span dir=3D"ltr" style=3D"left:330.33=
+4px;top:878.371px;font-size:16.6532px;font-family:sans-serif" class=3D"Cont=
+entPasted0">&nbsp;</span></strong></p>
+<p><span dir=3D"ltr" style=3D"left:346.991px;top:878.371px;font-size:16.653=
+2px;font-family:sans-serif;transform:scaleX(1.05981)" class=3D"ContentPaste=
+d0">The work will be conducted within the Sigma team of the LIG labora</spa=
+n><span dir=3D"ltr" style=3D"left:142.149px;top:898.355px;font-size:16.6532=
+px;font-family:sans-serif;transform:scaleX(1.07967)" class=3D"ContentPasted=
+0">tory
+ (http://sigma.imag.fr).</span><span dir=3D"ltr" style=3D"left:347.071px;to=
+p:898.355px;font-size:16.6532px;font-family:sans-serif" class=3D"ContentPas=
+ted0">&nbsp;</span><span dir=3D"ltr" style=3D"left:359.461px;top:898.355px;=
+font-size:16.6532px;font-family:sans-serif;transform:scaleX(1.0434)" class=
+=3D"ContentPasted0">The
+ recruited person will be welcomed within the team which offer a</span><spa=
+n dir=3D"ltr" style=3D"left:359.461px;top:898.355px;transform:scaleX(1.0434=
+)" class=3D"ContentPasted0">&nbsp;</span><span dir=3D"ltr" style=3D"left:14=
+2.149px;top:918.338px;font-size:16.6532px;font-family:sans-serif;transform:=
+scaleX(1.0122)" class=3D"ContentPasted0">stimulating,
+ multinational and pleasant working environment.</span></p>
+<p><span dir=3D"ltr" style=3D"left:142.149px;top:918.338px;font-size:16.653=
+2px;font-family:sans-serif;transform:scaleX(1.0122)" class=3D"ContentPasted=
+0"><br>
+</span></p>
+<p><strong><span dir=3D"ltr" style=3D"left:142.149px;top:961.625px;font-siz=
+e:16.6532px;font-family:sans-serif;transform:scaleX(1.17004)" class=3D"Cont=
+entPasted0">Instructions for applying</span><span dir=3D"ltr" style=3D"left=
+:347.997px;top:961.625px;font-size:16.6532px;font-family:sans-serif" class=
+=3D"ContentPasted0">&nbsp;</span></strong></p>
+<p><span dir=3D"ltr" style=3D"left:364.656px;top:961.625px;font-size:16.653=
+2px;font-family:sans-serif;transform:scaleX(1.00463)" class=3D"ContentPaste=
+d0">Applications must contain a CV + letter/message of motivation + mas</sp=
+an><span dir=3D"ltr" style=3D"left:142.149px;top:981.609px;font-size:16.653=
+2px;font-family:sans-serif;transform:scaleX(1.02075)" class=3D"ContentPaste=
+d0">ter
+ grades + letter(s) of recommendation (or names for potential letters), and=
+ be addressed to Cyril</span><span dir=3D"ltr" style=3D"left:142.149px;top:=
+981.609px;transform:scaleX(1.02075)" class=3D"ContentPasted0">&nbsp;</span>=
+<span dir=3D"ltr" style=3D"left:142.149px;top:1001.59px;font-size:16.6532px=
+;font-family:sans-serif;transform:scaleX(1.08154)" class=3D"ContentPasted0"=
+>Labb=E9</span><span dir=3D"ltr" style=3D"left:179.388px;top:1001.59px;font=
+-size:16.6532px;font-family:sans-serif;transform:scaleX(0.997521)" class=3D=
+"ContentPasted0">&nbsp;(cyril.labbe@imag.fr)
+ and Amira Barhoumi (amira.barhoumi@univ-grenoble-alpes.fr). Applica</span>=
+<span dir=3D"ltr" style=3D"left:142.149px;top:1021.58px;font-size:16.6532px=
+;font-family:sans-serif;transform:scaleX(0.997469)" class=3D"ContentPasted0=
+">tions will be considered on the fly.
+ It is therefore advisable to apply as soon as possible.</span></p>
+<p><span dir=3D"ltr" style=3D"left:142.149px;top:1021.58px;font-size:16.653=
+2px;font-family:sans-serif;transform:scaleX(0.997469)" class=3D"ContentPast=
+ed0"><br>
+</span></p>
+<p><strong><span dir=3D"ltr" style=3D"left:142.149px;top:1064.86px;font-siz=
+e:16.6532px;font-family:sans-serif;transform:scaleX(1.0558)" class=3D"Conte=
+ntPasted0">References</span></strong></p>
+<p><span dir=3D"ltr" style=3D"left:167.13px;top:1097.61px;font-size:16.6532=
+px;font-family:monospace" class=3D"ContentPasted0">=95</span><span dir=3D"l=
+tr" style=3D"left:175.455px;top:1097.61px;font-size:16.6532px;font-family:m=
+onospace" class=3D"ContentPasted0">&nbsp;</span><span dir=3D"ltr" style=3D"=
+left:183.782px;top:1098.17px;font-size:16.6532px;font-family:sans-serif;tra=
+nsform:scaleX(1.04478)" class=3D"ContentPasted0">Mintz,
+ M., Bills, S., Snow, R., &amp; Jurafsky, D. (2009, August). Distant superv=
+ision for relation</span><span dir=3D"ltr" style=3D"left:183.782px;top:1098=
+.17px;transform:scaleX(1.04478)" class=3D"ContentPasted0">&nbsp;</span><spa=
+n dir=3D"ltr" style=3D"left:183.782px;top:1118.15px;font-size:16.6532px;fon=
+t-family:sans-serif;transform:scaleX(1.04714)" class=3D"ContentPasted0">ext=
+raction
+ without labeled data.</span><span dir=3D"ltr" style=3D"left:424.311px;top:=
+1118.15px;font-size:16.6532px;font-family:sans-serif" class=3D"ContentPaste=
+d0">&nbsp;</span><span dir=3D"ltr" style=3D"left:437.217px;top:1118.15px;fo=
+nt-size:16.6532px;font-family:sans-serif;transform:scaleX(1.03671)" class=
+=3D"ContentPasted0">In
+ Proceedings of the Joint Conference of the 47th Annual</span><span dir=3D"=
+ltr" style=3D"left:437.217px;top:1118.15px;transform:scaleX(1.03671)" class=
+=3D"ContentPasted0">&nbsp;</span><span dir=3D"ltr" style=3D"left:183.782px;=
+top:1138.14px;font-size:16.6532px;font-family:sans-serif;transform:scaleX(0=
+.988972)" class=3D"ContentPasted0">Meeting
+ of the ACL and the 4th International Joint Conference on Natural Language =
+Processing</span><span dir=3D"ltr" style=3D"left:183.782px;top:1138.14px;tr=
+ansform:scaleX(0.988972)" class=3D"ContentPasted0">&nbsp;</span><span dir=
+=3D"ltr" style=3D"left:183.782px;top:1158.12px;font-size:16.6532px;font-fam=
+ily:sans-serif;transform:scaleX(1.01968)" class=3D"ContentPasted0">of
+ the AFNLP (pp. 1003-1011).</span><br class=3D"ContentPasted0">
+<span dir=3D"ltr" style=3D"left:167.13px;top:1190.87px;font-size:16.6532px;=
+font-family:monospace" class=3D"ContentPasted0">=95</span><span dir=3D"ltr"=
+ style=3D"left:175.455px;top:1190.87px;font-size:16.6532px;font-family:mono=
+space" class=3D"ContentPasted0">&nbsp;</span><span dir=3D"ltr" style=3D"lef=
+t:183.782px;top:1191.43px;font-size:16.6532px;font-family:sans-serif;transf=
+orm:scaleX(1.04827)" class=3D"ContentPasted0">Shang,
+ J., Liu, L., Ren, X., Gu, X., Ren, T., &amp; Han, J. (2018). Learning name=
+d entity tagger</span><span dir=3D"ltr" style=3D"left:183.782px;top:1191.43=
+px;transform:scaleX(1.04827)" class=3D"ContentPasted0">&nbsp;</span><span d=
+ir=3D"ltr" style=3D"left:183.782px;top:1211.41px;font-size:16.6532px;font-f=
+amily:sans-serif;transform:scaleX(1.00451)" class=3D"ContentPasted0">using
+ domain-specific dictionary. arXiv preprint arXiv:1809.03599.</span></p>
+<p><span dir=3D"ltr" style=3D"left:167.132px;top:98.6527px;font-size:16.653=
+2px;font-family:monospace" class=3D"ContentPasted0">=95</span><span dir=3D"=
+ltr" style=3D"left:175.457px;top:98.6527px;font-size:16.6532px;font-family:=
+monospace" class=3D"ContentPasted0">&nbsp;</span><span dir=3D"ltr" style=3D=
+"left:183.782px;top:99.2078px;font-size:16.6532px;font-family:sans-serif;tr=
+ansform:scaleX(1.10384)" class=3D"ContentPasted0">Sun,
+ Y., &amp; Loparo, K. (2019, July).</span><span dir=3D"ltr" style=3D"left:4=
+60.478px;top:99.2078px;font-size:16.6532px;font-family:sans-serif" class=3D=
+"ContentPasted0">&nbsp;</span><span dir=3D"ltr" style=3D"left:474.816px;top=
+:99.2078px;font-size:16.6532px;font-family:sans-serif;transform:scaleX(1.08=
+279)" class=3D"ContentPasted0">Information
+ extraction from free text in clinical trials&nbsp;</span><span dir=3D"ltr"=
+ style=3D"left:183.782px;top:119.191px;font-size:16.6532px;font-family:sans=
+-serif;transform:scaleX(1.01043)" class=3D"ContentPasted0">with knowledge-b=
+ased distant supervision. In 2019 IEEE 43rd
+ Annual Computer Software and</span><span dir=3D"ltr" style=3D"left:183.782=
+px;top:119.191px;transform:scaleX(1.01043)" class=3D"ContentPasted0">&nbsp;=
+</span><span dir=3D"ltr" style=3D"left:183.782px;top:139.175px;font-size:16=
+.6532px;font-family:sans-serif;transform:scaleX(1.01667)" class=3D"ContentP=
+asted0">Applications
+ Conference (COMPSAC) (Vol. 1, pp. 954-955). IEEE.</span><br class=3D"Conte=
+ntPasted0">
+<span dir=3D"ltr" style=3D"left:167.132px;top:171.926px;font-size:16.6532px=
+;font-family:monospace" class=3D"ContentPasted0">=95</span><span dir=3D"ltr=
+" style=3D"left:175.457px;top:171.926px;font-size:16.6532px;font-family:mon=
+ospace" class=3D"ContentPasted0">&nbsp;</span><span dir=3D"ltr" style=3D"le=
+ft:183.782px;top:172.481px;font-size:16.6532px;font-family:sans-serif;trans=
+form:scaleX(1.07194)" class=3D"ContentPasted0">Wang,
+ X., Hu, V., Song, X., Garg, S., Xiao, J., &amp; Han, J. (2021, November).<=
+/span><span dir=3D"ltr" style=3D"left:776.009px;top:172.481px;font-size:16.=
+6532px;font-family:sans-serif" class=3D"ContentPasted0">&nbsp;</span><span =
+dir=3D"ltr" style=3D"left:789.032px;top:172.481px;font-size:16.6532px;font-=
+family:sans-serif;transform:scaleX(1.03446)" class=3D"ContentPasted0">CHEMN=
+ER:</span><span dir=3D"ltr" style=3D"left:789.032px;top:172.481px;transform=
+:scaleX(1.03446)" class=3D"ContentPasted0">&nbsp;</span><span dir=3D"ltr" s=
+tyle=3D"left:183.782px;top:192.465px;font-size:16.6532px;font-family:sans-s=
+erif;transform:scaleX(1.00799)" class=3D"ContentPasted0">Fine-Grained
+ Chemistry Named Entity Recognition with Ontology-Guided Distant Supervisio=
+n.</span><span dir=3D"ltr" style=3D"left:183.782px;top:192.465px;transform:=
+scaleX(1.00799)" class=3D"ContentPasted0">&nbsp;</span><span dir=3D"ltr" st=
+yle=3D"left:183.782px;top:212.45px;font-size:16.6532px;font-family:sans-ser=
+if;transform:scaleX(1.00098)" class=3D"ContentPasted0">In
+ Proceedings of the 2021 Conference on Empirical Methods in Natural Languag=
+e Processing</span><span dir=3D"ltr" style=3D"left:183.782px;top:212.45px;t=
+ransform:scaleX(1.00098)" class=3D"ContentPasted0">&nbsp;</span><span dir=
+=3D"ltr" style=3D"left:183.782px;top:232.433px;font-size:16.6532px;font-fam=
+ily:sans-serif;transform:scaleX(0.976065)" class=3D"ContentPasted0">(pp.
+ 5227-5240).</span><br class=3D"ContentPasted0">
+<span dir=3D"ltr" style=3D"left:167.132px;top:265.184px;font-size:16.6532px=
+;font-family:monospace" class=3D"ContentPasted0">=95</span><span dir=3D"ltr=
+" style=3D"left:175.457px;top:265.184px;font-size:16.6532px;font-family:mon=
+ospace" class=3D"ContentPasted0">&nbsp;</span><span dir=3D"ltr" style=3D"le=
+ft:183.782px;top:265.739px;font-size:16.6532px;font-family:sans-serif;trans=
+form:scaleX(1.05964)" class=3D"ContentPasted0">Liang,
+ C., Yu, Y., Jiang, H., Er, S., Wang, R., Zhao, T., &amp; Zhang, C. (2020, =
+August).</span><span dir=3D"ltr" style=3D"left:827.477px;top:265.739px;font=
+-size:16.6532px;font-family:sans-serif" class=3D"ContentPasted0">&nbsp;</sp=
+an><span dir=3D"ltr" style=3D"left:837.602px;top:265.739px;font-size:16.653=
+2px;font-family:sans-serif;transform:scaleX(0.993567)" class=3D"ContentPast=
+ed0">Bond:</span><span dir=3D"ltr" style=3D"left:837.602px;top:265.739px;tr=
+ansform:scaleX(0.993567)" class=3D"ContentPasted0">&nbsp;</span><span dir=
+=3D"ltr" style=3D"left:183.782px;top:285.723px;font-size:16.6532px;font-fam=
+ily:sans-serif;transform:scaleX(0.994439)" class=3D"ContentPasted0">Bert-as=
+sisted
+ open-domain named entity recognition with distant supervision. In Proceedi=
+ngs of</span><span dir=3D"ltr" style=3D"left:183.782px;top:285.723px;transf=
+orm:scaleX(0.994439)" class=3D"ContentPasted0">&nbsp;</span><span dir=3D"lt=
+r" style=3D"left:183.782px;top:305.707px;font-size:16.6532px;font-family:sa=
+ns-serif;transform:scaleX(1.01329)" class=3D"ContentPasted0">the
+ 26th ACM SIGKDD International Conference on Knowledge Discovery &amp; Data=
+ Mining (pp.</span><span dir=3D"ltr" style=3D"left:183.782px;top:305.707px;=
+transform:scaleX(1.01329)" class=3D"ContentPasted0">&nbsp;</span><span dir=
+=3D"ltr" style=3D"left:183.782px;top:325.692px;font-size:16.6532px;font-fam=
+ily:sans-serif;transform:scaleX(0.926549)" class=3D"ContentPasted0">1054-10=
+64).</span><br class=3D"ContentPasted0">
+<span dir=3D"ltr" style=3D"left:167.132px;top:358.443px;font-size:16.6532px=
+;font-family:monospace" class=3D"ContentPasted0">=95</span><span dir=3D"ltr=
+" style=3D"left:175.457px;top:358.443px;font-size:16.6532px;font-family:mon=
+ospace" class=3D"ContentPasted0">&nbsp;</span><span dir=3D"ltr" style=3D"le=
+ft:183.782px;top:358.998px;font-size:16.6532px;font-family:sans-serif;trans=
+form:scaleX(1.12498)" class=3D"ContentPasted0">Hedderich,
+ M. A., Lange, L., Adel, H., Str ?</span><span dir=3D"ltr" style=3D"left:52=
+0.28px;top:358.998px;font-size:16.6532px;font-family:sans-serif;transform:s=
+caleX(1.10552)" class=3D"ContentPasted0">otgen, J., &amp; Klakow, D. (2020)=
+.</span><span dir=3D"ltr" style=3D"left:769.04px;top:358.998px;font-size:16=
+.6532px;font-family:sans-serif" class=3D"ContentPasted0">&nbsp;</span><span=
+ dir=3D"ltr" style=3D"left:786.276px;top:358.998px;font-size:16.6532px;font=
+-family:sans-serif;transform:scaleX(1.07557)" class=3D"ContentPasted0">A
+ survey on</span><span dir=3D"ltr" style=3D"left:786.276px;top:358.998px;tr=
+ansform:scaleX(1.07557)" class=3D"ContentPasted0">&nbsp;</span><span dir=3D=
+"ltr" style=3D"left:183.782px;top:378.982px;font-size:16.6532px;font-family=
+:sans-serif;transform:scaleX(0.999698)" class=3D"ContentPasted0">recent
+ approaches for natural language processing in low-resource scenarios.</spa=
+n><span dir=3D"ltr" style=3D"left:757.725px;top:378.982px;font-size:16.6532=
+px;font-family:sans-serif" class=3D"ContentPasted0">&nbsp;</span><span dir=
+=3D"ltr" style=3D"left:773.063px;top:378.982px;font-size:16.6532px;font-fam=
+ily:sans-serif;transform:scaleX(1.08805)" class=3D"ContentPasted0">arXiv
+ preprint</span><span dir=3D"ltr" style=3D"left:773.063px;top:378.982px;tra=
+nsform:scaleX(1.08805)" class=3D"ContentPasted0">&nbsp;</span><span dir=3D"=
+ltr" style=3D"left:183.782px;top:398.965px;font-size:16.6532px;font-family:=
+sans-serif;transform:scaleX(0.958146)" class=3D"ContentPasted0">arXiv:2010.=
+12309.</span><br class=3D"ContentPasted0">
+<span dir=3D"ltr" style=3D"left:167.132px;top:431.716px;font-size:16.6532px=
+;font-family:monospace" class=3D"ContentPasted0">=95</span><span dir=3D"ltr=
+" style=3D"left:175.457px;top:431.716px;font-size:16.6532px;font-family:mon=
+ospace" class=3D"ContentPasted0">&nbsp;</span><span dir=3D"ltr" style=3D"le=
+ft:183.782px;top:432.271px;font-size:16.6532px;font-family:sans-serif;trans=
+form:scaleX(1.02817)" class=3D"ContentPasted0">Khandelwal,
+ A., Kar, A., Chikka, V. R., &amp; Karlapalem, K. (2022, May). Biomedical N=
+ER using</span><span dir=3D"ltr" style=3D"left:183.782px;top:432.271px;tran=
+sform:scaleX(1.02817)" class=3D"ContentPasted0">&nbsp;</span><span dir=3D"l=
+tr" style=3D"left:183.782px;top:452.256px;font-size:16.6532px;font-family:s=
+ans-serif;transform:scaleX(1.00391)" class=3D"ContentPasted0">Novel
+ Schema and Distant Supervision.</span><span dir=3D"ltr" style=3D"left:478.=
+395px;top:452.256px;font-size:16.6532px;font-family:sans-serif" class=3D"Co=
+ntentPasted0">&nbsp;</span><span dir=3D"ltr" style=3D"left:490.968px;top:45=
+2.256px;font-size:16.6532px;font-family:sans-serif;transform:scaleX(1.02034=
+)" class=3D"ContentPasted0">In
+ Proceedings of the 21st Workshop on Biomedical</span><span dir=3D"ltr" sty=
+le=3D"left:490.968px;top:452.256px;transform:scaleX(1.02034)" class=3D"Cont=
+entPasted0">&nbsp;</span><span dir=3D"ltr" style=3D"left:183.782px;top:472.=
+24px;font-size:16.6532px;font-family:sans-serif;transform:scaleX(0.965557)"=
+ class=3D"ContentPasted0">Language
+ Processing (pp. 155-160)</span></p>
+<br>
+</div>
+</body>
+</html>
+
+--_000_AS8P194MB16899789255B7357CB62372DBB309AS8P194MB1689EURP_--

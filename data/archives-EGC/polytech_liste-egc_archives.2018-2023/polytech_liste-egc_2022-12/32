@@ -1,0 +1,554 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (bouncesmtp1.u12.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id E89FF14017DA
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon, 12 Dec 2022 11:02:54 +0100 (CET)
+Received: from mx3.localdomain (MX3.univ-nantes.fr [193.52.101.137])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id E473D703E
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon, 12 Dec 2022 11:02:54 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.localdomain (Postfix) with ESMTP id DB04E207C3
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 12 Dec 2022 11:02:54 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=univ-nantes.fr header.b=hVc7Zy/+; dkim=pass (2048-bit key)
+	header.d=univ-nantes.fr header.b=hVc7Zy/+
+Received: from mx3.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id GMMZQdX_y7Kg for <liste-egc@polytech.univ-nantes.fr>;
+	Mon, 12 Dec 2022 11:02:54 +0100 (CET)
+X-Greylist: whitelisted by SQLgrey-1.6.7
+Received: from smtp-tls.univ-nantes.fr (smtptls1-loi.cpub.univ-nantes.fr [193.52.103.112])
+	by mx3.localdomain (Postfix) with ESMTPS id BEEA820064
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 12 Dec 2022 11:02:54 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by smtp-tls.univ-nantes.fr (Postfix) with ESMTP id AA8B73A8;
+	Mon, 12 Dec 2022 11:02:54 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-nantes.fr;
+	s=mailv2; t=1670839374;
+	bh=95shnnN/LfJQFYSj+uVm4auP2+GOlEYyGpyYfUwdr4g=;
+	h=Date:Subject:References:To:From:In-Reply-To:From;
+	b=hVc7Zy/+NlgO8GFhCecc4hVeUDP1rAjL0t9cwzLXK9wHtbnVUmvTT/KfOEzkzmFYL
+	 dHrN7zlnEvmCHqwQvmOPJBKDg/xd2mjPENUYXSBtky/ZubwUxNLCCYSEq2X7/5M+95
+	 P97G+j/mvBzJ8CLa1KaGUn5qhWIFQk05jz702bGOq8zAOVbklgv6FbXkURJhG4G1+r
+	 YNNGlOSIXYmusNNeQ900C+pYcqolPxWsKj/68mLeYl/CGaC436fdS33KzQ570N5V/j
+	 DOBDa+z7VQlj5ecVtUzYjSyoIgac93d4saBwGb27O7ha3+UgpS/as6UCeYk7HD1mXz
+	 iaApHMep9pbzA==
+X-Virus-Scanned: Debian amavisd-new at smtptls1-lmb.cpub.univ-nantes.fr
+Received: from smtp-tls.univ-nantes.fr ([127.0.0.1])
+	by localhost (smtptls1-loi.cpub.univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id FRQPo2z5qMrb; Mon, 12 Dec 2022 11:02:54 +0100 (CET)
+Received: from [IPV6:2001:660:7220:389:ecd9:3eb1:c17a:8ab8] (unknown [IPv6:2001:660:7220:389:ecd9:3eb1:c17a:8ab8])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-tls.univ-nantes.fr (Postfix) with ESMTPSA id 5934BA3;
+	Mon, 12 Dec 2022 11:02:54 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-nantes.fr;
+	s=mailv2; t=1670839374;
+	bh=95shnnN/LfJQFYSj+uVm4auP2+GOlEYyGpyYfUwdr4g=;
+	h=Date:Subject:References:To:From:In-Reply-To:From;
+	b=hVc7Zy/+NlgO8GFhCecc4hVeUDP1rAjL0t9cwzLXK9wHtbnVUmvTT/KfOEzkzmFYL
+	 dHrN7zlnEvmCHqwQvmOPJBKDg/xd2mjPENUYXSBtky/ZubwUxNLCCYSEq2X7/5M+95
+	 P97G+j/mvBzJ8CLa1KaGUn5qhWIFQk05jz702bGOq8zAOVbklgv6FbXkURJhG4G1+r
+	 YNNGlOSIXYmusNNeQ900C+pYcqolPxWsKj/68mLeYl/CGaC436fdS33KzQ570N5V/j
+	 DOBDa+z7VQlj5ecVtUzYjSyoIgac93d4saBwGb27O7ha3+UgpS/as6UCeYk7HD1mXz
+	 iaApHMep9pbzA==
+Content-Type: multipart/alternative;
+ boundary="------------yumuXok19Us3PZ88UxFDM0M1"
+Message-ID: <823ed7ca-9d00-0337-0387-8da11fedf37f@univ-nantes.fr>
+Date: Mon, 12 Dec 2022 11:02:53 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Content-Language: fr
+References: <f0f75643-4a19-fd4a-5dea-4e53c9015ead@univ-nantes.fr>
+To: liste-egc@polytech.univ-nantes.fr, info-ic@listes.irisa.fr,
+ bull-i3@irit.fr
+From: Claudia Marinica <claudia.marinica@univ-nantes.fr>
+In-Reply-To: <f0f75643-4a19-fd4a-5dea-4e53c9015ead@univ-nantes.fr>
+X-Forwarded-Message-Id: <f0f75643-4a19-fd4a-5dea-4e53c9015ead@univ-nantes.fr>
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] PROGRAMME & RAPPEL : =?UTF-8?Q?9=C3=A8me_=C3=89cole_d?=
+ =?UTF-8?Q?=E2=80=99Hiver_=C3=A9-EGC?= "Gestion et traitement intelligent
+ des =?UTF-8?Q?=C3=A9cosyst=C3=A8mes?= de graphes de connaissances", Lyon,
+ France - Appel =?UTF-8?Q?=C3=A0?= participation
+
+This is a multi-part message in MIME format.
+--------------yumuXok19Us3PZ88UxFDM0M1
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+
+*
+
+**** La programme de l'école est disponible ci-dessous. ****
+
+ECOLE D’HIVER - APPEL A PARTICIPATION
+
+*
+*
+
+9ème Ecole d’Hiver é-EGC sur le thème « Gestion et traitement 
+intelligent des écosystèmes de graphes de connaissances »
+
+16 – 20 Janvier 2023, Lyon - France
+
+https://egc2023.sciencesconf.org/resource/page/id/20
+
+==============================================
+
+
+La neuvième École d’Hiver é-EGC, sur le thème « Gestion et traitement 
+intelligent des écosystèmes de graphes de connaissances », est un  
+événement organisé par l’Association Extraction et Gestion de 
+Connaissances (EGC, http://www.egc.asso.fr/).
+
+Cet événement s’organise autour de deux activités principales :
+
+•    deux jours de formation : les 16 et 17 Janvier 2023
+
+•    participation à la conférence EGC2023 : du 18 au 20  janvier 2023
+
+
+Cet appel est également disponible à l’adresse :
+
+https://egc2023.sciencesconf.org/resource/page/id/20 
+<https://egc2023.sciencesconf.org/resource/page/id/20>
+
+
+THEME DE L'ECOLE : Gestion et traitement intelligent des écosystèmes de 
+graphes de connaissances
+
+Cette école s’intéresse à la gestion et au traitement intelligent des 
+écosystèmes de graphes de connaissances disponibles aujourd’hui dans 
+tous les domaines. Cette thématique englobe les approches d’intelligence 
+artificielle symbolique, numérique ou hybride pour la construction, la 
+publication, l’interrogation et l’exploitation de bases de graphes de 
+connaissances annotés et interconnectés. Corollairement, elle touche aux 
+problématiques de la qualité des données et graphes de connaissances 
+produits, de la provenance des graphes de connaissances et de 
+l’explication des résultats de leurs traitements.
+
+
+OBJECTIFS DE L'ECOLE
+
+Les deux jours de formation ont pour but principal d’offrir aux 
+participants des tutoriaux d’initiation dans le domaine de recherche 
+couvrant les thèmes de l’école mais également des tutoriaux plus 
+spécifiques présentant les récentes avancées proposant des solutions et 
+des techniques nouvelles pour les différentes problématiques ayant 
+émergées dans ce domaine. Certains exposés seront associés à des séances 
+plus pratiques afin de permettre aux participants de manipuler quelques 
+outils.
+
+La participation à la conférence permettra aux participants de prendre 
+part à un des événements majeurs de la communauté francophone de 
+l’extraction et la gestion de connaissances. Elle leur permettra 
+d’assister à des présentations de nouvelles avancées et approches 
+développées dans la communauté, ceci pouvant ainsi inspirer leur 
+parcours scientifique futur.
+
+Enfin, cette école souhaite offrir aux jeunes chercheurs (doctorants, 
+post-doctorants et ingénieurs) et aux chercheurs confirmés du domaine la 
+possibilité de se rencontrer et d’échanger des idées, ce qui devrait 
+également permettre aux jeunes chercheurs d’enrichir leur réseau.
+
+
+PROGRAMME DE L'ECOLE
+
+*
+
+*Lundi 16/01/2023*
+
+  * 9h00 - 9h15 : Catherine Faron(I3S, Univ. Côte d’Azur), Bienvenue et
+    présentation du programme de l’école
+  * 9h15 - 10h00 : Catherine Faron(I3S, Univ. Côte d’Azur),Des graphes
+    de connaissances aux écosystèmes de graphes de connaissances
+  * 10h00 - 11h00 : Catherine Faron(I3S, Univ. Côte d’Azur) etRémi
+    Ceres(Inria), Session pratique avec le moteur sémantique Corese
+  * 11h00 - 11h30 : Pause café
+  * 11h30 - 12h30 :Pierre-Antoine Champin(LIRIS, Univ. Lyon),activités
+    du W3C sur la gestion des graphes de connaissances
+  * 12h30 - 14h00 : Déjeuner
+  * 14h00 - 15h30 : Hala Skaf (LINA, Univ. Nantes), Gestion de graphes
+    de connaissances décentralisées
+  * 15h30 - 16h00 : Pause café
+  * 16h00 - 18h00 : Clément Jonquet(Inrae), Evaluation du niveau de
+    FAIRness des ressources sémantiques
+  * 20h00 - Dîner
+
+*Mardi 17/01/2023*
+
+  * 09h00 - 10h30 : Nathalie Pernelle (Univ. Sorbonne Paris Nord),
+    Fouille de règles dans des graphes de connaissances
+  * 10h30 - 11h00 : Pause café
+  * 11h00 - 12h30 : Raphaël Troncy (Eurecom), Hybridation des modèles de
+    langues et des graphes de connaissances
+  * 12h30 - 14h00 : Déjeuner
+  * 14h00 - 15h30 : Axel Ngonga (Univ. Paderborn, DE), Neurosymbolic
+    Learning on Knowledge Graphs
+  * 15h30 - 16h00 : Pause café
+  * 16h00 - 17h30 : Neurosymbolic Learning on Knowledge Graphs (suite)
+  * 17h30 - 18h00 : Clôture de l'école
+
+**
+*
+
+PUBLIC CONCERNE
+
+L’École d’Hiver é-EGC 2023 s’adresse particulièrement aux doctorants et 
+étudiants, de manière générale, désirant approfondir leurs connaissances 
+dans le domaine de l’exploration de données et de l’apprentissage.
+
+
+COMITÉ SCIENTIFIQUE ET ORGANISATION
+
+• Catherine Faron (I3S, Université Côte d’Azur)
+
+•    Arnaud Martin (IRISA, Université de Rennes 1)
+
+• Cécile Favre (ERIC, ICOM)
+
+• Sabine Loudcher (ERIC, ICOM)
+
+•    Claudia Marinica (LS2N, Université de Nantes)
+
+
+DATES IMPORTANTES
+
+•    Date limite pré-inscriptions (CV à fournir) : 07/12/2022
+
+•    Inscription effective (École (formation + conférence EGC), sur le 
+site de la conférence) : 15/12/2022
+
+
+L’INSCRIPTION SE RÉALISE EN DEUX ÉTAPES
+
+1/ Les participants doivent manifester leur intérêt, avant le 
+07/12/2022, pour participer à l’École en s’inscrivant avec ce formulaire :
+
+https://forms.gle/zcMGiwRQyFb27vDs6 <https://forms.gle/zcMGiwRQyFb27vDs6>
+
+Pour que la pré-inscription soit prise en compte, elle doit être 
+accompagnée d’un CV récent du participant.
+
+2/ Après la confirmation de la pré-inscription par le comité 
+d’organisation, et avant le 15/12/2022, les participants doivent 
+s’inscrire via la page d’inscription de la conférence EGC 2023 
+(attention de bien choisir le tarif comprenant l’École).
+
+
+Le nombre de participants est limité à 30 personnes. Le tarif de 
+l’inscription sera affiché sur le site de la conférence EGC 
+(https://egc2023.sciencesconf.org/) et il comprend :
+
+– la participation à l’École d’Hiver (16 et 17 janvier) ;
+
+– la participation à la conférence (18 au 20  janvier) ;
+
+– les déjeuners et le repas de gala.
+
+Bien codialement,
+
+Pour le comité d'organisation,
+
+Claudia Marinica
+
+*
+
+Université de Nantes
+*Claudia MARINICA*
+Assistant Professor
+Computer Science department
+Polytech'Nantes, University of Nantes
+
+email: Claudia.Marinica@univ-nantes.fr
+
+rue Christian Pauc CS 50609
+44306 Nantes cedex 3
+office: D210 - Ireste
+
+web.polytech.univ-nantes.fr <http://web.polytech.univ-nantes.fr>
+<https://www.facebook.com/PolytechNantes/?ref=aymt_homepage_panel><https://twitter.com/PolytechNantes><https://www.instagram.com/polytechnantes/?hl=fr><https://www.linkedin.com/school/3848702/> 
+
+
+*_Adoptez l'éco-attitude_ : n'imprimez ce mail que si cela est vraiment 
+nécessaire*
+--------------yumuXok19Us3PZ88UxFDM0M1
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <b style="font-weight:normal;"
+      id="docs-internal-guid-f34cf8e0-7fff-22d1-fa6d-d29bb4a111a9">
+      <p dir="ltr"
+        style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><b><font
+            color="#f51f24">*** La programme de l'école est disponible
+            ci-dessous. ***</font></b><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"></span></p>
+      <p dir="ltr"
+        style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">
+</span></p>
+      <p dir="ltr"
+        style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">ECOLE D’HIVER - APPEL A PARTICIPATION</span></p>
+    </b>
+    <div class="moz-forward-container">
+      <div class="moz-forward-container"><b style="font-weight:normal;"
+          id="docs-internal-guid-f34cf8e0-7fff-22d1-fa6d-d29bb4a111a9">
+          <br>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">9ème Ecole d’Hiver é-EGC sur le thème « Gestion et traitement intelligent des écosystèmes de graphes de connaissances »</span></p>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">16 – 20 Janvier 2023, Lyon - France</span></p>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><a class="moz-txt-link-freetext" href="https://egc2023.sciencesconf.org/resource/page/id/20" moz-do-not-send="true">https://egc2023.sciencesconf.org/resource/page/id/20</a></span></p>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">==============================================</span></p>
+          <br>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">La neuvième École d’Hiver é-EGC, sur le thème « Gestion et traitement intelligent des écosystèmes de graphes de connaissances », est un  événement organisé par l’Association Extraction et Gestion de Connaissances (EGC, <a class="moz-txt-link-freetext" href="http://www.egc.asso.fr/" moz-do-not-send="true">http://www.egc.asso.fr/</a>).</span></p>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Cet événement s’organise autour de deux activités principales :</span></p>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">•    deux jours de formation : les 16 et 17 Janvier 2023</span></p>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">•    participation à la conférence EGC2023 : du 18 au 20  janvier 2023</span></p>
+          <br>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Cet appel est également disponible à l’adresse : </span></p>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><a
+href="https://egc2023.sciencesconf.org/resource/page/id/20"
+              style="text-decoration:none;" moz-do-not-send="true"><span style="font-size:11pt;font-family:Arial;color:#1155cc;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:underline;-webkit-text-decoration-skip:none;text-decoration-skip-ink:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">https://egc2023.sciencesconf.org/resource/page/id/20</span></a><span style="font-size:11pt;font-family:Arial;color:#ff0000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> </span></p>
+          <br>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">THEME DE L'ECOLE : Gestion et traitement intelligent des écosystèmes de graphes de connaissances</span></p>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Cette école s’intéresse à la gestion et au traitement intelligent des écosystèmes de graphes de connaissances disponibles aujourd’hui dans tous les domaines. Cette thématique englobe les approches d’intelligence artificielle symbolique, numérique ou hybride pour la construction, la publication, l’interrogation et l’exploitation de bases de graphes de connaissances annotés et interconnectés. Corollairement, elle touche aux problématiques de la qualité des données et graphes de connaissances produits, de la provenance des graphes de connaissances et de l’explication des résultats de leurs traitements.  </span></p>
+          <br>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">OBJECTIFS DE L'ECOLE</span></p>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Les deux jours de formation ont pour but principal d’offrir aux participants des tutoriaux d’initiation dans le domaine de recherche couvrant les thèmes de l’école mais également des tutoriaux plus spécifiques présentant les récentes avancées proposant des solutions et des techniques nouvelles pour les différentes problématiques ayant émergées dans ce domaine. Certains exposés seront associés à des séances plus pratiques afin de permettre aux participants de manipuler quelques outils.</span></p>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">La participation à la conférence permettra aux participants de prendre part à un des événements majeurs de la communauté francophone de l’extraction et la gestion de connaissances. Elle leur permettra d’assister à des présentations de nouvelles avancées et approches développées dans la communauté, ceci pouvant ainsi inspirer leur parcours scientifique futur.</span></p>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Enfin, cette école souhaite offrir aux jeunes chercheurs (doctorants, post-doctorants et ingénieurs) et aux chercheurs confirmés du domaine la possibilité de se rencontrer et d’échanger des idées, ce qui devrait également permettre aux jeunes chercheurs d’enrichir leur réseau.</span></p>
+          <br>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">PROGRAMME DE L'ECOLE</span></p>
+        </b>
+        <p dir="ltr" style="color: rgb(0, 0, 0); font-family: Arial,
+          Helvetica, sans-serif; font-size: 14px; font-style: normal;
+          font-variant-ligatures: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: 2;
+          text-align: -webkit-left; text-indent: 0px; text-transform:
+          none; white-space: normal; widows: 2; word-spacing: 0px;
+          -webkit-text-stroke-width: 0px; background-color: rgb(255,
+          255, 255); text-decoration-thickness: initial;
+          text-decoration-style: initial; text-decoration-color:
+          initial;"><strong>Lundi 16/01/2023</strong></p>
+        <ul style="color: rgb(0, 0, 0); font-family: Arial, Helvetica,
+          sans-serif; font-size: 14px; font-style: normal;
+          font-variant-ligatures: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: 2;
+          text-align: -webkit-left; text-indent: 0px; text-transform:
+          none; white-space: normal; widows: 2; word-spacing: 0px;
+          -webkit-text-stroke-width: 0px; background-color: rgb(255,
+          255, 255); text-decoration-thickness: initial;
+          text-decoration-style: initial; text-decoration-color:
+          initial;">
+          <li dir="ltr"><span>9h00 - 9h15 : </span><span>Catherine Faron</span><span><span> </span>(I3S,
+              Univ. Côte d’Azur), Bienvenue et présentation du programme
+              de l’école</span></li>
+          <li dir="ltr"><span>9h15 - 10h00 : </span><span>Catherine
+              Faron</span><span><span> </span>(I3S, Univ. Côte d’Azur),<span> </span></span><span>Des
+              graphes de connaissances aux écosystèmes de graphes de
+              connaissances</span></li>
+          <li dir="ltr"><span>10h00 - 11h00 : </span><span>Catherine
+              Faron</span><span><span> </span>(I3S, Univ. Côte d’Azur)
+              et<span> </span></span><span>Rémi Ceres</span><span><span> </span>(Inria), Session
+              pratique avec le moteur sémantique Corese</span></li>
+          <li dir="ltr"><span>11h00 - 11h30 : Pause café</span></li>
+          <li dir="ltr"><span>11h30 - 12h30 :<span> </span></span><span>Pierre-Antoine
+              Champin</span><span><span> </span>(LIRIS, Univ. Lyon),<span> </span></span><span>activités
+              du W3C sur la gestion des graphes de connaissances</span></li>
+          <li dir="ltr"><span>12h30 - 14h00 : Déjeuner</span></li>
+          <li dir="ltr"><span>14h00 - 15h30 : </span><span>Hala Skaf </span><span>(LINA,
+              Univ. Nantes), </span><span>Gestion de graphes de
+              connaissances décentralisées</span></li>
+          <li dir="ltr"><span>15h30 - 16h00 : Pause café</span></li>
+          <li dir="ltr"><span>16h00 - 18h00 : </span><span>Clément
+              Jonquet<span> </span></span><span>(Inrae), Evaluation du
+              niveau de FAIRness des ressources sémantiques</span></li>
+          <li dir="ltr"><span>20h00 - Dîner</span></li>
+        </ul>
+        <p dir="ltr" style="color: rgb(0, 0, 0); font-family: Arial,
+          Helvetica, sans-serif; font-size: 14px; font-style: normal;
+          font-variant-ligatures: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: 2;
+          text-align: -webkit-left; text-indent: 0px; text-transform:
+          none; white-space: normal; widows: 2; word-spacing: 0px;
+          -webkit-text-stroke-width: 0px; background-color: rgb(255,
+          255, 255); text-decoration-thickness: initial;
+          text-decoration-style: initial; text-decoration-color:
+          initial;"><strong>Mardi 17/01/2023</strong></p>
+        <ul style="color: rgb(0, 0, 0); font-family: Arial, Helvetica,
+          sans-serif; font-size: 14px; font-style: normal;
+          font-variant-ligatures: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: 2;
+          text-align: -webkit-left; text-indent: 0px; text-transform:
+          none; white-space: normal; widows: 2; word-spacing: 0px;
+          -webkit-text-stroke-width: 0px; background-color: rgb(255,
+          255, 255); text-decoration-thickness: initial;
+          text-decoration-style: initial; text-decoration-color:
+          initial;">
+          <li dir="ltr">09h00 - 10h30 : Nathalie Pernelle (Univ.
+            Sorbonne Paris Nord), Fouille de règles dans des graphes de
+            connaissances</li>
+          <li dir="ltr">10h30 - 11h00 : Pause café</li>
+          <li dir="ltr">11h00 - 12h30 : Raphaël Troncy (Eurecom),
+            Hybridation des modèles de langues et des graphes de
+            connaissances</li>
+          <li dir="ltr">12h30 - 14h00 : Déjeuner</li>
+          <li dir="ltr">14h00 - 15h30 : Axel Ngonga (Univ. Paderborn,
+            DE), Neurosymbolic Learning on Knowledge Graphs</li>
+          <li dir="ltr">15h30 - 16h00 : Pause café</li>
+          <li dir="ltr">16h00 - 17h30 : Neurosymbolic Learning on
+            Knowledge Graphs (suite)</li>
+          <li dir="ltr">17h30 - 18h00 : Clôture de l'école</li>
+        </ul>
+        <b style="font-weight:normal;"
+          id="docs-internal-guid-f34cf8e0-7fff-22d1-fa6d-d29bb4a111a9"></b></div>
+      <div class="moz-signature"><b style="font-weight:normal;"
+          id="docs-internal-guid-f34cf8e0-7fff-22d1-fa6d-d29bb4a111a9"><br>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">PUBLIC CONCERNE</span></p>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">L’École d’Hiver é-EGC 2023 s’adresse particulièrement aux doctorants et étudiants, de manière générale, désirant approfondir leurs connaissances dans le domaine de l’exploration de données et de l’apprentissage.</span></p>
+          <br>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">COMITÉ SCIENTIFIQUE ET ORGANISATION</span></p>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">•    </span><span style="font-size:11pt;font-family:Arial;color:#00000a;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Catherine Faron (I3S, Université Côte d’Azur)</span></p>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">•    Arnaud Martin (IRISA, Université de Rennes 1)</span></p>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">•    </span><span style="font-size:11pt;font-family:Arial;color:#00000a;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Cécile Favre (ERIC, ICOM)</span></p>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">•    </span><span style="font-size:11pt;font-family:Arial;color:#00000a;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Sabine Loudcher (ERIC, ICOM)</span></p>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">•    Claudia Marinica (LS2N, Université de Nantes)</span></p>
+          <br>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">DATES IMPORTANTES </span></p>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">•    Date limite pré-inscriptions (CV à fournir) : 07/12/2022</span></p>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">•    Inscription effective (École (formation + conférence EGC), sur le site de la conférence) : 15/12/2022</span></p>
+          <br>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">L’INSCRIPTION SE RÉALISE EN DEUX ÉTAPES</span></p>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">1/ Les participants doivent manifester leur intérêt, avant le 07/12/2022, pour participer à l’École en s’inscrivant avec ce formulaire :</span></p>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><a
+              href="https://forms.gle/zcMGiwRQyFb27vDs6"
+              style="text-decoration:none;" moz-do-not-send="true"><span style="font-size:11pt;font-family:Arial;color:#1155cc;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:underline;-webkit-text-decoration-skip:none;text-decoration-skip-ink:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">https://forms.gle/zcMGiwRQyFb27vDs6</span></a><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> </span></p>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Pour que la pré-inscription soit prise en compte, elle doit être accompagnée d’un CV récent du participant.</span></p>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">2/ Après la confirmation de la pré-inscription par le comité d’organisation, et avant le 15/12/2022, les participants doivent s’inscrire via la page d’inscription de la conférence EGC 2023 (attention de bien choisir le tarif comprenant l’École).</span></p>
+          <br>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Le nombre de participants est limité à 30 personnes. Le tarif de l’inscription sera affiché sur le site de la conférence EGC (<a class="moz-txt-link-freetext" href="https://egc2023.sciencesconf.org/" moz-do-not-send="true">https://egc2023.sciencesconf.org/</a>) et il comprend :</span></p>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">– la participation à l’École d’Hiver (16 et 17 janvier) ;</span></p>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">– la participation à la conférence (18 au 20  janvier) ;</span></p>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">– les déjeuners et le repas de gala.</span></p>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">
+</span></p>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Bien codialement,</span></p>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Pour le comité d'organisation, </span></p>
+          <p dir="ltr"
+            style="line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:11pt;font-family:Arial;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Claudia Marinica
+</span></p>
+        </b><br>
+        <meta content="text/html; charset=UTF-8"
+          http-equiv="content-type">
+        <style>
+            DIV.TagHeader { background-color:#009ee0; height:2px; width:520px; }
+            DIV.Tag { border:0px dotted grey; width: 518px;}
+            DIV.TagFooter { font-family:Trebuchet MS, sans-serif; font-size:8pt; size:1; color:#36a629; height:2em; text-align:center; width:520px;}
+            DIV.NomTitre { font-family:Trebuchet MS, sans-serif; font-size:10pt; size:1; color:#00305E; margin-left: 170px; }
+            DIV.Contact { font-family:Trebuchet MS, sans-serif; font-size:8pt; size:1; color:#777777; margin-left:170px;}
+            DIV.Adresse { font-family:Trebuchet MS, sans-serif; font-size:8pt; size:1; color:#777777; margin-left:170px;}
+
+            img.Logo {border: 0px solid ; width: 138px; height: 57px; left: 25px; position:absolute; z-index:-1; moz-do-not-send:true;}
+            body { bgcolor:#FFFFFF; text:#000000; }
+            a { text-decoration:none; color:#777777;}
+        </style>
+        <div class="moz-signature">
+          <div class="TagHeader"> </div>
+          <div class="Tag"><br>
+            <img class="Logo"
+src="http://web.polytech.univ-nantes.fr/medias/photo/polytech-nantes-p-univ_1516179753112-jpg?ID_FICHE=540435"
+              alt="Université de Nantes" moz-do-not-send="true">
+            <div class="NomTitre"> <b>Claudia MARINICA</b><br>
+              Assistant Professor<br>
+              Computer Science department<br>
+              Polytech'Nantes, University of Nantes<br>
+            </div>
+            <div class="Contact"><br>
+              <!-- tél : <br> --> email: <a
+                href="mailto:Claudia.Marinica@univ-nantes.fr"
+                class="moz-txt-link-freetext">Claudia.Marinica@univ-nantes.fr</a><br>
+              <!--web site: <a href="mailto:Claudia.Marinica@univ-nantes.fr">Claudia.Marinica@univ-nantes.fr</a><br>--><br>
+              rue Christian Pauc CS 50609
+              <br>
+              44306 Nantes cedex 3<br>
+              office: D210 - Ireste<br>
+              <br>
+              <a href="http://web.polytech.univ-nantes.fr">web.polytech.univ-nantes.fr</a>
+              <br>
+              <a
+                href="https://www.facebook.com/PolytechNantes/?ref=aymt_homepage_panel"
+                target="_blank" alt="Facebook"><img
+src="http://www.polytech.univ-nantes.fr/com/signature/nouveau/reseaux_sociaux_01.jpg"
+                  width="32" height="30"></a><a
+                href="https://twitter.com/PolytechNantes"
+                target="_blank" alt="Twitter"><img
+src="http://www.polytech.univ-nantes.fr/com/signature/nouveau/reseaux_sociaux_02.jpg"
+                  width="32" height="30"></a><a
+                href="https://www.instagram.com/polytechnantes/?hl=fr"
+                target="_blank" alt="Instagram"><img
+src="http://www.polytech.univ-nantes.fr/com/signature/nouveau/reseaux_sociaux_03.jpg"
+                  width="32" height="30"></a><a
+                href="https://www.linkedin.com/school/3848702/"
+                target="_blank" alt="LinkedIn"><img
+src="http://www.polytech.univ-nantes.fr/com/signature/nouveau/reseaux_sociaux_04.jpg"
+                  width="32" height="30"></a> </div>
+          </div>
+          <div class="TagFooter"> <br>
+            <b><u>Adoptez l'éco-attitude</u> : n'imprimez ce mail que si
+              cela est vraiment nécessaire</b><br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+--------------yumuXok19Us3PZ88UxFDM0M1--
+
+

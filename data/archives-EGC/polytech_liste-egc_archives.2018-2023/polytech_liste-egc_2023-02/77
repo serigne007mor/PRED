@@ -1,0 +1,368 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (bouncesmtp2.u12.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 8745814014F0
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu, 23 Feb 2023 09:24:04 +0100 (CET)
+Received: from mx3.localdomain (MX3.univ-nantes.fr [193.52.101.137])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id 7F731666E
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu, 23 Feb 2023 09:24:04 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.localdomain (Postfix) with ESMTP id 7220E20D8E
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 23 Feb 2023 09:24:04 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 1.197
+X-Spam-Level: *
+X-Spam-Status: No, score=1.197 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_HOTMAIL_RCVD2=1.187,
+	FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+	RCVD_IN_WSFF=0.01, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+	UN_PHISHING_PW=0.1] autolearn=disabled
+X-CRM114-Status: UNSURE ( -0.1742 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=hotmail.com
+Received: from mx3.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id YLIbM3S9bV_J for <liste-egc@polytech.univ-nantes.fr>;
+	Thu, 23 Feb 2023 09:24:02 +0100 (CET)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=40.92.48.43; helo=eur02-vi1-obe.outbound.protection.outlook.com; envelope-from=i_lahoud@hotmail.com; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=none dis=none) header.from=hotmail.com
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=I_lahoud@hotmail.com
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (2048-bit key; unprotected) header.d=hotmail.com header.i=@hotmail.com header.b="Z4o8wwZo";
+	dkim-atps=neutral
+X-Greylist: whitelisted by SQLgrey-1.6.7
+Received: from EUR02-VI1-obe.outbound.protection.outlook.com (mail-vi1eur02olkn2043.outbound.protection.outlook.com [40.92.48.43])
+	by mx3.localdomain (Postfix) with ESMTPS id DAADF201FF
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 23 Feb 2023 09:24:01 +0100 (CET)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=LQDdplS7Mlxx1Y9/h0ygbUuH1ca0nexJjwT1VJSmSudAHrEP5ZjWJXGjdkxvSfo7pVvNrRMc0t6L2/pnjj4sY9h47bo3i2XV7AmjozZYkaoEaEXaLlRY5eQgMrM7TiCFD4qNUdWMvfg5WaNwteS/7AZ3l8vFklz+leiGfHJNBmErPRRc+VSFoGfw6Km0uHAm9NdpeiwRUXeopu2yy7Sm5X8Uh5wdo01wYe8mtfTzKlNSOPr764W3XjbytVab9lsthNBVtz4QbyfZYLegX/YLVrmhQeNgr3XrncfMr9hlNfK5Xz8qjdbAH0gt3hqnpyVpNbhxSWC3GcSIfYWIZ6zQKw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Phvzm1fPM9j1oTNAkHaIa+BxzsR09vor13sRnjchxBI=;
+ b=F8toXP5OFxZe4n5w5xtg+Yzuwm7iKzQnrptTNyUwq66vxAqdsX72mPAHZMbENZ3R0V5LsFKc3gkvmprq4+gVibyXI2jO4FbPS0pL9Z2UvkAdZ0380J11s3GbadT3wxxvnQFkdU4i2NRSvJubJjUlJx362mCw3u9pkFmw3o/NUiG7LZ/X6uqERbFb0fcSI7dfvp+wnQQ8fUFxtQa0A9kXD1U6tWkHUKlmlh94IBplYEZK6sdPLOnntuB/rdIskjw2i32VknMtno+0yUuSV8YoiVOjByEqW8m9UyDpWeTtDGe8YrWy3qviV7/y/lXDIzhmxvER1AqPlgQKq/998IwuLA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Phvzm1fPM9j1oTNAkHaIa+BxzsR09vor13sRnjchxBI=;
+ b=Z4o8wwZoi3jGtV9PsOr5at1O9ozOtQeM/4Hsw1EiyNVP2/CibDa2Q1ILHPsnhV5ezuBKJTKrQsj7uKBmti1hDophjXQqWlblzhjdRLDzWiyGwrQsM8WHpsbjbfaiH24talfvCos247RLZq+dNY1cfJEKG0Y+oy0wlCpdlskN6tGgwX8ufWzxg1tvfAUhXS+rGOvH8udXPEAF8voDyD953Fx895cVoqjaGX6dTB5vHKdMMzhsQ1XnHsbeF6ahEMCol9rwjNofgtL0BBf88l1ZmtXzcN+S7PvG1nhfhhoK/y3LX+bK1/ONfceeJYiQSuNg0qpVYOnlHU8wnDPUb2Arxg==
+Received: from AM9P195MB1204.EURP195.PROD.OUTLOOK.COM (2603:10a6:20b:3a4::11)
+ by AS8P195MB1879.EURP195.PROD.OUTLOOK.COM (2603:10a6:20b:53b::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6134.19; Thu, 23 Feb
+ 2023 08:24:00 +0000
+Received: from AM9P195MB1204.EURP195.PROD.OUTLOOK.COM
+ ([fe80::e059:2754:386f:cac9]) by AM9P195MB1204.EURP195.PROD.OUTLOOK.COM
+ ([fe80::e059:2754:386f:cac9%8]) with mapi id 15.20.6134.019; Thu, 23 Feb 2023
+ 08:24:00 +0000
+From: Christine Lahoud <I_lahoud@hotmail.com>
+To: "info-ic@listes.irisa.fr" <info-ic@listes.irisa.fr>, "bull-i3@irit.fr"
+	<bull-i3@irit.fr>, "agents@cs.umbc.edu" <agents@cs.umbc.edu>,
+	"'Liste-egc@polytech.univ-nantes.fr'" <liste-egc@polytech.univ-nantes.fr>
+Thread-Topic: CFP (extended): 6th Special Session on Educational Knowledge
+ Management (EKM) at CSEDU2023
+Thread-Index: AQHZR1ccxF2dAYtAH0SMFxxlQcz1aw==
+Date: Thu, 23 Feb 2023 08:24:00 +0000
+Message-ID:
+ <AM9P195MB12048928B46ED3CC2CF9AD98E2AB9@AM9P195MB1204.EURP195.PROD.OUTLOOK.COM>
+Accept-Language: fr-FR, en-US
+Content-Language: fr-FR
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+x-tmn: [vcz/SRtMvbnIwDZL/AFBMrSOerm2jVXC]
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AM9P195MB1204:EE_|AS8P195MB1879:EE_
+x-ms-office365-filtering-correlation-id: 8efc041f-1214-4025-e143-08db157750f0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:
+ niW/+TJFfVi2utKN6aC5rO9MUoOiGH8dd0KLt8mqkr/nsMLdpo3+q+P2jLzEqnzpkwjH70b5D/VR1fZmNh98kCXcEBBiJaEnxddVKCR+UPhgtzCEIStFsFsxzR18NDl0MBKxsL4JDFLKjtp/m34bJn0DKbj+t795q23NvdBMzUL6BQJEwGB3OmA53RZNCJjsLJQe/Zrf/AoER36483xFao5frnVCJ4Zvoi296AjBtjLkxwDTUwR04M9nnJs4BdHGL3swftWVVvYUpX7Vl4/wVG9Xdjjs+dqs/21k/6qqv13ycQR9f9wlom8nFje82DJ/UmWMluTeHeQF4ghmRjFClULNSH1EH7TspFduxAz9Szbog4jEDeS1EyB3L7pm1XrjDtTeg0MUZEqDx2+9QYRwgNXlh9UF84lHekn0JhpvypqZDTN3xvH+5Te8YgTqNQUBFxtuY+0DhCzNCiAtAATsvpNK0zUG1vQIDrOT88gCjAIBchhG5UZuKUEDiaO+D0QitwhFE1BUGHMUtTk7fIb3ichdLEUNOKooRSbfOoh1gKMkIef3hEfO5ejagAsk1rcYPswpOsL4pFB1MBSz2Q/C1+jxPJxkH7AD6dBhzyMVdpVb8jnhPeZA8Vt25yCq6lwg
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?Windows-1252?Q?NAgA3DZCclwAh9DJy04ycQdi/MmXAC/xQAfXMwgMb2BJygvvVWmQn22e?=
+ =?Windows-1252?Q?AXAfePnXxKhZxDlfnHiSYcKbyXv4GkxkA1k1EIfI7+39r9j4ft0v5zJX?=
+ =?Windows-1252?Q?8gnvuxniAUJ+LvLCNLckzQkS+/5wABlZYH0kXYablBChHIohwtHENYZK?=
+ =?Windows-1252?Q?geWn5S0dt5tda2kyEbdRooar+pzXcafp2AS7PlCPBrU5cugnYIstvdvI?=
+ =?Windows-1252?Q?fDq6i0zxjK8N1gkz4ck9WUiiU6Ui9v/28twyXoihInuwcQgCk6m1/wN4?=
+ =?Windows-1252?Q?0nSTcGCvV7dGLiPorlkt+aMVtwMWndjtt8Fs/DU7Hgi5qGm0OgXbjGW7?=
+ =?Windows-1252?Q?CTKTwoqiQ6cVWo3qHNsWrJF0dR8uYFhVzSmibkf+rsEbY9YcM21JWttM?=
+ =?Windows-1252?Q?rCVbwDk0O0uzZY2xe2yIHfPUgpvDZ4hbTtuh0Ku2kNmf2QiXrzlBroTm?=
+ =?Windows-1252?Q?wLyHFN2jeScJLNKhlGLG1TWFyEqoGtfVSvohhk+WpKG8WIJ1Yi9FTXVQ?=
+ =?Windows-1252?Q?PCAm8fGh4Nj1RBp4Xe5OQTPORitZgdO+XzlfXqEnTy7U85vP3M8jhx1J?=
+ =?Windows-1252?Q?iSHhxuPu/0pzq6/6NmjEsN2mXoOpL7oSuMEp2oH0invr5dGPHhRlXba7?=
+ =?Windows-1252?Q?+fPJLwagsXo9hxJh7xQUaX2SLmNL20dZ+w0X6w0s1bspinKhKpGwswvw?=
+ =?Windows-1252?Q?Y2kLFH3ayW4gcTc2uu7ZXU03RSTmxblNCtSUPz1rqx/ztLe/iCZtRmpY?=
+ =?Windows-1252?Q?7NT1CmipSiZ2JX8UsOmiyjS9j5LJ7eS5bkfBHOKx7CqwlMYUi3ohqtUG?=
+ =?Windows-1252?Q?8CsXJuiVaOobXA+UtA/XD0ciDSqq+KgmwS2zD9XvbkQrxje3iKPNuEbA?=
+ =?Windows-1252?Q?3yCf3M9wwDV9SdqazAp48cnDdyyNw+RTnal42B+XN1zQyMH1Sk5yuhzm?=
+ =?Windows-1252?Q?T+XOS8WJt3tmxa3D4MRQeJqADa+DYCEYxLunJRqSN1HtnSbtEa6g6puS?=
+ =?Windows-1252?Q?PAtJzT+6hr3XW+d6D4yhpnf+2s1CrFSf/koZY8RUv8ZvPSnbC9cJXXCs?=
+ =?Windows-1252?Q?iGSz9INv9usCzTQukYmWIJPr/XRIOo7tWWCiT4aSAdEQ7Xxy3TB9hYu8?=
+ =?Windows-1252?Q?0gS6s4ERUnpXv+7Nj4qghAe04z0GNGNRUz7uud3otbQbWZFPyUPmGNCj?=
+ =?Windows-1252?Q?LYvj+oPky9l5zxyjJt0wAMtH9TXsZ3ghMX5iMXMM6EB12S62kmet8FJK?=
+ =?Windows-1252?Q?xXk+o+NooWKSU9qhB/eei5dritqs55Syyqaj1GNJpfUvqYGbCe6LOK17?=
+ =?Windows-1252?Q?iUbUfad0vqukbvbh4vkZPKFgws7EbrJo6EIAZfNCiYgRWYp3?=
+Content-Type: multipart/alternative;
+	boundary="_000_AM9P195MB12048928B46ED3CC2CF9AD98E2AB9AM9P195MB1204EURP_"
+MIME-Version: 1.0
+X-OriginatorOrg: sct-15-20-4755-11-msonline-outlook-49ed2.templateTenant
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AM9P195MB1204.EURP195.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8efc041f-1214-4025-e143-08db157750f0
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Feb 2023 08:24:00.5687
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8P195MB1879
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] CFP (extended): 6th Special Session on Educational
+ Knowledge Management (EKM) at CSEDU2023
+
+--_000_AM9P195MB12048928B46ED3CC2CF9AD98E2AB9AM9P195MB1204EURP_
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+[Apology for cross-postings]
+
+*******************************************************************
+
+CALL FOR PAPERS
+
+The 6th Special Session on Educational Knowledge Management (EKM2023)
+
+https://csedu.scitevents.org/EKM.aspx
+
+In conjunction with the 15th International Conference on Computer Supported=
+ Education (CSEDU), 21-23 April, 2023, Prague, Czech republic
+
+
+
+Chairs:
+
+Assistant Prof. Christine Lahoud, Universit=E9 Fran=E7aise d'Egypte, Egypt
+Prof. Marie-H=E9l=E8ne Abel, HEUDIASYC CNRS UMR, University of Compi=E8gne,=
+ France
+Associate Prof. Lilia Cheniti-Belcadhi, ISITCom, PRINCE Research Lab, Souss=
+e University, Tunisia
+
+Scope:
+
+The high volume of information in organizations has led researchers to focu=
+s on knowledge management as a form of competitive and success leverage. Th=
+e interest in KM for the educational domain has been growing in recent year=
+s as a strategic planning for its sustainable development. The use of the K=
+M in education can lead for instance to develop strategies to improve teach=
+ing effectiveness and student retention, making decisions, analyze the impo=
+rtance of social media and games in learning, generate exam=92s questions f=
+rom text files, or provide student guidance. For this edition, we welcome s=
+ubmissions reporting original research that explores how KM technologies ca=
+n solve problems related to the management and analysis of educational info=
+rmation in academic or professional learning institutions.
+
+Topics:
+
+We welcome papers describing original work applied to education. A non-exha=
+ustive list of topics for the workshop includes the following:
+=95 Recommender systems in educational domain
+=95 Educational knowledge management and ontologies
+=95 Educational data mining
+=95 Educational linked data and semantic web
+=95 Knowledge acquisition, extraction and reuse in education
+=95 Artificial intelligence, robotics and human-computer interaction in edu=
+cation
+=95 Natural Language Processing to improve educational effectiveness
+=95 Providing feedback to teachers and other stakeholders generated from EK=
+M methods
+=95 Learner or student modelling
+=95 Learning analytics
+=95 Smart learning environments
+=95 Assessment  analytics
+=95 Educational information systems
+=95 Improving educational software
+=95 Practice learning experiences and techniques
+=95 Evaluating and improving teachers' support
+=95 Educational knowledge evolution
+=95 Social media and games in learning
+=95 Experiences and examples of the use of KM in education
+=95 Global issues in education and research
+=95 Visualization of student learning patterns
+
+
+Paper Submission:
+
+Prospective authors are invited to submit papers in any of the topics liste=
+d above.
+Instructions for preparing the manuscript (in Word and Latex formats) are a=
+vailable at: https://csedu.scitevents.org/Templates.aspx
+Please also check the Guidelines (https://csedu.scitevents.org/Guidelines.a=
+spx)
+Papers must be submitted electronically via the web-based submission system=
+ using the appropriate button on the conference page.
+
+Publications:
+
+After thorough reviewing by the special session program committee, all acce=
+pted papers will be published in a special section of the conference procee=
+dings book - under an ISBN reference and on digital support - and submitted=
+ for indexation by SCOPUS, Google Scholar, DBLP, Semantic Scholar, EI and W=
+eb of Science / Conference Proceedings Citation Index.
+SCITEPRESS is a member of CrossRef (http://www.crossref.org/) and every pap=
+er is given a DOI (Digital Object Identifier).
+All papers presented at the conference venue will be available at the SCITE=
+PRESS Digital Library (https://www.scitepress.org/HomePage.aspx)
+
+
+Important Dates:
+
+Paper Submission: (Extended)February 28, 2023 (GMT anywhere on earth)
+Authors Notification: March 9, 2023
+Camera Ready and Registration: March 17, 2023
+
+--_000_AM9P195MB12048928B46ED3CC2CF9AD98E2AB9AM9P195MB1204EURP_
+Content-Type: text/html; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DWindows-1=
+252">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+[Apology for cross-postings]
+<div><br>
+</div>
+<div>*******************************************************************</d=
+iv>
+<div><br>
+</div>
+<div>CALL FOR PAPERS</div>
+<div><br>
+</div>
+<div>The 6th Special Session on Educational Knowledge Management (EKM2023)<=
+/div>
+<div><br>
+</div>
+<div>https://csedu.scitevents.org/EKM.aspx</div>
+<div><br>
+</div>
+<div>In conjunction with the 15th International Conference on Computer Supp=
+orted Education (CSEDU), 21-23 April, 2023, Prague, Czech republic</div>
+<div><br>
+</div>
+<div><br>
+</div>
+<div><br>
+</div>
+<div>Chairs:</div>
+<div><br>
+</div>
+<div>Assistant Prof. Christine Lahoud, Universit=E9 Fran=E7aise d'Egypte, E=
+gypt</div>
+<div>Prof. Marie-H=E9l=E8ne Abel, HEUDIASYC CNRS UMR, University of Compi=
+=E8gne, France</div>
+<div>Associate Prof. Lilia Cheniti-Belcadhi, ISITCom, PRINCE Research Lab, =
+Sousse University, Tunisia</div>
+<div><br>
+</div>
+<div>Scope:</div>
+<div><br>
+</div>
+<div>The high volume of information in organizations has led researchers to=
+ focus on knowledge management as a form of competitive and success leverag=
+e. The interest in KM for the educational domain has been growing in recent=
+ years as a strategic planning for
+ its sustainable development. The use of the KM in education can lead for i=
+nstance to develop strategies to improve teaching effectiveness and student=
+ retention, making decisions, analyze the importance of social media and ga=
+mes in learning, generate exam=92s
+ questions from text files, or provide student guidance. For this edition, =
+we welcome submissions reporting original research that explores how KM tec=
+hnologies can solve problems related to the management and analysis of educ=
+ational information in academic
+ or professional learning institutions.</div>
+<div><br>
+</div>
+<div>Topics: </div>
+<div><br>
+</div>
+<div>We welcome papers describing original work applied to education. A non=
+-exhaustive list of topics for the workshop includes the following:</div>
+<div>=95 Recommender systems in educational domain</div>
+<div>=95 Educational knowledge management and ontologies</div>
+<div>=95 Educational data mining</div>
+<div>=95 Educational linked data and semantic web</div>
+<div>=95 Knowledge acquisition, extraction and reuse in education</div>
+<div>=95 Artificial intelligence, robotics and human-computer interaction i=
+n education</div>
+<div>=95 Natural Language Processing to improve educational effectiveness</=
+div>
+<div>=95 Providing feedback to teachers and other stakeholders generated fr=
+om EKM methods</div>
+<div>=95 Learner or student modelling</div>
+<div>=95 Learning analytics</div>
+<div>=95 Smart learning environments</div>
+<div>=95 Assessment &nbsp;analytics</div>
+<div>=95 Educational information systems</div>
+<div>=95 Improving educational software</div>
+<div>=95 Practice learning experiences and techniques</div>
+<div>=95 Evaluating and improving teachers' support</div>
+<div>=95 Educational knowledge evolution</div>
+<div>=95 Social media and games in learning</div>
+<div>=95 Experiences and examples of the use of KM in education</div>
+<div>=95 Global issues in education and research</div>
+<div>=95 Visualization of student learning patterns</div>
+<div><br>
+</div>
+<div><br>
+</div>
+<div>Paper Submission:</div>
+<div><br>
+</div>
+<div>Prospective authors are invited to submit papers in any of the topics =
+listed above.</div>
+<div>Instructions for preparing the manuscript (in Word and Latex formats) =
+are available at: https://csedu.scitevents.org/Templates.aspx</div>
+<div>Please also check the Guidelines (https://csedu.scitevents.org/Guideli=
+nes.aspx)</div>
+<div>Papers must be submitted electronically via the web-based submission s=
+ystem using the appropriate button on the conference page.</div>
+<div><br>
+</div>
+<div>Publications:</div>
+<div><br>
+</div>
+<div>After thorough reviewing by the special session program committee, all=
+ accepted papers will be published in a special section of the conference p=
+roceedings book - under an ISBN reference and on digital support - and subm=
+itted for indexation by SCOPUS,
+ Google Scholar, DBLP, Semantic Scholar, EI and Web of Science / Conference=
+ Proceedings Citation Index.</div>
+<div>SCITEPRESS is a member of CrossRef (http://www.crossref.org/) and ever=
+y paper is given a DOI (Digital Object Identifier).</div>
+<div>All papers presented at the conference venue will be available at the =
+SCITEPRESS Digital Library (https://www.scitepress.org/HomePage.aspx)</div>
+<div><br>
+</div>
+<div><br>
+</div>
+<div>Important Dates:</div>
+<div><br>
+</div>
+<div>Paper Submission: (Extended)February 28, 2023 (GMT anywhere on earth) =
+</div>
+<div>Authors Notification: March 9, 2023</div>
+Camera Ready and Registration: March 17, 2023
+</body>
+</html>
+
+--_000_AM9P195MB12048928B46ED3CC2CF9AD98E2AB9AM9P195MB1204EURP_--

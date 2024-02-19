@@ -1,0 +1,826 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (BounceSMTP1.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 7A54314006F3
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Tue, 23 Feb 2021 22:03:08 +0100 (CET)
+Received: from mx2.d101.univ-nantes.fr (MX2.univ-nantes.fr [193.52.101.136])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id 6F09A6D19C6
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Tue, 23 Feb 2021 22:03:08 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTP id 66D2FB4B138
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 23 Feb 2021 22:03:08 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: YES
+X-Spam-Score: 5.224
+X-Spam-Level: *****
+X-Spam-Status: Yes, score=5.224 tagged_above=-1000 required=5
+	tests=[CRM114_SPAM=5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+	HTML_FONT_LOW_CONTRAST=0.001, HTML_MESSAGE=0.001, LONGWORD=0.3,
+	RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001,
+	SPF_PASS=-0.001, T_KAM_HTML_FONT_INVALID=0.01, UN_PHISHING_PW=0.1,
+	URIBL_BLOCKED=0.001] autolearn=disabled
+X-CRM114-Status: SPAM ( -5.8915 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=gmail.com
+Received: from mx2.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id PPTaILRiN35C for <liste-egc@polytech.univ-nantes.fr>;
+	Tue, 23 Feb 2021 22:03:05 +0100 (CET)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTPS id 5B099ACFF0F
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 23 Feb 2021 22:03:05 +0100 (CET)
+Received: by mail-ot1-x329.google.com with SMTP id c16so60939otp.0
+        for <liste-egc@polytech.univ-nantes.fr>; Tue, 23 Feb 2021 13:03:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=Fkz4UdK7Ry45novMarSuWEo5fzWIweywqP8iI8TFmng=;
+        b=L1jusWDueM1zzJBbKx5qk+zTHmpwEgVSOKKbpOgoG0VhAuqn265QnIaGaqT6fDXea9
+         zrTcx88jRk9XkmiXhpUNC51EEXqFBBaSsc4IDHH3NirZ4URdcabXQfSr8ba9DMWN2xLT
+         HKZFsMhhq9GOR2Du2Osj8ddarQrJ4LnU0li8+QU9hal68W/utf5I5/NxMWMS1YAhmvcQ
+         nl6p+pSaqnkpTbzjh4xSYU+uByMFZV5ONZW3ONGOTEHUhCyCOnfTkXegLod23kAFjnlI
+         Cpv1ncPiEYPymMnnZ3gqfMhnZWTkG/jV7j+ZjBTdVMgzVWRIX7eJmyzCZ/1rCa8W7XLG
+         +7MA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=Fkz4UdK7Ry45novMarSuWEo5fzWIweywqP8iI8TFmng=;
+        b=mRKg9KJ7RzFMXr/R9Bck/zLDfn/3wIDlCC9CLaZGBQBE+bg6JSSW8R2qt2XTN9U3eI
+         41/4lLBS8nDOKggvyupWbN0B8PDVg+qbHQ2Mt8WuHPE177l/4u2tOA6In1d0bl6b2asI
+         Br/SASfWuZu9dORLXDYmclJUsGrD33yS/clFFcETABDSJNBL5/hEx8gXFyjsx/RztPh/
+         iEwwy3viJMeTeq0ASuyviFDbbpcfbb+NlDJtznLhEMdp9NB83Y5JzJFtmJC6BnLzDfQ4
+         Wu86bPgetevr3OI5Fa2KAZtO9jjm7r9BOzJWuZ4czAHKetfzddmNQj3/36a2CyIObjzh
+         BFOA==
+X-Gm-Message-State: AOAM531rL3FxIphl0rjdUebxJaAS35VM6kJsvMhfpbJP2ZjqcmvqdAbd
+	HKRiI08kmnw6EplUouzA+v3YYsfh88SHgd7qB6C4kt5mVi/Po7Uo
+X-Google-Smtp-Source: ABdhPJz9JrbR2FxXDWWBVZPY7GzFcdtOZqVcU/o5KArgGzFxBJMecbvLsdnyozwHYKRQ6rn4+zzgilZmBWllNkkq50I=
+X-Received: by 2002:a9d:2968:: with SMTP id d95mr9032756otb.185.1614114183561;
+ Tue, 23 Feb 2021 13:03:03 -0800 (PST)
+MIME-Version: 1.0
+From: rafika boutalbi <boutalbi.rafika@gmail.com>
+Date: Tue, 23 Feb 2021 22:02:52 +0100
+Message-ID: <CANx104tT3S8p1m=4y2V_BCVrKRLP1S3qhUTfGJSMZxw7w6JTng@mail.gmail.com>
+To: liste-egc@polytech.univ-nantes.fr, info-ic@inria.fr, bull-i3@irit.fr, 
+	bull-ia@gdria.fr, dl@dl.kr.org, ln@groupes.renater.fr, Liste-proml@lri.fr, 
+	web.semantique@inria.fr, "Event@CIG" <event@in.tu-clausthal.de>, sma@loria.fr, 
+	agents@cs.umbc.edu, eda-liste <eda-liste@listes.univ-lyon2.fr>
+Content-Type: multipart/alternative; boundary="00000000000089d36205bc073ee8"
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] [SPAM] [CFP] 1st International workshop on Graph
+ Representation Learning for Scanned Document Analysis @ ICDAR 2021
+
+--00000000000089d36205bc073ee8
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Dear colleagues and researchers,
+
+
+
+* 1st International workshop on Graph Representation Learning *
+
+* for Scanned Document Analysis (GLESDO)*
+
+
+
+*https://www.glesdo-icdar2021.ml <https://www.glesdo-icdar2021.ml/>*
+
+
+ As part of The 16th International Conference on Document Analysis and
+Recognition (ICDAR 2021)
+
+
+
+*https://icdar2021.org/ <https://icdar2021.org/>*
+
+
+
+September 5-10, 2021, Lausanne, Switzerland
+Context
+
+Robust reading, also known as automatic document image processing, is an
+essential task in various applications areas such as data invoice
+extraction, subject review, medical prescription analysis, etc. and holds
+significant commercial potential. Several approaches are proposed in the
+literature, but datasets' availability and data privacy challenge it.
+
+Considering the problem of information extraction from documents, different
+aspects must be taken into account, such as (1) document classification (2)
+text localization (3) OCR (Optical Character Recognition) (4) table
+extraction (5) key information detection. In this context, the graph-based
+approaches are attractive methods for document processing. In fact, graphs
+are a natural way to represent the connections among objects (text, blocks,
+images, etc.) and aim to discover novel and hidden knowledge from data. The
+extracted text from scanned documents can be represented in the shape of a
+graph to exploit the best features of their characteristics. On the other
+hand, understanding spatial relationships is critical for text document
+extraction results for some applications such as invoice analysis. The aim
+is to capture the structural connections between keywords (invoice number,
+date, amounts) and the main value (the desired information). An effective
+approach requires a combination of spatial and textual information.
+
+*Objective*
+
+This workshop aims to bring together an area for experts from industry,
+science, and academia to exchange ideas and discuss on-going research in
+graph representation learning for scanned document analysis.
+
+*Topics of interests*
+
+
+We invite the submission of original works that is related -- but are not
+limited to -- the topics below:
+
+=E2=97=8F Deep learning for graph
+
+=E2=97=8F Probabilistic graphical models for graphs
+
+=E2=97=8F Graph-based approaches for text mining
+
+=E2=97=8F Graph-based approaches for spatial component in scanned document
+
+=E2=97=8F Graph representation learning for NLP
+
+=E2=97=8F Graph-based approaches using kernels
+
+=E2=97=8F Spectral graph clustering
+
+=E2=97=8F Semi-supervised graph-based methods
+
+=E2=97=8F Dynamic graph analysis
+
+=E2=97=8F Information Retrieval and Extraction using Graph-based methods
+
+=E2=97=8F Knowledge graph for semantic document analysis
+
+=E2=97=8F Semantic understanding of document content
+
+=E2=97=8F Entity and link prediction in graphs
+
+=E2=97=8F Merging ontologies with graph-based methods using NLP techniques
+
+=E2=97=8F Cleansing and image enhancement techniques for scanned document
+
+=E2=97=8F Document structure and layout learning
+
+=E2=97=8F OCR based graph methods
+
+=E2=97=8F Font text recognition in scanned document
+
+=E2=97=8F Table identication and extraction from scanned documents
+
+=E2=97=8F Handwriting detection and recognition in documents
+
+=E2=97=8F Signature detection and verication in documents
+
+=E2=97=8F Visual document structure understanding
+
+=E2=97=8F Visual Question Answering
+
+=E2=97=8F Invoice analysis
+
+=E2=97=8F Scanned documents classification
+
+=E2=97=8F Scanned documents summarization
+
+=E2=97=8F Scanned documents translation
+
+*Submission*
+
+The workshop is open to original papers of theoretical or practical nature.
+Papers should be formatted according to LNCS instructions for authors
+<https://www.google.com/url?q=3Dhttps%3A%2F%2Fwww.springer.com%2Ffr%2Fcompu=
+ter-science%2Flncs%2Fconference-proceedings-guidelines&sa=3DD&sntz=3D1&usg=
+=3DAFQjCNGhadQkou1B6uTwaCrX2p9HjIC9Iw>
+. Authors should not include their names and affiliations anywhere in the
+manuscript. Papers have to be submitted via the workshop's EasyChair
+<https://www.google.com/url?q=3Dhttps%3A%2F%2Feasychair.org%2Fconferences%2=
+F%3Fconf%3Dglesdo2021&sa=3DD&sntz=3D1&usg=3DAFQjCNE66fAYvnrmZAD_CpmHLnl3S8-=
+huA>
+submission
+page.
+
+We welcome the following types of contributions:
+
+   -
+
+   Full research papers (12-15 pages): finished or consolidated R&D works,
+   to be included in one of the Workshop topics
+   -
+
+   Short papers (6-8 pages): ongoing works with relevant preliminary
+   results, opened to discussion.
+
+At least one author of each accepted paper must register for the workshop,
+in order to present the paper. For further instructions please refer to the
+<https://www.google.com/url?q=3Dhttps%3A%2F%2Ficdar2021.org%2F&sa=3DD&sntz=
+=3D1&usg=3DAFQjCNH7XM46MS3RAIWrZPxhn4Kc5onLjw>
+ICDAR
+<https://www.google.com/url?q=3Dhttps%3A%2F%2Ficdar2021.org%2F&sa=3DD&sntz=
+=3D1&usg=3DAFQjCNH7XM46MS3RAIWrZPxhn4Kc5onLjw>
+2021
+<https://www.google.com/url?q=3Dhttps%3A%2F%2Ficdar2021.org%2F&sa=3DD&sntz=
+=3D1&usg=3DAFQjCNH7XM46MS3RAIWrZPxhn4Kc5onLjw>
+page.
+
+*Important dates*
+
+
+   -
+
+   Workshop paper submission due: *May 01, 2021*
+   -
+
+   Workshop paper notifications: June 21, 2021
+   -
+
+   Workshop paper camera-ready versions due: July 05, 2021
+   -
+
+   Workshop: September 05, 2021 (Half-Day)
+
+Publication
+
+Accepted papers will be published in the ICDAR 2021 proceeding.
+
+Workshop Chairs
+
+Rim Hantach, Engie, France
+
+Rafika Boutalbi, Trinov, France - University of Stuttgart, Germany
+
+Philippe Calvez, Engie, France
+
+Balsam Ajib, Trinov, France
+
+Thibault Defourneau, Trinov, France
+
+--00000000000089d36205bc073ee8
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><h3 id=3D"gmail-m_-309237671986272500gmail-m_-113950429763=
+8254686gmail-m_-5914441601677045308gmail-m_5877459378229919277gmail-m_-1693=
+841208724688500gmail-m_2522473243972615881gmail-m_4548988265741471820gmail-=
+m_3810846511310631558gmail-m_9169621892487355688gmail-m_-790863316667888498=
+6gmail-m_4229733924575016551gmail-m_5146125080209370541gmail-m_104173999649=
+6270710gmail-m_3853711880378550031gmail-m_5590849052228746836gmail-h.f1wop9=
+9o5jqr" dir=3D"ltr" style=3D"box-sizing:border-box;font-variant-ligatures:n=
+one;margin:18px 0px 0px;outline:none;font-weight:300;text-decoration-line:i=
+nherit;font-family:Roboto;line-height:1.27;white-space:pre-wrap"><div style=
+=3D"box-sizing:border-box;display:inline-block;max-width:100%"><span style=
+=3D"box-sizing:border-box"><span style=3D"font-weight:700;box-sizing:border=
+-box"><p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family=
+:&quot;Times New Roman&quot;,serif"><span style=3D"color:rgb(0,0,0);font-fa=
+mily:arial,sans-serif;font-variant-ligatures:normal;font-weight:400;white-s=
+pace:normal">Dear colleagues and researchers,</span><b><span style=3D"color=
+:rgb(153,0,0)"><br></span></b></p><p class=3D"MsoNormal" align=3D"center" s=
+tyle=3D"margin:0cm;font-size:12pt;text-align:center;font-family:&quot;Times=
+ New Roman&quot;,serif"><b><span style=3D"color:rgb(153,0,0)"><br></span></=
+b></p><p class=3D"MsoNormal" align=3D"center" style=3D"margin:0cm;font-size=
+:12pt;text-align:center;font-family:&quot;Times New Roman&quot;,serif"><b><=
+span style=3D"color:rgb(153,0,0)"><br></span></b></p><p class=3D"MsoNormal"=
+ align=3D"center" style=3D"margin:0cm;text-align:center;font-family:&quot;T=
+imes New Roman&quot;,serif"><b><span style=3D"color:rgb(153,0,0)"><font siz=
+e=3D"4">            1st=C2=A0<span style=3D"text-decoration-line:inherit">I=
+nternational workshop on Graph Representation Learning=C2=A0</span></font><=
+/span></b></p><p class=3D"MsoNormal" align=3D"center" style=3D"margin:0cm;t=
+ext-align:center;font-variant-ligatures:normal;font-family:&quot;Times New =
+Roman&quot;,serif"><span style=3D"text-decoration-line:inherit"><b><span st=
+yle=3D"color:rgb(153,0,0)"><font size=3D"4">             for Scanned Docume=
+nt Analysis (GLESDO)</font></span></b></span><span style=3D"font-size:12pt"=
+><b></b></span></p><p class=3D"MsoNormal" align=3D"center" style=3D"margin:=
+0cm;font-size:12pt;text-align:center;font-variant-ligatures:normal;font-fam=
+ily:&quot;Times New Roman&quot;,serif"><b><span style=3D"font-size:14pt;col=
+or:rgb(192,0,0)">=C2=A0</span></b><span style=3D"color:black"></span></p><p=
+ class=3D"MsoNormal" align=3D"center" style=3D"margin:0cm;font-size:12pt;te=
+xt-align:center;font-variant-ligatures:normal;font-family:&quot;Times New R=
+oman&quot;,serif"><b><span style=3D"color:rgb(192,0,0)"><a href=3D"https://=
+www.glesdo-icdar2021.ml/" target=3D"_blank" style=3D"color:blue">https://ww=
+w.glesdo-icdar2021.ml</a></span></b><span style=3D"color:black"></span></p>=
+<p class=3D"MsoNormal" align=3D"center" style=3D"margin:0cm;font-size:12pt;=
+text-align:center;font-variant-ligatures:normal;font-family:&quot;Times New=
+ Roman&quot;,serif"><b><br></b></p><p class=3D"MsoNormal" align=3D"center" =
+style=3D"margin:0cm;text-align:center;font-variant-ligatures:normal;font-fa=
+mily:&quot;Times New Roman&quot;,serif"><b><span style=3D"color:black"><spa=
+n style=3D"font-size:12pt">              </span><font size=3D"4">   =C2=A0<=
+/font></span></b><font size=3D"4"><span style=3D"color:black;text-decoratio=
+n-line:inherit">As part of=C2=A0The 16th </span><span style=3D"color:black;=
+text-decoration-line:inherit">International Conference on Document Analysis=
+ and Recognition </span><span style=3D"color:black;font-variant-ligatures:n=
+one;text-decoration-line:inherit">(ICDAR 2021)</span></font></p><p class=3D=
+"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot;Times New =
+Roman&quot;,serif"><b><span lang=3D"EN-IN" style=3D"color:black">=C2=A0</sp=
+an></b><span style=3D"color:black"></span></p><p class=3D"MsoNormal" align=
+=3D"center" style=3D"margin:0cm;font-size:12pt;text-align:center;font-varia=
+nt-ligatures:normal;font-family:&quot;Times New Roman&quot;,serif"><span st=
+yle=3D"text-decoration-line:underline"><b><span style=3D"color:black"><a hr=
+ef=3D"https://icdar2021.org/" target=3D"_blank" style=3D"color:blue">https:=
+//icdar2021.org/</a></span></b></span></p><p class=3D"MsoNormal" align=3D"c=
+enter" style=3D"margin:0cm;font-size:12pt;text-align:center;font-family:&qu=
+ot;Times New Roman&quot;,serif"><span style=3D"color:black">=C2=A0</span></=
+p><p class=3D"MsoNormal" align=3D"center" style=3D"margin:0cm 0cm 0.0001pt;=
+font-size:12pt;font-variant-ligatures:normal;font-weight:400;text-indent:0c=
+m;white-space:normal;text-align:center;line-height:normal;font-family:&quot=
+;Times New Roman&quot;,serif"></p><p class=3D"MsoNormal" align=3D"center" s=
+tyle=3D"margin:0cm;font-size:12pt;text-align:center;font-variant-ligatures:=
+normal;font-family:&quot;Times New Roman&quot;,serif"><span style=3D"color:=
+black">September 5-10, 2021, Lausanne, Switzerland</span></p></span></span>=
+</div></h3><h3 id=3D"gmail-m_-309237671986272500gmail-m_-113950429763825468=
+6gmail-m_-5914441601677045308gmail-m_5877459378229919277gmail-m_-1693841208=
+724688500gmail-m_2522473243972615881gmail-m_4548988265741471820gmail-m_3810=
+846511310631558gmail-m_9169621892487355688gmail-m_-7908633166678884986gmail=
+-m_4229733924575016551gmail-m_5146125080209370541gmail-m_104173999649627071=
+0gmail-m_3853711880378550031gmail-m_5590849052228746836gmail-h.f1wop99o5jqr=
+" dir=3D"ltr" style=3D"box-sizing:border-box;font-variant-ligatures:none;ma=
+rgin:18px 0px 0px;outline:none;color:rgb(33,33,33);font-weight:300;text-dec=
+oration-line:inherit;font-family:Roboto;line-height:1.27;white-space:pre-wr=
+ap"><div style=3D"box-sizing:border-box;display:inline-block;max-width:100%=
+"><span style=3D"box-sizing:border-box"><span style=3D"font-weight:700;box-=
+sizing:border-box"><font size=3D"4">Context</font></span></span></div></h3>=
+<p id=3D"gmail-m_-309237671986272500gmail-m_-1139504297638254686gmail-m_-59=
+14441601677045308gmail-m_5877459378229919277gmail-m_-1693841208724688500gma=
+il-m_2522473243972615881gmail-m_4548988265741471820gmail-m_3810846511310631=
+558gmail-m_9169621892487355688gmail-m_-7908633166678884986gmail-m_422973392=
+4575016551gmail-m_5146125080209370541gmail-m_1041739996496270710gmail-m_385=
+3711880378550031gmail-m_5590849052228746836gmail-h.jxka8zxzi2q9" dir=3D"ltr=
+" style=3D"box-sizing:border-box;font-variant-ligatures:none;margin:14px 0p=
+x 0px;outline:none;color:rgb(33,33,33);font-size:13pt;text-decoration-line:=
+inherit;font-family:Roboto;line-height:1.55;padding-left:0px;text-align:jus=
+tify"><span style=3D"box-sizing:border-box;font-size:13pt;vertical-align:ba=
+seline">Robust reading, also known as automatic document image processing, =
+is an essential task in various applications areas such as data invoice ext=
+raction, subject review, medical prescription analysis, etc. and holds sign=
+ificant commercial potential. Several approaches are proposed in the litera=
+ture, but datasets&#39; availability and data privacy challenge it.</span><=
+/p><p dir=3D"ltr" style=3D"box-sizing:border-box;font-variant-ligatures:non=
+e;margin:14px 0px 0px;outline:none;color:rgb(33,33,33);font-size:13pt;text-=
+decoration-line:inherit;font-family:Roboto;line-height:1.55;padding-left:0p=
+x;text-align:justify"><span style=3D"box-sizing:border-box;font-size:13pt;v=
+ertical-align:baseline">Considering the problem of information extraction f=
+rom documents, different aspects must be taken into account, such as (1) do=
+cument classification (2) text localization (3) OCR (Optical Character Reco=
+gnition) (4) table extraction (5) key information detection. In this contex=
+t, the graph-based approaches are attractive methods for document processin=
+g. In fact, graphs are a natural way to represent the connections among obj=
+ects (text, blocks, images, etc.) and aim to discover novel and hidden know=
+ledge from data. The extracted text from scanned documents can be represent=
+ed in the shape of a graph to exploit the best features of their characteri=
+stics. On the other hand, understanding spatial relationships is critical f=
+or text document extraction results for some applications such as invoice a=
+nalysis. The aim is to capture the structural connections between keywords =
+(invoice number, date, amounts) and the main value (the desired information=
+). An effective approach requires a combination of spatial and textual info=
+rmation.</span></p><p style=3D"box-sizing:border-box;font-variant-ligatures=
+:none;margin:14px 0px 0px;outline:none;color:rgb(33,33,33);font-size:13pt;t=
+ext-decoration-line:inherit;font-family:Roboto;line-height:1.55;padding-lef=
+t:0px;text-align:justify"><span style=3D"box-sizing:border-box;font-size:13=
+pt;vertical-align:baseline"><b>Objective</b></span></p><p dir=3D"ltr" style=
+=3D"box-sizing:border-box;font-variant-ligatures:none;margin:14px 0px 0px;o=
+utline:none;color:rgb(33,33,33);font-size:13pt;text-decoration-line:inherit=
+;font-family:Roboto;line-height:1.55;padding-left:0px;text-align:justify"><=
+span style=3D"box-sizing:border-box;font-size:13pt;vertical-align:baseline"=
+>This workshop aims to bring together an area for experts from industry, sc=
+ience, and academia to exchange ideas and discuss on-going research in grap=
+h representation learning for scanned document analysis.</span></p><p style=
+=3D"box-sizing:border-box;font-variant-ligatures:none;margin:14px 0px 0px;o=
+utline:none;color:rgb(33,33,33);font-size:13pt;text-decoration-line:inherit=
+;font-family:Roboto;line-height:1.55;padding-left:0px;text-align:justify"><=
+span style=3D"box-sizing:border-box;font-size:13pt;vertical-align:baseline"=
+><b>Topics of interests</b></span></p><p style=3D"box-sizing:border-box;fon=
+t-variant-ligatures:none;margin:14px 0px 0px;outline:none;color:rgb(33,33,3=
+3);font-size:13pt;text-decoration-line:inherit;font-family:Roboto;line-heig=
+ht:1.55;padding-left:0px;text-align:justify"><span style=3D"box-sizing:bord=
+er-box;font-size:13pt;vertical-align:baseline"><b><br></b></span></p><p dir=
+=3D"ltr" style=3D"font-style:inherit;font-weight:inherit;text-decoration:in=
+herit;box-sizing:border-box;font-variant-ligatures:none;margin:0px;outline:=
+none;color:rgb(33,33,33);font-size:13pt;font-family:Roboto;line-height:1.55=
+;padding-top:0px">We invite the submission of original works that is relate=
+d -- but are not limited to -- the topics below:</p><p dir=3D"ltr" style=3D=
+"background-color:transparent;box-sizing:border-box;font-variant-ligatures:=
+none;margin:1pt 0px 0px 19pt;outline:none;color:rgb(33,33,33);font-size:13p=
+t;text-decoration-line:inherit;font-family:Roboto;line-height:1.2;white-spa=
+ce:pre-wrap;border-width:initial;border-style:none;border-color:initial;pad=
+ding:0px"><span style=3D"box-sizing:border-box;color:rgb(0,0,0);font-size:1=
+3pt;vertical-align:baseline">=E2=97=8F Deep learning for graph </span></p><=
+p dir=3D"ltr" style=3D"background-color:transparent;box-sizing:border-box;f=
+ont-variant-ligatures:none;margin:2pt 0px 0px 19pt;outline:none;color:rgb(3=
+3,33,33);font-size:13pt;text-decoration-line:inherit;font-family:Roboto;lin=
+e-height:1.2;white-space:pre-wrap;border-width:initial;border-style:none;bo=
+rder-color:initial;padding:0px"><span style=3D"box-sizing:border-box;color:=
+rgb(0,0,0);font-size:13pt;vertical-align:baseline">=E2=97=8F Probabilistic =
+graphical models for graphs </span></p><p dir=3D"ltr" style=3D"background-c=
+olor:transparent;box-sizing:border-box;font-variant-ligatures:none;margin:1=
+pt 0px 0px 19pt;outline:none;color:rgb(33,33,33);font-size:13pt;text-decora=
+tion-line:inherit;font-family:Roboto;line-height:1.2;white-space:pre-wrap;b=
+order-width:initial;border-style:none;border-color:initial;padding:0px"><sp=
+an style=3D"box-sizing:border-box;color:rgb(0,0,0);font-size:13pt;vertical-=
+align:baseline">=E2=97=8F Graph-based approaches for text mining </span></p=
+><p dir=3D"ltr" style=3D"background-color:transparent;box-sizing:border-box=
+;font-variant-ligatures:none;margin:1pt 76pt 0px 19pt;outline:none;color:rg=
+b(33,33,33);font-size:13pt;text-decoration-line:inherit;font-family:Roboto;=
+line-height:1.36371;white-space:pre-wrap;border-width:initial;border-style:=
+none;border-color:initial;padding:0px"><span style=3D"box-sizing:border-box=
+;color:rgb(0,0,0);font-size:13pt;vertical-align:baseline">=E2=97=8F Graph-b=
+ased approaches for spatial component in scanned document </span></p><p dir=
+=3D"ltr" style=3D"background-color:transparent;box-sizing:border-box;font-v=
+ariant-ligatures:none;margin:1pt 76pt 0px 19pt;outline:none;color:rgb(33,33=
+,33);font-size:13pt;text-decoration-line:inherit;font-family:Roboto;line-he=
+ight:1.36371;white-space:pre-wrap;border-width:initial;border-style:none;bo=
+rder-color:initial;padding:0px"><span style=3D"box-sizing:border-box;color:=
+rgb(0,0,0);font-size:13pt;vertical-align:baseline">=E2=97=8F Graph represen=
+tation learning for NLP</span></p><p dir=3D"ltr" style=3D"background-color:=
+transparent;box-sizing:border-box;font-variant-ligatures:none;margin:0px 0p=
+x 0px 19pt;outline:none;color:rgb(33,33,33);font-size:13pt;text-decoration-=
+line:inherit;font-family:Roboto;line-height:1.2;white-space:pre-wrap;border=
+-width:initial;border-style:none;border-color:initial;padding:0px"><span st=
+yle=3D"box-sizing:border-box;color:rgb(0,0,0);font-size:13pt;vertical-align=
+:baseline">=E2=97=8F Graph-based approaches using kernels </span></p><p dir=
+=3D"ltr" style=3D"background-color:transparent;box-sizing:border-box;font-v=
+ariant-ligatures:none;margin:2pt 0px 0px 19pt;outline:none;color:rgb(33,33,=
+33);font-size:13pt;text-decoration-line:inherit;font-family:Roboto;line-hei=
+ght:1.2;white-space:pre-wrap;border-width:initial;border-style:none;border-=
+color:initial;padding:0px"><span style=3D"box-sizing:border-box;color:rgb(0=
+,0,0);font-size:13pt;vertical-align:baseline">=E2=97=8F Spectral graph clus=
+tering </span></p><p dir=3D"ltr" style=3D"background-color:transparent;box-=
+sizing:border-box;font-variant-ligatures:none;margin:1pt 0px 0px 19pt;outli=
+ne:none;color:rgb(33,33,33);font-size:13pt;text-decoration-line:inherit;fon=
+t-family:Roboto;line-height:1.2;white-space:pre-wrap;border-width:initial;b=
+order-style:none;border-color:initial;padding:0px"><span style=3D"box-sizin=
+g:border-box;color:rgb(0,0,0);font-size:13pt;vertical-align:baseline">=E2=
+=97=8F Semi-supervised graph-based methods </span></p><p dir=3D"ltr" style=
+=3D"background-color:transparent;box-sizing:border-box;font-variant-ligatur=
+es:none;margin:2pt 0px 0px 19pt;outline:none;color:rgb(33,33,33);font-size:=
+13pt;text-decoration-line:inherit;font-family:Roboto;line-height:1.2;white-=
+space:pre-wrap;border-width:initial;border-style:none;border-color:initial;=
+padding:0px"><span style=3D"box-sizing:border-box;color:rgb(0,0,0);font-siz=
+e:13pt;vertical-align:baseline">=E2=97=8F Dynamic graph analysis </span></p=
+><p dir=3D"ltr" style=3D"background-color:transparent;box-sizing:border-box=
+;font-variant-ligatures:none;margin:1pt 0px 0px 19pt;outline:none;color:rgb=
+(33,33,33);font-size:13pt;text-decoration-line:inherit;font-family:Roboto;l=
+ine-height:1.2;white-space:pre-wrap;border-width:initial;border-style:none;=
+border-color:initial;padding:0px"><span style=3D"box-sizing:border-box;colo=
+r:rgb(0,0,0);font-size:13pt;vertical-align:baseline">=E2=97=8F Information =
+Retrieval and Extraction using Graph-based methods </span></p><p dir=3D"ltr=
+" style=3D"background-color:transparent;box-sizing:border-box;font-variant-=
+ligatures:none;margin:1pt 0px 0px 19pt;outline:none;color:rgb(33,33,33);fon=
+t-size:13pt;text-decoration-line:inherit;font-family:Roboto;line-height:1.2=
+;white-space:pre-wrap;border-width:initial;border-style:none;border-color:i=
+nitial;padding:0px"><span style=3D"box-sizing:border-box;color:rgb(0,0,0);f=
+ont-size:13pt;vertical-align:baseline">=E2=97=8F Knowledge graph for semant=
+ic document analysis </span></p><p dir=3D"ltr" style=3D"background-color:tr=
+ansparent;box-sizing:border-box;font-variant-ligatures:none;margin:2pt 0px =
+0px 19pt;outline:none;color:rgb(33,33,33);font-size:13pt;text-decoration-li=
+ne:inherit;font-family:Roboto;line-height:1.2;white-space:pre-wrap;border-w=
+idth:initial;border-style:none;border-color:initial;padding:0px"><span styl=
+e=3D"box-sizing:border-box;color:rgb(0,0,0);font-size:13pt;vertical-align:b=
+aseline">=E2=97=8F Semantic understanding of document content </span></p><p=
+ dir=3D"ltr" style=3D"background-color:transparent;box-sizing:border-box;fo=
+nt-variant-ligatures:none;margin:1pt 0px 0px 19pt;outline:none;color:rgb(33=
+,33,33);font-size:13pt;text-decoration-line:inherit;font-family:Roboto;line=
+-height:1.2;white-space:pre-wrap;border-width:initial;border-style:none;bor=
+der-color:initial;padding:0px"><span style=3D"box-sizing:border-box;color:r=
+gb(0,0,0);font-size:13pt;vertical-align:baseline">=E2=97=8F Entity and link=
+ prediction in graphs </span></p><p dir=3D"ltr" style=3D"background-color:t=
+ransparent;box-sizing:border-box;font-variant-ligatures:none;margin:2pt 75p=
+t 0px 19pt;outline:none;color:rgb(33,33,33);font-size:13pt;text-decoration-=
+line:inherit;font-family:Roboto;line-height:1.29553;white-space:pre-wrap;bo=
+rder-width:initial;border-style:none;border-color:initial;padding:0px"><spa=
+n style=3D"box-sizing:border-box;color:rgb(0,0,0);font-size:13pt;vertical-a=
+lign:baseline">=E2=97=8F Merging ontologies with graph-based methods using =
+NLP techniques </span></p><p dir=3D"ltr" style=3D"background-color:transpar=
+ent;box-sizing:border-box;font-variant-ligatures:none;margin:2pt 75pt 0px 1=
+9pt;outline:none;color:rgb(33,33,33);font-size:13pt;text-decoration-line:in=
+herit;font-family:Roboto;line-height:1.29553;white-space:pre-wrap;border-wi=
+dth:initial;border-style:none;border-color:initial;padding:0px"><span style=
+=3D"box-sizing:border-box;color:rgb(0,0,0);font-size:13pt;vertical-align:ba=
+seline">=E2=97=8F Cleansing and image enhancement techniques for scanned do=
+cument </span></p><p dir=3D"ltr" style=3D"background-color:transparent;box-=
+sizing:border-box;font-variant-ligatures:none;margin:2pt 75pt 0px 19pt;outl=
+ine:none;color:rgb(33,33,33);font-size:13pt;text-decoration-line:inherit;fo=
+nt-family:Roboto;line-height:1.29553;white-space:pre-wrap;border-width:init=
+ial;border-style:none;border-color:initial;padding:0px"><span style=3D"box-=
+sizing:border-box;color:rgb(0,0,0);font-size:13pt;vertical-align:baseline">=
+=E2=97=8F Document structure and layout learning </span></p><p dir=3D"ltr" =
+style=3D"background-color:transparent;box-sizing:border-box;font-variant-li=
+gatures:none;margin:1pt 0px 0px 19pt;outline:none;color:rgb(33,33,33);font-=
+size:13pt;text-decoration-line:inherit;font-family:Roboto;line-height:1.2;w=
+hite-space:pre-wrap;border-width:initial;border-style:none;border-color:ini=
+tial;padding:0px"><span style=3D"box-sizing:border-box;color:rgb(0,0,0);fon=
+t-size:13pt;vertical-align:baseline">=E2=97=8F OCR based graph methods </sp=
+an></p><p dir=3D"ltr" style=3D"background-color:transparent;box-sizing:bord=
+er-box;font-variant-ligatures:none;margin:1pt 0px 0px 19pt;outline:none;col=
+or:rgb(33,33,33);font-size:13pt;text-decoration-line:inherit;font-family:Ro=
+boto;line-height:1.2;white-space:pre-wrap;border-width:initial;border-style=
+:none;border-color:initial;padding:0px"><span style=3D"box-sizing:border-bo=
+x;color:rgb(0,0,0);font-size:13pt;vertical-align:baseline">=E2=97=8F Font t=
+ext recognition in scanned document </span></p><p dir=3D"ltr" style=3D"back=
+ground-color:transparent;box-sizing:border-box;font-variant-ligatures:none;=
+margin:2pt 0px 0px 19pt;outline:none;color:rgb(33,33,33);font-size:13pt;tex=
+t-decoration-line:inherit;font-family:Roboto;line-height:1.2;white-space:pr=
+e-wrap;border-width:initial;border-style:none;border-color:initial;padding:=
+0px"><span style=3D"box-sizing:border-box;color:rgb(0,0,0);font-size:13pt;v=
+ertical-align:baseline">=E2=97=8F Table identication and extraction from sc=
+anned documents </span></p><p dir=3D"ltr" style=3D"background-color:transpa=
+rent;box-sizing:border-box;font-variant-ligatures:none;margin:1pt 0px 0px 1=
+9pt;outline:none;color:rgb(33,33,33);font-size:13pt;text-decoration-line:in=
+herit;font-family:Roboto;line-height:1.2;white-space:pre-wrap;border-width:=
+initial;border-style:none;border-color:initial;padding:0px"><span style=3D"=
+box-sizing:border-box;color:rgb(0,0,0);font-size:13pt;vertical-align:baseli=
+ne">=E2=97=8F Handwriting detection and recognition in documents </span></p=
+><p dir=3D"ltr" style=3D"background-color:transparent;box-sizing:border-box=
+;font-variant-ligatures:none;margin:1pt 0px 0px 19pt;outline:none;color:rgb=
+(33,33,33);font-size:13pt;text-decoration-line:inherit;font-family:Roboto;l=
+ine-height:1.2;white-space:pre-wrap;border-width:initial;border-style:none;=
+border-color:initial;padding:0px"><span style=3D"box-sizing:border-box;colo=
+r:rgb(0,0,0);font-size:13pt;vertical-align:baseline">=E2=97=8F Signature de=
+tection and verication in documents </span></p><p dir=3D"ltr" style=3D"back=
+ground-color:transparent;box-sizing:border-box;font-variant-ligatures:none;=
+margin:2pt 0px 0px 19pt;outline:none;color:rgb(33,33,33);font-size:13pt;tex=
+t-decoration-line:inherit;font-family:Roboto;line-height:1.2;white-space:pr=
+e-wrap;border-width:initial;border-style:none;border-color:initial;padding:=
+0px"><span style=3D"box-sizing:border-box;color:rgb(0,0,0);font-size:13pt;v=
+ertical-align:baseline">=E2=97=8F Visual document structure understanding <=
+/span></p><p dir=3D"ltr" style=3D"background-color:transparent;box-sizing:b=
+order-box;font-variant-ligatures:none;margin:1pt 0px 0px 19pt;outline:none;=
+color:rgb(33,33,33);font-size:13pt;text-decoration-line:inherit;font-family=
+:Roboto;line-height:1.2;white-space:pre-wrap;border-width:initial;border-st=
+yle:none;border-color:initial;padding:0px"><span style=3D"box-sizing:border=
+-box;color:rgb(0,0,0);font-size:13pt;vertical-align:baseline">=E2=97=8F Vis=
+ual Question Answering </span></p><p dir=3D"ltr" style=3D"background-color:=
+transparent;box-sizing:border-box;font-variant-ligatures:none;margin:2pt 0p=
+x 0px 19pt;outline:none;color:rgb(33,33,33);font-size:13pt;text-decoration-=
+line:inherit;font-family:Roboto;line-height:1.2;white-space:pre-wrap;border=
+-width:initial;border-style:none;border-color:initial;padding:0px"><span st=
+yle=3D"box-sizing:border-box;color:rgb(0,0,0);font-size:13pt;vertical-align=
+:baseline">=E2=97=8F Invoice analysis </span></p><p dir=3D"ltr" style=3D"ba=
+ckground-color:transparent;box-sizing:border-box;font-variant-ligatures:non=
+e;margin:1pt 0px 0px 19pt;outline:none;color:rgb(33,33,33);font-size:13pt;t=
+ext-decoration-line:inherit;font-family:Roboto;line-height:1.2;white-space:=
+pre-wrap;border-width:initial;border-style:none;border-color:initial;paddin=
+g:0px"><span style=3D"box-sizing:border-box;color:rgb(0,0,0);font-size:13pt=
+;vertical-align:baseline">=E2=97=8F Scanned documents classification </span=
+></p><p dir=3D"ltr" style=3D"background-color:transparent;box-sizing:border=
+-box;font-variant-ligatures:none;margin:1pt 0px 0px 19pt;outline:none;color=
+:rgb(33,33,33);font-size:13pt;text-decoration-line:inherit;font-family:Robo=
+to;line-height:1.2;white-space:pre-wrap;border-width:initial;border-style:n=
+one;border-color:initial;padding:0px"><span style=3D"box-sizing:border-box;=
+color:rgb(0,0,0);font-size:13pt;vertical-align:baseline">=E2=97=8F Scanned =
+documents summarization </span></p><p dir=3D"ltr" style=3D"background-color=
+:transparent;box-sizing:border-box;font-variant-ligatures:none;margin:1pt 0=
+px 0px 19pt;outline:none;color:rgb(33,33,33);font-size:13pt;text-decoration=
+-line:inherit;font-family:Roboto;line-height:1.2;white-space:pre-wrap;borde=
+r-width:initial;border-style:none;border-color:initial;padding:0px"><span s=
+tyle=3D"background-color:transparent;color:rgb(0,0,0);font-size:13pt;text-d=
+ecoration-line:inherit">=E2=97=8F Scanned documents translation </span></p>=
+<p dir=3D"ltr" style=3D"background-color:transparent;box-sizing:border-box;=
+font-variant-ligatures:none;margin:11pt 0px 0px;outline:none;font-size:13pt=
+;text-decoration-line:inherit;font-family:Roboto;line-height:1.55;white-spa=
+ce:pre-wrap;border-width:initial;border-style:none;border-color:initial;pad=
+ding:0px"><span style=3D"box-sizing:border-box;font-family:Arial;font-size:=
+13pt;vertical-align:baseline"><b><font color=3D"#000000">Submission</font><=
+/b><font color=3D"#212121"><br></font></span></p><p dir=3D"ltr" style=3D"ba=
+ckground-color:transparent;box-sizing:border-box;font-variant-ligatures:non=
+e;margin:11pt 0px 0px;outline:none;color:rgb(33,33,33);font-size:13pt;text-=
+decoration-line:inherit;font-family:Roboto;line-height:1.55;white-space:pre=
+-wrap;border-width:initial;border-style:none;border-color:initial;padding:0=
+px"><span style=3D"box-sizing:border-box;font-family:Arial;font-size:13pt;v=
+ertical-align:baseline"><span style=3D"font-family:Roboto;text-align:justif=
+y;white-space:normal">The workshop is open to original papers of theoretica=
+l or practical nature. Papers should be formatted=C2=A0</span><span style=
+=3D"box-sizing:border-box;text-align:justify;white-space:normal;color:rgb(0=
+,0,0);font-size:12pt;vertical-align:baseline">according to=C2=A0</span><spa=
+n style=3D"box-sizing:border-box;text-align:justify;white-space:normal;text=
+-decoration-line:underline;color:rgb(0,0,0);font-size:12pt;vertical-align:b=
+aseline"><a href=3D"https://www.google.com/url?q=3Dhttps%3A%2F%2Fwww.spring=
+er.com%2Ffr%2Fcomputer-science%2Flncs%2Fconference-proceedings-guidelines&a=
+mp;sa=3DD&amp;sntz=3D1&amp;usg=3DAFQjCNGhadQkou1B6uTwaCrX2p9HjIC9Iw" target=
+=3D"_blank" style=3D"color:inherit;box-sizing:border-box;text-decoration-li=
+ne:none">LNCS instructions for authors</a></span><span style=3D"font-family=
+:Roboto;text-align:justify;white-space:normal">.=C2=A0</span><span style=3D=
+"box-sizing:border-box;font-family:Roboto;font-size:13pt;text-align:justify=
+;white-space:normal;vertical-align:baseline">Authors should not include the=
+ir names and affiliations anywhere in the manuscript.=C2=A0</span><span sty=
+le=3D"box-sizing:border-box;text-align:justify;white-space:normal;color:rgb=
+(0,0,0);font-size:12pt;vertical-align:baseline">Papers=C2=A0</span><span st=
+yle=3D"box-sizing:border-box;text-align:justify;white-space:normal;color:rg=
+b(0,0,0);font-size:12pt;vertical-align:baseline">have</span><span style=3D"=
+box-sizing:border-box;text-align:justify;white-space:normal;color:rgb(0,0,0=
+);font-size:12pt;vertical-align:baseline">=C2=A0to be submitted</span><span=
+ style=3D"box-sizing:border-box;text-align:justify;white-space:normal;color=
+:rgb(0,0,0);font-size:12pt;vertical-align:baseline">=C2=A0</span><span styl=
+e=3D"box-sizing:border-box;text-align:justify;white-space:normal;color:rgb(=
+0,0,0);font-size:12pt;vertical-align:baseline">via the workshop&#39;s</span=
+><span style=3D"box-sizing:border-box;text-align:justify;white-space:normal=
+;color:rgb(0,0,0);font-size:12pt;vertical-align:baseline">=C2=A0</span><spa=
+n style=3D"box-sizing:border-box;text-align:justify;white-space:normal;text=
+-decoration-line:underline;font-size:12pt;vertical-align:baseline"><a href=
+=3D"https://www.google.com/url?q=3Dhttps%3A%2F%2Feasychair.org%2Fconference=
+s%2F%3Fconf%3Dglesdo2021&amp;sa=3DD&amp;sntz=3D1&amp;usg=3DAFQjCNE66fAYvnrm=
+ZAD_CpmHLnl3S8-huA" target=3D"_blank" style=3D"color:inherit;box-sizing:bor=
+der-box;text-decoration-line:none">EasyChair</a></span><span style=3D"box-s=
+izing:border-box;text-align:justify;white-space:normal;color:rgb(0,0,0);fon=
+t-size:12pt;vertical-align:baseline">=C2=A0submission page.</span><b><br></=
+b></span></p><p dir=3D"ltr" style=3D"background-color:transparent;box-sizin=
+g:border-box;font-variant-ligatures:none;margin:11pt 0px 0px;outline:none;c=
+olor:rgb(33,33,33);font-size:13pt;text-decoration-line:inherit;font-family:=
+Roboto;line-height:1.55;white-space:pre-wrap;border-width:initial;border-st=
+yle:none;border-color:initial;padding:0px"><span style=3D"box-sizing:border=
+-box;font-family:Arial;font-size:13pt;vertical-align:baseline">We welcome t=
+he following types of contributions:</span></p><ul style=3D"list-style-type=
+:square;box-sizing:border-box;padding:0px;margin:6px 0px 0px;color:rgb(0,0,=
+0);font-family:sans-serif;font-size:16px;white-space:pre-wrap"><li dir=3D"l=
+tr" style=3D"margin:0px 0px 0px 30pt;box-sizing:border-box;font-variant-lig=
+atures:none;outline:none;color:rgb(33,33,33);font-size:13pt;font-style:inhe=
+rit;font-weight:inherit;text-decoration:inherit;font-family:Roboto;line-hei=
+ght:1.55;padding-top:0px"><p dir=3D"ltr" style=3D"box-sizing:border-box;mar=
+gin:10pt 0px 0px;outline:none;font-size:13pt;font-style:inherit;font-weight=
+:inherit;text-decoration:inherit;line-height:1.55;padding:0px;background-co=
+lor:transparent;border-width:initial;border-style:none;border-color:initial=
+"><span style=3D"box-sizing:border-box;font-family:Arial;font-size:13pt;ver=
+tical-align:baseline">Full research papers (</span><span style=3D"box-sizin=
+g:border-box;color:rgb(34,34,34);font-family:Arial;font-size:12pt;vertical-=
+align:baseline">12-15 pages</span><span style=3D"box-sizing:border-box;font=
+-family:Arial;font-size:13pt;vertical-align:baseline">): </span><span style=
+=3D"box-sizing:border-box;font-family:Arial">f</span><span style=3D"box-siz=
+ing:border-box;font-family:Arial;font-size:13pt;vertical-align:baseline">in=
+ished or consolidated R&amp;D works, to be included in one of the Workshop =
+topics</span></p></li><li dir=3D"ltr" style=3D"margin:6px 0px 0px 30pt;box-=
+sizing:border-box;font-variant-ligatures:none;outline:none;color:rgb(33,33,=
+33);font-size:13pt;font-style:inherit;font-weight:inherit;text-decoration:i=
+nherit;font-family:Roboto;line-height:1.55;padding-bottom:0px"><p dir=3D"lt=
+r" style=3D"box-sizing:border-box;margin:15pt 0px 0px;outline:none;font-siz=
+e:13pt;font-style:inherit;font-weight:inherit;text-decoration:inherit;line-=
+height:1.55;padding:0px;background-color:transparent;border-width:initial;b=
+order-style:none;border-color:initial"><span style=3D"box-sizing:border-box=
+;font-family:Arial;font-size:13pt;vertical-align:baseline">Short papers (</=
+span><span style=3D"box-sizing:border-box;color:rgb(34,34,34);font-family:A=
+rial;font-size:12pt;vertical-align:baseline">6-8 pages</span><span style=3D=
+"box-sizing:border-box;color:rgb(34,34,34);font-family:Arial;font-size:12pt=
+;vertical-align:baseline">)</span><span style=3D"box-sizing:border-box;font=
+-family:Arial;font-size:13pt;vertical-align:baseline">: </span><span style=
+=3D"box-sizing:border-box;font-family:Arial">o</span><span style=3D"box-siz=
+ing:border-box;font-family:Arial;font-size:13pt;vertical-align:baseline">ng=
+oing works with relevant preliminary results, opened to discussion.</span><=
+/p></li></ul><p dir=3D"ltr" style=3D"background-color:transparent;box-sizin=
+g:border-box;font-variant-ligatures:none;margin:11pt 0px 0px;outline:none;c=
+olor:rgb(33,33,33);font-size:13pt;text-decoration-line:inherit;font-family:=
+Roboto;line-height:1.55;white-space:pre-wrap;border-width:initial;border-st=
+yle:none;border-color:initial;padding:0px"><span style=3D"box-sizing:border=
+-box;font-family:Arial;font-size:13pt;vertical-align:baseline">At least one=
+ author of each accepted paper must register for the workshop, in order to =
+present the paper</span><span style=3D"box-sizing:border-box;font-family:Ar=
+ial">. </span><span style=3D"box-sizing:border-box;font-family:Arial;font-s=
+ize:13pt;vertical-align:baseline">For further instructions please refer to =
+the<a href=3D"https://www.google.com/url?q=3Dhttps%3A%2F%2Ficdar2021.org%2F=
+&amp;sa=3DD&amp;sntz=3D1&amp;usg=3DAFQjCNH7XM46MS3RAIWrZPxhn4Kc5onLjw" targ=
+et=3D"_blank" style=3D"color:inherit;box-sizing:border-box;text-decoration-=
+line:none"> </a></span><span style=3D"box-sizing:border-box;font-family:Ari=
+al"><a href=3D"https://www.google.com/url?q=3Dhttps%3A%2F%2Ficdar2021.org%2=
+F&amp;sa=3DD&amp;sntz=3D1&amp;usg=3DAFQjCNH7XM46MS3RAIWrZPxhn4Kc5onLjw" tar=
+get=3D"_blank" style=3D"color:inherit;box-sizing:border-box;text-decoration=
+-line:none">ICDAR</a></span><span style=3D"box-sizing:border-box;font-famil=
+y:Arial;font-size:13pt;vertical-align:baseline"><a href=3D"https://www.goog=
+le.com/url?q=3Dhttps%3A%2F%2Ficdar2021.org%2F&amp;sa=3DD&amp;sntz=3D1&amp;u=
+sg=3DAFQjCNH7XM46MS3RAIWrZPxhn4Kc5onLjw" target=3D"_blank" style=3D"color:i=
+nherit;box-sizing:border-box;text-decoration-line:none"> 2021</a></span><sp=
+an style=3D"box-sizing:border-box;font-family:Arial;font-size:13pt;vertical=
+-align:baseline"> page.</span></p><p style=3D"background-color:transparent;=
+box-sizing:border-box;font-variant-ligatures:none;margin:11pt 0px 0px;outli=
+ne:none;font-size:13pt;text-decoration-line:inherit;font-family:Roboto;line=
+-height:1.55;white-space:pre-wrap;border-width:initial;border-style:none;bo=
+rder-color:initial;padding:0px"><span style=3D"box-sizing:border-box;font-f=
+amily:Arial;font-size:13pt;vertical-align:baseline"><b><font color=3D"#0000=
+00">Important dates</font></b><font color=3D"#212121"><br></font></span></p=
+><p style=3D"background-color:transparent;box-sizing:border-box;font-varian=
+t-ligatures:none;margin:11pt 0px 0px;outline:none;color:rgb(33,33,33);font-=
+size:13pt;text-decoration-line:inherit;font-family:Roboto;line-height:1.55;=
+white-space:pre-wrap;border-width:initial;border-style:none;border-color:in=
+itial;padding:0px"><span style=3D"box-sizing:border-box;font-family:Arial;f=
+ont-size:13pt;vertical-align:baseline"></span></p><ul style=3D"list-style-t=
+ype:square;box-sizing:border-box;padding:0px;margin:6px 0px 0px;color:rgb(0=
+,0,0);font-family:sans-serif;font-size:16px;white-space:pre-wrap"><li dir=
+=3D"ltr" style=3D"margin:0px 0px 0px 15pt;box-sizing:border-box;font-varian=
+t-ligatures:none;outline:none;color:rgb(33,33,33);font-size:13pt;font-style=
+:inherit;text-decoration:inherit;font-family:Roboto;line-height:1.55;paddin=
+g-top:0px"><p dir=3D"ltr" style=3D"box-sizing:border-box;margin:0px;outline=
+:none;font-size:13pt;font-style:inherit;text-decoration:inherit;line-height=
+:1.55;padding-top:0px;padding-bottom:0px;padding-left:0px"><span style=3D"f=
+ont-weight:inherit">Workshop paper submission due: </span><b><span style=3D=
+"box-sizing:border-box;color:rgb(34,34,34);font-family:Arial;font-size:12pt=
+;vertical-align:baseline">May</span><span style=3D"box-sizing:border-box;co=
+lor:rgb(34,34,34);font-family:Arial;font-size:12pt;vertical-align:baseline"=
+> 01</span><span style=3D"box-sizing:border-box;color:rgb(34,34,34);font-fa=
+mily:Arial;font-size:12pt;vertical-align:baseline">, 2021</span></b></p></l=
+i><li dir=3D"ltr" style=3D"margin:6px 0px 0px 15pt;box-sizing:border-box;fo=
+nt-variant-ligatures:none;outline:none;color:rgb(33,33,33);font-size:13pt;f=
+ont-style:inherit;font-weight:inherit;text-decoration:inherit;font-family:R=
+oboto;line-height:1.55"><p dir=3D"ltr" style=3D"box-sizing:border-box;margi=
+n:0px;outline:none;font-size:13pt;font-style:inherit;font-weight:inherit;te=
+xt-decoration:inherit;line-height:1.55;padding-top:0px;padding-bottom:0px;p=
+adding-left:0px">Workshop paper notifications: <span style=3D"box-sizing:bo=
+rder-box;color:rgb(34,34,34);font-family:Arial;font-size:12pt;vertical-alig=
+n:baseline">June 21, 2021</span></p></li><li dir=3D"ltr" style=3D"margin:6p=
+x 0px 0px 15pt;box-sizing:border-box;font-variant-ligatures:none;outline:no=
+ne;color:rgb(33,33,33);font-size:13pt;font-style:inherit;font-weight:inheri=
+t;text-decoration:inherit;font-family:Roboto;line-height:1.55"><p dir=3D"lt=
+r" style=3D"box-sizing:border-box;margin:0px;outline:none;font-size:13pt;fo=
+nt-style:inherit;font-weight:inherit;text-decoration:inherit;line-height:1.=
+55;padding-top:0px;padding-bottom:0px;padding-left:0px">Workshop paper came=
+ra-ready versions due: <span style=3D"box-sizing:border-box;color:rgb(34,34=
+,34);font-family:Arial;font-size:12pt;vertical-align:baseline">July 05, 202=
+1</span></p></li><li dir=3D"ltr" style=3D"margin:6px 0px 0px 15pt;box-sizin=
+g:border-box;font-variant-ligatures:none;outline:none;color:rgb(33,33,33);f=
+ont-size:13pt;font-style:inherit;font-weight:inherit;text-decoration:inheri=
+t;font-family:Roboto;line-height:1.55;padding-bottom:0px"><p dir=3D"ltr" st=
+yle=3D"box-sizing:border-box;margin:0px;outline:none;font-size:13pt;font-st=
+yle:inherit;font-weight:inherit;text-decoration:inherit;line-height:1.55;pa=
+dding-top:0px;padding-bottom:0px;padding-left:0px">Workshop: September 05, =
+2021 (Half-Day)</p></li></ul><h3 id=3D"gmail-m_-309237671986272500gmail-m_-=
+1139504297638254686gmail-m_-5914441601677045308gmail-m_5877459378229919277g=
+mail-m_-1693841208724688500gmail-m_2522473243972615881gmail-m_4548988265741=
+471820gmail-m_3810846511310631558gmail-m_9169621892487355688gmail-m_-790863=
+3166678884986gmail-m_4229733924575016551gmail-m_5146125080209370541gmail-m_=
+1041739996496270710gmail-m_3853711880378550031gmail-m_5590849052228746836gm=
+ail-h.at4f69o678dt" dir=3D"ltr" style=3D"box-sizing:border-box;font-variant=
+-ligatures:none;margin:18px 0px 0px;outline:none;color:rgb(33,33,33);font-w=
+eight:300;text-decoration-line:inherit;font-family:Roboto;line-height:1.27;=
+white-space:pre-wrap"><div style=3D"box-sizing:border-box;display:inline-bl=
+ock;max-width:100%"><span style=3D"box-sizing:border-box"><span style=3D"fo=
+nt-weight:700;box-sizing:border-box"><font size=3D"4">Publication</font></s=
+pan></span></div></h3><p dir=3D"ltr" style=3D"background-color:transparent;=
+box-sizing:border-box;font-variant-ligatures:none;margin:11pt 0px 0px;outli=
+ne:none;color:rgb(33,33,33);font-size:13pt;text-decoration-line:inherit;fon=
+t-family:Roboto;line-height:1.55;white-space:pre-wrap;border-width:initial;=
+border-style:none;border-color:initial;padding:0px"><span style=3D"box-sizi=
+ng:border-box;font-family:Arial;font-size:13pt;vertical-align:baseline"></s=
+pan></p><p dir=3D"ltr" style=3D"box-sizing:border-box;font-variant-ligature=
+s:none;margin:14px 0px 0px;outline:none;color:rgb(33,33,33);font-size:13pt;=
+text-decoration-line:inherit;font-family:Roboto;line-height:1.55;padding-bo=
+ttom:0px;white-space:pre-wrap">Accepted papers will be published <span styl=
+e=3D"box-sizing:border-box;font-size:13pt;vertical-align:baseline">in the I=
+CDAR 2021 proceeding.</span></p><h3 id=3D"gmail-m_-309237671986272500gmail-=
+m_-1139504297638254686gmail-m_-5914441601677045308gmail-m_58774593782299192=
+77gmail-m_-1693841208724688500gmail-m_2522473243972615881gmail-m_4548988265=
+741471820gmail-m_3810846511310631558gmail-m_9169621892487355688gmail-m_-790=
+8633166678884986gmail-m_4229733924575016551gmail-m_5146125080209370541gmail=
+-m_1041739996496270710gmail-m_3853711880378550031gmail-m_559084905222874683=
+6gmail-h.px6khf2olkac" dir=3D"ltr" style=3D"box-sizing:border-box;font-vari=
+ant-ligatures:none;margin:0px;outline:none;color:rgb(33,33,33);font-size:16=
+pt;font-weight:300;text-decoration-line:inherit;font-family:Roboto;line-hei=
+ght:1.27;padding-top:0px;white-space:pre-wrap"><div style=3D"box-sizing:bor=
+der-box;display:inline-block;max-width:100%"><span style=3D"box-sizing:bord=
+er-box"><span style=3D"font-weight:700;box-sizing:border-box"><br></span></=
+span></div></h3><h3 id=3D"gmail-m_-309237671986272500gmail-m_-1139504297638=
+254686gmail-m_-5914441601677045308gmail-m_5877459378229919277gmail-m_-16938=
+41208724688500gmail-m_2522473243972615881gmail-m_4548988265741471820gmail-m=
+_3810846511310631558gmail-m_9169621892487355688gmail-m_-7908633166678884986=
+gmail-m_4229733924575016551gmail-m_5146125080209370541gmail-m_1041739996496=
+270710gmail-m_3853711880378550031gmail-m_5590849052228746836gmail-h.px6khf2=
+olkac" dir=3D"ltr" style=3D"box-sizing:border-box;font-variant-ligatures:no=
+ne;margin:0px;outline:none;color:rgb(33,33,33);font-weight:300;text-decorat=
+ion-line:inherit;font-family:Roboto;line-height:1.27;padding-top:0px;white-=
+space:pre-wrap"><div style=3D"box-sizing:border-box;display:inline-block;ma=
+x-width:100%"><span style=3D"box-sizing:border-box"><span style=3D"font-wei=
+ght:700;box-sizing:border-box"><font size=3D"4">Workshop Chairs</font></spa=
+n></span></div></h3><p dir=3D"ltr" style=3D"box-sizing:border-box;font-vari=
+ant-ligatures:none;margin:14px 0px 0px;outline:none;color:rgb(33,33,33);fon=
+t-size:13pt;text-decoration-line:inherit;font-family:Roboto;line-height:1.5=
+5;white-space:pre-wrap"><span style=3D"box-sizing:border-box"><span style=
+=3D"font-weight:700;box-sizing:border-box">  Rim Hantach</span></span>, Eng=
+ie, France</p><p dir=3D"ltr" style=3D"box-sizing:border-box;font-variant-li=
+gatures:none;margin:14px 0px 0px;outline:none;color:rgb(33,33,33);font-size=
+:13pt;text-decoration-line:inherit;font-family:Roboto;line-height:1.55;whit=
+e-space:pre-wrap">  <span style=3D"box-sizing:border-box"><span style=3D"fo=
+nt-weight:700;box-sizing:border-box">Rafika Boutalbi</span></span>, Trinov,=
+ France - University of Stuttgart, Germany</p><p dir=3D"ltr" style=3D"box-s=
+izing:border-box;font-variant-ligatures:none;margin:14px 0px 0px;outline:no=
+ne;color:rgb(33,33,33);font-size:13pt;text-decoration-line:inherit;font-fam=
+ily:Roboto;line-height:1.55;white-space:pre-wrap">  <span style=3D"box-sizi=
+ng:border-box"><span style=3D"font-weight:700;box-sizing:border-box">Philip=
+pe Calvez</span></span>, Engie, France</p><p dir=3D"ltr" style=3D"box-sizin=
+g:border-box;font-variant-ligatures:none;margin:14px 0px 0px;outline:none;c=
+olor:rgb(33,33,33);font-size:13pt;text-decoration-line:inherit;font-family:=
+Roboto;line-height:1.55;white-space:pre-wrap">  <span style=3D"box-sizing:b=
+order-box;font-size:13pt;vertical-align:baseline"><span style=3D"font-weigh=
+t:700;box-sizing:border-box">Balsam Ajib</span></span><span style=3D"box-si=
+zing:border-box;font-size:13pt;vertical-align:baseline">, T</span>rinov, Fr=
+ance</p><p dir=3D"ltr" style=3D"box-sizing:border-box;font-variant-ligature=
+s:none;margin:14px 0px 0px;outline:none;color:rgb(33,33,33);font-size:13pt;=
+text-decoration-line:inherit;font-family:Roboto;line-height:1.55;padding-bo=
+ttom:0px;white-space:pre-wrap"><span style=3D"box-sizing:border-box;font-si=
+ze:13pt;vertical-align:baseline"></span></p><p dir=3D"ltr" style=3D"box-siz=
+ing:border-box;font-variant-ligatures:none;margin:14px 0px 0px;outline:none=
+;color:rgb(33,33,33);font-size:13pt;text-decoration-line:inherit;font-famil=
+y:Roboto;line-height:1.55;white-space:pre-wrap">  <span style=3D"box-sizing=
+:border-box;font-size:13pt;vertical-align:baseline"><span style=3D"font-wei=
+ght:700;box-sizing:border-box">Thibault Defourneau</span></span><span style=
+=3D"box-sizing:border-box;font-size:13pt;vertical-align:baseline">, Trinov,=
+ France</span></p></div>
+
+--00000000000089d36205bc073ee8--
+

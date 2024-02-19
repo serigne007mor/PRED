@@ -1,0 +1,539 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (bouncesmtp1.u12.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 5145B14017DB
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon, 25 Sep 2023 10:50:53 +0200 (CEST)
+Received: from mx3.univ-nantes.fr (MX3.univ-nantes.fr [193.52.101.137])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id 4A5293FC3
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon, 25 Sep 2023 10:50:53 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.univ-nantes.fr (Postfix) with ESMTP id 4570B20075
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 25 Sep 2023 10:50:53 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 0.522
+X-Spam-Level:
+X-Spam-Status: No, score=0.522 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	NO_RDNS=0.5, NO_RDNS2=0.01, RCVD_IN_DNSWL_NONE=-0.0001,
+	RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+	UN_PHISHING_PW=0.1, URIBL_BLOCKED=0.001] autolearn=disabled
+X-CRM114-Status: UNSURE ( -0.8810 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=uca.fr header.b=Kt7KFKmE; dkim=pass (1024-bit key)
+	header.d=uca.fr header.b=UljOiiDJ
+Received: from mx3.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id nEuv6gDShx4U for <liste-egc@polytech.univ-nantes.fr>;
+	Mon, 25 Sep 2023 10:50:49 +0200 (CEST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=193.49.117.21; helo=mta02.udamail.fr; envelope-from=issam.falih@uca.fr; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=none dis=none) header.from=uca.fr
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=uca.fr
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (1024-bit key; unprotected) header.d=uca.fr header.i=@uca.fr header.a=rsa-sha256 header.s=72FD7F0C-5358-11E8-A3B7-17E0B3BFED1B header.b=Kt7KFKmE;
+	dkim=pass (1024-bit key) header.d=uca.fr header.i=@uca.fr header.a=rsa-sha256 header.s=72FD7F0C-5358-11E8-A3B7-17E0B3BFED1B header.b=UljOiiDJ;
+	dkim-atps=neutral
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mta02.udamail.fr (mta02.udamail.fr [193.49.117.21])
+	by mx3.univ-nantes.fr (Postfix) with ESMTPS id DE1FA2007B
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 25 Sep 2023 10:50:46 +0200 (CEST)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mta02.udamail.fr (Postfix) with ESMTP id 4RvGmj4k3PzBrrc;
+	Mon, 25 Sep 2023 10:50:45 +0200 (CEST)
+Received: from mta02.udamail.fr ([127.0.0.1])
+ by localhost (mta02.udamail.fr [127.0.0.1]) (amavis, port 10032) with ESMTP
+ id y3EUYkrFsqUq; Mon, 25 Sep 2023 10:50:45 +0200 (CEST)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mta02.udamail.fr (Postfix) with ESMTP id 4RvGmj3BXPzBrrd;
+	Mon, 25 Sep 2023 10:50:45 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mta02.udamail.fr 4RvGmj3BXPzBrrd
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uca.fr;
+	s=72FD7F0C-5358-11E8-A3B7-17E0B3BFED1B; t=1695631845;
+	bh=W1rp4sq+5/qPcBOed8Ta2FpwB1bR626sgPc2uCxLzHc=;
+	h=From:Mime-Version:Date:Message-Id:To;
+	b=Kt7KFKmE+BMiGiQZQvx9MSgXMjYA0/ri1lRHEZ78XO2nd56aZJ5RUiyjzZvcEFJVo
+	 YLcNYiPp6frarkS0lDyWM38VdKZCdXyYbq5N32haeG2usHo0f18sl04N7Fg5n7Yqi7
+	 5xLSvc2kE68Ft8w2LqtTPxwOc0lYCq+triIeDY3Q=
+X-Virus-Scanned: amavis at mta02.udamail.fr
+Received: from mta02.udamail.fr ([127.0.0.1])
+ by localhost (mta02.udamail.fr [127.0.0.1]) (amavis, port 10026) with ESMTP
+ id 2s5OS19N8Y6L; Mon, 25 Sep 2023 10:50:45 +0200 (CEST)
+Received: from proxy02.udamail.fr (unknown [193.49.117.27])
+	by mta02.udamail.fr (Postfix) with ESMTPS id 4RvGmj0WtdzBrrY;
+	Mon, 25 Sep 2023 10:50:45 +0200 (CEST)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by proxy02.udamail.fr (Postfix) with ESMTP id 4RvGmh7463zBvbw;
+	Mon, 25 Sep 2023 10:50:44 +0200 (CEST)
+Received: from proxy02.udamail.fr ([127.0.0.1])
+ by localhost (proxy02.udamail.fr [127.0.0.1]) (amavis, port 10032) with ESMTP
+ id JQRRkqksvGpM; Mon, 25 Sep 2023 10:50:44 +0200 (CEST)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by proxy02.udamail.fr (Postfix) with ESMTP id 4RvGmh5c4TzBvWV;
+	Mon, 25 Sep 2023 10:50:44 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.10.3 proxy02.udamail.fr 4RvGmh5c4TzBvWV
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uca.fr;
+	s=72FD7F0C-5358-11E8-A3B7-17E0B3BFED1B; t=1695631844;
+	bh=W1rp4sq+5/qPcBOed8Ta2FpwB1bR626sgPc2uCxLzHc=;
+	h=From:Mime-Version:Date:Message-Id:To;
+	b=UljOiiDJGq6YbyuAt3WwO3Mpl/CWxVatDAmg2+v4QFsvV+6cyA6Qt38ryHKnbSZKV
+	 9N7XgGxT6M7VWcYvYGXI8sFG0Ua27/7JtXp9KRAuA0y6o4hytDJY8FAd6vQ8OFCvQg
+	 g9Njg39xgkp2Pa4Hs9eV9YjX0zAGAM3Z3lueg5b4=
+X-Virus-Scanned: amavis at proxy02.udamail.fr
+Received: from proxy02.udamail.fr ([127.0.0.1])
+ by localhost (proxy02.udamail.fr [127.0.0.1]) (amavis, port 10026) with ESMTP
+ id gQ0ytefJAPHS; Mon, 25 Sep 2023 10:50:44 +0200 (CEST)
+Received: from smtpclient.apple (unknown [172.27.170.151])
+	by proxy02.udamail.fr (Postfix) with ESMTPSA id 4RvGmh42bXzBvVb;
+	Mon, 25 Sep 2023 10:50:44 +0200 (CEST)
+From: Issam Falih <issam.falih@uca.fr>
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_46D183D1-B8AE-4956-B63B-950CBA8480D9"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.300.101.1.3\))
+Date: Mon, 25 Sep 2023 10:50:33 +0200
+Message-Id: <6E43720B-743A-47D1-9BE0-2EDB00B33A96@uca.fr>
+To: Issam FALIH <Issam.FALIH@uca.fr>
+X-Mailer: Apple Mail (2.3731.300.101.1.3)
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] [Cfp]Joint event ACONTA / MARAMI: Augmented Complex
+ Networks - Trustworthy Analysis & 12th Conference on Network Modeling and
+ Analysis
+
+
+--Apple-Mail=_46D183D1-B8AE-4956-B63B-950CBA8480D9
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
+
+[Our apologies if you received multiple copies of this CFP]
+=20
+=20
+
+Call for papers
+=20
+Joint event ACONTA / MARAMI: Augmented Complex Networks - Trustworthy =
+Analysis & 12th Conference on Network Modeling and Analysis
+Clermont Auvergne University, France.
+13-15 December 2023
+https://marami2023.sciencesconf.org =
+<https://marami2023.sciencesconf.org/>
+Abstract (2 pages) submission deadline: October 27th, 2023.
+=20
+=20
+Overview
+=20
+Complex networks analysis have been shown to be useful for gaining =
+insights in a wide variety of applications domains such as social =
+interactions, ecology, biological, healthcare, safety and security, and =
+many more. These applications have motivated the extension of network =
+models to richer representations and augmented complex network models, =
+such as feature-rich and higher-order network models. Examples include =
+multiplex networks, multilayer networks, temporal networks attributed =
+networks and network on networks.
+=20
+Machine learning approaches are being extensively used for obtaining =
+insights into/using these models and for mining knowledge from these =
+models and for a variety of tasks including node classification and role =
+identification, link prediction, community detection, anomaly detection =
+and much more. These tasks are generally required to enable and support =
+critical decisions and should so be largely trustworthy. XAI approaches =
+should be adapted to the networked context, and network analysis can =
+also contribute to devise explainability- oriented features in the =
+targeted applications areas.
+=20
+This joint conference aims to bridge the gap between these areas by =
+exploring the use of complex  network analysis and explainability in the =
+following featured application areas: Complex networks in  =
+Cybersecurity, safety and security, Biological and ecological networks =
+and Online Social Networks.
+=20
+Submission Guidelines
+=20
+Contributed talks should either present original work in the targeted =
+area or provide promising directions with respect to work in progress in =
+the focused area.
+=20
+Submitted abstracts (2 pages) must:
+* be written in English;
+* contain author names, affiliations, and email addresses;
+* be formatted according to the CEUR-WS-Template (use the 2-column =
+style): http://ceur-ws.org/Vol-XXX/CEURART.zip
+* be in PDF + source file(s); make sure that the PDF can be viewed on =
+any platform
+* Submission should be made using the following submission system: =
+https://marami2023.sciencesconf.org =
+<https://marami2023.sciencesconf.org/>
+=20
+A non exhaustive list of relevant topics is the following:
+=20
+Network Analysis & Mining
+Machine learning with graphs
+Community detection, Graph partitioning, Overlapping communities, Local =
+communities
+Community assessment and benchmarking
+Effective algorithms for sorting nodes in large graphs, Finding patterns =
+in graphs
+Visualisation and exploration of large graphs
+Study and simulation of phenomena occurring on networks
+Network evolution, Link prediction, Diffusion models
+Multi-agent systems and networks
+Complex networks embedding
+Trustworthy machine learning, Explainability, Interpretability
+Feature selection or construction for explainability
+Attributed networks, Feature-rich networks
+Temporal networks, Dynamic networks
+Multi-Layer networks, Multiplex networks, Heterogeneous networks
+Social networks, Affiliate networks, Social web, Folksonomies,
+Applications:
+=E2=80=93 Biological networks, peer-to-peer networks, space networks
+=E2=80=93 Modeling of geographical networks and spatial dynamics
+=E2=80=93 Cybersecurity
+=E2=80=93 Recommendation systems, collaborative filtering
+=E2=80=93 Decision support systems (viral marketing, epidemics)
+=20
+The proceedings of the conference will be published in HAL. Furthermore, =
+we will also consider publishing a selection of extended contributed =
+papers in a special issue of Computational Intelligence journal.
+=20
+Organization
+=20
+=20
+Issam Falih, Clermont Auvergne University / LIMOS CNRS UMR 6158, France
+Maria Malek, CY Cergy Paris University / ETIS CNRS UMR 8051, France
+Martin Atzmueller, Osnabr=C3=BCck University & German Research Center =
+for AI (DFKI), Germany
+Rushed Kanawati, Sorbonne Paris Nord University / LIPN CNRS UMR 7030, =
+France
+=20
+=20
+Important dates
+=20
+* Abstract submission deadline: October 27th, 2023.
+* Author notification: November 10 , 2023.
+* Camera ready: November 24, 2023
+* Conference: December 13 - 15, 2023=
+
+--Apple-Mail=_46D183D1-B8AE-4956-B63B-950CBA8480D9
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html><head><meta http-equiv=3D"content-type" content=3D"text/html; =
+charset=3Dutf-8"></head><body style=3D"overflow-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;"><div><font =
+face=3D"HelveticaNeue" size=3D"2">[<span style=3D"caret-color: rgb(51, =
+51, 51); color: rgb(51, 51, 51); background-color: rgb(255, 255, =
+255);">Our apologies if you received multiple copies of this =
+CFP]</span></font></div><div><p class=3D"MsoNormal" style=3D"margin: =
+0cm; font-size: 10pt; font-family: Calibri, sans-serif;"><span =
+lang=3D"EN-US" style=3D"font-size: 11pt;">&nbsp;</span></p><div =
+id=3D"mail-editor-reference-message-container"><p class=3D"MsoNormal" =
+style=3D"margin: 0cm 0cm 12pt; font-size: 10pt; font-family: Calibri, =
+sans-serif;"><span lang=3D"EN-US" style=3D"font-size: =
+11pt;">&nbsp;</span></p><blockquote style=3D"margin-left: 30pt; =
+margin-right: 0cm;"><div><p class=3D"MsoNormal" align=3D"center" =
+style=3D"margin: 0cm; font-size: 10pt; font-family: Calibri, sans-serif; =
+text-align: center;"><b><span lang=3D"EN-US" style=3D"font-size: 12pt; =
+font-family: &quot;Helvetica Neue&quot;;">Call for =
+papers</span></b><span lang=3D"EN-US" style=3D"font-size: 12pt; =
+font-family: &quot;Helvetica =
+Neue&quot;;"><o:p></o:p></span></p></div><div><p class=3D"MsoNormal" =
+style=3D"margin: 0cm; font-size: 10pt; font-family: Calibri, =
+sans-serif;"><span lang=3D"EN-US" style=3D"font-size: 12pt; font-family: =
+&quot;Helvetica Neue&quot;;">&nbsp;</span></p></div><div><p =
+class=3D"MsoNormal" align=3D"center" style=3D"margin: 0cm; font-size: =
+10pt; font-family: Calibri, sans-serif; text-align: center;"><b><span =
+lang=3D"EN-US" style=3D"font-size: 12pt; font-family: &quot;Helvetica =
+Neue&quot;;">Joint event ACONTA / MARAMI: Augmented Complex Networks - =
+Trustworthy Analysis &amp; 12th Conference on Network Modeling and =
+Analysis</span></b><span lang=3D"EN-US" style=3D"font-size: 12pt; =
+font-family: &quot;Helvetica =
+Neue&quot;;"><o:p></o:p></span></p></div><div><p class=3D"MsoNormal" =
+align=3D"center" style=3D"margin: 0cm; font-size: 10pt; font-family: =
+Calibri, sans-serif; text-align: center;"><b><span style=3D"font-size: =
+12pt; font-family: &quot;Helvetica Neue&quot;;">Clermont Auvergne =
+University, France.<o:p></o:p></span></b></p></div><div><p =
+class=3D"MsoNormal" align=3D"center" style=3D"margin: 0cm; font-size: =
+10pt; font-family: Calibri, sans-serif; text-align: center;"><b><span =
+lang=3D"EN-US" style=3D"font-size: 12pt; font-family: &quot;Helvetica =
+Neue&quot;;">13-15 December 2023</span></b><span lang=3D"EN-US" =
+style=3D"font-size: 12pt; font-family: &quot;Helvetica =
+Neue&quot;;"><o:p></o:p></span></p></div><div><p class=3D"MsoNormal" =
+align=3D"center" style=3D"margin: 0cm; font-size: 10pt; font-family: =
+Calibri, sans-serif; text-align: center;"><b><span style=3D"font-size: =
+12pt; font-family: &quot;Helvetica Neue&quot;;"><a =
+href=3D"https://marami2023.sciencesconf.org/" style=3D"color: rgb(5, 99, =
+193);"><span =
+lang=3D"EN-US">https://marami2023.sciencesconf.org</span></a></span></b><b=
+><span lang=3D"EN-US" style=3D"font-size: 12pt; font-family: =
+&quot;Helvetica Neue&quot;;"><o:p></o:p></span></b></p></div><p =
+class=3D"MsoNormal" style=3D"margin: 0cm 0cm 0cm 90pt; font-size: 10pt; =
+font-family: Calibri, sans-serif; text-indent: 16.2pt;"><span =
+lang=3D"EN-US" style=3D"font-family: &quot;Helvetica =
+Neue&quot;;">Abstract (2 pages) submission deadline: October 27th, =
+2023.<o:p></o:p></span></p><p class=3D"MsoNormal" align=3D"center" =
+style=3D"margin: 0cm; font-size: 10pt; font-family: Calibri, sans-serif; =
+text-align: center;"><span lang=3D"EN-US" style=3D"font-size: =
+11pt;">&nbsp;</span></p><div><p class=3D"MsoNormal" style=3D"margin: =
+0cm; font-size: 10pt; font-family: Calibri, sans-serif;"><span =
+lang=3D"EN-US" style=3D"font-size: 12pt; font-family: &quot;Helvetica =
+Neue&quot;;">&nbsp;</span></p></div><div><p class=3D"MsoNormal" =
+style=3D"margin: 0cm; font-size: 10pt; font-family: Calibri, =
+sans-serif;"><b><span style=3D"font-size: 12pt; font-family: =
+&quot;Helvetica Neue&quot;;">Overview</span></b><span style=3D"font-size: =
+12pt; font-family: &quot;Helvetica =
+Neue&quot;;"><o:p></o:p></span></p></div><div><p class=3D"MsoNormal" =
+style=3D"margin: 0cm; font-size: 10pt; font-family: Calibri, =
+sans-serif;"><span style=3D"font-size: 12pt; font-family: =
+&quot;Helvetica Neue&quot;;">&nbsp;</span></p></div><div><p =
+class=3D"MsoNormal" style=3D"margin: 0cm; font-size: 10pt; font-family: =
+Calibri, sans-serif;"><span style=3D"font-family: &quot;Helvetica =
+Neue&quot;;">Complex networks analysis have been shown to be useful for =
+gaining insights in a wide variety of applications domains such as =
+social interactions, ecology, biological, healthcare, safety and =
+security, and many more. These applications have motivated the extension =
+of network models to richer representations and augmented complex =
+network models, such as feature-rich and higher-order network models. =
+Examples include multiplex networks, multilayer networks, temporal =
+networks attributed networks and network on =
+networks.<o:p></o:p></span></p></div><div><p class=3D"MsoNormal" =
+style=3D"margin: 0cm; font-size: 10pt; font-family: Calibri, =
+sans-serif;"><span style=3D"font-size: 12pt; font-family: =
+&quot;Helvetica Neue&quot;;">&nbsp;</span></p></div><div><p =
+class=3D"MsoNormal" style=3D"margin: 0cm; font-size: 10pt; font-family: =
+Calibri, sans-serif;"><span style=3D"font-family: &quot;Helvetica =
+Neue&quot;;">Machine learning approaches are being extensively used for =
+obtaining insights into/using these models and for mining knowledge from =
+these models and for a variety of tasks including node classification =
+and role identification, link prediction, community detection, anomaly =
+detection and much more. These tasks are generally required to enable =
+and support critical decisions and should so be largely trustworthy. XAI =
+approaches should be adapted to the networked context, and network =
+analysis can also contribute to devise explainability- oriented features =
+in the targeted applications areas.<o:p></o:p></span></p></div><div><p =
+class=3D"MsoNormal" style=3D"margin: 0cm; font-size: 10pt; font-family: =
+Calibri, sans-serif;"><span style=3D"font-size: 12pt; font-family: =
+&quot;Helvetica Neue&quot;;">&nbsp;</span></p></div><div><p =
+class=3D"MsoNormal" style=3D"margin: 0cm; font-size: 10pt; font-family: =
+Calibri, sans-serif;"><span style=3D"font-family: &quot;Helvetica =
+Neue&quot;;">This joint conference aims to bridge the gap between these =
+areas by exploring the use of complex&nbsp; network analysis and =
+explainability in the following featured application areas: Complex =
+networks in&nbsp; Cybersecurity, safety and security, Biological and =
+ecological networks and Online Social =
+Networks.<o:p></o:p></span></p></div><div><p class=3D"MsoNormal" =
+style=3D"margin: 0cm; font-size: 10pt; font-family: Calibri, =
+sans-serif;"><span style=3D"font-size: 12pt; font-family: =
+&quot;Helvetica Neue&quot;;">&nbsp;</span></p></div><div><p =
+class=3D"MsoNormal" style=3D"margin: 0cm; font-size: 10pt; font-family: =
+Calibri, sans-serif;"><b><span style=3D"font-size: 12pt; font-family: =
+&quot;Helvetica Neue&quot;;">Submission Guidelines</span></b><span =
+style=3D"font-size: 12pt; font-family: &quot;Helvetica =
+Neue&quot;;"><o:p></o:p></span></p></div><div><p class=3D"MsoNormal" =
+style=3D"margin: 0cm; font-size: 10pt; font-family: Calibri, =
+sans-serif;"><span style=3D"font-size: 12pt; font-family: =
+&quot;Helvetica Neue&quot;;">&nbsp;</span></p></div><div><p =
+class=3D"MsoNormal" style=3D"margin: 0cm; font-size: 10pt; font-family: =
+Calibri, sans-serif;"><span style=3D"font-family: &quot;Helvetica =
+Neue&quot;;">Contributed talks should either present original work in =
+the targeted area or provide promising directions with respect to work =
+in progress in the focused area.<o:p></o:p></span></p></div><div><p =
+class=3D"MsoNormal" style=3D"margin: 0cm; font-size: 10pt; font-family: =
+Calibri, sans-serif;"><span style=3D"font-size: 12pt; font-family: =
+&quot;Helvetica Neue&quot;;">&nbsp;</span></p></div><div><p =
+class=3D"MsoNormal" style=3D"margin: 0cm; font-size: 10pt; font-family: =
+Calibri, sans-serif;"><span lang=3D"EN-US" style=3D"font-family: =
+&quot;Helvetica Neue&quot;;">Submitted abstracts (2 pages) =
+must:<o:p></o:p></span></p></div><div><p class=3D"MsoNormal" =
+style=3D"margin: 0cm 0cm 0cm 30pt; font-size: 10pt; font-family: =
+Calibri, sans-serif; text-indent: 5.4pt;"><span lang=3D"EN-US" =
+style=3D"font-family: &quot;Helvetica Neue&quot;;">* be written in =
+English;<o:p></o:p></span></p></div><div><p class=3D"MsoNormal" =
+style=3D"margin: 0cm 0cm 0cm 30pt; font-size: 10pt; font-family: =
+Calibri, sans-serif; text-indent: 5.4pt;"><span style=3D"font-family: =
+&quot;Helvetica Neue&quot;;">* contain author names, affiliations, and =
+email addresses;<o:p></o:p></span></p></div><div><p class=3D"MsoNormal" =
+style=3D"margin: 0cm 0cm 0cm 30pt; font-size: 10pt; font-family: =
+Calibri, sans-serif; text-indent: 5.4pt;"><span style=3D"font-family: =
+&quot;Helvetica Neue&quot;;">* be formatted according to the =
+CEUR-WS-Template (use the 2-column style):&nbsp;<a =
+href=3D"http://ceur-ws.org/Vol-XXX/CEURART.zip" style=3D"color: rgb(5, =
+99, =
+193);">http://ceur-ws.org/Vol-XXX/CEURART.zip</a><o:p></o:p></span></p></d=
+iv><div><p class=3D"MsoNormal" style=3D"margin: 0cm 0cm 0cm 30pt; =
+font-size: 10pt; font-family: Calibri, sans-serif; text-indent: =
+5.4pt;"><span style=3D"font-family: &quot;Helvetica Neue&quot;;">* be in =
+PDF + source file(s); make sure that the PDF can be viewed on any =
+platform<o:p></o:p></span></p></div><div><p class=3D"MsoNormal" =
+style=3D"margin: 0cm 0cm 0cm 30pt; font-size: 10pt; font-family: =
+Calibri, sans-serif; text-indent: 5.4pt;"><span style=3D"font-family: =
+&quot;Helvetica Neue&quot;;">* Submission should be made using the =
+following submission system:&nbsp;<a =
+href=3D"https://marami2023.sciencesconf.org/" style=3D"color: rgb(5, 99, =
+193);">https://marami2023.sciencesconf.org</a><o:p></o:p></span></p></div>=
+<div><p class=3D"MsoNormal" style=3D"margin: 0cm; font-size: 10pt; =
+font-family: Calibri, sans-serif;"><span style=3D"font-size: 12pt; =
+font-family: &quot;Helvetica =
+Neue&quot;;">&nbsp;</span></p></div><div><div><p class=3D"MsoNormal" =
+style=3D"margin: 0cm; font-size: 10pt; font-family: Calibri, =
+sans-serif;"><span style=3D"font-family: &quot;Helvetica Neue&quot;;">A =
+non exhaustive list of relevant topics is the =
+following:<o:p></o:p></span></p></div><div><p class=3D"MsoNormal" =
+style=3D"margin: 0cm; font-size: 10pt; font-family: Calibri, =
+sans-serif;"><span style=3D"font-family: &quot;Helvetica =
+Neue&quot;;">&nbsp;</span></p></div><div><ul type=3D"disc" =
+style=3D"margin-bottom: 0cm;"><li class=3D"MsoNormal" style=3D"margin: =
+0cm; font-size: 10pt; font-family: Calibri, sans-serif;"><span =
+style=3D"font-family: &quot;Helvetica Neue&quot;;">Network Analysis =
+&amp; Mining<o:p></o:p></span></li><li class=3D"MsoNormal" =
+style=3D"margin: 0cm; font-size: 10pt; font-family: Calibri, =
+sans-serif;"><span style=3D"font-family: &quot;Helvetica =
+Neue&quot;;">Machine learning with graphs<o:p></o:p></span></li><li =
+class=3D"MsoNormal" style=3D"margin: 0cm; font-size: 10pt; font-family: =
+Calibri, sans-serif;"><span style=3D"font-family: &quot;Helvetica =
+Neue&quot;;">Community detection, Graph partitioning, Overlapping =
+communities, Local communities<o:p></o:p></span></li><li =
+class=3D"MsoNormal" style=3D"margin: 0cm; font-size: 10pt; font-family: =
+Calibri, sans-serif;"><span style=3D"font-family: &quot;Helvetica =
+Neue&quot;;">Community assessment and =
+benchmarking<o:p></o:p></span></li><li class=3D"MsoNormal" =
+style=3D"margin: 0cm; font-size: 10pt; font-family: Calibri, =
+sans-serif;"><span style=3D"font-family: &quot;Helvetica =
+Neue&quot;;">Effective algorithms for sorting nodes in large graphs, =
+Finding patterns in graphs<o:p></o:p></span></li><li class=3D"MsoNormal" =
+style=3D"margin: 0cm; font-size: 10pt; font-family: Calibri, =
+sans-serif;"><span style=3D"font-family: &quot;Helvetica =
+Neue&quot;;">Visualisation and exploration of large =
+graphs<o:p></o:p></span></li><li class=3D"MsoNormal" style=3D"margin: =
+0cm; font-size: 10pt; font-family: Calibri, sans-serif;"><span =
+style=3D"font-family: &quot;Helvetica Neue&quot;;">Study and simulation =
+of phenomena occurring on networks<o:p></o:p></span></li><li =
+class=3D"MsoNormal" style=3D"margin: 0cm; font-size: 10pt; font-family: =
+Calibri, sans-serif;"><span style=3D"font-family: &quot;Helvetica =
+Neue&quot;;">Network evolution, Link prediction, Diffusion =
+models<o:p></o:p></span></li><li class=3D"MsoNormal" style=3D"margin: =
+0cm; font-size: 10pt; font-family: Calibri, sans-serif;"><span =
+style=3D"font-family: &quot;Helvetica Neue&quot;;">Multi-agent systems =
+and networks<o:p></o:p></span></li><li class=3D"MsoNormal" =
+style=3D"margin: 0cm; font-size: 10pt; font-family: Calibri, =
+sans-serif;"><span style=3D"font-family: &quot;Helvetica =
+Neue&quot;;">Complex networks embedding<o:p></o:p></span></li><li =
+class=3D"MsoNormal" style=3D"margin: 0cm; font-size: 10pt; font-family: =
+Calibri, sans-serif;"><span style=3D"font-family: &quot;Helvetica =
+Neue&quot;;">Trustworthy machine learning, Explainability, =
+Interpretability<o:p></o:p></span></li><li class=3D"MsoNormal" =
+style=3D"margin: 0cm; font-size: 10pt; font-family: Calibri, =
+sans-serif;"><span style=3D"font-family: &quot;Helvetica =
+Neue&quot;;">Feature selection or construction for =
+explainability<o:p></o:p></span></li><li class=3D"MsoNormal" =
+style=3D"margin: 0cm; font-size: 10pt; font-family: Calibri, =
+sans-serif;"><span style=3D"font-family: &quot;Helvetica =
+Neue&quot;;">Attributed networks, Feature-rich =
+networks<o:p></o:p></span></li><li class=3D"MsoNormal" style=3D"margin: =
+0cm; font-size: 10pt; font-family: Calibri, sans-serif;"><span =
+style=3D"font-family: &quot;Helvetica Neue&quot;;">Temporal networks, =
+Dynamic networks<o:p></o:p></span></li><li class=3D"MsoNormal" =
+style=3D"margin: 0cm; font-size: 10pt; font-family: Calibri, =
+sans-serif;"><span style=3D"font-family: &quot;Helvetica =
+Neue&quot;;">Multi-Layer networks, Multiplex networks, Heterogeneous =
+networks<o:p></o:p></span></li><li class=3D"MsoNormal" style=3D"margin: =
+0cm; font-size: 10pt; font-family: Calibri, sans-serif;"><span =
+style=3D"font-family: &quot;Helvetica Neue&quot;;">Social networks, =
+Affiliate networks, Social web, Folksonomies,<o:p></o:p></span></li><li =
+class=3D"MsoNormal" style=3D"margin: 0cm; font-size: 10pt; font-family: =
+Calibri, sans-serif;"><span style=3D"font-family: &quot;Helvetica =
+Neue&quot;;">Applications:<o:p></o:p></span></li></ul></div></div></blockq=
+uote><blockquote style=3D"margin-left: 30pt; margin-right: 0cm;"><div><p =
+class=3D"MsoNormal" style=3D"margin: 0cm 0cm 0cm 60pt; font-size: 10pt; =
+font-family: Calibri, sans-serif; text-indent: 6pt;"><span =
+style=3D"font-family: &quot;Helvetica Neue&quot;;"><span =
+lang=3D"EN-US">=E2=80=93 Biological networks, peer-to-peer networks, =
+space networks<o:p></o:p></span></span></p></div><div><p =
+class=3D"MsoNormal" style=3D"margin: 0cm 0cm 0cm 60pt; font-size: 10pt; =
+font-family: Calibri, sans-serif; text-indent: 10.8pt;"><span =
+style=3D"font-family: &quot;Helvetica Neue&quot;;">=E2=80=93 Modeling of =
+geographical networks and spatial =
+dynamics<o:p></o:p></span></p></div><div><p class=3D"MsoNormal" =
+style=3D"margin: 0cm 0cm 0cm 70.8pt; font-size: 10pt; font-family: =
+Calibri, sans-serif;"><span style=3D"font-family: &quot;Helvetica =
+Neue&quot;;">=E2=80=93 Cybersecurity<o:p></o:p></span></p></div><div><p =
+class=3D"MsoNormal" style=3D"margin: 0cm 0cm 0cm 70.8pt; font-size: =
+10pt; font-family: Calibri, sans-serif;"><span style=3D"font-family: =
+&quot;Helvetica Neue&quot;;">=E2=80=93 Recommendation systems, =
+collaborative filtering<o:p></o:p></span></p></div><div><p =
+class=3D"MsoNormal" style=3D"margin: 0cm 0cm 0cm 70.8pt; font-size: =
+10pt; font-family: Calibri, sans-serif;"><span style=3D"font-family: =
+&quot;Helvetica Neue&quot;;">=E2=80=93 Decision support systems (viral =
+marketing, epidemics)<o:p></o:p></span></p></div><div><p =
+class=3D"MsoNormal" style=3D"margin: 0cm; font-size: 10pt; font-family: =
+Calibri, sans-serif;"><span style=3D"font-size: 12pt; font-family: =
+&quot;Helvetica Neue&quot;;">&nbsp;</span></p></div><div><p =
+class=3D"MsoNormal" style=3D"margin: 0cm; font-size: 10pt; font-family: =
+Calibri, sans-serif;"><span style=3D"font-family: &quot;Helvetica =
+Neue&quot;;">The proceedings of the conference will be published in HAL. =
+Furthermore, we will also consider publishing a selection of extended =
+contributed papers in a special issue of Computational Intelligence =
+journal.<o:p></o:p></span></p></div><div><p class=3D"MsoNormal" =
+style=3D"margin: 0cm; font-size: 10pt; font-family: Calibri, =
+sans-serif;"><span style=3D"font-size: 12pt; font-family: =
+&quot;Helvetica Neue&quot;;">&nbsp;</span></p></div><div><p =
+class=3D"MsoNormal" style=3D"margin: 0cm; font-size: 10pt; font-family: =
+Calibri, sans-serif;"><b><span style=3D"font-size: 12pt; font-family: =
+&quot;Helvetica Neue&quot;;">Organization</span></b><span =
+style=3D"font-size: 12pt; font-family: &quot;Helvetica =
+Neue&quot;;"><o:p></o:p></span></p></div><div><p class=3D"MsoNormal" =
+style=3D"margin: 0cm; font-size: 10pt; font-family: Calibri, =
+sans-serif;"><span style=3D"font-family: &quot;Helvetica =
+Neue&quot;;">&nbsp;</span></p></div><div><p class=3D"MsoNormal" =
+style=3D"margin: 0cm; font-size: 10pt; font-family: Calibri, =
+sans-serif;"><span style=3D"font-family: &quot;Helvetica =
+Neue&quot;;">&nbsp;</span></p><p class=3D"MsoNormal" style=3D"margin: =
+0cm; font-size: 10pt; font-family: Calibri, sans-serif;"><span =
+lang=3D"EN-US" style=3D"font-family: &quot;Helvetica Neue&quot;;">Issam =
+Falih, Clermont Auvergne University / LIMOS CNRS UMR 6158, =
+France<o:p></o:p></span></p><p class=3D"MsoNormal" style=3D"margin: 0cm; =
+font-size: 10pt; font-family: Calibri, sans-serif;"><span lang=3D"EN-US" =
+style=3D"font-family: &quot;Helvetica Neue&quot;;">Maria Malek, CY Cergy =
+Paris University / ETIS CNRS UMR 8051, =
+France<o:p></o:p></span></p></div><div><p class=3D"MsoNormal" =
+style=3D"margin: 0cm; font-size: 10pt; font-family: Calibri, =
+sans-serif;"><span lang=3D"EN-US" style=3D"font-family: &quot;Helvetica =
+Neue&quot;;">Martin Atzmueller, Osnabr=C3=BCck University &amp; German =
+Research Center for AI (DFKI), Germany<o:p></o:p></span></p></div><p =
+class=3D"MsoNormal" style=3D"margin: 0cm; font-size: 10pt; font-family: =
+Calibri, sans-serif;"><span style=3D"font-family: &quot;Helvetica =
+Neue&quot;;">Rushed Kanawati, Sorbonne Paris Nord University / LIPN CNRS =
+UMR 7030, France<o:p></o:p></span></p><p class=3D"MsoNormal" =
+style=3D"margin: 0cm; font-size: 10pt; font-family: Calibri, =
+sans-serif;"><span lang=3D"EN-US" style=3D"font-size: =
+11pt;">&nbsp;</span></p><div><p class=3D"MsoNormal" style=3D"margin: =
+0cm; font-size: 10pt; font-family: Calibri, sans-serif;"><span =
+lang=3D"EN-US" style=3D"font-size: 12pt; font-family: &quot;Helvetica =
+Neue&quot;;">&nbsp;</span></p></div><div><p class=3D"MsoNormal" =
+style=3D"margin: 0cm; font-size: 10pt; font-family: Calibri, =
+sans-serif;"><b><span style=3D"font-size: 12pt; font-family: =
+&quot;Helvetica Neue&quot;;">Important dates</span></b><span =
+style=3D"font-size: 12pt; font-family: &quot;Helvetica =
+Neue&quot;;"><o:p></o:p></span></p></div><div><p class=3D"MsoNormal" =
+style=3D"margin: 0cm; font-size: 10pt; font-family: Calibri, =
+sans-serif;"><span style=3D"font-family: &quot;Helvetica =
+Neue&quot;;">&nbsp;</span></p></div><div><p class=3D"MsoNormal" =
+style=3D"margin: 0cm; font-size: 10pt; font-family: Calibri, =
+sans-serif;"><span style=3D"font-family: &quot;Helvetica Neue&quot;;">* =
+Abstract submission deadline: October 27th, =
+2023.<o:p></o:p></span></p></div><div><p class=3D"MsoNormal" =
+style=3D"margin: 0cm; font-size: 10pt; font-family: Calibri, =
+sans-serif;"><span style=3D"font-family: &quot;Helvetica Neue&quot;;">* =
+Author notification:&nbsp;November 10 , =
+2023.<o:p></o:p></span></p></div><div><p class=3D"MsoNormal" =
+style=3D"margin: 0cm; font-size: 10pt; font-family: Calibri, =
+sans-serif;"><span style=3D"font-family: &quot;Helvetica Neue&quot;;">* =
+Camera ready: November 24, 2023<o:p></o:p></span></p></div><div><p =
+class=3D"MsoNormal" style=3D"margin: 0cm; font-size: 10pt; font-family: =
+Calibri, sans-serif;"><span style=3D"font-family: &quot;Helvetica =
+Neue&quot;;">* Conference: December 13 - 15, =
+2023</span></p></div></blockquote></div></div></body></html>=
+
+--Apple-Mail=_46D183D1-B8AE-4956-B63B-950CBA8480D9--

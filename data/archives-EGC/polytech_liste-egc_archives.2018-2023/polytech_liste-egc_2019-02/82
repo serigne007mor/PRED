@@ -1,0 +1,754 @@
+Return-Path: <Rokia.Missaoui@uqo.ca>
+X-Original-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (BounceSMTP2.univ-nantes.prive [172.20.12.67])
+	by sympa6.univ-nantes.prive (Postfix) with ESMTP id 5A0D82292950
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Wed, 27 Feb 2019 14:17:28 +0100 (CET)
+Received: from mx3.d101.univ-nantes.fr (MX3.univ-nantes.fr [193.52.101.137])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id 58762628823
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Wed, 27 Feb 2019 14:17:28 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTP id 53A734019C16
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 27 Feb 2019 14:17:28 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -3.98
+X-Spam-Level:
+X-Spam-Status: No, score=-3.98 tagged_above=-1000 required=5
+	tests=[CRM114_GOOD=-5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, HTML_MESSAGE=0.001, NO_RDNS2=0.01,
+	RCVD_IN_SORBS=1, RCVD_IN_WSFF=0.01, SPF_HELO_PASS=-0.001,
+	SPF_PASS=-0.001, UN_PHISHING_PW=0.1, URIBL_BLOCKED=0.001]
+	autolearn=disabled
+X-CRM114-Status: GOOD ( 6.3833 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=uqo.ca
+Received: from mx3.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id dYoZqgW4lWzN for <liste-egc@polytech.univ-nantes.fr>;
+	Wed, 27 Feb 2019 14:17:25 +0100 (CET)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from relais.uqo.ca (relais.uqo.ca [132.213.9.51])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTPS id EEB494114793
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 27 Feb 2019 14:17:24 +0100 (CET)
+Received: from relais.uqo.ca (VMPROGAV10.uqo.ca [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 59142CC06E
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 27 Feb 2019 08:17:23 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uqo.ca; s=default;
+	t=1551273443; bh=NwT7vXW7mGwDmmh0Q9e9e0XigdxZtQzlRxw98BXwzh4=;
+	h=From:To:Date;
+	b=BsxwY4r/NXurP/RlcbqGTOtX9r/KYnCHqD2kIXAcAvRVz1ZRfLSN/Ozmn6UIfWKlX
+	 ZXl/LL1JPPx/15zwS67iiHuidMc0MfRJeDPxkSMaJ6ovWrByo2HVonQok7AIFLGjHn
+	 cB0RX1Fw3a+I5HO85W2Sjzr1HDGlgbGCRIu6jYS+7zidRo058tlvFfdOKR6NIpR+GZ
+	 VRSVtdiNDyP+BLCt/Usb6wK2/52dCY8LEQH1yk790AucdqKNJCahGgDaUON/yQolH+
+	 qamDx50QfKz1QoaDxF2azfUuF1eVsb3N9vI8CQTYTEueFscDWJ43lRttDkJYKlsKPc
+	 NO69Yv4TbFAqA==
+Received: from relais.uqo.ca (VMPROGAV10.uqo.ca [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 2D3E0CC06D
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 27 Feb 2019 08:17:23 -0500 (EST)
+Received: from courrier.uqo.ca (vmproexd02.uqo.local [132.213.9.172])
+	by relais.uqo.ca (Postfix) with ESMTPS
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 27 Feb 2019 08:17:23 -0500 (EST)
+Received: from VMPROEXD04.uqo.local (132.213.9.174) by VMPROEXD02.uqo.local
+ (132.213.9.172) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1591.10; Wed, 27 Feb
+ 2019 08:17:23 -0500
+Received: from VMPROEXD04.uqo.local ([132.213.9.174]) by VMPROEXD04.uqo.local
+ ([132.213.9.174]) with mapi id 15.01.1591.008; Wed, 27 Feb 2019 08:17:22
+ -0500
+From: "Missaoui, Rokia" <Rokia.Missaoui@uqo.ca>
+To: "liste-egc@polytech.univ-nantes.fr" <liste-egc@polytech.univ-nantes.fr>
+Thread-Topic: =?iso-8859-1?Q?Appel_=E0_communications_-_BigFCA'2019_-_Juin_2019?=
+Thread-Index: AdTOnpFOlRmzmvgcTVqTsdPWHaOOAA==
+Date: Wed, 27 Feb 2019 13:17:22 +0000
+Message-ID: <986aee6e4759441c9d3e8b3ee995c733@uqo.ca>
+Accept-Language: en-US, fr-CA
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [66.130.39.4]
+Content-Type: multipart/alternative;
+	boundary="_000_986aee6e4759441c9d3e8b3ee995c733uqoca_"
+MIME-Version: 1.0
+X-TM-AS-GCONF: 00
+X-TM-AS-Product-Ver: IMSVA-9.1.0.1832-8.2.0.1013-24458.006
+X-TM-AS-Result: No--19.809-7.0-31-10
+X-imss-scan-details: No--19.809-7.0-31-10
+X-TM-AS-User-Approved-Sender: No
+X-TM-AS-User-Blocked-Sender: No
+X-TMASE-Version: IMSVA-9.1.0.1832-8.2.1013-24458.006
+X-TMASE-Result: 10--19.809400-10.000000
+X-TMASE-MatchedRID: TAvv/+q0nMN+4D8R3CVA6rU+IyHhkXf1BXJ6j2Ez1Ie6uRFeVulAQx+W
+	1BDZciKf3EHsdsjBZQNoUJgKmvCzhuKCyLJN+midWnQHHkRrIIV5y+Nu7/EOOt9rUGWOnqtWhov
+	xJM23K7zmZrUyM+cZKJM2m7pFe7xyEwlsAdyTYBexT6X3XrQLUy9eSYpU2Ct+oeuYbgVam/+a7W
+	dMXKb3EvI5SdWAGkPGC+rM9V8OtO+5XqTmH3jzrf/q7MbXs5JTuGqFCFklB1BaW2Ktn+I8/olJu
+	0FQScym57PxubjH94WEKPHn8az4Bri7dOr/JWlJM0pZiLPQITpocPbgX6GmdLpgzv1ySIOtVrII
+	FE2LrBbCbysLfiIRFvuWucbYW7pdzMLMZrH3XePOUnHdMlbPmzfwU1OWX2USIiZge+DzGGjnAw8
+	yp081LCeepb9IrRfHh6kuhfGFyxqJbZbUgVrj64oLoibgjVEXynJpnCiFJArewHwlh5je2mBOBj
+	cz+3TROH4rsV5NBnaBRCqsNglK8MkfKu0c4hdWAEgqTc4LS4T2TYt281WiztNjcD9sAi1OWdPNV
+	Jjrp8VKPDh2sKlwEUC+6N424la0JSh75v+C6KOJr/YKepY5SSUrHHwpOWiwhrOrPKoesXnv/72z
+	C4hJFVhUDZOPhwqI54mbosKUuYfCKxdd3mKUazbN0t/c2qF2MrX+p1uNztAUtdRZTmEaIV2pa+a
+	JMbyanFfNkmfs1AiyNm0/eGTGyjScgMqgJnG/e5NWR5iixe25pw2tsxj4tFwpnAAvAwazeKLmRI
+	5Hi0Zi25qZmDV8WdqEJ/tVNl6pFTfTuMePJbyeAiCmPx4NwGmRqNBHmBveuME6WhSqqOE9euiYe
+	3o8ePe+C6+YSWD6uGK7Jl4ngS2VNNUaF1R4pkOyLjGm5l4wP4jC6HUHaoDwaUwS/+cvXw==
+X-TMASE-SNAP-Result: 1.821001.0001-0-1-12:0,22:0,33:0,34:0-0
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Appel =?ISO-8859-1?Q?=E0?= communications - BigFCA'2019
+ - Juin 2019
+
+--_000_986aee6e4759441c9d3e8b3ee995c733uqoca_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+CALL for PAPERS
+
+BigFCA'2019
+
+Workshop - Formal Concept Analysis at the Big Data Era
+In conjunction with ICFCA'2019, June 25-28, 2019, Frankfurt, Germany
+https://www.informatik.fb2.frankfurt-university.de/~icfca2019/
+
+
+OVERVIEW
+
+With the advent of Big Data and the increasing number of studies towards th=
+eir management and analysis, it becomes important to get a better insight i=
+nto existing studies, trends and challenges and rely on promising theories =
+such as Formal Concept Analysis together with recently developed technologi=
+es to design new, accurate and scalable solutions for big data analytics.
+Big Data (BD) are very large and possibly heterogeneous and unstructured da=
+ta collections defined by at least 7 V's: Volume (e.g., zettabytes), Veloci=
+ty (i.e., evolving and stream data), Variety, (e.g., text, image, video), V=
+ariability (i.e., changes in the data flow rates), Veracity (accuracy), Vis=
+ualization, and Value (i.e., extracted information and knowledge).
+Formal Concept Analysis (FCA) is an important formalism that is associated =
+with a variety of research areas such as lattice theory, knowledge represen=
+tation, data mining, machine learning, and semantic Web, to name a few. It =
+is successfully exploited in an increasing number of application domains su=
+ch as software engineering, information retrieval, social network analysis,=
+ and bioinformatics. The mathematical power of FCA comes from its concept l=
+attice formalization in which each element in the lattice captures a formal=
+ concept while the whole structure represents a conceptual hierarchy that o=
+ffers browsing, clustering and rule mining.
+Although there are  significant theoretical and practical contributions wit=
+hin the FCA community in a variety of topics, including the design and impl=
+ementation of efficient algorithms and tools for concept lattice computatio=
+n and exploitation, the goal of this workshop is to pinpoint and examine a =
+set of important and relevant research directions in Big Data management, a=
+nd see where the FCA community can very likely make significant contributio=
+ns. As an example, we expect to have fruitful discussions about how Formal =
+Concept Analysis and some of its extensions can be exploited, revisited and=
+ coupled with recent processing paradigms (e.g., MapReduce and Hadoop) to m=
+aximize the benefits of Big Data through their analysis.
+
+TOPICS OF INTEREST
+The scope of BigFCA'2019 includes, but is not limited to the following topi=
+cs:
+
+-          Applications of - and experiences with - FCA for big data analyt=
+ics
+
+-          Challenges of the V's of big data
+
+-          Stream data management
+
+-          Data decomposition and reduction
+
+-          Distributed and parallel algorithms
+
+-          MapReduce, Hadoop and Spark technologies
+
+-          Efficient data structures.
+
+IMPORTANT DATES
+
+Submission of abstracts:  March 20, 2019
+Submission of full papers:  March 27, 2019
+Notification of acceptance:  April 25, 2019
+Camera ready copies due:  May 20, 2019
+Workshop date: TBA
+
+SUBMISSION AND PUBLICATION
+
+
+All submissions of up to twelve pages must be done using the EasyChair syst=
+em of the workshop (see https://easychair.org/conferences/?conf=3Dbigfca201=
+9) and follow the author guidelines for ICFCA'2019, i.e., the formatting in=
+structions for the Springer LNCS style (https://www.springer.com/fr/compute=
+r-science/lncs/conference-proceedings-guidelines).
+
+All the accepted papers will be printed in the CEUR Workshop Proceedings. P=
+apers will be evaluated by three reviewers according to their significance,=
+ originality, technical content, style, clarity, and relevance to the works=
+hop. At least one author of each accepted paper is expected to attend the w=
+orkshop.
+The authors of the best accepted papers will be asked to produce an extende=
+d release to be submitted for consideration to either a journal special iss=
+ue or a Springer book.
+
+WORKSHOP ORGANIZERS
+L=E9onard Kwuida, Bern University of Applied Sciences, Switzerland
+leonard.kwuida@bfh.ch<mailto:leonard.kwuida@bfh.ch>
+Rokia Missaoui, Universit=E9 du Qu=E9bec en Outaouais, Canada
+Rokia.missaoui@uqo.ca<mailto:Rokia.missaoui@uqo.ca>
+
+PROGRAM COMMITTEE  - Preliminary List
+
+Talel Abdessalem, T=E9l=E9com ParisTech, France
+Ladjel Bellatreche, Universit=E9 de Poitiers, France
+Sadok Ben Yahia, Tallinn University of Technology, Estonia
+Karell Bertet, Universit=E9 de La Rochelle, France
+Pablo Cordero, University of Malaga, Spain
+Peter Eklund, Deakin University, Geelong, Australia
+Manuel Enciso, University of Malaga, Spain
+Tom Hanika, University of Kassel, Germany
+Mohamed-Hamza Ibrahim, Zagazig University, Egypt
+L=E9onard Kwuida, Bern University of Applied Sciences, Switzerland
+Rokia Missaoui, Universit=E9 du Qu=E9bec en Outaouais (UQO), Canada
+Angel Mora Bonilla, University of Malaga, Spain
+Amedeo Napoli, Universit=E9 de Lorraine, France
+Sergei Obiedkov, National Research University Higher School of Economics, R=
+ussia
+Christian Sacarea, Babes-Bolyai University, Cluj-Napoca, Romania
+Idrissa Sarr, Universit=E9 Cheikh Anta Diop, S=E9n=E9gal
+
+
+
+--_000_986aee6e4759441c9d3e8b3ee995c733uqoca_
+Content-Type: text/html; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1">
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:Courier;
+	panose-1:2 7 4 9 2 2 5 2 4 4;}
+@font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:"Calibri Light";
+	panose-1:2 15 3 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Cambria;
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-fareast-language:EN-US;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:36.0pt;
+	margin-bottom:.0001pt;
+	mso-add-space:auto;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-fareast-language:EN-US;}
+p.MsoListParagraphCxSpFirst, li.MsoListParagraphCxSpFirst, div.MsoListParag=
+raphCxSpFirst
+	{mso-style-type:export-only;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:36.0pt;
+	margin-bottom:.0001pt;
+	mso-add-space:auto;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-fareast-language:EN-US;}
+p.MsoListParagraphCxSpMiddle, li.MsoListParagraphCxSpMiddle, div.MsoListPar=
+agraphCxSpMiddle
+	{mso-style-type:export-only;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:36.0pt;
+	margin-bottom:.0001pt;
+	mso-add-space:auto;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-fareast-language:EN-US;}
+p.MsoListParagraphCxSpLast, li.MsoListParagraphCxSpLast, div.MsoListParagra=
+phCxSpLast
+	{mso-style-type:export-only;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:36.0pt;
+	margin-bottom:.0001pt;
+	mso-add-space:auto;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-fareast-language:EN-US;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+p.paragraphstyle5, li.paragraphstyle5, div.paragraphstyle5
+	{mso-style-name:paragraph_style_5;
+	mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	font-size:12.0pt;
+	font-family:"Times New Roman",serif;
+	mso-fareast-language:EN-CA;}
+span.apple-converted-space
+	{mso-style-name:apple-converted-space;}
+span.style2
+	{mso-style-name:style_2;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;
+	mso-fareast-language:EN-US;}
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+/* List Definitions */
+@list l0
+	{mso-list-id:75444100;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-737552 -1759346488 202113027 202113029 202113025 20=
+2113027 202113029 202113025 202113027 202113029;}
+@list l0:level1
+	{mso-level-start-at:0;
+	mso-level-number-format:bullet;
+	mso-level-text:-;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	font-family:"Cambria",serif;
+	mso-fareast-font-family:Calibri;
+	mso-bidi-font-family:"Times New Roman";}
+@list l0:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	font-family:"Courier New";}
+@list l0:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	font-family:Wingdings;}
+@list l0:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	font-family:Symbol;}
+@list l0:level5
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	font-family:"Courier New";}
+@list l0:level6
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	font-family:Wingdings;}
+@list l0:level7
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	font-family:Symbol;}
+@list l0:level8
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	font-family:"Courier New";}
+@list l0:level9
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	font-family:Wingdings;}
+ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"FR-CA" link=3D"#0563C1" vlink=3D"#954F72">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center"><b><spa=
+n lang=3D"EN-CA" style=3D"font-family:&quot;Calibri Light&quot;,sans-serif"=
+>CALL for PAPERS<o:p></o:p></span></b></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center"><b><spa=
+n lang=3D"EN-CA" style=3D"font-family:&quot;Calibri Light&quot;,sans-serif"=
+><o:p>&nbsp;</o:p></span></b></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center"><b><spa=
+n lang=3D"EN-CA" style=3D"font-family:&quot;Calibri Light&quot;,sans-serif"=
+>BigFCA&#8217;2019
+<o:p></o:p></span></b></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center"><b><spa=
+n lang=3D"EN-CA" style=3D"font-family:&quot;Calibri Light&quot;,sans-serif"=
+><o:p>&nbsp;</o:p></span></b></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center"><i><spa=
+n lang=3D"EN-CA" style=3D"font-family:&quot;Calibri Light&quot;,sans-serif"=
+>Workshop &#8211;
+<b>Formal Concept Analysis at the Big Data Era</b><o:p></o:p></span></i></p=
+>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;backgrou=
+nd:white"><span lang=3D"EN-CA" style=3D"font-size:11.0pt;font-family:&quot;=
+Calibri Light&quot;,sans-serif">In conjunction
+</span><b><span lang=3D"EN-CA" style=3D"font-size:11.0pt;font-family:&quot;=
+Calibri Light&quot;,sans-serif">with
+</span></b><b><span lang=3D"EN-CA" style=3D"font-size:11.0pt;font-family:&q=
+uot;Calibri Light&quot;,sans-serif">ICFCA&#8217;2019</span></b><span lang=
+=3D"EN-CA" style=3D"font-size:11.0pt;font-family:&quot;Calibri Light&quot;,=
+sans-serif">,
+</span><span lang=3D"EN-CA" style=3D"font-size:11.0pt;font-family:&quot;Cal=
+ibri Light&quot;,sans-serif">June 25-28, 2019, Frankfurt, Germany</span><sp=
+an class=3D"MsoHyperlink"><span lang=3D"EN-CA" style=3D"font-size:11.0pt;co=
+lor:windowtext;text-decoration:none"><o:p></o:p></span></span></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center"><span c=
+lass=3D"MsoHyperlink"><span lang=3D"EN-CA" style=3D"font-size:11.0pt;font-f=
+amily:&quot;Calibri Light&quot;,sans-serif;color:#1D419F"><a href=3D"https:=
+//www.informatik.fb2.frankfurt-university.de/~icfca2019/" target=3D"_blank"=
+><span style=3D"color:#1D419F">https://www.informatik.fb2.frankfurt-univers=
+ity.de/~icfca2019/</span></a></span></span><span lang=3D"EN-CA"><o:p></o:p>=
+</span></p>
+<p class=3D"MsoNormal"><b><span lang=3D"EN-US" style=3D"font-size:11.0pt;fo=
+nt-family:&quot;Calibri Light&quot;,sans-serif"><o:p>&nbsp;</o:p></span></b=
+></p>
+<p class=3D"MsoNormal"><b><span lang=3D"EN-US" style=3D"font-size:11.0pt;fo=
+nt-family:&quot;Calibri Light&quot;,sans-serif"><o:p>&nbsp;</o:p></span></b=
+></p>
+<p class=3D"MsoNormal"><b><span lang=3D"EN-US" style=3D"font-size:11.0pt;fo=
+nt-family:&quot;Calibri Light&quot;,sans-serif">OVERVIEW</span></b><b><span=
+ lang=3D"EN-CA" style=3D"font-size:11.0pt;font-family:&quot;Calibri Light&q=
+uot;,sans-serif"><o:p></o:p></span></b></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-CA" style=3D"font-size:11.0pt;font-=
+family:&quot;Calibri Light&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal" style=3D"text-align:justify"><span lang=3D"EN-CA" st=
+yle=3D"font-family:&quot;Calibri Light&quot;,sans-serif">With the advent of
+<i>Big Data</i> and the increasing number of studies towards their manageme=
+nt and analysis, it becomes important to get a better insight into existing=
+ studies, trends and challenges and rely on promising theories such as
+<i>Formal Concept Analysis</i> together with recently developed technologie=
+s to design new, accurate and scalable solutions for big data analytics.<o:=
+p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"text-align:justify;text-indent:14.2pt"><spa=
+n lang=3D"EN-CA" style=3D"font-family:&quot;Calibri Light&quot;,sans-serif"=
+>Big Data (BD) are very large and possibly heterogeneous and unstructured d=
+ata collections defined by at least 7 V&#8217;s:
+<b>V</b>olume (<i>e.g.,</i> zettabytes), <b>V</b>elocity (<i>i.e., </i>evol=
+ving and stream data),
+<b>V</b>ariety, (<i>e.g.,</i> text, image, video), <b>V</b>ariability (i.e.=
+, changes in the data flow rates),
+<b>V</b>eracity (accuracy), <b>Vi</b>sualization, and <b>V</b>alue (<i>i.e.=
+,</i> extracted information and knowledge).&nbsp;
+<o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"text-align:justify;text-indent:14.2pt"><spa=
+n lang=3D"EN-CA" style=3D"font-family:&quot;Calibri Light&quot;,sans-serif"=
+>Formal Concept Analysis (FCA) is an important formalism that is associated=
+ with a variety of research areas such as lattice
+ theory, knowledge representation, data mining, machine learning, and seman=
+tic Web, to name a few. It is successfully exploited in an increasing numbe=
+r of application domains such as software engineering, information retrieva=
+l, social network analysis, and
+ bioinformatics. The mathematical power of FCA comes from its concept latti=
+ce formalization in which each element in the lattice captures a formal con=
+cept while the whole structure represents a conceptual hierarchy that offer=
+s browsing, clustering and rule
+ mining.<o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"text-align:justify;text-indent:14.2pt"><spa=
+n lang=3D"EN-CA" style=3D"font-family:&quot;Calibri Light&quot;,sans-serif"=
+>Although there are&nbsp; significant theoretical and practical contributio=
+ns within the FCA community in a variety of topics, including
+ the design and implementation of efficient algorithms and tools for concep=
+t lattice computation and exploitation, the goal of this workshop is to pin=
+point and examine a set of important and relevant research directions in Bi=
+g Data management, and see where
+ the FCA community can very likely make significant contributions. As an ex=
+ample, we expect to have fruitful discussions about how Formal Concept Anal=
+ysis and some of its extensions can be exploited, revisited and coupled wit=
+h recent processing paradigms (e.g.,
+<i>MapReduce</i> and <i>Hadoop</i>) to maximize the benefits of Big Data th=
+rough their analysis.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-CA" style=3D"font-family:&quot;Cali=
+bri Light&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><b><span lang=3D"EN-US" style=3D"font-family:&quot;C=
+alibri Light&quot;,sans-serif">TOPICS OF INTEREST<o:p></o:p></span></b></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-CA" style=3D"font-family:&quot;Cali=
+bri Light&quot;,sans-serif">The scope of BigFCA&#8217;2019 includes, but is=
+ not limited to the following topics:<o:p></o:p></span></p>
+<p class=3D"MsoListParagraphCxSpFirst" style=3D"text-indent:-18.0pt;mso-lis=
+t:l0 level1 lfo1">
+<![if !supportLists]><span lang=3D"EN-CA" style=3D"font-family:&quot;Cambri=
+a&quot;,serif"><span style=3D"mso-list:Ignore">-<span style=3D"font:7.0pt &=
+quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;
+</span></span></span><![endif]><span lang=3D"EN-CA" style=3D"font-family:&q=
+uot;Calibri Light&quot;,sans-serif">Applications of - and experiences with =
+- FCA for big data analytics<o:p></o:p></span></p>
+<p class=3D"MsoListParagraphCxSpMiddle" style=3D"text-indent:-18.0pt;mso-li=
+st:l0 level1 lfo1">
+<![if !supportLists]><span lang=3D"EN-CA" style=3D"font-family:&quot;Cambri=
+a&quot;,serif"><span style=3D"mso-list:Ignore">-<span style=3D"font:7.0pt &=
+quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;
+</span></span></span><![endif]><span lang=3D"EN-CA" style=3D"font-family:&q=
+uot;Calibri Light&quot;,sans-serif">Challenges of the V&#8217;s of big data=
+<o:p></o:p></span></p>
+<p class=3D"MsoListParagraphCxSpMiddle" style=3D"text-indent:-18.0pt;mso-li=
+st:l0 level1 lfo1">
+<![if !supportLists]><span lang=3D"EN-CA" style=3D"font-family:&quot;Cambri=
+a&quot;,serif"><span style=3D"mso-list:Ignore">-<span style=3D"font:7.0pt &=
+quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;
+</span></span></span><![endif]><span lang=3D"EN-CA" style=3D"font-family:&q=
+uot;Calibri Light&quot;,sans-serif">Stream data management<o:p></o:p></span=
+></p>
+<p class=3D"MsoListParagraphCxSpMiddle" style=3D"text-indent:-18.0pt;mso-li=
+st:l0 level1 lfo1">
+<![if !supportLists]><span lang=3D"EN-CA" style=3D"font-family:&quot;Cambri=
+a&quot;,serif"><span style=3D"mso-list:Ignore">-<span style=3D"font:7.0pt &=
+quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;
+</span></span></span><![endif]><span lang=3D"EN-CA" style=3D"font-family:&q=
+uot;Calibri Light&quot;,sans-serif">Data decomposition and reduction<o:p></=
+o:p></span></p>
+<p class=3D"MsoListParagraphCxSpMiddle" style=3D"text-indent:-18.0pt;mso-li=
+st:l0 level1 lfo1">
+<![if !supportLists]><span lang=3D"EN-CA" style=3D"font-family:&quot;Cambri=
+a&quot;,serif"><span style=3D"mso-list:Ignore">-<span style=3D"font:7.0pt &=
+quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;
+</span></span></span><![endif]><span lang=3D"EN-CA" style=3D"font-family:&q=
+uot;Calibri Light&quot;,sans-serif">Distributed and parallel algorithms<o:p=
+></o:p></span></p>
+<p class=3D"MsoListParagraphCxSpMiddle" style=3D"text-indent:-18.0pt;mso-li=
+st:l0 level1 lfo1">
+<![if !supportLists]><span lang=3D"EN-CA" style=3D"font-family:&quot;Cambri=
+a&quot;,serif"><span style=3D"mso-list:Ignore">-<span style=3D"font:7.0pt &=
+quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;
+</span></span></span><![endif]><i><span lang=3D"EN-CA" style=3D"font-family=
+:&quot;Calibri Light&quot;,sans-serif">MapReduce, Hadoop</span></i><span la=
+ng=3D"EN-CA" style=3D"font-family:&quot;Calibri Light&quot;,sans-serif"> an=
+d
+<i>Spark</i> technologies<o:p></o:p></span></p>
+<p class=3D"MsoListParagraphCxSpLast" style=3D"text-indent:-18.0pt;mso-list=
+:l0 level1 lfo1">
+<![if !supportLists]><span lang=3D"FR" style=3D"font-family:&quot;Cambria&q=
+uot;,serif"><span style=3D"mso-list:Ignore">-<span style=3D"font:7.0pt &quo=
+t;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;
+</span></span></span><![endif]><span lang=3D"EN-CA" style=3D"font-family:&q=
+uot;Calibri Light&quot;,sans-serif">Efficient data structures.</span><span =
+lang=3D"FR" style=3D"font-family:&quot;Calibri Light&quot;,sans-serif"><o:p=
+></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-CA" style=3D"font-size:11.0pt;font-=
+family:&quot;Calibri Light&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><b><span lang=3D"EN-CA" style=3D"font-size:11.0pt;fo=
+nt-family:&quot;Calibri Light&quot;,sans-serif">IMPORTANT DATES<o:p></o:p><=
+/span></b></p>
+<p class=3D"MsoNormal"><span class=3D"style2"><span lang=3D"FR" style=3D"co=
+lor:black"><o:p>&nbsp;</o:p></span></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-CA" style=3D"font-size:11.0pt;font-=
+family:&quot;Calibri Light&quot;,sans-serif;background:white">Submission of=
+ abstracts:</span><span class=3D"apple-converted-space"><span lang=3D"EN-CA=
+" style=3D"font-size:11.0pt;font-family:&quot;Calibri Light&quot;,sans-seri=
+f;background:white">&nbsp;</span></span><span lang=3D"EN-CA" style=3D"font-=
+size:11.0pt;font-family:&quot;Calibri Light&quot;,sans-serif;background:whi=
+te">
+<b>March 20, 2019</b><br>
+Submission of full papers:<span class=3D"apple-converted-space">&nbsp;</spa=
+n> <b>March 27, 2019</b><br>
+Notification of acceptance:<span class=3D"apple-converted-space">&nbsp;</sp=
+an> <b>April 25, 2019</b><br>
+Camera ready copies due:<span class=3D"apple-converted-space">&nbsp;</span>=
+ <b>May 20, 2019</b></span><span lang=3D"EN-CA" style=3D"background:white">=
+<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-CA" style=3D"font-size:11.0pt;font-=
+family:&quot;Calibri Light&quot;,sans-serif;background:white">Workshop date=
+:</span><span class=3D"apple-converted-space"><span lang=3D"EN-CA" style=3D=
+"font-size:11.0pt;font-family:&quot;Calibri Light&quot;,sans-serif;backgrou=
+nd:white">&nbsp;</span></span><b><span lang=3D"EN-CA" style=3D"font-size:11=
+.0pt;font-family:&quot;Calibri Light&quot;,sans-serif;background:white">TBA=
+</span></b><span lang=3D"EN-CA" style=3D"font-size:11.0pt;font-family:&quot=
+;Calibri Light&quot;,sans-serif;background:white"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-CA" style=3D"font-size:11.0pt;font-=
+family:&quot;Calibri Light&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><b><span lang=3D"EN-US" style=3D"font-size:11.0pt;fo=
+nt-family:&quot;Calibri Light&quot;,sans-serif">SUBMISSION AND PUBLICATION<=
+o:p></o:p></span></b></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:11.0pt;font-=
+family:&quot;Calibri Light&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"paragraphstyle5" style=3D"margin:0cm;margin-bottom:.0001pt;text=
+-align:justify;mso-line-height-alt:8.0pt;background:white">
+<span lang=3D"EN-CA" style=3D"font-size:11.0pt;font-family:&quot;Calibri Li=
+ght&quot;,sans-serif">All submissions of
+<b>up to twelve pages</b> must be done using the <i>EasyChair</i> system of=
+ the workshop (see
+<span class=3D"MsoHyperlink"><a href=3D"https://easychair.org/conferences/?=
+conf=3Dbigfca2019">https://easychair.org/conferences/?conf=3Dbigfca2019</a>=
+</span>)<b>
+</b>and follow the author guidelines for ICFCA&#8217;2019, <i>i.e.,</i> the=
+ formatting instructions for the Springer LNCS style (<span class=3D"MsoHyp=
+erlink"><a href=3D"https://www.springer.com/fr/computer-science/lncs/confer=
+ence-proceedings-guidelines">https://www.springer.com/fr/computer-science/l=
+ncs/conference-proceedings-guidelines</a></span>).&nbsp;
+<b><o:p></o:p></b></span></p>
+<p class=3D"paragraphstyle5" style=3D"margin:0cm;margin-bottom:.0001pt;text=
+-align:justify;mso-line-height-alt:8.0pt;background:white">
+<span lang=3D"EN-CA" style=3D"font-size:11.0pt;font-family:&quot;Calibri Li=
+ght&quot;,sans-serif">All the accepted papers will be printed in the CEUR W=
+orkshop Proceedings.
+</span><span lang=3D"EN-US" style=3D"font-size:11.0pt;font-family:&quot;Cal=
+ibri Light&quot;,sans-serif">Papers will be evaluated by three reviewers ac=
+cording to their significance, originality, technical content, style, clari=
+ty, and relevance to the workshop. At least one
+ author of each accepted paper is expected to attend the workshop. </span><=
+span lang=3D"EN-CA" style=3D"font-size:11.0pt;font-family:&quot;Calibri Lig=
+ht&quot;,sans-serif"><o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"text-align:justify"><span lang=3D"EN-US" st=
+yle=3D"font-size:11.0pt;font-family:&quot;Calibri Light&quot;,sans-serif">T=
+he authors of the best accepted papers will be asked to produce an extended=
+ release to be submitted for consideration to either
+ a journal special issue or a Springer book. <o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-CA" style=3D"font-size:11.0pt;font-=
+family:&quot;Calibri Light&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal" style=3D"text-autospace:none"><b><span lang=3D"EN-CA=
+" style=3D"font-size:11.0pt;font-family:&quot;Calibri Light&quot;,sans-seri=
+f">WORKSHOP ORGANIZERS<o:p></o:p></span></b></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-CA" style=3D"font-size:11.0pt;font-=
+family:&quot;Calibri Light&quot;,sans-serif"></span><span lang=3D"EN-CA" st=
+yle=3D"font-size:11.0pt;font-family:&quot;Calibri Light&quot;,sans-serif"><=
+o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-CA" style=3D"font-size:11.0pt;font-=
+family:&quot;Calibri Light&quot;,sans-serif">L=E9onard Kwuida,
+<i>Bern University of Applied Sciences</i>, Switzerland<o:p></o:p></span></=
+p>
+<p class=3D"MsoNormal"><span class=3D"MsoHyperlink"><span style=3D"font-siz=
+e:11.0pt;font-family:&quot;Calibri Light&quot;,sans-serif"><a href=3D"mailt=
+o:leonard.kwuida@bfh.ch">leonard.kwuida@bfh.ch</a></span></span><span style=
+=3D"font-size:11.0pt;font-family:&quot;Calibri Light&quot;,sans-serif">
+<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt;font-family:&quot;Ca=
+libri Light&quot;,sans-serif">Rokia Missaoui, Universit=E9 du Qu=E9bec en O=
+utaouais, Canada<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span class=3D"MsoHyperlink"><span lang=3D"EN-CA" st=
+yle=3D"font-size:11.0pt;font-family:&quot;Calibri Light&quot;,sans-serif"><=
+a href=3D"mailto:Rokia.missaoui@uqo.ca">Rokia.missaoui@uqo.ca</a></span></s=
+pan><u><span lang=3D"EN-CA" style=3D"font-size:11.0pt;font-family:&quot;Cal=
+ibri Light&quot;,sans-serif;color:#0563C1"><o:p></o:p></span></u></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-CA" style=3D"font-size:11.0pt;font-=
+family:&quot;Calibri Light&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal" style=3D"page-break-after:avoid;text-autospace:none"=
+><b><span lang=3D"EN-CA" style=3D"font-size:11.0pt;font-family:&quot;Calibr=
+i Light&quot;,sans-serif">PROGRAM COMMITTEE</span></b><span lang=3D"EN-CA" =
+style=3D"font-size:11.0pt;font-family:&quot;Calibri Light&quot;,sans-serif"=
+>&nbsp;
+ - <u>Preliminary List</u><o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"page-break-after:avoid"><span lang=3D"EN-CA=
+" style=3D"font-size:11.0pt;font-family:&quot;Calibri Light&quot;,sans-seri=
+f"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-CA" style=3D"font-size:11.0pt;font-=
+family:&quot;Calibri Light&quot;,sans-serif">Talel Abdessalem, T=E9l=E9com =
+ParisTech, France<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"FR" style=3D"font-size:11.0pt;font-fam=
+ily:&quot;Calibri Light&quot;,sans-serif">Ladjel Bellatreche, Universit=E9 =
+de Poitiers, France<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-CA" style=3D"font-size:11.0pt;font-=
+family:&quot;Calibri Light&quot;,sans-serif">Sadok Ben Yahia, Tallinn Unive=
+rsity of Technology, Estonia<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"FR" style=3D"font-size:11.0pt;font-fam=
+ily:&quot;Calibri Light&quot;,sans-serif">Karell Bertet, Universit=E9 de La=
+ Rochelle, France<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-CA" style=3D"font-size:11.0pt;font-=
+family:&quot;Calibri Light&quot;,sans-serif">Pablo Cordero, University of M=
+alaga, Spain<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-CA" style=3D"font-size:11.0pt;font-=
+family:&quot;Calibri Light&quot;,sans-serif">Peter Eklund, Deakin Universit=
+y, Geelong, Australia<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-CA" style=3D"font-size:11.0pt;font-=
+family:&quot;Calibri Light&quot;,sans-serif">Manuel Enciso, University of M=
+alaga, Spain<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-CA" style=3D"font-size:11.0pt;font-=
+family:&quot;Calibri Light&quot;,sans-serif">Tom Hanika, University of Kass=
+el, Germany<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-CA" style=3D"font-size:11.0pt;font-=
+family:&quot;Calibri Light&quot;,sans-serif">Mohamed-Hamza Ibrahim, Zagazig=
+ University, Egypt<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-CA" style=3D"font-size:11.0pt;font-=
+family:&quot;Calibri Light&quot;,sans-serif">L=E9onard Kwuida, Bern Univers=
+ity of Applied Sciences, Switzerland<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"FR" style=3D"font-size:11.0pt;font-fam=
+ily:&quot;Calibri Light&quot;,sans-serif">Rokia Missaoui, Universit=E9 du Q=
+u=E9bec en Outaouais (UQO), Canada<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-CA" style=3D"font-size:11.0pt;font-=
+family:&quot;Calibri Light&quot;,sans-serif">Angel Mora Bonilla, University=
+ of Malaga, Spain<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"FR" style=3D"font-size:11.0pt;font-fam=
+ily:&quot;Calibri Light&quot;,sans-serif">Amedeo Napoli, Universit=E9 de Lo=
+rraine, France<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-CA" style=3D"font-size:11.0pt;font-=
+family:&quot;Calibri Light&quot;,sans-serif">Sergei Obiedkov, National Rese=
+arch University Higher School of Economics, Russia<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-CA" style=3D"font-size:11.0pt;font-=
+family:&quot;Calibri Light&quot;,sans-serif">Christian Sacarea, Babes-Bolya=
+i University, Cluj-Napoca, Romania<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"FR" style=3D"font-size:11.0pt;font-fam=
+ily:&quot;Calibri Light&quot;,sans-serif">Idrissa Sarr, Universit=E9 Cheikh=
+ Anta Diop, S=E9n=E9gal<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"FR" style=3D"font-size:11.0pt;font-fam=
+ily:&quot;Calibri Light&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"FR" style=3D"font-size:11.0pt"><o:p>&n=
+bsp;</o:p></span></p>
+</div>
+</body>
+</html>
+
+--_000_986aee6e4759441c9d3e8b3ee995c733uqoca_--
+

@@ -1,0 +1,459 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (bouncesmtp1.u12.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 03C6914017E3
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed,  5 Jul 2023 09:13:23 +0200 (CEST)
+Received: from mx1.localdomain (MX1.univ-nantes.fr [193.52.101.135])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id 0010C7064
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed,  5 Jul 2023 09:13:22 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.localdomain (Postfix) with ESMTP id ECB2912000C
+	for <liste-egc@polytech.univ-nantes.fr>; Wed,  5 Jul 2023 09:13:22 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 1.43
+X-Spam-Level: *
+X-Spam-Status: No, score=1.43 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	HTTP_ESCAPED_HOST=0.1, MR_NOT_ATTRIBUTED_IP=0.2, NO_RDNS2=0.01,
+	RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_SORBS=1, RCVD_IN_WSFF=0.01,
+	SPF_HELO_NONE=0.001, SPF_PASS=-0.001, T_KAM_HTML_FONT_INVALID=0.01,
+	UN_PHISHING_PW=0.1, UN_PHISHING_WEBMAIL=0.1] autolearn=disabled
+X-CRM114-Status: UNSURE ( 4.0209 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=unicaen.fr
+Received: from mx1.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Rujm7bNLOEok for <liste-egc@polytech.univ-nantes.fr>;
+	Wed,  5 Jul 2023 09:13:20 +0200 (CEST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=194.199.107.75; helo=mailout.unicaen.fr; envelope-from=bruno.cremilleux@unicaen.fr; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=none dis=none) header.from=unicaen.fr
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=bruno.cremilleux@unicaen.fr
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (1024-bit key; unprotected) header.d=unicaen.fr header.i=@unicaen.fr header.b="vK/OJ68R";
+	dkim-atps=neutral
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mailout.unicaen.fr (mailout.unicaen.fr [194.199.107.75])
+	by mx1.localdomain (Postfix) with ESMTP id 7DB71120040
+	for <liste-egc@polytech.univ-nantes.fr>; Wed,  5 Jul 2023 09:13:20 +0200 (CEST)
+Received: from wzproxy1.unicaen.fr (wzproxy1.unicaen.fr [193.55.120.52])
+	by mailout.unicaen.fr (Postfix) with ESMTP id 32CC7821DB;
+	Wed,  5 Jul 2023 09:13:20 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=unicaen.fr; s=mail;
+	t=1688541200; bh=HHmVUdCjmXqZRZN6lafRUgIEQoTZ4nrHSf/vWLaXOWI=;
+	h=Date:From:To:Subject:From;
+	b=vK/OJ68R58Q6H2EyfmZfWZRSEj3T0AcidcfA8WTjjQYTYNCyl0kbE7jqkoTzxsUwd
+	 QnqyEsduJflEONhEmzE0L1xQaEybJHjjzfeDH7HHp0/Twx9oUbzSmzlhvWgkyYMy+f
+	 cWnuowywrSP3uXk55lkmHd1DVgIKAgflWU2RAJAY=
+Received: from localhost (localhost [127.0.0.1])
+	by wzproxy1.unicaen.fr (Postfix) with ESMTP id 289F5668C7;
+	Wed,  5 Jul 2023 09:13:20 +0200 (CEST)
+X-Amavis-Modified: Mail body modified (using disclaimer) - wzproxy1.unicaen.fr
+X-Virus-Scanned: amavisd-new at wzproxy1.unicaen.fr
+Received: from wzproxy1.unicaen.fr ([127.0.0.1])
+	by localhost (wzproxy1.unicaen.fr [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id A0cTwkSg6xzz; Wed,  5 Jul 2023 09:13:20 +0200 (CEST)
+Received: from lsmtp2.unicaen.fr (lsmtp2.unicaen.fr [193.55.120.33])
+	by wzproxy1.unicaen.fr (Postfix) with ESMTP id E988266844;
+	Wed,  5 Jul 2023 09:13:19 +0200 (CEST)
+Received: from wzstore5.unicaen.fr (wzstore5.unicaen.fr [10.14.129.119])
+	by lsmtp2.unicaen.fr (Postfix) with ESMTP id C8040C0746;
+	Wed,  5 Jul 2023 09:13:12 +0200 (CEST)
+Date: Wed, 5 Jul 2023 09:13:12 +0200 (CEST)
+From: Bruno Cremilleux <bruno.cremilleux@unicaen.fr>
+To: bull-i3 <bull-i3@irit.fr>, proml@listes.univ-rennes.fr, 
+	liste-egc <liste-egc@polytech.univ-nantes.fr>, 
+	bull-ia <bull-ia@gdria.fr>, info-ic <info-ic@listes.irisa.fr>, 
+	gazettebd3@univ-grenoble-alpes.fr, 
+	annonces@listes.societe-informatique-de-france.fr
+Message-ID: <1017274099.21129891.1688541192652.JavaMail.zimbra@unicaen.fr>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="=_fa114328-f043-4d77-9033-40aa3f8fcee6"
+X-Originating-IP: [90.22.54.72]
+X-Mailer: Zimbra 8.8.15_GA_4545 (ZimbraWebClient - FF114 (Linux)/8.8.15_GA_4545)
+Thread-Index: Mdj/hr9mVaMj3ALCzYb6zlD7/2IR3A==
+Thread-Topic: Appel =?utf-8?Q?=C3=A0_Ateliers?= 2024 du GDR MaDICS
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Appel =?UTF-8?Q?=C3=A0?= Ateliers 2024 du GDR MaDICS
+
+--=_fa114328-f043-4d77-9033-40aa3f8fcee6
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+
+
+Le GDR MaDICS ( [ https://webmail.unicaen.fr/%20 | https://www.madics.fr/ ]=
+ [ https://webmail.unicaen.fr/%20 | ) ] est un Groupement de Recherche du C=
+NRS cr=C3=A9=C3=A9 en 2015. Il propose un =C3=A9cosyst=C3=A8me pour promouv=
+oir et animer des activit=C3=A9s de recherche interdisciplinaires en Scienc=
+es des Donn=C3=A9es .=20
+
+
+Les activit=C3=A9s de MaDICS sont structur=C3=A9es =C3=A0 travers des Actio=
+ns . L=E2=80=99objectif d=E2=80=99une Action est d'=C3=AAtre un lieu d=E2=
+=80=99animation associant des acteurs (producteurs/consommateurs de donn=C3=
+=A9es, scientifiques) issus de domaines diff=C3=A9rents. Il s'agit de promo=
+uvoir et/ou amplifier des =C3=A9changes autour de probl=C3=A9matiques de re=
+cherche interdisciplinaires positionn=C3=A9es dans un continuum =C2=AB des =
+donn=C3=A9es aux connaissances et =C3=A0 la prise de d=C3=A9cision =C2=BB. =
+La liste des Actions en cours est accessible ici : [ https://webmail.unicae=
+n.fr/ | http://www.madics.fr/actions/ ]=20
+
+
+
+Construire une Action MaDICS requiert une bonne connaissance des objectifs =
+et de l=E2=80=99=C3=A9cosyst=C3=A8me interdisciplinaire de notre GDR pour d=
+=C3=A9terminer un programme de travail et identifier les acteurs n=C3=A9ces=
+saires. Une Action d=C3=A9marre ainsi toujours sous la forme d=E2=80=99un A=
+telier durant un an au bout duquel une Action de 2 ans, renouvelable une fo=
+is, pourra =C3=AAtre propos=C3=A9e. L=E2=80=99objectif d=E2=80=99un Atelier=
+ est donc de cr=C3=A9er une premi=C3=A8re communaut=C3=A9 de chercheurs dan=
+s les th=C3=A9matiques de l=E2=80=99Action et de d=C3=A9finir en collaborat=
+ion avec les responsables du GDR, les contours et attendus de cette Action.=
+=20
+
+
+
+
+Un Atelier, pr=C3=A9figurant une Action MaDICS, se devra de recouvrir une p=
+robl=C3=A9matique de recherche partag=C3=A9e par une communaut=C3=A9 de che=
+rcheurs et de partenaires de diverses disciplines sur des masses de donn=C3=
+=A9es scientifiques bien identifi=C3=A9es. Un Atelier (comme une Action) es=
+t un lieu d=E2=80=99animation coordonnant diverses activit=C3=A9s (journ=C3=
+=A9es th=C3=A9matiques ou scientifiques, =C3=A9coles d=E2=80=99=C3=A9t=C3=
+=A9, =C3=A9tudes prospectives, comparaison de m=C3=A9thodes et d=E2=80=99al=
+gorithmes, d=C3=A9fis scientifiques, etc.) entre sp=C3=A9cialistes des donn=
+=C3=A9es dans divers domaines scientifiques. On d=C3=A9crira les donn=C3=A9=
+es produites ou consomm=C3=A9es dont la nature est clairement identifi=C3=
+=A9e et qui seront au c=C5=93ur de l=E2=80=99Action envisag=C3=A9e. Il ne s=
+=E2=80=99agit pas de mettre =C3=A0 disposition de la communaut=C3=A9 de tel=
+les donn=C3=A9es, mais plut=C3=B4t d=E2=80=99identifier et d=E2=80=99=C3=A9=
+changer sur les besoins et les attentes th=C3=A9matiques et sur les verrous=
+ scientifiques et techniques associ=C3=A9s. Un Atelier (comme une Action) n=
+e peut donc qu=E2=80=99=C3=AAtre interdisciplinaire, et de fait, il est sou=
+s la responsabilit=C3=A9 de personnes issues de domaines diff=C3=A9rents (S=
+TIC, SHS, Vie et Sant=C3=A9=E2=80=A6).=20
+
+
+
+
+Des activit=C3=A9s en collaboration avec d=E2=80=99autres instances telles =
+que des grands instruments, centres de calcul, autres organismes, autres GD=
+R pourront =C3=AAtre propos=C3=A9es.=20
+
+
+
+
+Qui peut soumettre =C3=A0 l=E2=80=99appel =C3=A0 Atelier MaDICS ? Tout grou=
+pe de 2 ou 3 personnes concern=C3=A9es par les th=C3=A9matiques MaDICS ind=
+=C3=A9pendamment de leur appartenance ou non =C3=A0 un institut du CNRS. N=
+=C3=A9anmoins, au moins un des responsables de l=E2=80=99Atelier doit =C3=
+=AAtre membre d=E2=80=99une UMR CNRS. De plus, si cette personne est =E2=80=
+=9Cinformaticienne=E2=80=9D, elle devra =C3=AAtre membre d=E2=80=99une UMR =
+INS2I. Au moins 2 personnes doivent venir de domaines diff=C3=A9rents (STIC=
+, SHS, Vie et Sant=C3=A9=E2=80=A6).=20
+
+
+
+
+Comment soumettre ? La proposition d=E2=80=99un Atelier se fait au travers =
+du formulaire (accessible uniquement apr=C3=A8s connexion au site) :=20
+
+http://www.madics.fr/ateliers/actions-appel/proposition-datelier/=20
+
+
+
+
+
+Pour quel r=C3=A9sultat ? Si votre proposition est retenue par le comit=C3=
+=A9 de direction du GDR, elle d=C3=A9butera au 1er janvier 2023. Le GDR met=
+tra =C3=A0 votre disposition tous les moyens de communication et de diffusi=
+on n=C3=A9cessaires ainsi qu=E2=80=99un budget d=E2=80=99animation propre d=
+e 1 500 =E2=82=AC (pour m=C3=A9moire, une Action dispose d=E2=80=99un budge=
+t de 3 000 =E2=82=AC par an).=20
+
+
+
+
+Dates importantes=20
+
+Soumission : 9 novembre 2023=20
+
+Retour vers la mi-d=C3=A9cembre 2023=20
+
+D=C3=A9marrage : 1er janvier 2024=20
+
+
+
+
+N=E2=80=99h=C3=A9sitez pas =C3=A0 contacter Bruno Cr=C3=A9milleux ( [ mailt=
+o:bruno.cremilleux@unicaen.fr | bruno.cremilleux@unicaen.fr ] ) et/ou Sarah=
+ Cohen-Boulakia ( [ mailto:sarah.cohen-boulakia@universite-paris-saclay.fr =
+| sarah.cohen-boulakia@universite-paris-saclay.fr ] ) pour tout renseigneme=
+nt compl=C3=A9mentaire.=20
+
+
+
+
+=0A
+--=_fa114328-f043-4d77-9033-40aa3f8fcee6
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><body><div style=3D"font-family: arial, helvetica, sans-serif; font-s=
+ize: 12pt; color: #000000"><div data-marker=3D"__QUOTED_TEXT__"><div style=
+=3D"font-family: arial, helvetica, sans-serif; font-size: 12pt; color: #000=
+000"><div><p dir=3D"ltr" style=3D"line-height: 1.2; text-align: justify; ma=
+rgin: 0px;" id=3D"docs-internal-guid-45a0ae78-7fff-9db9-01b8-828a309c4b8e">=
+<span style=3D"font-size: 12pt; font-family: 'Liberation Serif'; color: #00=
+0000; background-color: transparent; font-weight: 400; font-style: normal; =
+font-variant: normal; text-decoration: none; vertical-align: baseline; whit=
+e-space: pre-wrap;">Le GDR MaDICS (</span><a data-mce-href=3D"%20" href=3D"=
+%20"><span style=3D"font-size: 12pt; font-family: 'Liberation Serif'; color=
+: #1155cc; background-color: transparent; font-weight: 400; font-style: nor=
+mal; font-variant: normal; text-decoration: underline; -webkit-text-decorat=
+ion-skip: none; text-decoration-skip-ink: none; vertical-align: baseline; w=
+hite-space: pre-wrap;">https://www.madics.fr/</span></a><span style=3D"font=
+-size: 12pt; font-family: 'Liberation Serif'; color: #000000; background-co=
+lor: transparent; font-weight: 400; font-style: normal; font-variant: norma=
+l; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;"=
+><a data-mce-href=3D"%20" href=3D"%20">)</a> est un Groupement de Recherche=
+ du CNRS cr=C3=A9=C3=A9 en 2015. Il propose un =C3=A9cosyst=C3=A8me pour pr=
+omouvoir et animer des activit=C3=A9s de recherche interdisciplinaires en <=
+/span><span style=3D"font-size: 12pt; font-family: 'Liberation Serif'; colo=
+r: #000000; background-color: transparent; font-weight: bold; font-style: n=
+ormal; font-variant: normal; text-decoration: none; vertical-align: baselin=
+e; white-space: pre-wrap;">Sciences des Donn=C3=A9es</span><span style=3D"f=
+ont-size: 12pt; font-family: 'Liberation Serif'; color: #000000; background=
+-color: transparent; font-weight: 400; font-style: normal; font-variant: no=
+rmal; text-decoration: none; vertical-align: baseline; white-space: pre-wra=
+p;">.&nbsp;</span></p><br><p dir=3D"ltr" style=3D"line-height: 1.2; text-al=
+ign: justify; margin: 0px;"><span style=3D"font-size: 12pt; font-family: 'L=
+iberation Serif'; color: #000000; background-color: transparent; font-weigh=
+t: 400; font-style: normal; font-variant: normal; text-decoration: none; ve=
+rtical-align: baseline; white-space: pre-wrap;">Les activit=C3=A9s de MaDIC=
+S sont structur=C3=A9es =C3=A0 travers des </span><span style=3D"font-size:=
+ 12pt; font-family: 'Liberation Serif'; color: #000000; background-color: t=
+ransparent; font-weight: bold; font-style: normal; font-variant: normal; te=
+xt-decoration: none; vertical-align: baseline; white-space: pre-wrap;">Acti=
+ons</span><span style=3D"font-size: 12pt; font-family: 'Liberation Serif'; =
+color: #000000; background-color: transparent; font-weight: 400; font-style=
+: normal; font-variant: normal; text-decoration: none; vertical-align: base=
+line; white-space: pre-wrap;">. L=E2=80=99objectif d=E2=80=99une Action est=
+ d'=C3=AAtre un lieu d=E2=80=99animation associant des acteurs (producteurs=
+/consommateurs de donn=C3=A9es, scientifiques) issus de domaines diff=C3=A9=
+rents. Il s'agit de promouvoir et/ou amplifier des =C3=A9changes autour de =
+probl=C3=A9matiques de recherche interdisciplinaires positionn=C3=A9es dans=
+ un continuum =C2=AB des donn=C3=A9es aux connaissances et =C3=A0 la prise =
+de d=C3=A9cision =C2=BB. La liste des Actions en cours est&nbsp; accessible=
+ ici : </span><a href=3D" " style=3D"text-decoration: none;" target=3D"_bla=
+nk" data-mce-href=3D" " rel=3D"noopener"><span style=3D"font-size: 12pt; fo=
+nt-family: 'Liberation Serif'; color: #1155cc; background-color: transparen=
+t; font-weight: 400; font-style: normal; font-variant: normal; text-decorat=
+ion: underline; -webkit-text-decoration-skip: none; text-decoration-skip-in=
+k: none; vertical-align: baseline; white-space: pre-wrap;">http://www.madic=
+s.fr/actions/</span></a><br></p><br><p dir=3D"ltr" style=3D"line-height: 1.=
+2; text-align: justify; margin: 0px;"><span style=3D"font-size: 12pt; font-=
+family: 'Liberation Serif'; color: #000000; background-color: transparent; =
+font-weight: 400; font-style: normal; font-variant: normal; text-decoration=
+: none; vertical-align: baseline; white-space: pre-wrap;">Construire une Ac=
+tion MaDICS requiert une bonne connaissance des objectifs et de&nbsp; l=E2=
+=80=99=C3=A9cosyst=C3=A8me interdisciplinaire de notre GDR pour d=C3=A9term=
+iner un programme de travail et identifier les acteurs n=C3=A9cessaires. Un=
+e Action d=C3=A9marre ainsi toujours sous la forme d=E2=80=99un Atelier dur=
+ant un an au bout duquel une Action de 2 ans, renouvelable une fois, pourra=
+ =C3=AAtre propos=C3=A9e. L=E2=80=99objectif d=E2=80=99un Atelier est donc =
+de cr=C3=A9er une premi=C3=A8re communaut=C3=A9 de chercheurs dans les th=
+=C3=A9matiques de l=E2=80=99Action et de d=C3=A9finir en collaboration avec=
+ les responsables du GDR, les contours et attendus de cette Action.</span><=
+/p><p dir=3D"ltr" style=3D"line-height: 1.2; text-align: justify; margin: 0=
+px;"><span style=3D"font-size: 12pt; font-family: 'Liberation Serif'; color=
+: #000000; background-color: transparent; font-weight: 400; font-style: nor=
+mal; font-variant: normal; text-decoration: none; vertical-align: baseline;=
+ white-space: pre-wrap;"><br></span></p><p dir=3D"ltr" style=3D"line-height=
+: 1.2; text-align: justify; margin: 0px;"><span style=3D"font-size: 12pt; f=
+ont-family: 'Liberation Serif'; color: #000000; background-color: transpare=
+nt; font-weight: 400; font-style: normal; font-variant: normal; text-decora=
+tion: none; vertical-align: baseline; white-space: pre-wrap;">Un Atelier, p=
+r=C3=A9figurant une Action MaDICS, se devra de recouvrir une probl=C3=A9mat=
+ique de recherche partag=C3=A9e par une communaut=C3=A9 de chercheurs et de=
+ partenaires de diverses disciplines sur des masses de donn=C3=A9es scienti=
+fiques bien identifi=C3=A9es. Un Atelier (comme une Action) est un </span><=
+span style=3D"font-size: 12pt; font-family: 'Liberation Serif'; color: #000=
+000; background-color: transparent; font-weight: bold; font-style: normal; =
+font-variant: normal; text-decoration: none; vertical-align: baseline; whit=
+e-space: pre-wrap;">lieu d=E2=80=99animation</span><span style=3D"font-size=
+: 12pt; font-family: 'Liberation Serif'; color: #000000; background-color: =
+transparent; font-weight: 400; font-style: normal; font-variant: normal; te=
+xt-decoration: none; vertical-align: baseline; white-space: pre-wrap;">&nbs=
+p; coordonnant diverses activit=C3=A9s (journ=C3=A9es th=C3=A9matiques ou s=
+cientifiques, =C3=A9coles d=E2=80=99=C3=A9t=C3=A9, =C3=A9tudes prospectives=
+, comparaison de m=C3=A9thodes et d=E2=80=99algorithmes, d=C3=A9fis scienti=
+fiques, etc.) entre sp=C3=A9cialistes des donn=C3=A9es dans divers domaines=
+ scientifiques. On d=C3=A9crira les donn=C3=A9es produites ou consomm=C3=A9=
+es dont la nature est clairement identifi=C3=A9e et qui seront au c=C5=93ur=
+ de l=E2=80=99Action envisag=C3=A9e. Il ne s=E2=80=99agit pas de mettre =C3=
+=A0 disposition de la communaut=C3=A9 de telles donn=C3=A9es, mais plut=C3=
+=B4t d=E2=80=99identifier et d=E2=80=99=C3=A9changer sur les besoins et les=
+ attentes th=C3=A9matiques et sur les verrous scientifiques et techniques a=
+ssoci=C3=A9s. Un Atelier (comme une Action) ne peut donc qu=E2=80=99=C3=AAt=
+re interdisciplinaire, et de fait, il est sous la responsabilit=C3=A9 de pe=
+rsonnes issues de domaines diff=C3=A9rents (STIC, SHS, Vie et Sant=C3=A9=E2=
+=80=A6).</span></p><p dir=3D"ltr" style=3D"line-height: 1.2; text-align: ju=
+stify; margin: 0px;"><span style=3D"font-size: 12pt; font-family: 'Liberati=
+on Serif'; color: #000000; background-color: transparent; font-weight: 400;=
+ font-style: normal; font-variant: normal; text-decoration: none; vertical-=
+align: baseline; white-space: pre-wrap;"><br></span></p><p dir=3D"ltr" styl=
+e=3D"line-height: 1.2; text-align: justify; margin: 0px;"><span style=3D"fo=
+nt-size: 12pt; font-family: 'Liberation Serif'; color: #000000; background-=
+color: transparent; font-weight: 400; font-style: normal; font-variant: nor=
+mal; text-decoration: none; vertical-align: baseline; white-space: pre-wrap=
+;">Des activit=C3=A9s en collaboration avec d=E2=80=99autres instances tell=
+es que des grands instruments, centres de calcul, autres organismes, autres=
+ GDR pourront =C3=AAtre propos=C3=A9es.</span></p><p dir=3D"ltr" style=3D"l=
+ine-height: 1.2; text-align: justify; margin: 0px;"><span style=3D"font-siz=
+e: 12pt; font-family: 'Liberation Serif'; color: #000000; background-color:=
+ transparent; font-weight: bold; font-style: normal; font-variant: normal; =
+text-decoration: none; vertical-align: baseline; white-space: pre-wrap;"><b=
+r></span></p><p dir=3D"ltr" style=3D"line-height: 1.2; text-align: justify;=
+ margin: 0px;"><span style=3D"font-size: 12pt; font-family: 'Liberation Ser=
+if'; color: #000000; background-color: transparent; font-weight: bold; font=
+-style: normal; font-variant: normal; text-decoration: none; vertical-align=
+: baseline; white-space: pre-wrap;">Qui peut soumettre =C3=A0 l=E2=80=99app=
+el =C3=A0 Atelier MaDICS ?</span><span style=3D"font-size: 12pt; font-famil=
+y: 'Liberation Serif'; color: #000000; background-color: transparent; font-=
+weight: 400; font-style: normal; font-variant: normal; text-decoration: non=
+e; vertical-align: baseline; white-space: pre-wrap;"> Tout groupe de 2 ou 3=
+ personnes concern=C3=A9es par les th=C3=A9matiques MaDICS ind=C3=A9pendamm=
+ent de leur appartenance ou non =C3=A0 un institut du CNRS. N=C3=A9anmoins,=
+ au moins un des responsables de l=E2=80=99Atelier doit =C3=AAtre membre d=
+=E2=80=99une UMR CNRS. De plus, si cette personne est =E2=80=9Cinformaticie=
+nne=E2=80=9D, elle devra =C3=AAtre membre d=E2=80=99une UMR INS2I. Au moins=
+ 2 personnes doivent venir de domaines diff=C3=A9rents (STIC, SHS, Vie et S=
+ant=C3=A9=E2=80=A6).</span></p><p dir=3D"ltr" style=3D"line-height: 1.2; te=
+xt-align: justify; margin: 0px;"><span style=3D"font-size: 12pt; font-famil=
+y: 'Liberation Serif'; color: #000000; background-color: transparent; font-=
+weight: bold; font-style: normal; font-variant: normal; text-decoration: no=
+ne; vertical-align: baseline; white-space: pre-wrap;"><br></span></p><p dir=
+=3D"ltr" style=3D"line-height: 1.2; text-align: justify; margin: 0px;"><spa=
+n style=3D"font-size: 12pt; font-family: 'Liberation Serif'; color: #000000=
+; background-color: transparent; font-weight: bold; font-style: normal; fon=
+t-variant: normal; text-decoration: none; vertical-align: baseline; white-s=
+pace: pre-wrap;">Comment soumettre=E2=80=AF?</span><span style=3D"font-size=
+: 12pt; font-family: 'Liberation Serif'; color: #000000; background-color: =
+transparent; font-weight: 400; font-style: normal; font-variant: normal; te=
+xt-decoration: none; vertical-align: baseline; white-space: pre-wrap;"> La =
+proposition d=E2=80=99un Atelier se fait au travers du formulaire (accessib=
+le uniquement apr=C3=A8s connexion au site) :</span></p><p dir=3D"ltr" styl=
+e=3D"line-height: 1.2; margin: 0px; text-align: left;"><span style=3D"font-=
+size: 12pt; font-family: 'Liberation Serif'; color: #000000; background-col=
+or: transparent; font-weight: 400; font-style: normal; font-variant: normal=
+; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;">=
+&nbsp;</span><span style=3D"font-size: 12pt; font-family: 'Liberation Serif=
+'; color: #000000; background-color: transparent; font-weight: 400; font-st=
+yle: normal; font-variant: normal; text-decoration: underline; -webkit-text=
+-decoration-skip: none; text-decoration-skip-ink: none; vertical-align: bas=
+eline; white-space: pre-wrap;">http://www.madics.fr/ateliers/actions-appel/=
+proposition-datelier/&nbsp;</span><br></p><p dir=3D"ltr" style=3D"line-heig=
+ht: 1.2; text-align: center; margin: 0px;"><span style=3D"font-size: 12pt; =
+font-family: 'Liberation Serif'; color: #000000; background-color: transpar=
+ent; font-weight: 400; font-style: normal; font-variant: normal; text-decor=
+ation: underline; -webkit-text-decoration-skip: none; text-decoration-skip-=
+ink: none; vertical-align: baseline; white-space: pre-wrap;"><br></span></p=
+><p dir=3D"ltr" style=3D"line-height: 1.2; text-align: justify; margin: 0px=
+;"><span style=3D"font-size: 12pt; font-family: 'Liberation Serif'; color: =
+#000000; background-color: transparent; font-weight: bold; font-style: norm=
+al; font-variant: normal; text-decoration: none; vertical-align: baseline; =
+white-space: pre-wrap;">Pour quel r=C3=A9sultat=E2=80=AF? </span><span styl=
+e=3D"font-size: 12pt; font-family: 'Liberation Serif'; color: #000000; back=
+ground-color: transparent; font-weight: 400; font-style: normal; font-varia=
+nt: normal; text-decoration: none; vertical-align: baseline; white-space: p=
+re-wrap;">Si votre proposition est retenue par le comit=C3=A9 de direction =
+du GDR, elle d=C3=A9butera au 1er janvier 2023. Le GDR mettra =C3=A0 votre =
+disposition tous les moyens de communication et de diffusion n=C3=A9cessair=
+es ainsi qu=E2=80=99un budget d=E2=80=99animation propre de 1 500 =E2=82=AC=
+ (pour m=C3=A9moire, une Action dispose d=E2=80=99un budget de 3 000 =E2=82=
+=AC par an).&nbsp;&nbsp;</span></p><p dir=3D"ltr" style=3D"line-height: 1.2=
+; text-align: justify; margin: 0px;"><span style=3D"font-size: 12pt; font-f=
+amily: 'Liberation Serif'; color: #000000; background-color: transparent; f=
+ont-weight: bold; font-style: normal; font-variant: normal; text-decoration=
+: none; vertical-align: baseline; white-space: pre-wrap;"><br></span></p><p=
+ dir=3D"ltr" style=3D"line-height: 1.2; text-align: justify; margin: 0px;">=
+<span style=3D"font-size: 12pt; font-family: 'Liberation Serif'; color: #00=
+0000; background-color: transparent; font-weight: bold; font-style: normal;=
+ font-variant: normal; text-decoration: none; vertical-align: baseline; whi=
+te-space: pre-wrap;">Dates importantes&nbsp;</span></p><p dir=3D"ltr" style=
+=3D"line-height: 1.2; margin: 0px;"><span style=3D"font-size: 12pt; font-fa=
+mily: 'Liberation Serif'; color: #000000; background-color: transparent; fo=
+nt-weight: 400; font-style: normal; font-variant: normal; text-decoration: =
+none; vertical-align: baseline; white-space: pre-wrap;">Soumission : </span=
+><span style=3D"font-size: 12pt; font-family: 'Liberation Serif'; color: #0=
+00000; background-color: transparent; font-weight: bold; font-style: normal=
+; font-variant: normal; text-decoration: none; vertical-align: baseline; wh=
+ite-space: pre-wrap;">9 novembre 2023</span><span style=3D"font-size: 12pt;=
+ font-family: 'Liberation Serif'; color: #000000; background-color: transpa=
+rent; font-weight: 400; font-style: normal; font-variant: normal; text-deco=
+ration: none; vertical-align: baseline; white-space: pre-wrap;"> </span><sp=
+an style=3D"font-size: 12pt; font-family: 'Liberation Serif'; color: #00000=
+0; background-color: transparent; font-weight: bold; font-style: normal; fo=
+nt-variant: normal; text-decoration: none; vertical-align: baseline; white-=
+space: pre-wrap;">&nbsp;</span></p><p dir=3D"ltr" style=3D"line-height: 1.2=
+; margin: 0px;"><span style=3D"font-size: 12pt; font-family: 'Liberation Se=
+rif'; color: #000000; background-color: transparent; font-weight: 400; font=
+-style: normal; font-variant: normal; text-decoration: none; vertical-align=
+: baseline; white-space: pre-wrap;">Retour vers la </span><span style=3D"fo=
+nt-size: 12pt; font-family: 'Liberation Serif'; color: #000000; background-=
+color: transparent; font-weight: bold; font-style: normal; font-variant: no=
+rmal; text-decoration: none; vertical-align: baseline; white-space: pre-wra=
+p;">mi-d=C3=A9cembre 2023</span></p><p dir=3D"ltr" style=3D"line-height: 1.=
+2; margin: 0px;"><span style=3D"font-size: 12pt; font-family: 'Liberation S=
+erif'; color: #000000; background-color: transparent; font-weight: 400; fon=
+t-style: normal; font-variant: normal; text-decoration: none; vertical-alig=
+n: baseline; white-space: pre-wrap;">D=C3=A9marrage : </span><span style=3D=
+"font-size: 12pt; font-family: 'Liberation Serif'; color: #000000; backgrou=
+nd-color: transparent; font-weight: bold; font-style: normal; font-variant:=
+ normal; text-decoration: none; vertical-align: baseline; white-space: pre-=
+wrap;">1er janvier 2024</span></p><p dir=3D"ltr" style=3D"line-height: 1.2;=
+ text-align: justify; margin: 0px;"><span style=3D"font-size: 12pt; font-fa=
+mily: 'Liberation Serif'; color: #000000; background-color: transparent; fo=
+nt-weight: 400; font-style: normal; font-variant: normal; text-decoration: =
+none; vertical-align: baseline; white-space: pre-wrap;"><br></span></p><p d=
+ir=3D"ltr" style=3D"line-height: 1.2; text-align: justify; margin: 0px;"><s=
+pan style=3D"font-size: 12pt; font-family: 'Liberation Serif'; color: #0000=
+00; background-color: transparent; font-weight: 400; font-style: normal; fo=
+nt-variant: normal; text-decoration: none; vertical-align: baseline; white-=
+space: pre-wrap;">N=E2=80=99h=C3=A9sitez pas =C3=A0 contacter Bruno Cr=C3=
+=A9milleux (</span><a href=3D"mailto:bruno.cremilleux@unicaen.fr" style=3D"=
+text-decoration: none;" target=3D"_blank"><span style=3D"font-size: 12pt; f=
+ont-family: 'Liberation Serif'; color: #1155cc; background-color: transpare=
+nt; font-weight: 400; font-style: normal; font-variant: normal; text-decora=
+tion: underline; -webkit-text-decoration-skip: none; text-decoration-skip-i=
+nk: none; vertical-align: baseline; white-space: pre-wrap;">bruno.cremilleu=
+x@unicaen.fr</span></a><span style=3D"font-size: 12pt; font-family: 'Libera=
+tion Serif'; color: #000000; background-color: transparent; font-weight: 40=
+0; font-style: normal; font-variant: normal; text-decoration: none; vertica=
+l-align: baseline; white-space: pre-wrap;">) et/ou Sarah Cohen-Boulakia (</=
+span><a href=3D"mailto:sarah.cohen-boulakia@universite-paris-saclay.fr" sty=
+le=3D"text-decoration: none;" target=3D"_blank"><span style=3D"font-size: 1=
+2pt; font-family: 'Liberation Serif'; color: #1155cc; background-color: tra=
+nsparent; font-weight: 400; font-style: normal; font-variant: normal; text-=
+decoration: underline; -webkit-text-decoration-skip: none; text-decoration-=
+skip-ink: none; vertical-align: baseline; white-space: pre-wrap;">sarah.coh=
+en-boulakia@universite-paris-saclay.fr</span></a><span style=3D"font-size: =
+12pt; font-family: 'Liberation Serif'; color: #000000; background-color: tr=
+ansparent; font-weight: 400; font-style: normal; font-variant: normal; text=
+-decoration: none; vertical-align: baseline; white-space: pre-wrap;">) pour=
+ tout renseignement compl=C3=A9mentaire.&nbsp;</span></p><p dir=3D"ltr" sty=
+le=3D"line-height: 1.2; text-align: justify; margin: 0px;"><span style=3D"f=
+ont-size: 12pt; font-family: 'Liberation Serif'; color: #000000; background=
+-color: transparent; font-weight: 400; font-style: normal; font-variant: no=
+rmal; text-decoration: none; vertical-align: baseline; white-space: pre-wra=
+p;"></span></p></div></div><br></div></div>
+<br>=
+=0A<br>=
+</body></html>
+--=_fa114328-f043-4d77-9033-40aa3f8fcee6--

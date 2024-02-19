@@ -1,0 +1,580 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (BounceSMTP2.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id CB87514017C1
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed,  1 Jul 2020 09:09:42 +0200 (CEST)
+Received: from mx1.d101.univ-nantes.fr (MX1.univ-nantes.fr [193.52.101.135])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id CA10D61F0F0
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed,  1 Jul 2020 09:09:42 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.d101.univ-nantes.fr (Postfix) with ESMTP id C5DDC439D3E4
+	for <liste-egc@polytech.univ-nantes.fr>; Wed,  1 Jul 2020 09:09:42 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -2.676
+X-Spam-Level:
+X-Spam-Status: No, score=-2.676 tagged_above=-1000 required=5
+	tests=[CRM114_GOOD=-5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	MANGLED_MEDS=2.3, NO_RDNS2=0.01, RCVD_IN_MSPIKE_H4=0.001,
+	RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001,
+	SPF_PASS=-0.001, UN_PHISHING_COMPTE=0.1, UN_PHISHING_PW=0.1,
+	URIBL_BLOCKED=0.001] autolearn=disabled
+X-CRM114-Status: GOOD ( 5.0422 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=unicaen.fr
+Received: from mx1.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id XTsao0Abau9Q for <liste-egc@polytech.univ-nantes.fr>;
+	Wed,  1 Jul 2020 09:09:39 +0200 (CEST)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mailout.unicaen.fr (mailout2.unicaen.fr [194.199.107.74])
+	by mx1.d101.univ-nantes.fr (Postfix) with ESMTP id C9B73439D3E3
+	for <liste-egc@polytech.univ-nantes.fr>; Wed,  1 Jul 2020 09:09:39 +0200 (CEST)
+Received: from wzproxy1.unicaen.fr (wzproxy1.unicaen.fr [193.55.120.52])
+	by mailout.unicaen.fr (Postfix) with ESMTP id 9C8477D906FB6;
+	Wed,  1 Jul 2020 09:09:39 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=unicaen.fr; s=mail;
+	t=1593587379; bh=2Jr3tP++PCLehECIgmA4nk02Tq6t7xVPfG4CVTUAy7I=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
+	b=fJEhazACfXoh4Ni6e7bVtlw/svFx1izw5mZburdrrcCoBcvYiHsD2jewdiiUEwOcM
+	 +na1pMb9cJRLpe1rTVEGGVQ8/5VFHYQjO4omMOW67/CVLRPk3WfNxjq/GlEVWZSMhi
+	 qkrrxTabiKqWgmQ8CMGKGlRPhH5UuXwthLldpY/E=
+Received: from localhost (localhost [127.0.0.1])
+	by wzproxy1.unicaen.fr (Postfix) with ESMTP id 94A4566881;
+	Wed,  1 Jul 2020 09:09:39 +0200 (CEST)
+X-Amavis-Modified: Mail body modified (using disclaimer) - wzproxy1.unicaen.fr
+X-Virus-Scanned: amavisd-new at wzproxy1.unicaen.fr
+Received: from wzproxy1.unicaen.fr ([127.0.0.1])
+	by localhost (wzproxy1.unicaen.fr [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id iGpMVwAFIU-E; Wed,  1 Jul 2020 09:09:39 +0200 (CEST)
+Received: from lsmtp1.unicaen.fr (lsmtp1.unicaen.fr [193.55.120.32])
+	by wzproxy1.unicaen.fr (Postfix) with ESMTP id 6CED66684A;
+	Wed,  1 Jul 2020 09:09:39 +0200 (CEST)
+Received: from wzstore5.unicaen.fr (wzstore5.unicaen.fr [10.14.129.119])
+	by lsmtp1.unicaen.fr (Postfix) with ESMTP id 58FB07D5902AB;
+	Wed,  1 Jul 2020 09:09:36 +0200 (CEST)
+Date: Wed, 1 Jul 2020 09:09:36 +0200 (CEST)
+From: =?utf-8?Q?C=C3=A9line?= Alec <celine.alec@unicaen.fr>
+To: liste-egc <liste-egc@polytech.univ-nantes.fr>, info-ic <info-ic@inria.fr>
+Cc: Alexandre Niveau <alexandre.niveau@unicaen.fr>
+Message-ID: <255329712.5782109.1593587376307.JavaMail.zimbra@unicaen.fr>
+In-Reply-To: <202006301337.05UDbq0R030345@easychair.org>
+References: <202006301337.05UDbq0R030345@easychair.org>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="=_30d868d2-59f6-44c3-aa49-7850420e3d9e"
+X-Originating-IP: [10.38.11.95]
+X-Mailer: Zimbra 8.8.15_GA_3945 (ZimbraWebClient - FF77 (Win)/8.8.15_GA_3928)
+Thread-Topic: Appel =?utf-8?Q?=C3=A0_participation_en_ligne=2C_1er_au_3_juillet=2C_acc=C3=A8s?= libre au sessions
+Thread-Index: otFWLB9XWZa3K6dHLYceZ52UPg2eaw==
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] [RJCIA 2020] Appel =?UTF-8?Q?=C3=A0?= participation en
+ ligne, 1er au 3 juillet, =?UTF-8?Q?acc=C3=A8s?= libre au sessions
+
+--=_30d868d2-59f6-44c3-aa49-7850420e3d9e
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+
+
+Bonjour,=20
+
+pour raison de COVID-19, PFIA 2020 ne peut se faire en pr=C3=A9sentiel aux =
+dates initialement pr=C3=A9vues. L=E2=80=99AFIA a d=C3=A9cid=C3=A9 de virtu=
+aliser la plate-forme et d=E2=80=99offrir la gratuit=C3=A9 =C3=A0 toutes et=
+ tous (informations compl=C3=A9mentaires : [ http://pfia2020.fr/ | http://p=
+fia2020.fr/ ] ).=20
+
+Les dix-huiti=C3=A8mes Rencontres des Jeunes Chercheur=C2=B7ses en Intellig=
+ence Artificielle auront lieu du 1er au 3 juillet 2020 dans le cadre de PFI=
+A 2020.=20
+
+Pour acc=C3=A9der =C3=A0 la conf=C3=A9rence, vous devez cr=C3=A9er un compt=
+e sur Webikeo (proc=C3=A9dure =C3=A0 suivre sur [ http://pfia2020.fr/home/i=
+nscriptionauxsessions/ | http://pfia2020.fr/home/inscriptionauxsessions/ ] =
+) Ensuite, vous pourrez vous inscrire aux =C2=ABwebinaires=C2=BB qui consti=
+tuent les sessions ; attention, il faut apparemment s'=C3=AAtre inscrit=C2=
+=B7e avant le d=C3=A9but du webinaire . Vous trouverez le programme de RJCI=
+A ci-dessous. Notez que chaque session est divis=C3=A9e en deux webinaires =
+pour d'aga=C3=A7antes raisons purement techniques.=20
+
+
+Au plaisir de vous =C2=ABcroiser=C2=BB lors des sessions !=20
+
+
+
+Alexandre Niveau, pour le comit=C3=A9 de programme RJCIA 2020=20
+
+
+
+
+
+Programme RJCIA 2020=20
+[ http://webikeo.fr/chaine/conference-rjcia-pfia-2020/partage?campaign=3Dch=
+annel | Acc=C3=A9der
+              aux sessions de RJCIA ]=20
+
+
+
+Conf=C3=A9rence invit=C3=A9e RJCIA : [ http://www.liujialin.tech/index.html=
+ | Jialin Liu ]=20
+jeudi 2 juillet =E2=80=93 14h =E2=80=93 15h : [ https://webikeo.fr/webinar/=
+pfia-conferenciere-invitee-jialin-liu/share | Acc=C3=A9der
+              =C3=A0 ce webinaire ]=20
+BQ_BEGIN
+What evolutionary computation can do for games?=20
+This talk introduces the motivation of applying evolutionary computation to=
+ games and illustrates how evolutionary computation techniques have been ap=
+plied to board games and video games using some examples, including the use=
+ of evolutionary computation for learning policies, planning game action se=
+quences (e.g., rolling horizon), and designing (e.g., search-based procedur=
+al content generation, the combination of evolutionary computation and mach=
+ine learning methods for procedural content generation).=20
+
+BQ_END
+
+Sessions RJCIA=20
+
+
+La dur=C3=A9e des pr=C3=A9sentations (expos=C3=A9 + questions) est de 20+10=
+ minutes sauf pour les papiers marqu=C3=A9s =C2=AB court =C2=BB o=C3=B9 ell=
+e est de 10+5 minutes. Session RJCIA 1 : D=C3=A9tection d=E2=80=99objets et=
+ raisonnement spatial=20
+
+
+Pr=C3=A9sident de session : Alexandre Niveau=20
+mercredi 1 er juillet =E2=80=93 10h30 =E2=80=93 11h30 : [ https://webikeo.f=
+r/webinar/rjcia-1-partie-1-1/share | Acc=C3=A9der
+              =C3=A0 ce webinaire ]=20
+
+    * Recommandation ontologique multicrit=C3=A8re pour la m=C3=A9trologie =
+Axel Mascaro et Christophe Rey=20
+    * Double adaptation de domaine pour la d=C3=A9tection d=E2=80=99objets =
+Hiba Alqasir, Damien Muselet et Christophe Ducottet=20
+mercredi 1 er juillet =E2=80=93 11h30 =E2=80=93 12h30 : [ https://webikeo.f=
+r/webinar/rjcia-1-partie-2/share | Acc=C3=A9der
+              =C3=A0 ce webinaire ]=20
+
+    * M=C3=A9thode d=E2=80=99analyse s=C3=A9mantique d=E2=80=99images combi=
+nant apprentissage profond et relations structurelles par appariement de gr=
+aphes J=C3=A9r=C3=A9my Chopin, Jean-Baptiste Fasquel, Harold Mouch=C3=A8re,=
+ Isabelle Bloch et Rozenn Dahyot=20
+    * G=C3=A9n=C3=A9ration automatique de graphe pour mod=C3=A9liser les si=
+ngularit=C3=A9s de trajectoires spatiales (article court) Hippolyte Dubois,=
+ Patrick Le Callet et Antoine Coutrot=20
+Session RJCIA 2 : Th=C3=A9orie des jeux et recherche op=C3=A9rationnelle=20
+
+
+Pr=C3=A9sident de session : Abdallah Saffidine=20
+mercredi 1 er juillet =E2=80=93 15h30 =E2=80=93 16h30 : [ https://webikeo.f=
+r/webinar/rjcia-2-partie-1/share | Acc=C3=A9der
+              =C3=A0 ce webinaire ]=20
+
+    * Un mod=C3=A8le de jeux de coalitions stochastiques r=C3=A9p=C3=A9t=C3=
+=A9s Josselin Gu=C3=A9neron et Gr=C3=A9gory Bonnet=20
+    * Probl=C3=A8me d=E2=80=99affectation dynamique des emplacements de sto=
+ckage chez Knapp : vers de l=E2=80=99apprentissage automatique ? Paul Court=
+in, Axel Grimault, Mehdi Lhommeau et Jean-Baptiste Fasquel=20
+mercredi 1 er juillet =E2=80=93 16h30 =E2=80=93 17h00 : [ https://webikeo.f=
+r/webinar/rjcia-2-partie-2/share | Acc=C3=A9der
+              =C3=A0 ce webinaire ]=20
+
+    * Group-based Ordinal Classification based on a Negotiation Process (ar=
+ticle court) Ons Nefla, Meltem Ozturk, Paolo Viappiani, Im=C3=A8ne Brigui-C=
+htioui et Oussama Raboun=20
+Session RJCIA 3 : Algorithmes d=C3=A9centralis=C3=A9s=20
+
+
+Pr=C3=A9sident de session : Nicolas Verstaevel=20
+jeudi 2 juillet =E2=80=93 10h30 =E2=80=93 11h30 : [ https://webikeo.fr/webi=
+nar/rjcia-3-partie-1/share | Acc=C3=A9der
+              =C3=A0 ce webinaire ]=20
+
+    * A multi-agent system approach to ridesharing for older people =E2=80=
+=94 State-of-the-art work et preliminary design Iris Lohja, Yves Demazeau e=
+t Christine Verdier=20
+    * Approche d=C3=A9centralis=C3=A9e d=E2=80=99insertion avec am=C3=A9lio=
+ration continue de la qualit=C3=A9 de la solution pour un syst=C3=A8me TAD =
+Alaa Daoud, Flavien Balbo, Paolo Gianessi et Gauthier Picard=20
+jeudi 2 juillet =E2=80=93 11h30 =E2=80=93 12h00 : [ https://webikeo.fr/webi=
+nar/rjcia-3-partie-2/share | Acc=C3=A9der
+              =C3=A0 ce webinaire ]=20
+
+    * SANDMAN : un syst=C3=A8me auto-adaptatif pour la d=C3=A9tection d=E2=
+=80=99anomalies dans le flux des donn=C3=A9es des b=C3=A2timents intelligen=
+ts Maxime Houssin, St=C3=A9phanie Combettes, Marie-Pierre Gleizes et Berang=
+ere Lartigue=20
+Conf=C3=A9rence invit=C3=A9e RJCIA : [ http://www.liujialin.tech/index.html=
+ | Jialin Liu ]=20
+jeudi 2 juillet =E2=80=93 14h =E2=80=93 15h : [ https://webikeo.fr/webinar/=
+pfia-conferenciere-invitee-jialin-liu/share | Acc=C3=A9der
+              =C3=A0 ce webinaire ]=20
+BQ_BEGIN
+What evolutionary computation can do for games?=20
+This talk introduces the motivation of applying evolutionary computation to=
+ games and illustrates how evolutionary computation techniques have been ap=
+plied to board games and video games using some examples, including the use=
+ of evolutionary computation for learning policies, planning game action se=
+quences (e.g., rolling horizon), and designing (e.g., search-based procedur=
+al content generation, the combination of evolutionary computation and mach=
+ine learning methods for procedural content generation).=20
+BQ_END
+Session RJCIA 4 : Apprentissage profond=20
+
+
+Pr=C3=A9sident de session : Pierre-Fran=C3=A7ois Gimenez=20
+jeudi 2 juillet =E2=80=93 15h30 =E2=80=93 16h30 : [ https://webikeo.fr/webi=
+nar/rjcia-4-partie-1/share | Acc=C3=A9der
+              =C3=A0 ce webinaire ]=20
+
+    * Tour d=E2=80=99horizon autour de l=E2=80=99explicabilit=C3=A9 des mod=
+=C3=A8les profonds Ga=C3=ABlle Jouis, Harold Mouch=C3=A8re, Fabien Picaroug=
+ne et Alexandre Hardouin=20
+    * Apprentissage profond appliqu=C3=A9 =C3=A0 la classification d=E2=80=
+=99images microscopiques embryonnaires Tristan Gomez, Harold Mouch=C3=A8re,=
+ Thomas Fr=C3=A9our et Magalie Feyeux=20
+jeudi 2 juillet =E2=80=93 16h30 =E2=80=93 17h30 : [ https://webikeo.fr/webi=
+nar/rjcia-4-partie-2/share | Acc=C3=A9der
+              =C3=A0 ce webinaire ]=20
+
+    * Apprentissage profond et localisation d=E2=80=99objets : deux exemple=
+s d=E2=80=99applications en agriculture Louis Rigal, Jeremy Chopin, Jean-Ba=
+ptiste Fasquel, Rapha=C3=ABl Fernandez et Corinne Challe-Blanloeil=20
+Session RJCIA 5 : Interfaces humain-machine et aide =C3=A0 la d=C3=A9cision=
+=20
+vendredi 3 juillet =E2=80=93 10h30 =E2=80=93 11h30 : [ https://webikeo.fr/w=
+ebinar/rjcia-5-partie-1/share | Acc=C3=A9der
+              =C3=A0 ce webinaire ]=20
+
+    * Vers un diagnostic des biais cognitifs par les op=C3=A9rateurs AGM Va=
+lentin Fouillard, Safouan Taha, Nicolas Sabouret et Fr=C3=A9d=C3=A9ric Boul=
+anger=20
+    * IA et assistance =C3=A0 la d=C3=A9cision humaine : influence des info=
+rmations transmises sur l=E2=80=99=C3=A9valuation d=E2=80=99un nouveau plan=
+ de vol. Adrien Metge et Nicolas Maille=20
+vendredi 3 juillet =E2=80=93 11h30 =E2=80=93 12h30 : [ https://webikeo.fr/w=
+ebinar/rjcia-5-partie-2/share | Acc=C3=A9der
+              =C3=A0 ce webinaire ]=20
+
+    * Transduction s=C3=A9mantique pour la mod=C3=A9lisation de syst=C3=A8m=
+e Aur=C3=A9lien Lamercerie=20
+    * Travail du futur: des portails e-collaboratifs intrins=C3=A8quement m=
+otivants (article court) Mohamed El Fatri, Francis Rousseaux et Pierre Dreu=
+x=20
+Session RJCIA 6 : Agents autonomes=20
+
+
+Pr=C3=A9sident de session : G=C3=A9raud Fokou=20
+vendredi 3 juillet =E2=80=93 15h30 =E2=80=93 16h30 : [ https://webikeo.fr/w=
+ebinar/rjcia-6/share | Acc=C3=A9der =C3=A0
+              ce webinaire ]=20
+
+    * Accro=C3=AEtre l=E2=80=99interop=C3=A9rabilit=C3=A9 dans le Web des o=
+bjets =C3=A0 l=E2=80=99aide d=E2=80=99agents autonomes (prise de position) =
+Edison Chung, Maxime Lefran=C3=A7ois et Olivier Boissier=20
+    * Mod=C3=A8le d=E2=80=99Interruption pour la R=C3=A9partition des T=C3=
+=A2ches : Application pour une simulation de colonie d=E2=80=99abeilles. Th=
+omas Alves, Jeremy Riviere, Cedric Allaux, Yves Le Comte, Frank Singhoff, T=
+hierry Duval et Vincent Rodin=20
+
+
+
+
+=0A
+--=_30d868d2-59f6-44c3-aa49-7850420e3d9e
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><body><div style=3D"font-family: arial, helvetica, sans-serif; font-s=
+ize: 12pt; color: #000000"><div data-marker=3D"__QUOTED_TEXT__"><p>Bonjour,=
+</p>
+    <p>pour raison de COVID-19, PFIA 2020 ne peut se faire en pr=C3=A9senti=
+el
+      aux dates initialement pr=C3=A9vues. L=E2=80=99AFIA a d=C3=A9cid=C3=
+=A9 de virtualiser la
+      plate-forme et d=E2=80=99offrir la gratuit=C3=A9 =C3=A0 toutes et tou=
+s (informations
+      compl=C3=A9mentaires : <a class=3D"moz-txt-link-freetext" href=3D"htt=
+p://pfia2020.fr/" target=3D"_blank">http://pfia2020.fr/</a>).</p>
+    <p>Les <b>dix-huiti=C3=A8mes Rencontres des Jeunes Chercheur=C2=B7ses e=
+n
+        Intelligence Artificielle </b>auront lieu du<b> 1er au 3
+        juillet 2020</b> dans le cadre de PFIA 2020.</p>
+    <p>Pour acc=C3=A9der =C3=A0 la conf=C3=A9rence, vous devez cr=C3=A9er u=
+n compte sur
+      Webikeo (proc=C3=A9dure =C3=A0 suivre sur <a href=3D"http://pfia2020.=
+fr/home/inscriptionauxsessions/" target=3D"_blank">http://pfia2020.fr/home/=
+inscriptionauxsessions/</a>)</p>
+    Ensuite, vous pourrez vous inscrire aux =C2=ABwebinaires=C2=BB qui cons=
+tituent
+    les sessions ; attention, <b>il faut apparemment s'=C3=AAtre inscrit=C2=
+=B7e
+      avant le d=C3=A9but du webinaire</b>. Vous trouverez le programme de
+    RJCIA ci-dessous. Notez que chaque session est divis=C3=A9e en deux
+    webinaires pour d'aga=C3=A7antes raisons purement techniques.<br>
+    <p>Au plaisir de vous =C2=ABcroiser=C2=BB lors des sessions !</p>
+    <blockquote>
+      <p>Alexandre Niveau, pour le comit=C3=A9 de programme RJCIA 2020<br>
+      </p>
+    </blockquote>
+    <p><br>
+    </p>
+   =20
+      <h1 class=3D"entry-title tg-page-content__title">Programme RJCIA
+        2020</h1>
+   =20
+    <div class=3D"elementor-element elementor-element-3d3f0ba0
+      elementor-widget elementor-widget-text-editor">
+      <div class=3D"elementor-widget-container">
+        <div class=3D"elementor-text-editor elementor-clearfix">
+          <h3><a href=3D"http://webikeo.fr/chaine/conference-rjcia-pfia-202=
+0/partage?campaign=3Dchannel" target=3D"_blank">Acc=C3=A9der
+              aux sessions de RJCIA</a><br data-mce-bogus=3D"1"></h3>
+          <p align=3D"justify"><br>
+          </p>
+          <h2>Conf=C3=A9rence invit=C3=A9e RJCIA : <a href=3D"http://www.li=
+ujialin.tech/index.html" target=3D"_blank">Jialin Liu</a><br data-mce-bogus=
+=3D"1"></h2>
+          <strong>jeudi 2 juillet =E2=80=93 14h =E2=80=93 15h : <a href=3D"=
+https://webikeo.fr/webinar/pfia-conferenciere-invitee-jialin-liu/share" tar=
+get=3D"_blank">Acc=C3=A9der
+              =C3=A0 ce webinaire</a>
+          </strong>
+          <blockquote>
+            <h3>What evolutionary computation can do for games?</h3>
+            This talk introduces the motivation of applying evolutionary
+            computation to games and illustrates how evolutionary
+            computation techniques have been applied to board games and
+            video games using some examples, including the use of
+            evolutionary computation for learning policies, planning
+            game action sequences (e.g., rolling horizon), and designing
+            (e.g., search-based procedural content generation, the
+            combination of evolutionary computation and machine learning
+            methods for procedural content generation).<br>
+          </blockquote>
+          <h2><br>
+          </h2>
+          <h2>Sessions RJCIA</h2>
+          <p>La dur=C3=A9e des pr=C3=A9sentations (expos=C3=A9 + questions)=
+ est de
+            20+10 minutes sauf pour les papiers marqu=C3=A9s =C2=AB&nbsp;co=
+urt&nbsp;=C2=BB o=C3=B9
+            elle est de 10+5 minutes.</p>
+          <h3>Session RJCIA 1 : D=C3=A9tection d=E2=80=99objets et raisonne=
+ment
+            spatial</h3>
+          <p>Pr=C3=A9sident de session : Alexandre Niveau<br>
+          </p>
+          <strong>mercredi 1<sup>er</sup> juillet =E2=80=93 10h30 =E2=80=93=
+ 11h30 : <a href=3D"https://webikeo.fr/webinar/rjcia-1-partie-1-1/share" ta=
+rget=3D"_blank">Acc=C3=A9der
+              =C3=A0 ce webinaire</a></strong>
+          <ul>
+            <li><strong>Recommandation ontologique multicrit=C3=A8re pour l=
+a
+                m=C3=A9trologie</strong>
+              <em>Axel Mascaro et Christophe Rey</em></li>
+            <li><strong>Double adaptation de domaine pour la d=C3=A9tection
+                d=E2=80=99objets</strong>
+              <em>Hiba Alqasir, Damien Muselet et Christophe Ducottet</em><=
+/li>
+          </ul>
+          <strong>mercredi 1<sup>er</sup> juillet =E2=80=93 11h30 =E2=80=93=
+ 12h30 : <a href=3D"https://webikeo.fr/webinar/rjcia-1-partie-2/share" targ=
+et=3D"_blank">Acc=C3=A9der
+              =C3=A0 ce webinaire</a></strong>
+          <ul>
+            <li><strong>M=C3=A9thode d=E2=80=99analyse s=C3=A9mantique d=E2=
+=80=99images combinant
+                apprentissage profond et relations structurelles par
+                appariement de graphes</strong>
+              <em>J=C3=A9r=C3=A9my Chopin, Jean-Baptiste Fasquel, Harold Mo=
+uch=C3=A8re,
+                Isabelle Bloch et Rozenn Dahyot</em></li>
+            <li><strong>G=C3=A9n=C3=A9ration automatique de graphe pour mod=
+=C3=A9liser
+                les singularit=C3=A9s de trajectoires spatiales</strong>
+              (article court)
+              <em>Hippolyte Dubois, Patrick Le Callet et Antoine Coutrot</e=
+m></li>
+          </ul>
+          <h3>Session RJCIA 2 : Th=C3=A9orie des jeux et recherche
+            op=C3=A9rationnelle</h3>
+          <p>Pr=C3=A9sident de session : Abdallah Saffidine<br>
+          </p>
+          <strong>mercredi 1<sup>er</sup> juillet =E2=80=93 15h30 =E2=80=93=
+ 16h30 : <a href=3D"https://webikeo.fr/webinar/rjcia-2-partie-1/share" targ=
+et=3D"_blank">Acc=C3=A9der
+              =C3=A0 ce webinaire</a></strong>
+          <ul>
+            <li><strong>Un mod=C3=A8le de jeux de coalitions stochastiques
+                r=C3=A9p=C3=A9t=C3=A9s</strong>
+              <em>Josselin Gu=C3=A9neron et Gr=C3=A9gory Bonnet</em></li>
+            <li><strong>Probl=C3=A8me d=E2=80=99affectation dynamique des
+                emplacements de stockage chez Knapp : vers de
+                l=E2=80=99apprentissage automatique ?</strong>
+              <em>Paul Courtin, Axel Grimault, Mehdi Lhommeau et
+                Jean-Baptiste Fasquel</em></li>
+          </ul>
+          <strong>mercredi 1<sup>er</sup> juillet =E2=80=93 16h30 =E2=80=93=
+ 17h00 : <a href=3D"https://webikeo.fr/webinar/rjcia-2-partie-2/share" targ=
+et=3D"_blank">Acc=C3=A9der
+              =C3=A0 ce webinaire</a></strong>
+          <ul>
+            <li><strong>Group-based Ordinal Classification based on a
+                Negotiation Process</strong> (article court)
+              <em>Ons Nefla, Meltem Ozturk, Paolo Viappiani, Im=C3=A8ne
+                Brigui-Chtioui et Oussama Raboun</em></li>
+          </ul>
+          <h3>Session RJCIA 3 : Algorithmes d=C3=A9centralis=C3=A9s</h3>
+          <p>Pr=C3=A9sident de session : Nicolas Verstaevel<br>
+          </p>
+          <strong>jeudi 2 juillet =E2=80=93 10h30 =E2=80=93 11h30 : <a href=
+=3D"https://webikeo.fr/webinar/rjcia-3-partie-1/share" target=3D"_blank">Ac=
+c=C3=A9der
+              =C3=A0 ce webinaire</a></strong>
+          <ul>
+            <li><strong>A multi-agent system approach to ridesharing for
+                older people =E2=80=94 State-of-the-art work et preliminary
+                design</strong>
+              <em>Iris Lohja, Yves Demazeau et Christine Verdier</em></li>
+            <li><strong>Approche d=C3=A9centralis=C3=A9e d=E2=80=99insertio=
+n avec
+                am=C3=A9lioration continue de la qualit=C3=A9 de la solutio=
+n pour
+                un syst=C3=A8me TAD</strong>
+              <em>Alaa Daoud, Flavien Balbo, Paolo Gianessi et Gauthier
+                Picard</em></li>
+          </ul>
+          <strong>jeudi 2 juillet =E2=80=93 11h30 =E2=80=93 12h00 : <a href=
+=3D"https://webikeo.fr/webinar/rjcia-3-partie-2/share" target=3D"_blank">Ac=
+c=C3=A9der
+              =C3=A0 ce webinaire</a></strong>
+          <ul>
+            <li><strong>SANDMAN : un syst=C3=A8me auto-adaptatif pour la
+                d=C3=A9tection d=E2=80=99anomalies dans le flux des donn=C3=
+=A9es des
+                b=C3=A2timents intelligents</strong>
+              <em>Maxime Houssin, St=C3=A9phanie Combettes, Marie-Pierre
+                Gleizes et Berangere Lartigue</em></li>
+          </ul>
+          <h3>Conf=C3=A9rence invit=C3=A9e RJCIA : <a href=3D"http://www.li=
+ujialin.tech/index.html" target=3D"_blank">Jialin Liu</a><br data-mce-bogus=
+=3D"1"></h3>
+          <strong>jeudi 2 juillet =E2=80=93 14h =E2=80=93 15h : <a href=3D"=
+https://webikeo.fr/webinar/pfia-conferenciere-invitee-jialin-liu/share" tar=
+get=3D"_blank">Acc=C3=A9der
+              =C3=A0 ce webinaire</a>
+          </strong>
+          <blockquote>
+            <h5>What evolutionary computation can do for games?</h5>
+            This talk introduces the motivation of applying evolutionary
+            computation to games and illustrates how evolutionary
+            computation techniques have been applied to board games and
+            video games using some examples, including the use of
+            evolutionary computation for learning policies, planning
+            game action sequences (e.g., rolling horizon), and designing
+            (e.g., search-based procedural content generation, the
+            combination of evolutionary computation and machine learning
+            methods for procedural content generation).</blockquote>
+          <h3>Session RJCIA 4 : Apprentissage profond</h3>
+          <p>Pr=C3=A9sident de session : Pierre-Fran=C3=A7ois Gimenez<br>
+          </p>
+          <strong>jeudi 2 juillet =E2=80=93 15h30 =E2=80=93 16h30 : <a href=
+=3D"https://webikeo.fr/webinar/rjcia-4-partie-1/share" target=3D"_blank">Ac=
+c=C3=A9der
+              =C3=A0 ce webinaire</a></strong>
+          <ul>
+            <li><strong>Tour d=E2=80=99horizon autour de l=E2=80=99explicab=
+ilit=C3=A9 des
+                mod=C3=A8les profonds</strong>
+              <em>Ga=C3=ABlle Jouis, Harold Mouch=C3=A8re, Fabien Picarougn=
+e et
+                Alexandre Hardouin</em></li>
+            <li><strong>Apprentissage profond appliqu=C3=A9 =C3=A0 la
+                classification d=E2=80=99images microscopiques embryonnaire=
+s</strong>
+              <em>Tristan Gomez, Harold Mouch=C3=A8re, Thomas Fr=C3=A9our e=
+t
+                Magalie Feyeux</em></li>
+          </ul>
+          <strong>jeudi 2 juillet =E2=80=93 16h30 =E2=80=93 17h30 : <a href=
+=3D"https://webikeo.fr/webinar/rjcia-4-partie-2/share" target=3D"_blank">Ac=
+c=C3=A9der
+              =C3=A0 ce webinaire</a></strong>
+          <ul>
+            <li><strong>Apprentissage profond et localisation d=E2=80=99obj=
+ets :
+                deux exemples d=E2=80=99applications en agriculture</strong=
+>
+              <em>Louis Rigal, Jeremy Chopin, Jean-Baptiste Fasquel,
+                Rapha=C3=ABl Fernandez et Corinne Challe-Blanloeil</em></li=
+>
+          </ul>
+          <h3>Session RJCIA 5 : Interfaces humain-machine et aide =C3=A0 la
+            d=C3=A9cision</h3>
+          <strong>vendredi 3 juillet =E2=80=93 10h30 =E2=80=93 11h30 : <a h=
+ref=3D"https://webikeo.fr/webinar/rjcia-5-partie-1/share" target=3D"_blank"=
+>Acc=C3=A9der
+              =C3=A0 ce webinaire</a></strong>
+          <ul>
+            <li><b>Vers un diagnostic des biais cognitifs par les
+                op=C3=A9rateurs AGM</b>
+              <em>Valentin Fouillard, Safouan Taha, Nicolas Sabouret et
+                Fr=C3=A9d=C3=A9ric Boulanger</em></li>
+            <li><strong>IA et assistance =C3=A0 la d=C3=A9cision humaine :
+                influence des informations transmises sur l=E2=80=99=C3=A9v=
+aluation
+                d=E2=80=99un nouveau plan de vol.</strong>
+              <em>Adrien Metge et Nicolas Maille</em></li>
+          </ul>
+          <strong>vendredi 3 juillet =E2=80=93 11h30 =E2=80=93 12h30 : <a h=
+ref=3D"https://webikeo.fr/webinar/rjcia-5-partie-2/share" target=3D"_blank"=
+>Acc=C3=A9der
+              =C3=A0 ce webinaire</a></strong>
+          <ul>
+            <li><strong>Transduction s=C3=A9mantique pour la mod=C3=A9lisat=
+ion de
+                syst=C3=A8me</strong>
+              <em>Aur=C3=A9lien Lamercerie</em></li>
+            <li><strong>Travail du futur: des portails e-collaboratifs
+                intrins=C3=A8quement motivants</strong> (article court)
+              <em>Mohamed El Fatri, Francis Rousseaux et Pierre Dreux</em><=
+/li>
+          </ul>
+          <h3>Session RJCIA 6 : Agents autonomes</h3>
+          <p>Pr=C3=A9sident de session : G=C3=A9raud Fokou<br>
+          </p>
+          <strong>vendredi 3 juillet =E2=80=93 15h30 =E2=80=93 16h30 : <a h=
+ref=3D"https://webikeo.fr/webinar/rjcia-6/share" target=3D"_blank">Acc=C3=
+=A9der =C3=A0
+              ce webinaire</a></strong>
+          <ul>
+            <li><strong>Accro=C3=AEtre l=E2=80=99interop=C3=A9rabilit=C3=A9=
+ dans le Web des
+                objets =C3=A0 l=E2=80=99aide d=E2=80=99agents autonomes (pr=
+ise de position)</strong>
+              <em>Edison Chung, Maxime Lefran=C3=A7ois et Olivier Boissier<=
+/em></li>
+            <li><strong>Mod=C3=A8le d=E2=80=99Interruption pour la R=C3=A9p=
+artition des
+                T=C3=A2ches : Application pour une simulation de colonie
+                d=E2=80=99abeilles.</strong>
+              <em>Thomas Alves, Jeremy Riviere, Cedric Allaux, Yves Le
+                Comte, Frank Singhoff, Thierry Duval et Vincent Rodin</em><=
+/li>
+          </ul>
+        </div>
+      </div>
+    </div>
+ =20
+<br>
+
+<br><br></div></div>
+<br>=
+=0A<br>=
+</body></html>
+--=_30d868d2-59f6-44c3-aa49-7850420e3d9e--

@@ -1,0 +1,395 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (bouncesmtp1.u12.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 1FA2314017C1
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu,  4 May 2023 13:17:13 +0200 (CEST)
+Received: from mx2.localdomain (MX2.univ-nantes.fr [193.52.101.136])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id 1781E6747
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu,  4 May 2023 13:17:13 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.localdomain (Postfix) with ESMTP id 0ADEF1015DD
+	for <liste-egc@polytech.univ-nantes.fr>; Thu,  4 May 2023 13:17:13 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 0
+X-Spam-Level:
+X-Spam-Status: No, score=x tagged_above=-1000 required=5 WHITELISTED tests=[]
+	autolearn=unavailable
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=imt-atlantique.fr
+Received: from mx2.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Zpoh3a-1w_Zi for <liste-egc@polytech.univ-nantes.fr>;
+	Thu,  4 May 2023 13:17:12 +0200 (CEST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=2001:660:330f:2::c0; helo=zproxy110.enst.fr; envelope-from=gregory.smits@imt-atlantique.fr; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=none dis=none) header.from=imt-atlantique.fr
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=gregory.smits@imt-atlantique.fr
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (1024-bit key; unprotected) header.d=imt-atlantique.fr header.i=@imt-atlantique.fr header.b="Bg9mKD0E";
+	dkim-atps=neutral
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from zproxy110.enst.fr (zproxy110.enst.fr [IPv6:2001:660:330f:2::c0])
+	by mx2.localdomain (Postfix) with ESMTPS id D6D511014C2
+	for <liste-egc@polytech.univ-nantes.fr>; Thu,  4 May 2023 13:17:12 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+	by zproxy110.enst.fr (Postfix) with ESMTP id A7D0A82270
+	for <liste-egc@polytech.univ-nantes.fr>; Thu,  4 May 2023 13:17:12 +0200 (CEST)
+Received: from zproxy110.enst.fr ([IPv6:::1])
+	by localhost (zproxy110.enst.fr [IPv6:::1]) (amavisd-new, port 10032)
+	with ESMTP id LEzguTZ4RKBm for <liste-egc@polytech.univ-nantes.fr>;
+	Thu,  4 May 2023 13:17:12 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+	by zproxy110.enst.fr (Postfix) with ESMTP id 2F3118211D
+	for <liste-egc@polytech.univ-nantes.fr>; Thu,  4 May 2023 13:17:12 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy110.enst.fr 2F3118211D
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=imt-atlantique.fr;
+	s=50EA75E8-DE22-11E6-A6DE-0662BA474D24; t=1683199032;
+	bh=mXuMjTMaJbLtf0lOn4QnFyL0UFprX2oQ1FLMmjr5emg=;
+	h=From:Mime-Version:Message-Id:Date:To;
+	b=Bg9mKD0EdsFc6FF2YoDbXiZETKlAxnEZbIs4ovZoQrHsunFW0NcxlO//pRw0V0suN
+	 1MJMOaZZWDjo2Z6rO0rTlWa8Z3Ju67e8FYa+aXJXYA7AjFp1EhJjotNfZLt4eOkqnc
+	 7j90PcfRstPl36PpFPt/tZqIdcN7sc7xRG+gxvus=
+X-Virus-Scanned: amavisd-new at zproxy110.enst.fr
+Received: from zproxy110.enst.fr ([IPv6:::1])
+	by localhost (zproxy110.enst.fr [IPv6:::1]) (amavisd-new, port 10026)
+	with ESMTP id CvM-7oe3t_6u for <liste-egc@polytech.univ-nantes.fr>;
+	Thu,  4 May 2023 13:17:12 +0200 (CEST)
+Received: from smtpclient.apple (unknown [IPv6:2001:660:7302:5:1025:9382:97bd:71c5])
+	by zproxy110.enst.fr (Postfix) with ESMTPSA id 0B6E881F08
+	for <liste-egc@polytech.univ-nantes.fr>; Thu,  4 May 2023 13:17:12 +0200 (CEST)
+From: =?utf-8?Q?Gr=C3=A9gory_SMITS?= <gregory.smits@imt-atlantique.fr>
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_CB6950E1-99BC-4548-8D0D-F5785EDA9667"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.500.231\))
+Message-Id: <E03EBEAE-EF7D-47EE-A555-FA10F0FA0EEC@imt-atlantique.fr>
+Date: Thu, 4 May 2023 13:17:01 +0200
+To: liste-egc@polytech.univ-nantes.fr
+X-Mailer: Apple Mail (2.3731.500.231)
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] EIAH 2023 : Appel =?UTF-8?Q?=C3=A0?= participation
+
+
+--Apple-Mail=_CB6950E1-99BC-4548-8D0D-F5785EDA9667
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
+
+
+EIAH2023 : 11=C3=A8me Conf=C3=A9rence sur les Environnements =
+Informatiques pour l'Apprentissage Humain =
+<https://eiah2023.sciencesconf.org/>
+La conf=C3=A9rence pluridisciplinaire francophone sur la conception et =
+l'analyse des environnements num=C3=A9riques pour l'=C3=A9ducation et la =
+formation
+
+
+	La 11=C3=A8me =C3=A9dition de la conf=C3=A9rence EIAH =
+(https://eiah2023.sciencesconf.org/) aura lieu =C3=A0 Brest du 12 au 16 =
+juin 2023 sur le site d'IMT Atlantique.
+
+	La conf=C3=A9rence Environnements Informatiques pour =
+l=E2=80=99Apprentissage Humain (EIAH) est une conf=C3=A9rence =
+internationale francophone bisannuelle, plac=C3=A9e sous l=E2=80=99=C3=A9g=
+ide de l=E2=80=99ATIEF <http://www.atief.fr/> (Association des =
+Technologies de l=E2=80=99Information pour l=E2=80=99=C3=89ducation et =
+la Formation).=20
+
+	La conf=C3=A9rence EIAH rassemble des chercheurs issus de =
+disciplines diverses, en provenance de France, mais aussi du Canada, de =
+Suisse, de Belgique, du Maghreb, etc. L=E2=80=99objectif de la =
+conf=C3=A9rence est de permettre =C3=A0 la communaut=C3=A9 scientifique =
+francophone pluridisciplinaire de se rencontrer pour pr=C3=A9senter et =
+confronter ses travaux traitant des questions de recherche sur =
+l=E2=80=99=C3=A9ducation en g=C3=A9n=C3=A9ral, et sur le num=C3=A9rique =
+au service de l=E2=80=99=C3=A9ducation en particulier. L=E2=80=99objectif =
+de la conf=C3=A9rence EIAH=E2=80=992023 est de dresser un =C3=A9tat de =
+la recherche francophone sur la question de l=E2=80=99adaptation dans =
+les EIAH.
+
+Programme <https://eiah2023.sciencesconf.org/resource/page/id/5>
+12 juin : journ=C3=A9e Groupes de Travail ATIEF
+13 juin : journ=C3=A9e d'ateliers th=C3=A9matiques=20
+14 au 16 juin : conf=C3=A9rence principale=20
+Conf=C3=A9rences invit=C3=A9es =
+<https://eiah2023.sciencesconf.org/resource/page/id/4>
+Franck Amadieu "Soutenir l=E2=80=99autonomie des apprenants dans les =
+EIAH avec des prompts et feedbacks=E2=80=9D
+Val=C3=A9rie Psych=C3=A9 "Comprendre les tuteurs intelligents et leur =
+apport pour le milieu =C3=A9ducatif"
+
+Inscription <https://eiah2023.sciencesconf.org/resource/page/id/11>
+Avant le 7 mai 2023
+Plein tarif : 375 =E2=82=AC TTC
+Plein tarif membre ATIEF : 350 =E2=82=AC TTC
+Tarif =C3=A9tudiant : 300=E2=82=AC TTC
+Tarif =C3=A9tudiant membre ATIEF : 275=E2=82=AC TTC
+=C3=80 partir du 8 mai et jusqu=E2=80=99au 30 mai 2023
+Plein tarif : 445 =E2=82=AC TTC
+Plein tarif membre ATIEF : 420 =E2=82=AC TTC
+Tarif =C3=A9tudiant : 325 =E2=82=AC TTC
+Tarif =C3=A9tudiant membre ATIEF : 300 =E2=82=AC TTC=
+
+--Apple-Mail=_CB6950E1-99BC-4548-8D0D-F5785EDA9667
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html><head><meta http-equiv=3D"content-type" content=3D"text/html; =
+charset=3Dutf-8"></head><body style=3D"overflow-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;"><table =
+cellspacing=3D"0" cellpadding=3D"0" style=3D"font-variant-caps: normal; =
+color: rgb(0, 0, 0); border-collapse: collapse;"><tbody><tr><td =
+valign=3D"middle" style=3D"width: 566px; padding: 1px;"><p =
+style=3D"margin: 0px; text-align: center; font-stretch: normal; =
+font-size: 22px; line-height: normal; font-family: Arial; =
+font-size-adjust: none; font-kerning: auto; font-variant-alternates: =
+normal; font-variant-ligatures: normal; font-variant-numeric: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+font-feature-settings: normal; font-optical-sizing: auto; =
+font-variation-settings: normal; color: rgb(19, 137, 180);"><span =
+style=3D"font-kerning: none;"><a =
+href=3D"https://eiah2023.sciencesconf.org/"><b>EIAH2023 : 11=C3=A8me =
+Conf=C3=A9rence sur les Environnements Informatiques pour =
+l'Apprentissage Humain</b><span style=3D"font-stretch: normal; =
+line-height: normal; font-size-adjust: none; font-variant-alternates: =
+normal; font-variant-ligatures: normal; font-variant-numeric: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+font-feature-settings: normal; font-optical-sizing: auto; =
+font-variation-settings: normal; font-kerning: =
+none;"><b></b></span></a></span></p><p style=3D"margin: 0px; =
+font-stretch: normal; font-size: 18px; line-height: normal; font-family: =
+Arial; font-size-adjust: none; font-kerning: auto; =
+font-variant-alternates: normal; font-variant-ligatures: normal; =
+font-variant-numeric: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; font-feature-settings: normal; =
+font-optical-sizing: auto; font-variation-settings: normal; color: =
+rgb(19, 137, 180);"><span style=3D"font-kerning: none;">La conf=C3=A9rence=
+ pluridisciplinaire francophone sur la conception et l'analyse des =
+environnements num=C3=A9riques pour l'=C3=A9ducation et la =
+formation</span></p></td></tr></tbody></table><p style=3D"margin: 0px =
+0px 12px; text-align: center; font-stretch: normal; line-height: normal; =
+font-family: Arial; font-size-adjust: none; font-kerning: auto; =
+font-variant-alternates: normal; font-variant-ligatures: normal; =
+font-variant-numeric: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; font-feature-settings: normal; =
+font-optical-sizing: auto; font-variation-settings: normal; color: =
+rgb(0, 0, 0);"><span style=3D"font-kerning: none;"><br></span></p><p =
+style=3D"margin: 0px 0px 12px; font-stretch: normal; line-height: =
+normal; font-family: Arial; font-size-adjust: none; font-kerning: auto; =
+font-variant-alternates: normal; font-variant-ligatures: normal; =
+font-variant-numeric: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; font-feature-settings: normal; =
+font-optical-sizing: auto; font-variation-settings: normal; color: =
+rgb(0, 0, 0);"><span style=3D"font-kerning: none;"><span =
+class=3D"Apple-tab-span" style=3D"white-space: pre;">	</span>La 11=C3=A8=
+me =C3=A9dition de la conf=C3=A9rence EIAH (<a =
+href=3D"https://eiah2023.sciencesconf.org/"><span style=3D"font-stretch: =
+normal; line-height: normal; font-size-adjust: none; =
+font-variant-alternates: normal; font-variant-ligatures: normal; =
+font-variant-numeric: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; font-feature-settings: normal; =
+font-optical-sizing: auto; font-variation-settings: normal; =
+font-kerning: none; color: rgb(53, 134, =
+255);">https://eiah2023.sciencesconf.org/</span></a>) aura lieu =C3=A0 =
+Brest du 12 au 16 juin 2023 sur le site d'IMT Atlantique.</span></p><p =
+style=3D"margin: 0px 0px 12px; text-align: justify; font-stretch: =
+normal; line-height: normal; font-family: Arial; font-size-adjust: none; =
+font-kerning: auto; font-variant-alternates: normal; =
+font-variant-ligatures: normal; font-variant-numeric: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+font-feature-settings: normal; font-optical-sizing: auto; =
+font-variation-settings: normal; color: rgb(0, 0, 0);"><span =
+style=3D"font-kerning: none;"><span class=3D"Apple-tab-span" =
+style=3D"white-space: pre;">	</span>La conf=C3=A9rence Environnements =
+Informatiques pour l=E2=80=99Apprentissage Humain (EIAH) est une =
+conf=C3=A9rence internationale francophone bisannuelle, plac=C3=A9e sous =
+l=E2=80=99=C3=A9gide de l=E2=80=99<a href=3D"http://www.atief.fr/"><span =
+style=3D"font-stretch: normal; line-height: normal; font-size-adjust: =
+none; font-variant-alternates: normal; font-variant-ligatures: normal; =
+font-variant-numeric: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; font-feature-settings: normal; =
+font-optical-sizing: auto; font-variation-settings: normal; =
+font-kerning: none; color: rgb(19, 137, =
+180);">ATIEF</span></a>&nbsp;(Association des Technologies de =
+l=E2=80=99Information pour l=E2=80=99=C3=89ducation et la =
+Formation).&nbsp;</span></p><p style=3D"margin: 0px 0px 12px; =
+text-align: justify; font-stretch: normal; line-height: normal; =
+font-family: Arial; font-size-adjust: none; font-kerning: auto; =
+font-variant-alternates: normal; font-variant-ligatures: normal; =
+font-variant-numeric: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; font-feature-settings: normal; =
+font-optical-sizing: auto; font-variation-settings: normal; color: =
+rgb(0, 0, 0);"><span class=3D"Apple-tab-span" style=3D"white-space: =
+pre;">	</span><span style=3D"font-kerning: none;">La conf=C3=A9rence =
+EIAH rassemble des chercheurs issus de disciplines diverses, en =
+provenance de France, mais aussi du Canada, de Suisse, de Belgique, du =
+Maghreb, etc. L=E2=80=99objectif de la conf=C3=A9rence est de permettre =
+=C3=A0 la communaut=C3=A9 scientifique francophone pluridisciplinaire de =
+se rencontrer pour pr=C3=A9senter et confronter ses travaux traitant des =
+questions de recherche sur l=E2=80=99=C3=A9ducation en g=C3=A9n=C3=A9ral, =
+et sur le num=C3=A9rique au service de l=E2=80=99=C3=A9ducation en =
+particulier. L=E2=80=99objectif de la conf=C3=A9rence EIAH=E2=80=992023 =
+est de dresser un =C3=A9tat de la recherche francophone sur la question =
+de l=E2=80=99adaptation dans les EIAH.</span></p><p style=3D"margin: 0px =
+0px 0px 36px; text-indent: -36px; font-stretch: normal; line-height: =
+normal; font-family: Arial; font-size-adjust: none; font-kerning: auto; =
+font-variant-alternates: normal; font-variant-ligatures: normal; =
+font-variant-numeric: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; font-feature-settings: normal; =
+font-optical-sizing: auto; font-variation-settings: normal; color: =
+rgb(0, 0, 0);"><a =
+href=3D"https://eiah2023.sciencesconf.org/resource/page/id/5">Programme</a=
+></p><ul><li style=3D"margin: 0px; text-align: justify; font-stretch: =
+normal; line-height: normal; font-family: Arial; font-size-adjust: none; =
+font-kerning: auto; font-variant-alternates: normal; =
+font-variant-ligatures: normal; font-variant-numeric: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+font-feature-settings: normal; font-optical-sizing: auto; =
+font-variation-settings: normal;"><span style=3D"font-kerning: none;">12 =
+juin : journ=C3=A9e Groupes de Travail ATIEF</span></li><li =
+style=3D"margin: 0px; text-align: justify; font-stretch: normal; =
+line-height: normal; font-family: Arial; font-size-adjust: none; =
+font-kerning: auto; font-variant-alternates: normal; =
+font-variant-ligatures: normal; font-variant-numeric: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+font-feature-settings: normal; font-optical-sizing: auto; =
+font-variation-settings: normal;"><span style=3D"font-kerning: none;">13 =
+juin : journ=C3=A9e d'ateliers th=C3=A9matiques&nbsp;</span></li><li =
+style=3D"margin: 0px; text-align: justify; font-stretch: normal; =
+line-height: normal; font-family: Arial; font-size-adjust: none; =
+font-kerning: auto; font-variant-alternates: normal; =
+font-variant-ligatures: normal; font-variant-numeric: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+font-feature-settings: normal; font-optical-sizing: auto; =
+font-variation-settings: normal;"><span style=3D"font-kerning: none;">14 =
+au 16 juin : conf=C3=A9rence principale&nbsp;</span></li></ul><p =
+style=3D"margin: 0px 0px 12px; text-align: justify; font-stretch: =
+normal; line-height: normal; font-family: Arial; font-size-adjust: none; =
+font-kerning: auto; font-variant-alternates: normal; =
+font-variant-ligatures: normal; font-variant-numeric: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+font-feature-settings: normal; font-optical-sizing: auto; =
+font-variation-settings: normal; color: rgb(53, 134, 255);"><span =
+style=3D"text-decoration: underline; font-kerning: none;"><a =
+href=3D"https://eiah2023.sciencesconf.org/resource/page/id/4">Conf=C3=A9re=
+nces invit=C3=A9es</a></span></p><ul><li style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal; font-family: Arial; =
+font-size-adjust: none; font-kerning: auto; font-variant-alternates: =
+normal; font-variant-ligatures: normal; font-variant-numeric: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+font-feature-settings: normal; font-optical-sizing: auto; =
+font-variation-settings: normal; color: rgb(0, 0, 0);"><span =
+style=3D"font-kerning: none;">Franck Amadieu "Soutenir l=E2=80=99autonomie=
+ des apprenants dans les EIAH avec des prompts et =
+feedbacks=E2=80=9D</span></li><li style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal; font-family: Arial; font-size-adjust: none; =
+font-kerning: auto; font-variant-alternates: normal; =
+font-variant-ligatures: normal; font-variant-numeric: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+font-feature-settings: normal; font-optical-sizing: auto; =
+font-variation-settings: normal; color: rgb(0, 0, 0);"><span =
+style=3D"font-kerning: none;">Val=C3=A9rie Psych=C3=A9 "Comprendre les =
+tuteurs intelligents et leur apport pour le milieu =
+=C3=A9ducatif"</span></li></ul><p style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal; font-size-adjust: none; font-kerning: auto; =
+font-variant-alternates: normal; font-variant-ligatures: normal; =
+font-variant-numeric: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; font-feature-settings: normal; =
+font-optical-sizing: auto; font-variation-settings: normal; color: =
+rgb(53, 134, 255); min-height: 14px;"><span style=3D"text-decoration: =
+underline; font-kerning: none;"></span><br></p><p style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal; font-size-adjust: none; =
+font-kerning: auto; font-variant-alternates: normal; =
+font-variant-ligatures: normal; font-variant-numeric: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+font-feature-settings: normal; font-optical-sizing: auto; =
+font-variation-settings: normal; color: rgb(53, 134, 255);"><span =
+style=3D"text-decoration: underline; font-kerning: none;"><a =
+href=3D"https://eiah2023.sciencesconf.org/resource/page/id/11">Inscription=
+<span style=3D"font-stretch: normal; line-height: normal; =
+font-size-adjust: none; font-variant-alternates: normal; =
+font-variant-ligatures: normal; font-variant-numeric: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+font-feature-settings: normal; font-optical-sizing: auto; =
+font-variation-settings: normal; font-kerning: =
+none;"></span></a></span></p><p style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal; font-family: Arial; font-size-adjust: none; =
+font-kerning: auto; font-variant-alternates: normal; =
+font-variant-ligatures: normal; font-variant-numeric: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+font-feature-settings: normal; font-optical-sizing: auto; =
+font-variation-settings: normal; color: rgb(0, 0, 0);">Avant le 7 mai =
+2023</p><ul><li style=3D"margin: 0px; font-stretch: normal; line-height: =
+normal; font-family: Arial; font-size-adjust: none; font-kerning: auto; =
+font-variant-alternates: normal; font-variant-ligatures: normal; =
+font-variant-numeric: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; font-feature-settings: normal; =
+font-optical-sizing: auto; font-variation-settings: normal; color: =
+rgb(0, 0, 0);"><span style=3D"font-kerning: none;">Plein tarif : 375 =E2=82=
+=AC TTC</span></li><li style=3D"margin: 0px; font-stretch: normal; =
+line-height: normal; font-family: Arial; font-size-adjust: none; =
+font-kerning: auto; font-variant-alternates: normal; =
+font-variant-ligatures: normal; font-variant-numeric: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+font-feature-settings: normal; font-optical-sizing: auto; =
+font-variation-settings: normal; color: rgb(0, 0, 0);"><span =
+style=3D"font-kerning: none;">Plein tarif membre ATIEF : 350 =E2=82=AC =
+TTC</span></li><li style=3D"margin: 0px; font-stretch: normal; =
+line-height: normal; font-family: Arial; font-size-adjust: none; =
+font-kerning: auto; font-variant-alternates: normal; =
+font-variant-ligatures: normal; font-variant-numeric: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+font-feature-settings: normal; font-optical-sizing: auto; =
+font-variation-settings: normal; color: rgb(0, 0, 0);"><span =
+style=3D"font-kerning: none;">Tarif =C3=A9tudiant : 300=E2=82=AC =
+TTC</span></li><li style=3D"margin: 0px; font-stretch: normal; =
+line-height: normal; font-family: Arial; font-size-adjust: none; =
+font-kerning: auto; font-variant-alternates: normal; =
+font-variant-ligatures: normal; font-variant-numeric: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+font-feature-settings: normal; font-optical-sizing: auto; =
+font-variation-settings: normal; color: rgb(0, 0, 0);"><span =
+style=3D"font-kerning: none;">Tarif =C3=A9tudiant membre ATIEF : 275=E2=82=
+=AC TTC</span></li></ul><p style=3D"margin: 0px; font-stretch: normal; =
+line-height: normal; font-family: Arial; font-size-adjust: none; =
+font-kerning: auto; font-variant-alternates: normal; =
+font-variant-ligatures: normal; font-variant-numeric: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+font-feature-settings: normal; font-optical-sizing: auto; =
+font-variation-settings: normal; color: rgb(0, 0, 0);">=C3=80 partir du =
+8 mai et jusqu=E2=80=99au 30 mai 2023</p><ul><li style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal; font-family: Arial; =
+font-size-adjust: none; font-kerning: auto; font-variant-alternates: =
+normal; font-variant-ligatures: normal; font-variant-numeric: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+font-feature-settings: normal; font-optical-sizing: auto; =
+font-variation-settings: normal; color: rgb(0, 0, 0);"><span =
+style=3D"font-kerning: none;">Plein tarif : 445 =E2=82=AC =
+TTC</span></li><li style=3D"margin: 0px; font-stretch: normal; =
+line-height: normal; font-family: Arial; font-size-adjust: none; =
+font-kerning: auto; font-variant-alternates: normal; =
+font-variant-ligatures: normal; font-variant-numeric: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+font-feature-settings: normal; font-optical-sizing: auto; =
+font-variation-settings: normal; color: rgb(0, 0, 0);"><span =
+style=3D"font-kerning: none;">Plein tarif membre ATIEF : 420 =E2=82=AC =
+TTC</span></li><li style=3D"margin: 0px; font-stretch: normal; =
+line-height: normal; font-family: Arial; font-size-adjust: none; =
+font-kerning: auto; font-variant-alternates: normal; =
+font-variant-ligatures: normal; font-variant-numeric: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+font-feature-settings: normal; font-optical-sizing: auto; =
+font-variation-settings: normal; color: rgb(0, 0, 0);"><span =
+style=3D"font-kerning: none;">Tarif =C3=A9tudiant : 325 =E2=82=AC =
+TTC</span></li><li style=3D"margin: 0px; font-stretch: normal; =
+line-height: normal; font-family: Arial; font-size-adjust: none; =
+font-kerning: auto; font-variant-alternates: normal; =
+font-variant-ligatures: normal; font-variant-numeric: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+font-feature-settings: normal; font-optical-sizing: auto; =
+font-variation-settings: normal; color: rgb(0, 0, 0);"><span =
+style=3D"font-kerning: none;">Tarif =C3=A9tudiant membre ATIEF : 300 =E2=82=
+=AC TTC</span></li></ul></body></html>=
+
+--Apple-Mail=_CB6950E1-99BC-4548-8D0D-F5785EDA9667--

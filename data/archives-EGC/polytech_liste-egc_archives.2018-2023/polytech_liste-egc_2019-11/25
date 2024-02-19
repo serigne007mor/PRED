@@ -1,0 +1,632 @@
+Return-Path: <chourouk.belheouane@univ-poitiers.fr>
+X-Original-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (BounceSMTP1.univ-nantes.prive [172.20.12.66])
+	by sympa6.univ-nantes.prive (Postfix) with ESMTP id 0A1F32292950
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Fri, 15 Nov 2019 16:05:01 +0100 (CET)
+Received: from mx3.d101.univ-nantes.fr (MX3.univ-nantes.fr [193.52.101.137])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id 089B66D1BC9
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Fri, 15 Nov 2019 16:05:01 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTP id 004E9414AC8A
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 15 Nov 2019 16:05:00 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -4.101
+X-Spam-Level:
+X-Spam-Status: No, score=-4.101 tagged_above=-1000 required=5
+	tests=[CRM114_SPAM=5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_MED=-10,
+	RCVD_IN_WSFF=0.01, SARE_HEAD_8BIT_SPAM=0.888, SPF_PASS=-0.001,
+	UN_PHISHING_PW=0.1, URIBL_BLOCKED=0.001] autolearn=disabled
+X-CRM114-Status: SPAM ( -12.5140 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=univ-poitiers.fr header.b=HVWAtBMP; dkim=pass (1024-bit key)
+	header.d=univ-poitiers.fr header.b=HVWAtBMP
+Received: from mx3.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 3wosyl8_j2-Z for <liste-egc@polytech.univ-nantes.fr>;
+	Fri, 15 Nov 2019 16:04:58 +0100 (CET)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from smtp.univ-poitiers.fr (actarus.univ-poitiers.fr [195.83.66.86])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTPS id 0C70E400DB20
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 15 Nov 2019 16:04:58 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by smtp.univ-poitiers.fr (Postfix) with ESMTP id D8E8F60ED303
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 15 Nov 2019 16:04:57 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=univ-poitiers.fr;
+	s=mail; t=1573830297;
+	bh=OtMtUEiJBlgpTifnkEQO0pSJi2YgKk9eXZxPuUSGzHY=;
+	h=Date:From:To:Subject:From;
+	b=HVWAtBMPf3mt09xrHnGfAfBHfWdWf+FM1gghOFKMV7Y0DMeH5FCsTko6pxFjUKxcq
+	 txOELU4lGt2lmVvTwbijvbM6gIi26ipKvnGNdPSow5zceIthC9XTCYo6wBu2MVwIPJ
+	 GBWS7FF9CUCPny3wiB4M25Ob/gGmMQX2qQae8GGs=
+X-Virus-Scanned: Debian amavisd-new at smtp.univ-poitiers.fr
+Received: from smtp.univ-poitiers.fr ([127.0.0.1])
+	by localhost (smtp.univ-poitiers.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 0LbVg5M3IBYs for <liste-egc@polytech.univ-nantes.fr>;
+	Fri, 15 Nov 2019 16:04:57 +0100 (CET)
+Received: from zimbra-mta-2.ldbal.sci.univ-poitiers.fr (zimbra-mta-2.ldbal.sci.univ-poitiers.fr [172.16.2.40])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(Client did not present a certificate)
+	by smtp.univ-poitiers.fr (Postfix) with ESMTPS id 98BC160ED302
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 15 Nov 2019 16:04:57 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=univ-poitiers.fr;
+	s=mail; t=1573830297;
+	bh=OtMtUEiJBlgpTifnkEQO0pSJi2YgKk9eXZxPuUSGzHY=;
+	h=Date:From:To:Subject:From;
+	b=HVWAtBMPf3mt09xrHnGfAfBHfWdWf+FM1gghOFKMV7Y0DMeH5FCsTko6pxFjUKxcq
+	 txOELU4lGt2lmVvTwbijvbM6gIi26ipKvnGNdPSow5zceIthC9XTCYo6wBu2MVwIPJ
+	 GBWS7FF9CUCPny3wiB4M25Ob/gGmMQX2qQae8GGs=
+Received: from zimbra-mta-2.ldbal.sci.univ-poitiers.fr (localhost.localdomain [127.0.0.1])
+	by zimbra-mta-2.ldbal.sci.univ-poitiers.fr (Postfix) with ESMTPS id 8F8AE974
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 15 Nov 2019 16:04:57 +0100 (CET)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by zimbra-mta-2.ldbal.sci.univ-poitiers.fr (Postfix) with ESMTP id 7E3C2977
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 15 Nov 2019 16:04:57 +0100 (CET)
+X-Virus-Scanned: amavisd-new at zimbra-mta-2.ldbal.sci.univ-poitiers.fr
+Received: from zimbra-mta-2.ldbal.sci.univ-poitiers.fr ([127.0.0.1])
+	by localhost (zimbra-mta-2.ldbal.sci.univ-poitiers.fr [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id b3QzkVqlGDsv for <liste-egc@polytech.univ-nantes.fr>;
+	Fri, 15 Nov 2019 16:04:57 +0100 (CET)
+Received: from zimbra-mailstore-7.ldbal.sci.univ-poitiers.fr (zimbra-haproxy.ldbal.sci.univ-poitiers.fr [172.16.2.41])
+	by zimbra-mta-2.ldbal.sci.univ-poitiers.fr (Postfix) with ESMTP id 5149D974
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 15 Nov 2019 16:04:57 +0100 (CET)
+Date: Fri, 15 Nov 2019 16:04:57 +0100 (CET)
+From: Chourouk Belheouane <chourouk.belheouane@univ-poitiers.fr>
+To: liste-egc@polytech.univ-nantes.fr
+Message-ID: <1801832403.574540.1573830297284.JavaMail.zimbra@univ-poitiers.fr>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="=_dea6ae31-ec10-4b61-9d61-da274129be1b"
+X-Originating-IP: [172.16.2.34]
+X-Mailer: Zimbra 8.8.11_GA_3799 (ZimbraWebClient - GC78 (Win)/8.8.11_GA_3787)
+Thread-Index: nmnMGCi1PHGdVvd4P4/gtEtb2BakHA==
+Thread-Topic: CfP - =?utf-8?Q?SADASC=E2=80=992020?= - 25-27 March 2020, Marrakesh, Morocco
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] CfP - =?UTF-8?Q?SADASC=E2=80=992020?= - 25-27 March
+ 2020, Marrakesh, Morocco
+
+--=_dea6ae31-ec10-4b61-9d61-da274129be1b
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+
+The Third International Conference on Smart Applications and Data Analysis =
+for Smart Cyber-Physical Systems (SADASC=E2=80=992020)=20
+
+Marrakesh, Morocco, 25-27 March 2020 ( [ http://sadasc.net/index.html | htt=
+p://sadasc.net/index.html ] )=20
+
+
+
+IMPORTANT DATES=20
+
+    * Full-paper submission: December 09, 2019=20
+    * Acceptance notification: January 19, 2020=20
+    * Camera ready papers due: January 29, 2020=20
+    * Early bird registration: January 29, 2020=20
+
+PUBLICATION=20
+
+    * All accepted papers will be published in CCIS, by Springer-Verlag .=
+=20
+    * Selected papers will be invited to submit an extended full paper for =
+peer-reviewed publication in special issues on several journals .=20
+
+KEYNOTE SPEAKERS=20
+
+    * Professor Boualem Benatallah, University New South Wales, Sydney, Aus=
+tralia=20
+    * Professor, Vice Rector Yannis Manolopolous, Open University of Cyprus=
+, Cyprus=20
+    * Professor Sebastian Ventura, University of Cordoba, Spain=20
+
+
+The Third International Conference on Smart Applications and Data Analysis =
+for Smart Cyber-Physical Systems (SADASC=E2=80=9920) will be held during Ma=
+rch 25-27, 2020 in Marrakesh, Morocco. SADASC=E2=80=9920 will bring togethe=
+r researchers and industry professionals contributing towards different pha=
+ses of designing, exploiting and maintaining Smart Cyber Physical Systems a=
+nd their Applications. These phases include requirements engineering, data =
+acquisition/cleaning, storage, deployment, exploitation, and visualization.=
+ Designing these systems also has to consider issues such as ethics, securi=
+ty and privacy. SADASC=E2=80=992020 follows the success of the Agadir (2016=
+) and Casablanca (2018).=20
+
+TOPICS=20
+
+Prospective authors are invited to submit original research papers; which a=
+re NOT submitted or published or under consideration anywhere in other conf=
+erences or journals. Topics of interest include, but are not limited to:=20
+
+Track 1: Designing and modeling Smart Applications and Cyber-Physical Syste=
+ms=20
+
+    * Development lifecycle management=20
+    * Eco-systems Cyber-Physical Systems=20
+    * Simulation of Applications and Cyber-Physical Systems=20
+    * Requirement Engineering for applications and cyber-physical systems=
+=20
+    * Multi-paradigm modeling and methodologies in cyber physical systems=
+=20
+    * Software Engineering for cyber-physical systems=20
+    * Stakeholders, barriers and requirements for cyber-physical systems=20
+    * Human in the loop in cyber-physical systems=20
+    * Control and Optimization for cyber-physical systems=20
+    * Dependability in cyber-physical systems (real-time, reliability, avai=
+lability, safety, security)=20
+
+Track 2: Network technologies & IOT=20
+
+    * New platforms and hardware designs for networked sensor systems=20
+    * Systems software, including operating systems and network stacks=20
+    * Low power operation, energy harvesting, and energy management=20
+    * New communication paradigms for ubiquitous connectivity=20
+    * Mobile and pervasive systems, including personal wearable devices, dr=
+ones and robots=20
+    * Sensing, actuation, and control=20
+    * Heterogeneous collaborative sensing=20
+    * Fault-tolerance, reliability, and verification=20
+    * 5G wireless=20
+    * Routing, scheduling, resource allocation, spectrum sharing=20
+    * Network optimization and learning=20
+    * Sensor-oriented data modeling=20
+    * Network protocols, coverage, connectivity, and longevity=20
+    * Simulation tools and environments=20
+    * In-network processing and aggregation=20
+    * Foundations of sensor networks=20
+    * Vehicular Communication Design=20
+
+Track 3: Data Acquisition, Storage and Infrastructures=20
+
+    * Data Variety Management=20
+    * Heterogeneity of Devices for Data Collection=20
+    * Data Cleaning/Transforming/Fusing=20
+    * Data Quality=20
+    * Uncertainty of Data=20
+    * Data Curation=20
+    * Data Lakes=20
+    * Data Heterogeneity Management=20
+    * Ontologies=20
+    * Data Provenance/Integration/Fusion=20
+    * Data Collection Workflows=20
+    * Meta-data=20
+    * Value Capturing=20
+    * Norms and Standards=20
+    * Data Compression/Summarization=20
+    * Cloud/Cluster Computing=20
+    * Main Memory Databases=20
+    * Indexing=20
+    * Co-processing of data (CPU, GPU, FPGA, etc.)=20
+    * Polystore Deployment=20
+    * Data partitioning/Allocation/Load Balancing=20
+    * Data algorithms and data structures on modern hardware=20
+    * Hardware systems for query processing=20
+    * Benchmarks=20
+
+Track 4: Exploitation and Exploration=20
+
+    * Programming Models/Environments for Cluster/Cloud Computing=20
+    * Parallel Databases/NoSQL solutions/in-memory databases=20
+    * Open Sources for data management=20
+    * Data Analysis/Visualization=20
+    * Non-functional Requirement Satisfaction (ethics, pricing, legal, cult=
+ural, and economic principles and regulations)=20
+    * Green Computing=20
+    * Recommendation Systems=20
+    * Security, privacy and trust=20
+    * Blockchains=20
+    * Prediction Modeling=20
+    * Machine Learning/Deep Learning=20
+    * Exploratory Data Analysis=20
+    * Economical Models for Smart applications/systems=20
+
+Track 5: Case studies=20
+
+    * Smart Data Applications in Science, Internet, Finance, Telecommunicat=
+ions, Business, Medicine, Healthcare, Government, Transportation, Industry,=
+ Manufacture, smart grid, robotics, automated and connected vehicles, bridg=
+es, nuclear power stations, public and private building, aviation, =E2=80=
+=A6=20
+    * Certification of Smart Data Solutions=20
+    * Practices and Experiences of Smart Data Project Deployments=20
+    * Ethic Issues about Smart Data Applications=20
+    * Smart Data Solution Reproduction=20
+    * Robotics=20
+    * Industry 4.0=20
+
+SUBMISSION GUIDELINES AND INSTRUCTIONS=20
+
+Authors are invited to submit English-language research and application pap=
+ers representing original, previously unpublished work. Duplicate submissio=
+ns are not allowed. Papers must be submitted as a single PDF document, via =
+the Easychair system: [ https://easychair.org/conferences/?conf=3Dsadasc20 =
+| https://easychair.org/conferences/?conf=3Dsadasc20 ] . Submissions must c=
+onform to Springer's CCIS style (Latex style only for camera-ready papers) =
+and should not exceed 14 pages. Submitted papers will be carefully evaluate=
+d based on originality, significance, technical soundness, and clarity of e=
+xposition. The program committee may decide to accept a submission as a sho=
+rt paper if it reports interesting results, but does not justify a publicat=
+ion as a full paper. All accepted papers including short papers will be pub=
+lished in Springer CCIS series. An author of an accepted paper must registe=
+r to SADASC 2020 in order to have the paper published. Each accepted paper =
+must be presented at the conference by one of the authors.=20
+
+
+GENERAL CHAIRS=20
+
+    * Mohamed Hamlich, ENSAM, Hassan II University, Morocco=20
+
+PROGRAM COMMITTEE CO-CHAIRS=20
+
+    * Carlos Ordonez, University of Houston, USA.=20
+    * Anirban Mondal, Ashoka University, India=20
+    * Ladjel Bellatreche, ISAE-ENSMA, Poitiers, France=20
+
+PC MEMBERS=20
+
+    * [ http://sadasc.net/index.html#Committes-id | http://sadasc.net/index=
+.html#Committes-id ]=20
+
+
+
+
+
+
+Chourouk BELHEOUANE=20
+---------------------------------------------------------------------------=
+------=20
+Lecturer at Poitiers University=20
+LIAS Laboratory (ISAE-ENSMA)=20
+B407, 1 avenue Cl=C3=A9ment Ader BP 40109, 86961 Chasseneuil - France=20
++33(0) 549 498 336=20
+https://www.lias-lab.fr/members/chouroukbelheouane=20
+---------------------------------------------------------------------------=
+------=20
+
+--=_dea6ae31-ec10-4b61-9d61-da274129be1b
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><body><div style=3D"font-family: arial, helvetica, sans-serif; font-s=
+ize: 12pt; color: #000000"><div style=3D"font-family: arial, helvetica, san=
+s-serif; font-size: 12pt; color: #000000"> <!--StartFragment--><div style=
+=3D"color: #222222; font-family: Arial, Helvetica, sans-serif; font-size: s=
+mall; font-style: normal; font-variant-ligatures: normal; font-variant-caps=
+: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent=
+: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: =
+0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; text-decora=
+tion-style: initial; text-decoration-color: initial; text-align: center;" d=
+ata-mce-style=3D"color: #222222; font-family: Arial, Helvetica, sans-serif;=
+ font-size: small; font-style: normal; font-variant-ligatures: normal; font=
+-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2=
+; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; w=
+ord-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff=
+; text-decoration-style: initial; text-decoration-color: initial; text-alig=
+n: center;"><b><span style=3D"color: #0000ff; font-size: large;"><br data-m=
+ce-bogus=3D"1"></span></b></div><div style=3D"color: #222222; font-family: =
+Arial, Helvetica, sans-serif; font-size: small; font-style: normal; font-va=
+riant-ligatures: normal; font-variant-caps: normal; font-weight: 400; lette=
+r-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; whit=
+e-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0=
+px; background-color: #ffffff; text-decoration-style: initial; text-decorat=
+ion-color: initial; text-align: center;" data-mce-style=3D"color: #222222; =
+font-family: Arial, Helvetica, sans-serif; font-size: small; font-style: no=
+rmal; font-variant-ligatures: normal; font-variant-caps: normal; font-weigh=
+t: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transfor=
+m: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-st=
+roke-width: 0px; background-color: #ffffff; text-decoration-style: initial;=
+ text-decoration-color: initial; text-align: center;"><b><span style=3D"col=
+or: #0000ff; font-size: large;">The Third International Conference on Smart=
+ Applications and Data Analysis for Smart Cyber-Physical Systems (SADASC=E2=
+=80=992020)</span></b></div><div style=3D"color: #222222; font-family: Aria=
+l, Helvetica, sans-serif; font-size: small; font-style: normal; font-varian=
+t-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-sp=
+acing: normal; orphans: 2; text-indent: 0px; text-transform: none; white-sp=
+ace: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+background-color: #ffffff; text-decoration-style: initial; text-decoration-=
+color: initial; text-align: center;" data-mce-style=3D"color: #222222; font=
+-family: Arial, Helvetica, sans-serif; font-size: small; font-style: normal=
+; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 4=
+00; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: n=
+one; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke=
+-width: 0px; background-color: #ffffff; text-decoration-style: initial; tex=
+t-decoration-color: initial; text-align: center;"><br></div><div style=3D"c=
+olor: #222222; font-family: Arial, Helvetica, sans-serif; font-size: small;=
+ font-style: normal; font-variant-ligatures: normal; font-variant-caps: nor=
+mal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px=
+; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; background-color: #ffffff; text-decoration-=
+style: initial; text-decoration-color: initial; text-align: center;" data-m=
+ce-style=3D"color: #222222; font-family: Arial, Helvetica, sans-serif; font=
+-size: small; font-style: normal; font-variant-ligatures: normal; font-vari=
+ant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; tex=
+t-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-s=
+pacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; tex=
+t-decoration-style: initial; text-decoration-color: initial; text-align: ce=
+nter;"><span style=3D"font-size: large;"><b>Marrakesh, Morocco, 25-27 March=
+ 2020 (</b></span><b style=3D"color: #000000; font-size: large;" data-mce-s=
+tyle=3D"color: #000000; font-size: large;"><a href=3D"http://sadasc.net/ind=
+ex.html" target=3D"_blank" data-saferedirecturl=3D"https://www.google.com/u=
+rl?q=3Dhttp://sadasc.net/index.html&amp;source=3Dgmail&amp;ust=3D1573916393=
+124000&amp;usg=3DAFQjCNGjFxNZ3tNbKCswk28fx2UFSFebNg" style=3D"color: #1155c=
+c;" rel=3D"noopener" data-mce-href=3D"http://sadasc.net/index.html" data-mc=
+e-style=3D"color: #1155cc;">http://sadasc.net/index.html</a>)</b></div><div=
+ style=3D"color: #222222; font-family: Arial, Helvetica, sans-serif; font-s=
+ize: small; font-style: normal; font-variant-ligatures: normal; font-varian=
+t-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-=
+align: start; text-indent: 0px; text-transform: none; white-space: normal; =
+widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-co=
+lor: #ffffff; text-decoration-style: initial; text-decoration-color: initia=
+l;" data-mce-style=3D"color: #222222; font-family: Arial, Helvetica, sans-s=
+erif; font-size: small; font-style: normal; font-variant-ligatures: normal;=
+ font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orpha=
+ns: 2; text-align: start; text-indent: 0px; text-transform: none; white-spa=
+ce: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; b=
+ackground-color: #ffffff; text-decoration-style: initial; text-decoration-c=
+olor: initial;"><br></div><br style=3D"color: #222222; font-family: Arial, =
+Helvetica, sans-serif; font-size: small; font-style: normal; font-variant-l=
+igatures: normal; font-variant-caps: normal; font-weight: 400; letter-spaci=
+ng: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform=
+: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-str=
+oke-width: 0px; background-color: #ffffff; text-decoration-style: initial; =
+text-decoration-color: initial;" data-mce-style=3D"color: #222222; font-fam=
+ily: Arial, Helvetica, sans-serif; font-size: small; font-style: normal; fo=
+nt-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; te=
+xt-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -web=
+kit-text-stroke-width: 0px; background-color: #ffffff; text-decoration-styl=
+e: initial; text-decoration-color: initial;"><br style=3D"color: #222222; f=
+ont-family: Arial, Helvetica, sans-serif; font-size: small; font-style: nor=
+mal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight=
+: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: =
+0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0p=
+x; -webkit-text-stroke-width: 0px; background-color: #ffffff; text-decorati=
+on-style: initial; text-decoration-color: initial;" data-mce-style=3D"color=
+: #222222; font-family: Arial, Helvetica, sans-serif; font-size: small; fon=
+t-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;=
+ font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; t=
+ext-indent: 0px; text-transform: none; white-space: normal; widows: 2; word=
+-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; t=
+ext-decoration-style: initial; text-decoration-color: initial;"><b style=3D=
+"color: #222222; font-family: Arial, Helvetica, sans-serif; font-size: smal=
+l; font-style: normal; font-variant-ligatures: normal; font-variant-caps: n=
+ormal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: =
+0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0p=
+x; -webkit-text-stroke-width: 0px; background-color: #ffffff; text-decorati=
+on-style: initial; text-decoration-color: initial;" data-mce-style=3D"color=
+: #222222; font-family: Arial, Helvetica, sans-serif; font-size: small; fon=
+t-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;=
+ letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; t=
+ext-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -we=
+bkit-text-stroke-width: 0px; background-color: #ffffff; text-decoration-sty=
+le: initial; text-decoration-color: initial;"><span style=3D"color: #0000ff=
+;">IMPORTANT DATES</span></b><br style=3D"color: #222222; font-family: Aria=
+l, Helvetica, sans-serif; font-size: small; font-style: normal; font-varian=
+t-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-sp=
+acing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transf=
+orm: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-=
+stroke-width: 0px; background-color: #ffffff; text-decoration-style: initia=
+l; text-decoration-color: initial;" data-mce-style=3D"color: #222222; font-=
+family: Arial, Helvetica, sans-serif; font-size: small; font-style: normal;=
+ font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 40=
+0; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px;=
+ text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -=
+webkit-text-stroke-width: 0px; background-color: #ffffff; text-decoration-s=
+tyle: initial; text-decoration-color: initial;"><div style=3D"color: #22222=
+2; font-family: Arial, Helvetica, sans-serif; font-size: small; font-style:=
+ normal; font-variant-ligatures: normal; font-variant-caps: normal; font-we=
+ight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-inde=
+nt: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing=
+: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; text-deco=
+ration-style: initial; text-decoration-color: initial;" data-mce-style=3D"c=
+olor: #222222; font-family: Arial, Helvetica, sans-serif; font-size: small;=
+ font-style: normal; font-variant-ligatures: normal; font-variant-caps: nor=
+mal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: star=
+t; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #fffff=
+f; text-decoration-style: initial; text-decoration-color: initial;"><ul><li=
+ style=3D"margin-left: 15px;" data-mce-style=3D"margin-left: 15px;">Full-pa=
+per submission:<span>&nbsp;</span><b>December 09, 2019</b></li><li style=3D=
+"margin-left: 15px;" data-mce-style=3D"margin-left: 15px;">Acceptance notif=
+ication: January 19, 2020</li><li style=3D"margin-left: 15px;" data-mce-sty=
+le=3D"margin-left: 15px;">Camera ready papers due: January 29, 2020</li><li=
+ style=3D"margin-left: 15px;" data-mce-style=3D"margin-left: 15px;">Early b=
+ird registration: January 29, 2020</li></ul><br><b><span style=3D"color: #0=
+000ff;">PUBLICATION</span></b><br><ul><li style=3D"margin-left: 15px;" data=
+-mce-style=3D"margin-left: 15px;"><b>All accepted papers will be published =
+in CCIS, by Springer-Verlag</b>.</li><li style=3D"margin-left: 15px;" data-=
+mce-style=3D"margin-left: 15px;"><b>Selected papers will be invited to subm=
+it an extended full paper for peer-reviewed publication in special issues o=
+n several journals</b>.</li></ul><br><b><span style=3D"color: #0000ff;">KEY=
+NOTE SPEAKERS</span></b><br><ul><li style=3D"margin-left: 15px;" data-mce-s=
+tyle=3D"margin-left: 15px;">Professor Boualem Benatallah, University New So=
+uth Wales, Sydney, Australia</li><li style=3D"margin-left: 15px;" data-mce-=
+style=3D"margin-left: 15px;">Professor, Vice Rector Yannis Manolopolous, Op=
+en University of Cyprus, Cyprus</li><li style=3D"margin-left: 15px;" data-m=
+ce-style=3D"margin-left: 15px;">Professor Sebastian Ventura, University of =
+Cordoba, Spain</li></ul><br><br>The Third International Conference on Smart=
+ Applications and Data Analysis for Smart Cyber-Physical Systems (SADASC=E2=
+=80=9920) will be held during March 25-27, 2020 in Marrakesh, Morocco. SADA=
+SC=E2=80=9920 will bring together researchers and industry professionals co=
+ntributing towards different phases of designing, exploiting and maintainin=
+g Smart Cyber Physical Systems and their Applications. These phases include=
+ requirements engineering, data acquisition/cleaning, storage, deployment, =
+exploitation, and visualization. Designing these systems also has to consid=
+er issues such as ethics, security and privacy. SADASC=E2=80=992020 follows=
+ the success of the Agadir (2016) and Casablanca (2018).<br><br><b><span st=
+yle=3D"color: #0000ff;">TOPICS</span></b><br><br>Prospective authors are in=
+vited to submit original research papers; which are NOT submitted or publis=
+hed or under consideration anywhere in other conferences or journals. Topic=
+s of interest include, but are not limited to:<br><br><b>Track 1:</b><span>=
+&nbsp;</span>Designing and modeling Smart Applications and Cyber-Physical S=
+ystems<br><ul><li style=3D"margin-left: 15px;" data-mce-style=3D"margin-lef=
+t: 15px;">Development lifecycle management</li><li style=3D"margin-left: 15=
+px;" data-mce-style=3D"margin-left: 15px;">Eco-systems Cyber-Physical Syste=
+ms</li><li style=3D"margin-left: 15px;" data-mce-style=3D"margin-left: 15px=
+;">Simulation of Applications and Cyber-Physical Systems</li><li style=3D"m=
+argin-left: 15px;" data-mce-style=3D"margin-left: 15px;">Requirement Engine=
+ering for applications and cyber-physical systems</li><li style=3D"margin-l=
+eft: 15px;" data-mce-style=3D"margin-left: 15px;">Multi-paradigm modeling a=
+nd methodologies in cyber physical systems</li><li style=3D"margin-left: 15=
+px;" data-mce-style=3D"margin-left: 15px;">Software Engineering for cyber-p=
+hysical systems</li><li style=3D"margin-left: 15px;" data-mce-style=3D"marg=
+in-left: 15px;">Stakeholders, barriers and requirements for cyber-physical =
+systems</li><li style=3D"margin-left: 15px;" data-mce-style=3D"margin-left:=
+ 15px;">Human in the loop in cyber-physical systems</li><li style=3D"margin=
+-left: 15px;" data-mce-style=3D"margin-left: 15px;">Control and Optimizatio=
+n for cyber-physical systems</li><li style=3D"margin-left: 15px;" data-mce-=
+style=3D"margin-left: 15px;">Dependability in cyber-physical systems (real-=
+time, reliability, availability, safety, security)</li></ul><div><b>Track 2=
+:</b><span>&nbsp;</span>Network technologies &amp; IOT<br><ul><li style=3D"=
+margin-left: 15px;" data-mce-style=3D"margin-left: 15px;">New platforms and=
+ hardware designs for networked sensor systems</li><li style=3D"margin-left=
+: 15px;" data-mce-style=3D"margin-left: 15px;">Systems software, including =
+operating systems and network stacks</li><li style=3D"margin-left: 15px;" d=
+ata-mce-style=3D"margin-left: 15px;">Low power operation, energy harvesting=
+, and energy management</li><li style=3D"margin-left: 15px;" data-mce-style=
+=3D"margin-left: 15px;">New communication paradigms for ubiquitous connecti=
+vity</li><li style=3D"margin-left: 15px;" data-mce-style=3D"margin-left: 15=
+px;">Mobile and pervasive systems, including personal wearable devices, dro=
+nes and robots</li><li style=3D"margin-left: 15px;" data-mce-style=3D"margi=
+n-left: 15px;">Sensing, actuation, and control</li><li style=3D"margin-left=
+: 15px;" data-mce-style=3D"margin-left: 15px;">Heterogeneous collaborative =
+sensing</li><li style=3D"margin-left: 15px;" data-mce-style=3D"margin-left:=
+ 15px;">Fault-tolerance, reliability, and verification</li><li style=3D"mar=
+gin-left: 15px;" data-mce-style=3D"margin-left: 15px;">5G wireless</li><li =
+style=3D"margin-left: 15px;" data-mce-style=3D"margin-left: 15px;">Routing,=
+ scheduling, resource allocation, spectrum sharing</li><li style=3D"margin-=
+left: 15px;" data-mce-style=3D"margin-left: 15px;">Network optimization and=
+ learning</li><li style=3D"margin-left: 15px;" data-mce-style=3D"margin-lef=
+t: 15px;">Sensor-oriented data modeling</li><li style=3D"margin-left: 15px;=
+" data-mce-style=3D"margin-left: 15px;">Network protocols, coverage, connec=
+tivity, and longevity</li><li style=3D"margin-left: 15px;" data-mce-style=
+=3D"margin-left: 15px;">Simulation tools and environments</li><li style=3D"=
+margin-left: 15px;" data-mce-style=3D"margin-left: 15px;">In-network proces=
+sing and aggregation</li><li style=3D"margin-left: 15px;" data-mce-style=3D=
+"margin-left: 15px;">Foundations of sensor networks</li><li style=3D"margin=
+-left: 15px;" data-mce-style=3D"margin-left: 15px;">Vehicular Communication=
+ Design</li></ul><b>Track 3:</b><span>&nbsp;</span>Data Acquisition, Storag=
+e and Infrastructures<br><ul><li style=3D"margin-left: 15px;" data-mce-styl=
+e=3D"margin-left: 15px;">Data Variety Management</li><li style=3D"margin-le=
+ft: 15px;" data-mce-style=3D"margin-left: 15px;">Heterogeneity of Devices f=
+or Data Collection</li><li style=3D"margin-left: 15px;" data-mce-style=3D"m=
+argin-left: 15px;">Data Cleaning/Transforming/Fusing</li><li style=3D"margi=
+n-left: 15px;" data-mce-style=3D"margin-left: 15px;">Data Quality</li><li s=
+tyle=3D"margin-left: 15px;" data-mce-style=3D"margin-left: 15px;">Uncertain=
+ty of Data</li><li style=3D"margin-left: 15px;" data-mce-style=3D"margin-le=
+ft: 15px;">Data Curation</li><li style=3D"margin-left: 15px;" data-mce-styl=
+e=3D"margin-left: 15px;">Data Lakes</li><li style=3D"margin-left: 15px;" da=
+ta-mce-style=3D"margin-left: 15px;">Data Heterogeneity Management</li><li s=
+tyle=3D"margin-left: 15px;" data-mce-style=3D"margin-left: 15px;">Ontologie=
+s</li><li style=3D"margin-left: 15px;" data-mce-style=3D"margin-left: 15px;=
+">Data Provenance/Integration/Fusion</li><li style=3D"margin-left: 15px;" d=
+ata-mce-style=3D"margin-left: 15px;">Data Collection Workflows</li><li styl=
+e=3D"margin-left: 15px;" data-mce-style=3D"margin-left: 15px;">Meta-data</l=
+i><li style=3D"margin-left: 15px;" data-mce-style=3D"margin-left: 15px;">Va=
+lue Capturing</li><li style=3D"margin-left: 15px;" data-mce-style=3D"margin=
+-left: 15px;">Norms and Standards</li><li style=3D"margin-left: 15px;" data=
+-mce-style=3D"margin-left: 15px;">Data Compression/Summarization</li><li st=
+yle=3D"margin-left: 15px;" data-mce-style=3D"margin-left: 15px;">Cloud/Clus=
+ter Computing</li><li style=3D"margin-left: 15px;" data-mce-style=3D"margin=
+-left: 15px;">Main Memory Databases</li><li style=3D"margin-left: 15px;" da=
+ta-mce-style=3D"margin-left: 15px;">Indexing</li><li style=3D"margin-left: =
+15px;" data-mce-style=3D"margin-left: 15px;">Co-processing of data (CPU, GP=
+U, FPGA, etc.)</li><li style=3D"margin-left: 15px;" data-mce-style=3D"margi=
+n-left: 15px;">Polystore Deployment</li><li style=3D"margin-left: 15px;" da=
+ta-mce-style=3D"margin-left: 15px;">Data partitioning/Allocation/Load Balan=
+cing</li><li style=3D"margin-left: 15px;" data-mce-style=3D"margin-left: 15=
+px;">Data algorithms and data structures on modern hardware</li><li style=
+=3D"margin-left: 15px;" data-mce-style=3D"margin-left: 15px;">Hardware syst=
+ems for query processing</li><li style=3D"margin-left: 15px;" data-mce-styl=
+e=3D"margin-left: 15px;">Benchmarks</li></ul><b>Track 4:</b><span>&nbsp;</s=
+pan>Exploitation and Exploration<br><ul><li style=3D"margin-left: 15px;" da=
+ta-mce-style=3D"margin-left: 15px;">Programming Models/Environments for Clu=
+ster/Cloud Computing</li><li style=3D"margin-left: 15px;" data-mce-style=3D=
+"margin-left: 15px;">Parallel Databases/NoSQL solutions/in-memory databases=
+</li><li style=3D"margin-left: 15px;" data-mce-style=3D"margin-left: 15px;"=
+>Open Sources for data management</li><li style=3D"margin-left: 15px;" data=
+-mce-style=3D"margin-left: 15px;">Data Analysis/Visualization</li><li style=
+=3D"margin-left: 15px;" data-mce-style=3D"margin-left: 15px;">Non-functiona=
+l Requirement Satisfaction (ethics, pricing, legal, cultural, and economic =
+principles and regulations)</li><li style=3D"margin-left: 15px;" data-mce-s=
+tyle=3D"margin-left: 15px;">Green Computing</li><li style=3D"margin-left: 1=
+5px;" data-mce-style=3D"margin-left: 15px;">Recommendation Systems</li><li =
+style=3D"margin-left: 15px;" data-mce-style=3D"margin-left: 15px;">Security=
+, privacy and trust</li><li style=3D"margin-left: 15px;" data-mce-style=3D"=
+margin-left: 15px;">Blockchains</li><li style=3D"margin-left: 15px;" data-m=
+ce-style=3D"margin-left: 15px;">Prediction Modeling</li><li style=3D"margin=
+-left: 15px;" data-mce-style=3D"margin-left: 15px;">Machine Learning/Deep L=
+earning</li><li style=3D"margin-left: 15px;" data-mce-style=3D"margin-left:=
+ 15px;">Exploratory Data Analysis</li><li style=3D"margin-left: 15px;" data=
+-mce-style=3D"margin-left: 15px;">Economical Models for Smart applications/=
+systems</li></ul><b>Track 5:</b><span>&nbsp;</span>Case studies<br><ul><li =
+style=3D"margin-left: 15px;" data-mce-style=3D"margin-left: 15px;">Smart Da=
+ta Applications in Science, Internet, Finance, Telecommunications, Business=
+, Medicine, Healthcare, Government, Transportation, Industry, Manufacture, =
+smart grid, robotics, automated and connected vehicles, bridges, nuclear po=
+wer stations, public and private building, aviation, =E2=80=A6</li><li styl=
+e=3D"margin-left: 15px;" data-mce-style=3D"margin-left: 15px;">Certificatio=
+n of Smart Data Solutions</li><li style=3D"margin-left: 15px;" data-mce-sty=
+le=3D"margin-left: 15px;">Practices and Experiences of Smart Data Project D=
+eployments</li><li style=3D"margin-left: 15px;" data-mce-style=3D"margin-le=
+ft: 15px;">Ethic Issues about Smart Data Applications</li><li style=3D"marg=
+in-left: 15px;" data-mce-style=3D"margin-left: 15px;">Smart Data Solution R=
+eproduction</li><li style=3D"margin-left: 15px;" data-mce-style=3D"margin-l=
+eft: 15px;">Robotics</li><li style=3D"margin-left: 15px;" data-mce-style=3D=
+"margin-left: 15px;">Industry 4.0</li></ul><br><b><span style=3D"color: #00=
+00ff;">SUBMISSION GUIDELINES AND INSTRUCTIONS</span></b><br><br>Authors are=
+ invited to submit English-language research and application papers represe=
+nting original, previously unpublished work. Duplicate submissions are not =
+allowed. Papers must be submitted as a single PDF document, via the Easycha=
+ir system:<span>&nbsp;</span><a href=3D"https://easychair.org/conferences/?=
+conf=3Dsadasc20" target=3D"_blank" data-saferedirecturl=3D"https://www.goog=
+le.com/url?q=3Dhttps://easychair.org/conferences/?conf%3Dsadasc20&amp;sourc=
+e=3Dgmail&amp;ust=3D1573916393124000&amp;usg=3DAFQjCNHEbbSrPChT1ZsZKowpJQ7R=
+RaYHyg" style=3D"color: #1155cc;" rel=3D"noopener" data-mce-href=3D"https:/=
+/easychair.org/conferences/?conf=3Dsadasc20" data-mce-style=3D"color: #1155=
+cc;">https://easychair.org/<wbr>conferences/?conf=3Dsadasc20</a>. Submissio=
+ns must conform to Springer's CCIS style (Latex style only for camera-ready=
+ papers) and should not exceed 14 pages. Submitted papers will be carefully=
+ evaluated based on originality, significance, technical soundness, and cla=
+rity of exposition. The program committee may decide to accept a submission=
+ as a short paper if it reports interesting results, but does not justify a=
+ publication as a full paper. All accepted papers including short papers wi=
+ll be published in Springer CCIS series. An author of an accepted paper mus=
+t register to SADASC 2020 in order to have the paper published. Each accept=
+ed paper must be presented at the conference by one of the authors.<br><br>=
+<br><b><span style=3D"color: #0000ff;">GENERAL CHAIRS</span></b><br><ul><li=
+ style=3D"margin-left: 15px;" data-mce-style=3D"margin-left: 15px;">Mohamed=
+ Hamlich, ENSAM, Hassan II University, Morocco</li></ul><b><span style=3D"c=
+olor: #0000ff;"><br>PROGRAM COMMITTEE CO-CHAIRS</span></b><br><ul><li style=
+=3D"margin-left: 15px;" data-mce-style=3D"margin-left: 15px;">Carlos Ordone=
+z, University of Houston, USA.</li><li style=3D"margin-left: 15px;" data-mc=
+e-style=3D"margin-left: 15px;">Anirban Mondal, Ashoka University, India</li=
+><li style=3D"margin-left: 15px;" data-mce-style=3D"margin-left: 15px;">Lad=
+jel Bellatreche, ISAE-ENSMA, Poitiers, France</li></ul><br><b><span style=
+=3D"color: #0000ff;">PC MEMBERS</span></b><br><ul><li style=3D"margin-left:=
+ 15px;" data-mce-style=3D"margin-left: 15px;"><a href=3D"http://sadasc.net/=
+index.html#Committes-id" target=3D"_blank" data-saferedirecturl=3D"https://=
+www.google.com/url?q=3Dhttp://sadasc.net/index.html%23Committes-id&amp;sour=
+ce=3Dgmail&amp;ust=3D1573916393124000&amp;usg=3DAFQjCNGPlYQupsikxgMsN44wuXD=
+GVVfAGQ" style=3D"color: #1155cc;" rel=3D"noopener" data-mce-href=3D"http:/=
+/sadasc.net/index.html#Committes-id" data-mce-style=3D"color: #1155cc;">htt=
+p://sadasc.net/index.html#<wbr>Committes-id</a></li></ul></div></div><!--En=
+dFragment--> </div><div style=3D"font-family: arial, helvetica, sans-serif;=
+ font-size: 12pt; color: #000000"><br data-mce-bogus=3D"1"></div><div style=
+=3D"font-family: arial, helvetica, sans-serif; font-size: 12pt; color: #000=
+000"><br data-mce-bogus=3D"1"></div><div style=3D"font-family: arial, helve=
+tica, sans-serif; font-size: 12pt; color: #000000"><br data-mce-bogus=3D"1"=
+></div><div style=3D"font-family: arial, helvetica, sans-serif; font-size: =
+12pt; color: #000000"><br data-mce-bogus=3D"1"></div><div style=3D"font-fam=
+ily: arial, helvetica, sans-serif; font-size: 12pt; color: #000000"><br><br=
+><div data-marker=3D"__SIG_PRE__">Chourouk BELHEOUANE<br>------------------=
+---------------------------------------------------------------<br>Lecturer=
+ at Poitiers University<br>LIAS Laboratory (ISAE-ENSMA)<br>B407, 1 avenue C=
+l=C3=A9ment Ader BP 40109, 86961 Chasseneuil - France<br>+33(0) 549 498 336=
+<br>https://www.lias-lab.fr/members/chouroukbelheouane<br>-----------------=
+----------------------------------------------------------------</div></div=
+></div></body></html>
+--=_dea6ae31-ec10-4b61-9d61-da274129be1b--

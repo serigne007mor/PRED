@@ -1,0 +1,617 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (bouncesmtp2.u12.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id D9D0014017C0
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed, 29 Nov 2023 15:23:51 +0100 (CET)
+Received: from mx1.univ-nantes.fr (MX1.univ-nantes.fr [193.52.101.135])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id D56AB96B
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed, 29 Nov 2023 15:23:51 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.univ-nantes.fr (Postfix) with ESMTP id CDC9C120009
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 29 Nov 2023 15:23:51 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 4.506
+X-Spam-Level: ****
+X-Spam-Status: No, score=4.506 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_FONT_LOW_CONTRAST=0.001,
+	HTML_MESSAGE=0.001, KAM_SHORT=0.001, LONGLN_LOW_CONTRAST=2.494,
+	MR_NOT_ATTRIBUTED_IP=0.2, NO_RDNS=0.5, NO_RDNS2=0.01,
+	RCVD_HELO_IP_MISMATCH=1.186, RCVD_IN_MSPIKE_H3=0.001,
+	RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001,
+	SPF_PASS=-0.001, T_REMOTE_IMAGE=0.01, T_SCC_BODY_TEXT_LINE=-0.01,
+	UN_PHISHING_COMPTE=0.1, UN_PHISHING_PW=0.1, URIBL_BLOCKED=0.001]
+	autolearn=disabled
+X-CRM114-Status: UNSURE ( 4.9667 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=uvsq.fr
+Received: from mx1.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id NJr5NxtOcxXe for <liste-egc@polytech.univ-nantes.fr>;
+	Wed, 29 Nov 2023 15:23:48 +0100 (CET)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=194.254.240.33; helo=smtpout01-ext2.partage.renater.fr; envelope-from=zaineb.chelly-dagdia@uvsq.fr; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=none dis=none) header.from=uvsq.fr
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=uvsq.fr
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (2048-bit key; unprotected) header.d=uvsq.fr header.i=@uvsq.fr header.a=rsa-sha256 header.s=5E574DC4-0010-4D8A-A103-3C5BB1B12C60 header.b=zU2qJgEx;
+	dkim-atps=neutral
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from smtpout01-ext2.partage.renater.fr (smtpout01-ext2.partage.renater.fr [194.254.240.33])
+	by mx1.univ-nantes.fr (Postfix) with ESMTPS id B5C0E1200C6
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 29 Nov 2023 15:23:48 +0100 (CET)
+Received: from zmtaauth03.partage.renater.fr (zmtaauth03.partage.renater.fr [194.254.240.26])
+	by smtpout10.partage.renater.fr (Postfix) with ESMTP id 4BD6464171;
+	Wed, 29 Nov 2023 15:23:45 +0100 (CET)
+Received: from zmtaauth03.partage.renater.fr (localhost [127.0.0.1])
+	by zmtaauth03.partage.renater.fr (Postfix) with ESMTPS id 9B93F80130;
+	Wed, 29 Nov 2023 15:23:44 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by zmtaauth03.partage.renater.fr (Postfix) with ESMTP id 8441780113;
+	Wed, 29 Nov 2023 15:23:44 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zmtaauth03.partage.renater.fr 8441780113
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uvsq.fr;
+	s=5E574DC4-0010-4D8A-A103-3C5BB1B12C60; t=1701267824;
+	bh=GFFnK4jqz0vzSIA/w3Exz6Z4sQMhXx+W4yt9sNftg3s=;
+	h=From:To:Date:Message-ID:MIME-Version;
+	b=zU2qJgEx5qJcoW2bDyogEsEFi38A7/N6wrOhMfG/0+AKmX3QMZv+oNFNcku4kz5D4
+	 TlOz64MbUaJV+9sYp+JGi3FW5gRxLulhksFMcOFjcK3EjAJYHduqfhrrd75MvQhKNC
+	 CyjZq0eSH6C1+ARBB2tl2stS3hY6jtV8Uxjr7B2a3IvhSPhYDJyj5wA3y8o9rrrpzl
+	 4N/RT27pZCs+RQqvW3saxYUMWc7NlN+IufW4j46dfwgtnX99TNIO6IlWnMkUo115fx
+	 1QvQreNc1jJh+xFc3T9C3VqFYM3B9ug7K+EOazLx6J09ELWaLM1zlIPWMeLY0TAE/S
+	 TAjEk37uuiPuw==
+Received: from zmtaauth03.partage.renater.fr ([127.0.0.1])
+ by localhost (zmtaauth03.partage.renater.fr [127.0.0.1]) (amavis, port 10026)
+ with ESMTP id CVcX4Yx1rV-n; Wed, 29 Nov 2023 15:23:44 +0100 (CET)
+Received: from 92.170.236.225 (unknown [194.254.241.249])
+	by zmtaauth03.partage.renater.fr (Postfix) with ESMTPA id C885C80130;
+	Wed, 29 Nov 2023 15:23:43 +0100 (CET)
+From: "zaineb.garcia@uvsq.fr" <zaineb.chelly-dagdia@uvsq.fr>
+To: <liste-egc@polytech.univ-nantes.fr>,
+	<info-ic@listes.irisa.fr>,
+	<bull-i3@irit.fr>
+Date: Wed, 29 Nov 2023 15:23:47 +0100
+Message-ID: <013d01da22cf$aafa5c80$00ef1580$@uvsq.fr>
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_000_013E_01DA22D8.0CC3A680"
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AdoizpzBe/fUzrhoQ8SotLq6dd2AGg==
+Content-Language: fr
+X-Virus-Scanned: clamav-milter 0.103.8 at clamav04
+X-Virus-Status: Clean
+X-Renater-Ptge-SpamState: clean
+X-Renater-Ptge-SpamScore: 69
+X-Renater-Ptge-SpamCause: gggruggvucftvghtrhhoucdtuddrgedvkedrudeihedgiedvucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecutffgpfetvffgtfenuceurghilhhouhhtmecufedttdenucgoufhushhpvggtthffohhmrghinhculdegledmnegoteeftdelqddtudculddvtddmnecujfgurhephffvufffkfggtgfothesrgdtghepvddtudenucfhrhhomhepfdiirghinhgvsgdrghgrrhgtihgrsehuvhhsqhdrfhhrfdcuoeiirghinhgvsgdrtghhvghllhihqdgurghgughirgesuhhvshhqrdhfrheqnecuggftrfgrthhtvghrnhepleelvdefkedugedtgfelleduudejvdetfeefffeggfeggfduffdvueetgfeljeefnecuffhomhgrihhnpehuqdgsohhurhhgohhgnhgvrdhfrhdpvghgtgdrrghsshhordhfrhdpfhhorhhmshdrghhlvgdpuhhvshhqrdhfrhdpghhoohhglhgvrdgtohhmpdhgohhoghhlvgdrfhhrnecukfhppeduleegrddvheegrddvgedurddvgeelnecuuegrugftvghpuhhtkfhppeduleegrddvheegrddvgedurddvgeelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepudelgedrvdehgedrvdeguddrvdegledphhgvlhhopeelvddrudejtddrvdefiedrvddvhedpmhgrihhlfhhrohhmpedfiigrihhnvggsrdhgrghrtghirgesuhhvshhqrdhfrhdfuceoiigrihhnvggsrdgthhgvlhhlhidquggrghguihgrsehuvhhsqhdrfhhrqedpnhgspghrtghp
+ thhtohepfedprhgtphhtthhopegsuhhllhdqihefsehirhhithdrfhhrpdhrtghpthhtohepihhnfhhoqdhitgeslhhishhtvghsrdhirhhishgrrdhfrhdprhgtphhtthhopehlihhsthgvqdgvghgtsehpohhlhihtvggthhdruhhnihhvqdhnrghnthgvshdrfhhr
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] =?ISO-8859-1?Q?=C9COLE?= D'HIVER EGC
+ =?ISO-8859-1?Q?=28=E9-EGC=29?=  - APPEL A PARTICIPATION --  Date limite de
+ =?ISO-8859-1?Q?pr=E9-inscrip?= =?ISO-8859-1?Q?tion?= est
+ =?ISO-8859-1?Q?repouss=E9e?= au 07/12/2023
+
+This is a multipart message in MIME format.
+
+------=_NextPart_000_013E_01DA22D8.0CC3A680
+Content-Type: text/plain;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+=C9COLE D=92HIVER - APPEL A PARTICIPATION
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+10=E8me =C9cole d=92Hiver =E9-EGC sur le th=E8me =AB Analyse des =
+donn=E9es et
+apprentissage face =E0 l=92urgence climatique et la crise =E9cologique,
+humanitaire et =E9conomique =BB
+22 =96 26 Janvier 2024, Dijon - France
+https://iutdijon.u-bourgogne.fr/egc2024/
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+La dixi=E8me =C9cole d=92Hiver =E9-EGC, sur le th=E8me =AB Analyse des =
+donn=E9es et
+apprentissage face =E0 l'urgence climatique et la crise =E9cologique,
+humanitaire et =E9conomique  =BB, est un  =E9v=E9nement organis=E9 par =
+l=92Association
+Extraction et Gestion de Connaissances (EGC, http://www.egc.asso.fr/).
+
+Cet =E9v=E9nement s=92organise autour de deux activit=E9s principales :
+=95    deux jours de formation : les 22 et 23 Janvier 2024
+=95    participation =E0 la conf=E9rence EGC 2024 : du 24 au 26  janvier =
+2024
+
+Cet appel est =E9galement disponible =E0 l=92adresse :
+https://iutdijon.u-bourgogne.fr/egc2024/ecole-e-egc/
+
+TH=C8ME DE L'=C9COLE : "Analyse des donn=E9es et apprentissage face =E0 =
+l'urgence
+climatique et la crise =E9cologique, humanitaire et =E9conomique"
+Cette =E9cole s=92int=E9resse aux m=E9thodes aujourd=92hui disponibles =
+permettant la
+fusion de donn=E9es multimodales (audio, image, texte, s=E9rie =
+temporelle,
+etc.), l=92analyse et l=92apprentissage pour apporter des outils et =
+solutions
+aux probl=E9matiques pos=E9es par le changement climatique et ses =
+impacts sur
+notre environnement et nos soci=E9t=E9s. Cette th=E9matique englobe les =
+approches
+de l=92intelligence artificielle aussi bien symbolique, que num=E9rique =
+ou
+hybride pour le traitement et l=92analyse de donn=E9es complexes et de
+connaissances issues de diff=E9rents domaines scientifiques (sciences
+sociales, sciences de la Terre et du vivant, sciences m=E9dicales, =
+etc.). La
+multidisciplinarit=E9, ainsi que la diversit=E9, la complexit=E9 et
+l=92h=E9t=E9rog=E9n=E9it=E9 des donn=E9es mettent aux d=E9fis nos =
+approches actuelles et
+n=E9cessitent de nouvelles directions de recherche.
+
+OBJECTIFS DE L'=C9COLE :
+Les deux jours de formation ont pour but principal d=92offrir aux =
+participants
+des tutoriaux d=92initiation dans le domaine de recherche couvrant les =
+th=E8mes
+de l=92=E9cole mais =E9galement des tutoriaux plus sp=E9cifiques =
+pr=E9sentant les
+r=E9centes avanc=E9es proposant des solutions et des techniques =
+nouvelles pour
+les diff=E9rentes probl=E9matiques ayant =E9merg=E9es dans ce domaine. =
+Certains
+expos=E9s seront associ=E9s =E0 des s=E9ances plus pratiques afin de =
+permettre aux
+participants de manipuler quelques outils.
+
+La participation =E0 la conf=E9rence permettra aux participants de =
+prendre part
+=E0 un des =E9v=E9nements majeurs de la communaut=E9 francophone de =
+l=92extraction et
+la gestion de connaissances. Elle leur permettra d=92assister =E0 des
+pr=E9sentations de nouvelles avanc=E9es et approches d=E9velopp=E9es =
+dans la
+communaut=E9, ceci pouvant ainsi inspirer leur parcours scientifique =
+futur.
+
+Enfin, cette =E9cole souhaite offrir aux jeunes chercheurs (doctorants,
+post-doctorants et ing=E9nieurs) et aux chercheurs confirm=E9s du =
+domaine la
+possibilit=E9 de se rencontrer et d=92=E9changer des id=E9es, ce qui =
+devrait
+=E9galement permettre aux jeunes chercheurs d=92enrichir leur r=E9seau.
+
+PROGRAMME DE L'=C9COLE :
+<https://iutdijon.u-bourgogne.fr/egc2024/ecole-e-egc/#programme>
+https://iutdijon.u-bourgogne.fr/egc2024/ecole-e-egc/#programme=20
+Programme=20
+Lundi 22/01/2024
+8h30 =96 Accueil et attribution de badges
+8h45 =96 9h00 =96 Zaineb Chelly Dagdia, Christophe Cruz, J=E9r=F4me =
+Gensel, Claudia
+Marinica, Bienvenue et pr=E9sentation du programme de l=92=E9cole
+9h00 =96 10h30 =96 Reik DONNER (Magdeburg-Stendal University of Applied
+Sciences, Potsdam Institute for Climate Impact Research, Potsdam), =
+=93Complex
+system and network methods for understanding nonlinear climate =
+variability
+and extremes=94
+10h30 =96 10h45 =96 Pause caf=E9
+10h45 =96 12h15 =96 Pierrick BRUNEAU (Luxembourg Institute of Science =
+and
+Technology, Luxembourg), =93Science des donn=E9es et apprentissage pour =
+lutter
+contre les changements climatiques=94
+12h15 =96 14h00 =96 D=E9jeuner
+14h00 =96 15h30 =96 Pierre Gan=E7arski (ICUBE, Universit=E9 de =
+Strasbourg),
+=93Environnement et analyse de s=E9ries temporelles d=92images de =
+t=E9l=E9d=E9tection en
+Observation de la Terre=94
+15h30 =96 16h00 =96 Pause caf=E9
+16h00 =96 18h00 =96 Germain Forestier (IRIMAS, Universit=E9 de =
+Haute-Alsace), =E0
+venir
+20h00 =96 D=EEner
+Mardi 23/01/2024
+09h00 =96 10h30 =96 Davide FARANDA (Laboratoire de Science du Climat et =
+de
+l=92Environnement, Institute Pierre Simon Laplace, CNRS), =93Comment =
+peut-on
+attribuer les =E9v=E9nements m=E9t=E9orologiques extr=EAmes au =
+changement climatique?=94
+10h30 =96 11h00 =96 Pause caf=E9
+11h00 =96 12h00 =96 Davide FARANDA (Laboratoire de Science du Climat et =
+de
+l=92Environnement, Institute Pierre Simon Laplace, CNRS), =93Comment =
+peut-on
+attribuer les =E9v=E9nements m=E9t=E9orologiques extr=EAmes au =
+changement climatique?=94
+=96 s=E9ance pratique
+12h00 =96 13h30 =96 D=E9jeuner
+13h30 =96 15h00 =96 Aidan HOGAN (Universidad de Chile, Santiago), =
+=93Knowledge
+Graphs: An Introduction=94
+15h00 =96 15h30 =96 Pause caf=E9
+15h30 =96 16h30 =96 Aidan HOGAN (Universidad de Chile, Santiago), =
+=93Knowledge
+Graphs: An Introduction=94 =96 s=E9ance pratique
+16h30 =96 17h00 =96 Cl=F4ture de l=92=E9cole
+
+PUBLIC CONCERN=C9 :
+L'=C9cole d'Hiver =E9-EGC 2024 s'adresse particuli=E8rement aux =
+doctorants et
+=E9tudiants souhaitant approfondir leurs connaissances dans le domaine =
+de
+l'exploration de donn=E9es et de l'apprentissage, avec un focus sur
+l'application de ces comp=E9tences pour soutenir les Objectifs de
+d=E9veloppement durable.
+
+COMIT=C9 SCIENTIFIQUE ET ORGANISATION :
+=95         Zaineb Chelly Dagdia (UVSQ, Paris-Saclay)
+=95         Claudia Marinica (LS2N, Universit=E9 de Nantes)
+=95         J=E9rome Gensel (LIG, Universit=E9 Grenoble Alpes)
+=95         Christophe Cruz (ICB, Universit=E9 de Bourgogne)
+=95         Mustapha Lebbah (UVSQ, Paris-Saclay)
+
+DATES IMPORTANTES :
+=95        Date limite pr=E9-inscriptions (CV =E0 fournir) : 07/12/2023
+=95        Inscription effective (=C9cole (formation + conf=E9rence =
+EGC), sur le
+site de la conf=E9rence) : 20/12/2023
+
+L=92INSCRIPTION SE R=C9ALISE EN DEUX =C9TAPES :
+1.        Les participants doivent manifester leur int=E9r=EAt, avant le
+07/12/2023, pour participer =E0 l=92=C9cole en s=92inscrivant avec ce =
+formulaire :
+https://forms.gle/YcN8tSj7nP7A7kR58
+Pour que la pr=E9-inscription soit prise en compte, elle doit =EAtre =
+accompagn=E9e
+d=92un CV r=E9cent du participant.
+2.        Apr=E8s la confirmation de la pr=E9-inscription par le =
+comit=E9
+d=92organisation, et avant le 20/12/2023, les participants doivent =
+s=92inscrire
+via la page d=92inscription de la conf=E9rence EGC 2024 (attention de =
+bien
+choisir le tarif comprenant l=92=C9cole).
+
+Le nombre de participants est limit=E9 =E0 30 personnes. Le tarif de
+l=92inscription sera affich=E9 sur le site de la conf=E9rence EGC
+(https://iutdijon.u-bourgogne.fr/egc2024/ecole-e-egc/) et il comprend :
+=95        la participation =E0 l=92=C9cole d=92Hiver (22 et 23 janvier =
+2024) ;
+=95        la participation =E0 la conf=E9rence (24 au 26  janvier 2024) =
+;
+=95        les d=E9jeuners et le repas de gala.=20
+
+=20
+
+
+ <http://www.sciences.uvsq.fr/>=20
+
+Dr Zaineb CHELLY DAGDIA - GARCIA
+Associate professor (HDR)
+ <https://www.uvsq.fr/english> UVSQ, Univesit=E9 Paris-Saclay
+ <http://www.david.uvsq.fr/home/> Data and Algorithms for an Intelligent =
+and
+Sustainable City Laboratory (DAVID)
+
+ <https://sites.google.com/site/zeinebchelly/home> Homepage=20
+
+
+=20
+<http://maps.google.fr/maps?q=3D45+Avenue+des+%C3%89tats+Unis,+Versailles=
+&hl=3Df
+r&ie=3DUTF8&sll=3D46.75984,1.738281&sspn=3D11.426675,19.753418&oq=3D45+av=
+enue+des+et
+&hnear=3D45+Avenue+des+%C3%89tats+Unis,+78000+Versailles,+Yvelines,+%C3%8=
+Ele-d
+e-France&t=3Dm&z=3D16> 45 avenue des Etats-Unis 78035 Versailles=20
+
+=20
+
+=20
+
+
+------=_NextPart_000_013E_01DA22D8.0CC3A680
+Content-Type: text/html;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" =
+xmlns:o=3D"urn:schemas-microsoft-com:office:office" =
+xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" =
+xmlns=3D"http://www.w3.org/TR/REC-html40"><head><meta =
+http-equiv=3DContent-Type content=3D"text/html; =
+charset=3Diso-8859-1"><meta name=3DGenerator content=3D"Microsoft Word =
+15 (filtered medium)"><!--[if !mso]><style>v\:* =
+{behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style><![endif]--><style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-fareast-language:EN-US;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;
+	mso-fareast-language:EN-US;}
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:70.85pt 70.85pt 70.85pt 70.85pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]--></head><body lang=3DFR =
+link=3D"#0563C1" vlink=3D"#954F72" style=3D'word-wrap:break-word'><div =
+class=3DWordSection1><p class=3DMsoNormal><strong><span =
+style=3D'font-size:12.0pt;font-family:"Arial",sans-serif;color:black;back=
+ground:white'>=C9COLE D&#8217;HIVER - APPEL A =
+PARTICIPATION</span></strong><span =
+style=3D'font-size:12.0pt;font-family:"Arial",sans-serif;color:black'><br=
+><br><span =
+style=3D'background:white'>=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D</span><br><span style=3D'background:white'>10=E8me =
+=C9cole d&#8217;Hiver =E9-EGC sur le th=E8me =AB Analyse des donn=E9es =
+et apprentissage face =E0 l&#8217;urgence climatique et la crise =
+=E9cologique, humanitaire et =E9conomique =BB</span><br><span =
+style=3D'background:white'>22 &#8211; 26 Janvier 2024, Dijon - =
+France</span><br><span style=3D'background:white'><a =
+href=3D"https://iutdijon.u-bourgogne.fr/egc2024/" =
+target=3D"_blank">https://iutdijon.u-bourgogne.fr/egc2024/</a></span><br>=
+<span =
+style=3D'background:white'>=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D</span><br><br><span style=3D'background:white'>La =
+dixi=E8me =C9cole d&#8217;Hiver =E9-EGC, sur le th=E8me =AB Analyse des =
+donn=E9es et apprentissage face =E0 l'urgence climatique et la crise =
+=E9cologique, humanitaire et =E9conomique &nbsp;=BB, est un =
+&nbsp;=E9v=E9nement organis=E9 par l&#8217;Association Extraction et =
+Gestion de Connaissances (EGC,&nbsp;<a href=3D"http://www.egc.asso.fr/" =
+target=3D"_blank">http://www.egc.asso.fr/</a>).</span><br><br><span =
+style=3D'background:white'>Cet =E9v=E9nement s&#8217;organise autour de =
+deux activit=E9s principales :</span><br><span =
+style=3D'background:white'>&#8226; &nbsp; &nbsp;deux jours de formation =
+: les 22 et 23 Janvier 2024</span><br><span =
+style=3D'background:white'>&#8226; &nbsp; &nbsp;participation =E0 la =
+conf=E9rence EGC 2024 : du 24 au 26 &nbsp;janvier =
+2024</span><br><br><span style=3D'background:white'>Cet appel est =
+=E9galement disponible =E0 l&#8217;adresse :&nbsp;<a =
+href=3D"https://iutdijon.u-bourgogne.fr/egc2024/ecole-e-egc/" =
+target=3D"_blank">https://iutdijon.u-bourgogne.fr/egc2024/ecole-e-egc/</a=
+></span><br><br><strong><span =
+style=3D'font-family:"Arial",sans-serif;background:white'>TH=C8ME DE =
+L'=C9COLE :</span></strong><span =
+style=3D'background:white'>&nbsp;<em><span =
+style=3D'font-family:"Arial",sans-serif'>&quot;Analyse des donn=E9es et =
+apprentissage face =E0 l'urgence climatique et la crise =E9cologique, =
+humanitaire et =E9conomique&quot;</span></em></span><br><span =
+style=3D'background:white'>Cette =E9cole s&#8217;int=E9resse aux =
+m=E9thodes aujourd&#8217;hui disponibles permettant la fusion de =
+donn=E9es multimodales (audio, image, texte, s=E9rie temporelle, etc.), =
+l&#8217;analyse et l&#8217;apprentissage pour apporter des outils et =
+solutions aux probl=E9matiques pos=E9es par le changement climatique et =
+ses impacts sur notre environnement et nos soci=E9t=E9s. Cette =
+th=E9matique englobe les approches de l&#8217;intelligence artificielle =
+aussi bien symbolique, que num=E9rique ou hybride pour le traitement et =
+l&#8217;analyse de donn=E9es complexes et de connaissances issues de =
+diff=E9rents domaines scientifiques (sciences sociales, sciences de la =
+Terre et du vivant, sciences m=E9dicales, etc.). La =
+multidisciplinarit=E9, ainsi que la diversit=E9, la complexit=E9 et =
+l&#8217;h=E9t=E9rog=E9n=E9it=E9 des donn=E9es mettent aux d=E9fis nos =
+approches actuelles et n=E9cessitent de nouvelles directions de =
+recherche.</span><br><br><strong><span =
+style=3D'font-family:"Arial",sans-serif;background:white'>OBJECTIFS DE =
+L'=C9COLE :</span></strong><br><span style=3D'background:white'>Les deux =
+jours de formation ont pour but principal d&#8217;offrir aux =
+participants des tutoriaux d&#8217;initiation dans le domaine de =
+recherche couvrant les th=E8mes de l&#8217;=E9cole mais =E9galement des =
+tutoriaux plus sp=E9cifiques pr=E9sentant les r=E9centes avanc=E9es =
+proposant des solutions et des techniques nouvelles pour les =
+diff=E9rentes probl=E9matiques ayant =E9merg=E9es dans ce domaine. =
+Certains expos=E9s seront associ=E9s =E0 des s=E9ances plus pratiques =
+afin de permettre aux participants de manipuler quelques =
+outils.</span><br><br><span style=3D'background:white'>La participation =
+=E0 la conf=E9rence permettra aux participants de prendre part =E0 un =
+des =E9v=E9nements majeurs de la communaut=E9 francophone de =
+l&#8217;extraction et la gestion de connaissances. Elle leur permettra =
+d&#8217;assister =E0 des pr=E9sentations de nouvelles avanc=E9es et =
+approches d=E9velopp=E9es dans la communaut=E9, ceci pouvant ainsi =
+inspirer leur parcours scientifique futur.</span><br><br><span =
+style=3D'background:white'>Enfin, cette =E9cole souhaite offrir aux =
+jeunes chercheurs (doctorants, post-doctorants et ing=E9nieurs) et aux =
+chercheurs confirm=E9s du domaine la possibilit=E9 de se rencontrer et =
+d&#8217;=E9changer des id=E9es, ce qui devrait =E9galement permettre aux =
+jeunes chercheurs d&#8217;enrichir leur =
+r=E9seau.</span><br><br><strong><span =
+style=3D'font-family:"Arial",sans-serif;background:white'>PROGRAMME DE =
+L'=C9COLE : <a =
+href=3D"https://iutdijon.u-bourgogne.fr/egc2024/ecole-e-egc/#programme"><=
+span =
+style=3D'font-weight:normal'>https://iutdijon.u-bourgogne.fr/egc2024/ecol=
+e-e-egc/#programme</span></a> </span></strong><br><b><u><span =
+style=3D'background:white'>Programme </span></u></b><span =
+style=3D'background:white'><br><b><i><u>Lundi =
+22/01/2024</u></i></b><i><u><br></u></i><b>8h30</b> &#8211;&nbsp;Accueil =
+et attribution de badges<br><b>8h45 &#8211; =
+9h00&nbsp;&#8211;&nbsp;Zaineb Chelly Dagdia, Christophe Cruz, J=E9r=F4me =
+Gensel, Claudia Marinica,&nbsp;</b>Bienvenue et pr=E9sentation du =
+programme de l&#8217;=E9cole<br><b>9h00 &#8211; =
+10h30&nbsp;&#8211;&nbsp;Reik DONNER</b>&nbsp;(Magdeburg-Stendal =
+University of Applied Sciences, Potsdam Institute for Climate Impact =
+Research, Potsdam), &#8220;Complex system and network methods for =
+understanding nonlinear climate variability and =
+extremes&#8221;<br><b>10h30 &#8211; 10h45</b>&nbsp;&#8211; Pause =
+caf=E9<br><b>10h45 &#8211; 12h15&nbsp;&#8211;&nbsp;Pierrick =
+BRUNEAU</b>&nbsp;(Luxembourg Institute of Science and Technology, =
+Luxembourg), &#8220;Science des donn=E9es et apprentissage pour lutter =
+contre les changements climatiques&#8221;<br><b>12h15 &#8211; =
+14h00</b>&nbsp;&#8211;&nbsp;D=E9jeuner<br><b>14h00 &#8211; =
+15h30&nbsp;&#8211;&nbsp;Pierre Gan=E7arski</b>&nbsp;(ICUBE, Universit=E9 =
+de Strasbourg), &#8220;Environnement et analyse de s=E9ries temporelles =
+d&#8217;images de t=E9l=E9d=E9tection en Observation de la =
+Terre&#8221;<br><b>15h30 &#8211; 16h00</b>&nbsp;&#8211; Pause =
+caf=E9<br><b>16h00 &#8211; 18h00&nbsp;&#8211;&nbsp;Germain =
+Forestier</b>&nbsp;(IRIMAS, Universit=E9 de Haute-Alsace), =E0 =
+venir<br><b>20h00</b>&nbsp;&#8211; D=EEner<br><b><i><u>Mardi =
+23/01/2024</u></i></b><br><b>09h00 &#8211; =
+10h30&nbsp;&#8211;&nbsp;Davide FARANDA</b>&nbsp;(Laboratoire de Science =
+du Climat et de l&#8217;Environnement, Institute Pierre Simon Laplace, =
+CNRS), &#8220;Comment peut-on attribuer les =E9v=E9nements =
+m=E9t=E9orologiques extr=EAmes au changement =
+climatique?&#8221;<br><b>10h30 &#8211; 11h00</b>&nbsp;&#8211; Pause =
+caf=E9<br><b>11h00 &#8211; 12h00&nbsp;&#8211;&nbsp;Davide =
+FARANDA</b>&nbsp;(Laboratoire de Science du Climat et de =
+l&#8217;Environnement, Institute Pierre Simon Laplace, CNRS), =
+&#8220;Comment peut-on attribuer les =E9v=E9nements m=E9t=E9orologiques =
+extr=EAmes au changement climatique?&#8221; &#8211; s=E9ance =
+pratique<br><b>12h00 &#8211; 13h30</b>&nbsp;&#8211; =
+D=E9jeuner<br><b>13h30 &#8211; 15h00&nbsp;&#8211;&nbsp;Aidan =
+HOGAN</b>&nbsp;(Universidad de Chile, Santiago), &#8220;Knowledge =
+Graphs: An Introduction&#8221;<br><b>15h00 &#8211; =
+15h30</b>&nbsp;&#8211; Pause caf=E9<br><b>15h30 &#8211; =
+16h30&nbsp;&#8211;&nbsp;Aidan HOGAN</b>&nbsp;(Universidad de Chile, =
+Santiago), &#8220;Knowledge Graphs: An Introduction&#8221; &#8211; =
+s=E9ance pratique<br><b>16h30 &#8211; 17h00</b>&nbsp;&#8211; Cl=F4ture =
+de l&#8217;=E9cole</span><br><br><strong><span =
+style=3D'font-family:"Arial",sans-serif;background:white'>PUBLIC =
+CONCERN=C9 :</span></strong><br><span =
+style=3D'background:white'>L'=C9cole d'Hiver =E9-EGC 2024 s'adresse =
+particuli=E8rement aux doctorants et =E9tudiants souhaitant approfondir =
+leurs connaissances dans le domaine de l'exploration de donn=E9es et de =
+l'apprentissage, avec un focus sur l'application de ces comp=E9tences =
+pour soutenir les Objectifs de d=E9veloppement =
+durable.</span><br><br><strong><span =
+style=3D'font-family:"Arial",sans-serif;background:white'>COMIT=C9 =
+SCIENTIFIQUE ET ORGANISATION :</span></strong><br><span =
+style=3D'background:white'>&#8226; &nbsp; &nbsp; &nbsp; &nbsp; Zaineb =
+Chelly Dagdia (UVSQ, Paris-Saclay)<br>&#8226; =A0&nbsp; &nbsp; &nbsp; =
+&nbsp;Claudia Marinica (LS2N, Universit=E9 de Nantes)<br>&#8226; =
+=A0&nbsp; &nbsp; &nbsp; &nbsp;J=E9rome Gensel (LIG, Universit=E9 =
+Grenoble Alpes)<br>&#8226; =A0&nbsp; &nbsp; &nbsp; &nbsp;Christophe Cruz =
+(ICB, Universit=E9 de Bourgogne)<br>&#8226; =A0&nbsp; &nbsp; &nbsp; =
+&nbsp;Mustapha Lebbah (UVSQ, Paris-Saclay)</span><br><br><strong><span =
+style=3D'font-family:"Arial",sans-serif;background:white'>DATES =
+IMPORTANTES :</span></strong><br><span =
+style=3D'background:white'>&#8226; &nbsp; &nbsp; &nbsp; &nbsp;Date =
+limite pr=E9-inscriptions (CV =E0 fournir) : </span></span><b><span =
+style=3D'font-size:12.0pt;font-family:"Arial",sans-serif;color:red;backgr=
+ound:white'>07/12/2023</span></b><span =
+style=3D'font-size:12.0pt;font-family:"Arial",sans-serif;color:black'><br=
+><span style=3D'background:white'>&#8226; &nbsp; &nbsp; &nbsp; =
+&nbsp;Inscription effective (=C9cole (formation + conf=E9rence EGC), sur =
+le site de la conf=E9rence) : </span></span><b><span =
+style=3D'font-size:12.0pt;font-family:"Arial",sans-serif;color:red;backgr=
+ound:white'>20/12/2023</span></b><b><span =
+style=3D'font-size:12.0pt;font-family:"Arial",sans-serif;color:red'><br><=
+/span></b><span =
+style=3D'font-size:12.0pt;font-family:"Arial",sans-serif;color:black'><br=
+><strong><span =
+style=3D'font-family:"Arial",sans-serif;background:white'>L&#8217;INSCRIP=
+TION SE R=C9ALISE EN DEUX =C9TAPES :</span></strong><br><span =
+style=3D'background:white'>1. &nbsp; &nbsp; &nbsp; &nbsp;Les =
+participants doivent manifester leur int=E9r=EAt, avant le 07/12/2023, =
+pour participer =E0 l&#8217;=C9cole en s&#8217;inscrivant avec ce =
+formulaire :&nbsp;<a href=3D"https://forms.gle/YcN8tSj7nP7A7kR58" =
+target=3D"_blank">https://forms.gle/YcN8tSj7nP7A7kR58</a></span><br><span=
+ style=3D'background:white'>Pour que la pr=E9-inscription soit prise en =
+compte, elle doit =EAtre accompagn=E9e d&#8217;un CV r=E9cent du =
+participant.</span><br><span style=3D'background:white'>2. &nbsp; &nbsp; =
+&nbsp; &nbsp;Apr=E8s la confirmation de la pr=E9-inscription par le =
+comit=E9 d&#8217;organisation, et avant le 20/12/2023, les participants =
+doivent s&#8217;inscrire via la page d&#8217;inscription de la =
+conf=E9rence EGC 2024 (attention de bien choisir le tarif comprenant =
+l&#8217;=C9cole).</span><br><br><span style=3D'background:white'>Le =
+nombre de participants est limit=E9 =E0 30 personnes. Le tarif de =
+l&#8217;inscription sera affich=E9 sur le site de la conf=E9rence EGC =
+(<a href=3D"https://iutdijon.u-bourgogne.fr/egc2024/ecole-e-egc/" =
+target=3D"_blank">https://iutdijon.u-bourgogne.fr/egc2024/ecole-e-egc/</a=
+>) et il comprend :</span><br><span style=3D'background:white'>&#8226; =
+&nbsp; &nbsp; &nbsp; &nbsp;la participation =E0 l&#8217;=C9cole =
+d&#8217;Hiver (22 et 23 janvier 2024) ;</span><br><span =
+style=3D'background:white'>&#8226; &nbsp; &nbsp; &nbsp; &nbsp;la =
+participation =E0 la conf=E9rence (24 au 26 &nbsp;janvier 2024) =
+;</span><br><span style=3D'background:white'>&#8226; &nbsp; &nbsp; =
+&nbsp; &nbsp;les d=E9jeuners et le repas de gala.</span> </span><span =
+style=3D'font-size:12.0pt;font-family:"Arial",sans-serif;color:black;mso-=
+fareast-language:FR'><o:p></o:p></span></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><table class=3DMsoNormalTable =
+border=3D0 cellpadding=3D0><tr><td style=3D'padding:.75pt .75pt .75pt =
+.75pt'><p class=3DMsoNormal><a href=3D"http://www.sciences.uvsq.fr/" =
+target=3D"_blank"><span =
+style=3D'color:blue;mso-fareast-language:FR;text-decoration:none'><img =
+border=3D0 width=3D311 height=3D90 =
+style=3D'width:3.2395in;height:.9375in' id=3D"_x0000_i1025" =
+src=3D"http://redmine.dsi.uvsq.fr/signature/img/logo_ufr-sciences.jpg" =
+alt=3D"Site LISV"></span></a><span =
+style=3D'mso-fareast-language:FR'><o:p></o:p></span></p></td><td =
+style=3D'padding:3.0pt 3.0pt 3.0pt 3.0pt'><p class=3DMsoNormal><b><span =
+lang=3DEN-US =
+style=3D'font-size:8.5pt;color:gray;mso-fareast-language:FR'>Dr Zaineb =
+CHELLY DAGDIA - GARCIA</span></b><span lang=3DEN-US =
+style=3D'font-size:8.5pt;color:gray;mso-fareast-language:FR'><br>Associat=
+e professor (HDR)<br></span><span =
+style=3D'font-size:8.5pt;color:gray;mso-fareast-language:FR'><a =
+href=3D"https://www.uvsq.fr/english" target=3D"_blank" title=3D"Site =
+Paris-Saclay"><span lang=3DEN-US =
+style=3D'color:blue;text-decoration:none'>UVSQ, Univesit=E9 =
+Paris-Saclay</span></a></span><span lang=3DEN-US =
+style=3D'font-size:8.5pt;color:gray;mso-fareast-language:FR'><br></span><=
+span style=3D'font-size:8.5pt;color:gray;mso-fareast-language:FR'><a =
+href=3D"http://www.david.uvsq.fr/home/" target=3D"_blank" title=3D"Site =
+DAVID"><span lang=3DEN-US style=3D'color:blue;text-decoration:none'>Data =
+and Algorithms for an Intelligent and Sustainable City Laboratory =
+(DAVID)</span></a></span><span lang=3DEN-US =
+style=3D'font-size:8.5pt;color:gray;mso-fareast-language:FR'><o:p></o:p><=
+/span></p><div><p class=3DMsoNormal><span =
+style=3D'font-size:8.5pt;font-family:"Arial",sans-serif;color:gray;mso-fa=
+reast-language:FR'><a =
+href=3D"https://sites.google.com/site/zeinebchelly/home" =
+target=3D"_blank"><span =
+style=3D'color:#0095A2;text-decoration:none'>Homepage</span></a> =
+</span><span =
+style=3D'font-size:8.5pt;color:gray;mso-fareast-language:FR'><o:p></o:p><=
+/span></p></div></td></tr><tr><td colspan=3D2 =
+style=3D'background:gray;padding:.75pt .75pt .75pt .75pt'><p =
+class=3DMsoNormal align=3Dcenter style=3D'text-align:center'><span =
+style=3D'font-size:8.5pt;color:white;mso-fareast-language:FR'><a =
+href=3D"http://maps.google.fr/maps?q=3D45+Avenue+des+%C3%89tats+Unis,+Ver=
+sailles&amp;hl=3Dfr&amp;ie=3DUTF8&amp;sll=3D46.75984,1.738281&amp;sspn=3D=
+11.426675,19.753418&amp;oq=3D45+avenue+des+et&amp;hnear=3D45+Avenue+des+%=
+C3%89tats+Unis,+78000+Versailles,+Yvelines,+%C3%8Ele-de-France&amp;t=3Dm&=
+amp;z=3D16" target=3D"_blank" title=3DPlan><span =
+style=3D'color:white;text-decoration:none'>45 avenue des Etats-Unis =
+78035 Versailles</span></a> <o:p></o:p></span></p></td></tr></table><p =
+class=3DMsoNormal><span =
+style=3D'mso-fareast-language:FR'><o:p>&nbsp;</o:p></span></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p></div></body></html>
+------=_NextPart_000_013E_01DA22D8.0CC3A680--
+

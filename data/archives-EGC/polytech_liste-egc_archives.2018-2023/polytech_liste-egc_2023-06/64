@@ -1,0 +1,447 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (bouncesmtp1.u12.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id CA5B214017C0
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Sat, 24 Jun 2023 11:22:11 +0200 (CEST)
+Received: from mx2.localdomain (MX2.univ-nantes.fr [193.52.101.136])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id C27196FFE
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Sat, 24 Jun 2023 11:22:11 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.localdomain (Postfix) with ESMTP id B704C1015E4
+	for <liste-egc@polytech.univ-nantes.fr>; Sat, 24 Jun 2023 11:22:11 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 1.011
+X-Spam-Level: *
+X-Spam-Status: No, score=1.011 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	RCVD_IN_SORBS=1, RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001,
+	SPF_PASS=-0.001, UN_PHISHING_PW=0.1] autolearn=disabled
+X-CRM114-Status: UNSURE ( 0.6579 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=telecom-sudparis.eu
+Received: from mx2.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id H1vhU392Be3J for <liste-egc@polytech.univ-nantes.fr>;
+	Sat, 24 Jun 2023 11:22:05 +0200 (CEST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=137.194.2.194; helo=zproxy130.enst.fr; envelope-from=mohamed.sellami@telecom-sudparis.eu; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=none dis=none) header.from=telecom-sudparis.eu
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=mohamed.sellami@telecom-sudparis.eu
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (2048-bit key; unprotected) header.d=telecom-sudparis.eu header.i=@telecom-sudparis.eu header.b="KsrOcilo";
+	dkim-atps=neutral
+X-Greylist: from auto-whitelisted by SQLgrey-1.6.7
+Received: from zproxy130.enst.fr (zproxy130.enst.fr [137.194.2.194])
+	by mx2.localdomain (Postfix) with ESMTPS id BD7911015DD
+	for <liste-egc@polytech.univ-nantes.fr>; Sat, 24 Jun 2023 11:22:05 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+	by zproxy130.enst.fr (Postfix) with ESMTP id 7964A1204B7
+	for <liste-egc@polytech.univ-nantes.fr>; Sat, 24 Jun 2023 11:22:05 +0200 (CEST)
+Received: from zproxy130.enst.fr ([IPv6:::1])
+	by localhost (zproxy130.enst.fr [IPv6:::1]) (amavisd-new, port 10032)
+	with ESMTP id xWm5ddr_nrtv; Sat, 24 Jun 2023 11:22:00 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+	by zproxy130.enst.fr (Postfix) with ESMTP id 71B3312021C;
+	Sat, 24 Jun 2023 11:22:00 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy130.enst.fr 71B3312021C
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-sudparis.eu;
+	s=AC709B90-7D32-11EC-A50F-85E3E9539299; t=1687598520;
+	bh=ZowKdy3NoNfjRFJ8ZxYlAq/Sj9EmdKpeaRKRQ9nvlUE=;
+	h=Message-ID:Date:MIME-Version:To:From;
+	b=KsrOciloW0GvI5Ei5a3S6pWm7lgjsicijE+yzh4gKP99wOsIJjV6tEBcWl6Ag8DL1
+	 BaBA3QxREowKOzcSdRNoHLFsDPoU+pA8G5k6EK13wzslaZ6dQ64I4n+4mKoEyYN+ZI
+	 oJiSNEjZhpu9fxc7I3za6w5T+yW6cadPCMxeowWxygFa1uup0MN9pIv7A6ivJ/pVbC
+	 ZUziPQRxcYLo8qyRS0TrQxL+vKtgk+2fo59dwlRdjGxXBTJ2/r/88/fRxwKHCPTdti
+	 fvAKWSz59+baFhK2e9+IpRl+CDKta3kil/xxozREux9byHAoV5tM+lPNw3Cg0yNJo3
+	 O+XyMVGQW5rKQ==
+X-Virus-Scanned: amavisd-new at zproxy130.enst.fr
+Received: from zproxy130.enst.fr ([IPv6:::1])
+	by localhost (zproxy130.enst.fr [IPv6:::1]) (amavisd-new, port 10026)
+	with ESMTP id ZfD4OB0dDPgJ; Sat, 24 Jun 2023 11:22:00 +0200 (CEST)
+Received: from [192.168.1.44] (65.147.65.81.rev.sfr.net [81.65.147.65])
+	by zproxy130.enst.fr (Postfix) with ESMTPSA id E9118120CB6;
+	Sat, 24 Jun 2023 11:21:57 +0200 (CEST)
+Content-Type: multipart/alternative;
+ boundary="------------ja66aZBF6ihy7kmjCBBHmhf4"
+Message-ID: <abc1888d-e2ce-f7d1-6bf8-57da1f299a43@telecom-sudparis.eu>
+Date: Sat, 24 Jun 2023 11:21:57 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Content-Language: en-GB
+To: liste-egc@polytech.univ-nantes.fr
+From: Mohamed SELLAMI <mohamed.sellami@telecom-sudparis.eu>
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc]  CFP: CoopIS - International Conference on Cooperative
+ Information Systems (Submission deadline extended - July 15, 2023)
+
+This is a multi-part message in MIME format.
+--------------ja66aZBF6ihy7kmjCBBHmhf4
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+
+Call for Papers
+CoopIS 2023: The 29th International Conference on Cooperative=20
+Information Systems
+October 30 - November 3, 2023
+Groningen, The Netherlands
+http://www.coopisconference.org
+
+Proceedings: Springer LNCS
+-------------------------------------------------------------------------=
+----
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Important Dates:
+Abstract submission: July 8, 2023
+Full paper submission: July 15, 2023
+Full paper notification: August 7, 2023
+Camera ready papers: September 3, 2023
+CoopIS2023: October 30 - November 3, 2023
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Papers need to be submitted to EasyChair.
+https://easychair.org/my/conference?conf=3Dcoopis2023
+
+# Aim and Scope
+
+The International Conference on Cooperative Information Systems is an=20
+established international event for presenting and discussing scientific=20
+contributions about technical, economical, and societal aspects of=20
+distributed information systems at scale.
+The guiding theme of this 29th conference is "Human-centric Information=20
+Systems", with a particular focus on the following areas:
+- Topic 1: Knowledge Graphs and Data, Information, and Knowledge Engineer=
+ing
+- Topic 2: Inductive Learning, Machine-Learning and Knowledge Discovery
+- Topic 3: Process Analytics and Technology
+- Topic 4: Semantic Interoperability and Open Standards
+- Topic 5: Human-centric Security and Privacy in Information Systems
+- Topic 6: Internet of Things and Digital Twins
+- Topic 7: Architecture and Management of Information Systems
+- Topic 8: Human Aspects and Social Interaction in Information Systems
+- Topic 9: Services and Cloud in Information Systems
+- Topic 10: Applications of Human-centric Information Systems
+For a detailed description of these topics, please see the conference=20
+Web site at www.coopisconference.org
+
+Submissions
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Authors are invited to submit original, unpublished research papers that=20
+are not under review for any other conference, workshop, or journal.=20
+Papers must be written in English. The contributions should address=20
+research questions that relate to one of the topics listed above.
+
+We particularly encourage:
+
+1. Contributions that introduce and evaluate technological innovations=20
+(e.g. new techniques, tools, methods or software).
+2. Empirical studies (e.g. quantitative data on the effects of novel=20
+approaches in technical, social, or economical terms).
+3. Systematic surveys of emerging technologies and competing paradigms.
+4. Case studies in various application areas of human-centric=20
+information systems, such as Healthcare, Industry 4.0, learning=20
+analytics, compliance and control or any other industry.
+
+The questions addressed should both be practically relevant and=20
+appealing to the general IS field. Full papers should include a=20
+systematic evaluation of the contribution and relate this contribution=20
+to related scientific work. Short papers may present work supported by=20
+preliminary evidence only.
+
+Submitted papers will be peer-reviewed by at least 3 reviewers. Papers=20
+are evaluated in terms of originality, significance, technical=20
+soundness, and clarity.
+
+Submissions for full papers must not exceed 18 pages in the final=20
+camera-ready paper style. Short papers can cover up to 8 pages.=20
+Submissions must be laid out according to the final camera-ready=20
+formatting instructions and must be submitted in PDF format.
+
+Each accepted paper must have one of its authors registered to the=20
+conference before the camera-ready deadline. The conference organizers=20
+reserve the right of removing a paper from the proceedings if no author=20
+is officially registered by the camera-ready deadline. Moreover, only=20
+papers that have been presented by their authors during the conference=20
+will be published in the conference proceedings.
+
+The final proceedings will be published by Springer Verlag in their=20
+Lecture Notes in Computer Science (LNCS). Author instructions can be=20
+found at:=20
+https://www.springer.com/gp/computer-science/lncs/conference-proceedings-=
+guidelines
+
+It is mandatory to submit manuscripts in electronic form (in PDF format).
+
+
+General Chairs
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Herv=C3=A9 Panetto, Universit=C3=A9de Lorraine, CNRS, CRAN, TELECOM Nancy=
+, France.
+Walid Gaaloul, Institut Polytechnique de Paris - T=C3=A9l=C3=A9com SudPar=
+is,=20
+SAMOVAR, France.
+
+Program Chairs
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Maria-Esther Vidal, Leibniz University of Hannover and TIB-Leibniz=20
+Information Centre for Science and Technology, Germany
+Boudewijn van Dongen, Eindhoven University of Technology, The Netherlands
+
+Publicity Chairs
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Slim Kallel, University of Sfax, Redcad, Tunisia
+Gabriela Ydler, Leibniz University Hannover and Technische=20
+Informationsbibliothek (TIB), Germany
+Zhangbing Zhou, School of Information Engineering, China University of=20
+Geosciences, P.R. China.
+
+--=20
+T=C3=A9l=C3=A9com SudParis <http://www.telecom-sudparis.eu> =09
+*Mohamed SELLAMI*
+Ma=C3=AEtre de conf=C3=A9rences
+01 60 76 47 37
+9 rue Charles Fourier
+91011 =C3=89vry Cedex
+Site web T=C3=A9l=C3=A9com SudParis <http://www.telecom-sudparis.eu>Twitt=
+er=20
+T=C3=A9l=C3=A9com SudParis <https://twitter.com/TelecomSudParis>Facebook =
+T=C3=A9l=C3=A9com=20
+SudParis <https://www.facebook.com/TelecomSudParis>Google+ T=C3=A9l=C3=A9=
+com=20
+SudParis <https://plus.google.com/100453871096273769926>LinkedIn T=C3=A9l=
+=C3=A9com=20
+SudParis=20
+<https://www.linkedin.com/edu/school?id=3D42882&trk=3Dtyah&trkInfo=3Dclic=
+kedVertical%3Aschool%2Cidx%3A4-1-7%2CtarId%3A1429711678204%2Ctas%3Ateleco=
+m%20sud>Blog=20
+T=C3=A9l=C3=A9com SudParis <https://blogrecherche.wp.imt.fr>
+Une =C3=A9cole de l'IMT <https://www.imt.fr>
+
+--------------ja66aZBF6ihy7kmjCBBHmhf4
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+  <head>
+
+    <meta http-equiv=3D"content-type" content=3D"text/html; charset=3DUTF=
+-8">
+  </head>
+  <body>
+    <p>Call for Papers<br>
+      CoopIS 2023: The 29th International Conference on Cooperative
+      Information Systems<br>
+      October 30 - November 3, 2023<br>
+      Groningen, The Netherlands<br>
+      <a class=3D"moz-txt-link-freetext" href=3D"http://www.coopisconfere=
+nce.org">http://www.coopisconference.org</a><br>
+      <br>
+      Proceedings: Springer LNCS<br>
+-------------------------------------------------------------------------=
+----<br>
+      =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<br>
+      Important Dates:<br>
+      Abstract submission: July 8, 2023<br>
+      Full paper submission: July 15, 2023<br>
+      Full paper notification: August 7, 2023<br>
+      Camera ready papers: September 3, 2023<br>
+      CoopIS2023: October 30 - November 3, 2023<br>
+      =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<br>
+      Papers need to be submitted to EasyChair. <br>
+      <a class=3D"moz-txt-link-freetext" href=3D"https://easychair.org/my=
+/conference?conf=3Dcoopis2023">https://easychair.org/my/conference?conf=3D=
+coopis2023</a><br>
+      <br>
+      # Aim and Scope<br>
+      <br>
+      The International Conference on Cooperative Information Systems is
+      an established international event for presenting and discussing
+      scientific contributions about technical, economical, and societal
+      aspects of distributed information systems at scale. <br>
+      The guiding theme of this 29th conference is "Human-centric
+      Information Systems", with a particular focus on the following
+      areas:<br>
+      - Topic 1: Knowledge Graphs and Data, Information, and Knowledge
+      Engineering<br>
+      - Topic 2: Inductive Learning, Machine-Learning and Knowledge
+      Discovery<br>
+      - Topic 3: Process Analytics and Technology<br>
+      - Topic 4: Semantic Interoperability and Open Standards <br>
+      - Topic 5: Human-centric Security and Privacy in Information
+      Systems<br>
+      - Topic 6: Internet of Things and Digital Twins<br>
+      - Topic 7: Architecture and Management of Information Systems<br>
+      - Topic 8: Human Aspects and Social Interaction in Information
+      Systems<br>
+      - Topic 9: Services and Cloud in Information Systems<br>
+      - Topic 10: Applications of Human-centric Information Systems<br>
+      For a detailed description of these topics, please see the
+      conference Web site at <a class=3D"moz-txt-link-abbreviated" href=3D=
+"http://www.coopisconference.org">www.coopisconference.org</a><br>
+      <br>
+      Submissions<br>
+      =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<br>
+      Authors are invited to submit original, unpublished research
+      papers that are not under review for any other conference,
+      workshop, or journal. Papers must be written in English. The
+      contributions should address research questions that relate to one
+      of the topics listed above.<br>
+      <br>
+      We particularly encourage:<br>
+      <br>
+      1. Contributions that introduce and evaluate technological
+      innovations (e.g. new techniques, tools, methods or software).<br>
+      2. Empirical studies (e.g. quantitative data on the effects of
+      novel approaches in technical, social, or economical terms).<br>
+      3. Systematic surveys of emerging technologies and competing
+      paradigms.<br>
+      4. Case studies in various application areas of human-centric
+      information systems, such as Healthcare, Industry 4.0, learning
+      analytics, compliance and control or any other industry.<br>
+      <br>
+      The questions addressed should both be practically relevant and
+      appealing to the general IS field. Full papers should include a
+      systematic evaluation of the contribution and relate this
+      contribution to related scientific work. Short papers may present
+      work supported by preliminary evidence only.<br>
+      <br>
+      Submitted papers will be peer-reviewed by at least 3 reviewers.
+      Papers are evaluated in terms of originality, significance,
+      technical soundness, and clarity. <br>
+      <br>
+      Submissions for full papers must not exceed 18 pages in the final
+      camera-ready paper style. Short papers can cover up to 8 pages.
+      Submissions must be laid out according to the final camera-ready
+      formatting instructions and must be submitted in PDF format.<br>
+      <br>
+      Each accepted paper must have one of its authors registered to the
+      conference before the camera-ready deadline. The conference
+      organizers reserve the right of removing a paper from the
+      proceedings if no author is officially registered by the
+      camera-ready deadline. Moreover, only papers that have been
+      presented by their authors during the conference will be published
+      in the conference proceedings.<br>
+      <br>
+      The final proceedings will be published by Springer Verlag in
+      their Lecture Notes in Computer Science (LNCS). Author
+      instructions can be found at:
+<a class=3D"moz-txt-link-freetext" href=3D"https://www.springer.com/gp/co=
+mputer-science/lncs/conference-proceedings-guidelines">https://www.spring=
+er.com/gp/computer-science/lncs/conference-proceedings-guidelines</a><br>
+      <br>
+      It is mandatory to submit manuscripts in electronic form (in PDF
+      format). <br>
+      <br>
+      <br>
+      General Chairs<br>
+      =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<br>
+      Herv=C3=A9 Panetto, Universit=C3=A9de Lorraine, CNRS, CRAN, TELECOM=
+ Nancy,
+      France.<br>
+      Walid Gaaloul, Institut Polytechnique de Paris - T=C3=A9l=C3=A9com =
+SudParis,
+      SAMOVAR, France.<br>
+      <br>
+      Program Chairs<br>
+      =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<br>
+      Maria-Esther Vidal, Leibniz University of Hannover and TIB-Leibniz
+      Information Centre for Science and Technology, Germany<br>
+      Boudewijn van Dongen, Eindhoven University of Technology, The
+      Netherlands<br>
+      <br>
+      Publicity Chairs<br>
+      =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<br>
+      Slim Kallel, University of Sfax, Redcad, Tunisia<br>
+      Gabriela Ydler, Leibniz University Hannover and Technische
+      Informationsbibliothek (TIB), Germany<br>
+      Zhangbing Zhou, School of Information Engineering, China
+      University of Geosciences, P.R. China.<br>
+    </p>
+    <div class=3D"moz-signature">-- <br>
+      <table style=3D"background-color:#f1f1f1; border:1px #ddd solid;">
+        <tbody>
+          <tr>
+            <td> <a href=3D"http://www.telecom-sudparis.eu"
+                target=3D"_blank"><img
+                  src=3D"https://img.imt.fr/signature-mail/logos/logo-tsp=
+.png"
+                  title=3D"Site web T=C3=A9l=C3=A9com SudParis" alt=3D"T=C3=
+=A9l=C3=A9com
+                  SudParis" style=3D"padding:4px 0 4px 4px;"></a> </td>
+            <td>
+              <div style=3D"float:left; font: 13px/1.5 sans-serif;
+                color:#555; padding:8px 15px;"> <strong>Mohamed SELLAMI</=
+strong><br>
+                Ma=C3=AEtre de conf=C3=A9rences<br>
+                01 60 76 47 37</div>
+              <div style=3D"float:left; font: bold 11px/1.5 sans-serif;
+                color:#888; padding:8px 15px;"> 9 rue Charles Fourier<br>
+                91011 =C3=89vry Cedex<br>
+                <a href=3D"http://www.telecom-sudparis.eu" target=3D"_bla=
+nk"
+                  style=3D"text-decoration:none;"><img
+                    src=3D"https://img.imt.fr/signature-mail/social/web.p=
+ng"
+                    title=3D"Site web T=C3=A9l=C3=A9com SudParis" alt=3D"=
+Site web
+                    T=C3=A9l=C3=A9com SudParis" style=3D"padding:3px 10px=
+ 4px 0;"></a><a
+                  href=3D"https://twitter.com/TelecomSudParis"
+                  target=3D"_blank" style=3D"text-decoration:none;"><img
+                    src=3D"https://img.imt.fr/signature-mail/social/so-tw=
+.png"
+                    title=3D"Twitter T=C3=A9l=C3=A9com SudParis" alt=3D"T=
+witter
+                    T=C3=A9l=C3=A9com SudParis" style=3D"padding:3px 10px=
+ 4px 0;"></a><a
+                  href=3D"https://www.facebook.com/TelecomSudParis"
+                  target=3D"_blank" style=3D"text-decoration:none;"><img
+                    src=3D"https://img.imt.fr/signature-mail/social/so-fb=
+.png"
+                    title=3D"Facebook T=C3=A9l=C3=A9com SudParis" alt=3D"=
+Facebook
+                    T=C3=A9l=C3=A9com SudParis" style=3D"padding:3px 10px=
+ 4px 0;"></a><a
+                  href=3D"https://plus.google.com/100453871096273769926"
+                  target=3D"_blank" style=3D"text-decoration:none;"><img
+                    src=3D"https://img.imt.fr/signature-mail/social/so-gp=
+.png"
+                    title=3D"Google+ T=C3=A9l=C3=A9com SudParis" alt=3D"G=
+oogle+
+                    T=C3=A9l=C3=A9com SudParis" style=3D"padding:3px 10px=
+ 4px 0;"></a><a
+href=3D"https://www.linkedin.com/edu/school?id=3D42882&amp;trk=3Dtyah&amp=
+;trkInfo=3DclickedVertical%3Aschool%2Cidx%3A4-1-7%2CtarId%3A1429711678204=
+%2Ctas%3Atelecom%20sud"
+                  target=3D"_blank" style=3D"text-decoration:none;"><img
+                    src=3D"https://img.imt.fr/signature-mail/social/so-in=
+.png"
+                    title=3D"LinkedIn T=C3=A9l=C3=A9com SudParis" alt=3D"=
+LinkedIn
+                    T=C3=A9l=C3=A9com SudParis" style=3D"padding:3px 10px=
+ 4px 0;"></a><a
+                  href=3D"https://blogrecherche.wp.imt.fr" target=3D"_bla=
+nk"
+                  style=3D"text-decoration:none;"><img
+                    src=3D"https://img.imt.fr/signature-mail/social/blog.=
+png"
+                    title=3D"Blog T=C3=A9l=C3=A9com SudParis" alt=3D"Blog=
+ T=C3=A9l=C3=A9com
+                    SudParis" style=3D"padding:3px 10px 4px 0;"></a><br>
+                Une =C3=A9cole de <a href=3D"https://www.imt.fr"
+                  target=3D"_blank">l'IMT</a></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
+
+--------------ja66aZBF6ihy7kmjCBBHmhf4--

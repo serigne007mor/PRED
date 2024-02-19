@@ -1,0 +1,1222 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (bouncesmtp2.u12.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 3554D14014E3
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon,  5 Dec 2022 12:24:42 +0100 (CET)
+Received: from mx3.localdomain (MX3.univ-nantes.fr [193.52.101.137])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id 3114C5FA9
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon,  5 Dec 2022 12:24:42 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.localdomain (Postfix) with ESMTP id 2872A20064
+	for <liste-egc@polytech.univ-nantes.fr>; Mon,  5 Dec 2022 12:24:42 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -3.99
+X-Spam-Level:
+X-Spam-Status: No, score=-3.99 tagged_above=-1000 required=5
+	tests=[CRM114_GOOD=-5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	HTML_FONT_LOW_CONTRAST=0.001, HTML_MESSAGE=0.001,
+	RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_WSFF=0.01,
+	SARE_HEAD_8BIT_SPAM=0.888, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+	T_KAM_HTML_FONT_INVALID=0.01, UN_PHISHING_PW=0.1] autolearn=disabled
+X-CRM114-Status: GOOD ( 5.1969 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=dimes-unical-it.20210112.gappssmtp.com
+Received: from mx3.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Us15bEHtVoir for <liste-egc@polytech.univ-nantes.fr>;
+	Mon,  5 Dec 2022 12:24:38 +0100 (CET)
+X-Greylist: delayed 00:06:26 by SQLgrey-1.6.7
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+	by mx3.localdomain (Postfix) with ESMTPS id 97EB6201FF
+	for <liste-egc@polytech.univ-nantes.fr>; Mon,  5 Dec 2022 12:24:37 +0100 (CET)
+Received: by mail-lj1-x22f.google.com with SMTP id d3so13168567ljl.1
+        for <liste-egc@polytech.univ-nantes.fr>; Mon, 05 Dec 2022 03:24:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dimes-unical-it.20210112.gappssmtp.com; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=PEFTmlDB4rgIgduHUKjI7jn9NOEP1K+Mu6b0ELEHRm8=;
+        b=HF9cpOGspjKx379lXw56NIxVgnMBbscRt+grCPeIBX7DmZWJm6IKKoq9pHs9JoDsaI
+         373eZVo6rRYRo0yTEZEXBslfYc4c7C+HOwpfZqV8wia1SCKq927YQH4Lvk5A+7pOhLSM
+         hhgsMBjh+5oELWSM+kTqVxmL70RJHGSgshBvL4aPEIGooZPi8vUfVs4db+e6CsZkr3Ze
+         poaqeuVF8Q3zxkyimagxbkHOuaV7sCRgW1xSV5brCEYwBlkr7l8woTtUxOanygF4pVA3
+         QBKrX2CkIJQTZG+jf/kbM8IiMK6gyscbE92qsDs6ymSf1jZCNOlIEq0zrliTHnP6xlo1
+         vEZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=PEFTmlDB4rgIgduHUKjI7jn9NOEP1K+Mu6b0ELEHRm8=;
+        b=hvrjc+dzjIN0ijubBbaDSTeqvRcsslHyQWJwBPuSjx60TuWXKP0flpalIdAn+tX40A
+         DO6gVenuLcUvfyWD4mMLiRDUb0nbRO7sspVy91/CcYNNsn+PO4jjRbvhCV1z43kb3cY0
+         GaHcFN5k6UWhTod2aSQGukx1Avyj/m8y8qak46blPWEmpQxaM18cR9XbylYC6e6cdPfX
+         ZhyUBa5KMhXJX78WdZu3sr9n5RfZZRFn9XrF1IwsYTM6gf8TmpipHVobwGGEmQ2nEx8x
+         +/zGP5HPVfsFTU+h9DbMF1JEialnoPjuA23QQXEPKiUmmMR0XRNxw6EWmgCcG+QPMOH0
+         Q9Gw==
+X-Gm-Message-State: ANoB5pnHensNF0rqbA8gBc5O5v/Ob44AOuvKmXcr2SQkLRfElCZJI2Qj
+	738EplmYPWMtKYl0N4VeTrAF8X5k7h/5Xhd+ibimhuwiR3UFQWOD
+X-Google-Smtp-Source: AA0mqf79s+dCaFBXk/ukg8tbNoUoRtZUbKZkSF7AbUGGySBafA5pK7tjIkPSqJTOudlBAjAbkMYn/0zqxqKn/LaNF2U=
+X-Received: by 2002:a05:651c:19ab:b0:276:66a4:47c3 with SMTP id
+ bx43-20020a05651c19ab00b0027666a447c3mr19839193ljb.49.1670239091066; Mon, 05
+ Dec 2022 03:18:11 -0800 (PST)
+MIME-Version: 1.0
+From: Roberto Interdonato <rinterdonato@dimes.unical.it>
+Date: Mon, 5 Dec 2022 12:17:59 +0100
+Message-ID: <CAG4i7imekx0-x9tpNR_8OxJiYzRy-dJh0_H=uGDcyfTB_tuSGQ@mail.gmail.com>
+To: liste-egc@polytech.univ-nantes.fr
+Content-Type: multipart/alternative; boundary="000000000000b6a22a05ef12d795"
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Stage M2 (CIRAD, UMR TETIS, Montpellier) : Analyse de
+ =?UTF-8?Q?donn=C3=A9es_h=C3=A9t=C3=A9rog=C3=A8nes?= pour =?UTF-8?Q?am?=
+ =?UTF-8?Q?=C3=A9liorer?= la =?UTF-8?Q?pr=C3=A9diction_d=E2=80=99indices?=
+ de =?UTF-8?Q?s=C3=A9curit=C3=A9?= alimentaire
+
+--000000000000b6a22a05ef12d795
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Sujet de stage Ecole ing=C3=A9nieur / M2
+
+Analyse de donn=C3=A9es h=C3=A9t=C3=A9rog=C3=A8nes pour am=C3=A9liorer la p=
+r=C3=A9diction d=E2=80=99indices de
+s=C3=A9curit=C3=A9 alimentaire
+
+Analyse de donn=C3=A9es / Apprentissage par machine / S=C3=A9curit=C3=A9 al=
+imentaire /
+Enqu=C3=AAtes
+
+
+
+Contexte=E2=80=AF:
+
+
+Ce stage de Master s'inscrit dans le cadre du projet SCOSSA du programme
+TOSCA du CNES et dans la th=C3=A9matique g=C3=A9n=C3=A9rale de la s=C3=A9cu=
+rit=C3=A9 alimentaire en
+Afrique de l=E2=80=99Ouest consid=C3=A9r=C3=A9e comme l=E2=80=99un des enje=
+ux majeurs de
+d=C3=A9veloppement de la r=C3=A9gion.
+
+Dans ce contexte, des donn=C3=A9es recueillies au travers d=E2=80=99enqu=C3=
+=AAtes m=C3=A9nage
+repr=C3=A9sentent aujourd=E2=80=99hui une source d=E2=80=99informations fon=
+damentales pour
+calculer les indicateurs de s=C3=A9curit=C3=A9 alimentaire qui sont ensuite=
+ utilis=C3=A9s
+en routine par diff=C3=A9rentes organisations. Ces indicateurs sont
+particuli=C3=A8rement difficiles =C3=A0 mettre en place dans les zones de c=
+onflit o=C3=B9
+les enqu=C3=AAtes ne peuvent se d=C3=A9rouler normalement.
+
+Des =C3=A9tudes r=C3=A9centes se sont int=C3=A9ress=C3=A9es =C3=A0 l=E2=80=
+=99estimation de ces indices =C3=A0
+partir de donn=C3=A9es g=C3=A9ospatiales et h=C3=A9t=C3=A9rog=C3=A8nes, en =
+proposant des
+m=C3=A9thodes fond=C3=A9es
+sur l=E2=80=99utilisation des techniques avanc=C3=A9es de science des donn=
+=C3=A9es, et plus
+pr=C3=A9cis=C3=A9ment d=E2=80=99apprentissage automatique et profond [1]. C=
+es approches
+permettent d=E2=80=99expliquer une part de la variation de la consommation
+alimentaire insuffisante et peut surpasser un mod=C3=A8le utilisant la
+pr=C3=A9valence comme estimation.
+
+Des limitations existent encore et concernent notamment l=E2=80=99explicabi=
+lit=C3=A9 des
+mod=C3=A8les (apprentissage par machine) ainsi que les performances et la v=
+alidation
+de ces mod=C3=A8les face =C3=A0 des situations in=C3=A9dites : r=C3=A9gions=
+ concern=C3=A9es par des
+conflits arm=C3=A9s, p=C3=A9riodes de crises =C3=A9conomiques/inflation.
+
+
+Missions
+
+
+Au sein de l=E2=80=99UMR TETIS et en lien avec les =C3=A9quipes MISCA et AT=
+TOS, l=E2=80=99objectif
+de ce stage est d'am=C3=A9liorer la performance des mod=C3=A8les d=E2=80=99=
+apprentissage qui
+permettent d=E2=80=99estimer les indicateurs de consommation alimentaire.  =
+Une
+premi=C3=A8re t=C3=A2che sera la collecte et la mise en lien de donn=C3=A9e=
+s h=C3=A9t=C3=A9rog=C3=A8nes
+d=E2=80=99ordre =C3=A9conomique et en lien avec les situations de conflits =
+dans les
+r=C3=A9gions d=E2=80=99int=C3=A9r=C3=AAts [2].  Une deuxi=C3=A8me =C3=A9tap=
+e sera d=E2=80=99analyser les r=C3=A9sultats
+de simulation pour diff=C3=A9rentes entr=C3=A9es (donn=C3=A9es statique et =
+non statique,
+d=E2=80=99ordre agronomique/ m=C3=A9t=C3=A9orologique / =C3=A9conomique...)=
+. Des tests seront
+aussi r=C3=A9alis=C3=A9s sur d=E2=80=99autres r=C3=A9gions / avec des donn=
+=C3=A9es issues de nouvelles
+enqu=C3=AAtes [3].
+
+   -
+
+
+
+Comp=C3=A9tences du candidat/e=E2=80=AF:
+
+   -
+
+   Connaissances/go=C3=BBt pour la programmation
+   -
+
+   Int=C3=A9r=C3=AAt pour l=E2=80=99analyse de donn=C3=A9es
+   -
+
+   Rigueur scientifique
+   -
+
+   Curiosit=C3=A9 et ouverture d=E2=80=99esprit
+   -
+
+   Capacit=C3=A9 d'analyses, r=C3=A9dactionnelles et de synth=C3=A8se
+
+Informations compl=C3=A9mentaires :
+
+
+Dur=C3=A9e de 6 mois, =C3=A0 partir de f=C3=A9vrier 2023
+
+Le stage se d=C3=A9roulera au CIRAD, dans l=E2=80=99UMR TETIS (Territoire,
+Environnement, T=C3=A9l=C3=A9d=C3=A9tection et Information Spatiale), situ=
+=C3=A9e dans les
+locaux de la Maison de la T=C3=A9l=C3=A9d=C3=A9tection =C3=A0 Montpellier.
+
+
+Encadrement
+
+
+Simon Madec / Roberto Interdonato
+
+Envoyer un CV et une lettre de motivation avant le 31/12/2022 =C3=A0 :
+simon.madec@cirad.fr
+
+
+R=C3=A9f=C3=A9rences
+
+
+[1] Del=C3=A9glise, Hugo, et al. "Food security prediction from heterogeneo=
+us
+data combining machine and deep learning methods." Expert Systems with
+Applications 190 (2022): 116189.
+
+[2] Andree, Bo Pieter Johannes. "Estimating Food Price Inflation from
+Partial Surveys." World Bank, Washington, DC (2021).
+
+[3] https://microdata.worldbank.org/index.php/catalog/3768#metadata-version
+
+
+
+
+
+
+
+
+
+--=20
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Roberto Interdonato, PhD
+Research Scientist
+CIRAD
+UMR TETIS
+Montpellier
+France
+email: roberto.interdonato@cirad.fr
+tel: +33 (0) 467558615
+ =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+--000000000000b6a22a05ef12d795
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div class=3D"gmail-OutlineElement gmail-Ltr gmail-SCXW274=
+69860 gmail-BCX0" style=3D"margin:0px;padding:0px;overflow:visible;clear:bo=
+th;direction:ltr;color:rgb(0,0,0);font-family:&quot;Segoe UI&quot;,&quot;Se=
+goe UI Web&quot;,Arial,Verdana,sans-serif;font-size:12px"><p class=3D"gmail=
+-Paragraph gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;w=
+hite-space:pre-wrap;vertical-align:baseline;font-kerning:none;background-co=
+lor:transparent;color:windowtext"><span lang=3D"FR-FR" class=3D"gmail-TextR=
+un gmail-MacChromeBold gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;p=
+adding:0px;font-variant-numeric:normal;font-variant-east-asian:normal;font-=
+size:16pt;line-height:25px;font-family:WordVisi_MSFontService,&quot;Calibri=
+ Light&quot;,&quot;Calibri Light_EmbeddedFont&quot;,&quot;Calibri Light_MSF=
+ontService&quot;,sans-serif;font-weight:bold"><span class=3D"gmail-NormalTe=
+xtRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">Sujet=
+ de stage Ecole ing=C3=A9nieur / M2=C2=A0</span></span><span class=3D"gmail=
+-EOP gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;font-si=
+ze:16pt;line-height:25px;font-family:WordVisiPilcrow_MSFontService,&quot;Ca=
+libri Light&quot;,&quot;Calibri Light_EmbeddedFont&quot;,&quot;Calibri Ligh=
+t_MSFontService&quot;,sans-serif">=C2=A0</span></p></div><div class=3D"gmai=
+l-OutlineElement gmail-Ltr gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0=
+px;padding:0px;overflow:visible;clear:both;direction:ltr;color:rgb(0,0,0);f=
+ont-family:&quot;Segoe UI&quot;,&quot;Segoe UI Web&quot;,Arial,Verdana,sans=
+-serif;font-size:12px"><p class=3D"gmail-Paragraph gmail-SCXW27469860 gmail=
+-BCX0" role=3D"heading" style=3D"margin:0px;padding:0px;white-space:pre-wra=
+p;vertical-align:baseline;font-kerning:none;background-color:transparent;co=
+lor:rgb(47,84,150)"><span lang=3D"FR-FR" class=3D"gmail-TextRun gmail-MacCh=
+romeBold gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;fon=
+t-variant-numeric:normal;font-variant-east-asian:normal;color:rgb(0,0,0);fo=
+nt-size:16pt;line-height:26.9792px;font-family:WordVisi_MSFontService,&quot=
+;Times New Roman&quot;,&quot;Times New Roman_EmbeddedFont&quot;,&quot;Times=
+ New Roman_MSFontService&quot;,serif;font-weight:bold"><span class=3D"gmail=
+-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0=
+px">Analyse de donn=C3=A9es </span><span class=3D"gmail-NormalTextRun gmail=
+-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">h=C3=A9t=C3=A9ro=
+g=C3=A8nes </span><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gma=
+il-BCX0" style=3D"margin:0px;padding:0px">pour am=C3=A9liorer la pr=C3=A9di=
+ction d=E2=80=99indices de s=C3=A9curit=C3=A9 alimentaire</span></span><spa=
+n class=3D"gmail-EOP gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;pad=
+ding:0px;font-size:16pt;line-height:26.9792px;font-family:WordVisiPilcrow_M=
+SFontService,&quot;Times New Roman&quot;,&quot;Times New Roman_EmbeddedFont=
+&quot;,&quot;Times New Roman_MSFontService&quot;,serif;color:rgb(0,0,0)">=
+=C2=A0</span></p></div><div class=3D"gmail-OutlineElement gmail-Ltr gmail-S=
+CXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;overflow:visible;cl=
+ear:both;direction:ltr;color:rgb(0,0,0);font-family:&quot;Segoe UI&quot;,&q=
+uot;Segoe UI Web&quot;,Arial,Verdana,sans-serif;font-size:12px"><p class=3D=
+"gmail-Paragraph gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding=
+:0px;white-space:pre-wrap;vertical-align:baseline;font-kerning:none;backgro=
+und-color:transparent;color:windowtext"><span lang=3D"FR-FR" class=3D"gmail=
+-TextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;fon=
+t-variant-numeric:normal;font-variant-east-asian:normal;font-size:12pt;font=
+-style:italic;line-height:20.5042px;font-family:WordVisi_MSFontService,&quo=
+t;Times New Roman&quot;,&quot;Times New Roman_EmbeddedFont&quot;,&quot;Time=
+s New Roman_MSFontService&quot;,serif"><span class=3D"gmail-NormalTextRun g=
+mail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">Analyse de d=
+onn=C3=A9es / Apprentissage par machine / S=C3=A9curit=C3=A9 alimentaire / =
+Enqu=C3=AAtes=C2=A0</span></span><span class=3D"gmail-EOP gmail-SCXW2746986=
+0 gmail-BCX0" style=3D"margin:0px;padding:0px;font-size:12pt;line-height:20=
+.5042px;font-family:WordVisiPilcrow_MSFontService,&quot;Times New Roman&quo=
+t;,&quot;Times New Roman_EmbeddedFont&quot;,&quot;Times New Roman_MSFontSer=
+vice&quot;,serif">=C2=A0</span></p></div><div class=3D"gmail-OutlineElement=
+ gmail-Ltr gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;o=
+verflow:visible;clear:both;direction:ltr;color:rgb(0,0,0);font-family:&quot=
+;Segoe UI&quot;,&quot;Segoe UI Web&quot;,Arial,Verdana,sans-serif;font-size=
+:12px"><p class=3D"gmail-Paragraph gmail-SCXW27469860 gmail-BCX0" style=3D"=
+margin:0px;padding:0px;white-space:pre-wrap;vertical-align:baseline;font-ke=
+rning:none;background-color:transparent;color:windowtext"><span lang=3D"FR-=
+FR" class=3D"gmail-TextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0=
+px;padding:0px;font-variant-numeric:normal;font-variant-east-asian:normal;f=
+ont-size:12pt;line-height:20.5042px;font-family:WordVisi_MSFontService,&quo=
+t;Times New Roman&quot;,&quot;Times New Roman_EmbeddedFont&quot;,&quot;Time=
+s New Roman_MSFontService&quot;,serif"><span class=3D"gmail-NormalTextRun g=
+mail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px"></span></spa=
+n><span class=3D"gmail-EOP gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0=
+px;padding:0px;font-size:12pt;line-height:20.5042px;font-family:WordVisiPil=
+crow_MSFontService,&quot;Times New Roman&quot;,&quot;Times New Roman_Embedd=
+edFont&quot;,&quot;Times New Roman_MSFontService&quot;,serif">=C2=A0</span>=
+</p></div><div class=3D"gmail-OutlineElement gmail-Ltr gmail-SCXW27469860 g=
+mail-BCX0" style=3D"margin:0px;padding:0px;overflow:visible;clear:both;dire=
+ction:ltr;color:rgb(0,0,0);font-family:&quot;Segoe UI&quot;,&quot;Segoe UI =
+Web&quot;,Arial,Verdana,sans-serif;font-size:12px"><p class=3D"gmail-Paragr=
+aph gmail-SCXW27469860 gmail-BCX0" role=3D"heading" style=3D"margin:0px;pad=
+ding:0px;white-space:pre-wrap;vertical-align:baseline;font-kerning:none;bac=
+kground-color:transparent;color:rgb(47,84,150)"><span lang=3D"FR-FR" class=
+=3D"gmail-TextRun gmail-Underlined gmail-MacChromeBold gmail-SCXW27469860 g=
+mail-BCX0" style=3D"margin:0px;padding:0px;font-variant-numeric:normal;font=
+-variant-east-asian:normal;color:rgb(0,0,0);font-size:13pt;text-decoration-=
+line:underline;line-height:21.5833px;font-family:WordVisi_MSFontService,&qu=
+ot;Times New Roman&quot;,&quot;Times New Roman_EmbeddedFont&quot;,&quot;Tim=
+es New Roman_MSFontService&quot;,serif;font-weight:bold"><span class=3D"gma=
+il-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding=
+:0px">Contexte=E2=80=AF:</span></span><span class=3D"gmail-EOP gmail-SCXW27=
+469860 gmail-BCX0" style=3D"margin:0px;padding:0px;font-size:13pt;line-heig=
+ht:21.5833px;font-family:WordVisiPilcrow_MSFontService,&quot;Times New Roma=
+n&quot;,&quot;Times New Roman_EmbeddedFont&quot;,&quot;Times New Roman_MSFo=
+ntService&quot;,serif;color:rgb(0,0,0)">=C2=A0</span></p><p class=3D"gmail-=
+Paragraph gmail-SCXW27469860 gmail-BCX0" role=3D"heading" style=3D"margin:0=
+px;padding:0px;white-space:pre-wrap;vertical-align:baseline;font-kerning:no=
+ne;background-color:transparent;color:rgb(47,84,150)"><span class=3D"gmail-=
+EOP gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;font-siz=
+e:13pt;line-height:21.5833px;font-family:WordVisiPilcrow_MSFontService,&quo=
+t;Times New Roman&quot;,&quot;Times New Roman_EmbeddedFont&quot;,&quot;Time=
+s New Roman_MSFontService&quot;,serif;color:rgb(0,0,0)"><br></span></p></di=
+v><div class=3D"gmail-OutlineElement gmail-Ltr gmail-SCXW27469860 gmail-BCX=
+0" style=3D"margin:0px;padding:0px;overflow:visible;clear:both;direction:lt=
+r;color:rgb(0,0,0);font-family:&quot;Segoe UI&quot;,&quot;Segoe UI Web&quot=
+;,Arial,Verdana,sans-serif;font-size:12px"><p class=3D"gmail-Paragraph gmai=
+l-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;white-space:pre-=
+wrap;vertical-align:baseline;font-kerning:none;background-color:transparent=
+;color:windowtext"><span lang=3D"FR-FR" class=3D"gmail-TextRun gmail-SCXW27=
+469860 gmail-BCX0" style=3D"margin:0px;padding:0px;font-variant-numeric:nor=
+mal;font-variant-east-asian:normal;color:windowtext;font-size:10pt;line-hei=
+ght:17.2667px;font-family:WordVisi_MSFontService,&quot;Times New Roman&quot=
+;,&quot;Times New Roman_EmbeddedFont&quot;,&quot;Times New Roman_MSFontServ=
+ice&quot;,serif"><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmai=
+l-BCX0" style=3D"margin:0px;padding:0px">Ce stage de Master s&#39;inscrit d=
+ans le cadre du projet SCOSSA du programme TOSCA du CNES</span><span class=
+=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;=
+padding:0px"> et</span></span><span lang=3D"FR-FR" class=3D"gmail-TextRun g=
+mail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;font-variant-=
+numeric:normal;font-variant-east-asian:normal;font-size:10pt;line-height:17=
+.2667px;font-family:WordVisi_MSFontService,&quot;Times New Roman&quot;,&quo=
+t;Times New Roman_EmbeddedFont&quot;,&quot;Times New Roman_MSFontService&qu=
+ot;,serif"><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0=
+" style=3D"margin:0px;padding:0px"> dans la th=C3=A9matique g=C3=A9n=C3=A9r=
+ale de la s=C3=A9curit=C3=A9 alimentaire en Afrique de l=E2=80=99Ouest cons=
+id=C3=A9r=C3=A9e comme l=E2=80=99un des enjeux majeurs de d=C3=A9veloppemen=
+t de la r=C3=A9gion.=C2=A0</span></span><span class=3D"gmail-EOP gmail-SCXW=
+27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;font-size:10pt;line-he=
+ight:17.2667px;font-family:WordVisiPilcrow_MSFontService,&quot;Times New Ro=
+man&quot;,&quot;Times New Roman_EmbeddedFont&quot;,&quot;Times New Roman_MS=
+FontService&quot;,serif">=C2=A0</span></p></div><div class=3D"gmail-Outline=
+Element gmail-Ltr gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;paddin=
+g:0px;overflow:visible;clear:both;direction:ltr;color:rgb(0,0,0);font-famil=
+y:&quot;Segoe UI&quot;,&quot;Segoe UI Web&quot;,Arial,Verdana,sans-serif;fo=
+nt-size:12px"><p class=3D"gmail-Paragraph gmail-SCXW27469860 gmail-BCX0" st=
+yle=3D"margin:0px;padding:0px;white-space:pre-wrap;vertical-align:baseline;=
+font-kerning:none;background-color:transparent;color:windowtext"><span lang=
+=3D"FR-FR" class=3D"gmail-TextRun gmail-SCXW27469860 gmail-BCX0" style=3D"m=
+argin:0px;padding:0px;font-size:10pt;line-height:17.2667px;font-family:Word=
+Visi_MSFontService,&quot;Times New Roman&quot;,&quot;Times New Roman_Embedd=
+edFont&quot;,&quot;Times New Roman_MSFontService&quot;,serif;font-variant-l=
+igatures:none"><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-=
+BCX0" style=3D"margin:0px;padding:0px">Dans ce contexte, d</span><span clas=
+s=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px=
+;padding:0px">es donn=C3=A9es recueillies au travers d=E2=80=99enqu=C3=AAte=
+s m=C3=A9nage repr=C3=A9sentent aujourd=E2=80=99hui une source d=E2=80=99in=
+formations fondamentale</span><span class=3D"gmail-NormalTextRun gmail-SCXW=
+27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">s</span><span class=
+=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;=
+padding:0px"> pour calculer les indicateurs de s=C3=A9curit=C3=A9 alimentai=
+re qui sont ensuite utilis=C3=A9s en routine par diff=C3=A9rentes organisat=
+ions. </span></span><span lang=3D"FR-FR" class=3D"gmail-TextRun gmail-SCXW2=
+7469860 gmail-BCX0" style=3D"margin:0px;padding:0px;font-variant-numeric:no=
+rmal;font-variant-east-asian:normal;font-size:10pt;line-height:17.2667px;fo=
+nt-family:WordVisi_MSFontService,&quot;Times New Roman&quot;,&quot;Times Ne=
+w Roman_EmbeddedFont&quot;,&quot;Times New Roman_MSFontService&quot;,serif"=
+><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D=
+"margin:0px;padding:0px">Ces indicateurs sont particuli=C3=A8rement diffici=
+les =C3=A0 mettre en place dans les zones de conflit o=C3=B9 les enqu=C3=AA=
+tes ne peuvent se d=C3=A9rouler normalement.=C2=A0=C2=A0=C2=A0</span></span=
+><span class=3D"gmail-EOP gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0p=
+x;padding:0px;font-size:10pt;line-height:17.2667px;font-family:WordVisiPilc=
+row_MSFontService,&quot;Times New Roman&quot;,&quot;Times New Roman_Embedde=
+dFont&quot;,&quot;Times New Roman_MSFontService&quot;,serif">=C2=A0</span><=
+/p></div><div class=3D"gmail-OutlineElement gmail-Ltr gmail-SCXW27469860 gm=
+ail-BCX0" style=3D"margin:0px;padding:0px;overflow:visible;clear:both;direc=
+tion:ltr;color:rgb(0,0,0);font-family:&quot;Segoe UI&quot;,&quot;Segoe UI W=
+eb&quot;,Arial,Verdana,sans-serif;font-size:12px"><p class=3D"gmail-Paragra=
+ph gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;white-spa=
+ce:pre-wrap;vertical-align:baseline;font-kerning:none;background-color:tran=
+sparent;color:windowtext"><span lang=3D"FR-FR" class=3D"gmail-TextRun gmail=
+-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;font-size:10pt;li=
+ne-height:17.2667px;font-family:WordVisi_MSFontService,&quot;Times New Roma=
+n&quot;,&quot;Times New Roman_EmbeddedFont&quot;,&quot;Times New Roman_MSFo=
+ntService&quot;,serif;font-variant-ligatures:none"><span class=3D"gmail-Nor=
+malTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">=
+Des =C3=A9tudes r=C3=A9centes se sont int=C3=A9ress=C3=A9es =C3=A0 l=E2=80=
+=99estimation de ces indices =C3=A0 partir de donn=C3=A9es g=C3=A9ospatiale=
+s et h=C3=A9t=C3=A9rog=C3=A8nes, en proposant des m=C3=A9thodes </span><spa=
+n class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"marg=
+in:0px;padding:0px">fond=C3=A9es </span><span class=3D"gmail-NormalTextRun =
+gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">sur l=E2=80=
+=99utilisation des techniques avanc=C3=A9es de science des donn=C3=A9es, et=
+ plus pr=C3=A9cis=C3=A9ment d=E2=80=99apprentissage automatique et profond<=
+/span><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" sty=
+le=3D"margin:0px;padding:0px"> </span></span><span lang=3D"FR-FR" class=3D"=
+gmail-TextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0p=
+x;font-variant-numeric:normal;font-variant-east-asian:normal;color:rgb(34,3=
+4,34);font-size:9.5pt;line-height:16.1875px;font-family:WordVisi_MSFontServ=
+ice,Arial,Arial_EmbeddedFont,Arial_MSFontService,sans-serif"><span class=3D=
+"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;pad=
+ding:0px">[1]</span></span><span lang=3D"FR-FR" class=3D"gmail-TextRun gmai=
+l-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;font-size:10pt;l=
+ine-height:17.2667px;font-family:WordVisi_MSFontService,&quot;Times New Rom=
+an&quot;,&quot;Times New Roman_EmbeddedFont&quot;,&quot;Times New Roman_MSF=
+ontService&quot;,serif;font-variant-ligatures:none"><span class=3D"gmail-No=
+rmalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px"=
+>.</span><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" =
+style=3D"margin:0px;padding:0px"> </span><span class=3D"gmail-NormalTextRun=
+ gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">Ces approc=
+hes permettent </span><span class=3D"gmail-NormalTextRun gmail-SCXW27469860=
+ gmail-BCX0" style=3D"margin:0px;padding:0px">d=E2=80=99expliquer une part =
+de la variation de la consommation alimentaire insuffisante</span><span cla=
+ss=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0p=
+x;padding:0px"> </span><span class=3D"gmail-NormalTextRun gmail-SCXW2746986=
+0 gmail-BCX0" style=3D"margin:0px;padding:0px">et peut </span><span class=
+=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;=
+padding:0px">surpas</span><span class=3D"gmail-NormalTextRun gmail-SCXW2746=
+9860 gmail-BCX0" style=3D"margin:0px;padding:0px">s</span><span class=3D"gm=
+ail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;paddin=
+g:0px">er</span><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail=
+-BCX0" style=3D"margin:0px;padding:0px"> </span><span class=3D"gmail-Normal=
+TextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">un =
+</span><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" st=
+yle=3D"margin:0px;padding:0px">mod=C3=A8le</span><span class=3D"gmail-Norma=
+lTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px"> u=
+tilisant la pr=C3=A9valence comme estimation</span><span class=3D"gmail-Nor=
+malTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">=
+.</span><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" s=
+tyle=3D"margin:0px;padding:0px">=C2=A0</span></span><span class=3D"gmail-EO=
+P gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;font-size:=
+10pt;line-height:17.2667px;font-family:WordVisiPilcrow_MSFontService,&quot;=
+Times New Roman&quot;,&quot;Times New Roman_EmbeddedFont&quot;,&quot;Times =
+New Roman_MSFontService&quot;,serif">=C2=A0</span></p></div><div class=3D"g=
+mail-OutlineElement gmail-Ltr gmail-SCXW27469860 gmail-BCX0" style=3D"margi=
+n:0px;padding:0px;overflow:visible;clear:both;direction:ltr;color:rgb(0,0,0=
+);font-family:&quot;Segoe UI&quot;,&quot;Segoe UI Web&quot;,Arial,Verdana,s=
+ans-serif;font-size:12px"><p class=3D"gmail-Paragraph gmail-SCXW27469860 gm=
+ail-BCX0" style=3D"margin:0px;padding:0px;white-space:pre-wrap;vertical-ali=
+gn:baseline;font-kerning:none;background-color:transparent;color:windowtext=
+"><span lang=3D"FR-FR" class=3D"gmail-TextRun gmail-SCXW27469860 gmail-BCX0=
+" style=3D"margin:0px;padding:0px;font-size:10pt;line-height:17.2667px;font=
+-family:WordVisi_MSFontService,&quot;Times New Roman&quot;,&quot;Times New =
+Roman_EmbeddedFont&quot;,&quot;Times New Roman_MSFontService&quot;,serif;fo=
+nt-variant-ligatures:none"><span class=3D"gmail-NormalTextRun gmail-SCXW274=
+69860 gmail-BCX0" style=3D"margin:0px;padding:0px">Des </span><span class=
+=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;=
+padding:0px">limitations </span><span class=3D"gmail-NormalTextRun gmail-SC=
+XW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">existent encore</sp=
+an><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=
+=3D"margin:0px;padding:0px"> et </span><span class=3D"gmail-NormalTextRun g=
+mail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">concerne</sp=
+an><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=
+=3D"margin:0px;padding:0px">nt</span><span class=3D"gmail-NormalTextRun gma=
+il-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px"> </span><span =
+class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin=
+:0px;padding:0px">notamment</span><span class=3D"gmail-NormalTextRun gmail-=
+SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px"> </span><span cla=
+ss=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0p=
+x;padding:0px">l=E2=80=99</span><span class=3D"gmail-NormalTextRun gmail-SC=
+XW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">explicabilit=C3=A9 =
+des mod=C3=A8les</span><span class=3D"gmail-NormalTextRun gmail-SCXW2746986=
+0 gmail-BCX0" style=3D"margin:0px;padding:0px"> (apprentissage par machine)=
+</span><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" st=
+yle=3D"margin:0px;padding:0px"> </span><span class=3D"gmail-NormalTextRun g=
+mail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">ainsi que </=
+span><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" styl=
+e=3D"margin:0px;padding:0px">l</span><span class=3D"gmail-NormalTextRun gma=
+il-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">es performance=
+s</span><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" s=
+tyle=3D"margin:0px;padding:0px"> </span><span class=3D"gmail-NormalTextRun =
+gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">et</span><s=
+pan class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"ma=
+rgin:0px;padding:0px"> </span><span class=3D"gmail-NormalTextRun gmail-SCXW=
+27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">la </span><span class=
+=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;=
+padding:0px">validation de ces mod=C3=A8les face =C3=A0 des situations </sp=
+an><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=
+=3D"margin:0px;padding:0px">in=C3=A9dites</span><span class=3D"gmail-Normal=
+TextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px"> : =
+r=C3=A9gions concern=C3=A9es par des conflits arm=C3=A9s, p=C3=A9riodes de =
+crises =C3=A9conomiques/</span><span class=3D"gmail-NormalTextRun gmail-SCX=
+W27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">inflation</span><spa=
+n class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"marg=
+in:0px;padding:0px">.</span></span><span class=3D"gmail-EOP gmail-SCXW27469=
+860 gmail-BCX0" style=3D"margin:0px;padding:0px;font-size:10pt;line-height:=
+17.2667px;font-family:WordVisiPilcrow_MSFontService,&quot;Times New Roman&q=
+uot;,&quot;Times New Roman_EmbeddedFont&quot;,&quot;Times New Roman_MSFontS=
+ervice&quot;,serif">=C2=A0</span></p><p class=3D"gmail-Paragraph gmail-SCXW=
+27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;white-space:pre-wrap;v=
+ertical-align:baseline;font-kerning:none;background-color:transparent;color=
+:windowtext"><span class=3D"gmail-EOP gmail-SCXW27469860 gmail-BCX0" style=
+=3D"margin:0px;padding:0px;font-size:10pt;line-height:17.2667px;font-family=
+:WordVisiPilcrow_MSFontService,&quot;Times New Roman&quot;,&quot;Times New =
+Roman_EmbeddedFont&quot;,&quot;Times New Roman_MSFontService&quot;,serif"><=
+br></span></p></div><div class=3D"gmail-OutlineElement gmail-Ltr gmail-SCXW=
+27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;overflow:visible;clear=
+:both;direction:ltr;color:rgb(0,0,0);font-family:&quot;Segoe UI&quot;,&quot=
+;Segoe UI Web&quot;,Arial,Verdana,sans-serif;font-size:12px"><p class=3D"gm=
+ail-Paragraph gmail-SCXW27469860 gmail-BCX0" role=3D"heading" style=3D"marg=
+in:0px;padding:0px;white-space:pre-wrap;vertical-align:baseline;font-kernin=
+g:none;background-color:transparent;color:rgb(47,84,150)"><span lang=3D"FR-=
+FR" class=3D"gmail-TextRun gmail-Underlined gmail-MacChromeBold gmail-SCXW2=
+7469860 gmail-BCX0" style=3D"margin:0px;padding:0px;font-variant-numeric:no=
+rmal;font-variant-east-asian:normal;color:rgb(0,0,0);font-size:13pt;text-de=
+coration-line:underline;line-height:21.5833px;font-family:WordVisi_MSFontSe=
+rvice,&quot;Times New Roman&quot;,&quot;Times New Roman_EmbeddedFont&quot;,=
+&quot;Times New Roman_MSFontService&quot;,serif;font-weight:bold"><span cla=
+ss=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0p=
+x;padding:0px">Missions</span></span><span class=3D"gmail-EOP gmail-SCXW274=
+69860 gmail-BCX0" style=3D"margin:0px;padding:0px;font-size:13pt;line-heigh=
+t:21.5833px;font-family:WordVisiPilcrow_MSFontService,&quot;Times New Roman=
+&quot;,&quot;Times New Roman_EmbeddedFont&quot;,&quot;Times New Roman_MSFon=
+tService&quot;,serif;color:rgb(0,0,0)">=C2=A0</span></p><p class=3D"gmail-P=
+aragraph gmail-SCXW27469860 gmail-BCX0" role=3D"heading" style=3D"margin:0p=
+x;padding:0px;white-space:pre-wrap;vertical-align:baseline;font-kerning:non=
+e;background-color:transparent;color:rgb(47,84,150)"><span class=3D"gmail-E=
+OP gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;font-size=
+:13pt;line-height:21.5833px;font-family:WordVisiPilcrow_MSFontService,&quot=
+;Times New Roman&quot;,&quot;Times New Roman_EmbeddedFont&quot;,&quot;Times=
+ New Roman_MSFontService&quot;,serif;color:rgb(0,0,0)"><br></span></p></div=
+><div class=3D"gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0=
+px;color:rgb(0,0,0);font-family:&quot;Segoe UI&quot;,&quot;Segoe UI Web&quo=
+t;,Arial,Verdana,sans-serif;font-size:12px"><div class=3D"gmail-OutlineElem=
+ent gmail-Ltr gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0p=
+x;overflow:visible;clear:both;direction:ltr"><p class=3D"gmail-Paragraph gm=
+ail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;white-space:pr=
+e-wrap;vertical-align:baseline;font-kerning:none;background-color:transpare=
+nt;color:windowtext"><span lang=3D"FR-FR" class=3D"gmail-TextRun gmail-SCXW=
+27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;font-size:10pt;line-he=
+ight:17.2667px;font-family:WordVisi_MSFontService,&quot;Times New Roman&quo=
+t;,&quot;Times New Roman_EmbeddedFont&quot;,&quot;Times New Roman_MSFontSer=
+vice&quot;,serif;font-variant-ligatures:none"><span class=3D"gmail-NormalTe=
+xtRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">Au se=
+in de l=E2=80=99UMR TETIS </span><span class=3D"gmail-NormalTextRun gmail-S=
+CXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">et </span><span cl=
+ass=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0=
+px;padding:0px">en lien avec les </span></span><span lang=3D"FR-FR" class=
+=3D"gmail-TextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;paddin=
+g:0px;font-size:10pt;line-height:17.2667px;font-variant-ligatures:none"><sp=
+an class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"mar=
+gin:0px;padding:0px">=C3=A9quipe</span></span><span lang=3D"FR-FR" class=3D=
+"gmail-TextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0=
+px;font-size:10pt;line-height:17.2667px;font-family:WordVisi_MSFontService,=
+&quot;Times New Roman&quot;,&quot;Times New Roman_EmbeddedFont&quot;,&quot;=
+Times New Roman_MSFontService&quot;,serif;font-variant-ligatures:none"><spa=
+n class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"marg=
+in:0px;padding:0px">s</span><span class=3D"gmail-NormalTextRun gmail-SCXW27=
+469860 gmail-BCX0" style=3D"margin:0px;padding:0px"> MISCA et ATTOS, l</spa=
+n><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=
+=3D"margin:0px;padding:0px">=E2=80=99objectif de ce stage est </span><span =
+class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin=
+:0px;padding:0px">d&#39;am=C3=A9liorer</span><span class=3D"gmail-NormalTex=
+tRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px"> la pe=
+rformance des mod=C3=A8les d=E2=80=99apprentissage</span><span class=3D"gma=
+il-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding=
+:0px"> </span><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-B=
+CX0" style=3D"margin:0px;padding:0px">qui permettent d=E2=80=99estimer les =
+indicateurs de consommation alimentaire</span><span class=3D"gmail-NormalTe=
+xtRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">.=C2=
+=A0</span></span><span class=3D"gmail-EOP gmail-SCXW27469860 gmail-BCX0" st=
+yle=3D"margin:0px;padding:0px;font-size:10pt;line-height:17.2667px;font-fam=
+ily:WordVisiPilcrow_MSFontService,&quot;Times New Roman&quot;,&quot;Times N=
+ew Roman_EmbeddedFont&quot;,&quot;Times New Roman_MSFontService&quot;,serif=
+">=C2=A0</span><span lang=3D"FR-FR" class=3D"gmail-TextRun gmail-SCXW274698=
+60 gmail-BCX0" style=3D"background-color:transparent;color:windowtext;font-=
+size:10pt;margin:0px;padding:0px;line-height:17.2667px;font-family:WordVisi=
+_MSFontService,&quot;Times New Roman&quot;,&quot;Times New Roman_EmbeddedFo=
+nt&quot;,&quot;Times New Roman_MSFontService&quot;,serif;font-variant-ligat=
+ures:none"><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0=
+" style=3D"margin:0px;padding:0px">Une premi=C3=A8re t=C3=A2che sera la col=
+lecte et la mise en lien de donn=C3=A9es h=C3=A9t=C3=A9rog=C3=A8nes d=E2=80=
+=99ordre =C3=A9conomique et en lien avec les situations de conflits dans le=
+s r=C3=A9gions d=E2=80=99int=C3=A9r=C3=AAts </span></span><span lang=3D"FR-=
+FR" class=3D"gmail-TextRun gmail-SCXW27469860 gmail-BCX0" style=3D"backgrou=
+nd-color:transparent;font-size:10pt;font-variant-numeric:normal;font-varian=
+t-east-asian:normal;margin:0px;padding:0px;color:rgb(34,34,34);line-height:=
+17.2667px;font-family:WordVisi_MSFontService,&quot;Times New Roman&quot;,&q=
+uot;Times New Roman_EmbeddedFont&quot;,&quot;Times New Roman_MSFontService&=
+quot;,serif"><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BC=
+X0" style=3D"margin:0px;padding:0px">[2]</span></span><span lang=3D"FR-FR" =
+class=3D"gmail-TextRun gmail-SCXW27469860 gmail-BCX0" style=3D"background-c=
+olor:transparent;color:windowtext;font-size:10pt;margin:0px;padding:0px;lin=
+e-height:17.2667px;font-family:WordVisi_MSFontService,&quot;Times New Roman=
+&quot;,&quot;Times New Roman_EmbeddedFont&quot;,&quot;Times New Roman_MSFon=
+tService&quot;,serif;font-variant-ligatures:none"><span class=3D"gmail-Norm=
+alTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">.=
+=C2=A0</span></span><span class=3D"gmail-EOP gmail-SCXW27469860 gmail-BCX0"=
+ style=3D"background-color:transparent;color:windowtext;font-size:10pt;marg=
+in:0px;padding:0px;line-height:17.2667px;font-family:WordVisiPilcrow_MSFont=
+Service,&quot;Times New Roman&quot;,&quot;Times New Roman_EmbeddedFont&quot=
+;,&quot;Times New Roman_MSFontService&quot;,serif">=C2=A0</span><span lang=
+=3D"FR-FR" class=3D"gmail-TextRun gmail-SCXW27469860 gmail-BCX0" style=3D"b=
+ackground-color:transparent;color:windowtext;font-size:10pt;margin:0px;padd=
+ing:0px;line-height:17.2667px;font-family:WordVisi_MSFontService,&quot;Time=
+s New Roman&quot;,&quot;Times New Roman_EmbeddedFont&quot;,&quot;Times New =
+Roman_MSFontService&quot;,serif;font-variant-ligatures:none"><span class=3D=
+"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;pad=
+ding:0px">Une deuxi=C3=A8me </span></span><span lang=3D"FR-FR" class=3D"gma=
+il-TextRun gmail-SCXW27469860 gmail-BCX0" style=3D"background-color:transpa=
+rent;color:windowtext;font-family:&quot;Times New Roman&quot;,&quot;Times N=
+ew Roman_MSFontService&quot;,serif;font-size:10pt;margin:0px;padding:0px;li=
+ne-height:17.2667px;font-variant-ligatures:none"><span class=3D"gmail-Norma=
+lTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">=
+=C3=A9tape </span></span><span lang=3D"FR-FR" class=3D"gmail-TextRun gmail-=
+SCXW27469860 gmail-BCX0" style=3D"background-color:transparent;color:window=
+text;font-size:10pt;margin:0px;padding:0px;line-height:17.2667px;font-famil=
+y:WordVisi_MSFontService,&quot;Times New Roman&quot;,&quot;Times New Roman_=
+EmbeddedFont&quot;,&quot;Times New Roman_MSFontService&quot;,serif;font-var=
+iant-ligatures:none"><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 =
+gmail-BCX0" style=3D"margin:0px;padding:0px">sera d=E2=80=99analyser les r=
+=C3=A9sultats de simulation pour diff=C3=A9rentes entr=C3=A9es (donn=C3=A9e=
+s statique et non statique, d=E2=80=99ordre agronomique/ m=C3=A9t=C3=A9orol=
+ogique / =C3=A9conomique...).</span></span><span class=3D"gmail-EOP gmail-S=
+CXW27469860 gmail-BCX0" style=3D"background-color:transparent;color:windowt=
+ext;font-size:10pt;margin:0px;padding:0px;line-height:17.2667px;font-family=
+:WordVisiPilcrow_MSFontService,&quot;Times New Roman&quot;,&quot;Times New =
+Roman_EmbeddedFont&quot;,&quot;Times New Roman_MSFontService&quot;,serif">=
+=C2=A0</span><span lang=3D"FR-FR" class=3D"gmail-TextRun gmail-SCXW27469860=
+ gmail-BCX0" style=3D"background-color:transparent;color:windowtext;font-si=
+ze:10pt;margin:0px;padding:0px;line-height:17.2667px;font-family:WordVisi_M=
+SFontService,&quot;Times New Roman&quot;,&quot;Times New Roman_EmbeddedFont=
+&quot;,&quot;Times New Roman_MSFontService&quot;,serif;font-variant-ligatur=
+es:none"><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" =
+style=3D"margin:0px;padding:0px">Des tests</span><span class=3D"gmail-Norma=
+lTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px"> s=
+eront aussi r=C3=A9alis=C3=A9s sur d=E2=80=99autres r=C3=A9gions </span><sp=
+an class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"mar=
+gin:0px;padding:0px">/ </span><span class=3D"gmail-NormalTextRun gmail-SCXW=
+27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">avec des donn=C3=A9es=
+ issues de nouvelles enqu</span></span><span lang=3D"FR-FR" class=3D"gmail-=
+TextRun gmail-SCXW27469860 gmail-BCX0" style=3D"background-color:transparen=
+t;color:windowtext;font-family:&quot;Times New Roman&quot;,&quot;Times New =
+Roman_MSFontService&quot;,serif;font-size:10pt;margin:0px;padding:0px;line-=
+height:17.2667px;font-variant-ligatures:none"><span class=3D"gmail-NormalTe=
+xtRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">=C3=
+=AA</span></span><span lang=3D"FR-FR" class=3D"gmail-TextRun gmail-SCXW2746=
+9860 gmail-BCX0" style=3D"background-color:transparent;color:windowtext;fon=
+t-size:10pt;margin:0px;padding:0px;line-height:17.2667px;font-family:WordVi=
+si_MSFontService,&quot;Times New Roman&quot;,&quot;Times New Roman_Embedded=
+Font&quot;,&quot;Times New Roman_MSFontService&quot;,serif;font-variant-lig=
+atures:none"><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BC=
+X0" style=3D"margin:0px;padding:0px">tes</span><span class=3D"gmail-NormalT=
+extRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px"> [3]=
+.</span></span><span class=3D"gmail-EOP gmail-SCXW27469860 gmail-BCX0" styl=
+e=3D"background-color:transparent;color:windowtext;font-size:10pt;margin:0p=
+x;padding:0px;line-height:17.2667px;font-family:WordVisiPilcrow_MSFontServi=
+ce,&quot;Times New Roman&quot;,&quot;Times New Roman_EmbeddedFont&quot;,&qu=
+ot;Times New Roman_MSFontService&quot;,serif">=C2=A0</span></p></div><div c=
+lass=3D"gmail-ListContainerWrapper gmail-SCXW27469860 gmail-BCX0" style=3D"=
+margin:0px;padding:0px"><ul class=3D"gmail-BulletListStyle1 gmail-SCXW27469=
+860 gmail-BCX0" role=3D"list" style=3D"margin:0px;padding:0px;overflow:visi=
+ble;font-family:verdana"><li role=3D"listitem" class=3D"gmail-OutlineElemen=
+t gmail-Ltr gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px 0px 0px 24px=
+;padding:0px;overflow:visible;clear:both;direction:ltr;display:block;font-s=
+ize:10pt;font-family:&quot;Times New Roman&quot;,&quot;Times New Roman_MSFo=
+ntService&quot;,serif;vertical-align:baseline"><p class=3D"gmail-Paragraph =
+gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;white-space:=
+pre-wrap;vertical-align:baseline;font-kerning:none;background-color:transpa=
+rent;color:windowtext"><span class=3D"gmail-EOP gmail-SCXW27469860 gmail-BC=
+X0" style=3D"margin:0px;padding:0px;font-size:10pt;line-height:17.2667px;fo=
+nt-family:WordVisiPilcrow_MSFontService,&quot;Times New Roman&quot;,&quot;T=
+imes New Roman_EmbeddedFont&quot;,&quot;Times New Roman_MSFontService&quot;=
+,serif"><br></span></p></li></ul></div><div class=3D"gmail-OutlineElement g=
+mail-Ltr gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;ove=
+rflow:visible;clear:both;direction:ltr"><p class=3D"gmail-Paragraph gmail-S=
+CXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;white-space:pre-wra=
+p;vertical-align:baseline;font-kerning:none;background-color:transparent;co=
+lor:windowtext"><span lang=3D"FR-FR" class=3D"gmail-TextRun gmail-Underline=
+d gmail-MacChromeBold gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;pa=
+dding:0px;font-variant-numeric:normal;font-variant-east-asian:normal;font-s=
+ize:13pt;text-decoration-line:underline;line-height:21.5833px;font-family:W=
+ordVisi_MSFontService,&quot;Times New Roman&quot;,&quot;Times New Roman_Emb=
+eddedFont&quot;,&quot;Times New Roman_MSFontService&quot;,serif;font-weight=
+:bold"><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" st=
+yle=3D"margin:0px;padding:0px">Comp=C3=A9tences du candidat/e=E2=80=AF:</sp=
+an></span><span class=3D"gmail-EOP gmail-SCXW27469860 gmail-BCX0" style=3D"=
+margin:0px;padding:0px;font-size:13pt;line-height:21.5833px;font-family:Wor=
+dVisiPilcrow_MSFontService,&quot;Times New Roman&quot;,&quot;Times New Roma=
+n_EmbeddedFont&quot;,&quot;Times New Roman_MSFontService&quot;,serif">=C2=
+=A0</span></p></div></div><div class=3D"gmail-SCXW27469860 gmail-BCX0" styl=
+e=3D"margin:0px;padding:0px;color:rgb(0,0,0);font-family:&quot;Segoe UI&quo=
+t;,&quot;Segoe UI Web&quot;,Arial,Verdana,sans-serif;font-size:12px"><div c=
+lass=3D"gmail-ListContainerWrapper gmail-SCXW27469860 gmail-BCX0" style=3D"=
+margin:0px;padding:0px"><ul class=3D"gmail-BulletListStyle1 gmail-SCXW27469=
+860 gmail-BCX0" role=3D"list" style=3D"margin:0px;padding:0px;overflow:visi=
+ble;font-family:verdana"><li role=3D"listitem" class=3D"gmail-OutlineElemen=
+t gmail-Ltr gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px 0px 0px 24px=
+;padding:0px;overflow:visible;clear:both;direction:ltr;display:block;font-s=
+ize:10pt;font-family:&quot;Times New Roman&quot;,&quot;Times New Roman_MSFo=
+ntService&quot;,serif;vertical-align:baseline"><p class=3D"gmail-Paragraph =
+gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;white-space:=
+pre-wrap;vertical-align:baseline;font-kerning:none;background-color:transpa=
+rent;color:windowtext"><span lang=3D"FR-FR" class=3D"gmail-TextRun gmail-SC=
+XW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;font-variant-numeric=
+:normal;font-variant-east-asian:normal;font-size:10pt;line-height:17.2667px=
+;font-family:WordVisi_MSFontService,&quot;Times New Roman&quot;,&quot;Times=
+ New Roman_EmbeddedFont&quot;,&quot;Times New Roman_MSFontService&quot;,ser=
+if"><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=
+=3D"margin:0px;padding:0px">Connaissance</span><span class=3D"gmail-NormalT=
+extRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">s</s=
+pan><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=
+=3D"margin:0px;padding:0px">/go=C3=BBt pour la programmation=C2=A0</span></=
+span><span class=3D"gmail-EOP gmail-SCXW27469860 gmail-BCX0" style=3D"margi=
+n:0px;padding:0px;font-size:10pt;line-height:17.2667px;font-family:WordVisi=
+Pilcrow_MSFontService,&quot;Times New Roman&quot;,&quot;Times New Roman_Emb=
+eddedFont&quot;,&quot;Times New Roman_MSFontService&quot;,serif">=C2=A0</sp=
+an></p></li><li role=3D"listitem" class=3D"gmail-OutlineElement gmail-Ltr g=
+mail-SCXW27469860 gmail-BCX0" style=3D"margin:0px 0px 0px 24px;padding:0px;=
+overflow:visible;clear:both;direction:ltr;display:block;font-size:10pt;font=
+-family:&quot;Times New Roman&quot;,&quot;Times New Roman_MSFontService&quo=
+t;,serif;vertical-align:baseline"><p class=3D"gmail-Paragraph gmail-SCXW274=
+69860 gmail-BCX0" style=3D"margin:0px;padding:0px;white-space:pre-wrap;vert=
+ical-align:baseline;font-kerning:none;background-color:transparent;color:wi=
+ndowtext"><span lang=3D"FR-FR" class=3D"gmail-TextRun gmail-SCXW27469860 gm=
+ail-BCX0" style=3D"margin:0px;padding:0px;font-variant-numeric:normal;font-=
+variant-east-asian:normal;font-size:10pt;line-height:17.2667px;font-family:=
+WordVisi_MSFontService,&quot;Times New Roman&quot;,&quot;Times New Roman_Em=
+beddedFont&quot;,&quot;Times New Roman_MSFontService&quot;,serif"><span cla=
+ss=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0p=
+x;padding:0px">Int=C3=A9r=C3=AAt pour l=E2=80=99</span><span class=3D"gmail=
+-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0=
+px">analyse de donn=C3=A9es=C2=A0</span></span><span class=3D"gmail-EOP gma=
+il-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;font-size:10pt;=
+line-height:17.2667px;font-family:WordVisiPilcrow_MSFontService,&quot;Times=
+ New Roman&quot;,&quot;Times New Roman_EmbeddedFont&quot;,&quot;Times New R=
+oman_MSFontService&quot;,serif">=C2=A0</span></p></li><li role=3D"listitem"=
+ class=3D"gmail-OutlineElement gmail-Ltr gmail-SCXW27469860 gmail-BCX0" sty=
+le=3D"margin:0px 0px 0px 24px;padding:0px;overflow:visible;clear:both;direc=
+tion:ltr;display:block;font-size:10pt;font-family:&quot;Times New Roman&quo=
+t;,&quot;Times New Roman_MSFontService&quot;,serif;vertical-align:baseline"=
+><p class=3D"gmail-Paragraph gmail-SCXW27469860 gmail-BCX0" style=3D"margin=
+:0px;padding:0px;white-space:pre-wrap;vertical-align:baseline;font-kerning:=
+none;background-color:transparent;color:windowtext"><span lang=3D"FR-FR" cl=
+ass=3D"gmail-TextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;pad=
+ding:0px;font-variant-numeric:normal;font-variant-east-asian:normal;font-si=
+ze:10pt;line-height:17.2667px;font-family:WordVisi_MSFontService,&quot;Time=
+s New Roman&quot;,&quot;Times New Roman_EmbeddedFont&quot;,&quot;Times New =
+Roman_MSFontService&quot;,serif"><span class=3D"gmail-NormalTextRun gmail-S=
+CXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">Rigueur scientifiq=
+ue</span></span><span class=3D"gmail-EOP gmail-SCXW27469860 gmail-BCX0" sty=
+le=3D"margin:0px;padding:0px;font-size:10pt;line-height:17.2667px;font-fami=
+ly:WordVisiPilcrow_MSFontService,&quot;Times New Roman&quot;,&quot;Times Ne=
+w Roman_EmbeddedFont&quot;,&quot;Times New Roman_MSFontService&quot;,serif"=
+>=C2=A0</span></p></li><li role=3D"listitem" class=3D"gmail-OutlineElement =
+gmail-Ltr gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px 0px 0px 24px;p=
+adding:0px;overflow:visible;clear:both;direction:ltr;display:block;font-siz=
+e:10pt;font-family:&quot;Times New Roman&quot;,&quot;Times New Roman_MSFont=
+Service&quot;,serif;vertical-align:baseline"><p class=3D"gmail-Paragraph gm=
+ail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;white-space:pr=
+e-wrap;vertical-align:baseline;font-kerning:none;background-color:transpare=
+nt;color:windowtext"><span lang=3D"FR-FR" class=3D"gmail-TextRun gmail-SCXW=
+27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;font-variant-numeric:n=
+ormal;font-variant-east-asian:normal;font-size:10pt;line-height:17.2667px;f=
+ont-family:WordVisi_MSFontService,&quot;Times New Roman&quot;,&quot;Times N=
+ew Roman_EmbeddedFont&quot;,&quot;Times New Roman_MSFontService&quot;,serif=
+"><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=
+=3D"margin:0px;padding:0px">Curiosit=C3=A9 et ouverture d=E2=80=99esprit</s=
+pan></span><span class=3D"gmail-EOP gmail-SCXW27469860 gmail-BCX0" style=3D=
+"margin:0px;padding:0px;font-size:10pt;line-height:17.2667px;font-family:Wo=
+rdVisiPilcrow_MSFontService,&quot;Times New Roman&quot;,&quot;Times New Rom=
+an_EmbeddedFont&quot;,&quot;Times New Roman_MSFontService&quot;,serif">=C2=
+=A0</span></p></li><li role=3D"listitem" class=3D"gmail-OutlineElement gmai=
+l-Ltr gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px 0px 0px 24px;paddi=
+ng:0px;overflow:visible;clear:both;direction:ltr;display:block;font-size:10=
+pt;font-family:&quot;Times New Roman&quot;,&quot;Times New Roman_MSFontServ=
+ice&quot;,serif;vertical-align:baseline"><p class=3D"gmail-Paragraph gmail-=
+SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;white-space:pre-wr=
+ap;vertical-align:baseline;font-kerning:none;background-color:transparent;c=
+olor:windowtext"><span lang=3D"FR-FR" class=3D"gmail-TextRun gmail-SCXW2746=
+9860 gmail-BCX0" style=3D"margin:0px;padding:0px;font-variant-numeric:norma=
+l;font-variant-east-asian:normal;font-size:10pt;line-height:17.2667px;font-=
+family:WordVisi_MSFontService,&quot;Times New Roman&quot;,&quot;Times New R=
+oman_EmbeddedFont&quot;,&quot;Times New Roman_MSFontService&quot;,serif"><s=
+pan class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"ma=
+rgin:0px;padding:0px">Capacit=C3=A9 d&#39;analyse</span><span class=3D"gmai=
+l-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:=
+0px">s,</span><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-B=
+CX0" style=3D"margin:0px;padding:0px"> r=C3=A9dactionnelle</span><span clas=
+s=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px=
+;padding:0px">s</span><span class=3D"gmail-NormalTextRun gmail-SCXW27469860=
+ gmail-BCX0" style=3D"margin:0px;padding:0px"> et de synth=C3=A8se</span></=
+span><span class=3D"gmail-EOP gmail-SCXW27469860 gmail-BCX0" style=3D"margi=
+n:0px;padding:0px;font-size:10pt;line-height:17.2667px;font-family:WordVisi=
+Pilcrow_MSFontService,&quot;Times New Roman&quot;,&quot;Times New Roman_Emb=
+eddedFont&quot;,&quot;Times New Roman_MSFontService&quot;,serif">=C2=A0
+
+</span></p></li></ul></div></div><div class=3D"gmail-OutlineElement gmail-L=
+tr gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;overflow:=
+visible;clear:both;direction:ltr;color:rgb(0,0,0);font-family:&quot;Segoe U=
+I&quot;,&quot;Segoe UI Web&quot;,Arial,Verdana,sans-serif;font-size:12px"><=
+p class=3D"gmail-Paragraph gmail-SCXW27469860 gmail-BCX0" role=3D"heading" =
+style=3D"margin:0px;padding:0px;white-space:pre-wrap;vertical-align:baselin=
+e;font-kerning:none;background-color:transparent;color:rgb(47,84,150)"><spa=
+n lang=3D"FR-FR" class=3D"gmail-TextRun gmail-Underlined gmail-MacChromeBol=
+d gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;font-varia=
+nt-numeric:normal;font-variant-east-asian:normal;color:rgb(0,0,0);font-size=
+:10pt;text-decoration-line:underline;line-height:17.2667px;font-family:Word=
+Visi_MSFontService,&quot;Times New Roman&quot;,&quot;Times New Roman_Embedd=
+edFont&quot;,&quot;Times New Roman_MSFontService&quot;,serif;font-weight:bo=
+ld"><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=
+=3D"margin:0px;padding:0px">Informations compl=C3=A9mentaires :</span></spa=
+n><span class=3D"gmail-EOP gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0=
+px;padding:0px;font-size:10pt;line-height:17.2667px;font-family:WordVisiPil=
+crow_MSFontService,&quot;Times New Roman&quot;,&quot;Times New Roman_Embedd=
+edFont&quot;,&quot;Times New Roman_MSFontService&quot;,serif;color:rgb(0,0,=
+0)">=C2=A0</span></p><p class=3D"gmail-Paragraph gmail-SCXW27469860 gmail-B=
+CX0" role=3D"heading" style=3D"margin:0px;padding:0px;white-space:pre-wrap;=
+vertical-align:baseline;font-kerning:none;background-color:transparent;colo=
+r:rgb(47,84,150)"><span class=3D"gmail-EOP gmail-SCXW27469860 gmail-BCX0" s=
+tyle=3D"margin:0px;padding:0px;font-size:10pt;line-height:17.2667px;font-fa=
+mily:WordVisiPilcrow_MSFontService,&quot;Times New Roman&quot;,&quot;Times =
+New Roman_EmbeddedFont&quot;,&quot;Times New Roman_MSFontService&quot;,seri=
+f;color:rgb(0,0,0)"><br></span></p></div><div class=3D"gmail-OutlineElement=
+ gmail-Ltr gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;o=
+verflow:visible;clear:both;direction:ltr;color:rgb(0,0,0);font-family:&quot=
+;Segoe UI&quot;,&quot;Segoe UI Web&quot;,Arial,Verdana,sans-serif;font-size=
+:12px"><p class=3D"gmail-Paragraph gmail-SCXW27469860 gmail-BCX0" style=3D"=
+margin:0px;padding:0px;white-space:pre-wrap;vertical-align:baseline;font-ke=
+rning:none;background-color:transparent;color:windowtext"><span lang=3D"FR-=
+FR" class=3D"gmail-TextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0=
+px;padding:0px;font-variant-numeric:normal;font-variant-east-asian:normal;f=
+ont-size:10pt;line-height:17.2667px;font-family:WordVisi_MSFontService,&quo=
+t;Times New Roman&quot;,&quot;Times New Roman_EmbeddedFont&quot;,&quot;Time=
+s New Roman_MSFontService&quot;,serif"><span class=3D"gmail-NormalTextRun g=
+mail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">Dur=C3=A9e d=
+e 6 mois</span></span><span lang=3D"FR-FR" class=3D"gmail-TextRun gmail-SCX=
+W27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;font-variant-numeric:=
+normal;font-variant-east-asian:normal;font-size:10pt;line-height:17.2667px"=
+><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D=
+"margin:0px;padding:0px">, =C3=A0 partir de f=C3=A9vrier</span></span><span=
+ lang=3D"FR-FR" class=3D"gmail-TextRun gmail-SCXW27469860 gmail-BCX0" style=
+=3D"margin:0px;padding:0px;font-variant-numeric:normal;font-variant-east-as=
+ian:normal;font-size:10pt;line-height:17.2667px;font-family:WordVisi_MSFont=
+Service,&quot;Times New Roman&quot;,&quot;Times New Roman_EmbeddedFont&quot=
+;,&quot;Times New Roman_MSFontService&quot;,serif"><span class=3D"gmail-Nor=
+malTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">=
+ 202</span><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0=
+" style=3D"margin:0px;padding:0px">3</span></span><span class=3D"gmail-EOP =
+gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;font-size:10=
+pt;line-height:17.2667px;font-family:WordVisiPilcrow_MSFontService,&quot;Ti=
+mes New Roman&quot;,&quot;Times New Roman_EmbeddedFont&quot;,&quot;Times Ne=
+w Roman_MSFontService&quot;,serif">=C2=A0</span></p></div><div class=3D"gma=
+il-OutlineElement gmail-Ltr gmail-SCXW27469860 gmail-BCX0" style=3D"margin:=
+0px;padding:0px;overflow:visible;clear:both;direction:ltr;color:rgb(0,0,0);=
+font-family:&quot;Segoe UI&quot;,&quot;Segoe UI Web&quot;,Arial,Verdana,san=
+s-serif"><p class=3D"gmail-Paragraph gmail-SCXW27469860 gmail-BCX0" style=
+=3D"font-size:12px;margin:0px;padding:0px;white-space:pre-wrap;vertical-ali=
+gn:baseline;font-kerning:none;background-color:transparent;color:windowtext=
+;text-align:justify"><span lang=3D"FR-FR" class=3D"gmail-TextRun gmail-SCXW=
+27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;font-variant-numeric:n=
+ormal;font-variant-east-asian:normal;font-size:10pt;line-height:17.2667px;f=
+ont-family:WordVisi_MSFontService,&quot;Times New Roman&quot;,&quot;Times N=
+ew Roman_EmbeddedFont&quot;,&quot;Times New Roman_MSFontService&quot;,serif=
+"><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=
+=3D"margin:0px;padding:0px">Le stage se d=C3=A9roulera au CIRAD, dans l=E2=
+=80=99UMR TETIS (Territoire, Environnement, T=C3=A9l=C3=A9d=C3=A9tection et=
+ Information Spatiale), situ=C3=A9e dans les locaux de la Maison de la T=C3=
+=A9l=C3=A9d=C3=A9tection =C3=A0 Montpellier.=C2=A0</span></span><span class=
+=3D"gmail-EOP gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0p=
+x;font-size:10pt;line-height:17.2667px;font-family:WordVisiPilcrow_MSFontSe=
+rvice,&quot;Times New Roman&quot;,&quot;Times New Roman_EmbeddedFont&quot;,=
+&quot;Times New Roman_MSFontService&quot;,serif">=C2=A0</span></p><p class=
+=3D"gmail-Paragraph gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padd=
+ing:0px;white-space:pre-wrap;vertical-align:baseline;font-kerning:none;back=
+ground-color:transparent;color:windowtext;text-align:justify"><span class=
+=3D"gmail-EOP gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0p=
+x;line-height:17.2667px;font-family:WordVisiPilcrow_MSFontService,&quot;Tim=
+es New Roman&quot;,&quot;Times New Roman_EmbeddedFont&quot;,&quot;Times New=
+ Roman_MSFontService&quot;,serif"><font size=3D"4"><br></font></span></p></=
+div><div class=3D"gmail-OutlineElement gmail-Ltr gmail-SCXW27469860 gmail-B=
+CX0" style=3D"margin:0px;padding:0px;overflow:visible;clear:both;direction:=
+ltr;color:rgb(0,0,0);font-family:&quot;Segoe UI&quot;,&quot;Segoe UI Web&qu=
+ot;,Arial,Verdana,sans-serif"><p class=3D"gmail-Paragraph gmail-SCXW2746986=
+0 gmail-BCX0" role=3D"heading" style=3D"margin:0px;padding:0px;white-space:=
+pre-wrap;vertical-align:baseline;font-kerning:none;background-color:transpa=
+rent;color:rgb(47,84,150)"><font size=3D"4"><span lang=3D"FR-FR" class=3D"g=
+mail-TextRun gmail-Underlined gmail-MacChromeBold gmail-SCXW27469860 gmail-=
+BCX0" style=3D"margin:0px;padding:0px;font-variant-numeric:normal;font-vari=
+ant-east-asian:normal;color:rgb(0,0,0);text-decoration-line:underline;line-=
+height:17.2667px;font-family:WordVisi_MSFontService,&quot;Times New Roman&q=
+uot;,&quot;Times New Roman_EmbeddedFont&quot;,&quot;Times New Roman_MSFontS=
+ervice&quot;,serif;font-weight:bold"><span class=3D"gmail-NormalTextRun gma=
+il-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">Encadrement</s=
+pan></span><span class=3D"gmail-EOP gmail-SCXW27469860 gmail-BCX0" style=3D=
+"margin:0px;padding:0px;line-height:17.2667px;font-family:WordVisiPilcrow_M=
+SFontService,&quot;Times New Roman&quot;,&quot;Times New Roman_EmbeddedFont=
+&quot;,&quot;Times New Roman_MSFontService&quot;,serif;color:rgb(0,0,0)">=
+=C2=A0</span></font></p><p class=3D"gmail-Paragraph gmail-SCXW27469860 gmai=
+l-BCX0" role=3D"heading" style=3D"margin:0px;padding:0px;white-space:pre-wr=
+ap;vertical-align:baseline;font-kerning:none;background-color:transparent;c=
+olor:rgb(47,84,150)"><span class=3D"gmail-EOP gmail-SCXW27469860 gmail-BCX0=
+" style=3D"margin:0px;padding:0px;line-height:17.2667px;font-family:WordVis=
+iPilcrow_MSFontService,&quot;Times New Roman&quot;,&quot;Times New Roman_Em=
+beddedFont&quot;,&quot;Times New Roman_MSFontService&quot;,serif;color:rgb(=
+0,0,0)"><font size=3D"4"><br></font></span></p></div><div class=3D"gmail-Ou=
+tlineElement gmail-Ltr gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;p=
+adding:0px;overflow:visible;clear:both;direction:ltr;color:rgb(0,0,0);font-=
+family:&quot;Segoe UI&quot;,&quot;Segoe UI Web&quot;,Arial,Verdana,sans-ser=
+if"><p class=3D"gmail-Paragraph gmail-SCXW27469860 gmail-BCX0" style=3D"mar=
+gin:0px;padding:0px;white-space:pre-wrap;vertical-align:baseline;font-kerni=
+ng:none;background-color:transparent;color:windowtext"><font size=3D"4"><sp=
+an lang=3D"EN-US" class=3D"gmail-TextRun gmail-SCXW27469860 gmail-BCX0" sty=
+le=3D"margin:0px;padding:0px;font-variant-numeric:normal;font-variant-east-=
+asian:normal;line-height:17.2667px;font-family:WordVisi_MSFontService,&quot=
+;Times New Roman&quot;,&quot;Times New Roman_EmbeddedFont&quot;,&quot;Times=
+ New Roman_MSFontService&quot;,serif"><span class=3D"gmail-NormalTextRun gm=
+ail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">Simon Madec /=
+ Roberto Interdonato=C2=A0</span></span><span class=3D"gmail-EOP gmail-SCXW=
+27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;line-height:17.2667px;=
+font-family:WordVisiPilcrow_MSFontService,&quot;Times New Roman&quot;,&quot=
+;Times New Roman_EmbeddedFont&quot;,&quot;Times New Roman_MSFontService&quo=
+t;,serif">=C2=A0</span></font></p></div><div class=3D"gmail-OutlineElement =
+gmail-Ltr gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;ov=
+erflow:visible;clear:both;direction:ltr;color:rgb(0,0,0);font-family:&quot;=
+Segoe UI&quot;,&quot;Segoe UI Web&quot;,Arial,Verdana,sans-serif"><p class=
+=3D"gmail-Paragraph gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padd=
+ing:0px;white-space:pre-wrap;vertical-align:baseline;font-kerning:none;back=
+ground-color:transparent;color:windowtext"><font size=3D"4"><span lang=3D"F=
+R-FR" class=3D"gmail-TextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin=
+:0px;padding:0px;font-variant-numeric:normal;font-variant-east-asian:normal=
+;line-height:17.2667px;font-family:WordVisi_MSFontService,&quot;Times New R=
+oman&quot;,&quot;Times New Roman_EmbeddedFont&quot;,&quot;Times New Roman_M=
+SFontService&quot;,serif"><span class=3D"gmail-NormalTextRun gmail-SCXW2746=
+9860 gmail-BCX0" style=3D"margin:0px;padding:0px">Envoyer un CV et une lett=
+re de motivation avant le 31/12/202</span><span class=3D"gmail-NormalTextRu=
+n gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">2</span><=
+/span><span lang=3D"FR-FR" class=3D"gmail-TextRun gmail-SCXW27469860 gmail-=
+BCX0" style=3D"margin:0px;padding:0px;font-variant-numeric:normal;font-vari=
+ant-east-asian:normal;line-height:17.2667px"><span class=3D"gmail-NormalTex=
+tRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px"> =C3=
+=A0 : </span></span><a class=3D"gmail-Hyperlink gmail-SCXW27469860 gmail-BC=
+X0" href=3D"mailto:simon.madec@cirad.fr" target=3D"_blank" rel=3D"noreferre=
+r noopener" style=3D"margin:0px;padding:0px;text-decoration-line:none;color=
+:inherit"><span lang=3D"FR-FR" class=3D"gmail-TextRun gmail-Underlined gmai=
+l-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;font-variant-num=
+eric:normal;font-variant-east-asian:normal;color:rgb(5,99,193);text-decorat=
+ion-line:underline;line-height:17.2667px;font-family:WordVisi_MSFontService=
+,&quot;Times New Roman&quot;,&quot;Times New Roman_EmbeddedFont&quot;,&quot=
+;Times New Roman_MSFontService&quot;,serif"><span class=3D"gmail-NormalText=
+Run gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">simon.m=
+adec@cirad.fr</span></span></a><span lang=3D"FR-FR" class=3D"gmail-TextRun =
+gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;font-variant=
+-numeric:normal;font-variant-east-asian:normal;line-height:17.2667px;font-f=
+amily:WordVisi_MSFontService,&quot;Times New Roman&quot;,&quot;Times New Ro=
+man_EmbeddedFont&quot;,&quot;Times New Roman_MSFontService&quot;,serif"><sp=
+an class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"mar=
+gin:0px;padding:0px">=C2=A0</span></span><span class=3D"gmail-EOP gmail-SCX=
+W27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;line-height:17.2667px=
+;font-family:WordVisiPilcrow_MSFontService,&quot;Times New Roman&quot;,&quo=
+t;Times New Roman_EmbeddedFont&quot;,&quot;Times New Roman_MSFontService&qu=
+ot;,serif">=C2=A0</span></font></p><p class=3D"gmail-Paragraph gmail-SCXW27=
+469860 gmail-BCX0" style=3D"font-size:12px;margin:0px;padding:0px;white-spa=
+ce:pre-wrap;vertical-align:baseline;font-kerning:none;background-color:tran=
+sparent;color:windowtext"><span class=3D"gmail-EOP gmail-SCXW27469860 gmail=
+-BCX0" style=3D"margin:0px;padding:0px;font-size:10pt;line-height:17.2667px=
+;font-family:WordVisiPilcrow_MSFontService,&quot;Times New Roman&quot;,&quo=
+t;Times New Roman_EmbeddedFont&quot;,&quot;Times New Roman_MSFontService&qu=
+ot;,serif"><br></span></p></div><div class=3D"gmail-OutlineElement gmail-Lt=
+r gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;overflow:v=
+isible;clear:both;direction:ltr;color:rgb(0,0,0);font-family:&quot;Segoe UI=
+&quot;,&quot;Segoe UI Web&quot;,Arial,Verdana,sans-serif;font-size:12px"><p=
+ class=3D"gmail-Paragraph gmail-SCXW27469860 gmail-BCX0" role=3D"heading" s=
+tyle=3D"margin:0px;padding:0px;white-space:pre-wrap;vertical-align:baseline=
+;font-kerning:none;background-color:transparent;color:rgb(47,84,150)"><span=
+ lang=3D"FR-FR" class=3D"gmail-TextRun gmail-Underlined gmail-MacChromeBold=
+ gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;font-varian=
+t-numeric:normal;font-variant-east-asian:normal;color:rgb(0,0,0);font-size:=
+13pt;text-decoration-line:underline;line-height:21.5833px;font-family:WordV=
+isi_MSFontService,&quot;Times New Roman&quot;,&quot;Times New Roman_Embedde=
+dFont&quot;,&quot;Times New Roman_MSFontService&quot;,serif;font-weight:bol=
+d"><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=
+=3D"margin:0px;padding:0px">R=C3=A9f=C3=A9rences=C2=A0</span></span><span c=
+lass=3D"gmail-EOP gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;paddin=
+g:0px;font-size:13pt;line-height:21.5833px;font-family:WordVisiPilcrow_MSFo=
+ntService,&quot;Times New Roman&quot;,&quot;Times New Roman_EmbeddedFont&qu=
+ot;,&quot;Times New Roman_MSFontService&quot;,serif;color:rgb(0,0,0)">=C2=
+=A0</span></p><p class=3D"gmail-Paragraph gmail-SCXW27469860 gmail-BCX0" ro=
+le=3D"heading" style=3D"margin:0px;padding:0px;white-space:pre-wrap;vertica=
+l-align:baseline;font-kerning:none;background-color:transparent;color:rgb(4=
+7,84,150)"><span class=3D"gmail-EOP gmail-SCXW27469860 gmail-BCX0" style=3D=
+"margin:0px;padding:0px;font-size:13pt;line-height:21.5833px;font-family:Wo=
+rdVisiPilcrow_MSFontService,&quot;Times New Roman&quot;,&quot;Times New Rom=
+an_EmbeddedFont&quot;,&quot;Times New Roman_MSFontService&quot;,serif;color=
+:rgb(0,0,0)"><br></span></p></div><div class=3D"gmail-OutlineElement gmail-=
+Ltr gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;overflow=
+:visible;clear:both;direction:ltr;color:rgb(0,0,0);font-family:&quot;Segoe =
+UI&quot;,&quot;Segoe UI Web&quot;,Arial,Verdana,sans-serif;font-size:12px">=
+<p class=3D"gmail-Paragraph gmail-SCXW27469860 gmail-BCX0" style=3D"margin:=
+0px;padding:0px;white-space:pre-wrap;vertical-align:baseline;font-kerning:n=
+one;background-color:transparent;color:windowtext"><span lang=3D"FR-FR" cla=
+ss=3D"gmail-TextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padd=
+ing:0px;font-variant-numeric:normal;font-variant-east-asian:normal;color:rg=
+b(34,34,34);font-size:10pt;line-height:17.2667px;font-family:WordVisi_MSFon=
+tService,Arial,Arial_EmbeddedFont,Arial_MSFontService,sans-serif"><span cla=
+ss=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0p=
+x;padding:0px">[</span><span class=3D"gmail-NormalTextRun gmail-SCXW2746986=
+0 gmail-BCX0" style=3D"margin:0px;padding:0px">1</span><span class=3D"gmail=
+-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0=
+px">]</span><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX=
+0" style=3D"margin:0px;padding:0px"> </span><span class=3D"gmail-NormalText=
+Run gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">Del=C3=
+=A9glise</span><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-=
+BCX0" style=3D"margin:0px;padding:0px">, Hugo, et al. &quot;Food </span><sp=
+an class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"mar=
+gin:0px;padding:0px">security</span><span class=3D"gmail-NormalTextRun gmai=
+l-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px"> </span><span c=
+lass=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:=
+0px;padding:0px">prediction</span><span class=3D"gmail-NormalTextRun gmail-=
+SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px"> </span><span cla=
+ss=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0p=
+x;padding:0px">from</span><span class=3D"gmail-NormalTextRun gmail-SCXW2746=
+9860 gmail-BCX0" style=3D"margin:0px;padding:0px"> </span><span class=3D"gm=
+ail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;paddin=
+g:0px">heterogeneous</span><span class=3D"gmail-NormalTextRun gmail-SCXW274=
+69860 gmail-BCX0" style=3D"margin:0px;padding:0px"> data </span><span class=
+=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;=
+padding:0px">combining</span><span class=3D"gmail-NormalTextRun gmail-SCXW2=
+7469860 gmail-BCX0" style=3D"margin:0px;padding:0px"> machine and </span><s=
+pan class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"ma=
+rgin:0px;padding:0px">deep</span><span class=3D"gmail-NormalTextRun gmail-S=
+CXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px"> </span><span clas=
+s=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px=
+;padding:0px">learning</span><span class=3D"gmail-NormalTextRun gmail-SCXW2=
+7469860 gmail-BCX0" style=3D"margin:0px;padding:0px"> </span><span class=3D=
+"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;pad=
+ding:0px">methods</span><span class=3D"gmail-NormalTextRun gmail-SCXW274698=
+60 gmail-BCX0" style=3D"margin:0px;padding:0px">.&quot; </span></span><span=
+ lang=3D"FR-FR" class=3D"gmail-TextRun gmail-SCXW27469860 gmail-BCX0" style=
+=3D"margin:0px;padding:0px;font-variant-numeric:normal;font-variant-east-as=
+ian:normal;color:rgb(34,34,34);font-size:10pt;font-style:italic;line-height=
+:17.2667px;font-family:WordVisi_MSFontService,Arial,Arial_EmbeddedFont,Aria=
+l_MSFontService,sans-serif"><span class=3D"gmail-NormalTextRun gmail-SCXW27=
+469860 gmail-BCX0" style=3D"margin:0px;padding:0px">Expert </span><span cla=
+ss=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0p=
+x;padding:0px">Systems</span><span class=3D"gmail-NormalTextRun gmail-SCXW2=
+7469860 gmail-BCX0" style=3D"margin:0px;padding:0px"> </span><span class=3D=
+"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;pad=
+ding:0px">with</span><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 =
+gmail-BCX0" style=3D"margin:0px;padding:0px"> Applications</span></span><sp=
+an lang=3D"FR-FR" class=3D"gmail-TextRun gmail-SCXW27469860 gmail-BCX0" sty=
+le=3D"margin:0px;padding:0px;font-variant-numeric:normal;font-variant-east-=
+asian:normal;color:rgb(34,34,34);font-size:10pt;line-height:17.2667px;font-=
+family:WordVisi_MSFontService,Arial,Arial_EmbeddedFont,Arial_MSFontService,=
+sans-serif"><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX=
+0" style=3D"margin:0px;padding:0px"> 190 (2022</span><span class=3D"gmail-N=
+ormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px=
+">):</span><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0=
+" style=3D"margin:0px;padding:0px"> 116189.</span></span><span class=3D"gma=
+il-EOP gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;font-=
+size:10pt;line-height:17.2667px;font-family:WordVisiPilcrow_MSFontService,A=
+rial,Arial_EmbeddedFont,Arial_MSFontService,sans-serif;color:rgb(34,34,34)"=
+>=C2=A0</span></p></div><div class=3D"gmail-OutlineElement gmail-Ltr gmail-=
+SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;overflow:visible;c=
+lear:both;direction:ltr;color:rgb(0,0,0);font-family:&quot;Segoe UI&quot;,&=
+quot;Segoe UI Web&quot;,Arial,Verdana,sans-serif;font-size:12px"><p class=
+=3D"gmail-Paragraph gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padd=
+ing:0px;white-space:pre-wrap;vertical-align:baseline;font-kerning:none;back=
+ground-color:transparent;color:windowtext"><span lang=3D"FR-FR" class=3D"gm=
+ail-TextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;=
+font-variant-numeric:normal;font-variant-east-asian:normal;color:rgb(34,34,=
+34);font-size:10pt;line-height:17.2667px;font-family:WordVisi_MSFontService=
+,Arial,Arial_EmbeddedFont,Arial_MSFontService,sans-serif"><span class=3D"gm=
+ail-NormalTextRun gmail-CommentStart gmail-SCXW27469860 gmail-BCX0" style=
+=3D"margin:0px;padding:0px">[2] </span><span class=3D"gmail-NormalTextRun g=
+mail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">Andree</span=
+><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D=
+"margin:0px;padding:0px">, Bo Pieter Johannes. &quot;</span><span class=3D"=
+gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padd=
+ing:0px">Estimating</span><span class=3D"gmail-NormalTextRun gmail-SCXW2746=
+9860 gmail-BCX0" style=3D"margin:0px;padding:0px"> Food Price Inflation </s=
+pan><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=
+=3D"margin:0px;padding:0px">from</span><span class=3D"gmail-NormalTextRun g=
+mail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px"> Partial </s=
+pan><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=
+=3D"margin:0px;padding:0px">Surveys</span><span class=3D"gmail-NormalTextRu=
+n gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px">.&quot; <=
+/span></span><span lang=3D"FR-FR" class=3D"gmail-TextRun gmail-SCXW27469860=
+ gmail-BCX0" style=3D"margin:0px;padding:0px;font-variant-numeric:normal;fo=
+nt-variant-east-asian:normal;font-size:10pt;line-height:17.2667px;font-fami=
+ly:WordVisi_MSFontService,Arial,Arial_EmbeddedFont,Arial_MSFontService,sans=
+-serif"><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" s=
+tyle=3D"margin:0px;padding:0px">World Bank, Washington, DC</span></span><sp=
+an lang=3D"FR-FR" class=3D"gmail-TextRun gmail-SCXW27469860 gmail-BCX0" sty=
+le=3D"margin:0px;padding:0px;font-size:10pt;line-height:17.2667px;font-fami=
+ly:WordVisi_MSFontService,Arial,Arial_EmbeddedFont,Arial_MSFontService,sans=
+-serif;font-variant-ligatures:none"><span class=3D"gmail-NormalTextRun gmai=
+l-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px"> </span></span>=
+<span lang=3D"FR-FR" class=3D"gmail-TextRun gmail-SCXW27469860 gmail-BCX0" =
+style=3D"margin:0px;padding:0px;font-variant-numeric:normal;font-variant-ea=
+st-asian:normal;color:rgb(34,34,34);font-size:10pt;line-height:17.2667px;fo=
+nt-family:WordVisi_MSFontService,Arial,Arial_EmbeddedFont,Arial_MSFontServi=
+ce,sans-serif"><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-=
+BCX0" style=3D"margin:0px;padding:0px">(2021).</span></span><span class=3D"=
+gmail-EOP gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;fo=
+nt-size:10pt;line-height:17.2667px;font-family:WordVisiPilcrow_MSFontServic=
+e,Arial,Arial_EmbeddedFont,Arial_MSFontService,sans-serif;color:rgb(34,34,3=
+4)">=C2=A0</span></p></div><div class=3D"gmail-OutlineElement gmail-Ltr gma=
+il-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;overflow:visibl=
+e;clear:both;direction:ltr;color:rgb(0,0,0);font-family:&quot;Segoe UI&quot=
+;,&quot;Segoe UI Web&quot;,Arial,Verdana,sans-serif;font-size:12px"><p clas=
+s=3D"gmail-Paragraph gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;pad=
+ding:0px;white-space:pre-wrap;vertical-align:baseline;font-kerning:none;bac=
+kground-color:transparent;color:windowtext"><span lang=3D"FR-FR" class=3D"g=
+mail-TextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px=
+;font-size:10pt;line-height:17.2667px;font-family:WordVisi_MSFontService,Ar=
+ial,Arial_EmbeddedFont,Arial_MSFontService,sans-serif;font-variant-ligature=
+s:none"><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" s=
+tyle=3D"margin:0px;padding:0px">[3]</span></span><span lang=3D"FR-FR" class=
+=3D"gmail-TextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;paddin=
+g:0px;font-variant-numeric:normal;font-variant-east-asian:normal;color:rgb(=
+34,34,34);font-size:10pt;line-height:17.2667px;font-family:WordVisi_MSFontS=
+ervice,Arial,Arial_EmbeddedFont,Arial_MSFontService,sans-serif"><span class=
+=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;=
+padding:0px"> </span><span class=3D"gmail-NormalTextRun gmail-SCXW27469860 =
+gmail-BCX0" style=3D"margin:0px;padding:0px"><a href=3D"https://microdata.w=
+orldbank.org/index.php/catalog/3768#metadata-version">https://microdata.wor=
+ldbank.org/index.php/catalog/3768#metadata-version</a></span></span><span c=
+lass=3D"gmail-EOP gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;paddin=
+g:0px;font-size:10pt;line-height:17.2667px;font-family:WordVisiPilcrow_MSFo=
+ntService,Arial,Arial_EmbeddedFont,Arial_MSFontService,sans-serif;color:rgb=
+(34,34,34)">=C2=A0</span></p></div><div class=3D"gmail-OutlineElement gmail=
+-Ltr gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;overflo=
+w:visible;clear:both;direction:ltr;color:rgb(0,0,0);font-family:&quot;Segoe=
+ UI&quot;,&quot;Segoe UI Web&quot;,Arial,Verdana,sans-serif;font-size:12px"=
+><p class=3D"gmail-Paragraph gmail-SCXW27469860 gmail-BCX0" style=3D"margin=
+:0px;padding:0px;white-space:pre-wrap;vertical-align:baseline;font-kerning:=
+none;background-color:transparent;color:windowtext"><span lang=3D"FR-FR" cl=
+ass=3D"gmail-TextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;pad=
+ding:0px;font-variant-numeric:normal;font-variant-east-asian:normal;color:r=
+gb(34,34,34);font-size:9.5pt;line-height:16.1875px;font-family:WordVisi_MSF=
+ontService,Arial,Arial_EmbeddedFont,Arial_MSFontService,sans-serif"><span c=
+lass=3D"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:=
+0px;padding:0px"></span></span><span class=3D"gmail-EOP gmail-SCXW27469860 =
+gmail-BCX0" style=3D"margin:0px;padding:0px;font-size:9.5pt;line-height:16.=
+1875px;font-family:WordVisiPilcrow_MSFontService,Arial,Arial_EmbeddedFont,A=
+rial_MSFontService,sans-serif;color:rgb(34,34,34)">=C2=A0</span></p></div><=
+div class=3D"gmail-OutlineElement gmail-Ltr gmail-SCXW27469860 gmail-BCX0" =
+style=3D"margin:0px;padding:0px;overflow:visible;clear:both;direction:ltr;c=
+olor:rgb(0,0,0);font-family:&quot;Segoe UI&quot;,&quot;Segoe UI Web&quot;,A=
+rial,Verdana,sans-serif;font-size:12px"><p class=3D"gmail-Paragraph gmail-S=
+CXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;white-space:pre-wra=
+p;vertical-align:baseline;font-kerning:none;background-color:transparent;co=
+lor:windowtext"><span lang=3D"FR-FR" class=3D"gmail-TextRun gmail-SCXW27469=
+860 gmail-BCX0" style=3D"margin:0px;padding:0px;font-size:11pt;line-height:=
+18.3458px;font-family:WordVisi_MSFontService,Calibri,Calibri_EmbeddedFont,C=
+alibri_MSFontService,sans-serif;font-variant-ligatures:none"><span class=3D=
+"gmail-NormalTextRun gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;pad=
+ding:0px"></span></span><span class=3D"gmail-EOP gmail-SCXW27469860 gmail-B=
+CX0" style=3D"margin:0px;padding:0px;font-size:11pt;line-height:18.3458px;f=
+ont-family:WordVisiPilcrow_MSFontService,Calibri,Calibri_EmbeddedFont,Calib=
+ri_MSFontService,sans-serif">=C2=A0</span></p></div><div class=3D"gmail-Out=
+lineElement gmail-Ltr gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;pa=
+dding:0px;overflow:visible;clear:both;direction:ltr;color:rgb(0,0,0);font-f=
+amily:&quot;Segoe UI&quot;,&quot;Segoe UI Web&quot;,Arial,Verdana,sans-seri=
+f;font-size:12px"><p class=3D"gmail-Paragraph gmail-SCXW27469860 gmail-BCX0=
+" style=3D"margin:0px;padding:0px;white-space:pre-wrap;vertical-align:basel=
+ine;font-kerning:none;background-color:transparent;color:windowtext"><span =
+lang=3D"FR-FR" class=3D"gmail-TextRun gmail-SCXW27469860 gmail-BCX0" style=
+=3D"margin:0px;padding:0px;font-size:11pt;line-height:18.3458px;font-family=
+:WordVisi_MSFontService,Calibri,Calibri_EmbeddedFont,Calibri_MSFontService,=
+sans-serif;font-variant-ligatures:none"><span class=3D"gmail-NormalTextRun =
+gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px"></span></sp=
+an><span class=3D"gmail-EOP gmail-SCXW27469860 gmail-BCX0" style=3D"margin:=
+0px;padding:0px;font-size:11pt;line-height:18.3458px;font-family:WordVisiPi=
+lcrow_MSFontService,Calibri,Calibri_EmbeddedFont,Calibri_MSFontService,sans=
+-serif">=C2=A0</span></p></div><div class=3D"gmail-OutlineElement gmail-Ltr=
+ gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px;padding:0px;overflow:vi=
+sible;clear:both;direction:ltr;color:rgb(0,0,0);font-family:&quot;Segoe UI&=
+quot;,&quot;Segoe UI Web&quot;,Arial,Verdana,sans-serif;font-size:12px"><p =
+class=3D"gmail-Paragraph gmail-SCXW27469860 gmail-BCX0" style=3D"margin:0px=
+;padding:0px;white-space:pre-wrap;vertical-align:baseline;font-kerning:none=
+;background-color:transparent;color:windowtext"><br></p></div><div><br></di=
+v>-- <br><div dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail=
+_signature"><div dir=3D"ltr"><div><div dir=3D"ltr"><div><div dir=3D"ltr"><d=
+iv><div dir=3D"ltr"><div><div dir=3D"ltr"><div dir=3D"ltr"><br><span><font =
+color=3D"#999999">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D<br>
+Roberto Interdonato, PhD<br><div dir=3D"ltr">Research Scientist=C2=A0</div>=
+<div dir=3D"ltr">CIRAD=C2=A0</div><div dir=3D"ltr">UMR TETIS</div>Montpelli=
+er</font></span></div><div dir=3D"ltr"><span><font color=3D"#999999">France=
+<br></font><font color=3D"#999999">
+email:=C2=A0</font></span><span style=3D"color:rgb(85,85,85);white-space:no=
+wrap"><a href=3D"mailto:roberto.interdonato@cirad.fr" target=3D"_blank">rob=
+erto.interdonato@cirad.fr</a><br></span><span style=3D"color:rgb(153,153,15=
+3)">tel: +33 (0) 467558615</span></div><div><span><font color=3D"#999999">=
+=C2=A0=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</font><b=
+r></span></div></div></div></div></div></div></div></div></div></div></div>=
+</div>
+
+--000000000000b6a22a05ef12d795--

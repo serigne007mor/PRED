@@ -1,0 +1,901 @@
+Return-Path: <christine.sinoquet@univ-nantes.fr>
+X-Original-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (BounceSMTP2.univ-nantes.prive [172.20.12.67])
+	by sympa6.univ-nantes.prive (Postfix) with ESMTP id 0F1082292950
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Tue, 16 Apr 2019 23:22:07 +0200 (CEST)
+Received: from mx1.d101.univ-nantes.fr (MX1.univ-nantes.fr [193.52.101.135])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id 0D04866176C
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Tue, 16 Apr 2019 23:22:07 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.d101.univ-nantes.fr (Postfix) with ESMTP id EBA474821B7C
+	for <polytech_liste-egc@univ-nantes.fr>; Tue, 16 Apr 2019 23:22:06 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=univ-nantes.fr header.b=v9PrPs2Z; dkim=pass (1024-bit key)
+	header.d=univ-nantes.fr header.b=v9PrPs2Z
+Received: from mx1.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id pSUMl89Mf386 for <polytech_liste-egc@univ-nantes.fr>;
+	Tue, 16 Apr 2019 23:22:06 +0200 (CEST)
+X-Greylist: whitelisted by SQLgrey-1.6.7
+Received: from smtp-tls.univ-nantes.fr (smtptls1-cha.cpub.univ-nantes.fr [193.52.103.113])
+	by mx1.d101.univ-nantes.fr (Postfix) with ESMTPS id C6A7947EC079
+	for <polytech_liste-egc@univ-nantes.fr>; Tue, 16 Apr 2019 23:22:06 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by smtp-tls.univ-nantes.fr (Postfix) with ESMTP id B896B647D01
+	for <polytech_liste-egc@univ-nantes.fr>; Tue, 16 Apr 2019 23:22:06 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-nantes.fr;
+	s=mail; t=1555449726;
+	bh=rFarTWArj33caj3i2zFhvNWifkssKUCvds8Y68eRPwk=;
+	h=From:Subject:To:References:Date:In-Reply-To:From;
+	b=v9PrPs2ZDGRLNkhzBIji6fcBfFGYnRNBgVB/OA2MEefO+mSf9gh/GFqKHYrRObwWH
+	 TtkgwE1steD6SKHwjgu7tXBs7F3IrWTHnlCiuLPjVlnlkwmFL/aL0d6xcC9+CgEjOl
+	 +S0a5CgrnsxV2UbSv7tkh8XyM+N4dL0OkCXnN56Y=
+X-Virus-Scanned: Debian amavisd-new at smtptls1-lmb.cpub.univ-nantes.fr
+Received: from smtp-tls.univ-nantes.fr ([127.0.0.1])
+	by localhost (smtptls1-cha.cpub.univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 27_QuB0d1Tev for <polytech_liste-egc@univ-nantes.fr>;
+	Tue, 16 Apr 2019 23:22:06 +0200 (CEST)
+Received: from [IPv6:2a01:cb05:8919:a200:a902:334c:8ee1:8a61] (2a01cb058919a200a902334c8ee18a61.ipv6.abo.wanadoo.fr [IPv6:2a01:cb05:8919:a200:a902:334c:8ee1:8a61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp-tls.univ-nantes.fr (Postfix) with ESMTPSA id 3CC8560FA1D
+	for <polytech_liste-egc@univ-nantes.fr>; Tue, 16 Apr 2019 23:22:06 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-nantes.fr;
+	s=mail; t=1555449726;
+	bh=rFarTWArj33caj3i2zFhvNWifkssKUCvds8Y68eRPwk=;
+	h=From:Subject:To:References:Date:In-Reply-To:From;
+	b=v9PrPs2ZDGRLNkhzBIji6fcBfFGYnRNBgVB/OA2MEefO+mSf9gh/GFqKHYrRObwWH
+	 TtkgwE1steD6SKHwjgu7tXBs7F3IrWTHnlCiuLPjVlnlkwmFL/aL0d6xcC9+CgEjOl
+	 +S0a5CgrnsxV2UbSv7tkh8XyM+N4dL0OkCXnN56Y=
+From: Christine Sinoquet <christine.sinoquet@univ-nantes.fr>
+To: polytech_liste-egc@univ-nantes.fr
+References: <31cfd1e80dc8f861b380c17737fd1fec@www.madics.fr>
+Message-ID: <b211bea3-9010-bb2f-c1c1-cadb7f1adc91@univ-nantes.fr>
+Date: Tue, 16 Apr 2019 23:22:06 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
+MIME-Version: 1.0
+In-Reply-To: <31cfd1e80dc8f861b380c17737fd1fec@www.madics.fr>
+Content-Type: multipart/alternative;
+ boundary="------------E4DA007503CE1152F64A2885"
+Content-Language: fr
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Offre de =?UTF-8?Q?Th=C3=A8se?= en IA - Laboratoire
+ LS2N - Nantes, "Analyse =?UTF-8?Q?=C3=A0?= grande =?UTF-8?Q?=C3=A9chelle?=
+ de traces =?UTF-8?Q?d=E2=80=99=C3=A9v=C3=A9nements?= et de =?UTF-8?Q?s?=
+ =?UTF-8?Q?=C3=A9ries?= temporelles =?UTF-8?Q?multivari=C3=A9es_interd?=
+ =?UTF-8?Q?=C3=A9pendantes=2C?= en contexte incertain."
+
+This is a multi-part message in MIME format.
+--------------E4DA007503CE1152F64A2885
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+
+Bonsoir,
+
+Veuillez nous excuser pour les réceptions multiples.
+
+*Analyse à grande échelle de traces d’événements et de séries 
+temporelles multivariées interdépendantes, en contexte incertain. 
+**Application en santé*
+
+Le sujet de thèse proposé s’inscrit dans les thématiques de l’équipe 
+DUKe (Data / User / Knowledge) du LS2N (Laboratoire des Sciences du 
+Numérique de Nantes – UMR CNRS 6004). Deux compétences majeures de cette 
+équipe, liées à l’intelligence artificielle, sont la fouille de données 
+et l’apprentissage automatique. Par ailleurs, les travaux de thèse 
+s’inscrivent dans la thématique applicative ‘‘santé du futur’’ mise en 
+avant par l’équipe DUKe.
+https://www.ls2n.fr/
+https://www.ls2n.fr/equipe/duke/
+
+*Résumé*
+
+Le sujet proposé**s’intéresse à la fouille de traces d’événements, menée 
+conjointement avec la fouille de séries temporelles multivariées 
+dépendantes de ces traces. L’objectif est la modélisation de la 
+dynamique de l’impact des événements d’une trace sur les variables des 
+séries, en contexte incertain. A terme, l’objectif est de pouvoir 
+générer automatiquement des scénarios réalistes de simulation de 
+situation critique en anesthésie.
+
+*Mots-clés *
+
+Intelligence artificielle, apprentissage automatique, apprentissage 
+statistique, fouille de données, représentation des connaissances, 
+modélisation pour les systèmes complexes, fouille de traces 
+d’événements, fouille de séries temporelles multivariées, contexte 
+incertain, modèle probabiliste, données massives
+
+*Contexte et objectifs*
+
+Dans un but d’amélioration de la sécurité et de la qualité des soins 
+péropératoires, les spécialistes de la formation en médecine intensive 
+du SiMU (Laboratoire Expérimental de Simulation de Médecine Intensive de 
+l'Université de Nantes) souhaitentvarier la diversité des scénarios à 
+proposer aux internes en anesthésie et infirmiers anesthésistes, en 
+formation initiale, ainsi qu’aux praticiens plus expérimentés, en 
+formation continue. Pour varier les scénarios, le LS2N propose 
+d’automatiser la génération de scénarios réalistes de simulation, en 
+s’appuyant sur tout ou partie de la base deprofils anesthésiques 
+enregistrés par le CHU de Nantes. De cette innovation est attendu un 
+accès potentiel à une grande variété de scénarios réalistes de 
+simulation de cas d’anesthésie. Servir cet objectif de formation répond 
+également au besoin d’anticipation par prédiction, inhérent au paradigme 
+de la médecine personnalisée, en pleine émergence.
+
+*Mission*
+
+Le suivi anesthésique de chaque acte chirurgical garde la trace des 
+actions de l’équipe médicale, éventuellement des réactions du sujet 
+opéré, et mémorise la série temporelle de chaque paramètre de monitorage.**
+
+Chacune de ces séries est déterminée par le jeu d’une ou de plusieurs 
+actions de la trace sur le paramètre concerné. Comme ce jeu est observé 
+sur une cohorte de patients, il ne peut être modélisé que dans un 
+contexte incertain. L’objectif de la thèse est donc de concevoir une 
+nouvelle classe de modèle probabiliste, et son algorithme 
+d’apprentissage, pour modéliser quantitativement la dynamique de 
+l’impact des événements d’une trace sur l’évolution des variables de 
+séries temporelles multivariées.
+
+De très nombreux travaux ont été conduits tant en analyse de traces 
+d’événements qu’en analyse de séries temporelles. Dans la première 
+catégorie, on peut citer par exemple la détection d’activité frauduleuse 
+par alignement de traces [JA10], le partitionnement de traces [CCD17]. 
+L’analyse de séries temporellespeut être illustrée par la détection 
+automatique de patterns [LLP14], l’alignement multiple de séries 
+temporelles [LNR04], la détection de ruptures dans la structure d’une 
+série [N18]. L’examen de la corrélation de deux séries temporelles est 
+une opération classique. La capture des dépendances entre les événements 
+d’une trace a conduit à quelques travaux [SWG17, CLF14]. Finalement, peu 
+de travaux ont traité de l’identification de corrélations entre traces 
+d’événements et séries temporelles ([MBBL08, LLL14]).
+
+Pour pallier ce manque, une nouvelle classe de modèle probabiliste sera 
+proposée, qui devra aussi pouvoir prendre en compte d’éventuelles 
+dépendances entre événements, au sein d’une même trace. Un algorithme 
+d’apprentissage correspondant sera développé, avec le souci qu’il puisse 
+être exécuté rapidement, sur une cohorte de patients d’intérêt.
+
+Une fois la modélisation validée, quelques cas d’anesthésie seront 
+ciblés, et les modèles de variation correspondants seront construits. Il 
+sera alors examiné avec l’aide de l’équipe IEIAH (*) du LIUM (**), 
+comment générer un modèle de scénario de simulation à partir des modèles 
+de variation.
+
+(*) Ingénierie des Environnements Informatiques pour l’Apprentissage Humain
+(**) Laboratoire d’Informatique de l’Université du Mans
+
+*Références bibliographiques*
+
+[CCD17] T. Chatain, J. Carmona, B.F. van Dongen (2017) Alignment-based 
+trace clustering. Proceedings of the 36th International Conference on 
+Conceptual Modeling (ER2017), Lecture Notes in Computer Science, Vol. 
+10650, Spain, Valencia, 6-9 september, 295-308.
+
+[CLF14] M. Ceci, P.F. Lanotte, F. Fumarola, D. P. Cavallo, D. Malerba 
+(2014) Completion time and next activity prediction of processes using 
+sequential pattern mining. International Conference on Discovery 
+Science, DS2014, pp. 49-61.
+
+[LLL14] C. Luo, J.-G. Lou, Q. Lin, Q. Fu, R. Ding (2014) Correlating 
+events with time series for incident diagnosis. Proceedings of the 20th 
+ACM SIGKDD International Conference on Knowledge Discovery and Data 
+Mining, USA, New York, 24-27 august, 1583-1592.
+
+[LLP14] J.A. Lara, D. Lizcanoa, A. Pérez, J.P. Valente (2014) A general 
+framework for time series data mining based on event analysis: 
+application to the medical domains of electroencephalography and 
+stabilometry. Journal of Biomedical Informatics, 51, 219-241.
+
+[LNR04] J. Listgarten, R. M. Neal, S.T. Roweis, A. Emili (2004) Multiple 
+alignment of continuous time series. Proceedings of Advances in Neural 
+Information Processing Systems, NIPS2004, 817-824.
+
+[LSD18] Y. Liu, T. Safavi, A. Dighe, and D. Koutra (2018) Graph 
+summarization methods and applications: A survey. ACM Computing Surveys 
+(CSUR), 51(3).
+
+[MBBL08] B. Minaei-Bidgoli, S. Behzad Lajevardi (2008) Correlation 
+mining between time series stream and event stream. Proceedings of the 
+4th International Conference on Networked Computing and Advanced 
+Information Management, 2, 333-338.
+
+[N18] V. Novák (2018) Detection of structural breaks in time series 
+using fuzzy techniques. International Journal of Fuzzy Logic and 
+Intelligent Systems, 18(1):1-12.
+
+[SWG17] A. Senderovich, M. Weidlich, A. Gal (2017) Temporal network 
+representation of event logs for improved performance modelling in 
+business processes. Proceedings of the 14th International Conference on 
+Business Process Management (BPM2017), pp 3 -21.
+
+*Profil*
+
+Master de recherche en informatique ou équivalent, ou spécialisation 
+d’école d’ingénieurs, ou Master en informatique pour la santé dans le 
+domaine des sciences des données, de l’apprentissage automatique ou/et 
+en statistique en grande dimension.
+
+Le candidat doit présenter un intérêt marqué pour la recherche 
+méthodologique et académique. La motivation du candidat pour des travaux 
+de recherche à mener sur trois années sera un élément capital. Le 
+candidat doit également être motivé par les interactions en contexte 
+interdisciplinaire. Il doit également montrer un réel intérêt pour les 
+mises en oeuvre effectives. A cet égard, l’excellente maîtrise d’un 
+langage de programmation de type C++ est requise, ainsi qu’une bonne 
+connaissance de l’administration et de la gestion des bases de données. 
+Des compétences en parallélisation de code seraient un plus.
+
+Aucun prérequis n’est nécessaire en IEIAH.
+
+Le candidat doit être classé dans le premier tiers de sa promotion, pour 
+ce qui concerne les résultats théoriques obtenus au cours du Master ou 
+équivalent.
+
+Informationscomplémentairesrelatives au sujet de thèse en :
+https://uncloud.univ-nantes.fr/index.php/s/CcGzTmJPfHeZQPH#pdfviewer
+
+*Dépôt de candidature
+*<https://theses.u-bretagneloire.fr/mathstic>
+
+Le candidat enverra par mail (christine.sinoquet@univ-nantes.fr 
+<mailto:christine.sinoquet@univ-nantes.fr>)les documents suivants :
+– lettre de motivation
+– CV complet
+– relevé de notes du Master (ou équivalent)
+– attestation relative au classement obtenu à l’issue des épreuves 
+théoriques du Master (ou équivalent)
+– coordonnées d’au moins deux contacts (affiliation, adresse mail, 
+numéro de téléphone)
+– tout document complémentaire : lettre(s) de recommandation, 
+éventuellement publications
+
+*F**inancement*
+Ministère de l’Enseignement Supérieur et de la Recherche
+
+*Durée*
+36 mois, à compter du 1^er octobre 2019
+
+*Direction de thèse et contact*
+Christine Sinoquet, Maître de Conférences HdR 
+(christine.sinoquet@univ-nantes.fr)
+
+*Accueil*
+
+****Le doctorant sera accueilli à la Faculté des Sciences de 
+l’Université de Nantes. Il échangera régulièrement avec des membres de 
+l’équipe DUKe, basés sur un autre site du LS2N, à Nantes (Polytech Nantes).
+
+*D**ates clés
+*/*Ouverture de la campagne de recrutement : *//*mercredi *//*03 avril 2019
+Fin de la campagne de recrutement (audition incluse) : *//*mercredi 
+*//*24 avril 2019*//*
+Date limite de candidature :*//**//*lundi *//*22*//**//*avril*//*2019 
+*//*1*//*2*//*H00*/
+
+*Audition* : pour être retenu, un candidat devra avoir été auditionné 
+par le LS2N (audition à distance possible).
+
+
+Christine Sinoquet
+http://christinesinoquet.wixsite.com/christinesinoquet
+Maître de Conférences, HdR 2014, Qualifiée PR 2015
+Responsable de la mention de Master Bioinformatique de l'Université de 
+Nantes
+LS2N (Laboratoire des Sciences du Numérique de Nantes)  / UMR CNRS 6004
+
+
+
+--------------E4DA007503CE1152F64A2885
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body text="#000000" bgcolor="#FFFFFF">
+    <p>Bonsoir,</p>
+    <p>Veuillez nous excuser pour les réceptions multiples.<br>
+    </p>
+    <div class="moz-text-html" lang="x-unicode">
+      <p style="margin-bottom: 0cm"> <font face="Arial, sans-serif"><font
+            style="font-size: 12pt" size="3"><b><font face="Arial,
+                serif"><font style="font-size: 13pt" size="3"><span
+                    lang="fr-FR">Analyse à grande échelle de traces
+                    d’événements et de séries temporelles multivariées
+                    interdépendantes, en contexte incertain. </span></font></font></b></font></font><font
+          face="Arial, sans-serif"><font style="font-size: 12pt"
+            size="3"><b><font face="Arial, serif"><font
+                  style="font-size: 13pt" size="3"><span lang="fr-FR">Application
+                    en santé</span></font></font></b></font></font> </p>
+      <p align="justify"> <font face="Arial, sans-serif"><font
+            style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                style="font-weight: normal">Le sujet de thèse proposé
+                s’inscrit dans les thématiques de l’équipe DUKe (Data /
+                User / Knowledge) </span></span></font></font><font
+          face="Arial, sans-serif"><font style="font-size: 12pt"
+            size="3"><span lang="fr-FR"><span style="font-weight:
+                normal">du LS2N (Laboratoire des Sciences du Numérique
+                de Nantes – UMR CNRS 6004). </span></span></font></font><font
+          face="Arial, sans-serif"><font style="font-size: 12pt"
+            size="3"><span lang="fr-FR"><span style="font-weight:
+                normal">D</span></span></font></font><font face="Arial,
+          sans-serif"><font style="font-size: 12pt" size="3"><span
+              lang="fr-FR"><span style="font-weight: normal">eux
+                compétences majeur</span></span></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-style: normal"><span style="font-weight:
+                    normal">es </span></span></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-style: normal"><span style="font-weight:
+                    normal">de cette équipe</span></span></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-style: normal"><span style="font-weight:
+                    normal">, liées à l’intelligence artificielle, sont
+                    la fouille de données et l’apprentissage
+                    automatique. </span></span></span></font></font></font><font
+          face="Arial, sans-serif"><font style="font-size: 12pt"
+            size="3"><span lang="fr-FR"><span style="font-weight:
+                normal">Par ailleurs, </span></span></font></font><font
+          face="Arial, sans-serif"><font style="font-size: 12pt"
+            size="3"><span lang="fr-FR"><span style="font-weight:
+                normal">l</span></span></font></font><font face="Arial,
+          sans-serif"><font style="font-size: 12pt" size="3"><span
+              lang="fr-FR"><span style="font-weight: normal">es travaux
+              </span></span></font></font><font face="Arial, sans-serif"><font
+            style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                style="font-weight: normal">de thèse </span></span></font></font><font
+          face="Arial, sans-serif"><font style="font-size: 12pt"
+            size="3"><span lang="fr-FR"><span style="font-weight:
+                normal">s’inscrivent </span></span></font></font><font
+          face="Arial, sans-serif"><font style="font-size: 12pt"
+            size="3"><span lang="fr-FR"><span style="font-weight:
+                normal">dans la thématique applicative ‘‘santé du
+                futur’’ </span></span></font></font><font face="Arial,
+          sans-serif"><font style="font-size: 12pt" size="3"><span
+              lang="fr-FR"><span style="font-weight: normal">mise en
+                avant par l’équipe DUKe. <br>
+              </span></span></font></font><a
+          class="moz-txt-link-freetext" href="https://www.ls2n.fr/"
+          moz-do-not-send="true">https://www.ls2n.fr/</a><br>
+        <a class="moz-txt-link-freetext"
+          href="https://www.ls2n.fr/equipe/duke/" moz-do-not-send="true">https://www.ls2n.fr/equipe/duke/</a><br>
+        <font face="Arial, sans-serif"><font style="font-size: 12pt"
+            size="3"><span lang="fr-FR"><span style="font-weight:
+                normal"></span></span></font></font> </p>
+      <p style="margin-bottom: 0cm" align="justify"><font face="Arial,
+          serif"><font style="font-size: 14pt" size="4"><b>Résumé</b></font></font>
+      </p>
+      <font face="Arial, serif"><font style="font-size: 12pt" size="3"><font
+            face="Arial, sans-serif">L</font><font face="Arial,
+            sans-serif">e sujet </font><font face="Arial, sans-serif">proposé</font><font
+            face="Arial, sans-serif"><b> </b></font><font face="Arial,
+            sans-serif">s’intéresse à la fouille de traces d’événements,
+            menée conjointement avec la fouille de séries temporelles
+            multivariées dépendantes de ces traces. L’objectif est la
+            modélisation de la dynamique de l’impact des événements
+            d’une trace sur les variables des séries, en contexte
+            incertain. A terme, l’objectif est de pouvoir générer
+            automatiquement des scénarios réalistes de simulation de
+            situation critique en anesthésie.</font> </font></font>
+      <p style="margin-bottom: 0cm; font-weight: normal" align="justify"><font
+          face="Arial, serif"><font style="font-size: 14pt" size="4"><b>Mots-clés
+            </b></font></font> </p>
+      <font face="Arial, sans-serif"><font style="font-size: 12pt"
+          size="3"><font face="Arial, serif"><span lang="fr-FR">I</span></font><font
+            face="Arial, serif"><span lang="fr-FR">ntelligence
+              artificielle, </span></font><font face="Arial, serif"><span
+              lang="fr-FR">apprentissage automatiqu</span></font><font
+            face="Arial, serif"><span lang="fr-FR">e, apprentissage </span></font><font
+            face="Arial, serif"><span lang="fr-FR">statistique, fouille
+              de données, </span></font><font face="Arial, serif"><span
+              lang="fr-FR">représentation des connaissances, </span></font><font
+            face="Arial, serif"><span lang="fr-FR">modélisation </span></font><font
+            face="Arial, serif"><span lang="fr-FR">pour les systèmes
+              complexes, fouille de traces d’événements, fouille de
+              séries temporelles multivariées, contexte incertain,
+              modèle probabiliste, données </span></font><font
+            face="Arial, serif"><span lang="fr-FR">massives</span></font></font></font>
+      <p style="margin-bottom: 0cm" align="justify"> <font face="Arial,
+          serif"><font style="font-size: 14pt" size="4"><b>Contexte et
+              objectifs</b></font></font> </p>
+      <font style="font-size: 12pt" size="3"><font face="Arial, serif"><span
+            lang="fr-FR">Dans un but d’amélioration de la sécurité et de
+            la qualité des soins péropératoires, les spécialistes de la
+            formation en médecine intensive </span></font><font
+          face="Arial, serif"><span lang="fr-FR">du SiMU (Laboratoire
+            Expérimental de Simulation de Médecine Intensive de
+            l'Université de Nantes) souhaitent</span></font><font
+          face="Arial, serif"><span lang="fr-FR"> varier la diversité
+            des scénarios à proposer aux internes </span></font><font
+          face="Arial, serif"><span lang="fr-FR">en anesthésie et
+            infirmiers anesthésistes</span></font><font face="Arial,
+          serif"><span lang="fr-FR">, en formation initiale, ainsi
+            qu’aux praticiens plus expérimentés, en formation continue.
+            Pour varier les scénarios, le LS2N propose d’automatiser la
+            génération de scénarios réalistes de simulation, en
+            s’appuyant sur tout ou partie de </span></font><font
+          face="Arial, serif"><span lang="fr-FR">la base de</span></font><font
+          face="Arial, serif"><span lang="fr-FR"> profils anesthésiques
+            enregistrés par le CHU de Nantes. De cette innovation est
+            attendu un accès potentiel à une grande variété de scénarios
+            réalistes de simulation de cas d’anesthésie. Servir cet
+            objectif de formation répond également au besoin
+            d’anticipation par prédiction, inhérent au paradigme de la
+            médecine personnalisée, en pleine émergence.</span></font></font>
+      <p style="margin-bottom: 0cm; font-weight: normal" align="justify"><font
+          style="font-size: 14pt" size="4"><b><font face="Arial, serif"><span
+                lang="fr-FR">M</span></font><font face="Arial, serif"><span
+                lang="fr-FR">ission</span></font></b></font><font
+          style="font-size: 12pt" size="3"><font face="Arial, serif"><span
+              lang="fr-FR"></span></font></font><br>
+        <font style="font-size: 12pt" size="3"><font face="Arial, serif"><span
+              lang="fr-FR"></span></font></font></p>
+      <font style="font-size: 12pt" size="3"><font face="Arial, serif"><span
+            lang="fr-FR">Le suivi anesthésique de chaque acte
+            chirurgical garde la trace des actions de l’équipe médicale,
+            éventuellement des réactions du sujet opéré, et mémorise la
+            série temporelle de chaque paramètre de monitorage.</span></font></font><font
+        style="font-size: 14pt" size="4"><b><font face="Arial, serif"><span
+              lang="fr-FR"></span></font></b></font>
+      <p style="margin-bottom: 0cm; font-weight: normal" align="justify"><font
+          style="font-size: 12pt" size="3"><font face="Arial, serif"><span
+              lang="fr-FR">Chacune de ces séries est déterminée par le
+              jeu d’une ou de plusieurs actions de la trace sur le
+              paramètre concerné. Comme ce jeu est observé sur une
+              cohorte de patients, il ne peut être modélisé que dans un
+              contexte incertain. L’objectif de la thèse est donc de
+              concevoir une nouvelle classe de modèle probabiliste, et
+              son algorithme d’apprentissage, pour modéliser
+              quantitativement la dynamique de l’impact des événements
+              d’une trace sur l’évolution des variables de séries
+              temporelles multivariées.</span></font></font> </p>
+      <p style="margin-bottom: 0cm; font-weight: normal" align="justify"><font
+          style="font-size: 12pt" size="3"><font face="Arial, serif"><span
+              lang="fr-FR">De très nombreux travaux ont été conduits
+              tant en analyse de traces d’événements qu’en analyse de
+              séries temporelles. Dans la première catégorie, on peut
+              citer par exemple la détection d’activité frauduleuse par
+              alignement de traces [JA10], le partitionnement de traces
+              [CCD17]. L’</span></font><font face="Arial, serif"><span
+              lang="fr-FR">analyse de séries temporelles</span></font><font
+            face="Arial, serif"><span lang="fr-FR"> peut être illustrée
+              par la détection automatique de patterns [LLP14],
+              l’alignement multiple de séries temporelles [LNR04], la
+              détection de ruptures dans la structure d’une série [N18].
+              L’examen de la corrélation de deux séries temporelles est
+              une opération classique. </span></font><font face="Arial,
+            serif"><span lang="fr-FR">L</span></font><font face="Arial,
+            serif"><span lang="fr-FR">a capture des dépendances entre
+              les événements d’une trace </span></font><font
+            face="Arial, serif"><span lang="fr-FR">a conduit à quelques
+              travaux </span></font><font face="Arial, serif"><span
+              lang="fr-FR">[SWG17, CLF14]. Finalement, peu de travaux
+              ont traité de l’identification de corrélations entre
+              traces d’événements et séries temporelles ([MBBL08,
+              LLL14]).</span></font></font> </p>
+      <p style="margin-bottom: 0cm; font-weight: normal" align="justify"><font
+          style="font-size: 12pt" size="3"><font face="Arial, serif"><span
+              lang="fr-FR">Pour pallier ce manque, une nouvelle classe
+              de modèle probabiliste sera proposée, qui devra aussi
+              pouvoir prendre en compte d’éventuelles dépendances entre
+              événements, au sein d’une même trace. Un algorithme
+              d’apprentissage correspondant sera développé, avec le
+              souci qu’il puisse être exécuté rapidement, sur une
+              cohorte de patients d’intérêt. </span></font></font> </p>
+      <p style="margin-bottom: 0cm; font-weight: normal" align="justify"><font
+          style="font-size: 12pt" size="3"><font face="Arial, serif"><span
+              lang="fr-FR"><span style="font-weight: normal">Une fois la
+                modélisation validée, quelques cas d’anesthésie seront
+                ciblés, et les modèles de variation correspondants
+                seront construits. Il sera alors examiné avec l’aide d</span></span></font><font
+            face="Arial, serif"><span lang="fr-FR"><span
+                style="font-weight: normal">e l’équipe </span></span></font><font
+            face="Arial, serif"><span lang="fr-FR"><span
+                style="font-weight: normal"> </span></span></font><font
+            face="Arial, serif"><span lang="fr-FR"><span
+                style="font-weight: normal">IEIAH (*) du </span></span></font><font
+            face="Arial, serif"><span lang="fr-FR"><span
+                style="font-weight: normal">LIUM </span></span></font><font
+            face="Arial, serif"><span lang="fr-FR"><span
+                style="font-weight: normal">(**), </span></span></font><font
+            face="Arial, serif"><span lang="fr-FR"><span
+                style="font-weight: normal">comment générer un modèle de
+                scénario de simulation à partir des modèles de
+                variation.</span></span></font></font> </p>
+      <p style="margin-bottom: 0cm" align="justify"><font
+          style="font-size: 12pt" size="3"><font face="Arial, serif"><span
+              lang="fr-FR"><span style="font-weight: normal">(*)
+                Ingénierie des Environnements Informatiques pour
+                l’Apprentissage Humain<br>
+                (**) Laboratoire d’Informatique de l’Université du Mans</span></span></font></font></p>
+      <p style="margin-bottom: 0cm; orphans: 0; widows: 0"
+        align="justify"><font face="Arial, sans-serif"><font
+            style="font-size: 14pt" size="4"><b>Références
+              bibliographiques</b></font></font></p>
+      <font face="Arial, sans-serif"><font style="font-size: 12pt"
+          size="3"><font face="Arial, serif"><span lang="fr-FR"><span
+                style="font-weight: normal">[CCD17] T. Chatain, J.
+                Carmona, B.F. van Dongen (2017) Alignment-based trace
+                clustering. Proceedings of the 36th International
+                Conference on Conceptual Modeling (ER2017), Lecture
+                Notes in Computer Science, Vol. 10650, Spain, Valencia,
+                6-9 september, 295-308.</span></span></font></font></font>
+      <p style="margin-bottom: 0cm; font-weight: normal; orphans: 0;
+        widows: 0" align="justify"> <font face="Arial, sans-serif"><font
+            style="font-size: 12pt" size="3"><font face="Arial, serif"><span
+                lang="fr-FR">[CLF14] M. Ceci, P.F. Lanotte, F. Fumarola,
+                D. P. Cavallo, D. Malerba (2014) Completion time and
+                next activity prediction of processes using sequential
+                pattern mining. International Conference on Discovery
+                Science, DS2014, pp. 49-61.</span></font></font></font></p>
+      <p style="margin-bottom: 0cm; font-weight: normal; orphans: 0;
+        widows: 0" align="justify"> <font face="Arial, sans-serif"><font
+            style="font-size: 12pt" size="3"><font face="Arial, serif"><span
+                lang="fr-FR">[LLL14] C. Luo, J.-G. Lou, Q. Lin, Q. Fu,
+                R. Ding (2014) Correlating events with time series for
+                incident diagnosis. Proceedings of the 20th ACM SIGKDD
+                International Conference on Knowledge Discovery and Data
+                Mining, USA, New York, 24-27 august, 1583-1592.</span></font></font></font></p>
+      <p style="margin-bottom: 0cm; font-weight: normal; orphans: 0;
+        widows: 0" align="justify"> <font face="Arial, sans-serif"><font
+            style="font-size: 12pt" size="3"><font face="Arial, serif"><span
+                lang="fr-FR">[LLP14] J.A. Lara, D. Lizcanoa, A. Pérez,
+                J.P. Valente (2014) A general framework for time series
+                data mining based on event analysis: application to the
+                medical domains of electroencephalography and
+                stabilometry. Journal of Biomedical Informatics, 51,
+                219-241.</span></font></font></font></p>
+      <p style="margin-bottom: 0cm; font-weight: normal; orphans: 0;
+        widows: 0" align="justify"> <font face="Arial, sans-serif"><font
+            style="font-size: 12pt" size="3"><font face="Arial, serif"><span
+                lang="fr-FR">[LNR04] J. Listgarten, R. M. Neal, S.T.
+                Roweis, A. Emili (2004) Multiple alignment of continuous
+                time series. Proceedings of Advances in Neural
+                Information Processing Systems, NIPS2004, 817-824.</span></font></font></font></p>
+      <p style="margin-bottom: 0cm; font-weight: normal; orphans: 0;
+        widows: 0" align="justify"> <font face="Arial, sans-serif"><font
+            style="font-size: 12pt" size="3"><font face="Arial, serif"><span
+                lang="fr-FR">[LSD18] Y. Liu, T. Safavi, A. Dighe, and D.
+                Koutra (2018) Graph summarization methods and
+                applications: A survey. ACM Computing Surveys (CSUR),
+                51(3).</span></font></font></font></p>
+      <p style="margin-bottom: 0cm; font-weight: normal; orphans: 0;
+        widows: 0" align="justify"> <font face="Arial, sans-serif"><font
+            style="font-size: 12pt" size="3"><font face="Arial, serif"><span
+                lang="fr-FR">[MBBL08] B. Minaei-Bidgoli, S. Behzad
+                Lajevardi (2008) Correlation mining between time series
+                stream and event stream. Proceedings of the 4th
+                International Conference on Networked Computing and
+                Advanced Information Management, 2, 333-338.</span></font></font></font></p>
+      <p style="margin-bottom: 0cm; font-weight: normal; orphans: 0;
+        widows: 0" align="justify"> <font face="Arial, sans-serif"><font
+            style="font-size: 12pt" size="3"><font face="Arial, serif"><span
+                lang="fr-FR">[N18] V. Novák (2018) Detection of
+                structural breaks in time series using fuzzy techniques.
+                International Journal of Fuzzy Logic and Intelligent
+                Systems, 18(1):1-12.</span></font></font></font></p>
+      <p style="margin-bottom: 0cm; font-weight: normal; orphans: 0;
+        widows: 0" align="justify"> <font face="Arial, sans-serif"><font
+            style="font-size: 12pt" size="3"><font face="Arial, serif"><span
+                lang="fr-FR">[SWG17] A. Senderovich, M. Weidlich, A. Gal
+                (2017) Temporal network representation of event logs for
+                improved performance modelling in business processes.
+                Proceedings of the 14th International Conference on
+                Business Process Management (BPM2017), pp 3 -21.</span></font></font></font></p>
+      <p style="margin-bottom: 0cm; orphans: 0; widows: 0"
+        align="justify"><font face="Arial, sans-serif"><font
+            style="font-size: 14pt" size="4"><b>Profil</b></font></font></p>
+      <font face="Arial, sans-serif"><font style="font-size: 12pt"
+          size="3">Master de recherche en informatique ou équivalent, ou
+          spécialisation d’école d’ingénieurs, ou Master en informatique
+          pour la santé dans le domaine des sciences des données, de
+          l’apprentissage automatique ou/et en statistique en grande
+          dimension.</font></font>
+      <p style="margin-bottom: 0cm; font-weight: normal; orphans: 0;
+        widows: 0" align="justify"> <font face="Arial, sans-serif"><font
+            style="font-size: 12pt" size="3">Le candidat doit présenter
+            un intérêt marqué pour la recherche méthodologique et
+            académique. La motivation du candidat pour des travaux de
+            recherche à mener sur trois années sera un élément capital.
+            Le candidat doit également être motivé par les interactions
+            en contexte interdisciplinaire. Il doit également montrer un
+            réel intérêt pour les mises en oeuvre effectives. A cet
+            égard, l’excellente maîtrise d’un langage de programmation
+            de type C++ est requise, ainsi qu’une bonne connaissance de
+            l’administration et de la gestion des bases de données. Des
+            compétences en parallélisation de code seraient un plus.</font></font></p>
+      <p style="margin-bottom: 0cm; font-weight: normal; orphans: 0;
+        widows: 0" align="justify"> <font face="Arial, sans-serif"><font
+            style="font-size: 12pt" size="3">Aucun prérequis n’est
+            nécessaire en IEIAH.</font></font></p>
+      <p style="margin-bottom: 0cm; orphans: 0; widows: 0"
+        align="justify"><font face="Arial, sans-serif"><font
+            style="font-size: 12pt" size="3"><font color="#000000"><font
+                face="Arial, serif"><span lang="fr-FR"><span
+                    style="font-weight: normal">Le candidat doit être
+                    classé dans le premier tiers de sa promotion, pour
+                    ce qui concerne les résultats théoriques obtenus au
+                    cours du Master ou équivalent. </span></span></font></font></font></font>
+      </p>
+      <p style="margin-top: 0.35cm; margin-bottom: 0cm; line-height:
+        138%" align="left"> <font color="#000000"><font face="Arial,
+            sans-serif"><font style="font-size: 12pt" size="3"><span
+                lang="fr-FR"><span style="font-weight: normal">I</span></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal">nformation</span></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal">s</span></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal"> </span></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal">complémentaires</span></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal"> </span></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal">relatives au sujet de
+                  thèse en : <br>
+                </span></span></font></font></font><a
+href="https://uncloud.univ-nantes.fr/index.php/s/CcGzTmJPfHeZQPH#pdfviewer"
+          moz-do-not-send="true"><font color="#000000"><font
+              face="Arial, sans-serif"><font style="font-size: 12pt"
+                size="3"><span lang="fr-FR"><span style="font-weight:
+                    normal">https://uncloud.univ-nantes.fr/index.php/s/CcGzTmJPfHeZQPH#pdfviewer</span></span></font></font></font></a></p>
+      <p style="margin-top: 0.35cm; margin-bottom: 0cm; line-height:
+        100%" align="left"> <font color="#000000"><font face="Arial,
+            sans-serif"><font style="font-size: 14pt" size="4"><span
+                lang="fr-FR"><b>Dépôt de candidature<br>
+                </b></span></font></font></font><a
+          href="https://theses.u-bretagneloire.fr/mathstic"
+          moz-do-not-send="true"><font color="#000000"><font
+              face="Arial, sans-serif"><font style="font-size: 12pt"
+                size="3"><span lang="fr-FR"></span></font></font></font></a><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal"> </span></span></font></font></font>
+      </p>
+      <p style="margin-top: 0.35cm; margin-bottom: 0cm; line-height:
+        138%" align="left">  <font color="#000000"><font face="Arial,
+            sans-serif"><font style="font-size: 12pt" size="3"><span
+                lang="fr-FR"><span style="font-weight: normal">Le
+                  candidat </span></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal">enverra par mail (</span></span></font></font></font><font
+          color="#000000"><font face="Arial, serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal"><a
+                    href="mailto:christine.sinoquet@univ-nantes.fr"
+                    moz-do-not-send="true">christine.sinoquet@univ-nantes.fr</a>)</span></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal"> les documents suivants :<br>
+                </span></span></font></font></font><font color="#000000"><font
+            face="Arial, sans-serif"><font style="font-size: 12pt"
+              size="3"><span lang="fr-FR"><span style="font-weight:
+                  normal">– l</span></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal">ettre de motivation</span></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal"><br>
+                  – CV </span></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal">complet</span></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal"><br>
+                  – </span></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal">relevé de notes du Master
+                  (ou équivalent)<br>
+                </span></span></font></font></font><font color="#000000"><font
+            face="Arial, sans-serif"><font style="font-size: 12pt"
+              size="3"><span lang="fr-FR"><span style="font-weight:
+                  normal">– </span></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal">attestation relative au
+                  classement obtenu à l’issue des épreuves théoriques du
+                  Master (ou équivalent)<br>
+                </span></span></font></font></font><font color="#000000"><font
+            face="Arial, sans-serif"><font style="font-size: 12pt"
+              size="3"><span lang="fr-FR"><span style="font-weight:
+                  normal">– </span></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal">coordonnées d’</span></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal">au moins </span></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal">deux contacts
+                  (affiliation, adresse mail, numéro de téléphone)<br>
+                </span></span></font></font></font><font color="#000000"><font
+            face="Arial, sans-serif"><font style="font-size: 12pt"
+              size="3"><span lang="fr-FR"><span style="font-weight:
+                  normal">– </span></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal">tout document
+                  complémentaire : lettre(s) de recommandation,
+                  éventuellement publications</span></span></font></font></font></p>
+      <p style="margin-top: 0.35cm; margin-bottom: 0cm; line-height:
+        138%" align="left"> <font color="#000000"><font face="Arial,
+            sans-serif"><font style="font-size: 14pt" size="4"><span
+                lang="fr-FR"><b>F</b></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 14pt" size="4"><span lang="fr-FR"><b>inancement</b></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal"><br>
+                  Ministère de l’Enseignement Supérieur et de la
+                  Recherche</span></span></font></font></font></p>
+      <p style="margin-top: 0.35cm; margin-bottom: 0cm; line-height:
+        138%" align="left"> <font color="#000000"><font face="Arial,
+            sans-serif"><font style="font-size: 14pt" size="4"><span
+                lang="fr-FR"><b>Durée</b></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal"><br>
+                  36 mois, à compter du 1</span></span></font></font></font><font
+          color="#000000"><sup><font face="Arial, sans-serif"><font
+                style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                    style="font-weight: normal">er</span></span></font></font></sup></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal"> octobre 2019</span></span></font></font></font></p>
+      <p style="margin-top: 0.35cm; margin-bottom: 0cm; line-height:
+        138%" align="left"> <font face="Arial, sans-serif"><font
+            style="font-size: 12pt" size="3"><font style="font-size:
+              14pt" size="4"><b>Direction de thèse et contact</b></font></font></font><font
+          face="Arial, sans-serif"><font style="font-size: 12pt"
+            size="3"><br>
+            Christine Sinoquet, Maître de Conférences HdR (<a
+              class="moz-txt-link-abbreviated"
+              href="mailto:christine.sinoquet@univ-nantes.fr"
+              moz-do-not-send="true">christine.sinoquet@univ-nantes.fr</a>)</font></font>
+      </p>
+      <p style="margin-bottom: 0cm; orphans: 0; widows: 0"
+        align="justify"> <font style="font-size: 14pt" size="4"><b><font
+              face="Arial, sans-serif"><span lang="fr-FR">Accueil</span></font></b></font><br>
+      </p>
+      <font style="font-size: 14pt" size="4"><b><font face="Arial,
+            sans-serif"><span lang="fr-FR"></span></font></b></font><font
+        style="font-size: 14pt" size="4"><b><font face="Arial,
+            sans-serif"><span lang="fr-FR"></span></font></b><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal">Le doctorant sera
+                  accueilli à la Faculté des Sciences de l’Université de
+                  Nantes. Il </span></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal"> </span></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal">échangera régulièrement
+                  avec des membres de l’équipe DUKe, basés </span></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal">sur un autre site du LS2N,
+                  à Nantes (</span></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal">Polytech Nantes</span></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal">)</span></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal">. </span></span></font></font></font></font><br>
+      <font style="font-size: 14pt" size="4"><font color="#000000"><font
+            face="Arial, sans-serif"><font style="font-size: 12pt"
+              size="3"><span lang="fr-FR"><span style="font-weight:
+                  normal"></span></span></font></font></font></font>
+      <p style="margin-top: 0.35cm; margin-bottom: 0cm; border: none;
+        padding: 0cm; line-height: 138%; orphans: 0; widows: 0"
+        align="left"> <font color="#000000"><font face="Arial,
+            sans-serif"><font style="font-size: 14pt" size="4"><span
+                lang="fr-FR"><b>D</b></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 14pt" size="4"><span lang="fr-FR"><b>ates
+                  clés<br>
+                </b></span></font></font></font><font color="#000000"><font
+            face="Arial, sans-serif"><font style="font-size: 12pt"
+              size="3"><span lang="fr-FR"><i><b>Ouverture de la campagne
+                    de recrutement : </b></i></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><i><b>mercredi
+                  </b></i></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><i><b>03
+                    avril 2019<br>
+                    <font color="#ff0000">Fin de la campagne de
+                      recrutement (audition incluse) : </font></b></i></span></font></font></font><font
+          face="Arial, sans-serif" color="#ff0000"><font
+            style="font-size: 12pt" size="3"><span lang="fr-FR"><i><b>mercredi
+                </b></i></span></font></font><font face="Arial,
+          sans-serif" color="#ff0000"><font style="font-size: 12pt"
+            size="3"><span lang="fr-FR"><i><b>24 avril 2019</b></i></span></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><i><b><br>
+                    Date limite de candidature :</b></i></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><i><b>
+                  </b></i></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><i><b>lundi
+                  </b></i></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><i><b>22</b></i></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><i><b>
+                  </b></i></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><i><b>avril</b></i></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><i><b>
+                    2019 </b></i></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><i><b>1</b></i></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><i><b>2</b></i></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><i><b>H00</b></i></span></font></font></font></p>
+      <p style="margin-top: 0.35cm; margin-bottom: 0cm; line-height:
+        138%" align="left"> <font color="#000000"><font face="Arial,
+            sans-serif"><font style="font-size: 12pt" size="3"><span
+                lang="fr-FR"><b>Audition</b></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal"> : pour être retenu, un
+                  candidat devra avoir été auditionné par le LS2N </span></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal">(audition à distance
+                  possible)</span></span></font></font></font><font
+          color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal">. <br>
+                </span></span></font></font></font></p>
+      <p style="margin-top: 0.35cm; margin-bottom: 0cm; line-height:
+        138%" align="left"><br>
+        <font color="#000000"><font face="Arial, sans-serif"><font
+              style="font-size: 12pt" size="3"><span lang="fr-FR"><span
+                  style="font-weight: normal">Christine Sinoquet <br>
+                  <a class="moz-txt-link-freetext"
+                    href="http://christinesinoquet.wixsite.com/christinesinoquet"
+                    moz-do-not-send="true">http://christinesinoquet.wixsite.com/christinesinoquet</a>
+                  <br>
+                  Maître de Conférences, HdR 2014, Qualifiée PR 2015 <br>
+                  Responsable de la mention de Master Bioinformatique de
+                  l'Université de Nantes <br>
+                  LS2N (Laboratoire des Sciences du Numérique de
+                  Nantes)  / UMR CNRS 6004</span></span></font></font></font></p>
+      <br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:31cfd1e80dc8f861b380c17737fd1fec@www.madics.fr"> </blockquote>
+  </body>
+</html>
+
+--------------E4DA007503CE1152F64A2885--

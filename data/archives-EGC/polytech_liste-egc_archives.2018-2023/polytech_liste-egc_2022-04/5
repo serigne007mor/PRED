@@ -1,0 +1,627 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (BounceSMTP2.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 3FD4F14014F0
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon,  4 Apr 2022 10:26:16 +0200 (CEST)
+Received: from mx1.d101.univ-nantes.fr (MX1.univ-nantes.fr [193.52.101.135])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id 3BF6C5FA9
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon,  4 Apr 2022 10:26:16 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.d101.univ-nantes.fr (Postfix) with ESMTP id 35A434821B1C
+	for <liste-egc@polytech.univ-nantes.fr>; Mon,  4 Apr 2022 10:26:16 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 0.312
+X-Spam-Level:
+X-Spam-Status: No, score=0.312 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+	HTML_MESSAGE=0.001, LONGWORD=0.3, RCVD_IN_DNSWL_NONE=-0.0001,
+	RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+	UN_PHISHING_PW=0.1] autolearn=disabled
+X-CRM114-Status: UNSURE ( -0.1754 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=gmail.com
+Received: from mx1.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id alKv_fpcNhQJ for <liste-egc@polytech.univ-nantes.fr>;
+	Mon,  4 Apr 2022 10:26:13 +0200 (CEST)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
+	by mx1.d101.univ-nantes.fr (Postfix) with ESMTPS id EB98B47EC059
+	for <liste-egc@polytech.univ-nantes.fr>; Mon,  4 Apr 2022 10:26:12 +0200 (CEST)
+Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-2eb888cf7e7so2510847b3.13
+        for <liste-egc@polytech.univ-nantes.fr>; Mon, 04 Apr 2022 01:26:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=UKVpw2F0XuxbAEvn/dD7RzxO1/J/uTILkOyaZr1LK8o=;
+        b=DPxeDLWMQVAliea+RgX+T2xcrjGSBm+27v6M3pQZ4IS+gPiQIdHYwrWHYfseccKZKb
+         vvj26wwL9toM36dTcODENDWTckZKFwBugGNFSnhq1MJctI7aeaCu5VAz6y5sd0ZB5VJ/
+         wOr6aKz7zyn5j9Elk68C52PaFcBMQpKJwvlNsAddjOeLJWbXcuJbT7smJty9UAP93SZO
+         mct9yeENOoZ1LneJyCgtd02XvthrfiIEjD+avA5aJecOOczhdK06ThIwtYBXJaDeJCNW
+         QrUxmAmpch4fYRuu+tHJgAK5Z0yQNQK9V8E/UXhNfVa7qnTEon8GT2uLN9qF72C0RaSF
+         ReYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=UKVpw2F0XuxbAEvn/dD7RzxO1/J/uTILkOyaZr1LK8o=;
+        b=UcUUScstfH0xjQ4+llIUptMOXAdZr/S+wtBYKMLarbVlxAUeYb7i2ikFZvvaepYnmz
+         1geENol28G0vPLMAcJHBDDa+B04k3y+MbQAsWpJh7spgJ3a59ZrH6vQFxnrZ0K48YntV
+         eaYQqJLetDFPBR13lHx3ycYc7fblxMUX7xeKtB7plVbuVXj+0Qr3Zmb0pG/fhg2ywmwx
+         SUsqmL6GxhS7LuMF0iPkW34kcMlhM3849m6+DSYX11w02Uepu1dCAP62jMSeJEGKXmIE
+         m0BQdLjnAoQQTOQ/p2aDK5Q/kV6xhyNRXo4zimAMKIgtZnxnfaYv0JLbyFDqK3eQyk7w
+         yNVw==
+X-Gm-Message-State: AOAM531lwv5ek1wDyO9TrrjtrDZMr47SQDg9/96RTLt1SKi/UmWusDU6
+	O0ygcFFnHZeQ3y9aRSCxInEUNBUIyMTvlnWzLNjlffl8CnkD5GE1
+X-Google-Smtp-Source: ABdhPJyKPsHOZcS7rcdfDYrXA7YkeABYlKUGz+5tVBNUJKPp7oT2XwSgD7Dl7RIE1wkqsO0UuiLnRtSsElEW9q9yXA4=
+X-Received: by 2002:a81:1c1:0:b0:2eb:7369:dd09 with SMTP id
+ 184-20020a8101c1000000b002eb7369dd09mr1832535ywb.35.1649060771760; Mon, 04
+ Apr 2022 01:26:11 -0700 (PDT)
+MIME-Version: 1.0
+From: Rim Hantach <rim.hantach@gmail.com>
+Date: Mon, 4 Apr 2022 10:25:30 +0200
+Message-ID: <CAPD0GtKmgc0-4KE46ievB=5SFVtiYBJ3uFddA-fRR4owRJVPZg@mail.gmail.com>
+To: liste-egc@polytech.univ-nantes.fr, info-ic@inria.fr, bull-i3@irit.fr, 
+	bull-ia@gdria.fr, dl@dl.kr.org, ln@groupes.renater.fr, Liste-proml@lri.fr, 
+	web.semantique@inria.fr, "Event@CIG" <event@in.tu-clausthal.de>, sma@loria.fr, 
+	agents@cs.umbc.edu, eda-liste <eda-liste@listes.univ-lyon2.fr>
+Content-Type: multipart/alternative; boundary="000000000000838d8e05dbcfe1c7"
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] 2nd International workshop on Graph Representation
+ Learning for Scanned Document Analysis @ ICPR 2022
+
+--000000000000838d8e05dbcfe1c7
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Dear colleagues and researchers,
+
+
+
+
+
+*2nd International workshop on Graph Representation Learning *
+
+*for Scanned Document Analysis (GLESDO)*
+
+
+
+*https://sites.google.com/view/glesdo-workshop-icpr2022/home
+<https://sites.google.com/view/glesdo-workshop-icpr2022/home>*
+
+
+
+ *As part of the 26th International Conference on **Pattern Recognition*
+
+*(ICPR 2022)*
+
+
+
+*https://www.icpr2022.com/ <https://www.icpr2022.com/>*
+
+
+
+*August 21-25, 2022, **Montr=C3=A9al Qu=C3=A9bec*
+
+
+
+*Context*
+
+Robust reading, also known as automatic document image processing, is an
+essential task in various application areas such as data invoice
+extraction, subject review, medical prescription analysis, etc., and holds
+significant commercial potential. Several approaches are proposed in the
+literature, but datasets' availability and data privacy challenge it.
+
+Considering the problem of information extraction from documents, different
+aspects must be taken into account, such as (1) document classification (2)
+text localization (3) OCR (Optical Character Recognition) (4) table
+extraction (5) key information detection. In this context, graph-based
+approaches are attractive methods for document processing. In fact, graphs
+are a natural way to represent the connections among objects (text, blocks,
+images, etc.) and aim to discover novel and hidden knowledge from data. The
+extracted text from scanned documents can be represented in the shape of a
+graph to exploit the best features of their characteristics. On the other
+hand, understanding spatial relationships is critical for text document
+extraction results for some applications such as invoice analysis. The aim
+is to capture the structural connections between keywords (invoice number,
+date, amounts) and the main value (the desired information). An effective
+approach requires a combination of spatial and textual information.
+
+*Objective*
+
+In this second edition of the GLESDO workshop, we encourage the description
+of novel problems or applications for document image analysis in the area
+of information retrieval that has emerged in recent years. We also
+encourage works that include NLP tools for extracted text, such as language
+models and Transforms.  Finally, we also encourage works that develop new
+scanned document datasets for novel applications. The GLESDO workshop aims
+to bring together an area for experts from industry, science, and academia
+to exchange ideas and discuss ongoing research in graph representation
+learning for scanned document analysis.
+
+*Topics of interests*
+
+
+
+We invite the submission of original works that are related -- but are not
+limited to -- the topics below:
+
+=E2=97=8F Deep learning for graph
+
+=E2=97=8F Probabilistic graphical models for graphs
+
+=E2=97=8F Graph-based approaches for text mining
+
+=E2=97=8F Graph-based approaches for a spatial component in a scanned docum=
+ent
+
+=E2=97=8F Graph representation learning for NLP
+
+=E2=97=8F Graph-based approaches using kernels
+
+=E2=97=8F Spectral graph clustering
+
+=E2=97=8F Semi-supervised graph-based methods
+
+=E2=97=8F Dynamic graph analysis
+
+=E2=97=8F Information Retrieval and Extraction using Graph-based methods
+
+=E2=97=8F Knowledge graph for semantic document analysis
+
+=E2=97=8F Semantic understanding of document content
+
+=E2=97=8F Entity and link prediction in graphs
+
+=E2=97=8F Merging ontologies with graph-based methods using NLP techniques
+
+=E2=97=8F Cleansing and image enhancement techniques for scanned document
+
+=E2=97=8F Document structure and layout learning
+
+=E2=97=8F OCR based graph methods
+
+=E2=97=8F Font text recognition in a scanned document
+
+=E2=97=8F Table identification and extraction from scanned documents
+
+=E2=97=8F Handwriting detection and recognition in documents
+
+=E2=97=8F Signature detection and verification in documents
+
+=E2=97=8F Visual document structure understanding
+
+=E2=97=8F Visual Question Answering
+
+=E2=97=8F Invoice analysis
+
+=E2=97=8F Scanned documents classification
+
+=E2=97=8F Scanned documents summarization
+
+=E2=97=8F Scanned documents translation
+
+*Submission*
+
+The workshop is open to original papers of theoretical or practical nature.
+Papers should be formatted according to ICPR instructions for authors
+<https://www.icpr2022.com/wp-content/uploads/2021/11/IEEEconf_ICPR2022.zip>
+. Papers have to be submitted via the workshop's EasyChair
+<https://easychair.org/my/conference?conf=3Dglesdo2022> submission page.
+
+We welcome the following types of contributions:
+
+=C2=A7  Full research papers (12-15 pages): finished or consolidated R&D wo=
+rks,
+to be included in one of the Workshop topics
+
+=C2=A7  Short papers (6-8 pages): ongoing works with relevant preliminary
+results, opened to discussion.
+
+At least one author of each accepted paper must register for the workshop,
+in order to present the paper. For further instructions please refer to the
+<https://www.google.com/url?q=3Dhttps%3A%2F%2Ficdar2021.org%2F&sa=3DD&sntz=
+=3D1&usg=3DAFQjCNH7XM46MS3RAIWrZPxhn4Kc5onLjw>ICPR
+2022 <https://www.icpr2022.com/submission-guidelines/> page.
+
+*Important dates*
+
+
+   - Submission Deadline: June 6, 2022, at 11:59pm Pacific Time
+   - Decisions Announced: June 27, 2022, at 12:00pm Pacific Time
+   - Camera Ready Deadline: July 11, 2022, at 12:00pm Pacific Time
+   - Workshop day: August 21, 2022 (Half-Day)
+
+
+*Workshop Chairs*
+
+*Rim Hantach*, Engie, France
+
+*Rafika Boutalbi*, University of Stuttgart, Germany
+
+*Philippe Calvez*, Engie, France
+
+--000000000000838d8e05dbcfe1c7
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><p class=3D"MsoNormal" style=3D"margin:0cm;background-imag=
+e:initial;background-position:initial;background-size:initial;background-re=
+peat:initial;background-origin:initial;background-clip:initial;font-size:12=
+pt;font-family:Calibri,sans-serif"><span lang=3D"EN-US" style=3D"color:blac=
+k">Dear colleagues and researchers,</span><b><span lang=3D"EN-US"></span></=
+b></p><p class=3D"MsoNormal" align=3D"center" style=3D"margin:0cm;text-alig=
+n:center;background-image:initial;background-position:initial;background-si=
+ze:initial;background-repeat:initial;background-origin:initial;background-c=
+lip:initial;font-size:12pt;font-family:Calibri,sans-serif"><b><span lang=3D=
+"EN-US" style=3D"font-family:&quot;Times New Roman&quot;,serif">=C2=A0</spa=
+n></b></p><p class=3D"MsoNormal" align=3D"center" style=3D"margin:0cm;text-=
+align:center;background-image:initial;background-position:initial;backgroun=
+d-size:initial;background-repeat:initial;background-origin:initial;backgrou=
+nd-clip:initial;font-size:12pt;font-family:Calibri,sans-serif"><b><span lan=
+g=3D"EN-US" style=3D"font-family:&quot;Times New Roman&quot;,serif">=C2=A0<=
+/span></b></p><p class=3D"MsoNormal" align=3D"center" style=3D"margin:0cm;t=
+ext-align:center;background-image:initial;background-position:initial;backg=
+round-size:initial;background-repeat:initial;background-origin:initial;back=
+ground-clip:initial;font-size:12pt;font-family:Calibri,sans-serif"><b><span=
+ lang=3D"EN-US" style=3D"font-family:&quot;Times New Roman&quot;,serif;colo=
+r:rgb(153,0,0)">2nd=C2=A0International workshop on Graph Representation Lea=
+rning=C2=A0</span></b><b><span lang=3D"EN-US" style=3D"font-family:&quot;Ti=
+mes New Roman&quot;,serif"></span></b></p><p class=3D"MsoNormal" align=3D"c=
+enter" style=3D"margin:0cm;text-align:center;background-image:initial;backg=
+round-position:initial;background-size:initial;background-repeat:initial;ba=
+ckground-origin:initial;background-clip:initial;font-size:12pt;font-family:=
+Calibri,sans-serif"><b><span lang=3D"EN-US" style=3D"font-family:&quot;Time=
+s New Roman&quot;,serif;color:rgb(153,0,0)">for Scanned Document Analysis (=
+GLESDO)</span></b><b><span lang=3D"EN-US" style=3D"font-size:13.5pt;font-fa=
+mily:&quot;Times New Roman&quot;,serif"></span></b></p><p class=3D"MsoNorma=
+l" align=3D"center" style=3D"margin:0cm;text-align:center;background-image:=
+initial;background-position:initial;background-size:initial;background-repe=
+at:initial;background-origin:initial;background-clip:initial;font-size:12pt=
+;font-family:Calibri,sans-serif"><b><span lang=3D"EN-US" style=3D"font-size=
+:14pt;font-family:&quot;Times New Roman&quot;,serif;color:rgb(192,0,0)">=C2=
+=A0</span></b><b><span lang=3D"EN-US" style=3D"font-family:&quot;Times New =
+Roman&quot;,serif"></span></b></p><p class=3D"MsoNormal" align=3D"center" s=
+tyle=3D"margin:0cm;text-align:center;background-image:initial;background-po=
+sition:initial;background-size:initial;background-repeat:initial;background=
+-origin:initial;background-clip:initial;font-size:12pt;font-family:Calibri,=
+sans-serif"><b><span style=3D"font-family:&quot;Times New Roman&quot;,serif=
+;color:rgb(192,0,0)"><a href=3D"https://sites.google.com/view/glesdo-worksh=
+op-icpr2022/home" target=3D"_blank" style=3D"color:blue"><span lang=3D"EN-U=
+S">https://sites.google.com/view/glesdo-workshop-icpr2022/home</span></a></=
+span></b><b><span lang=3D"EN-US" style=3D"font-family:&quot;Times New Roman=
+&quot;,serif;color:rgb(192,0,0)"></span></b></p><p class=3D"MsoNormal" alig=
+n=3D"center" style=3D"margin:0cm;text-align:center;background-image:initial=
+;background-position:initial;background-size:initial;background-repeat:init=
+ial;background-origin:initial;background-clip:initial;font-size:12pt;font-f=
+amily:Calibri,sans-serif"><b><span lang=3D"EN-US" style=3D"font-family:&quo=
+t;Times New Roman&quot;,serif">=C2=A0</span></b></p><p class=3D"MsoNormal" =
+align=3D"center" style=3D"margin:0cm;text-align:center;background-image:ini=
+tial;background-position:initial;background-size:initial;background-repeat:=
+initial;background-origin:initial;background-clip:initial;font-size:12pt;fo=
+nt-family:Calibri,sans-serif"><b><span lang=3D"EN-US" style=3D"font-size:13=
+.5pt;font-family:&quot;Times New Roman&quot;,serif;color:black">=C2=A0</spa=
+n></b><b><span lang=3D"EN-US" style=3D"font-family:&quot;Times New Roman&qu=
+ot;,serif;color:black">As part of=C2=A0the 26th International Conference on=
+=C2=A0</span></b><b><span lang=3D"EN-US" style=3D"font-family:&quot;Times N=
+ew Roman&quot;,serif;color:black">Pattern Recognition</span></b></p><p clas=
+s=3D"MsoNormal" align=3D"center" style=3D"margin:0cm;text-align:center;back=
+ground-image:initial;background-position:initial;background-size:initial;ba=
+ckground-repeat:initial;background-origin:initial;background-clip:initial;f=
+ont-size:12pt;font-family:Calibri,sans-serif"><b><span style=3D"font-family=
+:&quot;Times New Roman&quot;,serif">(ICPR 2022)</span></b></p><p class=3D"M=
+soNormal" style=3D"margin:0cm;background-image:initial;background-position:=
+initial;background-size:initial;background-repeat:initial;background-origin=
+:initial;background-clip:initial;font-size:12pt;font-family:Calibri,sans-se=
+rif"><b><span style=3D"font-family:&quot;Times New Roman&quot;,serif;color:=
+black">=C2=A0</span></b><b><span style=3D"font-family:&quot;Times New Roman=
+&quot;,serif"></span></b></p><p class=3D"MsoNormal" align=3D"center" style=
+=3D"margin:0cm;text-align:center;background-image:initial;background-positi=
+on:initial;background-size:initial;background-repeat:initial;background-ori=
+gin:initial;background-clip:initial;font-size:12pt;font-family:Calibri,sans=
+-serif"><b><span style=3D"font-family:&quot;Times New Roman&quot;,serif;col=
+or:black"><a href=3D"https://www.icpr2022.com/" target=3D"_blank" style=3D"=
+color:blue">https://www.icpr2022.com/</a></span></b><b><span style=3D"font-=
+family:&quot;Times New Roman&quot;,serif"></span></b></p><p class=3D"MsoNor=
+mal" align=3D"center" style=3D"margin:0cm;text-align:center;background-imag=
+e:initial;background-position:initial;background-size:initial;background-re=
+peat:initial;background-origin:initial;background-clip:initial;font-size:12=
+pt;font-family:Calibri,sans-serif"><b><span style=3D"font-family:&quot;Time=
+s New Roman&quot;,serif;color:black">=C2=A0</span></b><b><span style=3D"fon=
+t-family:&quot;Times New Roman&quot;,serif"></span></b></p><p class=3D"MsoN=
+ormal" align=3D"center" style=3D"margin:0cm;text-align:center;font-size:12p=
+t;font-family:Calibri,sans-serif"><b><span lang=3D"EN-US" style=3D"font-fam=
+ily:&quot;Times New Roman&quot;,serif;color:black">August 21-25, 2022,=C2=
+=A0</span></b><b><span style=3D"font-family:&quot;Times New Roman&quot;,ser=
+if;color:black">Montr=C3=A9al Qu=C3=A9bec</span></b></p><p class=3D"MsoNorm=
+al" align=3D"center" style=3D"margin:0cm;text-align:center;background-image=
+:initial;background-position:initial;background-size:initial;background-rep=
+eat:initial;background-origin:initial;background-clip:initial;font-size:12p=
+t;font-family:Calibri,sans-serif"><b><span style=3D"font-family:&quot;Times=
+ New Roman&quot;,serif">=C2=A0</span></b></p><p class=3D"MsoNormal" style=
+=3D"margin:13.5pt 0cm 0cm;background-image:initial;background-position:init=
+ial;background-size:initial;background-repeat:initial;background-origin:ini=
+tial;background-clip:initial;font-size:12pt;font-family:Calibri,sans-serif"=
+><b><span lang=3D"EN-US" style=3D"font-size:13.5pt;color:rgb(33,33,33)">Con=
+text</span></b><span lang=3D"EN-US" style=3D"font-size:13.5pt;color:rgb(33,=
+33,33)"></span></p><p class=3D"MsoNormal" style=3D"margin:10.5pt 0cm 0cm;te=
+xt-align:justify;background-image:initial;background-position:initial;backg=
+round-size:initial;background-repeat:initial;background-origin:initial;back=
+ground-clip:initial;font-size:12pt;font-family:Calibri,sans-serif"><span la=
+ng=3D"EN-US" style=3D"font-size:13pt;color:rgb(33,33,33)">Robust reading, a=
+lso known as automatic document image processing, is an essential task in v=
+arious application areas such as data invoice extraction, subject review, m=
+edical prescription analysis, etc., and holds significant commercial potent=
+ial. Several approaches are proposed in the literature, but datasets&#39; a=
+vailability and data privacy challenge it.</span></p><p class=3D"MsoNormal"=
+ style=3D"margin:10.5pt 0cm 0cm;text-align:justify;background-image:initial=
+;background-position:initial;background-size:initial;background-repeat:init=
+ial;background-origin:initial;background-clip:initial;font-size:12pt;font-f=
+amily:Calibri,sans-serif"><span lang=3D"EN-US" style=3D"font-size:13pt;colo=
+r:rgb(33,33,33)">Considering the problem of information extraction from doc=
+uments, different aspects must be taken into account, such as (1) document =
+classification (2) text localization (3) OCR (Optical Character Recognition=
+) (4) table extraction (5) key information detection. In this context, grap=
+h-based approaches are attractive methods for document processing. In fact,=
+ graphs are a natural way to represent the connections among objects (text,=
+ blocks, images, etc.) and aim to discover novel and hidden knowledge from =
+data. The extracted text from scanned documents can be represented in the s=
+hape of a graph to exploit the best features of their characteristics. On t=
+he other hand, understanding spatial relationships is critical for text doc=
+ument extraction results for some applications such as invoice analysis. Th=
+e aim is to capture the structural connections between keywords (invoice nu=
+mber, date, amounts) and the main value (the desired information). An effec=
+tive approach requires a combination of spatial and textual information.</s=
+pan></p><p class=3D"MsoNormal" style=3D"margin:10.5pt 0cm 0cm;text-align:ju=
+stify;background-image:initial;background-position:initial;background-size:=
+initial;background-repeat:initial;background-origin:initial;background-clip=
+:initial;font-size:12pt;font-family:Calibri,sans-serif"><b><span lang=3D"EN=
+-US" style=3D"font-size:13pt;color:rgb(33,33,33)">Objective</span></b><span=
+ lang=3D"EN-US" style=3D"font-size:13pt;color:rgb(33,33,33)"></span></p><p =
+class=3D"MsoNormal" style=3D"margin:10.5pt 0cm 0cm;text-align:justify;backg=
+round-image:initial;background-position:initial;background-size:initial;bac=
+kground-repeat:initial;background-origin:initial;background-clip:initial;fo=
+nt-size:12pt;font-family:Calibri,sans-serif"><span lang=3D"EN-US" style=3D"=
+font-size:13pt;color:rgb(33,33,33)">In this second edition of the GLESDO wo=
+rkshop, we encourage the description of novel problems or applications for =
+document image analysis in the area of information retrieval that has emerg=
+ed in recent years. We also encourage works that include NLP tools for extr=
+acted text, such as language models and Transforms.=C2=A0 Finally, we also =
+encourage works that develop new scanned document datasets for novel applic=
+ations. The GLESDO workshop aims to bring together an area for experts from=
+ industry, science, and academia to exchange ideas and discuss ongoing rese=
+arch in graph representation learning for scanned document analysis.</span>=
+</p><p class=3D"MsoNormal" style=3D"margin:10.5pt 0cm 0cm;text-align:justif=
+y;background-image:initial;background-position:initial;background-size:init=
+ial;background-repeat:initial;background-origin:initial;background-clip:ini=
+tial;font-size:12pt;font-family:Calibri,sans-serif"><b><span lang=3D"EN-US"=
+ style=3D"font-size:13pt;color:rgb(33,33,33)">Topics of interests</span></b=
+><span lang=3D"EN-US" style=3D"font-size:13pt;color:rgb(33,33,33)"></span><=
+/p><p class=3D"MsoNormal" style=3D"margin:10.5pt 0cm 0cm;text-align:justify=
+;background-image:initial;background-position:initial;background-size:initi=
+al;background-repeat:initial;background-origin:initial;background-clip:init=
+ial;font-size:12pt;font-family:Calibri,sans-serif"><span lang=3D"EN-US" sty=
+le=3D"font-size:13pt;color:rgb(33,33,33)">=C2=A0</span></p><p class=3D"MsoN=
+ormal" style=3D"margin:0cm;background-image:initial;background-position:ini=
+tial;background-size:initial;background-repeat:initial;background-origin:in=
+itial;background-clip:initial;font-size:12pt;font-family:Calibri,sans-serif=
+"><span lang=3D"EN-US" style=3D"font-size:13pt;color:rgb(33,33,33)">We invi=
+te the submission of original works that are related -- but are not limited=
+ to -- the topics below:</span></p><p class=3D"MsoNormal" style=3D"margin:1=
+pt 0cm 0.0001pt 19pt;font-size:12pt;font-family:Calibri,sans-serif"><span l=
+ang=3D"EN-US" style=3D"font-size:13pt;color:black">=E2=97=8F Deep learning =
+for graph</span><span lang=3D"EN-US" style=3D"font-size:13pt;color:rgb(33,3=
+3,33)"></span></p><p class=3D"MsoNormal" style=3D"margin:2pt 0cm 0.0001pt 1=
+9pt;font-size:12pt;font-family:Calibri,sans-serif"><span lang=3D"EN-US" sty=
+le=3D"font-size:13pt;color:black">=E2=97=8F Probabilistic graphical models =
+for graphs</span><span lang=3D"EN-US" style=3D"font-size:13pt;color:rgb(33,=
+33,33)"></span></p><p class=3D"MsoNormal" style=3D"margin:1pt 0cm 0.0001pt =
+19pt;font-size:12pt;font-family:Calibri,sans-serif"><span lang=3D"EN-US" st=
+yle=3D"font-size:13pt;color:black">=E2=97=8F Graph-based approaches for tex=
+t mining</span><span lang=3D"EN-US" style=3D"font-size:13pt;color:rgb(33,33=
+,33)"></span></p><p class=3D"MsoNormal" style=3D"margin:1pt 76pt 0.0001pt 1=
+9pt;font-size:12pt;font-family:Calibri,sans-serif"><span lang=3D"EN-US" sty=
+le=3D"font-size:13pt;color:black">=E2=97=8F Graph-based approaches for a sp=
+atial component in a scanned document</span><span lang=3D"EN-US" style=3D"f=
+ont-size:13pt;color:rgb(33,33,33)"></span></p><p class=3D"MsoNormal" style=
+=3D"margin:1pt 76pt 0.0001pt 19pt;font-size:12pt;font-family:Calibri,sans-s=
+erif"><span lang=3D"EN-US" style=3D"font-size:13pt;color:black">=E2=97=8F G=
+raph representation learning for NLP</span><span lang=3D"EN-US" style=3D"fo=
+nt-size:13pt;color:rgb(33,33,33)"></span></p><p class=3D"MsoNormal" style=
+=3D"margin:0cm 0cm 0cm 19pt;font-size:12pt;font-family:Calibri,sans-serif">=
+<span lang=3D"EN-US" style=3D"font-size:13pt;color:black">=E2=97=8F Graph-b=
+ased approaches using kernels</span><span lang=3D"EN-US" style=3D"font-size=
+:13pt;color:rgb(33,33,33)"></span></p><p class=3D"MsoNormal" style=3D"margi=
+n:2pt 0cm 0.0001pt 19pt;font-size:12pt;font-family:Calibri,sans-serif"><spa=
+n lang=3D"EN-US" style=3D"font-size:13pt;color:black">=E2=97=8F Spectral gr=
+aph clustering</span><span lang=3D"EN-US" style=3D"font-size:13pt;color:rgb=
+(33,33,33)"></span></p><p class=3D"MsoNormal" style=3D"margin:1pt 0cm 0.000=
+1pt 19pt;font-size:12pt;font-family:Calibri,sans-serif"><span lang=3D"EN-US=
+" style=3D"font-size:13pt;color:black">=E2=97=8F Semi-supervised graph-base=
+d methods</span><span lang=3D"EN-US" style=3D"font-size:13pt;color:rgb(33,3=
+3,33)"></span></p><p class=3D"MsoNormal" style=3D"margin:2pt 0cm 0.0001pt 1=
+9pt;font-size:12pt;font-family:Calibri,sans-serif"><span lang=3D"EN-US" sty=
+le=3D"font-size:13pt;color:black">=E2=97=8F Dynamic graph analysis</span><s=
+pan lang=3D"EN-US" style=3D"font-size:13pt;color:rgb(33,33,33)"></span></p>=
+<p class=3D"MsoNormal" style=3D"margin:1pt 0cm 0.0001pt 19pt;font-size:12pt=
+;font-family:Calibri,sans-serif"><span lang=3D"EN-US" style=3D"font-size:13=
+pt;color:black">=E2=97=8F Information Retrieval and Extraction using Graph-=
+based methods</span><span lang=3D"EN-US" style=3D"font-size:13pt;color:rgb(=
+33,33,33)"></span></p><p class=3D"MsoNormal" style=3D"margin:1pt 0cm 0.0001=
+pt 19pt;font-size:12pt;font-family:Calibri,sans-serif"><span lang=3D"EN-US"=
+ style=3D"font-size:13pt;color:black">=E2=97=8F Knowledge graph for semanti=
+c document analysis</span><span lang=3D"EN-US" style=3D"font-size:13pt;colo=
+r:rgb(33,33,33)"></span></p><p class=3D"MsoNormal" style=3D"margin:2pt 0cm =
+0.0001pt 19pt;font-size:12pt;font-family:Calibri,sans-serif"><span lang=3D"=
+EN-US" style=3D"font-size:13pt;color:black">=E2=97=8F Semantic understandin=
+g of document content</span><span lang=3D"EN-US" style=3D"font-size:13pt;co=
+lor:rgb(33,33,33)"></span></p><p class=3D"MsoNormal" style=3D"margin:1pt 0c=
+m 0.0001pt 19pt;font-size:12pt;font-family:Calibri,sans-serif"><span lang=
+=3D"EN-US" style=3D"font-size:13pt;color:black">=E2=97=8F Entity and link p=
+rediction in graphs</span><span lang=3D"EN-US" style=3D"font-size:13pt;colo=
+r:rgb(33,33,33)"></span></p><p class=3D"MsoNormal" style=3D"margin:2pt 75pt=
+ 0.0001pt 19pt;font-size:12pt;font-family:Calibri,sans-serif"><span lang=3D=
+"EN-US" style=3D"font-size:13pt;color:black">=E2=97=8F Merging ontologies w=
+ith graph-based methods using NLP techniques</span><span lang=3D"EN-US" sty=
+le=3D"font-size:13pt;color:rgb(33,33,33)"></span></p><p class=3D"MsoNormal"=
+ style=3D"margin:2pt 75pt 0.0001pt 19pt;font-size:12pt;font-family:Calibri,=
+sans-serif"><span lang=3D"EN-US" style=3D"font-size:13pt;color:black">=E2=
+=97=8F Cleansing and image enhancement techniques for scanned document</spa=
+n><span lang=3D"EN-US" style=3D"font-size:13pt;color:rgb(33,33,33)"></span>=
+</p><p class=3D"MsoNormal" style=3D"margin:2pt 75pt 0.0001pt 19pt;font-size=
+:12pt;font-family:Calibri,sans-serif"><span lang=3D"EN-US" style=3D"font-si=
+ze:13pt;color:black">=E2=97=8F Document structure and layout learning</span=
+><span lang=3D"EN-US" style=3D"font-size:13pt;color:rgb(33,33,33)"></span><=
+/p><p class=3D"MsoNormal" style=3D"margin:1pt 0cm 0.0001pt 19pt;font-size:1=
+2pt;font-family:Calibri,sans-serif"><span lang=3D"EN-US" style=3D"font-size=
+:13pt;color:black">=E2=97=8F OCR based graph methods</span><span lang=3D"EN=
+-US" style=3D"font-size:13pt;color:rgb(33,33,33)"></span></p><p class=3D"Ms=
+oNormal" style=3D"margin:1pt 0cm 0.0001pt 19pt;font-size:12pt;font-family:C=
+alibri,sans-serif"><span lang=3D"EN-US" style=3D"font-size:13pt;color:black=
+">=E2=97=8F Font text recognition in a scanned document</span><span lang=3D=
+"EN-US" style=3D"font-size:13pt;color:rgb(33,33,33)"></span></p><p class=3D=
+"MsoNormal" style=3D"margin:2pt 0cm 0.0001pt 19pt;font-size:12pt;font-famil=
+y:Calibri,sans-serif"><span lang=3D"EN-US" style=3D"font-size:13pt;color:bl=
+ack">=E2=97=8F Table identification and extraction from scanned documents</=
+span><span lang=3D"EN-US" style=3D"font-size:13pt;color:rgb(33,33,33)"></sp=
+an></p><p class=3D"MsoNormal" style=3D"margin:1pt 0cm 0.0001pt 19pt;font-si=
+ze:12pt;font-family:Calibri,sans-serif"><span lang=3D"EN-US" style=3D"font-=
+size:13pt;color:black">=E2=97=8F Handwriting detection and recognition in d=
+ocuments</span><span lang=3D"EN-US" style=3D"font-size:13pt;color:rgb(33,33=
+,33)"></span></p><p class=3D"MsoNormal" style=3D"margin:1pt 0cm 0.0001pt 19=
+pt;font-size:12pt;font-family:Calibri,sans-serif"><span lang=3D"EN-US" styl=
+e=3D"font-size:13pt;color:black">=E2=97=8F Signature detection and verifica=
+tion in documents</span><span lang=3D"EN-US" style=3D"font-size:13pt;color:=
+rgb(33,33,33)"></span></p><p class=3D"MsoNormal" style=3D"margin:2pt 0cm 0.=
+0001pt 19pt;font-size:12pt;font-family:Calibri,sans-serif"><span lang=3D"EN=
+-US" style=3D"font-size:13pt;color:black">=E2=97=8F Visual document structu=
+re understanding</span><span lang=3D"EN-US" style=3D"font-size:13pt;color:r=
+gb(33,33,33)"></span></p><p class=3D"MsoNormal" style=3D"margin:1pt 0cm 0.0=
+001pt 19pt;font-size:12pt;font-family:Calibri,sans-serif"><span lang=3D"EN-=
+US" style=3D"font-size:13pt;color:black">=E2=97=8F Visual Question Answerin=
+g</span><span lang=3D"EN-US" style=3D"font-size:13pt;color:rgb(33,33,33)"><=
+/span></p><p class=3D"MsoNormal" style=3D"margin:2pt 0cm 0.0001pt 19pt;font=
+-size:12pt;font-family:Calibri,sans-serif"><span lang=3D"EN-US" style=3D"fo=
+nt-size:13pt;color:black">=E2=97=8F Invoice analysis</span><span lang=3D"EN=
+-US" style=3D"font-size:13pt;color:rgb(33,33,33)"></span></p><p class=3D"Ms=
+oNormal" style=3D"margin:1pt 0cm 0.0001pt 19pt;font-size:12pt;font-family:C=
+alibri,sans-serif"><span lang=3D"EN-US" style=3D"font-size:13pt;color:black=
+">=E2=97=8F Scanned documents classification</span><span lang=3D"EN-US" sty=
+le=3D"font-size:13pt;color:rgb(33,33,33)"></span></p><p class=3D"MsoNormal"=
+ style=3D"margin:1pt 0cm 0.0001pt 19pt;font-size:12pt;font-family:Calibri,s=
+ans-serif"><span lang=3D"EN-US" style=3D"font-size:13pt;color:black">=E2=97=
+=8F Scanned documents summarization</span><span lang=3D"EN-US" style=3D"fon=
+t-size:13pt;color:rgb(33,33,33)"></span></p><p class=3D"MsoNormal" style=3D=
+"margin:1pt 0cm 0.0001pt 19pt;font-size:12pt;font-family:Calibri,sans-serif=
+"><span lang=3D"EN-US" style=3D"font-size:13pt;color:black">=E2=97=8F Scann=
+ed documents translation</span><span lang=3D"EN-US" style=3D"font-size:13pt=
+;color:rgb(33,33,33)"></span></p><p class=3D"MsoNormal" style=3D"margin:11p=
+t 0cm 0cm;font-size:12pt;font-family:Calibri,sans-serif"><b><span lang=3D"E=
+N-US" style=3D"font-size:13pt;color:black">Submission</span></b><span lang=
+=3D"EN-US" style=3D"font-size:13pt;color:rgb(33,33,33)"><br><br></span><spa=
+n lang=3D"EN-US" style=3D"font-size:13pt"></span></p><p class=3D"MsoNormal"=
+ style=3D"margin:11pt 0cm 0cm;font-size:12pt;font-family:Calibri,sans-serif=
+"><span lang=3D"EN-US" style=3D"font-size:13pt;color:rgb(33,33,33)">The=C2=
+=A0workshop=C2=A0is open to original papers of theoretical or practical nat=
+ure. Papers should be formatted=C2=A0</span><span lang=3D"EN-US" style=3D"c=
+olor:black">according to=C2=A0</span><span style=3D"color:black"><a href=3D=
+"https://www.icpr2022.com/wp-content/uploads/2021/11/IEEEconf_ICPR2022.zip"=
+ target=3D"_blank" style=3D"color:blue"><span lang=3D"EN-US">ICPR instructi=
+ons for authors</span></a></span><span lang=3D"EN-US" style=3D"font-size:13=
+pt;color:rgb(33,33,33)">.=C2=A0</span><span lang=3D"EN-US" style=3D"color:b=
+lack">Papers=C2=A0have=C2=A0to be submitted=C2=A0via the=C2=A0workshop&#39;=
+s=C2=A0</span><span style=3D"color:rgb(33,33,33)"><a href=3D"https://easych=
+air.org/my/conference?conf=3Dglesdo2022" target=3D"_blank" style=3D"color:b=
+lue"><span lang=3D"EN-US">EasyChair</span></a></span><span lang=3D"EN-US" s=
+tyle=3D"color:black">=C2=A0submission page.</span><b><span lang=3D"EN-US" s=
+tyle=3D"font-size:13pt;color:rgb(33,33,33)"><br></span></b><span style=3D"c=
+olor:rgb(33,33,33);font-size:13pt"><br></span></p><p class=3D"MsoNormal" st=
+yle=3D"margin:11pt 0cm 0cm;font-size:12pt;font-family:Calibri,sans-serif"><=
+span style=3D"color:rgb(33,33,33);font-size:13pt">We welcome the following =
+types of contributions:</span><b><span lang=3D"EN-US" style=3D"font-size:13=
+pt;color:rgb(33,33,33)"><br></span></b></p><p class=3D"MsoNormal" style=3D"=
+margin:10pt 0cm 0.0001pt 66pt;font-size:12pt;font-family:Calibri,sans-serif=
+"><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:Wingdings;color:=
+rgb(33,33,33)">=C2=A7<span style=3D"font-variant-numeric:normal;font-varian=
+t-east-asian:normal;font-stretch:normal;font-size:7pt;line-height:normal;fo=
+nt-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0</span></span><span lang=
+=3D"EN-US" style=3D"font-size:13pt;color:rgb(33,33,33)">Full research paper=
+s (</span><span lang=3D"EN-US">12-15 pages</span><span lang=3D"EN-US" style=
+=3D"font-size:13pt;color:rgb(33,33,33)">): finished or consolidated R&amp;D=
+ works, to be included in one of the Workshop topics</span></p><p class=3D"=
+MsoNormal" style=3D"margin:15pt 0cm 0.0001pt 66pt;font-size:12pt;font-famil=
+y:Calibri,sans-serif"><span lang=3D"EN-US" style=3D"font-size:10pt;font-fam=
+ily:Wingdings;color:rgb(33,33,33)">=C2=A7<span style=3D"font-variant-numeri=
+c:normal;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;l=
+ine-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0</sp=
+an></span><span lang=3D"EN-US" style=3D"font-size:13pt;color:rgb(33,33,33)"=
+>Short papers (</span><span lang=3D"EN-US">6-8 pages)</span><span lang=3D"E=
+N-US" style=3D"font-size:13pt;color:rgb(33,33,33)">: ongoing works with rel=
+evant preliminary results, opened to discussion.</span></p><p class=3D"MsoN=
+ormal" style=3D"margin:11pt 0cm 0cm;font-size:12pt;font-family:Calibri,sans=
+-serif"><span lang=3D"EN-US" style=3D"font-size:13pt;color:rgb(33,33,33)">A=
+t least one author of each accepted paper must register for the workshop, i=
+n order to present the paper. For further instructions please refer to the<=
+/span><span style=3D"font-size:13pt;color:rgb(33,33,33)"><a href=3D"https:/=
+/www.google.com/url?q=3Dhttps%3A%2F%2Ficdar2021.org%2F&amp;sa=3DD&amp;sntz=
+=3D1&amp;usg=3DAFQjCNH7XM46MS3RAIWrZPxhn4Kc5onLjw" target=3D"_blank" style=
+=3D"color:blue">=C2=A0</a><a href=3D"https://www.icpr2022.com/submission-gu=
+idelines/" target=3D"_blank" style=3D"color:blue"><span lang=3D"EN-US">ICPR=
+ 2022</span></a></span><span lang=3D"EN-US" style=3D"font-size:13pt;color:r=
+gb(33,33,33)">=C2=A0page.</span></p><p class=3D"MsoNormal" style=3D"margin:=
+11pt 0cm 0cm;font-size:12pt;font-family:Calibri,sans-serif"><b><span lang=
+=3D"EN-US" style=3D"font-size:13pt;color:black">Important dates</span></b><=
+/p><p class=3D"MsoNormal" style=3D"margin:11pt 0cm 0cm;font-size:12pt;font-=
+family:Calibri,sans-serif"></p><ul><li><span lang=3D"EN-US" style=3D"font-s=
+ize:13pt;color:rgb(33,33,33)">Submission Deadline: June 6, 2022, at 11:59pm=
+ Pacific Time</span></li><li><span style=3D"color:rgb(33,33,33);font-size:1=
+3pt;font-variant-ligatures:none;text-decoration-line:inherit;white-space:pr=
+e-wrap">Decisions Announced: June 27, 2022, at 12:00pm Pacific Time</span><=
+/li><li><span style=3D"color:rgb(33,33,33);font-size:13pt;font-variant-liga=
+tures:none;text-decoration-line:inherit;white-space:pre-wrap">Camera Ready =
+Deadline: July 11, 2022, at 12:00pm Pacific Time</span></li><li><span style=
+=3D"color:rgb(33,33,33);font-size:13pt;font-variant-ligatures:none;text-dec=
+oration-line:inherit;white-space:pre-wrap">Workshop day: August 21, 2022 (H=
+alf-Day)</span></li></ul><p></p><p class=3D"MsoNormal" style=3D"margin:0cm;=
+background-image:initial;background-position:initial;background-size:initia=
+l;background-repeat:initial;background-origin:initial;background-clip:initi=
+al;font-size:12pt;font-family:Calibri,sans-serif"><span lang=3D"EN-US" styl=
+e=3D"font-size:16pt;color:rgb(33,33,33)"></span></p><p class=3D"MsoNormal" =
+style=3D"margin:0cm;background-image:initial;background-position:initial;ba=
+ckground-size:initial;background-repeat:initial;background-origin:initial;b=
+ackground-clip:initial;font-size:12pt;font-family:Calibri,sans-serif"><b st=
+yle=3D"font-size:12pt"><span lang=3D"EN-US" style=3D"font-size:13.5pt;color=
+:rgb(33,33,33)"><br></span></b></p><p class=3D"MsoNormal" style=3D"margin:0=
+cm;background-image:initial;background-position:initial;background-size:ini=
+tial;background-repeat:initial;background-origin:initial;background-clip:in=
+itial;font-size:12pt;font-family:Calibri,sans-serif"><b style=3D"font-size:=
+12pt"><span lang=3D"EN-US" style=3D"font-size:13.5pt;color:rgb(33,33,33)">W=
+orkshop Chairs</span></b><br></p><p class=3D"MsoNormal" style=3D"margin:0cm=
+;background-image:initial;background-position:initial;background-size:initi=
+al;background-repeat:initial;background-origin:initial;background-clip:init=
+ial;font-size:12pt;font-family:Calibri,sans-serif"><span lang=3D"EN-US" sty=
+le=3D"font-size:13.5pt;color:rgb(33,33,33)"></span></p><p class=3D"MsoNorma=
+l" style=3D"margin:10.5pt 0cm 0cm;background-image:initial;background-posit=
+ion:initial;background-size:initial;background-repeat:initial;background-or=
+igin:initial;background-clip:initial;font-size:12pt;font-family:Calibri,san=
+s-serif"><b><span lang=3D"EN-US" style=3D"font-size:13pt;color:rgb(33,33,33=
+)">Rim Hantach</span></b><span lang=3D"EN-US" style=3D"font-size:13pt;color=
+:rgb(33,33,33)">, Engie, France</span></p><p class=3D"MsoNormal" style=3D"m=
+argin:10.5pt 0cm 0cm;background-image:initial;background-position:initial;b=
+ackground-size:initial;background-repeat:initial;background-origin:initial;=
+background-clip:initial;font-size:12pt;font-family:Calibri,sans-serif"><b><=
+span lang=3D"EN-US" style=3D"font-size:13pt;color:rgb(33,33,33)">Rafika Bou=
+talbi</span></b><span lang=3D"EN-US" style=3D"font-size:13pt;color:rgb(33,3=
+3,33)">, University of Stuttgart, Germany</span></p><p class=3D"MsoNormal" =
+style=3D"margin:10.5pt 0cm 0cm;background-image:initial;background-position=
+:initial;background-size:initial;background-repeat:initial;background-origi=
+n:initial;background-clip:initial;font-size:12pt;font-family:Calibri,sans-s=
+erif"><b><span style=3D"font-size:13pt;color:rgb(33,33,33)">Philippe Calvez=
+</span></b><span style=3D"font-size:13pt;color:rgb(33,33,33)">, Engie, Fran=
+ce</span></p></div>
+
+--000000000000838d8e05dbcfe1c7--

@@ -1,0 +1,675 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (bouncesmtp1.u12.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 4705214017DE
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon,  1 May 2023 07:34:43 +0200 (CEST)
+Received: from mx3.localdomain (MX3.univ-nantes.fr [193.52.101.137])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id 43EB76741
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon,  1 May 2023 07:34:43 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.localdomain (Postfix) with ESMTP id 36E8320075
+	for <liste-egc@polytech.univ-nantes.fr>; Mon,  1 May 2023 07:34:43 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 2.199
+X-Spam-Level: **
+X-Spam-Status: No, score=2.199 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+	HTML_MESSAGE=0.001, J_CHICKENPOX_45=0.6, MR_NOT_ATTRIBUTED_IP=0.2,
+	RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+	RCVD_IN_WSFF=0.01, SARE_HEAD_8BIT_SPAM=0.888, SPF_HELO_NONE=0.001,
+	SPF_PASS=-0.001, SUBJ_ALL_CAPS=0.5, UN_PHISHING_PW=0.1]
+	autolearn=disabled
+X-CRM114-Status: UNSURE ( -3.3475 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=yahoo.com
+Received: from mx3.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id u4NUDcZZTJ3h for <liste-egc@polytech.univ-nantes.fr>;
+	Mon,  1 May 2023 07:34:41 +0200 (CEST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=106.10.242.139; helo=sonic302-19.consmr.mail.sg3.yahoo.com; envelope-from=rima.grati@yahoo.com; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=reject dis=none) header.from=yahoo.com
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=rima.grati@yahoo.com
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (2048-bit key; unprotected) header.d=yahoo.com header.i=@yahoo.com header.b="e8hFhCxy";
+	dkim-atps=neutral
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from sonic302-19.consmr.mail.sg3.yahoo.com (sonic302-19.consmr.mail.sg3.yahoo.com [106.10.242.139])
+	by mx3.localdomain (Postfix) with ESMTPS id 7ACF020918
+	for <liste-egc@polytech.univ-nantes.fr>; Mon,  1 May 2023 07:34:40 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1682919277; bh=3653dBl+5dwNl3S+UEKEK8PnibVf/1oJAFIHwODXGCY=; h=Date:From:To:Subject:References:From:Subject:Reply-To; b=e8hFhCxygk+jROMag/U6W/ARUUhzH1EoAA17gUKWPfiMV0VUUOPHIE+nAxJhsnEybc3Qr5DBfFpfK8cMl73mr6eU5aF6OGISCLw0R0BLq4XZnSw2FMCCrNzujCUmRGAuUsWkqIefhQtLgfVO5wXIHxOB1mGzQJgJ1kSGrfbGwTYdZyUMXbkBhpLgTkdFGDSyCocifuUOtlfRR1tJRrYM0Z5LusSpuSTVSGiDHh1bvCt0gKepk6GRJdfBzseo2yfWF7fgtqsKcq2t8VpU/CzT+hBIfrQWH6H6mZfHw/ONHsYKdFTL7xZvpNOfTfoGLOe3HSZ4WWOhx+/VQVLgjtq/CQ==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1682919277; bh=hyzXWa/OeK7hGDcfu8Q8/MXRz18Mw1s3UmBuoFB5DGC=; h=X-Sonic-MF:Date:From:To:Subject:From:Subject; b=j2vMUJo/n0DJYtZ8YKfj76/woP4Sbox/STEb+LmoEPU0RL0kVKExePuRORcRbiSqh3wj2K09gwitygcuR8Yntyly5lE2ZQiKmFaybTo89/rC+pAD8tbTJavdTum/BlF2m9nghEO6THHggX+OvubkBgKkhbsAtQnk0CWzT3J5MugZLFi6+b8xHr3sHvELGeG/y4GXOeOdmYoJ0xXhZqJF+udf4EdYbHYbT8HMMD8Ix8ITNv29hjCUgdPxFf8etapyPl1A/yxns8/HagvQBtxG/Uql7Np1BhV1Pniz6CmGx1qUV5l1yOhnrryvt2clMq3eW2IHuqHGGnb8gDc4EFkpng==
+X-YMail-OSG: SpbWFC8VM1lRQe_AZzjZBC4wK8IZ7U2wmLLMJhMnIYA.lZ5xVxRCJG3Pyoh_YDB
+ GPLqFhGjl85wRMlb8nm4TugPODOIrOD4jKOE7VxyxFvGquGBsEapiD5eAZFaFHJnwtzWXgneNSOI
+ D3PKXEkKyqI.GZ2sHoTwYgM82qj0XOSWdhzgRB_vU646tnuLshyhSbVKEpWHMr7l4H1nkqaA6IVc
+ EGawxrbyupd_KVn00f7WDE6pehQ6Aw1WlK6b274wRSQ65rgwbfs.VeFskoQc7kGh7wvGBJwG1Tm_
+ zLteB9pEvamPGv6lyoZ9OuMNtuHNPK18s2F.Q4.MZR0T5xZyPyraChFtUQ7McCfVvXgf_E7gJMwY
+ qehJ73wz_Fwz829yDcl4SJV1ClahDEWN442VPYWv9aCrXyzdbjsRTxncvsMd.ov8iYyLb6gQIX2C
+ pK74nHCk62p855PuIoxIXPzIbNB1uUJ3mS7lp.MVGQk_IAnpXPQCn3Jfkw.Sm1OZiEGbCoA9EdmY
+ Z7_KiG1gvt_0o.K1uxAeeBDyz8FmNes92d_0A.wnKR68scX_yBRJ9c5O4wm4okwku3fpfzNV.EaO
+ xY4jtby8oOUoizwjEU_NYdXNSy50sUNqL1V8n2Xt3BAaxOwG2hFPTog24o4UKTkSDzmRmYpKIoYx
+ bUn46jIau2vzqNRRluPjj9SjNhqaJU6_ZX4z7CfNZwEpW_SWTP03_LYOuVXPEC_s5m7MiLtYPP.B
+ XMcSP3lShSlN_JGO3HKcTf1TB.52Oebd0Mg.QVMzz5VS18kuPthL6lf.Ab0vMqr7zSeRc8VLKCgL
+ mzxf4vPx2AZ.706f2.qIpbTR6AYRQ1hNSIvOmWtrfRlvwS0DcYqRDPW2cbBpV5RbYg4tdLcjTfPu
+ pUfXqoWMF33jgnTPObxQptwqaRmP9dWNsFjvZa_2hx_k9l4HfboAJSVtcgs8SfZedTIwbnSZPI40
+ CNpHyQr0tY9TTflJI43TlJdcuKfDO_5z7nOfsDTEcxXE88LwuQz3Hg3OYx7inCZv7ysQKl0cSiU3
+ dPj1T0SNjS.tpJYLcuO975_QJVw8W0h_Z4pOQjvsZ1SMnIvB8qiWb1y9iwNFK32ahOFQ6pIvbrv2
+ PpAjO4FptKlXeAVFLC9YJvCPPy0CHT6N51qRH0PyIzwjB.Nr.SWqOVg9sa9ilvc3RALwc_OwjrtN
+ tNAw.iqolJtkHFAUXwlsUIVxOmP98m2NFp5c9H3HkbTUY27DtZbQE1YTfCF8GrpqA0A49hWNk7vw
+ Ls4dfiqWYwmxaihQNGA3sNp3KkVDnBsIIwchDHyPkdYU.iS3G.B2bfmTm1dQk0Il7TiNQ3s7P2YN
+ _QoOEmdd3L3DkhqtSKDMssaWoj5wqoQ1BwPyGZGGGVKGH.GTVF0FFOvV8Sf88C7SJwwMmjHnYhaE
+ cvBtFmO9.SJJ0PZzEPOHNOkiZuJvJmMYZbhBG4QfS.xJXhVDmuBwA.7P32f9SFxIJKa_Ey3gfHqq
+ GxA3cc1I2dWRxmXdDWLfqQxmTTtgyEDKlWUy0HSHKo9dvLf0xlgaT4NenOp3sQFF.pyQ3XVGfyEL
+ evavZJVIBBbtZ44eOWWLhNg6ctMdKewxHMGW.q06Jt1UjLz2U35CO65Oe45ytX4KRu1nFup4IHbn
+ cfg2b8DwbNwVgc3QDOILxU_.yXOmDaVoFAtOYS.ZEAzFyXiRGTG4eDIA1OXdA7PW.CdNl60XhFX6
+ id9_r8FKujZ8kMWhhGJwWDrI01vA5xwdbRwN2unjGgOnShgyq0Egny.IeBEF3cQEwOgOU5IFXF6s
+ i3y1ihDYZiHbIN43vQNGjsVZp4ypTTEOPE2pt1y2iFCR.tsHwndqfp.UvVK5_B8U3g46KvU.F6OS
+ hUCmbuY0DsYXYfCULp0.ZsQVZLMKNIUQHfZu2Myn9KpeIRNWe8zBFe9NBKmmgj7Hw9xbMhn7ooOW
+ g8XlzjTaSznTYRlwVLZIUXC501SNLOfTlHXwxTnQvL4JDmlWeb.YYaE7Gwvw1noNHbe_CX1.CFyd
+ oesSQgJx09mC3PS5Ph1rMGjir.MQ1I0RuYj_NX4wcRCuEDKC7gkrucTL53fpJuFwMisRl192XFcK
+ xM5.wIY4B2W5o5zEnT44scryUFgZD7XKzvvhJtEjVLt..FYkcZWi6tRq1dOmHxObZDW6jqVGYsNC
+ X38vDgm.Fmrup_RPrvxNYKpnT
+X-Sonic-MF: <rima.grati@yahoo.com>
+X-Sonic-ID: 4f04bf9b-fc29-440f-afa5-985e234d812f
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic302.consmr.mail.sg3.yahoo.com with HTTP; Mon, 1 May 2023 05:34:37 +0000
+Date: Mon, 1 May 2023 05:34:34 +0000 (UTC)
+From: Rima Grati <rima.grati@yahoo.com>
+To: "liste-egc@polytech.univ-nantes.fr" <liste-egc@polytech.univ-nantes.fr>
+Message-ID: <2115621148.1458817.1682919274555@mail.yahoo.com>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_1458816_428018439.1682919274551"
+References: <2115621148.1458817.1682919274555.ref@mail.yahoo.com>
+X-Mailer: WebService/1.1.21417 YMailNorrin
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] REMINDER IMPORTANT DATE CALL FOR PAPERS
+ =?UTF-8?Q?=E2=80=93?= AICCSA 2023
+
+------=_Part_1458816_428018439.1682919274551
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+
+
+20th ACS/IEEE International Conference on Computer Systems & Applications
+
+(AICCSA 2023) 4 =E2=80=93 7 December2023
+
+https://aiccsa.net/AICCSA2023/=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0
+
+
+
+
+The ACS/IEEEInternational Conference on Computer Systems and Applications (=
+AICCSA) is thepremier conference covering all contemporary areas in compute=
+r systems andapplications and hence it is an international forum for leadin=
+g researchers andpractitioners in this important and rapidly changing disci=
+pline. AICCSA 2023will be held in the lovely and highly vibrant city of Sma=
+rt Village, Giza,Egypt.
+
+=C2=A0
+
+Track 1: Ubiquitous, Parallel and DistributedComputing (including cloud, Io=
+T, network, sensors, blockchain technologies
+
+Track 2: Security, Privacy, and Trust
+
+Track 3: Data Science, knowledge engineering, andontologies (including Info=
+rmation Retrieval, Big Data, Databases, and KnowledgeSystems)=C2=A0
+
+Track 4: Artificial Intelligence & CognitiveSystems
+
+Track 5: Natural Language Processing
+
+Track 6: Multimedia, Computer Vision, and ImageProcessing=C2=A0
+
+=C2=A0
+
+Important Dates:
+
+Main Conference
+=E2=80=A2 Paper submission duedate:=C2=A015 May , 2023=C2=A0
+=E2=80=A2 Notification toauthors:=C2=A015 August, 2023
+=E2=80=A2 Camera-ready papers andregistration :=C2=A015 Sept, 2023
+
+=C2=A0
+
+PhD Forum
+=E2=80=A2 Paper submission duedate:=C2=A015 May , 2023=C2=A0
+=E2=80=A2 Notification to authors:=C2=A015 August, 2023
+=E2=80=A2 Camera-ready papers and registration :=C2=A015 Sept, 2023
+
+Workshop Proposals
+=E2=80=A2 Workshop proposalsdue:=C2=A030 March, 2023
+=E2=80=A2 Notification ofacceptance:=C2=A015 April, 2023
+=E2=80=A2 Camera-ready papers and registration:=C2=A015 Sept, 2023
+
+=C2=A0
+
+Tutorial Proposals
+=E2=80=A2 Tutorial proposalsdue:=C2=A030 June, 2023
+=E2=80=A2 Notification ofacceptance:=C2=A030 July, 2023
+
+=C2=A0
+
+General Co-Chairs
+
+Hisham A. Kholidy,=C2=A0The State University of New York (SUNY), Polytechni=
+cInstitute, USA
+
+Elhadj Benkhelifa,=C2=A0Staffordshire University, UK
+
+=C2=A0
+
+Program Co-Chairs
+
+Khouloud Boukadi, University of Sfax, Tunisia
+
+Ilaria Matteucci, Istituto di Informatica e Telematica =E2=80=93 CNR, Italy
+
+=C2=A0
+
+=C2=A0
+
+
+------=_Part_1458816_428018439.1682919274551
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><head></head><body><div class=3D"yahoo-style-wrap" style=3D"font-fami=
+ly:Helvetica Neue, Helvetica, Arial, sans-serif;font-size:16px;"><div dir=
+=3D"ltr" data-setdir=3D"false"><div><p class=3D"ydpac0968f5MsoNormal" align=
+=3D"center" style=3D"margin-bottom: 0.0001pt; text-align: center; line-heig=
+ht: normal; background-image: initial; background-position: initial; backgr=
+ound-size: initial; background-repeat: initial; background-attachment: init=
+ial; background-origin: initial; background-clip: initial; vertical-align: =
+baseline;"><b><span lang=3D"EN-GB" style=3D"font-size:14.0pt;mso-fareast-fo=
+nt-family:&quot;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi=
+-theme-font:minor-latin;color:red;border:none windowtext 1.0pt;mso-border-a=
+lt:none windowtext 0in;padding:0in;mso-ansi-language:EN-GB;mso-fareast-lang=
+uage:FR"><br>
+20th ACS/IEEE International Conference on Computer Systems &amp; Applicatio=
+ns</span></b><span lang=3D"EN-US" style=3D"mso-fareast-font-family:&quot;Ti=
+mes New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-=
+latin;color:black;mso-ansi-language:EN-US;mso-fareast-language:FR"></span><=
+/p>
+
+<p class=3D"ydpac0968f5MsoNormal" align=3D"center" style=3D"margin-bottom: =
+0.0001pt; text-align: center; line-height: normal; background-image: initia=
+l; background-position: initial; background-size: initial; background-repea=
+t: initial; background-attachment: initial; background-origin: initial; bac=
+kground-clip: initial; vertical-align: baseline;"><b><span lang=3D"EN-GB" s=
+tyle=3D"font-size:14.0pt;mso-fareast-font-family:&quot;Times New Roman&quot=
+;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin;color:red;bo=
+rder:none windowtext 1.0pt;mso-border-alt:none windowtext 0in;padding:0in;m=
+so-ansi-language:EN-GB;mso-fareast-language:FR">(AICCSA 2023) 4 =E2=80=93 7=
+ December
+2023</span></b><span lang=3D"EN-US" style=3D"mso-fareast-font-family:&quot;=
+Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:mino=
+r-latin;color:black;mso-ansi-language:EN-US;mso-fareast-language:FR"></span=
+></p>
+
+<p class=3D"ydpac0968f5MsoNormal" align=3D"center" style=3D"margin-bottom: =
+0.0001pt; text-align: center; line-height: normal; background-image: initia=
+l; background-position: initial; background-size: initial; background-repea=
+t: initial; background-attachment: initial; background-origin: initial; bac=
+kground-clip: initial; vertical-align: baseline;"><a href=3D"https://aiccsa=
+.net/AICCSA2023/" rel=3D"nofollow" target=3D"_blank"><b><span lang=3D"EN-GB=
+" style=3D"font-size:14.0pt;mso-fareast-font-family:&quot;Times New Roman&q=
+uot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin;color:#05=
+63C1;border:none windowtext 1.0pt;mso-border-alt:none windowtext 0in;paddin=
+g:0in;mso-ansi-language:EN-GB;mso-fareast-language:FR">https://aiccsa.net/A=
+ICCSA2023/</span></b></a><b><span lang=3D"EN-GB" style=3D"font-size:12.0pt;=
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:Ca=
+libri;mso-bidi-theme-font:minor-latin;color:red;border:none windowtext 1.0p=
+t;mso-border-alt:none windowtext 0in;padding:0in;mso-ansi-language:EN-GB;ms=
+o-fareast-language:FR">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</sp=
+an></b><span lang=3D"EN-US" style=3D"mso-fareast-font-family:&quot;Times Ne=
+w Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin;=
+color:black;mso-ansi-language:EN-US;mso-fareast-language:FR"></span></p>
+
+<p class=3D"ydpac0968f5MsoNormal" style=3D"margin-bottom: 0.0001pt; text-al=
+ign: justify; line-height: normal; background-image: initial; background-po=
+sition: initial; background-size: initial; background-repeat: initial; back=
+ground-attachment: initial; background-origin: initial; background-clip: in=
+itial;"><br></p>
+
+<p class=3D"ydpac0968f5MsoNormal" style=3D"margin-bottom: 0.0001pt; text-al=
+ign: justify; line-height: normal; background-image: initial; background-po=
+sition: initial; background-size: initial; background-repeat: initial; back=
+ground-attachment: initial; background-origin: initial; background-clip: in=
+itial;"><span lang=3D"EN-US" style=3D"mso-fareast-font-family:&quot;Times N=
+ew Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin=
+;color:black;mso-ansi-language:EN-US;mso-fareast-language:FR">The ACS/IEEE
+International Conference on Computer Systems and Applications (AICCSA) is t=
+he
+premier conference covering all contemporary areas in computer systems and
+applications and hence it is an international forum for leading researchers=
+ and
+practitioners in this important and rapidly changing discipline. AICCSA 202=
+3
+will be held in the lovely and highly vibrant city of Smart Village, Giza,
+Egypt.</span></p>
+
+<p class=3D"ydpac0968f5MsoNormal" style=3D"margin-bottom: 0.0001pt; line-he=
+ight: normal; background-image: initial; background-position: initial; back=
+ground-size: initial; background-repeat: initial; background-attachment: in=
+itial; background-origin: initial; background-clip: initial; vertical-align=
+: baseline;"><span lang=3D"EN-US" style=3D"mso-fareast-font-family:&quot;Ti=
+mes New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-=
+latin;color:black;mso-ansi-language:EN-US;mso-fareast-language:FR">&nbsp;</=
+span></p>
+
+<p class=3D"ydpac0968f5MsoNormal" style=3D"margin-bottom: 0.0001pt; line-he=
+ight: normal; background-image: initial; background-position: initial; back=
+ground-size: initial; background-repeat: initial; background-attachment: in=
+itial; background-origin: initial; background-clip: initial; vertical-align=
+: baseline;"><span lang=3D"EN-GB" style=3D"mso-fareast-font-family:&quot;Ti=
+mes New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-=
+latin;color:blue;border:none windowtext 1.0pt;mso-border-alt:none windowtex=
+t 0in;padding:0in;mso-ansi-language:EN-GB;mso-fareast-language:FR">Track 1:=
+ Ubiquitous, Parallel and Distributed
+Computing (including cloud, IoT, network, sensors, blockchain technologies<=
+/span><span lang=3D"EN-US" style=3D"mso-fareast-font-family:&quot;Times New=
+ Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin;c=
+olor:black;mso-ansi-language:EN-US;mso-fareast-language:FR"></span></p>
+
+<p class=3D"ydpac0968f5MsoNormal" style=3D"margin-bottom: 0.0001pt; line-he=
+ight: normal; background-image: initial; background-position: initial; back=
+ground-size: initial; background-repeat: initial; background-attachment: in=
+itial; background-origin: initial; background-clip: initial; vertical-align=
+: baseline;"><span lang=3D"EN-GB" style=3D"mso-fareast-font-family:&quot;Ti=
+mes New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-=
+latin;color:blue;border:none windowtext 1.0pt;mso-border-alt:none windowtex=
+t 0in;padding:0in;mso-ansi-language:EN-GB;mso-fareast-language:FR">Track 2:=
+ Security, Privacy, and Trust</span><span lang=3D"EN-US" style=3D"mso-farea=
+st-font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso=
+-bidi-theme-font:minor-latin;color:black;mso-ansi-language:EN-US;mso-fareas=
+t-language:FR"></span></p>
+
+<p class=3D"ydpac0968f5MsoNormal" style=3D"margin-bottom: 0.0001pt; line-he=
+ight: normal; background-image: initial; background-position: initial; back=
+ground-size: initial; background-repeat: initial; background-attachment: in=
+itial; background-origin: initial; background-clip: initial; vertical-align=
+: baseline;"><span lang=3D"EN-GB" style=3D"mso-fareast-font-family:&quot;Ti=
+mes New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-=
+latin;color:blue;border:none windowtext 1.0pt;mso-border-alt:none windowtex=
+t 0in;padding:0in;mso-ansi-language:EN-GB;mso-fareast-language:FR">Track 3:=
+ Data Science, knowledge engineering, and
+ontologies (including Information Retrieval, Big Data, Databases, and Knowl=
+edge
+Systems)&nbsp;</span><span lang=3D"EN-US" style=3D"mso-fareast-font-family:=
+&quot;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-fon=
+t:minor-latin;color:black;mso-ansi-language:EN-US;mso-fareast-language:FR">=
+</span></p>
+
+<p class=3D"ydpac0968f5MsoNormal" style=3D"margin-bottom: 0.0001pt; line-he=
+ight: normal; background-image: initial; background-position: initial; back=
+ground-size: initial; background-repeat: initial; background-attachment: in=
+itial; background-origin: initial; background-clip: initial; vertical-align=
+: baseline;"><span lang=3D"EN-GB" style=3D"mso-fareast-font-family:&quot;Ti=
+mes New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-=
+latin;color:blue;border:none windowtext 1.0pt;mso-border-alt:none windowtex=
+t 0in;padding:0in;mso-ansi-language:EN-GB;mso-fareast-language:FR">Track 4:=
+ Artificial Intelligence &amp; Cognitive
+Systems</span><span lang=3D"EN-US" style=3D"mso-fareast-font-family:&quot;T=
+imes New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor=
+-latin;color:black;mso-ansi-language:EN-US;mso-fareast-language:FR"></span>=
+</p>
+
+<p class=3D"ydpac0968f5MsoNormal" style=3D"margin-bottom: 0.0001pt; line-he=
+ight: normal; background-image: initial; background-position: initial; back=
+ground-size: initial; background-repeat: initial; background-attachment: in=
+itial; background-origin: initial; background-clip: initial; vertical-align=
+: baseline;"><span lang=3D"EN-GB" style=3D"mso-fareast-font-family:&quot;Ti=
+mes New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-=
+latin;color:blue;border:none windowtext 1.0pt;mso-border-alt:none windowtex=
+t 0in;padding:0in;mso-ansi-language:EN-GB;mso-fareast-language:FR">Track 5:=
+ Natural Language Processing</span><span lang=3D"EN-US" style=3D"mso-fareas=
+t-font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-=
+bidi-theme-font:minor-latin;color:black;mso-ansi-language:EN-US;mso-fareast=
+-language:FR"></span></p>
+
+<p class=3D"ydpac0968f5MsoNormal" style=3D"margin-bottom: 0.0001pt; line-he=
+ight: normal; background-image: initial; background-position: initial; back=
+ground-size: initial; background-repeat: initial; background-attachment: in=
+itial; background-origin: initial; background-clip: initial; vertical-align=
+: baseline;"><span lang=3D"EN-GB" style=3D"mso-fareast-font-family:&quot;Ti=
+mes New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-=
+latin;color:blue;border:none windowtext 1.0pt;mso-border-alt:none windowtex=
+t 0in;padding:0in;mso-ansi-language:EN-GB;mso-fareast-language:FR">Track 6:=
+ Multimedia, Computer Vision, and Image
+Processing&nbsp;</span><span lang=3D"EN-US" style=3D"mso-fareast-font-famil=
+y:&quot;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-f=
+ont:minor-latin;color:black;mso-ansi-language:EN-US;mso-fareast-language:FR=
+"></span></p>
+
+<p class=3D"ydpac0968f5MsoNormal" style=3D"margin-bottom: 0.0001pt; line-he=
+ight: normal; background-image: initial; background-position: initial; back=
+ground-size: initial; background-repeat: initial; background-attachment: in=
+itial; background-origin: initial; background-clip: initial; vertical-align=
+: baseline;"><span lang=3D"EN-US" style=3D"mso-fareast-font-family:&quot;Ti=
+mes New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-=
+latin;color:black;mso-ansi-language:EN-US;mso-fareast-language:FR">&nbsp;</=
+span></p>
+
+<p class=3D"ydpac0968f5MsoNormal" style=3D"margin-bottom: 0.0001pt; line-he=
+ight: normal; background-image: initial; background-position: initial; back=
+ground-size: initial; background-repeat: initial; background-attachment: in=
+itial; background-origin: initial; background-clip: initial; vertical-align=
+: baseline;"><b><u><span lang=3D"EN-GB" style=3D"mso-fareast-font-family:&q=
+uot;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:=
+minor-latin;color:red;border:none windowtext 1.0pt;mso-border-alt:none wind=
+owtext 0in;padding:0in;mso-ansi-language:EN-GB;mso-fareast-language:FR">Imp=
+ortant Dates:</span></u></b><span lang=3D"EN-US" style=3D"mso-fareast-font-=
+family:&quot;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-th=
+eme-font:minor-latin;color:black;mso-ansi-language:EN-US;mso-fareast-langua=
+ge:FR"></span></p>
+
+<p class=3D"ydpac0968f5MsoNormal" style=3D"margin-bottom:0in;margin-bottom:=
+.0001pt;line-height:normal;background:#FCFCFC;vertical-align:baseline"><b><=
+span lang=3D"EN-GB" style=3D"mso-fareast-font-family:&quot;Times New Roman&=
+quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin;color:bl=
+ack;border:none windowtext 1.0pt;mso-border-alt:none windowtext 0in;padding=
+:0in;mso-ansi-language:EN-GB;mso-fareast-language:FR">Main Conference<br>
+</span></b><span lang=3D"EN-GB" style=3D"mso-fareast-font-family:&quot;Time=
+s New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-la=
+tin;color:black;border:none windowtext 1.0pt;mso-border-alt:none windowtext=
+ 0in;padding:0in;mso-ansi-language:EN-GB;mso-fareast-language:FR">=E2=80=A2=
+ Paper submission due
+date:&nbsp;</span><b><span lang=3D"EN-GB" style=3D"mso-fareast-font-family:=
+&quot;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-fon=
+t:minor-latin;color:blue;border:none windowtext 1.0pt;mso-border-alt:none w=
+indowtext 0in;padding:0in;mso-ansi-language:EN-GB;mso-fareast-language:FR">=
+15 May , 2023&nbsp;</span></b><span lang=3D"EN-GB" style=3D"mso-fareast-fon=
+t-family:&quot;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-=
+theme-font:minor-latin;color:#7A7A7A;mso-ansi-language:EN-GB;mso-fareast-la=
+nguage:FR"><br>
+</span><span lang=3D"EN-GB" style=3D"mso-fareast-font-family:&quot;Times Ne=
+w Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin;=
+color:black;border:none windowtext 1.0pt;mso-border-alt:none windowtext 0in=
+;padding:0in;mso-ansi-language:EN-GB;mso-fareast-language:FR">=E2=80=A2 Not=
+ification to
+authors:&nbsp;</span><b><span lang=3D"EN-GB" style=3D"mso-fareast-font-fami=
+ly:&quot;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-=
+font:minor-latin;color:blue;border:none windowtext 1.0pt;mso-border-alt:non=
+e windowtext 0in;padding:0in;mso-ansi-language:EN-GB;mso-fareast-language:F=
+R">15 August, 2023</span></b><span lang=3D"EN-GB" style=3D"mso-fareast-font=
+-family:&quot;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-t=
+heme-font:minor-latin;color:#7A7A7A;mso-ansi-language:EN-GB;mso-fareast-lan=
+guage:FR"><br>
+</span><span lang=3D"EN-GB" style=3D"mso-fareast-font-family:&quot;Times Ne=
+w Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin;=
+color:black;border:none windowtext 1.0pt;mso-border-alt:none windowtext 0in=
+;padding:0in;mso-ansi-language:EN-GB;mso-fareast-language:FR">=E2=80=A2 Cam=
+era-ready papers and
+registration :&nbsp;</span><b><span lang=3D"EN-GB" style=3D"mso-fareast-fon=
+t-family:&quot;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-=
+theme-font:minor-latin;color:blue;border:none windowtext 1.0pt;mso-border-a=
+lt:none windowtext 0in;padding:0in;mso-ansi-language:EN-GB;mso-fareast-lang=
+uage:FR">15 Sept, 2023</span></b><span lang=3D"EN-US" style=3D"mso-fareast-=
+font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-bi=
+di-theme-font:minor-latin;color:black;mso-ansi-language:EN-US;mso-fareast-l=
+anguage:FR"></span></p>
+
+<p class=3D"ydpac0968f5MsoNormal" style=3D"margin-bottom:0in;margin-bottom:=
+.0001pt;line-height:normal;background:#FCFCFC;vertical-align:baseline"><spa=
+n lang=3D"EN-GB" style=3D"mso-fareast-font-family:&quot;Times New Roman&quo=
+t;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin;color:#7A7A=
+7A;mso-ansi-language:EN-GB;mso-fareast-language:FR">&nbsp;</span><span lang=
+=3D"EN-US" style=3D"mso-fareast-font-family:&quot;Times New Roman&quot;;mso=
+-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin;color:black;mso-a=
+nsi-language:EN-US;mso-fareast-language:FR"></span></p>
+
+<p class=3D"ydpac0968f5MsoNormal" style=3D"margin-bottom:12.0pt;line-height=
+:normal;background:#FCFCFC;vertical-align:baseline"><b><span lang=3D"EN-GB"=
+ style=3D"mso-fareast-font-family:&quot;Times New Roman&quot;;mso-bidi-font=
+-family:Calibri;mso-bidi-theme-font:minor-latin;color:black;border:none win=
+dowtext 1.0pt;mso-border-alt:none windowtext 0in;padding:0in;mso-ansi-langu=
+age:EN-GB;mso-fareast-language:FR">PhD Forum<br>
+</span></b><span lang=3D"EN-GB" style=3D"mso-fareast-font-family:&quot;Time=
+s New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-la=
+tin;color:black;border:none windowtext 1.0pt;mso-border-alt:none windowtext=
+ 0in;padding:0in;mso-ansi-language:EN-GB;mso-fareast-language:FR">=E2=80=A2=
+ Paper submission due
+date:&nbsp;</span><b><span lang=3D"EN-GB" style=3D"mso-fareast-font-family:=
+&quot;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-fon=
+t:minor-latin;color:blue;border:none windowtext 1.0pt;mso-border-alt:none w=
+indowtext 0in;padding:0in;mso-ansi-language:EN-GB;mso-fareast-language:FR">=
+15 May , 2023&nbsp;</span></b><span lang=3D"EN-GB" style=3D"mso-fareast-fon=
+t-family:&quot;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-=
+theme-font:minor-latin;color:black;border:none windowtext 1.0pt;mso-border-=
+alt:none windowtext 0in;padding:0in;mso-ansi-language:EN-GB;mso-fareast-lan=
+guage:FR"><br>
+=E2=80=A2 Notification to authors:&nbsp;</span><b><span lang=3D"EN-GB" styl=
+e=3D"mso-fareast-font-family:&quot;Times New Roman&quot;;mso-bidi-font-fami=
+ly:Calibri;mso-bidi-theme-font:minor-latin;color:blue;border:none windowtex=
+t 1.0pt;mso-border-alt:none windowtext 0in;padding:0in;mso-ansi-language:EN=
+-GB;mso-fareast-language:FR">15 August, 2023</span></b><span lang=3D"EN-GB"=
+ style=3D"mso-fareast-font-family:&quot;Times New Roman&quot;;mso-bidi-font=
+-family:Calibri;mso-bidi-theme-font:minor-latin;color:black;border:none win=
+dowtext 1.0pt;mso-border-alt:none windowtext 0in;padding:0in;mso-ansi-langu=
+age:EN-GB;mso-fareast-language:FR"><br>
+=E2=80=A2 Camera-ready papers and registration :&nbsp;</span><b><span lang=
+=3D"EN-GB" style=3D"mso-fareast-font-family:&quot;Times New Roman&quot;;mso=
+-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin;color:blue;border=
+:none windowtext 1.0pt;mso-border-alt:none windowtext 0in;padding:0in;mso-a=
+nsi-language:EN-GB;mso-fareast-language:FR">15 Sept, 2023</span></b><span l=
+ang=3D"EN-US" style=3D"mso-fareast-font-family:&quot;Times New Roman&quot;;=
+mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin;color:black;ms=
+o-ansi-language:EN-US;mso-fareast-language:FR"></span></p>
+
+<p class=3D"ydpac0968f5MsoNormal" style=3D"margin-bottom:0in;margin-bottom:=
+.0001pt;line-height:normal;background:#FCFCFC;vertical-align:baseline"><b><=
+span lang=3D"EN-GB" style=3D"mso-fareast-font-family:&quot;Times New Roman&=
+quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin;color:bl=
+ack;border:none windowtext 1.0pt;mso-border-alt:none windowtext 0in;padding=
+:0in;mso-ansi-language:EN-GB;mso-fareast-language:FR">Workshop Proposals<br=
+>
+</span></b><span lang=3D"EN-GB" style=3D"mso-fareast-font-family:&quot;Time=
+s New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-la=
+tin;color:black;border:none windowtext 1.0pt;mso-border-alt:none windowtext=
+ 0in;padding:0in;mso-ansi-language:EN-GB;mso-fareast-language:FR">=E2=80=A2=
+ Workshop proposals
+due:&nbsp;</span><b><span lang=3D"EN-GB" style=3D"mso-fareast-font-family:&=
+quot;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font=
+:minor-latin;color:blue;border:none windowtext 1.0pt;mso-border-alt:none wi=
+ndowtext 0in;padding:0in;mso-ansi-language:EN-GB;mso-fareast-language:FR">3=
+0 March, 2023</span></b><span lang=3D"EN-GB" style=3D"mso-fareast-font-fami=
+ly:&quot;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-=
+font:minor-latin;color:#7A7A7A;mso-ansi-language:EN-GB;mso-fareast-language=
+:FR"><br>
+</span><span lang=3D"EN-GB" style=3D"mso-fareast-font-family:&quot;Times Ne=
+w Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin;=
+color:black;border:none windowtext 1.0pt;mso-border-alt:none windowtext 0in=
+;padding:0in;mso-ansi-language:EN-GB;mso-fareast-language:FR">=E2=80=A2 Not=
+ification of
+acceptance:&nbsp;</span><b><span lang=3D"EN-GB" style=3D"mso-fareast-font-f=
+amily:&quot;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-the=
+me-font:minor-latin;color:blue;border:none windowtext 1.0pt;mso-border-alt:=
+none windowtext 0in;padding:0in;mso-ansi-language:EN-GB;mso-fareast-languag=
+e:FR">15 April, 2023</span></b><span lang=3D"EN-GB" style=3D"mso-fareast-fo=
+nt-family:&quot;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi=
+-theme-font:minor-latin;color:#7A7A7A;mso-ansi-language:EN-GB;mso-fareast-l=
+anguage:FR"><br>
+</span><span lang=3D"EN-GB" style=3D"mso-fareast-font-family:&quot;Times Ne=
+w Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin;=
+color:black;border:none windowtext 1.0pt;mso-border-alt:none windowtext 0in=
+;padding:0in;mso-ansi-language:EN-GB;mso-fareast-language:FR">=E2=80=A2 Cam=
+era-ready papers and registration:&nbsp;</span><b><span lang=3D"EN-GB" styl=
+e=3D"mso-fareast-font-family:&quot;Times New Roman&quot;;mso-bidi-font-fami=
+ly:Calibri;mso-bidi-theme-font:minor-latin;color:blue;border:none windowtex=
+t 1.0pt;mso-border-alt:none windowtext 0in;padding:0in;mso-ansi-language:EN=
+-GB;mso-fareast-language:FR">15 Sept, 2023</span></b><span lang=3D"EN-US" s=
+tyle=3D"mso-fareast-font-family:&quot;Times New Roman&quot;;mso-bidi-font-f=
+amily:Calibri;mso-bidi-theme-font:minor-latin;color:black;mso-ansi-language=
+:EN-US;mso-fareast-language:FR"></span></p>
+
+<p class=3D"ydpac0968f5MsoNormal" style=3D"margin-bottom:0in;margin-bottom:=
+.0001pt;line-height:normal;background:#FCFCFC;vertical-align:baseline"><spa=
+n lang=3D"EN-GB" style=3D"mso-fareast-font-family:&quot;Times New Roman&quo=
+t;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin;color:#7A7A=
+7A;mso-ansi-language:EN-GB;mso-fareast-language:FR">&nbsp;</span><span lang=
+=3D"EN-US" style=3D"mso-fareast-font-family:&quot;Times New Roman&quot;;mso=
+-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin;color:black;mso-a=
+nsi-language:EN-US;mso-fareast-language:FR"></span></p>
+
+<p class=3D"ydpac0968f5MsoNormal" style=3D"margin-bottom:0in;margin-bottom:=
+.0001pt;line-height:normal;background:#FCFCFC;vertical-align:baseline"><b><=
+span lang=3D"EN-GB" style=3D"mso-fareast-font-family:&quot;Times New Roman&=
+quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin;color:bl=
+ack;border:none windowtext 1.0pt;mso-border-alt:none windowtext 0in;padding=
+:0in;mso-ansi-language:EN-GB;mso-fareast-language:FR">Tutorial Proposals<br=
+>
+</span></b><span lang=3D"EN-GB" style=3D"mso-fareast-font-family:&quot;Time=
+s New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-la=
+tin;color:black;border:none windowtext 1.0pt;mso-border-alt:none windowtext=
+ 0in;padding:0in;mso-ansi-language:EN-GB;mso-fareast-language:FR">=E2=80=A2=
+ Tutorial proposals
+due:&nbsp;</span><b><span lang=3D"EN-GB" style=3D"mso-fareast-font-family:&=
+quot;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font=
+:minor-latin;color:blue;border:none windowtext 1.0pt;mso-border-alt:none wi=
+ndowtext 0in;padding:0in;mso-ansi-language:EN-GB;mso-fareast-language:FR">3=
+0 June, 2023</span></b><span lang=3D"EN-GB" style=3D"mso-fareast-font-famil=
+y:&quot;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-f=
+ont:minor-latin;color:#7A7A7A;mso-ansi-language:EN-GB;mso-fareast-language:=
+FR"><br>
+</span><span lang=3D"EN-GB" style=3D"mso-fareast-font-family:&quot;Times Ne=
+w Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin;=
+color:black;border:none windowtext 1.0pt;mso-border-alt:none windowtext 0in=
+;padding:0in;mso-ansi-language:EN-GB;mso-fareast-language:FR">=E2=80=A2 Not=
+ification of
+acceptance:&nbsp;</span><b><span lang=3D"EN-GB" style=3D"mso-fareast-font-f=
+amily:&quot;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-the=
+me-font:minor-latin;color:blue;border:none windowtext 1.0pt;mso-border-alt:=
+none windowtext 0in;padding:0in;mso-ansi-language:EN-GB;mso-fareast-languag=
+e:FR">30 July, 2023</span></b><span lang=3D"EN-US" style=3D"mso-fareast-fon=
+t-family:&quot;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-=
+theme-font:minor-latin;color:black;mso-ansi-language:EN-US;mso-fareast-lang=
+uage:FR"></span></p>
+
+<p class=3D"ydpac0968f5MsoNormal" style=3D"margin-bottom: 0.0001pt; line-he=
+ight: normal; background-image: initial; background-position: initial; back=
+ground-size: initial; background-repeat: initial; background-attachment: in=
+itial; background-origin: initial; background-clip: initial; vertical-align=
+: baseline;"><span lang=3D"EN-US" style=3D"mso-fareast-font-family:&quot;Ti=
+mes New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-=
+latin;color:black;mso-ansi-language:EN-US;mso-fareast-language:FR">&nbsp;</=
+span></p>
+
+<p class=3D"ydpac0968f5MsoNormal" style=3D"margin-bottom: 0.0001pt; line-he=
+ight: normal; background-image: initial; background-position: initial; back=
+ground-size: initial; background-repeat: initial; background-attachment: in=
+itial; background-origin: initial; background-clip: initial; vertical-align=
+: baseline;"><b><span lang=3D"EN-GB" style=3D"mso-fareast-font-family:&quot=
+;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:min=
+or-latin;color:red;border:none windowtext 1.0pt;mso-border-alt:none windowt=
+ext 0in;padding:0in;mso-ansi-language:EN-GB;mso-fareast-language:FR">Genera=
+l Co-Chairs</span></b><span lang=3D"EN-US" style=3D"mso-fareast-font-family=
+:&quot;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-fo=
+nt:minor-latin;color:black;mso-ansi-language:EN-US;mso-fareast-language:FR"=
+></span></p>
+
+<p class=3D"ydpac0968f5MsoNormal" style=3D"margin-bottom: 0.0001pt; line-he=
+ight: normal; background-image: initial; background-position: initial; back=
+ground-size: initial; background-repeat: initial; background-attachment: in=
+itial; background-origin: initial; background-clip: initial; vertical-align=
+: baseline;"><b><span lang=3D"EN-GB" style=3D"mso-fareast-font-family:&quot=
+;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:min=
+or-latin;color:#171717;border:none windowtext 1.0pt;mso-border-alt:none win=
+dowtext 0in;padding:0in;mso-ansi-language:EN-GB;mso-fareast-language:FR">Hi=
+sham A. Kholidy,&nbsp;</span></b><span lang=3D"EN-GB" style=3D"mso-fareast-=
+font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-bi=
+di-theme-font:minor-latin;color:#171717;border:none windowtext 1.0pt;mso-bo=
+rder-alt:none windowtext 0in;padding:0in;mso-ansi-language:EN-GB;mso-fareas=
+t-language:FR">The State University of New York (SUNY), Polytechnic
+Institute, USA</span><span lang=3D"EN-US" style=3D"mso-fareast-font-family:=
+&quot;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-fon=
+t:minor-latin;color:black;mso-ansi-language:EN-US;mso-fareast-language:FR">=
+</span></p>
+
+<p class=3D"ydpac0968f5MsoNormal" style=3D"margin-bottom: 0.0001pt; line-he=
+ight: normal; background-image: initial; background-position: initial; back=
+ground-size: initial; background-repeat: initial; background-attachment: in=
+itial; background-origin: initial; background-clip: initial; vertical-align=
+: baseline;"><b><span lang=3D"EN-GB" style=3D"mso-fareast-font-family:&quot=
+;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:min=
+or-latin;color:#171717;border:none windowtext 1.0pt;mso-border-alt:none win=
+dowtext 0in;padding:0in;mso-ansi-language:EN-GB;mso-fareast-language:FR">El=
+hadj Benkhelifa,&nbsp;</span></b><span lang=3D"EN-GB" style=3D"mso-fareast-=
+font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-bi=
+di-theme-font:minor-latin;color:#171717;border:none windowtext 1.0pt;mso-bo=
+rder-alt:none windowtext 0in;padding:0in;mso-ansi-language:EN-GB;mso-fareas=
+t-language:FR">Staffordshire University, UK</span><span lang=3D"EN-US" styl=
+e=3D"mso-fareast-font-family:&quot;Times New Roman&quot;;mso-bidi-font-fami=
+ly:Calibri;mso-bidi-theme-font:minor-latin;color:black;mso-ansi-language:EN=
+-US;mso-fareast-language:FR"></span></p>
+
+<p class=3D"ydpac0968f5MsoNormal" style=3D"margin-bottom: 0.0001pt; line-he=
+ight: normal; background-image: initial; background-position: initial; back=
+ground-size: initial; background-repeat: initial; background-attachment: in=
+itial; background-origin: initial; background-clip: initial; vertical-align=
+: baseline;"><span lang=3D"EN-GB" style=3D"font-size:12.0pt;mso-fareast-fon=
+t-family:&quot;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-=
+theme-font:minor-latin;color:#171717;border:none windowtext 1.0pt;mso-borde=
+r-alt:none windowtext 0in;padding:0in;mso-ansi-language:EN-GB;mso-fareast-l=
+anguage:FR">&nbsp;</span><span lang=3D"EN-US" style=3D"font-size:12.0pt;mso=
+-fareast-font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:Calib=
+ri;mso-bidi-theme-font:minor-latin;color:black;mso-ansi-language:EN-US;mso-=
+fareast-language:FR"></span></p>
+
+<p class=3D"ydpac0968f5MsoNormal" style=3D"margin-bottom: 0.0001pt; line-he=
+ight: normal; background-image: initial; background-position: initial; back=
+ground-size: initial; background-repeat: initial; background-attachment: in=
+itial; background-origin: initial; background-clip: initial; vertical-align=
+: baseline;"><b><span lang=3D"EN-GB" style=3D"mso-fareast-font-family:&quot=
+;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:min=
+or-latin;color:red;border:none windowtext 1.0pt;mso-border-alt:none windowt=
+ext 0in;padding:0in;mso-ansi-language:EN-GB;mso-fareast-language:FR">Progra=
+m Co-Chairs</span></b></p>
+
+<p class=3D"ydpac0968f5MsoNormal" style=3D"margin-bottom: 0.0001pt; line-he=
+ight: normal; background-image: initial; background-position: initial; back=
+ground-size: initial; background-repeat: initial; background-attachment: in=
+itial; background-origin: initial; background-clip: initial;"><b><span lang=
+=3D"EN-US" style=3D"mso-fareast-font-family:&quot;Times New Roman&quot;;mso=
+-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin;color:black;mso-a=
+nsi-language:EN-US;mso-fareast-language:FR">Khouloud Boukadi,</span></b><sp=
+an lang=3D"EN-US" style=3D"mso-fareast-font-family:&quot;Times New Roman&qu=
+ot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin;color:blac=
+k;mso-ansi-language:EN-US;mso-fareast-language:FR"> University of Sfax, Tun=
+isia</span></p>
+
+<p class=3D"ydpac0968f5MsoNormal" style=3D"margin-bottom: 0.0001pt; line-he=
+ight: normal; background-image: initial; background-position: initial; back=
+ground-size: initial; background-repeat: initial; background-attachment: in=
+itial; background-origin: initial; background-clip: initial;"><b><span lang=
+=3D"EN-US" style=3D"mso-fareast-font-family:&quot;Times New Roman&quot;;mso=
+-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin;color:black;mso-a=
+nsi-language:EN-US;mso-fareast-language:FR">Ilaria Matteucci,</span></b><sp=
+an lang=3D"EN-US" style=3D"mso-fareast-font-family:&quot;Times New Roman&qu=
+ot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin;color:blac=
+k;mso-ansi-language:EN-US;mso-fareast-language:FR"> Istituto di Informatica=
+ e Telematica =E2=80=93 CNR, Italy</span><span lang=3D"EN-US" style=3D"font=
+-size:12.0pt;mso-fareast-font-family:&quot;Times New Roman&quot;;mso-bidi-f=
+ont-family:Calibri;mso-bidi-theme-font:minor-latin;color:black;mso-ansi-lan=
+guage:EN-US;mso-fareast-language:FR"></span></p>
+
+<p class=3D"ydpac0968f5MsoNormal" style=3D"margin-bottom: 0.0001pt; line-he=
+ight: normal; background-image: initial; background-position: initial; back=
+ground-size: initial; background-repeat: initial; background-attachment: in=
+itial; background-origin: initial; background-clip: initial;"><span lang=3D=
+"EN-US" style=3D"font-size:12.0pt;mso-fareast-font-family:&quot;Times New R=
+oman&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin;col=
+or:black;mso-ansi-language:EN-US;mso-fareast-language:FR">&nbsp;</span></p>
+
+<p class=3D"ydpac0968f5MsoNormal"><span lang=3D"EN-US" style=3D"font-size:1=
+2.0pt;line-height:107%;mso-bidi-font-family:Calibri;mso-bidi-theme-font:min=
+or-latin;mso-ansi-language:EN-US">&nbsp;</span></p></div><br></div></div></=
+body></html>
+------=_Part_1458816_428018439.1682919274551--
+

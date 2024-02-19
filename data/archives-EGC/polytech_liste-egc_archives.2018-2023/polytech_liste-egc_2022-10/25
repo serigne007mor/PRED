@@ -1,0 +1,620 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (bouncesmtp2.u12.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id A8E0C14017CA
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Tue, 11 Oct 2022 18:32:12 +0200 (CEST)
+Received: from mx1.localdomain (MX1.univ-nantes.fr [193.52.101.135])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id A4B955FA4
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Tue, 11 Oct 2022 18:32:12 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.localdomain (Postfix) with ESMTP id 9A9CA120E60
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 11 Oct 2022 18:32:12 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: YES
+X-Spam-Score: 5.195
+X-Spam-Level: *****
+X-Spam-Status: Yes, score=5.195 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+	HTML_MESSAGE=0.001, J_BACKHAIR_56=1, MALFORMED_FREEMAIL=1.776,
+	MISSING_HEADERS=1.207, MR_NOT_ATTRIBUTED_IP=0.2,
+	RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001,
+	SPF_PASS=-0.001, UN_PHISHING_PW=0.1, VOWEL_URI_5=1] autolearn=disabled
+X-CRM114-Status: UNSURE ( -0.5861 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=gmail.com
+Received: from mx1.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id mlksT5I1jtxr for <liste-egc@polytech.univ-nantes.fr>;
+	Tue, 11 Oct 2022 18:32:09 +0200 (CEST)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+	by mx1.localdomain (Postfix) with ESMTPS id F192C120E58
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 11 Oct 2022 18:32:08 +0200 (CEST)
+Received: by mail-wr1-x42c.google.com with SMTP id bp11so9714263wrb.9
+        for <liste-egc@polytech.univ-nantes.fr>; Tue, 11 Oct 2022 09:32:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:subject:date:mime-version:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=x7oiVvRAV9j3mdZoweQKPNhZfZ6moOJS+i61KMtrjCk=;
+        b=CEoKNIcwb4nS2+21/IR3RGVHvtMnD1gz8wiaMdv+sR0WZEoERt2JxExjVJUHI9a01p
+         7Ajcp957/2sEUEHbKyag+in2YSXuJRPN7iY8tEFtDgwvfBPHuIHAH/zLhW/U2/bVCwiq
+         l4u6OY9YGZRYi5Am20PNPAiGrk8RLXNpYP8Hv8oKufX2bIfoVqehtvWTAGuE1QDpCnI0
+         7ZB5qEDzWoY4QaUNZEfR74E8f1uDkU9hVg26M/CoQxO0fpt/VCKahzH6zpmYL6uMu+qF
+         tO5KIvXpHVrEPHFlV9tuWb+++G5ATgIDptDn856m844JaaQA2TTfR6qB+vsPRYJiVuZ7
+         V4Jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=message-id:subject:date:mime-version:from:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=x7oiVvRAV9j3mdZoweQKPNhZfZ6moOJS+i61KMtrjCk=;
+        b=J+fHDFDD1dsAI1kBXqYq2vh81v8LGkBCkbMGn4+be6ThrT4x+cIydOQVoTPo3eeK+N
+         34x/6o7Ui+ewwl1PJT27q71PwhjwMhQfUqq7Ui+zthjx+wIekpI1NsvdKe4jXLdhx499
+         TvGROcsRz9bALeRA0FEtDmmssUaMmigNqHs75W3ZZBekNxDT48Mr6PTpl6cqe50lG4m5
+         NAfImAWTjHKA+6IG1NIsKPVW9K57zIVkTKOfsC5vQdUHfjDof9Wry0jY5CvpkWJ/53iY
+         du4e7Lweh5Dmkkopa8XN86SCuckzeeP5Wx5XN38JBGrA8DgTxBNjV9awQ8Iw3dbjIiev
+         iqJw==
+X-Gm-Message-State: ACrzQf15OPpB307S7oAt9wNX1nLJ+PJBXzZd7k8tqhnn+hIBoc/ufkyk
+	wXD11VUUTDvO4MrGTW9l4ww=
+X-Google-Smtp-Source: AMsMyM7bpPY+q8NMnNIuPUUbcolHFTqelWN3YeH3N0LCsK7kbPQcYRanC3wc/zC3zr4R+KvuWVJHYQ==
+X-Received: by 2002:a5d:65c6:0:b0:22e:36aa:65be with SMTP id e6-20020a5d65c6000000b0022e36aa65bemr15738747wrw.531.1665505928306;
+        Tue, 11 Oct 2022 09:32:08 -0700 (PDT)
+Received: from smtpclient.apple ([2a01:cb15:81ed:8100:edfb:889c:c83a:1a69])
+        by smtp.gmail.com with ESMTPSA id u11-20020a5d468b000000b0022add5a6fb1sm11486808wrq.30.2022.10.11.09.32.06
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 11 Oct 2022 09:32:07 -0700 (PDT)
+From: Ge auf gmail <genoveva.vargas@gmail.com>
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_3F0C119E-6606-4819-8B73-19C0407478BC"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.1\))
+Date: Tue, 11 Oct 2022 18:32:06 +0200
+Message-Id: <6DE94B86-58FD-4B8F-8C4B-B53EEAD189FB@gmail.com>
+X-Mailer: Apple Mail (2.3696.120.41.1.1)
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] [SPAM] EXTENDED Deadline Hybrid mode CFP: Data science
+ for equality, inclusion and well-being challenges @ IEEE Big Data 2022
+
+
+--Apple-Mail=_3F0C119E-6606-4819-8B73-19C0407478BC
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Second International Workshop on Data science for equality, inclusion =
+and well-being challenges
+In conjunction with the IEEE BigData 2021 Conference.
+
+=E2=80=82=E2=80=82=E2=80=82=E2=80=82=E2=80=82=E2=80=82DS4EIW 2022 @ IEEE =
+BigData 2022
+    website: http://dbdmg.polito.it/ds4eiw-2022/ =
+<http://dbdmg.polito.it/ds4eiw-2022/>
+=E2=80=82=E2=80=82=E2=80=82=E2=80=82=E2=80=82=E2=80=82December 17-20, =
+Osaka, Japan
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+***** The DS4EIW2022@IEEE Big Data 2022 will be organized as a hybrid =
+event; thus, it will be accessible online via two-way =
+video-conferencing. Authors of accepted papers can present their work by =
+attending the conference physically or remotely.*****
+=20
+
+
+*** Important Dates ***
+++ Electronic submission of full papers:  October 25, 2022
+++ Notification of paper acceptance: November 10, 2022
+++ Camera-ready of accepted papers: November 20, 2022
+++ Workshop: December 17-20, 2022
+
+
+***********************************************************************
+Goal
+***********************************************************************
+
+DS4EIW promotes and shares research and innovation on data science =
+solutions with the final challenge to study, promote, and guarantee =
+equality, inclusion, and well-being, significantly impacting society. =
+This is an essential subject of debate in engineering and sociology, =
+also involving governments, private and public companies, activists, and =
+the press because discrimination and biases have to be avoided, =
+stereotypes have to be removed, and well-being opportunities have to be =
+designed and promoted.=20
+
+The workshop aims to allow academics and practitioners from various =
+research areas to share their experiences studying, analyzing, =
+designing, and developing innovative methodologies centered on societal =
+challenges to derive insights, characterize sociological phenomena, and =
+support policymakers in promoting more inclusive reflexive, and =
+innovative societies.
+
+Industrial implementations of explainable/transparent data algorithm =
+applications, design and deployment experience reports on various issues =
+raising data transparency projects, and avoiding bias and =
+discrimination, are particularly welcome. We call for research and =
+experience papers and demonstration proposals covering any aspect of =
+data algorithmic transparency and accountability in real-life =
+applications, fundamental properties to avoid bias and discrimination. =20=
+
+
+***********************************************************************
+Topics of interest
+***********************************************************************
+We invite the submission of high-quality manuscripts reporting relevant =
+and work-in-progress research studies addressing various aspects of data =
+science and analytic for equality, inclusion and well-being challenges. =
+Contributions should be of interest to a large and varied =
+cross-disciplinary audience of researchers and practitioners involved or =
+interested from different perspectives in societal challenges. The =
+workshop welcomes submissions of methodological, experimental, technical =
+papers, application papers, and papers on experiences in real-life =
+application settings addressing - though not limited to - the following =
+topics:
+
+- Concepts, methodologies, and solutions for sensing, modeling, =
+managing, mining, and understanding people's behavior and activity
+- Algorithmic accountability
+- Explainable algorithms=20
+- Data analytics and artificial intelligent algorithms
+- Recommendations for people and analysts=20
+- Recommendations for policymakers
+- Intelligent systems to enhance user awareness of algorithm decisions
+- Ethical issues of data collection, storage, and exchange
+- Interactive query refinement and processing
+- Innovative solutions for exploring, analyzing, and visualizing data
+- User-controlled algorithms for data integration, cleaning, and =
+analysis
+- Perception-aware data processing and analytics
+- Database systems designed for highly interactive applications
+- Crowd-powered data infrastructure.
+
+In one of - though not limited to - the following application scenarios:
+- Education=20
+- Private and public employment
+- Entrepreneurship
+- Healthcare applications
+- Public safety and security
+- Citizens' mobility and transportation
+- Urban economy and urban environments
+- Data journalism
+- Covid-19 pandemic
+- Gender Equality Plan
+- Inclusive Language
+- Social services, unemployment and homelessness
+- Economic, social and personal development
+- Government transparency
+- User-generated content (like tweets, micro-blog, check-ins, photos)
+
+addressing - though not limited to - the following societal challenges:
+
++ Smart-working
++ Gender gap
++ Balance of life and work times
++ Special needs,=20
++ Ethnic and religious origin
++ Well-being
+
+Topics aligned with the UN development goals: =
+https://www.un.org/sustainabledevelopment/sustainable-development-goals/ =
+<https://www.un.org/sustainabledevelopment/sustainable-development-goals/>=
+
+
+************************************************************************
+Diversity and Inclusion Statement
+=
+*************************************************************************
+We support Diversity & Inclusion in the DS4EIW community therefore we =
+kindly ask authors to adopt inclusive language in their papers and =
+presentations
+-- Inclusion and diversity in writing =
+https://dbdni.github.io/pages/inclusivewriting.html =
+<https://dbdni.github.io/pages/inclusivewriting.html>
+-- Tips for designing inclusive presentations =
+https://dbdni.github.io/pages/inclusivetalks.html =
+<https://dbdni.github.io/pages/inclusivetalks.html> =20
+
+We also encourage women and underrepresented communities to submit =
+papers on the research outcomes of their activity.
+We will offer 2 free registrations to the event to female =
+students/researchers or to people belonging to underrepresented =
+communities to attend the workshop. The DW4EIW organizers will publish =
+guidelines to apply for this support.
+
+************************************************************************
+Submission Guidelines
+=
+*************************************************************************
+Submissions should present original results and substantial new work not =
+currently under review or published elsewhere.
+
+Papers should be formatted to IEEE Computer Society Proceedings =
+Manuscript Formatting Guidelines =
+(https://www.ieee.org/conferences/publishing/templates.html =
+<https://www.ieee.org/conferences/publishing/templates.html>).
+
+Please submit a full-length paper (from 5 pages up to 10 pages IEEE =
+2-column format) through the online submission system =
+(https://wi-lab.com/cyberchair/2022/bigdata22/scripts/submit.php?subarea=3D=
+S34&undisplay_detail=3D1&wh=3D/cyberchair/2022/bigdata22/scripts/ws_submit=
+.php =
+<https://wi-lab.com/cyberchair/2022/bigdata22/scripts/submit.php?subarea=3D=
+S34&undisplay_detail=3D1&wh=3D/cyberchair/2022/bigdata22/scripts/ws_submit=
+.php>)
+
+The workshop proceedings will be published by the IEEE Computer Society.
+
+=
+*************************************************************************
+Workshop organizers
+=
+*************************************************************************
+Tania Cerquitelli, Politecnico di Torino, Italy ( email: tania DOT =
+cerquitelli AT polito DOT it)
+Genoveva Vargas-Solar, CNRS, LIRIS, France
+Arianna Montorsi, Politecnico di Torino, Italy
+Claudia De Giorgi, Politecnico di Torino, Italy
+
+-- =E2=80=94=20
+Dra. Genoveva Vargas Solar
+Centre National de la Recherche Scientifique, LIRIS, Database Group=20
+www.vargas-solar.com
+
+LIRIS | Laboratoire d'InfoRmatique en Image et Syst=C3=A8mes =
+d'information (UMR 5205)
+Campus de la Doua - B - 21-005 B=C3=A2timent Nautibus
+25 avenue Pierre de Coubertin
+69622 Villeurbanne Cedex
+France
+M   genoveva.vargas-solar@cnrs.fr
+
+Visiting scientist, Data and Knowledge Management Group, UDLAP
+Universidad de las Am=C3=A9ricas, Puebla
+Sta. Catarina M=C3=A1rtir 72820 Cholula, Puebla, Mexico=20
+T    +52 222 2 29 26 06=20
+F    +52 222 2 29 21 38,  +52 222 1 78 01 85=20
+E    Genoveva.Vargas@udlap.mx
+
+
+--Apple-Mail=_3F0C119E-6606-4819-8B73-19C0407478BC
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
+charset=3Dutf-8"></head><body style=3D"word-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;" class=3D""><span=
+ style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;" =
+class=3D"">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
+++++++</span><div class=3D"x_ContentPasted0" style=3D"font-family: =
+Calibri, Arial, Helvetica, sans-serif; font-size: 16px;">Second =
+International Workshop on Data science for equality, inclusion and =
+well-being challenges</div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">In conjunction with the IEEE BigData 2021 Conference.</div><div =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;" class=3D""><br class=3D"x_ContentPasted0"></div><div =
+class=3D"x_ContentPasted0" style=3D"font-family: Calibri, Arial, =
+Helvetica, sans-serif; font-size: 16px;">=E2=80=82=E2=80=82=E2=80=82=E2=80=
+=82=E2=80=82=E2=80=82DS4EIW 2022 @ IEEE BigData 2022</div><div =
+class=3D"x_ContentPasted0" style=3D"font-family: Calibri, Arial, =
+Helvetica, sans-serif; font-size: 16px;">&nbsp; &nbsp; website:&nbsp;<a =
+href=3D"http://dbdmg.polito.it/ds4eiw-2022/" =
+class=3D"">http://dbdmg.polito.it/ds4eiw-2022/</a></div><div =
+class=3D"x_ContentPasted0" style=3D"font-family: Calibri, Arial, =
+Helvetica, sans-serif; font-size: 16px;">=E2=80=82=E2=80=82=E2=80=82=E2=80=
+=82=E2=80=82=E2=80=82December 17-20, Osaka, Japan</div><div =
+class=3D"x_ContentPasted0" style=3D"font-family: Calibri, Arial, =
+Helvetica, sans-serif; font-size: =
+16px;">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
+++</div><div style=3D"font-family: Calibri, Arial, Helvetica, =
+sans-serif; font-size: 16px;" class=3D""><br =
+class=3D"x_ContentPasted0"></div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">***** The DS4EIW2022@IEEE Big Data 2022 will be organized as a =
+hybrid event; thus, it will be accessible online via two-way =
+video-conferencing. Authors of accepted papers can present their work by =
+attending the conference physically or remotely.*****</div><div =
+class=3D"x_ContentPasted0" style=3D"font-family: Calibri, Arial, =
+Helvetica, sans-serif; font-size: 16px;">&nbsp;</div><div =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;" class=3D""><br class=3D"x_ContentPasted0"></div><div =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;" class=3D""><br class=3D"x_ContentPasted0"></div><div =
+class=3D"x_ContentPasted0" style=3D"font-family: Calibri, Arial, =
+Helvetica, sans-serif; font-size: 16px;">*** Important Dates =
+***</div><div class=3D"x_ContentPasted0" style=3D"font-family: Calibri, =
+Arial, Helvetica, sans-serif; font-size: 16px;">++ Electronic submission =
+of full papers: &nbsp;October 25, 2022</div><div =
+class=3D"x_ContentPasted0" style=3D"font-family: Calibri, Arial, =
+Helvetica, sans-serif; font-size: 16px;">++ Notification of paper =
+acceptance: November 10, 2022</div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">++ Camera-ready of accepted papers: November 20, 2022</div><div =
+class=3D"x_ContentPasted0" style=3D"font-family: Calibri, Arial, =
+Helvetica, sans-serif; font-size: 16px;">++ Workshop: December 17-20, =
+2022</div><div style=3D"font-family: Calibri, Arial, Helvetica, =
+sans-serif; font-size: 16px;" class=3D""><br =
+class=3D"x_ContentPasted0"></div><div style=3D"font-family: Calibri, =
+Arial, Helvetica, sans-serif; font-size: 16px;" class=3D""><br =
+class=3D"x_ContentPasted0"></div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">*******************************************************************=
+****</div><div class=3D"x_ContentPasted0" style=3D"font-family: Calibri, =
+Arial, Helvetica, sans-serif; font-size: 16px;">Goal</div><div =
+class=3D"x_ContentPasted0" style=3D"font-family: Calibri, Arial, =
+Helvetica, sans-serif; font-size: =
+16px;">*******************************************************************=
+****</div><div style=3D"font-family: Calibri, Arial, Helvetica, =
+sans-serif; font-size: 16px;" class=3D""><br =
+class=3D"x_ContentPasted0"></div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">DS4EIW promotes and shares research and innovation on data =
+science solutions with the final challenge to study, promote, and =
+guarantee equality, inclusion, and well-being, significantly impacting =
+society. This is an essential subject of debate in engineering and =
+sociology, also involving governments, private and public companies, =
+activists, and the press because discrimination and biases have to be =
+avoided, stereotypes have to be removed, and well-being opportunities =
+have to be designed and promoted.&nbsp;</div><div style=3D"font-family: =
+Calibri, Arial, Helvetica, sans-serif; font-size: 16px;" class=3D""><br =
+class=3D"x_ContentPasted0"></div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">The workshop aims to allow academics and practitioners from =
+various research areas to share their experiences studying, analyzing, =
+designing, and developing innovative methodologies centered on societal =
+challenges to derive insights, characterize sociological phenomena, and =
+support policymakers in promoting more inclusive reflexive, and =
+innovative societies.</div><div style=3D"font-family: Calibri, Arial, =
+Helvetica, sans-serif; font-size: 16px;" class=3D""><br =
+class=3D"x_ContentPasted0"></div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">Industrial implementations of explainable/transparent data =
+algorithm applications, design and deployment experience reports on =
+various issues raising data transparency projects, and avoiding bias and =
+discrimination, are particularly welcome. We call for research and =
+experience papers and demonstration proposals covering any aspect of =
+data algorithmic transparency and accountability in real-life =
+applications, fundamental properties to avoid bias and discrimination. =
+&nbsp;</div><div style=3D"font-family: Calibri, Arial, Helvetica, =
+sans-serif; font-size: 16px;" class=3D""><br =
+class=3D"x_ContentPasted0"></div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">*******************************************************************=
+****</div><div class=3D"x_ContentPasted0" style=3D"font-family: Calibri, =
+Arial, Helvetica, sans-serif; font-size: 16px;">Topics of =
+interest</div><div class=3D"x_ContentPasted0" style=3D"font-family: =
+Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">*******************************************************************=
+****</div><div class=3D"x_ContentPasted0" style=3D"font-family: Calibri, =
+Arial, Helvetica, sans-serif; font-size: 16px;">We invite the submission =
+of high-quality manuscripts reporting relevant and work-in-progress =
+research studies addressing various aspects of data science and analytic =
+for equality, inclusion and well-being challenges. Contributions should =
+be of interest to a large and varied cross-disciplinary audience of =
+researchers and practitioners involved or interested from different =
+perspectives in societal challenges. The workshop welcomes submissions =
+of methodological, experimental, technical papers, application papers, =
+and papers on experiences in real-life application settings addressing - =
+though not limited to - the following topics:</div><div =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;" class=3D""><br class=3D"x_ContentPasted0"></div><div =
+class=3D"x_ContentPasted0" style=3D"font-family: Calibri, Arial, =
+Helvetica, sans-serif; font-size: 16px;">- Concepts, methodologies, and =
+solutions for sensing, modeling, managing, mining, and understanding =
+people's behavior and activity</div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">- Algorithmic accountability</div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">- Explainable algorithms&nbsp;</div><div class=3D"x_ContentPasted0"=
+ style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">- Data analytics and artificial intelligent algorithms</div><div =
+class=3D"x_ContentPasted0" style=3D"font-family: Calibri, Arial, =
+Helvetica, sans-serif; font-size: 16px;">- Recommendations for people =
+and analysts&nbsp;</div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">- Recommendations for policymakers</div><div =
+class=3D"x_ContentPasted0" style=3D"font-family: Calibri, Arial, =
+Helvetica, sans-serif; font-size: 16px;">- Intelligent systems to =
+enhance user awareness of algorithm decisions</div><div =
+class=3D"x_ContentPasted0" style=3D"font-family: Calibri, Arial, =
+Helvetica, sans-serif; font-size: 16px;">- Ethical issues of data =
+collection, storage, and exchange</div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">- Interactive query refinement and processing</div><div =
+class=3D"x_ContentPasted0" style=3D"font-family: Calibri, Arial, =
+Helvetica, sans-serif; font-size: 16px;">- Innovative solutions for =
+exploring, analyzing, and visualizing data</div><div =
+class=3D"x_ContentPasted0" style=3D"font-family: Calibri, Arial, =
+Helvetica, sans-serif; font-size: 16px;">- User-controlled algorithms =
+for data integration, cleaning, and analysis</div><div =
+class=3D"x_ContentPasted0" style=3D"font-family: Calibri, Arial, =
+Helvetica, sans-serif; font-size: 16px;">- Perception-aware data =
+processing and analytics</div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">- Database systems designed for highly interactive =
+applications</div><div class=3D"x_ContentPasted0" style=3D"font-family: =
+Calibri, Arial, Helvetica, sans-serif; font-size: 16px;">- Crowd-powered =
+data infrastructure.</div><div style=3D"font-family: Calibri, Arial, =
+Helvetica, sans-serif; font-size: 16px;" class=3D""><br =
+class=3D"x_ContentPasted0"></div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">In one of - though not limited to - the following application =
+scenarios:</div><div class=3D"x_ContentPasted0" style=3D"font-family: =
+Calibri, Arial, Helvetica, sans-serif; font-size: 16px;">- =
+Education&nbsp;</div><div class=3D"x_ContentPasted0" style=3D"font-family:=
+ Calibri, Arial, Helvetica, sans-serif; font-size: 16px;">- Private and =
+public employment</div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">- Entrepreneurship</div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">- Healthcare applications</div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">- Public safety and security</div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">- Citizens' mobility and transportation</div><div =
+class=3D"x_ContentPasted0" style=3D"font-family: Calibri, Arial, =
+Helvetica, sans-serif; font-size: 16px;">- Urban economy and urban =
+environments</div><div class=3D"x_ContentPasted0" style=3D"font-family: =
+Calibri, Arial, Helvetica, sans-serif; font-size: 16px;">- Data =
+journalism</div><div class=3D"x_ContentPasted0" style=3D"font-family: =
+Calibri, Arial, Helvetica, sans-serif; font-size: 16px;">- Covid-19 =
+pandemic</div><div class=3D"x_ContentPasted0" style=3D"font-family: =
+Calibri, Arial, Helvetica, sans-serif; font-size: 16px;">- Gender =
+Equality Plan</div><div class=3D"x_ContentPasted0" style=3D"font-family: =
+Calibri, Arial, Helvetica, sans-serif; font-size: 16px;">- Inclusive =
+Language</div><div class=3D"x_ContentPasted0" style=3D"font-family: =
+Calibri, Arial, Helvetica, sans-serif; font-size: 16px;">- Social =
+services, unemployment and homelessness</div><div =
+class=3D"x_ContentPasted0" style=3D"font-family: Calibri, Arial, =
+Helvetica, sans-serif; font-size: 16px;">- Economic, social and personal =
+development</div><div class=3D"x_ContentPasted0" style=3D"font-family: =
+Calibri, Arial, Helvetica, sans-serif; font-size: 16px;">- Government =
+transparency</div><div class=3D"x_ContentPasted0" style=3D"font-family: =
+Calibri, Arial, Helvetica, sans-serif; font-size: 16px;">- =
+User-generated content (like tweets, micro-blog, check-ins, =
+photos)</div><div style=3D"font-family: Calibri, Arial, Helvetica, =
+sans-serif; font-size: 16px;" class=3D""><br =
+class=3D"x_ContentPasted0"></div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">addressing - though not limited to - the following societal =
+challenges:</div><div style=3D"font-family: Calibri, Arial, Helvetica, =
+sans-serif; font-size: 16px;" class=3D""><br =
+class=3D"x_ContentPasted0"></div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">+ Smart-working</div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">+ Gender gap</div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">+ Balance of life and work times</div><div =
+class=3D"x_ContentPasted0" style=3D"font-family: Calibri, Arial, =
+Helvetica, sans-serif; font-size: 16px;">+ Special =
+needs,&nbsp;</div><div class=3D"x_ContentPasted0" style=3D"font-family: =
+Calibri, Arial, Helvetica, sans-serif; font-size: 16px;">+ Ethnic and =
+religious origin</div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">+ Well-being</div><div style=3D"font-family: Calibri, Arial, =
+Helvetica, sans-serif; font-size: 16px;" class=3D""><br =
+class=3D"x_ContentPasted0"></div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">Topics aligned with the UN development goals:&nbsp;<a =
+href=3D"https://www.un.org/sustainabledevelopment/sustainable-development-=
+goals/" =
+class=3D"">https://www.un.org/sustainabledevelopment/sustainable-developme=
+nt-goals/</a></div><div style=3D"font-family: Calibri, Arial, Helvetica, =
+sans-serif; font-size: 16px;" class=3D""><br =
+class=3D"x_ContentPasted0"></div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">*******************************************************************=
+*****</div><div class=3D"x_ContentPasted0" style=3D"font-family: =
+Calibri, Arial, Helvetica, sans-serif; font-size: 16px;">Diversity and =
+Inclusion Statement</div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">*******************************************************************=
+******</div><div class=3D"x_ContentPasted0" style=3D"font-family: =
+Calibri, Arial, Helvetica, sans-serif; font-size: 16px;">We support =
+Diversity &amp; Inclusion in the DS4EIW community therefore we kindly =
+ask authors to adopt inclusive language in their papers and =
+presentations</div><div class=3D"x_ContentPasted0" style=3D"font-family: =
+Calibri, Arial, Helvetica, sans-serif; font-size: 16px;">-- Inclusion =
+and diversity in writing&nbsp;<a =
+href=3D"https://dbdni.github.io/pages/inclusivewriting.html" =
+class=3D"">https://dbdni.github.io/pages/inclusivewriting.html</a></div><d=
+iv class=3D"x_ContentPasted0" style=3D"font-family: Calibri, Arial, =
+Helvetica, sans-serif; font-size: 16px;">-- Tips for designing inclusive =
+presentations&nbsp;<a =
+href=3D"https://dbdni.github.io/pages/inclusivetalks.html" =
+class=3D"">https://dbdni.github.io/pages/inclusivetalks.html</a>&nbsp;&nbs=
+p;</div><div style=3D"font-family: Calibri, Arial, Helvetica, =
+sans-serif; font-size: 16px;" class=3D""><br =
+class=3D"x_ContentPasted0"></div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">We also encourage women and underrepresented communities to =
+submit papers on the research outcomes of their activity.</div><div =
+class=3D"x_ContentPasted0" style=3D"font-family: Calibri, Arial, =
+Helvetica, sans-serif; font-size: 16px;">We will offer 2 free =
+registrations to the event to female students/researchers or to people =
+belonging to underrepresented communities to attend the workshop. The =
+DW4EIW organizers will publish guidelines to apply for this =
+support.</div><div style=3D"font-family: Calibri, Arial, Helvetica, =
+sans-serif; font-size: 16px;" class=3D""><br =
+class=3D"x_ContentPasted0"></div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">*******************************************************************=
+*****</div><div class=3D"x_ContentPasted0" style=3D"font-family: =
+Calibri, Arial, Helvetica, sans-serif; font-size: 16px;">Submission =
+Guidelines</div><div class=3D"x_ContentPasted0" style=3D"font-family: =
+Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">*******************************************************************=
+******</div><div class=3D"x_ContentPasted0" style=3D"font-family: =
+Calibri, Arial, Helvetica, sans-serif; font-size: 16px;">Submissions =
+should present original results and substantial new work not currently =
+under review or published elsewhere.</div><div style=3D"font-family: =
+Calibri, Arial, Helvetica, sans-serif; font-size: 16px;" class=3D""><br =
+class=3D"x_ContentPasted0"></div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">Papers should be formatted to IEEE Computer Society Proceedings =
+Manuscript Formatting Guidelines (<a =
+href=3D"https://www.ieee.org/conferences/publishing/templates.html" =
+class=3D"">https://www.ieee.org/conferences/publishing/templates.html</a>)=
+.</div><div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; =
+font-size: 16px;" class=3D""><br class=3D"x_ContentPasted0"></div><div =
+class=3D"x_ContentPasted0" style=3D"font-family: Calibri, Arial, =
+Helvetica, sans-serif; font-size: 16px;">Please submit a full-length =
+paper (from 5 pages up to 10 pages IEEE 2-column format) through the =
+online submission system (<a =
+href=3D"https://wi-lab.com/cyberchair/2022/bigdata22/scripts/submit.php?su=
+barea=3DS34&amp;undisplay_detail=3D1&amp;wh=3D/cyberchair/2022/bigdata22/s=
+cripts/ws_submit.php" =
+class=3D"">https://wi-lab.com/cyberchair/2022/bigdata22/scripts/submit.php=
+?subarea=3DS34&amp;undisplay_detail=3D1&amp;wh=3D/cyberchair/2022/bigdata2=
+2/scripts/ws_submit.php</a>)</div><div style=3D"font-family: Calibri, =
+Arial, Helvetica, sans-serif; font-size: 16px;" class=3D""><br =
+class=3D"x_ContentPasted0"></div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">The workshop proceedings will be published by the IEEE Computer =
+Society.</div><div style=3D"font-family: Calibri, Arial, Helvetica, =
+sans-serif; font-size: 16px;" class=3D""><br =
+class=3D"x_ContentPasted0"></div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">*******************************************************************=
+******</div><div class=3D"x_ContentPasted0" style=3D"font-family: =
+Calibri, Arial, Helvetica, sans-serif; font-size: 16px;">Workshop =
+organizers</div><div class=3D"x_ContentPasted0" style=3D"font-family: =
+Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">*******************************************************************=
+******</div><div class=3D"x_ContentPasted0" style=3D"font-family: =
+Calibri, Arial, Helvetica, sans-serif; font-size: 16px;">Tania =
+Cerquitelli, Politecnico di Torino, Italy ( email: tania DOT cerquitelli =
+AT polito DOT it)</div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">Genoveva Vargas-Solar, CNRS, LIRIS, France</div><div =
+class=3D"x_ContentPasted0" style=3D"font-family: Calibri, Arial, =
+Helvetica, sans-serif; font-size: 16px;">Arianna Montorsi, Politecnico =
+di Torino, Italy</div><div class=3D"x_ContentPasted0" =
+style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+16px;">Claudia De Giorgi, Politecnico di Torino, Italy</div>
+<br class=3D""><div class=3D"">
+<meta charset=3D"UTF-8" class=3D""><div>-- =E2=80=94&nbsp;<br =
+class=3D""><b class=3D"">Dra. Genoveva Vargas Solar</b><br =
+class=3D"">Centre National de la Recherche&nbsp;Scientifique, LIRIS, =
+Database Group&nbsp;<br class=3D""><a href=3D"http://www.vargas-solar.com"=
+ class=3D"">www.vargas-solar.com</a><br class=3D""><br class=3D""><b =
+class=3D"">LIRIS | Laboratoire d'InfoRmatique en&nbsp;Image et Syst=C3=A8m=
+es d'information (UMR&nbsp;5205)</b><br class=3D"">Campus de la Doua - B =
+- 21-005 B=C3=A2timent&nbsp;Nautibus<br class=3D"">25 avenue Pierre de =
+Coubertin<br class=3D"">69622 Villeurbanne Cedex<br class=3D"">France<br =
+class=3D"">M &nbsp; genoveva.vargas-solar@cnrs.fr<br class=3D""><br =
+class=3D"">Visiting scientist, Data and Knowledge&nbsp;Management Group, =
+UDLAP<br class=3D"">Universidad de las Am=C3=A9ricas, Puebla<br =
+class=3D"">Sta. Catarina M=C3=A1rtir 72820 Cholula, =
+Puebla,&nbsp;Mexico&nbsp;<br class=3D"">T &nbsp; &nbsp;+52 222 2 29 26 =
+06&nbsp;<br class=3D"">F &nbsp; &nbsp;+52 222 2 29 21 38, &nbsp;+52 222 =
+1 78 01 85&nbsp;<br class=3D"">E &nbsp; =
+&nbsp;Genoveva.Vargas@udlap.mx</div>
+</div>
+<br class=3D""></body></html>=
+
+--Apple-Mail=_3F0C119E-6606-4819-8B73-19C0407478BC--

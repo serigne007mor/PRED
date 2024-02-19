@@ -1,0 +1,492 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (bouncesmtp2.u12.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 1DAED14017E7
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu,  2 Mar 2023 16:47:39 +0100 (CET)
+Received: from mx1.localdomain (MX1.univ-nantes.fr [193.52.101.135])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id 1A1035FA6
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu,  2 Mar 2023 16:47:39 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.localdomain (Postfix) with ESMTP id 0CFB11213AC
+	for <liste-egc@polytech.univ-nantes.fr>; Thu,  2 Mar 2023 16:47:39 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -2.592
+X-Spam-Level:
+X-Spam-Status: No, score=-2.592 tagged_above=-1000 required=5
+	tests=[CRM114_GOOD=-5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	FUZZY_OCR_WRONG_EXTENSION=1.500, HTML_MESSAGE=0.001,
+	J_CHICKENPOX_21=0.6, MR_NOT_ATTRIBUTED_IP=0.2,
+	RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+	RCVD_IN_WSFF=0.01, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+	UN_PHISHING_PW=0.1] autolearn=disabled
+X-CRM114-Status: GOOD ( 8.3821 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=ina1.onmicrosoft.com
+Received: from mx1.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id H6suWcgcEwqt for <liste-egc@polytech.univ-nantes.fr>;
+	Thu,  2 Mar 2023 16:47:36 +0100 (CET)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=40.107.21.117; helo=eur05-vi1-obe.outbound.protection.outlook.com; envelope-from=nherve@ina.fr; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=none (p=none dis=none) header.from=ina.fr
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=nherve@ina.fr
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (1024-bit key; unprotected) header.d=INA1.onmicrosoft.com header.i=@INA1.onmicrosoft.com header.b="hICRyv13";
+	dkim-atps=neutral
+X-Greylist: whitelisted by SQLgrey-1.6.7
+Received: from EUR05-VI1-obe.outbound.protection.outlook.com (mail-vi1eur05on2117.outbound.protection.outlook.com [40.107.21.117])
+	by mx1.localdomain (Postfix) with ESMTPS id 6A50C120356
+	for <liste-egc@polytech.univ-nantes.fr>; Thu,  2 Mar 2023 16:47:35 +0100 (CET)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=lL3zofLuuiZIZugJ2ykRTRrPPLyayHhdYPq9BmEYld2ou2DtlRBpFfUppLtEpj787Hj8blHqOERqSHVRqBwp1T8b4ibx+fWhQLbeLdkEQDTT+zXUMvvilJ4y2PrzeRDMfjlWc55qUpEpvrc7ACyltnqeOXx6U+vo9sIGcmgHSWbdOz5BvOxYqICDkf8sRUaBbPLUS4DgEqzT6cSgc148xHdV2IjBQEnZ/9OhMH0z6HGpS2/AcQpE+VPG0+ZCTArjDNKTytTFydi8e7SOQzCu39eLqY4OJELBjqYZDmYd2/hRI3JyR1d5ch39mZUl+kITcTFOeRKMOkrMiHtd/xf2eA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=UJ7lMkHH72Cxq7exKETd3tUzVJGisE9xsSPXBJ8UvdY=;
+ b=UL2mtE4CJcH6G/Qq0ycEjYb+3otz/9btpJDTj7/2bFtm6fRR8Fw9lOQ2SncFYHBfuS6TFTAkx1B9J4+0hRYogOyg6Sn0n/WCciMTiAZRzaqDCR2fdl+Z7Hcy7tjKdgTXl57DYt88Ywiyfc28iG0zsVu5/l12h4nuimWWiUmEiwunJi5I/iQAoc1CHPzTqkw9vgKq3SoIWf3v4y9zcmd2MAdiw92uTIgjxfKuMN7n/BTC9/048QjguvUsNKjTRhg5BZxSbtz9NUThpC4MpRbJk1CuAqnzsyO4BgAlpsU2X/h6httw+czCRcjYsNGV33Py+nHRiMalZQl+ZlqGFTzR0Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=ina.fr; dmarc=pass action=none header.from=ina.fr; dkim=pass
+ header.d=ina.fr; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=INA1.onmicrosoft.com;
+ s=selector2-INA1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=UJ7lMkHH72Cxq7exKETd3tUzVJGisE9xsSPXBJ8UvdY=;
+ b=hICRyv13KyeRvQdOnv2teSZZCri+CDSQw9xMsW/Ebd3GGelNbJ+LMYpqrxjpq/MjXSJ/QR9o0Q3D9vwS9TLG4vMfxheuUNOHmsytvP7SyvxeloP+uusHufzKqATqA73PNVJOJrsp021hxEPBqFjOSvFkjl3FNor8MM7Ep83mkAk=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=ina.fr;
+Received: from DB6PR04MB3096.eurprd04.prod.outlook.com (2603:10a6:6:c::12) by
+ AM8PR04MB7937.eurprd04.prod.outlook.com (2603:10a6:20b:248::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6156.18; Thu, 2 Mar
+ 2023 15:47:32 +0000
+Received: from DB6PR04MB3096.eurprd04.prod.outlook.com
+ ([fe80::d0af:556e:4740:20f7]) by DB6PR04MB3096.eurprd04.prod.outlook.com
+ ([fe80::d0af:556e:4740:20f7%5]) with mapi id 15.20.6111.015; Thu, 2 Mar 2023
+ 15:47:32 +0000
+Content-Type: multipart/alternative;
+ boundary="------------Vy6brDztt47Eb4delk0dY2b2"
+Message-ID: <83a90d90-8b88-7861-dd4d-2c479d3be49f@ina.fr>
+Date: Thu, 2 Mar 2023 16:47:30 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Content-Language: fr
+To: "liste-egc@polytech.univ-nantes.fr" <liste-egc@polytech.univ-nantes.fr>
+From: Nicolas HERVE <nherve@ina.fr>
+X-ClientProxiedBy: PR3P193CA0053.EURP193.PROD.OUTLOOK.COM
+ (2603:10a6:102:51::28) To DB6PR04MB3096.eurprd04.prod.outlook.com
+ (2603:10a6:6:c::12)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DB6PR04MB3096:EE_|AM8PR04MB7937:EE_
+X-MS-Office365-Filtering-Correlation-Id: bcbd3023-2a69-4991-083c-08db1b356fad
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	3VKBSIxIXgGuXhxFlQCA9RjLRyz/IQUzm4uBxetvQgAwagAp668euVO6RKhyzo98BXd9O4mZgeKbXZVWodS9vc/61ys/lMxkddce2PhrWUhrsr30JffQaFF3ba8mHRalHEbyB8sHLUOwRZ0mg7ON6DwwyD54YP+FsMeAkuPGRf2fq10LAgKsU4B7WCXdT+qT1dh5Pabiwlw1Bg2abOZL/j8VDCWESASPE/w17lTMSAYtUxYugcqYqI58Vy+W4ZbanPH5XLV201Zf/vqTnYPpg9hCSmSQAxmZ3yguHIRmqEpp6em2b3NSMnT3Z5yCD4sHJoOK+5EClDJARJSKjYsyTl6OaQUx17fhrtlXA0nLXPR8vs6fFThKh6U7HjNkDFWfWnfOZXBk19CWh8uTNkcTt1oIz45Kwb5+IsjEtXP3cenhuD4ubghZRmpwmF9CAwOVZQUS9BOLjMMVNVuUxuP+D/zqvkNPwcqG+vxi5iq0aHlSf9lMPIyRM1pCB6kKOYLvp8XkRa3h7PwAMJtLaJWyoWP8Ako2s8izgns7k42FrVjjriWM473YXdqhg2Leq9XcIzGIAD+5fLQizdg18j9mSvJj+mOscXDALzAjthCn2AWF0gUZhd3uvj6N6rewRCRMU0g8YK16Ixx8p7NSnvgemHKVbpLEhuW+jC5bZxcDSQhxk/P3zEeJZBlOstm/KQ2jrfBqAjvHy/px3BAOXb1Um1Zz+/Bhin5+8N5AwycEqBIzlycu9KFDRNCrq93SF4L/
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:fr;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DB6PR04MB3096.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(4636009)(396003)(136003)(376002)(346002)(39850400004)(366004)(451199018)(166002)(38350700002)(38100700002)(224303003)(31696002)(36756003)(6916009)(86362001)(66476007)(66946007)(2906002)(8936002)(66556008)(41300700001)(5660300002)(26005)(6512007)(186003)(6506007)(33964004)(2616005)(316002)(786003)(478600001)(52116002)(966005)(6486002)(45080400002)(31686004)(43740500002)(45980500001);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?M3NxQ0JIZGFlUUR2UWtaclpIVytNdUtDVmdSc0l1aVhEdTJtUVFGb2xURTI0?=
+ =?utf-8?B?TXFnSnhHRjk4dE1rQytrRktFakl3UHRkL08zdkRZQ0pVaVliK0RZU0xFdmtx?=
+ =?utf-8?B?TlZIazVVd0JOa0ViYTlGOXVDeGJyY09tVFIvaE9rbXd1eDJKVzNkTHdlOUFV?=
+ =?utf-8?B?SDFrcHRiSE1BcklScGdYVUdSUC9tbnVBM3EvbHNITTEvREw4TnhmQWI3QjAz?=
+ =?utf-8?B?SzJXQVNjUmVid0M5OGp2MVpmbGxORVZHWGU0cDJJZ2h0T3NZc0tmaWdQdnh3?=
+ =?utf-8?B?T1NCKzBkSllMdzh0OU1rTlZQM21qWDhWMjB6a25HbVgyRkxjN0YrYUxmRFpI?=
+ =?utf-8?B?NFYxQVpwTmt4M29qQ3hMRTVTcXFHMTBKTUJvV2tzVmhXcUJuZXFwSzFvODc5?=
+ =?utf-8?B?Y0EvWU0rTTBWeHB1N0ptZjhkeXRwcU02ZXhuMUZ5ZDlkVTRyMldNNHFWb1Rx?=
+ =?utf-8?B?VFhyRmo2TWd3S2MrZTczRERkVy9zQmN5UVFRU2hrc1BWQkgwWFhSa3pRdzR1?=
+ =?utf-8?B?cUhCejlPbkNzUzZsd0ZUTkpvU3ZCSmFUV29CYzhLaHpnVjFqajRDbTk1TmNq?=
+ =?utf-8?B?bEVSWXBRZXdNWnpwNmFxSmczbXZ1d2dhRm1jUzE3b1BoUlA0Q0M2aDkvSWZO?=
+ =?utf-8?B?aDZnRmVHb05ja29MQlpuclpsSVFFRWVxcXdReHdEVkdnZmNobVR4SGpJek9j?=
+ =?utf-8?B?V25TUW1iR1Q0NWhTc2JxeDJPcXg1ZlBhN0dnZ1dXRXVCRWQvYUNxcjNvVkNP?=
+ =?utf-8?B?Z0sxTVNiWm1yNnBCa1pZbmZvTzBtWjlZU3lhMTRvSWdRZmtsUVZwQWNmMDVK?=
+ =?utf-8?B?WnIzK29uaVBNZVhlNzJkTWwyVEc1MktGUUZGaGVHSGFzemU3WE5rSC83RXhK?=
+ =?utf-8?B?bDRrSzloY2VrL0MzZC9VUnI0elZuUVFGYTZER3kyL1U5S2Nndm9ZN08vTUhv?=
+ =?utf-8?B?M2RqVFN1cVYrWmhnTVFrTzd1U0hQenZtUjI0cmRScjVyK1hnMXMvd1prcU1j?=
+ =?utf-8?B?QnkrcXhPRDBQVVpxRUprUXNMSXBZNUJTc2k5Qk9VRUMxYjBQY1o0U1JZTzd4?=
+ =?utf-8?B?eTVGalg3UFl6MlRENEhOVXZHWjFaMFd0U0dncm96WlgwbkptTHU3Umw5TXdB?=
+ =?utf-8?B?Tnk1WkxuRTZjR05tWDZETWRzUWIxRUVsMjhRbG94VytMQzFXbHJQdy9jeHNE?=
+ =?utf-8?B?UlFZT0pENjJFR3MyakNubmdIaEZRT1hLRGhkUE54aldFRXBuUmtqdlZKRzVm?=
+ =?utf-8?B?eldUeEZHcWxLT01LWmtZVmw4c3lDNURHOEV3aU9taEVvejQyZlFrK09IUUtU?=
+ =?utf-8?B?QjY1ekVISmJIb24zaVNEQU80SVBRSklhNHVpWG9IbUdPcHg4NFFUb0VOYjdD?=
+ =?utf-8?B?azAzdi9TZFhEREtDemVmYlducWJPVi9kSzVrMFRkR0lXdGh3OXo5TkdoSmt2?=
+ =?utf-8?B?anBlSGtMa003Y2J3OUJid3JsSjdadzA0aGJmSlYwVjJjRjBGcU12a0phZFRq?=
+ =?utf-8?B?dmYyWFgwcjF2YnNUakFGejZvanlSeHYrYnZFQ21Yb3dBbFErenZrby9zQTUz?=
+ =?utf-8?B?TUsrOXl2cmZnYjNUbVNDTHh2NnA4RlJ2T3lOTnZkZElNcWZTcHBuN2ZZd2tw?=
+ =?utf-8?B?Uy9pSGhmWTA1VE03MUdKaUZEcnN5OTk0d1g1dVlIaE93ZHFzeU82MUF6NS90?=
+ =?utf-8?B?U0ZMbTdOaG13c0NvbUN1ZVYrbGpsSm5JNTdvY2ZQVjd1TFlLaXFYTFY2Yk9Z?=
+ =?utf-8?B?SG5wUTdTUmNqK1g0a2ZLL3M5b0w2NUl5eEltVjlQZU9BdEdWQzdOVElHYWti?=
+ =?utf-8?B?Q2l6QS9WeTBweGRaNGNNb21hT2V6Ym95aXZNUHlzSkdBU0E4dmFUTUtrcTdn?=
+ =?utf-8?B?RjQ2QlBUT1FVU2lzMzhUaWdON1A5TGtwWndiMEhMaGhRY0tSUkNQdTFMVjVL?=
+ =?utf-8?B?aXF1ckI3Q0p4Q0Z3SjBDc085OExZVTNYREpMUUZQMjNHdFlobFpwUkV0UkQr?=
+ =?utf-8?B?N3NYSDdVZUY4T0dqb1gwNU5Hdk1RTG45Qmx5OGp6dnZNR3ZnOVZnSldzb3Er?=
+ =?utf-8?B?MHBtQmE1NHhaMGRwUDVmU2xYNFUySWQ3TldvRnVNUmdaeVhqdXBuV0N1SHJh?=
+ =?utf-8?Q?Ni7eSZ+MEOVw8VTiCj7wW2Fk1?=
+X-OriginatorOrg: ina.fr
+X-MS-Exchange-CrossTenant-Network-Message-Id: bcbd3023-2a69-4991-083c-08db1b356fad
+X-MS-Exchange-CrossTenant-AuthSource: DB6PR04MB3096.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Mar 2023 15:47:32.5759
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 884113ac-9e9c-40dd-b29b-edfe77e79656
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: KJ6TzsjZlT4Kn5pln116ho14cfOUqiB0lWs+dDsfxsfsXtwZQjDPDkikTRbS2kR4
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM8PR04MB7937
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Poste CDI chercheur.se NLP =?UTF-8?Q?=C3=A0?= l'Ina
+
+--------------Vy6brDztt47Eb4delk0dY2b2
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+
+Bonjour,
+
+L’INA (Institut national de l’audiovisuel) assure le dépôt légal de la 
+télévision, de la radio et du web média, et commercialise une importante 
+collection audiovisuelle auprès des professionnels.
+
+Les travaux menés au sein du service de la Recherche de l’INA visent 
+notamment à améliorer les approches numériques permettant d’extraire, 
+d’indexer, de modéliser, de visualiser et de comprendre des 
+connaissances depuis les fonds audiovisuels conservés par l’institut. 
+Ces méthodes numériques sont principalement utilisées pour aider à la 
+documentation des fonds ainsi que dans des travaux transdisciplinaires 
+pour avoir une meilleure connaissance des médias et de la façon dont ils 
+parlent de la société.
+
+Afin de renforcer les travaux sur l’extraction d’informations issus de 
+la modalité texte, l’institut recrute un.e Chercheur.euse spécialisé.e 
+en TAL (Traitement automatique des langues) en CDI. Les sujets 
+prioritaires sur lesquels il/elle sera amené à se pencher sont la 
+segmentation sémantique des flux audios (en se basant sur les 
+transcriptions) et l’amélioration des modèles de langues neuronaux pour 
+des tâches finales de compréhension de la langue orale (SLU) : 
+classification, sentence labeling, adaptation de vocabulaire, …
+
+Sous la responsabilité du chef de service Recherche, vous serez en 
+charge de :
+
+Garantir les missions de recherche en TAL (Traitement automatique des 
+langues) notamment la segmentation sémantique des flux audios (en se 
+basant sur les transcriptions) et l’amélioration des modèles de langues 
+neuronaux pour des tâches finales de compréhension de la langue orale 
+(SLU) : classification, sentence labeling, adaptation de vocabulaire, …
+
+
+1 - Proposer, concevoir et mettre en œuvre des projets de recherche et 
+innovation complexes et/ou d'envergure
+
+  *
+
+    Définir les projets de recherche liés à cette thématique
+
+  *
+
+    Organiser une veille scientifique et effectuer des travaux de
+    recherche visant à améliorer l’état de l’art, notamment sur de gros
+    corpus de données issus des collections de l’INA
+
+  *
+
+    Concevoir, implémenter, tester, évaluer des outils technologiques
+    innovants dans le cadre des usages existants ou pressentis de
+    l’Institut
+
+  *
+
+    Participer à la stratégie de recherche et développement du service
+
+  *
+
+    Participer à la rédaction des documents liés à l’activité (rapports
+    d’activité, livrables des projets en particulier).
+
+2 - Coordonner les travaux des stagiaires et des doctorants
+3 - Réaliser des partenariats
+4 - Proposer et participer à des projets de recherche collaboratifs 
+(financements régionaux, ANR, européens, …)
+5 - Collaborer avec l’ensemble des acteurs internes et externes du 
+service, notamment la tribu IA au sein de la DDT et le Lab de l'INA 
+(DDT/Patrimoines)
+6 - Rédiger ou participer à la rédaction d’articles scientifiques et 
+présenter ces articles dans des colloques, séminaire ou salons
+
+Diplômes
+Justifier d’un doctorat dans le domaine de l'informatique, spécialité : 
+traitement automatique des langues et/ou machine learning, ou parcours 
+professionnel admis en équivalence.
+
+Offre LinkedIn : https://www.linkedin.com/jobs/view/3499038776/
+
+Poste basé à Bry sur Marne, télétravail partiel possible
+
+N'hésitez pas à me contacter pour plus d'informations, les entretiens se 
+feront au fil de l'eau.
+
+
+
+-- 
+
+logo_ina
+
+	
+
+*Nicolas Hervé *
+
+*Chef du service de la Recherche *
+
+Direction Data et Technologies
+
+Ligne directe : +33 1 49 83 *21 66* - nherve@ina.fr <mailto:nherve@ina.fr>
+
+--------------Vy6brDztt47Eb4delk0dY2b2
+Content-Type: multipart/related;
+ boundary="------------qV0Ba3RfQakZYGEAIVPsfq2c"
+
+--------------qV0Ba3RfQakZYGEAIVPsfq2c
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  </head>
+  <body>
+    <p> </p>
+    <p><font face="Helvetica, Arial, sans-serif">Bonjour,</font></p>
+    <p><font face="Helvetica, Arial, sans-serif">L’INA (Institut
+        national de l’audiovisuel) assure le dépôt légal de la
+        télévision, de la radio et du web média, et commercialise une
+        importante collection audiovisuelle auprès des professionnels.<br>
+        <br>
+        Les
+        travaux menés au sein du service de la Recherche de l’INA visent
+        notamment à améliorer les approches numériques permettant
+        d’extraire, d’indexer, de modéliser, de visualiser et de
+        comprendre des connaissances depuis les fonds audiovisuels
+        conservés
+        par l’institut. Ces méthodes numériques sont principalement
+        utilisées pour aider à la documentation des fonds ainsi que dans
+        des travaux transdisciplinaires pour avoir une meilleure
+        connaissance
+        des médias et de la façon dont ils parlent de la société.<br>
+        <br>
+        Afin
+        de renforcer les travaux sur l’extraction d’informations issus
+        de
+        la modalité texte, l’institut recrute un.e Chercheur.euse
+        spécialisé.e en TAL (Traitement automatique des langues) en CDI.
+        Les sujets prioritaires sur lesquels il/elle sera amené à se
+        pencher sont la segmentation sémantique des flux audios (en se
+        basant sur les transcriptions) et l’amélioration des modèles de
+        langues neuronaux pour des tâches finales de compréhension de la
+        langue orale (SLU) : classification, sentence labeling,
+        adaptation de
+        vocabulaire, …<br>
+        <br>
+        Sous la responsabilité du chef de
+        service Recherche, vous serez en charge de :<br>
+        <br>
+        Garantir les
+        missions de recherche en TAL (Traitement automatique des
+        langues)
+        notamment la segmentation sémantique des flux audios (en se
+        basant
+        sur les transcriptions) et l’amélioration des modèles de langues
+        neuronaux pour des tâches finales de compréhension de la langue
+        orale (SLU) : classification, sentence labeling, adaptation de
+        vocabulaire, …<br>
+        <br>
+        <br>
+        1 - Proposer, concevoir et mettre
+        en œuvre des projets de recherche et innovation complexes et/ou
+        d'envergure</font></p>
+    <ul>
+      <li>
+        <p style="margin-bottom: 0cm"><font face="Helvetica, Arial,
+            sans-serif">Définir les projets de recherche liés à cette
+            thématique</font> </p>
+      </li>
+      <li>
+        <p style="margin-bottom: 0cm"><font face="Helvetica, Arial,
+            sans-serif">Organiser une veille scientifique et effectuer
+            des travaux de recherche visant à améliorer l’état de l’art,
+            notamment sur de gros corpus de données issus des
+            collections de l’INA</font> </p>
+      </li>
+      <li>
+        <p style="margin-bottom: 0cm"><font face="Helvetica, Arial,
+            sans-serif">Concevoir, implémenter, tester, évaluer des
+            outils technologiques innovants dans le cadre des usages
+            existants ou pressentis de l’Institut</font> </p>
+      </li>
+      <li>
+        <p style="margin-bottom: 0cm"><font face="Helvetica, Arial,
+            sans-serif">Participer à la stratégie de recherche et
+            développement du service</font> </p>
+      </li>
+      <li>
+        <p><font face="Helvetica, Arial, sans-serif">Participer à la
+            rédaction des documents liés à l’activité (rapports
+            d’activité, livrables des projets en particulier).</font></p>
+      </li>
+    </ul>
+    <p><font face="Helvetica, Arial, sans-serif">2 - Coordonner les
+        travaux des stagiaires et des doctorants<br>
+        3 - Réaliser des
+        partenariats<br>
+        4 - Proposer et participer à des projets de
+        recherche collaboratifs (financements régionaux, ANR, européens,
+        …)<br>
+        5 - Collaborer avec l’ensemble des acteurs internes et
+        externes du service, notamment la tribu IA au sein de la DDT et
+        le
+        Lab de l'INA (DDT/Patrimoines)<br>
+        6 - Rédiger ou participer à la
+        rédaction d’articles scientifiques et présenter ces articles
+        dans
+        des colloques, séminaire ou salons<br>
+        <br>
+        Diplômes<br>
+        Justifier
+        d’un doctorat dans le domaine de l'informatique, spécialité :
+        traitement automatique des langues et/ou machine learning, ou
+        parcours professionnel admis en équivalence.<br>
+        <br>
+        Offre
+        LinkedIn : <a class="moz-txt-link-freetext" href="https://www.linkedin.com/jobs/view/3499038776/">https://www.linkedin.com/jobs/view/3499038776/</a></font></p>
+    <p><font face="Helvetica, Arial, sans-serif">Poste basé à Bry sur
+        Marne, télétravail partiel possible</font></p>
+    <p><font face="Helvetica, Arial, sans-serif">N'hésitez pas à me
+        contacter pour plus d'informations, les entretiens se feront au
+        fil
+        de l'eau.</font></p>
+    <p><br>
+      <br>
+    </p>
+    <p>
+      <style type="text/css">p { margin-bottom: 0.25cm; line-height: 115%; background: transparent }</style></p>
+    <div class="moz-signature">-- <br>
+      <style><!--
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm; margin-bottom:.0001pt; font-size:12.0pt; font-family:'Lato','sans-serif'; color:black;}
+a:link
+	{color:blue;text-decoration:underline;}
+a:visited
+	{color:purple;text-decoration:underline;}
+--></style>
+      <table cellspacing="0" cellpadding="0" border="0">
+        <tbody>
+          <tr style="height:49.35pt">
+            <td style="width:48.75pt;height:49.35pt" width="65" valign="top">
+              <p class="MsoNormal" style="margin-left:-2.25pt"> <span style="font-size:7.0pt"> <img src="cid:part1.whqdrlAP.BPGjHMiN@ina.fr" alt="logo_ina" width="64" height="64"> </span> </p>
+            </td>
+            <td colspan="3" style="width:384.45pt;border-left:none;height:49.35pt" width="513" valign="top">
+              <p class="MsoNormal" style="margin-left:11.35pt"> <b><span style="font-size:10.0pt;color:#0099CC"> Nicolas
+                    Hervé </span></b> </p>
+              <p class="MsoNormal" style="margin-left:11.35pt;line-height:9.0pt"> <b><span style="font-size:8.0pt"> Chef du service de la
+                    Recherche </span></b> </p>
+              <p class="MsoNormal" style="margin-left:11.35pt;line-height:9.0pt"> <span style="font-size:8.0pt;color:#666666"> Direction Data
+                  et Technologies </span> </p>
+              <p class="MsoNormal" style="margin-left:11.35pt;line-height:9.0pt"> <span style="font-size:7.5pt;color:#333333"> Ligne directe :
+                  +33 1 49 83 <b>21 66</b> - </span> <span style="font-size:7.0pt"> <a href="mailto:nherve@ina.fr"> <span style="font-size:7.5pt;color:#333333;text-decoration:none">nherve@ina.fr</span>
+                  </a> </span> </p>
+            </td>
+          </tr>
+          <tr style="height:10pt">
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
+--------------qV0Ba3RfQakZYGEAIVPsfq2c
+Content-Type: image/jpg
+Content-Id: <part1.whqdrlAP.BPGjHMiN@ina.fr>
+Content-Transfer-Encoding: base64
+
+/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABaAAD/4QOqaHR0cDov
+L25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENl
+aGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4
+OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjMtYzAxMSA2Ni4xNDU2NjEsIDIwMTIvMDIvMDYtMTQ6
+NTY6MjcgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5
+OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHht
+bG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0i
+aHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1sbnM6eG1w
+PSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3Jn
+L2RjL2VsZW1lbnRzLzEuMS8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QzM1MkEyMENDNDgx
+MTFFM0ExOUU4QkU1MzIxRTJCNkUiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QzM1MkEyMEJD
+NDgxMTFFM0ExOUU4QkU1MzIxRTJCNkUiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgSWxsdXN0cmF0
+b3IgQ1MzIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NDQz
+OEJEMjFCQzAwMTFFM0JFNjBCOUQzRkIxNTMyRDIiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6
+NDQzOEJEMjJCQzAwMTFFM0JFNjBCOUQzRkIxNTMyRDIiLz4gPGRjOnRpdGxlPiA8cmRmOkFsdD4g
+PHJkZjpsaSB4bWw6bGFuZz0ieC1kZWZhdWx0Ij5JbXByaW1lcjwvcmRmOmxpPiA8L3JkZjpBbHQ+
+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
+K9pyvacr2nK9oIYfaf/Z
+
+--------------qV0Ba3RfQakZYGEAIVPsfq2c--
+
+--------------Vy6brDztt47Eb4delk0dY2b2--

@@ -1,0 +1,735 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (BounceSMTP1.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 10CBD14006DE
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu, 11 Nov 2021 16:21:47 +0100 (CET)
+Received: from mx2.d101.univ-nantes.fr (MX2.univ-nantes.fr [193.52.101.136])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id 09B0B6D19C6
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu, 11 Nov 2021 16:21:47 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTP id F07C51009DC
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 11 Nov 2021 16:21:46 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=univ-nantes.fr header.b=ds7aRoj3; dkim=pass (2048-bit key)
+	header.d=univ-nantes.fr header.b=ds7aRoj3
+Received: from mx2.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id qrAAsoLGkoZc for <liste-egc@polytech.univ-nantes.fr>;
+	Thu, 11 Nov 2021 16:21:46 +0100 (CET)
+X-Greylist: whitelisted by SQLgrey-1.6.7
+Received: from smtp-tls.univ-nantes.fr (smtptls1-loi.cpub.univ-nantes.fr [193.52.103.112])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTPS id D34891009DB
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 11 Nov 2021 16:21:46 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by smtp-tls.univ-nantes.fr (Postfix) with ESMTP id B6DAA615166
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 11 Nov 2021 16:21:46 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-nantes.fr;
+	s=mailv2; t=1636644106;
+	bh=201/5wyAx57ErxA0JynIbd/TAiVNtXtLOFEgxqAXw+8=;
+	h=Date:Subject:References:To:From:In-Reply-To:From;
+	b=ds7aRoj3nJzUUboTQeSvSKTOBcV77E1S3mrWqHAsPelex2V7kLhscfloh9QUcdjMv
+	 PSZAfBwQDJb7U8SkddWbp1ILueCv2MkxR8o2uvLhthmDnDB6jNIDIdQDoMDKDVgxFu
+	 EXUIXh31D5Qph6PKxxIL7L/R+7cVLF5BzKVEitvDvstsQE6f5dV1/WFbZ+2lovrhzy
+	 zLSGB+VxdR6FU+i7Z0thEVzbCd/giGo7Nb+vIqYoRgPveIOidhS7V+rOFAH9ew/jbd
+	 tZEH4JkQ+VT3UecYTqpbfr4f9qpuSayyEK/jdCTkU3PuRIPL8SmKR4OfOrL1kJr2Vq
+	 0MkIu6Tn2Ea9A==
+X-Virus-Scanned: Debian amavisd-new at smtptls1-lmb.cpub.univ-nantes.fr
+Received: from smtp-tls.univ-nantes.fr ([127.0.0.1])
+	by localhost (smtptls1-loi.cpub.univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 1eCC8m747vMs for <liste-egc@polytech.univ-nantes.fr>;
+	Thu, 11 Nov 2021 16:21:46 +0100 (CET)
+Received: from [IPV6:2a01:cb05:891e:b700:f512:2b:11d4:d5dc] (2a01cb05891eb700f512002b11d4d5dc.ipv6.abo.wanadoo.fr [IPv6:2a01:cb05:891e:b700:f512:2b:11d4:d5dc])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-tls.univ-nantes.fr (Postfix) with ESMTPSA id 6F883615165
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 11 Nov 2021 16:21:46 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-nantes.fr;
+	s=mailv2; t=1636644106;
+	bh=201/5wyAx57ErxA0JynIbd/TAiVNtXtLOFEgxqAXw+8=;
+	h=Date:Subject:References:To:From:In-Reply-To:From;
+	b=ds7aRoj3nJzUUboTQeSvSKTOBcV77E1S3mrWqHAsPelex2V7kLhscfloh9QUcdjMv
+	 PSZAfBwQDJb7U8SkddWbp1ILueCv2MkxR8o2uvLhthmDnDB6jNIDIdQDoMDKDVgxFu
+	 EXUIXh31D5Qph6PKxxIL7L/R+7cVLF5BzKVEitvDvstsQE6f5dV1/WFbZ+2lovrhzy
+	 zLSGB+VxdR6FU+i7Z0thEVzbCd/giGo7Nb+vIqYoRgPveIOidhS7V+rOFAH9ew/jbd
+	 tZEH4JkQ+VT3UecYTqpbfr4f9qpuSayyEK/jdCTkU3PuRIPL8SmKR4OfOrL1kJr2Vq
+	 0MkIu6Tn2Ea9A==
+Content-Type: multipart/alternative;
+ boundary="------------lCs50fQHHtF8AuabnYmlOmr2"
+Message-ID: <d8c7a44e-ba4a-9570-3b45-46b505681b37@univ-nantes.fr>
+Date: Thu, 11 Nov 2021 16:21:44 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.0
+Content-Language: fr
+References: <33f4d99e-bf4e-ed2c-e107-03cfb0e01bfa@univ-nantes.fr>
+To: liste-egc@polytech.univ-nantes.fr
+From: Claudia Marinica <claudia.marinica@univ-nantes.fr>
+In-Reply-To: <33f4d99e-bf4e-ed2c-e107-03cfb0e01bfa@univ-nantes.fr>
+X-Forwarded-Message-Id: <33f4d99e-bf4e-ed2c-e107-03cfb0e01bfa@univ-nantes.fr>
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] EXTENSION =?UTF-8?Q?8=C3=A8me_=C3=89cole_d=E2=80=99Hi?=
+ =?UTF-8?Q?ver_=C3=A9-EGC_=22L=E2=80=99humain?= dans la boucle de
+ =?UTF-8?Q?l=E2=80=99exploration?= des =?UTF-8?Q?donn=C3=A9es?= et de
+ =?UTF-8?Q?l=E2=80=99apprentissage=22?= =?UTF-8?Q?=2C?=
+ Blois, France - Appel =?UTF-8?Q?=C3=A0?= participation
+
+This is a multi-part message in MIME format.
+--------------lCs50fQHHtF8AuabnYmlOmr2
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+
+**** Extension de la date limite de pré-inscription : 30 Novembre 2021 ****
+
+*ECOLE D’HIVER - APPEL A PARTICIPATION*
+
+*
+
+8ème École d’Hiver é-EGC sur le thème « L’humain dans la boucle de 
+l’exploration des données et de l’apprentissage »
+
+24 – 28 Janvier 2022, Blois - France
+
+https://egc2022.univ-tours.fr/ <https://egc2022.univ-tours.fr/>
+
+==============================================
+
+
+La huitième École d’Hiver é-EGC, sur le thème « L’humain dans la boucle 
+de l’exploration des données et de l’apprentissage », est un  événement 
+organisé par l’Association Extraction et Gestion de Connaissances (EGC, 
+http://www.egc.asso.fr/).
+
+Cet événement s’organise autour de deux activités principales :
+
+•    deux jours de formation : les 24 et 25 Janvier 2022
+
+•    participation à la conférence EGC2022 : du 24 au 28  janvier 2022
+
+
+Cet appel est également disponible à l’adresse :
+
+https://egc2022.univ-tours.fr/ecole <https://egc2022.univ-tours.fr/ecole>
+
+
+THEMES DE L'ECOLE : L’humain dans la boucle de l’exploration des données 
+et de l’apprentissage
+
+L'exploration de données est une tâche qui nécessite intrinsèquement une 
+forte interaction humaine. L'expert en la matière examine les données 
+pour identifier une hypothèse, des questions potentielles et où chercher 
+des réponses dans les données. De même, en apprentissage automatique ou 
+en fouille de données, l’expert peut jouer un rôle fondamental dans le 
+processus d’élicitation d’un modèle ou de découvertes de connaissances 
+en spécifiant des propriétés que doit satisfaire le modèle recherché. 
+Cette école s'intéresse aux différentes méthodes d'intégration de 
+l'humain au processus d'exploration de données et de découverte de 
+connaissances.
+
+
+OBJECTIFS DE L'ECOLE
+
+Les deux jours de formation ont pour but principal d’offrir aux 
+participants des tutoriaux d’initiation dans le domaine de recherche 
+couvrant les thèmes de l’école mais également des tutoriaux plus 
+spécifiques présentant les récentes avancées proposant des solutions et 
+des techniques nouvelles pour les différentes problématiques ayant 
+émergées dans ce domaine. Les exposés de 1h30 couvriront une large gamme 
+des problématiques et des solutions existantes.Certains exposés seront 
+associés à des séances plus pratiques afin de permettre aux participants 
+de manipuler quelques outils.
+
+La participation à la conférence permettra aux participants de prendre 
+part à un des événements majeurs de la communauté francophone de 
+l’extraction et la gestion de connaissances. Elle leur permettra 
+d’assister à des présentations de nouvelles avancées et approches 
+développées dans la communauté, ceci pouvant ainsi inspirer leur 
+parcours scientifique futur.
+
+Enfin, cette école souhaite offrir aux jeunes chercheurs (doctorants, 
+post-doctorants et ingénieurs) et aux chercheurs confirmés du domaine la 
+possibilité de se rencontrer et d’échanger des idées, ce qui devrait 
+également permettre aux jeunes chercheurs d’enrichir leur réseau.
+
+
+PROGRAMME DE L'ECOLE
+
+Le programme sera finalisé et disponible sur le site de l’école dans les 
+plus brefs délais ; les intervenants :
+
+Sihem Amer-Yahia (LIG, Université de Grenoble Alpes)
+
+Sarah Cohen-Boulakia (LRI, Université Paris-Saclay)
+
+Bruno Crémilleux (GREYC, Université de Caen)
+
+Nicolas Labroche, Patrick Marcel et Veronika Peralta (LIFAT, Université 
+de Tours)
+
+Vincent Lemaire (Orange R&D)
+
+Vanessa Murdock (Amazon)
+
+Christel Vrain (LIFO, Université d’Orléans)
+
+
+
+PUBLIC CONCERNE
+
+L’École d’Hiver é-EGC 2022 s’adresse particulièrement aux doctorants et 
+étudiants, de manière générale, désirant approfondir leurs connaissances 
+dans le domaine de l’exploration de données et de l’apprentissage.
+
+
+COMITÉ SCIENTIFIQUE ET ORGANISATION
+
+•    Sihem Amer-Yahia (LIG, Université Grenoble Alpes)
+
+•    Arnaud Martin (IRISA, Université de Rennes 1)
+
+•    Claudia Marinica (LS2N, Université de Nantes)
+
+•    Arnaud Soulet (LIFAT, Université de Tours)
+
+
+DATES IMPORTANTES
+
+•    Date limite pré-inscriptions (CV à fournir) : 30/11/2021
+
+•    Inscription effective (École (formation + conférence EGC), sur le 
+site de la conférence) : 17/12/2021
+
+
+L’INSCRIPTION SE RÉALISE EN DEUX ÉTAPES
+
+1/ Les participants doivent manifester leur intérêt, avant le 
+30/11/2021, pour participer à l’École en s’inscrivant avec ce formulaire :
+
+https://docs.google.com/forms/d/1iLqbYfYO4bO1CGZyhfGBpfq144Nr89ox41WoDA4flMA/prefill 
+<https://docs.google.com/forms/d/1iLqbYfYO4bO1CGZyhfGBpfq144Nr89ox41WoDA4flMA/prefill>
+
+Pour que la pré-inscription soit prise en compte, elle doit être 
+accompagnée d’un CV récent du participant.
+
+2/ Après la confirmation de la pré-inscription par le comité 
+d’organisation, et avant le 17/12/2021, les participants doivent 
+s’inscrire via la page d’inscription de la conférence EGC2022 (attention 
+de bien choisir le tarif comprenant l’École).
+
+
+Le tarif de l’inscription sera affiché sur le site de la conférence EGC 
+(https://egc2022.univ-tours.fr/) et il comprend :
+
+– la participation à l’École d’Hiver (24 et 25 janvier) ;
+
+– la participation à la conférence (26 au 28 janvier) ;
+
+– les déjeuners et le repas de gala.
+
+*
+-- 
+
+Université de Nantes
+*Claudia MARINICA*
+Assistant Professor
+Computer Science department
+Polytech'Nantes, University of Nantes
+
+email: Claudia.Marinica@univ-nantes.fr
+
+rue Christian Pauc CS 50609
+44306 Nantes cedex 3
+office: D210 - Ireste
+
+web.polytech.univ-nantes.fr <http://web.polytech.univ-nantes.fr>
+<https://www.facebook.com/PolytechNantes/?ref=aymt_homepage_panel><https://twitter.com/PolytechNantes><https://www.instagram.com/polytechnantes/?hl=fr><https://www.linkedin.com/school/3848702/> 
+
+
+*_Adoptez l'éco-attitude_ : n'imprimez ce mail que si cela est vraiment 
+nécessaire*
+--------------lCs50fQHHtF8AuabnYmlOmr2
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+  <head>
+
+    <meta http-equiv=3D"content-type" content=3D"text/html; charset=3DUTF=
+-8">
+  </head>
+  <body>
+    <b><font color=3D"#f51f24">*** Extension de la date limite de
+        pr=C3=A9-inscription : 30 Novembre 2021 ***</font></b><br>
+    <div class=3D"moz-forward-container"><br>
+      <p dir=3D"ltr"
+        style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><b
+          style=3D"font-weight:normal;"
+          id=3D"docs-internal-guid-bf24e38f-7fff-a6ae-404f-af1c7fa444a7">=
+<span style=3D"font-size:11pt;font-family:Arial;color:#000000;background-=
+color:transparent;font-weight:400;font-style:normal;font-variant:normal;t=
+ext-decoration:none;vertical-align:baseline;white-space:pre;white-space:p=
+re-wrap;">ECOLE D=E2=80=99HIVER - APPEL A PARTICIPATION</span></b></p>
+      <b style=3D"font-weight:normal;"
+        id=3D"docs-internal-guid-bf24e38f-7fff-a6ae-404f-af1c7fa444a7"> <=
+br>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">8=C3=A8me =C3=89cole d=E2=80=99Hiver =C3=A9-EGC sur le th=C3=A8me=
+ =C2=AB L=E2=80=99humain dans la boucle de l=E2=80=99exploration des donn=
+=C3=A9es et de l=E2=80=99apprentissage =C2=BB</span></p>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">24 =E2=80=93 28 Janvier 2022, Blois - France</span></p>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><a=
+
+            href=3D"https://egc2022.univ-tours.fr/"
+            style=3D"text-decoration:none;" moz-do-not-send=3D"true"><spa=
+n style=3D"font-size:11pt;font-family:Arial;color:#1155cc;background-colo=
+r:transparent;font-weight:400;font-style:normal;font-variant:normal;text-=
+decoration:underline;-webkit-text-decoration-skip:none;text-decoration-sk=
+ip-ink:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;=
+">https://egc2022.univ-tours.fr/</span></a></p>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<=
+/span></p>
+        <br>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">La huiti=C3=A8me =C3=89cole d=E2=80=99Hiver =C3=A9-EGC, sur le th=
+=C3=A8me =C2=AB L=E2=80=99humain dans la boucle de l=E2=80=99exploration =
+des donn=C3=A9es et de l=E2=80=99apprentissage =C2=BB, est un=C2=A0 =C3=A9=
+v=C3=A9nement organis=C3=A9 par l=E2=80=99Association Extraction et Gesti=
+on de Connaissances (EGC, <a class=3D"moz-txt-link-freetext" href=3D"http=
+://www.egc.asso.fr/" moz-do-not-send=3D"true">http://www.egc.asso.fr/</a>=
+).</span></p>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">Cet =C3=A9v=C3=A9nement s=E2=80=99organise autour de deux activit=
+=C3=A9s principales :</span></p>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">=E2=80=A2=C2=A0 =C2=A0 deux jours de formation : les 24 et 25 Jan=
+vier 2022</span></p>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">=E2=80=A2=C2=A0 =C2=A0 participation =C3=A0 la conf=C3=A9rence EG=
+C2022 : du 24 au 28=C2=A0 janvier 2022</span></p>
+        <br>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">Cet appel est =C3=A9galement disponible =C3=A0 l=E2=80=99adresse =
+:=C2=A0</span></p>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><a=
+
+            href=3D"https://egc2022.univ-tours.fr/ecole"
+            style=3D"text-decoration:none;" moz-do-not-send=3D"true"><spa=
+n style=3D"font-size:11pt;font-family:Arial;color:#1155cc;background-colo=
+r:transparent;font-weight:400;font-style:normal;font-variant:normal;text-=
+decoration:underline;-webkit-text-decoration-skip:none;text-decoration-sk=
+ip-ink:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;=
+">https://egc2022.univ-tours.fr/ecole</span></a></p>
+        <br>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">THEMES DE L'ECOLE : L=E2=80=99humain dans la boucle de l=E2=80=99=
+exploration des donn=C3=A9es et de l=E2=80=99apprentissage</span></p>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">L'exploration de donn=C3=A9es est une t=C3=A2che qui n=C3=A9cessi=
+te intrins=C3=A8quement une forte interaction humaine. L'expert en la mat=
+i=C3=A8re examine les donn=C3=A9es pour identifier une hypoth=C3=A8se, de=
+s questions potentielles et o=C3=B9 chercher des r=C3=A9ponses dans les d=
+onn=C3=A9es. De m=C3=AAme, en apprentissage automatique ou en fouille de =
+donn=C3=A9es, l=E2=80=99expert peut jouer un r=C3=B4le fondamental dans l=
+e processus d=E2=80=99=C3=A9licitation d=E2=80=99un mod=C3=A8le ou de d=C3=
+=A9couvertes de connaissances en sp=C3=A9cifiant des propri=C3=A9t=C3=A9s=
+ que doit satisfaire le mod=C3=A8le recherch=C3=A9. Cette =C3=A9cole s'in=
+t=C3=A9resse aux diff=C3=A9rentes m=C3=A9thodes d'int=C3=A9gration de l'h=
+umain au processus d'exploration de donn=C3=A9es et de d=C3=A9couverte de=
+ connaissances.=C2=A0=C2=A0</span></p>
+        <br>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">OBJECTIFS DE L'ECOLE</span></p>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">Les deux jours de formation ont pour but principal d=E2=80=99offr=
+ir aux participants des tutoriaux d=E2=80=99initiation dans le domaine de=
+ recherche couvrant les th=C3=A8mes de l=E2=80=99=C3=A9cole mais =C3=A9ga=
+lement des tutoriaux plus sp=C3=A9cifiques pr=C3=A9sentant les r=C3=A9cen=
+tes avanc=C3=A9es proposant des solutions et des techniques nouvelles pou=
+r les diff=C3=A9rentes probl=C3=A9matiques ayant =C3=A9merg=C3=A9es dans =
+ce domaine. Les expos=C3=A9s de 1h30 couvriront une large gamme des probl=
+=C3=A9matiques et des solutions existantes.</span><span style=3D"font-siz=
+e:11pt;font-family:Arial;color:#ff0000;background-color:transparent;font-=
+weight:400;font-style:normal;font-variant:normal;text-decoration:none;ver=
+tical-align:baseline;white-space:pre;white-space:pre-wrap;"> </span><span=
+ style=3D"font-size:11pt;font-family:Arial;color:#000000;background-color=
+:transparent;font-weight:400;font-style:normal;font-variant:normal;text-d=
+ecoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wr=
+ap;">Certains expos=C3=A9s seront associ=C3=A9s =C3=A0 des s=C3=A9ances p=
+lus pratiques afin de permettre aux participants de manipuler quelques ou=
+tils.</span></p>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">La participation =C3=A0 la conf=C3=A9rence permettra aux particip=
+ants de prendre part =C3=A0 un des =C3=A9v=C3=A9nements majeurs de la com=
+munaut=C3=A9 francophone de l=E2=80=99extraction et la gestion de connais=
+sances. Elle leur permettra d=E2=80=99assister =C3=A0 des pr=C3=A9sentati=
+ons de nouvelles avanc=C3=A9es et approches d=C3=A9velopp=C3=A9es dans la=
+ communaut=C3=A9, ceci pouvant ainsi inspirer leur parcours scientifique =
+futur.</span></p>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">Enfin, cette =C3=A9cole souhaite offrir aux jeunes chercheurs (do=
+ctorants, post-doctorants et ing=C3=A9nieurs) et aux chercheurs confirm=C3=
+=A9s du domaine la possibilit=C3=A9 de se rencontrer et d=E2=80=99=C3=A9c=
+hanger des id=C3=A9es, ce qui devrait =C3=A9galement permettre aux jeunes=
+ chercheurs d=E2=80=99enrichir leur r=C3=A9seau.</span></p>
+        <br>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">PROGRAMME DE L'ECOLE</span></p>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">Le programme sera finalis=C3=A9 et disponible sur le site de l=E2=
+=80=99=C3=A9cole dans les plus brefs d=C3=A9lais ; les intervenants :</sp=
+an></p>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">Sihem Amer-Yahia (LIG, Universit=C3=A9 de Grenoble Alpes)</span><=
+/p>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">Sarah Cohen-Boulakia (LRI, Universit=C3=A9 Paris-Saclay)</span></=
+p>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">Bruno Cr=C3=A9milleux (GREYC, Universit=C3=A9 de Caen)</span></p>=
+
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">Nicolas Labroche, Patrick Marcel et Veronika Peralta (LIFAT, Univ=
+ersit=C3=A9 de Tours)</span></p>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">Vincent Lemaire (Orange R&amp;D)</span></p>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">Vanessa Murdock (Amazon)</span></p>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">Christel Vrain (LIFO, Universit=C3=A9 d=E2=80=99Orl=C3=A9ans)</sp=
+an></p>
+        <br>
+        <br>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">PUBLIC CONCERNE</span></p>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">L=E2=80=99=C3=89cole d=E2=80=99Hiver =C3=A9-EGC 2022 s=E2=80=99ad=
+resse particuli=C3=A8rement aux doctorants et =C3=A9tudiants, de mani=C3=A8=
+re g=C3=A9n=C3=A9rale, d=C3=A9sirant approfondir leurs connaissances dans=
+ le domaine de l=E2=80=99exploration de donn=C3=A9es et de l=E2=80=99appr=
+entissage.</span></p>
+        <br>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">COMIT=C3=89 SCIENTIFIQUE ET ORGANISATION</span></p>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">=E2=80=A2=C2=A0 =C2=A0 Sihem Amer-Yahia (LIG, Universit=C3=A9 Gre=
+noble Alpes)</span></p>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">=E2=80=A2=C2=A0 =C2=A0 Arnaud Martin (IRISA, Universit=C3=A9 de R=
+ennes 1)</span></p>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">=E2=80=A2=C2=A0 =C2=A0 Claudia Marinica (LS2N, Universit=C3=A9 de=
+ Nantes)</span></p>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">=E2=80=A2=C2=A0 =C2=A0 Arnaud Soulet (LIFAT, Universit=C3=A9 de T=
+ours)</span></p>
+        <br>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">DATES IMPORTANTES=C2=A0</span></p>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">=E2=80=A2=C2=A0 =C2=A0 Date limite pr=C3=A9-inscriptions (CV =C3=A0=
+ fournir) : 30/11/2021</span></p>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">=E2=80=A2=C2=A0 =C2=A0 Inscription effective (=C3=89cole (formati=
+on + conf=C3=A9rence EGC), sur le site de la conf=C3=A9rence) : 17/12/202=
+1</span></p>
+        <br>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">L=E2=80=99INSCRIPTION SE R=C3=89ALISE EN DEUX =C3=89TAPES</span><=
+/p>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">1/ Les participants doivent manifester leur int=C3=A9r=C3=AAt, av=
+ant le 30/11/2021, pour participer =C3=A0 l=E2=80=99=C3=89cole en s=E2=80=
+=99inscrivant avec ce formulaire :</span></p>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><a=
+
+href=3D"https://docs.google.com/forms/d/1iLqbYfYO4bO1CGZyhfGBpfq144Nr89ox=
+41WoDA4flMA/prefill"
+            style=3D"text-decoration:none;" moz-do-not-send=3D"true"><spa=
+n style=3D"font-size:11pt;font-family:Arial;color:#1155cc;background-colo=
+r:transparent;font-weight:400;font-style:normal;font-variant:normal;text-=
+decoration:underline;-webkit-text-decoration-skip:none;text-decoration-sk=
+ip-ink:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;=
+">https://docs.google.com/forms/d/1iLqbYfYO4bO1CGZyhfGBpfq144Nr89ox41WoDA=
+4flMA/prefill</span></a></p>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">Pour que la pr=C3=A9-inscription soit prise en compte, elle doit =
+=C3=AAtre accompagn=C3=A9e d=E2=80=99un CV r=C3=A9cent du participant.</s=
+pan></p>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">2/ Apr=C3=A8s la confirmation de la pr=C3=A9-inscription par le c=
+omit=C3=A9 d=E2=80=99organisation, et avant le 17/12/2021, les participan=
+ts doivent s=E2=80=99inscrire via la page d=E2=80=99inscription de la con=
+f=C3=A9rence EGC2022 (attention de bien choisir le tarif comprenant l=E2=80=
+=99=C3=89cole).</span></p>
+        <br>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">Le tarif de l=E2=80=99inscription sera affich=C3=A9 sur le site d=
+e la conf=C3=A9rence EGC (<a class=3D"moz-txt-link-freetext" href=3D"http=
+s://egc2022.univ-tours.fr/" moz-do-not-send=3D"true">https://egc2022.univ=
+-tours.fr/</a>) et il comprend :</span></p>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">=E2=80=93 la participation =C3=A0 l=E2=80=99=C3=89cole d=E2=80=99=
+Hiver (24 et 25 janvier) ;</span></p>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">=E2=80=93 la participation =C3=A0 la conf=C3=A9rence (26 au 28 ja=
+nvier) ;</span></p>
+        <p dir=3D"ltr"
+          style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:#000000;background-co=
+lor:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">=E2=80=93 les d=C3=A9jeuners et le repas de gala.</span></p>
+      </b><br class=3D"Apple-interchange-newline">
+    </div>
+    <div class=3D"moz-signature">-- <br>
+      <meta content=3D"text/html; charset=3DUTF-8" http-equiv=3D"content-=
+type">
+      <style>
+            DIV.TagHeader { background-color:#009ee0; height:2px; width:5=
+20px; }
+            DIV.Tag { border:0px dotted grey; width: 518px;}
+            DIV.TagFooter { font-family:Trebuchet MS, sans-serif; font-si=
+ze:8pt; size:1; color:#36a629; height:2em; text-align:center; width:520px=
+;}
+            DIV.NomTitre { font-family:Trebuchet MS, sans-serif; font-siz=
+e:10pt; size:1; color:#00305E; margin-left: 170px; }
+            DIV.Contact { font-family:Trebuchet MS, sans-serif; font-size=
+:8pt; size:1; color:#777777; margin-left:170px;}
+            DIV.Adresse { font-family:Trebuchet MS, sans-serif; font-size=
+:8pt; size:1; color:#777777; margin-left:170px;}
+
+            img.Logo {border: 0px solid ; width: 138px; height: 57px; lef=
+t: 25px; position:absolute; z-index:-1; moz-do-not-send:true;}
+            body { bgcolor:#FFFFFF; text:#000000; }
+            a { text-decoration:none; color:#777777;}
+        </style>
+      <div class=3D"moz-signature">
+        <div class=3D"TagHeader">=C2=A0</div>
+        <div class=3D"Tag"><br>
+          <img class=3D"Logo"
+src=3D"http://web.polytech.univ-nantes.fr/medias/photo/polytech-nantes-p-=
+univ_1516179753112-jpg?ID_FICHE=3D540435"
+            alt=3D"Universit=C3=A9 de Nantes" moz-do-not-send=3D"true">
+          <div class=3D"NomTitre"> <b>Claudia MARINICA</b><br>
+            Assistant Professor<br>
+            Computer Science department<br>
+            Polytech'Nantes, University of Nantes<br>
+          </div>
+          <div class=3D"Contact"><br>
+            <!-- t=C3=A9l : <br> --> email: <a
+              href=3D"mailto:Claudia.Marinica@univ-nantes.fr"
+              class=3D"moz-txt-link-freetext">Claudia.Marinica@univ-nante=
+s.fr</a><br>
+            <!--web site: <a href=3D"mailto:Claudia.Marinica@univ-nantes.=
+fr">Claudia.Marinica@univ-nantes.fr</a><br>--><br>
+            rue Christian Pauc CS 50609
+            <br>
+            44306 Nantes cedex 3<br>
+            office: D210 - Ireste<br>
+            <br>
+            <a href=3D"http://web.polytech.univ-nantes.fr">web.polytech.u=
+niv-nantes.fr</a>
+            <br>
+            <a
+              href=3D"https://www.facebook.com/PolytechNantes/?ref=3Daymt=
+_homepage_panel"
+              target=3D"_blank" alt=3D"Facebook"><img
+src=3D"http://www.polytech.univ-nantes.fr/com/signature/nouveau/reseaux_s=
+ociaux_01.jpg"
+                width=3D"32" height=3D"30"></a><a
+              href=3D"https://twitter.com/PolytechNantes" target=3D"_blan=
+k"
+              alt=3D"Twitter"><img
+src=3D"http://www.polytech.univ-nantes.fr/com/signature/nouveau/reseaux_s=
+ociaux_02.jpg"
+                width=3D"32" height=3D"30"></a><a
+              href=3D"https://www.instagram.com/polytechnantes/?hl=3Dfr"
+              target=3D"_blank" alt=3D"Instagram"><img
+src=3D"http://www.polytech.univ-nantes.fr/com/signature/nouveau/reseaux_s=
+ociaux_03.jpg"
+                width=3D"32" height=3D"30"></a><a
+              href=3D"https://www.linkedin.com/school/3848702/"
+              target=3D"_blank" alt=3D"LinkedIn"><img
+src=3D"http://www.polytech.univ-nantes.fr/com/signature/nouveau/reseaux_s=
+ociaux_04.jpg"
+                width=3D"32" height=3D"30"></a> </div>
+        </div>
+        <div class=3D"TagFooter"> <br>
+          <b><u>Adoptez l'=C3=A9co-attitude</u> : n'imprimez ce mail que =
+si
+            cela est vraiment n=C3=A9cessaire</b><br>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+--------------lCs50fQHHtF8AuabnYmlOmr2--
+

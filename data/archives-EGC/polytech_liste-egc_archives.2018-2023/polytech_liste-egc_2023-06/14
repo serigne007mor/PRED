@@ -1,0 +1,507 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (bouncesmtp1.u12.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 2FDDD14017E3
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu,  1 Jun 2023 23:39:04 +0200 (CEST)
+Received: from mx3.localdomain (MX3.univ-nantes.fr [193.52.101.137])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id 2C6E2707D
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu,  1 Jun 2023 23:39:04 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.localdomain (Postfix) with ESMTP id 2500420FBB
+	for <liste-egc@polytech.univ-nantes.fr>; Thu,  1 Jun 2023 23:39:04 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 2.099
+X-Spam-Level: **
+X-Spam-Status: No, score=2.099 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+	HTML_MESSAGE=0.001, J_CHICKENPOX_56=0.6, J_CHICKENPOX_66=0.6,
+	RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_WSFF=0.01,
+	SARE_HEAD_8BIT_SPAM=0.888, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+	UN_PHISHING_PW=0.1] autolearn=disabled
+X-CRM114-Status: UNSURE ( -1.6059 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=yahoo.fr
+Received: from mx3.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id hbN8SegA6Li6 for <liste-egc@polytech.univ-nantes.fr>;
+	Thu,  1 Jun 2023 23:39:01 +0200 (CEST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=87.248.110.31; helo=sonic307-54.consmr.mail.ir2.yahoo.com; envelope-from=f_mhamdi@yahoo.fr; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=reject dis=none) header.from=yahoo.fr
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=f_mhamdi@yahoo.fr
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (2048-bit key; unprotected) header.d=yahoo.fr header.i=@yahoo.fr header.b="J+yIGnTo";
+	dkim-atps=neutral
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from sonic307-54.consmr.mail.ir2.yahoo.com (sonic307-54.consmr.mail.ir2.yahoo.com [87.248.110.31])
+	by mx3.localdomain (Postfix) with ESMTPS id 7AFBB20FAF
+	for <liste-egc@polytech.univ-nantes.fr>; Thu,  1 Jun 2023 23:39:01 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.fr; s=s2048; t=1685655541; bh=ue0pmYhUERIxVOWebLtbE3DAML11DoXwkTy+g0H0HPc=; h=Date:From:To:Cc:Subject:References:From:Subject:Reply-To; b=J+yIGnTogANvHE2yEyiuPeRIWw7V+GBE9PkA2oMAPaDlBURjejQDKNJbUk6srxtW3ETJCL4lHbT5ICNWPNEuo9X+9AVc9ku/2MGY6+SMJluNF9T6PrRte8khuTBAXFHf6bAxsIuqFhLdGwLP8JYGNadTWspOqgJ7F5rPPJZtD1Ii4Ml3eERCOccIIEvn+vsjT5JxPxCak+Y57ua5lA5EOklTgpqi7tIqYCe/mrtYdO/gpdZZXaBkQf1Iw+S0aa/hUl/ejeGKTuLYrf1FbarVb6oKFHAH3aTO0BtutpYfHBGzpebzp+gqJj6B7XhuX5Y+qG64F2Sfz73CILKVXvWAAA==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1685655541; bh=kdZ74S4Rale8Awvom7RH0zLiBwkdH/w9sVE40OJq3OK=; h=X-Sonic-MF:Date:From:To:Subject:From:Subject; b=s/56dshJ1motHEss2qKT3WX0kEfaTAtZBpqLmrGOgKpQDLRgK24jeOxDnS3McoiQWWI95oxheqaBti6NRw4UZW/iScKS0L/ewwbIERyig8z1QI8D3p3thnnOhY/Rt2s/V/pABx/EsrqGvakM0opdRUirG7LSHPwuvQHCNL6zpxW/K3o/XAimQ7+B/N62Sy/d9sD601Zf17cKDr2oCfsr0T2uSnWh0KVBuiRNQx+o5wQrBhIglSCdfVx2LePUvoU54sEmHcXyAkrF74HGOnGPpTFs77qxAt/vxr6D+kQywTuJHK+Ill177niVr/stCnO4cKgbCbY1nGrucR5ULkxhSA==
+X-YMail-OSG: 49ViCdYVM1nIOY3b5aA.f4zMVqc2I3UgVmzD9kTsTIeVmpcSFeM8qCfL7vbioy8
+ 4nsvJFqX9n64Aj.r4N_s5LtSXmEoZhYFjiagRjFmujSiHsIVXlpsDFn_RnPj01K0DtXTjF7W.h2q
+ fGog6IRZsnWp.mRi8IB0G1MNHSiFOrg1OIIiunaaq2yeC9fEjwqHoWtFi1T.5dz4YTOJbRnVUKmV
+ iNRrse.XOtZhr526HQVRt60pr4lboiG4L74cwVoS_NwmqPpMfoBEzEtesD3e01O0SabSdt2QPX12
+ PhmS.3ht8jeqwaPpCEncbKIg8fNM.CzER_sUNbSgJatfxEi1yVey9zyutn8UkG8vv8sjAeqc8rbe
+ p0q6tIEkhuwMv_lRkBkbmS6Oyg8MZ9jKR_0rmo0fRagXskiZqRNtsuVPk2ofHWtQeqUksIETjbfv
+ 5dA604asc4JMSdri7o1nMSzWONXw8U3zXR6W20a3Sc0gQ5z3wrgHIXvh_FaNpXAk0GIJ5aIEZE_O
+ xpOD7ALCSVmGiOjz_UWslTkFJvaU8PdsQsFStRKwovqWno26gmm9KBZ1JDpZrqZgnzUIUgEjUxM_
+ 5a7R9xsmEektEGoky0rMuzr4ZOgCyh7UyLkJHbfMRVi32OkfuIxizFnDVs9b6tQhJzQ9ZK2Umm.u
+ _.0nhwRouUU2zO0ShWKqivMq4oWK9BQRi1fHDNJzSFwl6gmRar3bBrZrks3rmQOrdDzRL0uKJBS6
+ RYvDwN3_EYiJoAQELkll_n8xsBr0zAPYIC2IPp2fnColSWai.BSJ34NFYBAN.im5YC0h4PN.imOj
+ FA7pU65xuja0Uxdey91gltalLt9zfspTik4u0bkxJHVv7EDOhz3LX4fOPVKjnC6MUO6GcKvQdLgD
+ k3KXMa0EW23uyRwELhVC0XLneho0vOlvienYtd78_WN2jxkHgxT_FIeyAgWlLooyBq3tTc1e8ujR
+ nGh6EktJW2WIbNnHf0KIrgwfTQ2td7bRAc6x_g1m4SMQfnK8WYEm5vPoEtr.0I4LpgWPv1BAG340
+ VWUQsojSumoAPQnPz2adeBtcOwGqTz._.s4DV5J02wW2Ao0vnL1mrlUg6EgVH6fniEW88Svf8sW0
+ ypl4EasKjRryCA1m9P7h4h4T9tJNvsuRWDDWHwbm6huJ5b8rp85SHkkKMaYaOTrIDh4SwW1z5a.5
+ 9miktyodWQBWdnysOhoBjzew8IqpEOWF_9W_QMLNYdn8hF9gLylfYOdqVTW9Pv95zdxY1rzdt0D2
+ Q20Rn2L1Iih3qYr7ue5OgMphVS3gSvI27z6riqjLXZefApIjzWgXuQP4G6xdBty4WEQKS_FLwUF9
+ feE7vbte4_lCEqyy4hO8fc2FZjvN5bMTjW5sKwODHVPbfoyEIVvlE6rGWsp18Hq5AoEbd09eVkng
+ xPCC94Va1NxT3ltdnG3qcwlkAZImoYzdjc9klScdomCUyXiFs65KwwGq3UqQZWbh2ZfgGrrikbDf
+ sdM8OqyUeqNOKx.Rz.omMHvu.tsDsD3uguwJYeyN799v5xShMuWsPjcsz7gHE5IyanAfkthIHcTp
+ FVtUHw6kcBaNd_lOrCijqlBH8AUOWvvRF9whPkXu65GPnZ99nqz2HAyyKHwZNXo3hXTVl3b_agtc
+ np_2z7CN6vxESLS2V81aQd10GywFpYGXujuhXzAOcNs2hvf4Nkl61.42r_ONFVvF_6pI1qYIJrkU
+ 6BSB7c8IFilIXsCfsyD5VGXo4gB71EN.3N1GaCObBRwcwuedXLS4EtjcfAWBucaeLfyb2d_Iob2x
+ 9VF_kI6THI6xuDWrf.lF1K1UNBxWMtuccE_ggIOf2vFCp._q5aC0iuuNJmMlKpOeM5EU8QSqr9yt
+ 4RLapG1e7LiERV6_Qm4HoJ3yseq.Y95qCZNkG78MGIJGYGmJ0s.M6OrPL54BWLVB0QyPyf3dYaVn
+ QHG1qmwjGOWyzxdH0DuBULCkFUIfI6K03jkVNyG25OYNE023jr7O_XJykdgt5YxzcZ4TJbdpwqML
+ 4cLhgd.6EHpwvuxtkwW8Gjs2t2sQLkIth6FWZvGNiZBOajiuUYDAFOgl24NinX7aSPce6aLubfo_
+ RWYUm_r1xpWQY3HMxv5YmOOPcQRbZDpKTD.lpOpYH44LyJTU4O0zIieSgL.ulA4ncwwR3nJc5DgY
+ FXgUhdufRvnh5GsU8benkFd_Oak_aXyRPUWZcda6C3pcPevNIVdRsmQ11ub.2S585q1T3LejUPuH
+ 80Oc2xZF0i.1mlfKrzBOnSrro3D2Z
+X-Sonic-MF: <f_mhamdi@yahoo.fr>
+X-Sonic-ID: d7c643ea-1d3b-4750-8b9f-4aed71d8bb73
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic307.consmr.mail.ir2.yahoo.com with HTTP; Thu, 1 Jun 2023 21:39:01 +0000
+Date: Thu, 1 Jun 2023 21:36:35 +0000 (UTC)
+From: mhamdi faouzi <f_mhamdi@yahoo.fr>
+To: Liste-proml <liste-proml@lri.fr>, Info-ic <info-ic@listes.irisa.fr>, 
+	Bioinfo <bioinfo@sfbi.fr>, Info-ic <info-ic@inria.fr>, 
+	Bull-i3 <bull-i3@irit.fr>, 
+	Liste-egc <liste-egc@polytech.univ-nantes.fr>
+Cc: Salma Sassi <sassisalma@yahoo.fr>, 
+	walidd bbarhoumi <walid_barhoumi@yahoo.fr>, 
+	Ramzi Guesmi <ramzi.guesmi@gmail.com>, 
+	Richard Chbeir <richard.chbeir@univ-pau.fr>, 
+	RIM FAIZ <rim.faiz@ihec.rnu.tn>, Faiz Sami <samifaiz2002@yahoo.fr>, 
+	Faiez Gargouri <faiez.gargouri@gmail.com>, 
+	mhamdi faouzi <f_mhamdi@yahoo.fr>, 
+	"leila.benayed@ensi-uma.tn" <leila.benayed@ensi-uma.tn>, 
+	Ladjel Bellatreche <ladjel.bellatreche@ensma.fr>
+Message-ID: <1918911690.8784100.1685655395903@mail.yahoo.com>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_8784099_1675379570.1685655395901"
+References: <1918911690.8784100.1685655395903.ref@mail.yahoo.com>
+X-Mailer: WebService/1.1.21495 YMailNorrin
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Special Session on Data Science at the Service of
+ Biology and Healthcare - INISTA 2023- 3rd CALL FOR CONTRIBUTIONS
+ =?UTF-8?Q?=E2=80=93?= Deadline Jun 15th, 2023
+
+------=_Part_8784099_1675379570.1685655395901
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+
+[Apologiesfor cross-postings]
+
+=C2=A0
+
+Dearcolleagues,
+
+=C2=A0
+
+We arepleased to invite you to submit a paper for presentation in the speci=
+al sessionon "Data Science at the Service of Biology and Healthcare (DSSBH2=
+023)" that will be part of the =E2=80=9CThe 17th International Symposium on=
+INnovations in Intelligent SysTems and Applications=E2=80=9D (INISTA 2023, =
+Hammamet,Tunisia, 20-23 September 2023).
+
+=C2=A0
+
+CONFERENCEINFORMATION:
+
+=C2=A0Core Ranking: C(http://portal.core.edu.au/conf-ranks/1391/)
+
+Indexing:IEEE, DBLP, SCOPUS, =E2=80=A6
+
+Proceedings:https://ieeexplore.ieee.org/xpl/conhome/1803839/all-proceedings
+
+SpecialSession Website: https://conferences.sigappfr.org/inista2023/dssbh-2=
+023/
+
+=C2=A0
+
+AIMS ANDSCOPE:
+
+Medical andbiology data are among the most data analyzed and treated. Biolo=
+gical andmedical experimentations in vitro are very expensive, because they=
+ arecharacterized by their complexities and big volumes and results are ver=
+ysensitive about the health of human. Thus, the exploitation of new technol=
+ogiesand computer science models becomes a necessity, firstly to reduce the=
+ cost ofexperimentations and secondly to help experts (doctors and biologis=
+ts) to makethe good decision. The virus Covid=E2=80=9919 is a good lesson a=
+nd motivation forhumanities to continuously develop technologies and comput=
+er science programs.In fact, predict diseases or the severity level of viru=
+s before any diagnosticsbecome a real challenge for our society and for man=
+y researchers from variousdisciplines (Biology, Medicine, Statistics, Compu=
+ter Science, etc.).
+
+Today,there are many processes used for processing data in order to deal wi=
+th manyreal-world issues, such as classification, prediction, regression an=
+dclustering. The main goal of these processes is to discover knowledge from=
+ datain order to make a precise decision. Also, in this kind of problems, t=
+hetolerance of errors rate is very low, because the decision concerns the h=
+ealthof human. In addition, it is a challenge for researchers to propose th=
+eiroptimal works in short time. Since many decades, researchers try to wind=
+angerous diseases, while not neglecting the fact that research in this rega=
+rdis developing from day to day.
+
+The maingoal of the DSSBH2023 special session is to present the recent rese=
+arches, andtheir results, on data sciences techniques for the analysis of b=
+iology andhealthcare data. This session provides a more focused, in-depth v=
+enue forpresentations, discussions and interactions of a very important sub=
+ject.
+
+=C2=A0
+
+TOPICSOF INTERESTS:
+
+The scopeof the DSSBH2023 includes, but is not limited to, the following to=
+pics:
+
+Datascience models for biological sequence analysis
+
+Bioinformatics
+
+ComputationalBiology
+
+Healthinformatics
+
+Evolutionaryand swarm optimization techniques for biology and healthcare ap=
+plications
+
+Hybridizationof exact and heuristic methods in biology and healthcare
+
+ComputerVision applied in biology and healthcare
+
+Cancerdiagnosis using machine and deep learning techniques
+
+ExplainableAI in biology and healthcare
+
+Medicalimage interpretable AI
+
+Machinelearning for prediction in biology and healthcare
+
+Dealingwith unbalanced classification and regression data in biology and he=
+althcare
+
+=C2=A0
+
+SUBMISSIONPROCESS & INFORMATION:
+
+Manuscriptsshould conform to the IEEE template/format as indicated in the I=
+nformation forAuthors section of the Article Submission Guidelines. All man=
+uscripts to beconsidered for publication must be submitted by the deadline =
+through theEasychair, while selecting the Track =E2=80=9CData Science at th=
+e Service of Biologyand Healthcare=E2=80=9D from the option-box.
+
+=C2=A0
+
+Page Limit:Papers have a maximum page limit of 6 pages including references=
+ and graphs.INISTA will offer the option to buy a limited number of extra p=
+ages forsubmission (there will be a charge of 100 euros per extra page).
+
+=C2=A0
+
+Acceptedpapers will appear in the conference proceedings, and be indexed in=
+ the Web ofScience Core Collection databases. The authors of selected best =
+papers will beinvited to extend their contributions for special issues.
+
+=C2=A0
+
+IMPORTANTDATES
+
+Papersubmission deadline: Jun 15th, 2023
+
+Paperacceptance notification: July 1st, 2023
+
+Camera-readySubmission & Registration: July 10th, 2023
+
+=C2=A0
+
+=C2=A0
+
+Theorganizing committee:
+
+Prof. WalidBarhoumi, LIMTIC Laboratory, University of Tunis El Manar
+
+ENICarthage,University of Carthage, Tunisia
+
+E-mail:walid.barhoumi@enicarthage.rnu.tn
+
+=C2=A0
+
+Dr. RamziGuesmi, LETI Laboratory, University of Sfax
+
+ISLAIB,University of Jendouba, Tunisia
+
+E-mail:ramzi.guesmi@islaib.u-jendouba.tn
+
+=C2=A0
+
+Dr. FaouziMhamdi, LaTICE Laboratory, University of Tunis
+
+ISLAIB,University of Jendouba, Tunisia
+
+E-mail: faouzi.mhamdi@ensi.rnu.tn
+
+=C2=A0
+
+Please feelfree to forward this announcement to any colleagues who may be i=
+nterested inthis special session.
+
+We arelooking forward to your contributions and welcome questions and comme=
+nts.
+
+
+------=_Part_8784099_1675379570.1685655395901
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><head></head><body><div class=3D"yahoo-style-wrap" style=3D"font-fami=
+ly:Helvetica Neue, Helvetica, Arial, sans-serif;font-size:16px;"><div dir=
+=3D"ltr" data-setdir=3D"false"><div><p class=3D"ydp441bf282MsoNormal"><span=
+ lang=3D"EN-US">[Apologies
+for cross-postings]</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">&nbsp;</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">Dear
+colleagues,</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">&nbsp;</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">We are
+pleased to invite you to submit a paper for presentation in the special ses=
+sion
+on "Data Science at the Service of Biology and Healthcare (DSSBH
+2023)" that will be part of the =E2=80=9CThe 17th International Symposium o=
+n
+INnovations in Intelligent SysTems and Applications=E2=80=9D (INISTA 2023, =
+Hammamet,
+Tunisia, 20-23 September 2023).</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">&nbsp;</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><b><span lang=3D"EN-US">CONFERENCE
+INFORMATION:</span></b></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US"><span>&nbsp;</span>C=
+ore Ranking: <b>C</b>
+(http://portal.core.edu.au/conf-ranks/1391/)</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">Indexing:
+IEEE, DBLP, SCOPUS, =E2=80=A6</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">Proceedings:
+https://ieeexplore.ieee.org/xpl/conhome/1803839/all-proceedings</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">Special
+Session Website: https://conferences.sigappfr.org/inista2023/dssbh-2023/</s=
+pan></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">&nbsp;</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><b><span lang=3D"EN-US">AIMS AND
+SCOPE:</span></b></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">Medical and
+biology data are among the most data analyzed and treated. Biological and
+medical experimentations in vitro are very expensive, because they are
+characterized by their complexities and big volumes and results are very
+sensitive about the health of human. Thus, the exploitation of new technolo=
+gies
+and computer science models becomes a necessity, firstly to reduce the cost=
+ of
+experimentations and secondly to help experts (doctors and biologists) to m=
+ake
+the good decision. The virus Covid=E2=80=9919 is a good lesson and motivati=
+on for
+humanities to continuously develop technologies and computer science progra=
+ms.
+In fact, predict diseases or the severity level of virus before any diagnos=
+tics
+become a real challenge for our society and for many researchers from vario=
+us
+disciplines (Biology, Medicine, Statistics, Computer Science, etc.).</span>=
+</p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">Today,
+there are many processes used for processing data in order to deal with man=
+y
+real-world issues, such as classification, prediction, regression and
+clustering. The main goal of these processes is to discover knowledge from =
+data
+in order to make a precise decision. Also, in this kind of problems, the
+tolerance of errors rate is very low, because the decision concerns the hea=
+lth
+of human. In addition, it is a challenge for researchers to propose their
+optimal works in short time. Since many decades, researchers try to win
+dangerous diseases, while not neglecting the fact that research in this reg=
+ard
+is developing from day to day.</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">The main
+goal of the DSSBH2023 special session is to present the recent researches, =
+and
+their results, on data sciences techniques for the analysis of biology and
+healthcare data. This session provides a more focused, in-depth venue for
+presentations, discussions and interactions of a very important subject.</s=
+pan></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">&nbsp;</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><b><span lang=3D"EN-US">TOPICS
+OF INTERESTS:</span></b></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">The scope
+of the DSSBH2023 includes, but is not limited to, the following topics:</sp=
+an></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">Data
+science models for biological sequence analysis</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">Bioinformatics</span=
+></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">Computational
+Biology</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">Health
+informatics</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">Evolutionary
+and swarm optimization techniques for biology and healthcare applications</=
+span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">Hybridization
+of exact and heuristic methods in biology and healthcare</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">Computer
+Vision applied in biology and healthcare</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">Cancer
+diagnosis using machine and deep learning techniques</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">Explainable
+AI in biology and healthcare</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">Medical
+image interpretable AI</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">Machine
+learning for prediction in biology and healthcare</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">Dealing
+with unbalanced classification and regression data in biology and healthcar=
+e</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">&nbsp;</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><b><span lang=3D"EN-US">SUBMISSION
+PROCESS &amp; INFORMATION:</span></b></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">Manuscripts
+should conform to the IEEE template/format as indicated in the Information =
+for
+Authors section of the Article Submission Guidelines. All manuscripts to be
+considered for publication must be submitted by the deadline through the
+Easychair, while selecting the Track =E2=80=9CData Science at the Service o=
+f Biology
+and Healthcare=E2=80=9D from the option-box.</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">&nbsp;</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">Page Limit:
+Papers have a maximum page limit of 6 pages including references and graphs=
+.
+INISTA will offer the option to buy a limited number of extra pages for
+submission (there will be a charge of 100 euros per extra page).</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">&nbsp;</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">Accepted
+papers will appear in the conference proceedings, and be indexed in the Web=
+ of
+Science Core Collection databases. The authors of selected best papers will=
+ be
+invited to extend their contributions for special issues.</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">&nbsp;</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><b><span lang=3D"EN-US">IMPORTANT
+DATES</span></b></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">Paper
+submission deadline: <b><span style=3D"color:red">Jun 15<sup>th</sup>, 2023=
+</span></b></span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">Paper
+acceptance notification: July 1st, 2023</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">Camera-ready
+Submission &amp; Registration: July 10th, 2023</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">&nbsp;</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">&nbsp;</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><b><span lang=3D"EN-US">The
+organizing committee:</span></b></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">Prof. Walid
+Barhoumi, LIMTIC Laboratory, University of Tunis El Manar</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">ENICarthage,
+University of Carthage, Tunisia</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">E-mail:
+walid.barhoumi@enicarthage.rnu.tn</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">&nbsp;</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">Dr. Ramzi
+Guesmi, LETI Laboratory, University of Sfax</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">ISLAIB,
+University of Jendouba, Tunisia</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">E-mail:
+ramzi.guesmi@islaib.u-jendouba.tn</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">&nbsp;</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">Dr. Faouzi
+Mhamdi, LaTICE Laboratory, University of Tunis</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">ISLAIB,
+University of Jendouba, Tunisia</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">E-mail: faouzi.mhamd=
+i@ensi.rnu.tn</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">&nbsp;</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">Please feel
+free to forward this announcement to any colleagues who may be interested i=
+n
+this special session.</span></p>
+
+<p class=3D"ydp441bf282MsoNormal"><span lang=3D"EN-US">We are
+looking forward to your contributions and welcome questions and comments.</=
+span></p></div><br></div></div></body></html>
+------=_Part_8784099_1675379570.1685655395901--

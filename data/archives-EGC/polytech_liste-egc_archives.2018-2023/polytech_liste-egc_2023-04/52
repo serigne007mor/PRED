@@ -1,0 +1,494 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (bouncesmtp1.u12.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id D22C014014F3
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon, 17 Apr 2023 08:46:53 +0200 (CEST)
+Received: from mx3.localdomain (MX3.univ-nantes.fr [193.52.101.137])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id CE917705B
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon, 17 Apr 2023 08:46:53 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.localdomain (Postfix) with ESMTP id C1733208B9
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 17 Apr 2023 08:46:53 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: YES
+X-Spam-Score: 5.121
+X-Spam-Level: *****
+X-Spam-Status: Yes, score=5.121 tagged_above=-1000 required=5
+	tests=[CRM114_SPAM=5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+	HTML_MESSAGE=0.001, MR_NOT_ATTRIBUTED_IP=0.2,
+	RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+	RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+	T_KAM_HTML_FONT_INVALID=0.01, UN_PHISHING_PW=0.1] autolearn=disabled
+X-CRM114-Status: SPAM ( -8.2077 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=yahoo.com
+Received: from mx3.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Ay-Ke8DajYuH for <liste-egc@polytech.univ-nantes.fr>;
+	Mon, 17 Apr 2023 08:46:51 +0200 (CEST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=106.10.242.139; helo=sonic302-19.consmr.mail.sg3.yahoo.com; envelope-from=rima.grati@yahoo.com; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=reject dis=none) header.from=yahoo.com
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=rima.grati@yahoo.com
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (2048-bit key; unprotected) header.d=yahoo.com header.i=@yahoo.com header.b="gvyOATxI";
+	dkim-atps=neutral
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from sonic302-19.consmr.mail.sg3.yahoo.com (sonic302-19.consmr.mail.sg3.yahoo.com [106.10.242.139])
+	by mx3.localdomain (Postfix) with ESMTPS id CB0F9208C7
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 17 Apr 2023 08:46:50 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1681714008; bh=Bq6OBhR6yPUl/41zdTqt//qjJAsjIgaTwcRbjEedVSA=; h=Date:From:To:Subject:References:From:Subject:Reply-To; b=gvyOATxIF89bKDCxDpnFg6ony+1POHbHt7Lsq00dIvX4ZkSRUvBKzCSPD2ySujVMZg5bR2rh2amtCTW+lwnL7/SMSfpTcsqontTCNoJsnO5Oe4sI6e6E53ysFNBawSusygMuH4u6+YotKh80BmMePse7hSmzND1/96uqZ5PlwwivTbLBWw7c0AyomMFED/fsXiAtbvul/2NdC9weyLd+XxJL1xIy5osr1w3/EO1uYoX/qIUMxWhlBG/t4gp9FJf/w7lUFONPwBmLCNXrWY2IoWodELGec1IHI6UgnOv+46WT/0y6HgJrT1fbqL2V/0cqUrdWvMF8QMt1sz47qI07RQ==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1681714008; bh=nvwqHW5U9CyGvmvGxt4j2jbKo8ZveLFq9j7fRnj+CAx=; h=X-Sonic-MF:Date:From:To:Subject:From:Subject; b=jCU+4u0AXFe0eiaANPxHb22s/oSjGJHLD7tAjBjApXH0DbbyYNOjICdQrfaK9OxKe564Wcvsl+ik5uouy3efcWm8blOYqW7pT5mDAL/JNMqBCyjfzJKCT6l/TuN75vx8jb+bKpTVYn2cPm3yq4upAwqWWEvFX3Sgu8CiWn0ZDj27bBcIG0SrV8EHvFi7b3hMY0B/pG+sT+Ga0TDQM282oBuL4EsE9z6UocV8XKH1/haB0H1BKG1z0XLZEZ8fk6f5fiqUYyLQ088EivYZ94xfwTeuXzpQit8J+8OUy4deIC929nO7kt2UZOEW8Fn/65MkIdZlDPo3eyPHiQ89WrRSng==
+X-YMail-OSG: hlHJU7oVM1l8rm3WidX8Op0nPwQ.Jvfhxrr7XomfU5Zc3zJx2gS5PT37scoPTFo
+ nqwwbentmZvBtXORsonOanDQudo0v2TffGZKDkNo7HcJN0CTM8f6_aoDKipLQZM9smywluq.xMoJ
+ LF1yWa_5tEzoyDaSSe0nLMQK5tr8EUHWbQBKgSGGWPR0Pa8ycF5QxaOfk_bjWsYb0S1i9TguzEVA
+ QQCOf0R.g6McjfSg.wLSagp15sYEtQ1gjaG7VY26_XnfkdvSU5BdlaDmt_F7ZuhhyBh9pjjVIiko
+ 1IjOJX7BXvgNEdZpzhiMmSJYtGXxDGAerIDSZjqg0mHlITjqUCwdZLQFEhRPII1vc5L42D2IWWEB
+ h.7HjmDSV830uxTHJS.iR7u25454YRejWd8NI7AgpemqUU08f32D3T8YAtKqsf_XicAot1yZk67S
+ VF2s3QPJM..F96gCOKOoE_tf6PRMUdRB75dQjxS6sPnsDElPGyU8U2n_1EC9DvuYDXER42oljSB1
+ 5cmb6gH6wu40aOl_1PNwKdh6nxlVfjBZtoD8_hDScSkNuCEvYQOAKUS4XmL5YNBfAbgL.Wr8SY0b
+ 3gZ.5jaicA9oYINuHkgjcxMWMgFbOTRW5iEuXYE7DjeWl8fX76VDKaPBqy2BKK2OvJ1jwnqHutzz
+ 9YU.o9UiLhTpe2.L_II6FJgKK4l3GsmCafDEYCKVFAFOoQaAGqGxsYlIC89yhcfnuN5dQP1kpe3s
+ 0ej2NUINeqq.TiJDh28llp5svjea3qSzCcpM5r6FxGhU57Wj6KFOyhNDTVl5jE48g2SscWPjUvVK
+ 7WnMatK0zX3W5SFN1G3pOHRsbBkKr1xtlEgtaJUPnnh.d5zgrVsZiHfE5ZZjZ2B4stUU7gl2QVwO
+ 3HdNB0LgMHEtQNWlSGtEK2ig3QRL9A7tCb3qa4eksr9t3r2aPFGA0Z2OkIg_3gkSqug.Qj6cbx7h
+ bQ9QVuxx7g0LWhCaNMQvw9aCzMA6q.xrkGjeqapI5F_wVobAuE8h079uDDglAJy7nS7dZKnljH2g
+ AplWlu3sitfnfhBlYUDJjEwSdtbbR_Y2FNAfOn40A8aPLvqu0LMfGh0uECEYvHCs74HimuyzzJWL
+ EOW9Yx.iWNAHJIZ25AmgTIKMTMrEmm.VOslvOhmNMO7u7lcHYaFnCXdPyVprdVnX5GodbF5WzHiw
+ 3RStl7aJIklEzXd9yiA67Dmug7VL5qqr1FDl7HKAcPiHLE67d9XIGBxXuwK0cxCH60UbLiQhUil1
+ dcu5JmqvefnTZtIkkh9KsaNper71IAz8Z6Lb5ozK_CBMb69MBDl5RuAd5j0kTAU17Ld3eH0UPvQQ
+ nIiRsnYqMppWP5ob0MzNxi2ZK_TWflyqF_gH8Xo43r4AOB5iKNOfs9aBuKlbvdZRUE1HhhDhs44J
+ HfNowYlRx_s7jtq8_YwVc_9a6B.vz6cyuZFjcCIeOZ9ojgjZmoKihsdoR2iaPbzpvelY.AqeguCJ
+ en0fFoPmZvMvH4eyDZeLej_zH0XzUu1Wr3mdcWimP_7VXBBK8ibdPyWTY6bq2hvRaDPpQRD3mscT
+ TUKnJBi9mkGJx2RW4xteKJ_.yw6n9iBBlTXbTNxshi7USmmI4HsNWezzttLFTvhWljeGac.WDQAv
+ mmahJ153A4ElmBUM5_SCiIo_aO3gjZzVNoF8Ues69CrLRW0aPSrclMGmex.Er8p0d2desVdIyPUM
+ 4SMLVG9g4AbQx6MXR_RR5jsNFq35O5um85KIXS72yi7zRRZcuehN0LYfX7_sDcuoaTKvXGno0csO
+ m2pSm96.aw7bbKFg2IUmlU8cnw5v0jzwU35fdBfPFNLruCKzaljZWq.fcNM4k8ukjIUwiYU78k10
+ gP.8jayhlnQaNOxpnMqR2ZAzgmlP3PVbOkufLPsFrZEQpBUL_dDbltaJ3H3Iu63orKLC_eGuxToJ
+ Y5q5yrxfWtCsOPn6XLUAFLSITDb1ZJpphKsBzoXWVtM3JQ0umk0yDpQdrKlPsxXRdtiL9fLMmFAb
+ IFoZuj1uQnVDPRC97naPS_wZnx_YOww3ph7VOwKH27xtQ7q75xNVetqvNEhEsP401GwntD_YpQED
+ mkVCoocGEDrMyxDWK7g34khgZk.CZT9AYN2dFU5JQilMqD_bx.VfZHL4wLCRrbaN_FKXOx5AgkEV
+ ASWLn2Jo26vx3gWfcTEevh9c07DzFcVcY6QfFaNayYHKrdEYM9oUTFe6wgzGHumwozUrPLZJGHmW
+ CbR2svJzCzimUAJPBVn464CfZYJCU5WMqjt7e6p3J2f28Bia6xuJIfEDS5qWvgSyifUBHaPS2cFx
+ t9fMUZd2G0q_dultxcAiPIVHy9pnJ8rdTedMNzfcUOZgnL5jjKYNG6fczvvoby8PFRA1sUJwlBJ1
+ nXRvuM1hoXCAiOhMtITN8N_xxnWnx5i4Rxmy5hPrzIE6D4R32QQt1KC.026qUvrNSnAE95nvZYTz
+ IeYo-
+X-Sonic-MF: <rima.grati@yahoo.com>
+X-Sonic-ID: 9a2892ef-9349-4808-948d-21ce51603143
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic302.consmr.mail.sg3.yahoo.com with HTTP; Mon, 17 Apr 2023 06:46:48 +0000
+Date: Mon, 17 Apr 2023 06:46:45 +0000 (UTC)
+From: Rima Grati <rima.grati@yahoo.com>
+To: "bull-ia@gdria.fr" <bull-ia@gdria.fr>, 
+	"liste-proml@lri.fr" <liste-proml@lri.fr>, 
+	"liste-egc@polytech.univ-nantes.fr" <liste-egc@polytech.univ-nantes.fr>, 
+	"bull-i3@irit.fr" <bull-i3@irit.fr>
+Message-ID: <360296782.3027183.1681714005139@mail.yahoo.com>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_3027182_545557552.1681714005136"
+References: <360296782.3027183.1681714005139.ref@mail.yahoo.com>
+X-Mailer: WebService/1.1.21365 YMailNorrin
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] [SPAM] HICSS 57: Decision Systems for smart farming
+
+------=_Part_3027182_545557552.1681714005136
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+
+DecisionSystems for smart farming=20
+
+=C2=A0
+
+https://hicss.hawaii.edu/tracks-57/decision-analytics-and-service-science/#=
+decision-systems-for-smart-farming-minitrack
+
+=C2=A0
+
+Hawaii,January 3-6, 2024
+
+=C2=A0
+
+The Hawaii International Conference on SystemSciences (HICSS)
+
+=C2=A0
+
+The mini-track Decision Systems for smart farming is under the main trackDe=
+cision analytics and service science and the main conference HICSS-57 https=
+://hicss.hawaii.edu/tracks-57/decision-analytics-and-service-science/#decis=
+ion-systems-for-smart-farming-minitrack
+
+The objective of this mini-track DecisionSystems for smart farming is to en=
+courage and attract research in Internetof Things, Drones, Smart remote sen=
+sing, Computer imaging, Data analysis,Machine learning and deep learning in=
+ smart farming context. Typical themesthat are expected for contributions t=
+o the mini-track include, but are notlimited to:
+
+=C2=B7=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Precision irrigation
+
+=C2=B7=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Fertilization
+
+=C2=B7=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Irrigation
+
+=C2=B7=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Early diseasedetection
+
+=C2=B7=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Automation of farmer=E2=80=99sta=
+sks
+
+=C2=B7=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0IoT-based solutions, roboticsand =
+automation for farmers
+
+=C2=B7=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Smart Farming for FoodSafety
+
+High quality and relevant papers will be fast tracked for consideration ofp=
+ublication in the=C2=A0InternationalJournal of Neural Computing and Applica=
+tions. Authors will be notified during or shortly after the HICSS conferenc=
+eabout this opportunity. If interested, they will need to extend the manusc=
+riptin content and length by at least 30%, change the paper=E2=80=99s title=
+, and make surethat the manuscript is in line with the requirements for sta=
+ndard researcharticles published in this journal.=20
+
+
+|=20
+|=20
+|=20
+|  |  |
+
+ |
+
+ |
+|=20
+|  |=20
+Neural Computing and Applications
+
+Neural Computing & Applications is an international journal which publishes=
+ original research and other informat...
+ |
+
+ |
+
+ |
+
+
+
+
+Important Dates
+
+April 15=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 =C2=A0Paper submiss=
+ion system reopened for HICSS-57
+June 15=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Papers due
+August 17=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Notification ofacceptance=
+/rejection
+
+Minitrack Co-Chairs:
+
+Khouloud Boukadi,=C2=A0Faculty of Economics andmanagement, khouloud.boukadi=
+@fsegs.usf.tn
+
+Rima Grati, Zayed University, rima.grati@zu.ac.ae
+
+=C2=A0
+
+
+------=_Part_3027182_545557552.1681714005136
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns=3D"http://www.w3.org/1999/xhtml" xmlns:v=3D"urn:schemas-microso=
+ft-com:vml" xmlns:o=3D"urn:schemas-microsoft-com:office:office"><head><!--[=
+if gte mso 9]><xml><o:OfficeDocumentSettings><o:AllowPNG/><o:PixelsPerInch>=
+96</o:PixelsPerInch></o:OfficeDocumentSettings></xml><![endif]--></head><bo=
+dy><div class=3D"yahoo-style-wrap" style=3D"font-family:Helvetica Neue, Hel=
+vetica, Arial, sans-serif;font-size:16px;"><div><div dir=3D"ltr" data-setdi=
+r=3D"false"><p class=3D"ydp5b6fda42MsoNormal" align=3D"center" style=3D"mar=
+gin-bottom: 0.0001pt; text-align: center; line-height: normal; background-i=
+mage: initial; background-position: initial; background-size: initial; back=
+ground-repeat: initial; background-attachment: initial; background-origin: =
+initial; background-clip: initial;"><b><span lang=3D"EN-US" style=3D"mso-fa=
+reast-font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:Calibri;=
+mso-bidi-theme-font:minor-latin;color:#4472C4;mso-themecolor:accent1;mso-an=
+si-language:EN-US;mso-fareast-language:FR">Decision
+Systems for smart farming </span></b></p>
+
+<p class=3D"ydp5b6fda42MsoNormal" align=3D"center" style=3D"margin-bottom: =
+0.0001pt; text-align: center; line-height: normal; background-image: initia=
+l; background-position: initial; background-size: initial; background-repea=
+t: initial; background-attachment: initial; background-origin: initial; bac=
+kground-clip: initial;"><span lang=3D"EN-US">&nbsp;</span></p>
+
+<p class=3D"ydp5b6fda42MsoNormal" align=3D"center" style=3D"margin-bottom: =
+0.0001pt; text-align: center; line-height: normal; background-image: initia=
+l; background-position: initial; background-size: initial; background-repea=
+t: initial; background-attachment: initial; background-origin: initial; bac=
+kground-clip: initial;"><a href=3D"https://hicss.hawaii.edu/tracks-57/decis=
+ion-analytics-and-service-science/#decision-systems-for-smart-farming-minit=
+rack" rel=3D"nofollow" target=3D"_blank"><span lang=3D"EN-US">https://hicss=
+.hawaii.edu/tracks-57/decision-analytics-and-service-science/#decision-syst=
+ems-for-smart-farming-minitrack</span></a><span lang=3D"EN-US"></span></p>
+
+<p class=3D"ydp5b6fda42MsoNormal" align=3D"center" style=3D"margin-bottom: =
+0.0001pt; text-align: center; line-height: normal; background-image: initia=
+l; background-position: initial; background-size: initial; background-repea=
+t: initial; background-attachment: initial; background-origin: initial; bac=
+kground-clip: initial;"><span lang=3D"EN-US">&nbsp;</span></p>
+
+<p class=3D"ydp5b6fda42MsoNormal" align=3D"center" style=3D"margin-bottom: =
+0.0001pt; text-align: center; line-height: normal; background-image: initia=
+l; background-position: initial; background-size: initial; background-repea=
+t: initial; background-attachment: initial; background-origin: initial; bac=
+kground-clip: initial;"><b><span lang=3D"EN-US" style=3D"mso-fareast-font-f=
+amily:&quot;Times New Roman&quot;;mso-bidi-font-family:Calibri;mso-bidi-the=
+me-font:minor-latin;color:#4472C4;mso-themecolor:accent1;mso-ansi-language:=
+EN-US;mso-fareast-language:FR">Hawaii,
+January 3-6, 2024</span></b><b><span lang=3D"EN-US"></span></b></p>
+
+<p class=3D"ydp5b6fda42MsoNormal" align=3D"center" style=3D"margin-bottom: =
+0.0001pt; text-align: center; line-height: normal; background-image: initia=
+l; background-position: initial; background-size: initial; background-repea=
+t: initial; background-attachment: initial; background-origin: initial; bac=
+kground-clip: initial;"><span lang=3D"EN-US">&nbsp;</span></p>
+
+<p class=3D"ydp5b6fda42MsoNormal" align=3D"center" style=3D"margin-bottom: =
+0.0001pt; text-align: center; line-height: normal; background-image: initia=
+l; background-position: initial; background-size: initial; background-repea=
+t: initial; background-attachment: initial; background-origin: initial; bac=
+kground-clip: initial;"><span lang=3D"EN-US" style=3D"background-image: ini=
+tial; background-position: initial; background-size: initial; background-re=
+peat: initial; background-attachment: initial; background-origin: initial; =
+background-clip: initial;">The Hawaii International Conference on System
+Sciences (HICSS)</span><span lang=3D"EN-US"></span></p>
+
+<p class=3D"ydp5b6fda42MsoNormal" align=3D"center" style=3D"margin-bottom: =
+0.0001pt; text-align: center; line-height: normal; background-image: initia=
+l; background-position: initial; background-size: initial; background-repea=
+t: initial; background-attachment: initial; background-origin: initial; bac=
+kground-clip: initial;"><span lang=3D"EN-US">&nbsp;</span></p>
+
+<p class=3D"ydp5b6fda42MsoNormal" style=3D"margin: 13.5pt 0in 0.0001pt; lin=
+e-height: normal; background-image: initial; background-position: initial; =
+background-size: initial; background-repeat: initial; background-attachment=
+: initial; background-origin: initial; background-clip: initial;"><span lan=
+g=3D"EN-US">The mini-track Decision Systems for smart farming is under the =
+main track
+Decision analytics and service science and the main conference HICSS-57 </s=
+pan><a href=3D"https://hicss.hawaii.edu/tracks-57/decision-analytics-and-se=
+rvice-science/#decision-systems-for-smart-farming-minitrack" rel=3D"nofollo=
+w" target=3D"_blank"><span lang=3D"EN-US">https://hicss.hawaii.edu/tracks-5=
+7/decision-analytics-and-service-science/#decision-systems-for-smart-farmin=
+g-minitrack</span></a><span lang=3D"EN-US"></span></p>
+
+<p class=3D"ydp5b6fda42MsoNormal" style=3D"margin: 13.5pt 0in 0.0001pt; lin=
+e-height: normal; background-image: initial; background-position: initial; =
+background-size: initial; background-repeat: initial; background-attachment=
+: initial; background-origin: initial; background-clip: initial;"><span lan=
+g=3D"EN-US">The objective of this mini-track <b>Decision
+Systems for smart farming</b> is to encourage and attract research in Inter=
+net
+of Things, Drones, Smart remote sensing, Computer imaging, Data analysis,
+Machine learning and deep learning in smart farming context. Typical themes
+that are expected for contributions to the mini-track include, but are not
+limited to:</span></p>
+
+<p class=3D"ydp5b6fda42MsoListParagraphCxSpFirst" style=3D"margin: 0in 0in =
+0.0001pt 40.5pt; line-height: normal; background-image: initial; background=
+-position: initial; background-size: initial; background-repeat: initial; b=
+ackground-attachment: initial; background-origin: initial; background-clip:=
+ initial;"><!--[if !supportLists]--><span style=3D"font-family:Symbol;mso-f=
+areast-font-family:Symbol;mso-bidi-font-family:Symbol;mso-fareast-language:=
+FR">=C2=B7<span style=3D"font-stretch: normal; font-size: 7pt; line-height:=
+ normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;&nbsp; </span></span><!--[endif]-->Precision irrigation</p>
+
+<p class=3D"ydp5b6fda42MsoListParagraphCxSpMiddle" style=3D"margin: 0in 0in=
+ 0.0001pt 40.5pt; line-height: normal; background-image: initial; backgroun=
+d-position: initial; background-size: initial; background-repeat: initial; =
+background-attachment: initial; background-origin: initial; background-clip=
+: initial;"><!--[if !supportLists]--><span style=3D"font-family:Symbol;mso-=
+fareast-font-family:Symbol;mso-bidi-font-family:Symbol;mso-fareast-language=
+:FR">=C2=B7<span style=3D"font-stretch: normal; font-size: 7pt; line-height=
+: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp; </span></span><!--[endif]-->Fertilization</p>
+
+<p class=3D"ydp5b6fda42MsoListParagraphCxSpMiddle" style=3D"margin: 0in 0in=
+ 0.0001pt 40.5pt; line-height: normal; background-image: initial; backgroun=
+d-position: initial; background-size: initial; background-repeat: initial; =
+background-attachment: initial; background-origin: initial; background-clip=
+: initial;"><!--[if !supportLists]--><span style=3D"font-family:Symbol;mso-=
+fareast-font-family:Symbol;mso-bidi-font-family:Symbol;mso-fareast-language=
+:FR">=C2=B7<span style=3D"font-stretch: normal; font-size: 7pt; line-height=
+: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp; </span></span><!--[endif]-->Irrigation</p>
+
+<p class=3D"ydp5b6fda42MsoListParagraphCxSpMiddle" style=3D"margin: 0in 0in=
+ 0.0001pt 40.5pt; line-height: normal; background-image: initial; backgroun=
+d-position: initial; background-size: initial; background-repeat: initial; =
+background-attachment: initial; background-origin: initial; background-clip=
+: initial;"><!--[if !supportLists]--><span style=3D"font-family:Symbol;mso-=
+fareast-font-family:Symbol;mso-bidi-font-family:Symbol;mso-fareast-language=
+:FR">=C2=B7<span style=3D"font-stretch: normal; font-size: 7pt; line-height=
+: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp; </span></span><!--[endif]-->Early disease
+detection</p>
+
+<p class=3D"ydp5b6fda42MsoListParagraphCxSpMiddle" style=3D"margin: 0in 0in=
+ 0.0001pt 40.5pt; line-height: normal; background-image: initial; backgroun=
+d-position: initial; background-size: initial; background-repeat: initial; =
+background-attachment: initial; background-origin: initial; background-clip=
+: initial;"><!--[if !supportLists]--><span style=3D"font-family:Symbol;mso-=
+fareast-font-family:Symbol;mso-bidi-font-family:Symbol;mso-fareast-language=
+:FR">=C2=B7<span style=3D"font-stretch: normal; font-size: 7pt; line-height=
+: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp; </span></span><!--[endif]-->Automation of farmer=E2=80=99s
+tasks</p>
+
+<p class=3D"ydp5b6fda42MsoListParagraphCxSpMiddle" style=3D"margin: 0in 0in=
+ 0.0001pt 40.5pt; line-height: normal; background-image: initial; backgroun=
+d-position: initial; background-size: initial; background-repeat: initial; =
+background-attachment: initial; background-origin: initial; background-clip=
+: initial;"><!--[if !supportLists]--><span lang=3D"EN-US" style=3D"font-fam=
+ily:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol;mso-a=
+nsi-language:EN-US;mso-fareast-language:FR">=C2=B7<span style=3D"font-stret=
+ch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times N=
+ew Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><!--[endif]--><span lang=3D"EN-US">IoT-based solutions, robot=
+ics
+and automation for farmers</span></p>
+
+<p class=3D"ydp5b6fda42MsoListParagraphCxSpLast" style=3D"margin: 0in 0in 0=
+.0001pt 40.5pt; line-height: normal; background-image: initial; background-=
+position: initial; background-size: initial; background-repeat: initial; ba=
+ckground-attachment: initial; background-origin: initial; background-clip: =
+initial;"><!--[if !supportLists]--><span style=3D"font-family:Symbol;mso-fa=
+reast-font-family:Symbol;mso-bidi-font-family:Symbol;mso-fareast-language:F=
+R">=C2=B7<span style=3D"font-stretch: normal; font-size: 7pt; line-height: =
+normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;=
+&nbsp;&nbsp; </span></span><!--[endif]-->Smart Farming for Food
+Safety</p>
+
+<p class=3D"ydp5b6fda42MsoNormal" style=3D"margin: 13.5pt 0in 0.0001pt; lin=
+e-height: normal; background-image: initial; background-position: initial; =
+background-size: initial; background-repeat: initial; background-attachment=
+: initial; background-origin: initial; background-clip: initial;"><span lan=
+g=3D"EN-US">High quality and relevant papers will be fast tracked for consi=
+deration of
+publication in the&nbsp;</span><a href=3D"https://www.springer.com/journal/=
+521" rel=3D"nofollow" target=3D"_blank" class=3D"enhancr_card_2474184725"><=
+b><span lang=3D"EN-US" style=3D"mso-fareast-font-family:&quot;Times New Rom=
+an&quot;;mso-bidi-font-family:Calibri;mso-bidi-theme-font:minor-latin;color=
+:windowtext;border:none windowtext 1.0pt;mso-border-alt:none windowtext 0in=
+;padding:0in;mso-ansi-language:EN-US;mso-fareast-language:FR">International
+Journal of Neural Computing and Applications</span></b></a><span lang=3D"EN=
+-US">. Authors will be notified during or shortly after the HICSS conferenc=
+e
+about this opportunity. If interested, they will need to extend the manuscr=
+ipt
+in content and length by at least 30%, change the paper=E2=80=99s title, an=
+d make sure
+that the manuscript is in line with the requirements for standard research
+articles published in this journal. </span></p><div><br></div><div id=3D"yd=
+p4f78ffadenhancr_card_2474184725" class=3D"ydp4f78ffadyahoo-link-enhancr-ca=
+rd ydp4f78ffadymail-preserve-class ydp4f78ffadymail-preserve-style" style=
+=3D"max-width:400px;font-family:YahooSans, &quot;Helvetica Neue&quot;, &quo=
+t;Segoe UI&quot;, Helvetica, Arial, sans-serif" data-url=3D"https://www.spr=
+inger.com/journal/521" data-type=3D"YENHANCER" data-size=3D"MEDIUM" content=
+editable=3D"false"><a href=3D"https://www.springer.com/journal/521" style=
+=3D"text-decoration:none !important;color:#000 !important" class=3D"ydp4f78=
+ffadyahoo-enhancr-cardlink" rel=3D"nofollow" target=3D"_blank"><table borde=
+r=3D"0" class=3D"ydp4f78ffadcard-wrapper ydp4f78ffadyahoo-ignore-table" cel=
+lpadding=3D"0" cellspacing=3D"0" style=3D"max-width:400px"><tbody><tr><td w=
+idth=3D"400"><table border=3D"0" class=3D"ydp4f78ffadcard ydp4f78ffadyahoo-=
+ignore-table" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"m=
+ax-width:400px;border-width:1px;border-style:solid;border-color:rgb(224, 22=
+8, 233);border-radius:2px"><tbody><tr><td class=3D"ydp4f78ffadcard-primary-=
+image-cell" background=3D"https://s.yimg.com/lo/api/res/1.2/C8AR5e5Hr0B2VAj=
+6bg62YA--~A/Zmk9ZmlsbDt3PTQwMDtoPTIwMDthcHBpZD1pZXh0cmFjdA--/https://media.=
+springernature.com/w92/springer-static/cover/journal/521.jpg.cf.jpg" bgcolo=
+r=3D"#000000" valign=3D"top" height=3D"175" style=3D"background-color: rgb(=
+0, 0, 0); background-size: cover; position: relative; border-radius: 2px 2p=
+x 0px 0px; min-height: 175px;"><!--[if gte mso 9]><v:rect fill=3D"true" str=
+oke=3D"false" style=3D"width:396px;height:175px;position:absolute;top:0;lef=
+t:0;"><v:fill type=3D"frame" color=3D"#000000" src=3D"https://s.yimg.com/lo=
+/api/res/1.2/C8AR5e5Hr0B2VAj6bg62YA--~A/Zmk9ZmlsbDt3PTQwMDtoPTIwMDthcHBpZD1=
+pZXh0cmFjdA--/https://media.springernature.com/w92/springer-static/cover/jo=
+urnal/521.jpg.cf.jpg"/></v:rect><![endif]--><table border=3D"0" class=3D"yd=
+p4f78ffadcard-overlay-container-table ydp4f78ffadyahoo-ignore-table" cellpa=
+dding=3D"0" cellspacing=3D"0" style=3D"width:100%"><tbody><tr><td class=3D"=
+ydp4f78ffadcard-overlay-cell" background=3D"https://s.yimg.com/cv/ae/nq/sto=
+rm/assets/enhancrV21/1/enhancr_gradient-400x175.png" bgcolor=3D"transparent=
+" valign=3D"top" style=3D"background-color: transparent; border-radius: 2px=
+ 2px 0px 0px; min-height: 175px;"><!--[if gte mso 9]><v:rect fill=3D"true" =
+stroke=3D"false" style=3D"width:396px;height:175px;position:absolute;top:-1=
+8px;left:0;"><v:fill type=3D"pattern" color=3D"#000000" src=3D"https://s.yi=
+mg.com/cv/ae/nq/storm/assets/enhancrV21/1/enhancr_gradient-400x175.png"/><v=
+:textbox inset=3D"0,0,20px,0"><![endif]--><table border=3D"0" class=3D"ydp4=
+f78ffadyahoo-ignore-table" height=3D"175" style=3D"width: 100%; min-height:=
+ 175px;"><tbody><tr><td class=3D"ydp4f78ffadcard-richInfo2" style=3D"text-a=
+lign:left;padding:15px 0 0 15px;vertical-align:top"></td><td class=3D"ydp4f=
+78ffadcard-actions" style=3D"text-align:right;padding:15px 15px 0 0;vertica=
+l-align:top"><div class=3D"ydp4f78ffadcard-share-container"></div></td></tr=
+></tbody></table><!--[if gte mso 9]></v:textbox></v:rect><![endif]--></td><=
+/tr></tbody></table></td></tr><tr><td><table border=3D"0" align=3D"center" =
+class=3D"ydp4f78ffadcard-info ydp4f78ffadyahoo-ignore-table" cellpadding=3D=
+"0" cellspacing=3D"0" style=3D"background:#fff;position:relative;z-index:2;=
+width:100%;max-width:400px;border-radius:0 0 2px 2px;border-top:1px solid r=
+gb(224, 228, 233)"><tbody><tr><td style=3D"background-color:#ffffff;padding=
+:16px 0 16px 12px;vertical-align:top;border-radius:0 0 0 2px"></td><td styl=
+e=3D"vertical-align:middle;padding:12px 24px 16px 12px;width:99%;font-famil=
+y:YahooSans, &quot;Helvetica Neue&quot;, &quot;Segoe UI&quot;, Helvetica, A=
+rial, sans-serif;border-radius:0 0 2px 0"><h2 class=3D"ydp4f78ffadcard-titl=
+e" style=3D"font-size: 14px; line-height: 19px; margin: 0px 0px 6px; font-f=
+amily: YahooSans, &quot;Helvetica Neue&quot;, &quot;Segoe UI&quot;, Helveti=
+ca, Arial, sans-serif; color: rgb(29, 34, 40); max-width: 314px;">Neural Co=
+mputing and Applications</h2><p class=3D"ydp4f78ffadcard-description" style=
+=3D"font-size: 12px; line-height: 16px; margin: 0px; color: rgb(151, 158, 1=
+68);">Neural Computing &amp; Applications is an international journal which=
+ publishes original research and other informat...</p></td></tr></tbody></t=
+able></td></tr></tbody></table></td></tr></tbody></table></a></div><div><br=
+></div><div><br></div>
+
+<p class=3D"ydp5b6fda42MsoNormal" style=3D"margin: 20.25pt 0in 0.0001pt; li=
+ne-height: normal; background-image: initial; background-position: initial;=
+ background-size: initial; background-repeat: initial; background-attachmen=
+t: initial; background-origin: initial; background-clip: initial;"><b><span=
+ lang=3D"EN-US">Important Dates</span></b></p>
+
+<p style=3D"margin-top:13.5pt;margin-right:0in;margin-bottom:0in;margin-lef=
+t:0in;margin-bottom:.0001pt"><span lang=3D"EN-US" style=3D"font-size:11.0pt=
+;font-family:&quot;Calibri&quot;,sans-serif;mso-ascii-theme-font:minor-lati=
+n;mso-hansi-theme-font:minor-latin;mso-bidi-theme-font:minor-latin;color:#4=
+472C4;mso-themecolor:accent1;mso-ansi-language:EN-US">April 15&nbsp; &nbsp;=
+ &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp;Paper submission system reopened for HICSS-57<br>
+June 15&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Papers due</s=
+pan><span lang=3D"EN-US" style=3D"font-size:11.0pt;font-family:&quot;Calibr=
+i&quot;,sans-serif;mso-ascii-theme-font:minor-latin;mso-hansi-theme-font:mi=
+nor-latin;mso-bidi-theme-font:minor-latin;mso-ansi-language:EN-US"><br>
+August 17&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Notification of
+acceptance/rejection</span></p>
+
+<p class=3D"ydp5b6fda42MsoNormal" style=3D"margin: 20.25pt 0in 0.0001pt; li=
+ne-height: normal; background-image: initial; background-position: initial;=
+ background-size: initial; background-repeat: initial; background-attachmen=
+t: initial; background-origin: initial; background-clip: initial;"><b><span=
+ lang=3D"EN-US">Minitrack Co-Chairs:</span></b></p>
+
+<p class=3D"ydp5b6fda42MsoNormal" style=3D"margin: 13.5pt 0in 0.0001pt; lin=
+e-height: normal; background-image: initial; background-position: initial; =
+background-size: initial; background-repeat: initial; background-attachment=
+: initial; background-origin: initial; background-clip: initial;"><b><span =
+lang=3D"EN-US">Khouloud Boukadi,</span></b><span lang=3D"EN-US">&nbsp;Facul=
+ty of Economics and
+management, khouloud.boukadi@fsegs.usf.tn</span></p>
+
+<p class=3D"ydp5b6fda42MsoNormal" style=3D"margin: 13.5pt 0in 0.0001pt; lin=
+e-height: normal; background-image: initial; background-position: initial; =
+background-size: initial; background-repeat: initial; background-attachment=
+: initial; background-origin: initial; background-clip: initial;"><b><span =
+lang=3D"EN-US">Rima Grati</span></b><span lang=3D"EN-US">, Zayed University=
+, rima.grati@zu.ac.ae</span></p>
+
+<p class=3D"ydp5b6fda42MsoNormal"><span lang=3D"EN-US">&nbsp;</span></p></d=
+iv><br></div></div></body></html>
+------=_Part_3027182_545557552.1681714005136--

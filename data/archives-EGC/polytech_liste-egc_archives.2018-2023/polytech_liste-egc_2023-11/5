@@ -1,0 +1,761 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (bouncesmtp1.u12.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 48D2314014ED
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed,  1 Nov 2023 10:23:09 +0100 (CET)
+Received: from mx2.univ-nantes.fr (MX2.univ-nantes.fr [193.52.101.136])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id 3DDF3D4C
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed,  1 Nov 2023 10:23:09 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.univ-nantes.fr (Postfix) with ESMTP id 376CA1002DA
+	for <liste-egc@polytech.univ-nantes.fr>; Wed,  1 Nov 2023 10:23:09 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -2.801
+X-Spam-Level:
+X-Spam-Status: No, score=-2.801 tagged_above=-1000 required=5
+	tests=[CRM114_SPAM=5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	KAM_MANYTO=0.2, NO_RDNS2=0.01, RCVD_IN_DNSWL_MED=-10,
+	RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001, SPF_PASS=-0.001, TW_LN=0.077,
+	UN_COMMAS_IN_SUBJ=2, UN_PHISHING_PW=0.1, URIBL_BLOCKED=0.001]
+	autolearn=disabled
+X-CRM114-Status: SPAM ( -6.4692 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=tu-dresden.de
+Received: from mx2.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id TkYU3Kk-ngH5 for <liste-egc@polytech.univ-nantes.fr>;
+	Wed,  1 Nov 2023 10:23:03 +0100 (CET)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=141.30.67.75; helo=mailout4.zih.tu-dresden.de; envelope-from=lucia.gomez_alvarez@tu-dresden.de; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=none dis=none) header.from=tu-dresden.de
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=tu-dresden.de
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (2048-bit key; unprotected) header.d=tu-dresden.de header.i=@tu-dresden.de header.a=rsa-sha256 header.s=dkim2022 header.b=kjjPtjtv;
+	dkim-atps=neutral
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mailout4.zih.tu-dresden.de (mailout4.zih.tu-dresden.de [141.30.67.75])
+	by mx2.univ-nantes.fr (Postfix) with ESMTPS id A2C971002CA
+	for <liste-egc@polytech.univ-nantes.fr>; Wed,  1 Nov 2023 10:23:02 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=tu-dresden.de; s=dkim2022; h=MIME-Version:Content-Type:Message-ID:Date:
+	Subject:To:From:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=rJU26umPGFvhavAtBadlO+7GHhSKyf15jojsbNyjnvk=; b=kjjPtjtvklyleHN3M0rVIBcTH9
+	mniNrFCEHa6Qcp3RiaRws7k30strWjsqEtug1T24lv3Lwhtj7lB08BGTjq4s8YdOtw+6x3YCpPIN/
+	HnM0yBWZbTrPOs4eihcooTTUuF5q0NR6AuXuo5c3cHSiNLW0o6Bs6Xk70/ZE4I/HhmvH9jHL3xK88
+	t3QKU4g4BOEBf7B47JNzS0fo9GeifNTzxsvXyxd9bjxkcJqhFYEoF70rtDKJI/Wz4xq99bKWq/Xy0
+	rPmbC7Yg7nIb56jshx9Pme2ndKTTSkYGUGd8yEIUMkCUrsciC3cJxBETiCH9sltRjsxVEwCYjvx1n
+	3Zyp/aFg==;
+Received: from [172.26.34.113] (helo=msx.tu-dresden.de)
+	by mailout4.zih.tu-dresden.de with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <lucia.gomez_alvarez@tu-dresden.de>)
+	id 1qy7Qp-00H1hO-43; Wed, 01 Nov 2023 10:22:35 +0100
+Received: from msx-l319.msx.ad.zih.tu-dresden.de (172.26.34.119) by
+ MSX-L313.msx.ad.zih.tu-dresden.de (172.26.34.113) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.34; Wed, 1 Nov 2023 10:21:04 +0100
+Received: from msx-l319.msx.ad.zih.tu-dresden.de ([172.26.34.119]) by
+ msx-l319.msx.ad.zih.tu-dresden.de ([172.26.34.119]) with mapi id
+ 15.01.2507.034; Wed, 1 Nov 2023 10:21:04 +0100
+From: Lucia Gomez Alvarez <lucia.gomez_alvarez@tu-dresden.de>
+To: "logic@cs.stanford.edu" <logic@cs.stanford.edu>,
+	"loginf@lists.tcs.ifi.lmu.de" <loginf@lists.tcs.ifi.lmu.de>, "aixia@aixia.it"
+	<aixia@aixia.it>, "bull-i3@irit.fr" <bull-i3@irit.fr>, "bull-ia@gdria.fr"
+	<bull-ia@gdria.fr>, "dgkl@listserv.linguistlist.org"
+	<dgkl@listserv.linguistlist.org>, "fca-list@cs.uni-kassel.de"
+	<fca-list@cs.uni-kassel.de>, "obml@lists.informatik.uni-leipzig.de"
+	<obml@lists.informatik.uni-leipzig.de>, "agents@cs.umbc.edu"
+	<agents@cs.umbc.edu>, "AI-SGES@JISCMAIL.AC.UK" <AI-SGES@JISCMAIL.AC.UK>,
+	"announcements@lists.cognitivesciencesociety.org"
+	<announcements@lists.cognitivesciencesociety.org>, "comma@list.tuwien.ac.at"
+	<comma@list.tuwien.ac.at>, "corpora@list.elra.info" <corpora@list.elra.info>,
+	"ifi-ci-event@lists.tu-clausthal.de" <ifi-ci-event@lists.tu-clausthal.de>,
+	"liste-egc@polytech.univ-nantes.fr" <liste-egc@polytech.univ-nantes.fr>,
+	"madics-annonces-request@univ-grenoble-alpes.fr"
+	<madics-annonces-request@univ-grenoble-alpes.fr>,
+	"public-semweb-lifesci@w3.org" <public-semweb-lifesci@w3.org>,
+	"semantic-web@w3.org" <semantic-web@w3.org>,
+	"sigai-announce@listserv.acm.org" <sigai-announce@listserv.acm.org>,
+	"sigir@acm.org" <sigir@acm.org>, "web.semantique@lists-sop.inria.fr"
+	<web.semantique@lists-sop.inria.fr>, "wi@lists.kit.edu" <wi@lists.kit.edu>,
+	"comma@list.tuwien.ac.at" <comma@list.tuwien.ac.at>,
+	"liste-egc@polytech.univ-nantes.fr" <liste-egc@polytech.univ-nantes.fr>,
+	"AI-SGES@JISCMAIL.AC.UK" <AI-SGES@JISCMAIL.AC.UK>,
+	"polytech_liste-egc@univ-nantes.fr" <polytech_liste-egc@univ-nantes.fr>,
+	"finite-model-theory@lists.rwth-aachen.de"
+	<finite-model-theory@lists.rwth-aachen.de>, "logic-list@helsinki.fi"
+	<logic-list@helsinki.fi>, "dl@dl.kr.org" <dl@dl.kr.org>,
+	"logic@math.uni-bonn.de" <logic@math.uni-bonn.de>, "planetkr@kr.org"
+	<planetkr@kr.org>, "uai@engr.orst.edu" <uai@engr.orst.edu>,
+	"folli@folli.info" <folli@folli.info>, "agents@cs.umbc.edu"
+	<agents@cs.umbc.edu>
+Thread-Topic: FoIKS 2024, 13th International Symposium on Foundations of
+ Information and Knowledge Systems, 8 - 11 April 2024, Sheffield (UK).
+ Abstract deadline: 24th November 2023
+Thread-Index: AQHaDKQ9ziMrFo5OyUGkHX7/js4PYQ==
+Date: Wed, 1 Nov 2023 09:21:04 +0000
+Message-ID: <0135dfa55bed4d5f91d65351a4c6c881@tu-dresden.de>
+Accept-Language: en-GB, de-DE, en-US
+Content-Language: en-GB
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+Content-Type: multipart/alternative;
+	boundary="_000_0135dfa55bed4d5f91d65351a4c6c881tudresdende_"
+MIME-Version: 1.0
+X-TUD-Virus-Scanned: mailout4.zih.tu-dresden.de
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] FoIKS 2024, 13th International Symposium on Foundations
+ of Information and Knowledge Systems, 8 - 11 April 2024, Sheffield (UK).
+ Abstract deadline: 24th November 2023
+
+--_000_0135dfa55bed4d5f91d65351a4c6c881tudresdende_
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+*Call for Papers*
+=97----------------
+
+13th International Symposium on Foundations of Information and Knowledge Sy=
+stems =96 FoIKS 2024
+
+
+https://foiks2024.github.io/
+
+
+Abstract submission deadline: 24.11.2023
+Paper submission deadline: 01.12.2023
+
+
+The FoIKS symposia provide a biennial forum for presenting and discussing t=
+heoretical and applied research on information and knowledge systems. The g=
+oal is to bring together researchers with an interest in this subject, shar=
+e research experiences, promote collaboration and identify new issues and d=
+irections for future research.
+
+FoIKS 2024 solicits original contributions (as well as extensions of previo=
+usly published contributions) dealing with any foundational aspect of infor=
+mation and knowledge systems. This includes submissions that apply ideas, t=
+heories or methods from specific disciplines to information and knowledge s=
+ystems. Examples of such disciplines are discrete mathematics, logic and al=
+gebra, model theory, information theory, (parameterized) complexity theory,=
+ algorithmics and computation, statistics, and optimisation, among, of cour=
+se, many others.
+
+The FoIKS symposia are a forum for intensive discussions. Speakers will be =
+given sufficient time to present their ideas and results within the larger =
+context of their research. Furthermore, participants will be asked to prepa=
+re a first response to another contribution in order to initiate discussion=
+.
+
+
+Suggested topics
+=97---------------
+
+The suggested topics include, but are not limited to:
+* Database Design: Formal models, dependencies and independencies
+* Big Data: Models for data in the Cloud, programming languages for big dat=
+a, query processing
+* Dynamics of Information: Models of transactions, concurrency control, upd=
+ates, consistency preservation, belief revision
+* Information Fusion: Heterogeneity, views, schema dominance, multiple sour=
+ce information merging, reasoning under inconsistency
+* Integrity and Constraint Management: Verification, validation, consistent=
+ query answering, information cleaning
+* Intelligent Agents: Multi-agent systems, autonomous agents, foundations o=
+f software agents, cooperative agents, formal models of interactions, negot=
+iations and dialogue, logical models of emotions
+* Knowledge Discovery and Information Retrieval: Machine learning, data min=
+ing, formal concept analysis and association rules, text mining, informatio=
+n extraction
+* Knowledge Representation, Reasoning and Planning: Non-monotonic formalism=
+s, probabilistic and non-probabilistic models of uncertainty, graphical mod=
+els and independence, similarity-based reasoning, preference modeling and h=
+andling, computational models of argument, argumentation systems
+* Logics in Databases and AI: Classical and non-classical logics, logic pro=
+gramming, description logics, spatial and temporal logics, probability logi=
+c, fuzzy logic
+* Mathematical Foundations: Discrete structures and algorithms, graphs, gra=
+mmars, automata, abstract machines, finite model theory, information theory=
+, coding theory, (parameterised) complexity theory, randomness
+* Security in Information and Knowledge Systems: Identity theft, privacy, t=
+rust, intrusion detection, access control, inference control, secure Web se=
+rvices, secure Semantic Web, risk management
+* Semi-Structured Data and XML: Data modelling, data processing, data compr=
+ession, data exchange
+* Social Computing: Collective intelligence and self-organizing knowledge, =
+collaborative filtering, computational social choice, Boolean games, coalit=
+ion formation, reputation systems
+* The Semantic Web and Knowledge Management: Languages, ontologies, agents,=
+ adaption, intelligent algorithms, ontology-based data access
+* The WWW: Models of Web databases, Web dynamics, Web services, Web transac=
+tions and negotiations, Social Networks, Web Mining
+
+
+Invited Speakers
+=97---------------
+
+* Georg Gottlob, University of Oxford
+* Phokion Kolaitis, University of California Santa Cruz and IBM Research
+* Andrei Popescu, University of Sheffield
+* Uli Sattler, University of Manchester
+
+
+Important Dates
+=97--------------
+
+All deadlines are at 23:59 UTC-12 (AoE, "anywhere on earth").
+
+Submission server opens                                        01.09.2023
+Abstract submission deadline (long and short papers)        24.11.2023
+Paper submission deadline (long and short papers)        01.12.2023
+Acceptance notifications                                29.01.2024
+Camera-ready versions of accepted papers due                08.02.2024
+Early registration deadline                                08.03.2024
+Late registration deadline                                01.04.2024
+Conference                                                8=9611.04.2024
+
+
+Submission Guidelines
+=97--------------------
+
+For long papers, the page limit is 16 plus additional pages of references. =
+For short papers, the maximum number of pages is 10 plus additional pages o=
+f references. All papers must be original and not simultaneously submitted =
+to another journal or conference. Papers must be typeset using the Springer=
+ LaTeX2e style llncs for Lecture Notes in Computer Science (see https://www=
+.springer.com/gp/computer-science/lncs/conference-proceedings-guidelines an=
+d https://resource-cms.springernature.com/springer-cms/rest/v1/content/1923=
+8648/data/v6). Submissions that deviate substantially from these guidelines=
+ may be rejected without review. Initial submissions must be in PDF format,=
+ but authors should keep in mind that the LaTeX2e source must be submitted =
+for the final versions of accepted papers. Submissions in alternate formats=
+, such as Microsoft Word, cannot be accepted for either initial or final ve=
+rsions. The submissions will be judged for scientific quality and for suita=
+bility as a basis for broader discussion.
+
+
+Submission is via the EasyChair link https://easychair.org/conferences/?con=
+f=3Dfoiks24.
+
+
+Publication
+=97----------
+
+The proceedings will be published by Springer-Verlag in the Lecture Notes i=
+n Computer Science. After the symposium, authors of selected papers will be=
+ invited to submit extended journal versions of their papers for a FoIKS 20=
+24 special issue in the journal Knowledge Engineering Review (https://www.c=
+ambridge.org/core/journals/knowledge-engineering-review). Further details w=
+ill be provided on the conference website.
+
+
+Program Committee Chairs
+=97-----------------------
+
+Arne Meier
+Leibniz Universit=E4t Hannover, Germany
+
+Magdalena Ortiz
+TU Wien, Austria and Ume=E5 University, Sweden
+
+Local Chair
+=97----------
+
+Jonni Virtema
+University of Sheffield, UK
+
+
+Contact
+=97------
+
+All questions about submissions should be emailed to foiks24@easychair.org.
+
+
+https://foiks2024.github.io/
+
+
+
+
+_________________________
+Dr. Luc=EDa G=F3mez =C1lvarez
+Computational Logic Group
+Institute for Artificial Intelligence
+Faculty of Computer Science
+TU Dresden
+GERMANY
+
+--_000_0135dfa55bed4d5f91d65351a4c6c881tudresdende_
+Content-Type: text/html; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DWindows-1=
+252">
+<style type=3D"text/css" style=3D"display:none;"><!-- P {margin-top:0;margi=
+n-bottom:0;} --></style>
+</head>
+<body dir=3D"ltr">
+<div id=3D"divtagdefaultwrapper" style=3D"font-size:12pt;color:#000000;font=
+-family:Arial,Helvetica,sans-serif;" dir=3D"ltr">
+<p></p>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<span style=3D"font-size: 12pt;">*Call for Papers*&nbsp;</span><br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+=97----------------</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+13th International Symposium on Foundations of Information and Knowledge Sy=
+stems =96 FoIKS 2024</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+https://foiks2024.github.io/</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+Abstract submission deadline: 24.11.2023</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+Paper submission deadline: 01.12.2023</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+The FoIKS symposia provide a biennial forum for presenting and discussing t=
+heoretical and applied research on information and knowledge systems. The g=
+oal is to bring together researchers with an interest in this subject, shar=
+e research experiences, promote
+ collaboration and identify new issues and directions for future research.<=
+/div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+FoIKS 2024 solicits original contributions (as well as extensions of previo=
+usly published contributions) dealing with any foundational aspect of infor=
+mation and knowledge systems. This includes submissions that apply ideas, t=
+heories or methods from specific
+ disciplines to information and knowledge systems. Examples of such discipl=
+ines are discrete mathematics, logic and algebra, model theory, information=
+ theory, (parameterized) complexity theory, algorithmics and computation, s=
+tatistics, and optimisation, among,
+ of course, many others.</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+The FoIKS symposia are a forum for intensive discussions. Speakers will be =
+given sufficient time to present their ideas and results within the larger =
+context of their research. Furthermore, participants will be asked to prepa=
+re a first response to another contribution
+ in order to initiate discussion.</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+Suggested topics</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+=97---------------</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+The suggested topics include, but are not limited to:</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+* Database Design: Formal models, dependencies and independencies</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+* Big Data: Models for data in the Cloud, programming languages for big dat=
+a, query processing</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+* Dynamics of Information: Models of transactions, concurrency control, upd=
+ates, consistency preservation, belief revision</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+* Information Fusion: Heterogeneity, views, schema dominance, multiple sour=
+ce information merging, reasoning under inconsistency</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+* Integrity and Constraint Management: Verification, validation, consistent=
+ query answering, information cleaning</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+* Intelligent Agents: Multi-agent systems, autonomous agents, foundations o=
+f software agents, cooperative agents, formal models of interactions, negot=
+iations and dialogue, logical models of emotions</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+* Knowledge Discovery and Information Retrieval: Machine learning, data min=
+ing, formal concept analysis and association rules, text mining, informatio=
+n extraction</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+* Knowledge Representation, Reasoning and Planning: Non-monotonic formalism=
+s, probabilistic and non-probabilistic models of uncertainty, graphical mod=
+els and independence, similarity-based reasoning, preference modeling and h=
+andling, computational models of
+ argument, argumentation systems</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+* Logics in Databases and AI: Classical and non-classical logics, logic pro=
+gramming, description logics, spatial and temporal logics, probability logi=
+c, fuzzy logic</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+* Mathematical Foundations: Discrete structures and algorithms, graphs, gra=
+mmars, automata, abstract machines, finite model theory, information theory=
+, coding theory, (parameterised) complexity theory, randomness</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+* Security in Information and Knowledge Systems: Identity theft, privacy, t=
+rust, intrusion detection, access control, inference control, secure Web se=
+rvices, secure Semantic Web, risk management</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+* Semi-Structured Data and XML: Data modelling, data processing, data compr=
+ession, data exchange</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+* Social Computing: Collective intelligence and self-organizing knowledge, =
+collaborative filtering, computational social choice, Boolean games, coalit=
+ion formation, reputation systems</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+* The Semantic Web and Knowledge Management: Languages, ontologies, agents,=
+ adaption, intelligent algorithms, ontology-based data access</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+* The WWW: Models of Web databases, Web dynamics, Web services, Web transac=
+tions and negotiations, Social Networks, Web Mining</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+Invited Speakers</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+=97---------------</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+* Georg Gottlob, University of Oxford</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+* Phokion Kolaitis, University of California Santa Cruz and IBM Research</d=
+iv>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+* Andrei Popescu, University of Sheffield</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+* Uli Sattler, University of Manchester</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+Important Dates</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+=97--------------</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+All deadlines are at 23:59 UTC-12 (AoE, &quot;anywhere on earth&quot;).</di=
+v>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+Submission server opens&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nb=
+sp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &=
+nbsp; &nbsp; 01.09.2023</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+Abstract submission deadline (long and short papers)&nbsp; &nbsp; &nbsp; &n=
+bsp; 24.11.2023</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+Paper submission deadline (long and short papers)&nbsp; &nbsp; &nbsp; &nbsp=
+; 01.12.2023</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+Acceptance notifications&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &n=
+bsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 29.01.2024</di=
+v>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+Camera-ready versions of accepted papers due&nbsp; &nbsp; &nbsp; &nbsp; &nb=
+sp; &nbsp; &nbsp; &nbsp; 08.02.2024</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+Early registration deadline&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;=
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 08.03.2024<=
+/div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+Late registration deadline&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; =
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 01.04.2024</=
+div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+Conference&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &n=
+bsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; =
+&nbsp; &nbsp; &nbsp; &nbsp; 8=9611.04.2024</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+Submission Guidelines</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+=97--------------------</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+For long papers, the page limit is 16 plus additional pages of references. =
+For short papers, the maximum number of pages is 10 plus additional pages o=
+f references. All papers must be original and not simultaneously submitted =
+to another journal or conference.
+ Papers must be typeset using the Springer LaTeX2e style llncs for Lecture =
+Notes in Computer Science (see https://www.springer.com/gp/computer-science=
+/lncs/conference-proceedings-guidelines and https://resource-cms.springerna=
+ture.com/springer-cms/rest/v1/content/19238648/data/v6).
+ Submissions that deviate substantially from these guidelines may be reject=
+ed without review. Initial submissions must be in PDF format, but authors s=
+hould keep in mind that the LaTeX2e source must be submitted for the final =
+versions of accepted papers. Submissions
+ in alternate formats, such as Microsoft Word, cannot be accepted for eithe=
+r initial or final versions. The submissions will be judged for scientific =
+quality and for suitability as a basis for broader discussion.</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+Submission is via the EasyChair link https://easychair.org/conferences/?con=
+f=3Dfoiks24.</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+Publication</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+=97----------</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+The proceedings will be published by Springer-Verlag in the Lecture Notes i=
+n Computer Science. After the symposium, authors of selected papers will be=
+ invited to submit extended journal versions of their papers for a FoIKS 20=
+24 special issue in the journal
+ Knowledge Engineering Review (https://www.cambridge.org/core/journals/know=
+ledge-engineering-review). Further details will be provided on the conferen=
+ce website.</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+Program Committee Chairs</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+=97-----------------------</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+Arne Meier</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+Leibniz Universit=E4t Hannover, Germany&nbsp;</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+Magdalena Ortiz</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+TU Wien, Austria and Ume=E5 University, Sweden&nbsp;</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+Local Chair</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+=97----------</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+Jonni Virtema</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+University of Sheffield, UK</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+Contact</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+=97------</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+All questions about submissions should be emailed to foiks24@easychair.org.=
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+https://foiks2024.github.io/</div>
+<div><br>
+</div>
+<br>
+<p></p>
+<p><br>
+</p>
+<div id=3D"Signature">
+<div name=3D"divtagdefaultwrapper" style=3D"font-family:Calibri,Arial,Helve=
+tica,sans-serif; font-size:; margin:0">
+<div class=3D"" style=3D"color:rgb(33,33,33); font-family:&quot;Segoe UI&qu=
+ot;,&quot;Segoe WP&quot;,&quot;Segoe UI WPC&quot;,Tahoma,Arial,sans-serif; =
+font-size:15px; background-color:rgb(255,255,255)">
+_________________________</div>
+<div class=3D"" style=3D"color:rgb(33,33,33); font-family:&quot;Segoe UI&qu=
+ot;,&quot;Segoe WP&quot;,&quot;Segoe UI WPC&quot;,Tahoma,Arial,sans-serif; =
+font-size:15px; background-color:rgb(255,255,255)">
+Dr. Luc=EDa G=F3mez =C1lvarez<br class=3D"">
+Computational Logic Group<br class=3D"">
+Institute for Artificial Intelligence<br class=3D"">
+Faculty of Computer Science<br class=3D"">
+TU Dresden<br class=3D"">
+GERMANY</div>
+</div>
+</div>
+</div>
+</body>
+</html>
+
+--_000_0135dfa55bed4d5f91d65351a4c6c881tudresdende_--

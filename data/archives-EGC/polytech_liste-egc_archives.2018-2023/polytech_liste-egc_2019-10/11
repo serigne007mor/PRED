@@ -1,0 +1,1187 @@
+Return-Path: <antoine.cornuejols@agroparistech.fr>
+X-Original-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (BounceSMTP2.univ-nantes.prive [172.20.12.67])
+	by sympa6.univ-nantes.prive (Postfix) with ESMTP id EE2A92292950
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Tue,  8 Oct 2019 11:18:24 +0200 (CEST)
+Received: from mx2.d101.univ-nantes.fr (MX2.univ-nantes.fr [193.52.101.136])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id E708961F0EB
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Tue,  8 Oct 2019 11:18:24 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTP id D6235B4B134
+	for <liste-egc@polytech.univ-nantes.fr>; Tue,  8 Oct 2019 11:18:24 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -4.802
+X-Spam-Level:
+X-Spam-Status: No, score=-4.802 tagged_above=-1000 required=5
+	tests=[CRM114_GOOD=-5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, HTML_MESSAGE=0.001, NO_RDNS2=0.01,
+	RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_WSFF=0.01, SPF_PASS=-0.001,
+	TW_EG=0.077, UN_PHISHING_COMPTE=0.1, UN_PHISHING_PW=0.1,
+	URIBL_BLOCKED=0.001] autolearn=disabled
+X-CRM114-Status: GOOD ( 10.9520 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=agroparistech.fr header.b=n/9FOQu4; dkim=pass (1024-bit key)
+	header.d=agroparistech.fr header.b=PYXk1BJW
+Received: from mx2.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 8KjldydVvx0o for <liste-egc@polytech.univ-nantes.fr>;
+	Tue,  8 Oct 2019 11:18:21 +0200 (CEST)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from smtp.agroparistech.fr (smtp.agroparistech.fr [193.54.111.4])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTP id 33237A3DB51
+	for <liste-egc@polytech.univ-nantes.fr>; Tue,  8 Oct 2019 11:18:21 +0200 (CEST)
+Received: from smtp.agroparistech.fr (smtp [127.0.0.1])
+	by smtp.agroparistech.fr (Postfix) with ESMTP id 02FFE40EF1;
+	Tue,  8 Oct 2019 11:18:21 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=agroparistech.fr;
+	s=mail; t=1570526301;
+	bh=vHX0DIqAqqjr05JuiE40DquPPTvREEkO1kBvzrr21t0=;
+	h=From:Subject:Date:Cc:To;
+	b=n/9FOQu4XL8sPfBX5PgVN25LbBHz9zjhHq6SsE789UkElR7262fIgwJp24j5QOLDA
+	 39PoiaF/l+Nxslx3m/TYETpqoV2GIVBK7qOvf2NrLasHYgU+B2q83Socb/la/0Sg9V
+	 kOMSOkRIzCk5Mixt6LJKnOwslDHVN9oSg1sCcEso=
+Received: from zmbp1.agroparistech.fr (zmbp1.agroparistech.fr [193.54.111.137])
+	by smtp.agroparistech.fr (Postfix) with ESMTP id 70ADE41A64;
+	Tue,  8 Oct 2019 11:18:16 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=agroparistech.fr;
+	s=mail; t=1570526296;
+	bh=vHX0DIqAqqjr05JuiE40DquPPTvREEkO1kBvzrr21t0=;
+	h=From:Subject:Date:Cc:To;
+	b=PYXk1BJWGAw82SgMI5BTKDL0mklS54i3w5x4piMB9y0x4seQvIJ+HO7HYm3TKfyEk
+	 EZ33IGmkacGhl2uG2qlY/nZsZiVwwU4aehvcsBSas2Jej4EojyyTlF0e3OYCp59xUh
+	 rP8W5ecoZ8ck/jwkNTE7TCKLIiV9uW8sSFEyJgeY=
+Received: from zmbp1.agroparistech.fr (localhost.localdomain [127.0.0.1])
+	by zmbp1.agroparistech.fr (Postfix) with ESMTPS id 44489AD7E7;
+	Mon,  7 Oct 2019 17:27:48 +0200 (CEST)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by zmbp1.agroparistech.fr (Postfix) with ESMTP id ADBD8AA472;
+	Mon,  7 Oct 2019 17:17:05 +0200 (CEST)
+Received: from zmbp1.agroparistech.fr ([127.0.0.1])
+	by localhost (zmbp1.agroparistech.fr [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id YdnTrfsEakd0; Mon,  7 Oct 2019 17:17:05 +0200 (CEST)
+Received: from donglemacantoine.agroparistech.fr (donglemacAntoine.agroparistech.fr [172.16.203.26])
+	by zmbp1.agroparistech.fr (Postfix) with ESMTPSA id 85523A6407;
+	Mon,  7 Oct 2019 17:13:00 +0200 (CEST)
+From: =?utf-8?Q?Antoine_Cornu=C3=A9jols?= <antoine.cornuejols@agroparistech.fr>
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_B948BE19-6FD5-4EF5-99F7-2CBB500E3EB2"
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.8\))
+Message-Id: <95C16D73-1EBF-4D08-BC1A-1331B5FA3020@agroparistech.fr>
+Date: Mon, 7 Oct 2019 17:13:16 +0200
+Cc: =?utf-8?Q?Antoine_Cornu=C3=A9jols?= <antoine.cornuejols@agroparistech.fr>
+To: liste-proml@lri.fr,
+ liste-egc@polytech.univ-nantes.fr,
+ bull-ia@gdria.fr
+X-Mailer: Apple Mail (2.3445.104.8)
+X-AV-Checked: ClamAV MX AgroParisTech
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] EGC-2020 : Report dates de soumissions des
+ =?UTF-8?Q?r=C3=A9sum=C3=A9s?= et des papiers
+
+
+--Apple-Mail=_B948BE19-6FD5-4EF5-99F7-2CBB500E3EB2
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
+
+[Please accept our apologies for cross-posting - Avec nos excuses en cas =
+de r=C3=A9ceptions multiples]
+
+Suite =C3=A0 plusieurs demandes, pour la conf=C3=A9rence EGC 2020 :
+
+- la date de soumission des r=C3=A9sum=C3=A9s est report=C3=A9e au lundi =
+14 Octobre 2019. (The abstract submission deadline is postponed to  =
+Monday, 14 October 2019)
+
+- la date de soumission des papiers est report=C3=A9e au lundi 21 =
+octobre 2019. (The paper submission deadline is postponed to  Monday, 21 =
+October 2019)
+Par ailleurs, veuillez noter qu=E2=80=99un certain nombre de bourses =
+pourront =C3=AAtre obtenues pour les doctorants publiant un article =C3=A0=
+ EGC-2020. (A number of grants will be made available for the Ph.D =
+students having a paper published in the conference).
+
+https://egc2020.sciencesconf.org/ <https://egc2020.sciencesconf.org/>
+
+Lien vers easychair : https://easychair.org/conferences/?conf=3Degc2020 =
+<https://easychair.org/conferences/?conf=3Degc2020>
+
+Antoine Cornu=C3=A9jols
+Pr=C3=A9sident du comit=C3=A9 de programme de EGC-2020
+
+=
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=
+=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=
+=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=
+=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=
+=94=E2=80=94=E2=80=94=E2=80=94
+
+APPEL A COMMUNICATIONS EGC 2020
+20=C3=A8me conf=C3=A9rence francophone sur l'Extraction et la Gestion =
+des Connaissances
+du 27 au 31 janvier 2020 - Bruxelles
+
+https://egc2020.sciencesconf.org/=C2=A0 =
+<https://egc2020.sciencesconf.org/>=20
+
+Avec les conf=C3=A9renciers invit=C3=A9s :
+
+=E2=80=94 Hughes Bersini (ULB)                            : Applications =
+and developments of the new generation of recurrent neural networks
+=E2=80=94 L=C3=A9on Bottou (FaceBook AI Lab)             : Learning =
+representations using causal invariances
+=E2=80=94 Jean-Louis Dessalles (Telecom Paris)  : Que veut dire =
+comprendre pour une machine ?
+=E2=80=94 Laurence Devillers (CNRS)                    : Nudging with =
+Affective computing system: inequalities and ethical issues
+=E2=80=94 Pierre-Yves Oudeyer (INRIA et ENSTA ParisTech)  : =
+Developmental machine learning
+
+
+______________________________________________________________
+
+Appel =C3=A0 communications
+______________________________________________________________
+
+Cette ann=C3=A9e, c=E2=80=99est la 20=C3=A8me =C3=A9dition de la =
+conf=C3=A9rence EGC !  20 ans d=C3=A9j=C3=A0 : sant=C3=A9, jeunesse =
+flamboyante et des projets plein la t=C3=AAte. La 20=C3=A8me =C3=A9dition =
+aura lieu =C3=A0 Bruxelles du 27 au 31 janvier 2020 sur le campus de =
+l=E2=80=99ICHEC.=20
+
+La conf=C3=A9rence Extraction et Gestion des Connaissances (EGC) est un =
+=C3=A9v=C3=A9nement annuel r=C3=A9unissant des chercheurs et praticiens =
+de disciplines relevant des sciences des donn=C3=A9es et des =
+connaissances. Ces disciplines incluent notamment l=E2=80=99apprentissage =
+automatique, l=E2=80=99ing=C3=A9nierie et la repr=C3=A9sentation de =
+connaissances, le raisonnement sur des donn=C3=A9es et des =
+connaissances, la fouille et l=E2=80=99analyse de donn=C3=A9es, les =
+syst=C3=A8mes d=E2=80=99information, les bases de donn=C3=A9es, le web =
+s=C3=A9mantique et les donn=C3=A9es ouvertes, etc.
+
+Tous les travaux innovants portant sur ces th=C3=A8mes sont les =
+bienvenus.=20
+
+Pour cette =C3=A9dition, nous souhaitons mettre l=E2=80=99accent sur les =
+rapports entre apprentissage automatique et raisonnement et sur =
+apprentissage et transfert entre domaines. L=E2=80=99apprentissage =
+automatique conna=C3=AEt des avanc=C3=A9es spectaculaires depuis deux =
+d=C3=A9cennies : le boosting, les SVM, et plus r=C3=A9cemment r=C3=A9seaux=
+ de neurones profonds, sont des m=C3=A9thodes souvent tr=C3=A8s =
+puissantes. Toutes les t=C3=A2ches perceptives : reconnaissance =
+d=E2=80=99images, traitement du signal, sont r=C3=A9volutionn=C3=A9es, =
+et des t=C3=A2ches faisant intervenir la s=C3=A9mantique, par exemple la =
+traduction automatique, sont =C3=A9galement maintenant approch=C3=A9es =
+de mani=C3=A8re diff=C3=A9rente. Pourtant, il est difficile de fournir =
+des informations =C3=A0 ces m=C3=A9thodes, de m=C3=AAme qu=E2=80=99il =
+est difficile d=E2=80=99obtenir des explications sur les r=C3=A9sultats =
+qu=E2=80=99elles obtiennent. Corr=C3=A9lativement, ces m=C3=A9thodes =
+demandent souvent des donn=C3=A9es en tr=C3=A8s grand nombre pour =
+apprendre, alors que nous apprenons souvent =C3=A0 partir de peu =
+d=E2=80=99exemples, voire tr=C3=A8s peu dans le cas du raisonnement par =
+analogie. Est-il possible de construire des ponts entre les capacit=C3=A9s=
+ actuelles des algorithmes et celles des humains ? Les machines =
+peuvent-elles apprendre =C3=A0 partir de peu d=E2=80=99exemples, et sous =
+quelles conditions ? Peuvent-elles argumenter leurs r=C3=A9sultats et =C2=AB=
+ raisonnements =C2=BB avec les humains ? =C3=80 ces questions en sont =
+li=C3=A9es d=E2=80=99autres sur la capacit=C3=A9 de transf=C3=A9rer des =
+connaissances ou des r=C3=A8gles de d=C3=A9cision d=E2=80=99un domaine =
+=C3=A0 un autre. Par exemple, l=E2=80=99analyse de sentiments propre =C3=A0=
+ un domaine peut-elle servir pour apprendre =C3=A0 analyser des =
+sentiments dans un domaine diff=C3=A9rent ? Ces questions sur =
+l=E2=80=99apprentissage par transfert sont essentielles pour capitaliser =
+efficacement ce qui est appris ou connu dans un domaine pour en aborder =
+de nouveaux.=20
+
+La conf=C3=A9rence EGC est l=E2=80=99occasion de faire se rencontrer =
+acad=C3=A9miques et industriels afin de confronter des travaux =
+th=C3=A9oriques et des applications pratiques sur des donn=C3=A9es =
+r=C3=A9elles et de communiquer des travaux de qualit=C3=A9, =
+d=E2=80=99=C3=A9changer et de favoriser la fertilisation crois=C3=A9e =
+des id=C3=A9es, =C3=A0 travers la pr=C3=A9sentation de travaux de =
+recherche r=C3=A9cents, de d=C3=A9veloppements industriels et =
+d=E2=80=99applications originales.
+
+Les actes d=E2=80=99EGC 2020, comprenant les articles des communications =
+orales ainsi que ceux associ=C3=A9s aux posters para=C3=AEtront dans un =
+num=C3=A9ro de la revue RNTI. Les auteurs des meilleurs articles seront =
+invit=C3=A9s =C3=A0 soumettre une version =C3=A9tendue de leurs articles =
+pour =C3=AAtre publi=C3=A9s dans des post-actes internationaux =C3=A9dit=C3=
+=A9s chez Springer.
+
+Cette ann=C3=A9e, il est pr=C3=A9vu une session d=C3=A9fi sur donn=C3=A9es=
+ r=C3=A9elles qui fera l=E2=80=99objet d=E2=80=99un appel =C3=A0 =
+participations sp=C3=A9cifique. Le ou les laur=C3=A9ats seront invit=C3=A9=
+s =C3=A0 pr=C3=A9senter leurs r=C3=A9sultats =C3=A0 EGC 2020.
+
+
+______________________________________________________________
+
+Soumission
+
+Plusieurs types de communications sont possibles (les d=C3=A9monstrations =
+de logiciels, et ateliers th=C3=A9matiques font l'objet d'appels =C3=A0 =
+contributions sp=C3=A9cifiques) :
+=E2=80=A2    Travaux de recherche originaux (acad=C3=A9miques ou =
+applicatifs/industriels) soumis dans un format unique de 12 pages max, =
+publi=C3=A9s sous forme d=E2=80=99articles longs de 12 pages, =
+d=E2=80=99articles courts de 8 pages ou de posters accompagn=C3=A9s de =
+r=C3=A9sum=C3=A9s de 2 pages, selon leur maturit=C3=A9. Chaque article =
+accept=C3=A9 avec un format long ou court sera pr=C3=A9sent=C3=A9 =
+oralement lors de la conf=C3=A9rence et les auteurs pourront, s'ils le =
+souhaitent, accompagner leur communication orale par un poster.
+=E2=80=A2    Travaux de recherche d=C3=A9j=C3=A0 publi=C3=A9s dans de =
+bonnes conf=C3=A9rences ou revues internationales mais in=C3=A9dits en =
+fran=C3=A7ais (en vue d=E2=80=99une publication dans les actes d=E2=80=99u=
+n r=C3=A9sum=C3=A9 de 8 pages obligatoirement en fran=C3=A7ais)
+=E2=80=A2    D=C3=A9monstrations de logiciels, avec video de =
+pr=C3=A9sentation, o=C3=B9 la d=C3=A9monstration est compl=C3=A9t=C3=A9e =
+d'un article de 4 =C3=A0 8 pages : voir appel =C3=A0 soumissions =
+sp=C3=A9cifique aux d=C3=A9monstrations.
+=E2=80=A2    Ateliers th=C3=A9matiques : voir appel =C3=A0 soumissions =
+sp=C3=A9cifique =C3=A0 l'organisation d'ateliers th=C3=A9matiques qui =
+auront lieu le mardi 28 janvier 2020.
+
+Les articles peuvent =C3=AAtre soumis en fran=C3=A7ais ou en anglais =
+mais en cas d'acceptation, l'article devra =C3=AAtre traduit en =
+fran=C3=A7ais sauf pour les articles o=C3=B9 les auteurs sont =
+non-francophones. Une v=C3=A9rification de la traduction pourra =C3=AAtre =
+effectu=C3=A9e et le comit=C3=A9 de programme se r=C3=A9serve le droit =
+de rejeter un article suite =C3=A0 cette =C3=A9tape.
+
+______________________________________________________________
+
+Format de soumission
+
+Les soumissions seront anonymes et se feront par voie =C3=A9lectronique =
+exclusivement =C3=A0 partir du site web de la conf=C3=A9rence.
+Elles devront =C3=AAtre soumises au format pdf exclusivement et devront =
+imp=C3=A9rativement utiliser le format RNTI latex accessible via le site =
+web de la conf=C3=A9rence.
+Les soumissions qui d=C3=A9passeraient 12 pages ou qui ne respecteront =
+pas l=E2=80=99anonymat et/ou le format RNTI Latex ne seront pas =
+=C3=A9valu=C3=A9es.
+http://www.editions-rnti.fr/files/RNTI-X-Y2.1.zip =
+<http://www.editions-rnti.fr/files/RNTI-X-Y2.1.zip>
+
+______________________________________________________________
+
+Prix
+
+Cinq prix scientifiques seront attribu=C3=A9s lors de la conf=C3=A9rence =
+:
+=E2=80=A2    un prix pour la cat=C3=A9gorie "article acad=C3=A9mique" =
+(1500 euros),
+=E2=80=A2    un prix pour la cat=C3=A9gorie "article applicatif" (1500 =
+euros),
+=E2=80=A2    un prix pour le d=C3=A9fi (1500 euros + 500 euros si =
+collaboration avec une =C3=A9quipe de SHS),
+=E2=80=A2    un prix pour la cat=C3=A9gorie "d=C3=A9monstration" (500 =
+euros),
+=E2=80=A2    un prix de th=C3=A8se (500 euros) d=C3=A9cern=C3=A9 =C3=A0 =
+un jeune docteur dont la th=C3=A8se a =C3=A9t=C3=A9 soutenue depuis =
+moins de trois ans dans les th=C3=A9matiques li=C3=A9es =C3=A0 =
+l=E2=80=99extraction et la gestion des connaissances.
+
+Ces prix seront d=C3=A9cern=C3=A9s par un jury compos=C3=A9 de membres =
+du comit=C3=A9 de pilotage. Le prix de th=C3=A8se fait l=E2=80=99objet =
+d=E2=80=99une annonce sp=C3=A9cifique.
+
+______________________________________________________________
+
+Dates importantes
+
+Ces dates concernent les articles acad=C3=A9miques ou =
+applicatifs/industriels, les travaux de recherche d=C3=A9j=C3=A0 =
+publi=C3=A9s dans des conf=C3=A9rences internationales mais in=C3=A9dits =
+en fran=C3=A7ais. Pour les ateliers et les d=C3=A9monstrations, voir les =
+appels =C3=A0 communications sp=C3=A9cifiques. Ces dates sont fermes et =
+d=C3=A9finitives.
+
+R=C3=A9sum=C3=A9s des articles              : 7  14 octobre 2019 =E2=80=93=
+ 11:00 AM Paris
+Textes complets des articles : 14 21octobre 2019 =E2=80=93 11:00 AM =
+Paris
+Interactions auteurs/membres Comit=C3=A9 de Programme : 14-17 novembre =
+2019 =E2=80=93 11:00 AM Paris
+Notification aux auteurs         : 22 novembre 2019 =E2=80=93 11:00 AM =
+Paris
+Version finale des articles      : 11 d=C3=A9cembre 2019 =E2=80=93 11:00 =
+AM Paris
+
+______________________________________________________________
+
+Organisation
+
+Pr=C3=A9sident du Comit=C3=A9 de Programme :
+   Antoine Cornu=C3=A9jols, AgroParisTech, D=C3=A9partement MMIP =
+(Mod=C3=A9lisation Math=C3=A9matique, Informatique et Physique), Paris
+
+Pr=C3=A9sident du Comit=C3=A9 d'Organisation :
+   =C3=89tienne Cuvelier, ICHEC Brussels Management School, Bruxelles
+
+______________________________________________________________
+
+Th=C3=A9matiques
+
+Les sujets d=E2=80=99int=C3=A9r=C3=AAt de la conf=C3=A9rence incluent =
+(liste non-exhaustive) :
+
+Fondements de l=E2=80=99extraction et de la gestion de connaissances
+
+- apprentissage supervis=C3=A9 : apprentissage profond, apprentissage de =
+r=C3=A8gles, apprentissage statistique, mod=C3=A8les probabilistes, =
+m=C3=A9thodes d'ensembles, r=C3=A9gression,
+classes d=C3=A9s=C3=A9quilibr=C3=A9es, classification guid=C3=A9e par =
+les connaissances
+- apprentissage non supervis=C3=A9 : m=C3=A9thodes de partitionnement et =
+de recouvrement, m=C3=A9thodes hi=C3=A9rarchiques, multi-vues, =
+multi-strat=C3=A9gies, co-clustering, clustering sous contraintes
+- m=C3=A9thode de d=C3=A9couverte de motifs et d'ensembles de motifs : =
+s=C3=A9quences, graphes, tenseurs.
+- cadre th=C3=A9orique pour la fouille de donn=C3=A9es, langages de =
+requ=C3=AAtes d=C3=A9claratifs pour la fouille de donn=C3=A9es, fouille =
+de donn=C3=A9es sous contraintes, m=C3=A9thodes incr=C3=A9mentales
+- algorithmes de fouille de donn=C3=A9es robustes au passage =C3=A0 =
+l=E2=80=99=C3=A9chelle, syst=C3=A8mes distribu=C3=A9s / parall=C3=A8les =
+pour la fouille de donn=C3=A9es
+- m=C3=A9thodes statistiques en fouille de donn=C3=A9es
+- programmation logique inductive
+- apprentissage topologique, vari=C3=A9t=C3=A9s math=C3=A9matiques
+- analyse des donn=C3=A9es symboliques
+- d=C3=A9tection d'exceptions, d'inattendus, d'anomalies, de signaux =
+faibles.
+- visualisation et fouille visuelle de donn=C3=A9es massives
+- interrogation et raisonnement sur des donn=C3=A9es en pr=C3=A9sence =
+d=E2=80=99ontologies
+- repr=C3=A9sentation, traitement et =C3=A9change de donn=C3=A9es et =
+connaissances sur le Web s=C3=A9mantique et le Web des donn=C3=A9es =
+li=C3=A9es
+- vari=C3=A9t=C3=A9 des donn=C3=A9es et donn=C3=A9es complexes : =
+donn=C3=A9es structur=C3=A9es, semi-structur=C3=A9es, textuelles ; =
+donn=C3=A9es temporelles, spatiales, g=C3=A9olocalis=C3=A9es ; donn=C3=A9e=
+s multim=C3=A9dia ; donn=C3=A9es relationnelles ; donn=C3=A9es en =
+r=C3=A9seau, en graphes ; donn=C3=A9es dynamiques ; flux de donn=C3=A9es =
+; donn=C3=A9es annot=C3=A9es =C3=A0 l'aide d'ontologies ; donn=C3=A9es =
+h=C3=A9t=C3=A9rog=C3=A8nes s=C3=A9mantiquement
+- pr=C3=A9servation de la confidentialit=C3=A9 et de l'anonymat
+- transparence, =C3=A9quit=C3=A9 et explicabilit=C3=A9 des algorithmes =
+de traitement et d=E2=80=99analyse des donn=C3=A9es
+
+Aspects m=C3=A9thodologiques de l=E2=80=99extraction et de la gestion de =
+connaissances
+
+- acquisition, nettoyage, filtrage des donn=C3=A9es,  r=C3=A9duction de =
+dimensions, s=C3=A9lection et modification des caract=C3=A9ristiques
+- gestion des connaissances et d'ontologies (acquisition, stockage, mise =
+=C3=A0 jour, interop=C3=A9rabilit=C3=A9, interconnexion, =C3=A9volution)
+- cycle de vie et alignements des vocabulaires (ontologies, th=C3=A9saurus=
+, m=C3=A9ta-donn=C3=A9es) sur le Web
+- pr=C3=A9paration, architecture et mod=C3=A8les de donn=C3=A9es li=C3=A9e=
+s sur le Web.
+- int=C3=A9gration de connaissances dans le processus d'extraction =
+(ontologies, expertise,...)
+- tra=C3=A7abilit=C3=A9, s=C3=A9curit=C3=A9 et int=C3=A9grit=C3=A9 de =
+l'information et des donn=C3=A9es
+- plateformes et syst=C3=A8mes pour l'extraction et la gestion de =
+donn=C3=A9es et de connaissances
+- =C3=A9tudes exp=C3=A9rimentales sur des donn=C3=A9es volumineuses
+- interaction et apprentissage actif
+- visualisation, explication et compr=C3=A9hension de r=C3=A9sultats
+- crit=C3=A8res et =C3=A9valuation de la qualit=C3=A9 des donn=C3=A9es, =
+des connaissances extraites
+- protocoles d'=C3=A9valuation et validation de mod=C3=A8les =C3=A0 =
+partir d'utilisateurs
+- interaction homme-machine en fouille de donn=C3=A9es
+
+
+Extraction et gestion de connaissances dans des domaines =C3=A9mergents =
+ou connexes
+
+- analyse de liens, communaut=C3=A9s en ligne, r=C3=A9seaux sociaux, =
+m=C3=A9dias sociaux.
+- fouille de donn=C3=A9es d'opinions, de d=C3=A9p=C3=AAches, de =
+microblogging
+- mobilit=C3=A9, g=C3=A9o-localisation, d=C3=A9couverte de connaissances =
+et ubiquit=C3=A9, intelligence ambiante, r=C3=A9seaux de capteurs, =
+internet des objets
+- Big Data et nouveaux paradigmes de traitement des donn=C3=A9es : =
+calcul haute performance, parall=C3=A9lisme, syst=C3=A8mes distribu=C3=A9s=
+
+- crowdsourcing, mod=C3=A9lisation de comportements
+- fouille du Web de donn=C3=A9es, extraction pour le Web s=C3=A9mantique, =
+annotation de ressources multim=C3=A9dia pour le Web, annotation du Web =
+des Objets
+- fertilisation crois=C3=A9e entre extraction de connaissances et autres =
+domaines de recherche ou d'applications : intelligence artificielle, =
+sciences sociales et humanit=C3=A9s num=C3=A9riques, traitement =
+automatique des langues, traitement d=E2=80=99images, vision par =
+ordinateur.
+
+Applications de l'extraction et de la gestion de connaissances
+
+- d=C3=A9veloppement durable, transports et lieux intelligents
+- informatique verte pour la gestion et l'extraction de connaissances
+- mod=C3=A9lisation des =C3=A9pid=C3=A9mies, recherche clinique, =
+m=C3=A9decine, biologie
+- d=C3=A9tection d'intrusion, pr=C3=A9vention de fraude, s=C3=A9curit=C3=A9=
+
+- m=C3=A9moires d'entreprise, veille technologique, intelligence =
+=C3=A9conomique
+- syst=C3=A8me de recommandation, commerce =C3=A9lectronique, publicit=C3=A9=
+ en ligne
+- applications dans d'autres domaines comme la chimie, l'environnement, =
+les sciences sociales, l'=C3=A9ducation, l'=C3=A9conomie, la finance, le =
+tourisme, la d=C3=A9fense, le g=C3=A9nie logiciel.
+
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94
+Antoine Cornu=C3=A9jols
+Professeur =C3=A0 AgroParisTech, Paris (France)
+http://www2.agroparistech.fr/ufr-info/membres/cornuejols/ =
+<http://www2.agroparistech.fr/ufr-info/membres/cornuejols/>
+
+______________________________________________________________
+
+Association Extraction et Gestion des Connaissances
+Site Web : egc.asso.fr <http://egc.asso.fr/>
+
+Suivez-nous aussi sur Twitter : @associationEGC, et Facebook : =
+facebook.com/AssociationEGC <http://facebook.com/AssociationEGC>
+
+G=C3=A9rer votre abonnement : egc.asso.fr/13-FR-Liste_de_diffusion =
+<http://egc.asso.fr/13-FR-Liste_de_diffusion>
+Informations sur la liste : =
+sympa.univ-nantes.fr/sympa/info/polytech_liste-egc =
+<http://sympa.univ-nantes.fr/sympa/info/polytech_liste-egc>
+Le Mod=C3=A9rateur, Pierrick Bruneau, p_bruneau@hotmail.com =
+<mailto:p_bruneau@hotmail.com>
+
+=
+--------------------------------------------------------------------------=
+----------=
+
+--Apple-Mail=_B948BE19-6FD5-4EF5-99F7-2CBB500E3EB2
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
+charset=3Dutf-8"></head><body style=3D"word-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;" class=3D""><p =
+style=3D"background-color: rgb(255, 255, 255);" class=3D"">[<span =
+id=3D"docs-internal-guid-7bb8f911-a9c8-6e1c-ae1b-b1e68506950a" =
+class=3D""><span class=3D"">Please accept our apologies for =
+cross-posting</span></span>&nbsp;- Avec nos excuses en cas de =
+r=C3=A9ceptions multiples]<br class=3D""></p><p style=3D"background-color:=
+ rgb(255, 255, 255);" class=3D"">Suite =C3=A0 plusieurs demandes, pour =
+la conf=C3=A9rence EGC 2020 :</p><p style=3D"background-color: rgb(255, =
+255, 255);" class=3D"">- la date de soumission des <b =
+class=3D"">r=C3=A9sum=C3=A9s</b>&nbsp;est report=C3=A9e au <b =
+class=3D"">lundi 14 Octobre 2019</b>. (The abstract submission deadline =
+is postponed to&nbsp; Monday, 14 October 2019)</p><div class=3D"">- la =
+date de soumission des <b class=3D"">papiers</b> est report=C3=A9e au<b =
+class=3D""> lundi 21 octobre 2019</b>.&nbsp;<span =
+style=3D"background-color: rgb(255, 255, 255);" class=3D"">(The paper =
+submission deadline is postponed to&nbsp; Monday, 21 October =
+2019)</span></div><p style=3D"background-color: rgb(255, 255, 255);" =
+class=3D""><span style=3D"orphans: 2; widows: 2;" class=3D"">Par =
+ailleurs, veuillez noter qu=E2=80=99un certain nombre de bourses =
+pourront =C3=AAtre obtenues pour les doctorants publiant un article =C3=A0=
+ EGC-2020. (A number of&nbsp;grants will be made available for the Ph.D =
+students having a paper published in the conference).</span></p><div =
+class=3D""><a href=3D"https://egc2020.sciencesconf.org/" =
+class=3D"">https://egc2020.sciencesconf.org/</a></div><div class=3D""><br =
+class=3D""></div><div class=3D"">Lien vers easychair :&nbsp;<a =
+href=3D"https://easychair.org/conferences/?conf=3Degc2020" =
+class=3D"">https://easychair.org/conferences/?conf=3Degc2020</a></div><div=
+ class=3D""><br class=3D""></div><div class=3D"">Antoine =
+Cornu=C3=A9jols</div><div class=3D"">Pr=C3=A9sident du comit=C3=A9 de =
+programme de EGC-2020</div><div class=3D""><br class=3D""></div><div =
+class=3D"">=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=
+=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=
+=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=
+=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94</div><div class=3D""><br =
+class=3D""></div><div class=3D""><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">APPEL A COMMUNICATIONS EGC =
+2020</span></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">20=C3=A8me conf=C3=A9rence =
+francophone sur l'Extraction et la Gestion des =
+Connaissances</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">du 27 au 31 janvier 2020 - =
+Bruxelles</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal; min-height: 14px;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;"></span><br =
+class=3D""></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal; color: rgb(9, 79, 209);"><span class=3D"" =
+style=3D"text-decoration: underline; -webkit-font-kerning: none;"><a =
+href=3D"https://egc2020.sciencesconf.org/" =
+class=3D"">https://egc2020.sciencesconf.org/<span class=3D"" =
+style=3D"-webkit-font-kerning: none; color: rgb(0, 0, =
+0);">&nbsp;</span></a></span><span class=3D"" =
+style=3D"-webkit-font-kerning: none; color: rgb(0, 0, =
+0);">&nbsp;</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal; min-height: 14px;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;"></span><br =
+class=3D""></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">Avec les&nbsp;<b =
+class=3D"">conf=C3=A9renciers invit=C3=A9s</b>&nbsp;:</span></div><div =
+class=3D"" style=3D"margin: 0px; font-stretch: normal; line-height: =
+normal; min-height: 14px;"><span class=3D"" style=3D"-webkit-font-kerning:=
+ none;"></span><br class=3D""></div><div class=3D"" style=3D"margin: =
+0px; font-stretch: normal; line-height: normal;">=E2=80=94 Hughes =
+Bersini (ULB) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; =
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: <i class=3D"">Applications =
+and developments of the new generation of recurrent neural =
+networks</i></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal;">=E2=80=94 L=C3=A9on Bottou (FaceBook AI =
+Lab) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; :&nbsp;<i =
+class=3D"">Learning representations using causal =
+invariances</i></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">=E2=80=94 Jean-Louis Dessalles =
+(Telecom Paris) &nbsp;:&nbsp;<i class=3D"">Que veut dire comprendre pour =
+une machine ?</i></span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">=E2=80=94 Laurence Devillers =
+(CNRS) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; =
+&nbsp;:&nbsp;</span><i class=3D"">Nudging with Affective computing =
+system: inequalities and ethical issues</i></div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; line-height: =
+normal;">=E2=80=94&nbsp;<span class=3D"" style=3D"-webkit-font-kerning: =
+none;">Pierre-Yves Oudeyer (INRIA et ENSTA ParisTech) =
+&nbsp;:&nbsp;</span><i class=3D"">Developmental machine =
+learning</i></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal; min-height: 14px;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;"></span><br class=3D""></div><div =
+class=3D"" style=3D"margin: 0px; font-stretch: normal; line-height: =
+normal; min-height: 14px;"><span class=3D"" style=3D"-webkit-font-kerning:=
+ none;"></span><br class=3D""></div><p class=3D"" style=3D"margin: 0px =
+0px 12px; font-stretch: normal; line-height: normal; font-family: =
+Times;"><span class=3D"" style=3D"-webkit-font-kerning: =
+none;">______________________________________________________________</spa=
+n></p><div class=3D"" style=3D"margin: 0px; font-stretch: normal; =
+line-height: normal;"><span class=3D"" style=3D"-webkit-font-kerning: =
+none;">Appel =C3=A0 communications</span></div><p class=3D"" =
+style=3D"margin: 0px 0px 12px; font-stretch: normal; line-height: =
+normal; font-family: Times;"><span class=3D"" =
+style=3D"-webkit-font-kerning: =
+none;">______________________________________________________________<br =
+class=3D""></span></p><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">Cette ann=C3=A9e, c=E2=80=99est =
+la&nbsp;<b class=3D"">20=C3=A8me =C3=A9dition de la conf=C3=A9rence EGC =
+!&nbsp;</b>&nbsp;20 ans d=C3=A9j=C3=A0 : sant=C3=A9, jeunesse =
+flamboyante et des projets plein la t=C3=AAte. La 20=C3=A8me =C3=A9dition =
+aura lieu =C3=A0&nbsp;<b class=3D"">Bruxelles</b>&nbsp;du&nbsp;<b =
+class=3D"">27 au 31 janvier 2020</b>&nbsp;sur le campus de =
+l=E2=80=99ICHEC.&nbsp;</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal; min-height: 14px;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;"></span><br =
+class=3D""></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">La conf=C3=A9rence Extraction et =
+Gestion des Connaissances (EGC) est un =C3=A9v=C3=A9nement annuel =
+r=C3=A9unissant des chercheurs et praticiens de disciplines relevant des =
+sciences des donn=C3=A9es et des connaissances. Ces disciplines incluent =
+notamment l=E2=80=99apprentissage automatique, l=E2=80=99ing=C3=A9nierie =
+et la repr=C3=A9sentation de connaissances, le raisonnement sur des =
+donn=C3=A9es et des connaissances, la fouille et l=E2=80=99analyse de =
+donn=C3=A9es, les syst=C3=A8mes d=E2=80=99information, les bases de =
+donn=C3=A9es, le web s=C3=A9mantique et les donn=C3=A9es ouvertes, =
+etc.</span></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal; min-height: 14px;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;"></span><br class=3D""></div><div =
+class=3D"" style=3D"margin: 0px; font-stretch: normal; line-height: =
+normal;"><span class=3D"" style=3D"-webkit-font-kerning: none;">Tous les =
+travaux innovants portant sur ces th=C3=A8mes sont les =
+bienvenus.&nbsp;</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal; min-height: 14px;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;"></span><br =
+class=3D""></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">Pour cette =C3=A9dition, nous =
+souhaitons mettre l=E2=80=99<b class=3D"">accent sur les rapports entre =
+apprentissage automatique et raisonnement&nbsp;</b>et sur&nbsp;<b =
+class=3D"">apprentissage et transfert entre domaines</b>. =
+L=E2=80=99apprentissage automatique conna=C3=AEt des avanc=C3=A9es =
+spectaculaires depuis deux d=C3=A9cennies : le boosting, les SVM, et =
+plus r=C3=A9cemment r=C3=A9seaux de neurones profonds, sont des =
+m=C3=A9thodes souvent tr=C3=A8s puissantes. Toutes les t=C3=A2ches =
+perceptives : reconnaissance d=E2=80=99images, traitement du signal, =
+sont r=C3=A9volutionn=C3=A9es, et des t=C3=A2ches faisant intervenir la =
+s=C3=A9mantique, par exemple la traduction automatique, sont =C3=A9galemen=
+t maintenant approch=C3=A9es de mani=C3=A8re diff=C3=A9rente. Pourtant, =
+il est difficile de fournir des informations =C3=A0 ces m=C3=A9thodes, =
+de m=C3=AAme qu=E2=80=99il est difficile d=E2=80=99obtenir des =
+explications sur les r=C3=A9sultats qu=E2=80=99elles obtiennent. =
+Corr=C3=A9lativement, ces m=C3=A9thodes demandent souvent des donn=C3=A9es=
+ en tr=C3=A8s grand nombre pour apprendre, alors que nous apprenons =
+souvent =C3=A0 partir de peu d=E2=80=99exemples, voire tr=C3=A8s peu =
+dans le cas du raisonnement par analogie. Est-il possible de construire =
+des ponts entre les capacit=C3=A9s actuelles des algorithmes et celles =
+des humains ? Les machines peuvent-elles apprendre =C3=A0 partir de peu =
+d=E2=80=99exemples, et sous quelles conditions ? Peuvent-elles =
+argumenter leurs r=C3=A9sultats et =C2=AB&nbsp;raisonnements&nbsp;=C2=BB =
+avec les humains ? =C3=80 ces questions en sont li=C3=A9es d=E2=80=99autre=
+s sur la capacit=C3=A9 de transf=C3=A9rer des connaissances ou des =
+r=C3=A8gles de d=C3=A9cision d=E2=80=99un domaine =C3=A0 un autre. Par =
+exemple, l=E2=80=99analyse de sentiments propre =C3=A0 un domaine =
+peut-elle servir pour apprendre =C3=A0 analyser des sentiments dans un =
+domaine diff=C3=A9rent ? Ces questions sur l=E2=80=99apprentissage par =
+transfert sont essentielles pour capitaliser efficacement ce qui est =
+appris ou connu dans un domaine pour en aborder de =
+nouveaux.&nbsp;</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal; min-height: 14px;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;"></span><br =
+class=3D""></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">La conf=C3=A9rence EGC est =
+l=E2=80=99occasion de faire se rencontrer acad=C3=A9miques et =
+industriels afin de confronter des travaux th=C3=A9oriques et des =
+applications pratiques sur des donn=C3=A9es r=C3=A9elles et de =
+communiquer des travaux de qualit=C3=A9, d=E2=80=99=C3=A9changer et de =
+favoriser la fertilisation crois=C3=A9e des id=C3=A9es, =C3=A0 travers =
+la pr=C3=A9sentation de travaux de recherche r=C3=A9cents, de =
+d=C3=A9veloppements industriels et d=E2=80=99applications =
+originales.</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal; min-height: 14px;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;"></span><br =
+class=3D""></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">Les actes d=E2=80=99EGC 2020, =
+comprenant les articles des communications orales ainsi que ceux =
+associ=C3=A9s aux posters para=C3=AEtront dans un num=C3=A9ro de la =
+revue RNTI. Les auteurs des meilleurs articles seront invit=C3=A9s =C3=A0 =
+soumettre une version =C3=A9tendue de leurs articles pour =C3=AAtre =
+publi=C3=A9s dans des post-actes internationaux =C3=A9dit=C3=A9s chez =
+Springer.</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal; min-height: 14px;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;"></span><br =
+class=3D""></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">Cette ann=C3=A9e, il est pr=C3=A9vu =
+une session d=C3=A9fi sur donn=C3=A9es r=C3=A9elles qui fera l=E2=80=99obj=
+et d=E2=80=99un appel =C3=A0 participations sp=C3=A9cifique. Le ou les =
+laur=C3=A9ats seront invit=C3=A9s =C3=A0 pr=C3=A9senter leurs r=C3=A9sulta=
+ts =C3=A0 EGC 2020.</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal; min-height: 14px;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;"></span><br =
+class=3D""></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal; min-height: 14px;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;"></span><br class=3D""></div><p =
+class=3D"" style=3D"margin: 0px 0px 12px; font-stretch: normal; =
+line-height: normal; font-family: Times;"><span class=3D"" =
+style=3D"-webkit-font-kerning: =
+none;">______________________________________________________________</spa=
+n></p><p class=3D"" style=3D"margin: 0px 0px 12px; font-stretch: normal; =
+line-height: normal;"><span class=3D"" style=3D"-webkit-font-kerning: =
+none;"><b class=3D"">Soumission</b></span></p><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; line-height: normal;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;">Plusieurs types de =
+communications sont possibles (les d=C3=A9monstrations de logiciels, et =
+ateliers th=C3=A9matiques font l'objet d'appels =C3=A0 contributions =
+sp=C3=A9cifiques) :</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">=E2=80=A2&nbsp; &nbsp;&nbsp;<b =
+class=3D"">Travaux de recherche originaux</b>&nbsp;(acad=C3=A9miques ou =
+applicatifs/industriels) soumis dans un format unique de 12 pages max, =
+publi=C3=A9s sous forme d=E2=80=99articles longs de 12 pages, =
+d=E2=80=99articles courts de 8 pages ou de posters accompagn=C3=A9s de =
+r=C3=A9sum=C3=A9s de 2 pages, selon leur maturit=C3=A9. Chaque article =
+accept=C3=A9 avec un format long ou court sera pr=C3=A9sent=C3=A9 =
+oralement lors de la conf=C3=A9rence et les auteurs pourront, s'ils le =
+souhaitent, accompagner leur communication orale par un =
+poster.</span></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">=E2=80=A2&nbsp; &nbsp;&nbsp;<b =
+class=3D"">Travaux de recherche d=C3=A9j=C3=A0 publi=C3=A9s</b>&nbsp;dans =
+de bonnes conf=C3=A9rences ou revues internationales mais in=C3=A9dits =
+en fran=C3=A7ais (en vue d=E2=80=99une publication dans les actes d=E2=80=99=
+un r=C3=A9sum=C3=A9 de 8 pages obligatoirement en =
+fran=C3=A7ais)</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">=E2=80=A2&nbsp; &nbsp;&nbsp;<b =
+class=3D"">D=C3=A9monstrations de logiciels</b>, avec video de =
+pr=C3=A9sentation, o=C3=B9 la d=C3=A9monstration est compl=C3=A9t=C3=A9e =
+d'un article de 4 =C3=A0 8 pages : voir appel =C3=A0 soumissions =
+sp=C3=A9cifique aux d=C3=A9monstrations.</span></div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; line-height: normal;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;">=E2=80=A2&nbsp; =
+&nbsp;&nbsp;<b class=3D"">Ateliers th=C3=A9matiques</b>&nbsp;: voir =
+appel =C3=A0 soumissions sp=C3=A9cifique =C3=A0 l'organisation =
+d'ateliers th=C3=A9matiques qui auront lieu le mardi 28 janvier =
+2020.</span></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal; min-height: 14px;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;"></span><br class=3D""></div><div =
+class=3D"" style=3D"margin: 0px; font-stretch: normal; line-height: =
+normal;"><span class=3D"" style=3D"-webkit-font-kerning: none;">Les =
+articles peuvent =C3=AAtre soumis en fran=C3=A7ais ou en anglais mais en =
+cas d'acceptation, l'article devra =C3=AAtre traduit en fran=C3=A7ais =
+sauf pour les articles o=C3=B9 les auteurs sont non-francophones. Une =
+v=C3=A9rification de la traduction pourra =C3=AAtre effectu=C3=A9e et le =
+comit=C3=A9 de programme se r=C3=A9serve le droit de rejeter un article =
+suite =C3=A0 cette =C3=A9tape.</span></div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; line-height: normal; =
+min-height: 14px;"><span class=3D"" style=3D"-webkit-font-kerning: =
+none;"></span><br class=3D""></div><p class=3D"" style=3D"margin: 0px =
+0px 12px; font-stretch: normal; line-height: normal; font-family: =
+Times;"><span class=3D"" style=3D"-webkit-font-kerning: =
+none;">______________________________________________________________</spa=
+n></p><p class=3D"" style=3D"margin: 0px 0px 12px; font-stretch: normal; =
+line-height: normal;"><span class=3D"" style=3D"-webkit-font-kerning: =
+none;"><b class=3D"">Format de soumission</b></span></p><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; line-height: normal;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;">Les soumissions seront =
+anonymes et se feront par voie =C3=A9lectronique exclusivement =C3=A0 =
+partir du site web de la conf=C3=A9rence.</span></div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; line-height: normal;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;">Elles devront =C3=AAtre =
+soumises au format pdf exclusivement et devront imp=C3=A9rativement =
+utiliser le format RNTI latex accessible via le site web de la =
+conf=C3=A9rence.</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">Les soumissions qui d=C3=A9passeraie=
+nt 12 pages ou qui ne respecteront pas l=E2=80=99anonymat et/ou le =
+format RNTI Latex ne seront pas =C3=A9valu=C3=A9es.</span></div><div =
+class=3D"" style=3D"margin: 0px; font-stretch: normal; line-height: =
+normal;"><span class=3D"" style=3D"text-decoration: underline; =
+-webkit-font-kerning: none;"><a =
+href=3D"http://www.editions-rnti.fr/files/RNTI-X-Y2.1.zip" =
+class=3D"">http://www.editions-rnti.fr/files/RNTI-X-Y2.1.zip<span =
+class=3D"" style=3D"-webkit-font-kerning: none; color: rgb(0, 0, =
+0);"></span></a></span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal; min-height: 14px;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;"></span><br =
+class=3D""></div><p class=3D"" style=3D"margin: 0px 0px 12px; =
+font-stretch: normal; line-height: normal; font-family: Times;"><span =
+class=3D"" style=3D"-webkit-font-kerning: =
+none;">______________________________________________________________</spa=
+n></p><p class=3D"" style=3D"margin: 0px 0px 12px; font-stretch: normal; =
+line-height: normal;"><span class=3D"" style=3D"-webkit-font-kerning: =
+none;"><b class=3D"">Prix</b></span></p><div class=3D"" style=3D"margin: =
+0px; font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">Cinq prix scientifiques seront =
+attribu=C3=A9s lors de la conf=C3=A9rence :</span></div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; line-height: normal;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;">=E2=80=A2&nbsp; &nbsp; =
+un&nbsp;<b class=3D"">prix</b>&nbsp;pour la cat=C3=A9gorie "<b =
+class=3D"">article acad=C3=A9mique</b>" (1500 euros),</span></div><div =
+class=3D"" style=3D"margin: 0px; font-stretch: normal; line-height: =
+normal;"><span class=3D"" style=3D"-webkit-font-kerning: =
+none;">=E2=80=A2&nbsp; &nbsp; un&nbsp;<b class=3D"">prix</b>&nbsp;pour =
+la cat=C3=A9gorie "<b class=3D"">article applicatif</b>" (1500 =
+euros),</span></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">=E2=80=A2&nbsp; &nbsp; un&nbsp;<b =
+class=3D"">prix</b>&nbsp;pour le&nbsp;<b class=3D"">d=C3=A9fi</b>&nbsp;(15=
+00 euros + 500 euros si collaboration avec une =C3=A9quipe de =
+SHS),</span></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">=E2=80=A2&nbsp; &nbsp; un&nbsp;<b =
+class=3D"">prix</b>&nbsp;pour la cat=C3=A9gorie "<b =
+class=3D"">d=C3=A9monstration</b>" (500 euros),</span></div><div =
+class=3D"" style=3D"margin: 0px; font-stretch: normal; line-height: =
+normal;"><span class=3D"" style=3D"-webkit-font-kerning: =
+none;">=E2=80=A2&nbsp; &nbsp; un&nbsp;<b =
+class=3D"">prix</b>&nbsp;de&nbsp;<b class=3D"">th=C3=A8se</b>&nbsp;(500 =
+euros) d=C3=A9cern=C3=A9 =C3=A0 un jeune docteur dont la th=C3=A8se a =
+=C3=A9t=C3=A9 soutenue depuis moins de trois ans dans les th=C3=A9matiques=
+ li=C3=A9es =C3=A0 l=E2=80=99extraction et la gestion des =
+connaissances.</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal; min-height: 14px;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;"></span><br =
+class=3D""></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">Ces prix seront d=C3=A9cern=C3=A9s =
+par un jury compos=C3=A9 de membres du comit=C3=A9 de pilotage. Le prix =
+de th=C3=A8se fait l=E2=80=99objet d=E2=80=99une annonce =
+sp=C3=A9cifique.</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal; min-height: 14px;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;"></span><br =
+class=3D""></div><p class=3D"" style=3D"margin: 0px 0px 12px; =
+font-stretch: normal; line-height: normal; font-family: Times;"><span =
+class=3D"" style=3D"-webkit-font-kerning: =
+none;">______________________________________________________________</spa=
+n></p><div class=3D"" style=3D"margin: 0px; font-stretch: normal; =
+line-height: normal;"><span class=3D"" style=3D"-webkit-font-kerning: =
+none;"><b class=3D"">Dates importantes</b></span></div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; line-height: normal; =
+min-height: 14px;"><span class=3D"" style=3D"-webkit-font-kerning: =
+none;"></span><br class=3D""></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">Ces dates concernent les articles =
+acad=C3=A9miques ou applicatifs/industriels, les travaux de recherche =
+d=C3=A9j=C3=A0 publi=C3=A9s dans des conf=C3=A9rences internationales =
+mais in=C3=A9dits en fran=C3=A7ais. Pour les ateliers et les =
+d=C3=A9monstrations, voir les appels =C3=A0 communications sp=C3=A9cifique=
+s. Ces dates sont fermes et d=C3=A9finitives.</span></div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; line-height: normal; =
+min-height: 14px;"><span class=3D"" style=3D"-webkit-font-kerning: =
+none;"></span><br class=3D""></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;"><b class=3D"">R=C3=A9sum=C3=A9s</b>&=
+nbsp;des articles&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; =
+:&nbsp;<span class=3D""><strike class=3D"">7</strike><b class=3D"">&nbsp; =
+14 octobre 2019</b></span>&nbsp;=E2=80=93 11:00 AM =
+Paris</span></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;"><b class=3D"">Textes =
+complets</b>&nbsp;des articles :&nbsp;<span class=3D""><strike =
+class=3D"">14</strike><b class=3D""> 21octobre 2019&nbsp;</b></span>=E2=80=
+=93 11:00 AM Paris</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;"><b =
+class=3D"">Interactions</b>&nbsp;auteurs/membres Comit=C3=A9 de =
+Programme :&nbsp;<b class=3D"">14-17 novembre 2019</b>&nbsp;=E2=80=93 =
+11:00 AM Paris</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;"><b =
+class=3D"">Notification</b>&nbsp;aux auteurs &nbsp; &nbsp; &nbsp; &nbsp; =
+:&nbsp;<b class=3D"">22 novembre 2019&nbsp;</b>=E2=80=93 11:00 AM =
+Paris</span></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;"><b class=3D"">Version =
+finale&nbsp;</b>des articles&nbsp; &nbsp; &nbsp; :&nbsp;<b class=3D"">11 =
+d=C3=A9cembre 2019</b>&nbsp;=E2=80=93 11:00 AM Paris</span></div><div =
+class=3D"" style=3D"margin: 0px; font-stretch: normal; line-height: =
+normal; min-height: 14px;"><span class=3D"" style=3D"-webkit-font-kerning:=
+ none;"></span><br class=3D""></div><p class=3D"" style=3D"margin: 0px =
+0px 12px; font-stretch: normal; line-height: normal; font-family: =
+Times;"><span class=3D"" style=3D"-webkit-font-kerning: =
+none;">______________________________________________________________</spa=
+n></p><p class=3D"" style=3D"margin: 0px 0px 12px; font-stretch: normal; =
+line-height: normal;"><span class=3D"" style=3D"-webkit-font-kerning: =
+none;"><b class=3D"">Organisation</b></span></p><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; line-height: normal;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;">Pr=C3=A9sident du =
+Comit=C3=A9 de Programme :</span></div><div class=3D"" style=3D"margin: =
+0px; font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">&nbsp;&nbsp; Antoine Cornu=C3=A9jols=
+, AgroParisTech, D=C3=A9partement MMIP (Mod=C3=A9lisation Math=C3=A9matiqu=
+e, Informatique et Physique), Paris</span></div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; line-height: normal; =
+min-height: 14px;"><span class=3D"" style=3D"-webkit-font-kerning: =
+none;"></span><br class=3D""></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">Pr=C3=A9sident du Comit=C3=A9 =
+d'Organisation :</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">&nbsp;&nbsp; =C3=89tienne =
+Cuvelier, ICHEC Brussels Management School, Bruxelles</span></div><div =
+class=3D"" style=3D"margin: 0px; font-stretch: normal; line-height: =
+normal; min-height: 14px;"><span class=3D"" style=3D"-webkit-font-kerning:=
+ none;"></span><br class=3D""></div><p class=3D"" style=3D"margin: 0px =
+0px 12px; font-stretch: normal; line-height: normal; font-family: =
+Times;"><span class=3D"" style=3D"-webkit-font-kerning: =
+none;">______________________________________________________________</spa=
+n></p><div class=3D"" style=3D"margin: 0px; font-stretch: normal; =
+line-height: normal;"><span class=3D"" style=3D"-webkit-font-kerning: =
+none;"><b class=3D"">Th=C3=A9matiques</b></span></div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; line-height: normal; =
+min-height: 14px;"><span class=3D"" style=3D"-webkit-font-kerning: =
+none;"></span><br class=3D""></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">Les sujets d=E2=80=99int=C3=A9r=C3=AA=
+t de la conf=C3=A9rence incluent (liste non-exhaustive) =
+:</span></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal; min-height: 14px;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;"></span><br class=3D""></div><div =
+class=3D"" style=3D"margin: 0px; font-stretch: normal; line-height: =
+normal;"><span class=3D"" style=3D"-webkit-font-kerning: none;"><b =
+class=3D"">Fondements</b>&nbsp;de l=E2=80=99extraction et de la gestion =
+de connaissances</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal; min-height: 14px;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;"></span><br =
+class=3D""></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">- apprentissage supervis=C3=A9 : =
+apprentissage profond, apprentissage de r=C3=A8gles, apprentissage =
+statistique, mod=C3=A8les probabilistes, m=C3=A9thodes d'ensembles, =
+r=C3=A9gression,</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">classes d=C3=A9s=C3=A9quilibr=C3=A9e=
+s, classification guid=C3=A9e par les connaissances</span></div><div =
+class=3D"" style=3D"margin: 0px; font-stretch: normal; line-height: =
+normal;"><span class=3D"" style=3D"-webkit-font-kerning: none;">- =
+apprentissage non supervis=C3=A9 : m=C3=A9thodes de partitionnement et =
+de recouvrement, m=C3=A9thodes hi=C3=A9rarchiques, multi-vues, =
+multi-strat=C3=A9gies, co-clustering, clustering sous =
+contraintes</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">- m=C3=A9thode de d=C3=A9couverte =
+de motifs et d'ensembles de motifs : s=C3=A9quences, graphes, =
+tenseurs.</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">- cadre th=C3=A9orique pour la =
+fouille de donn=C3=A9es, langages de requ=C3=AAtes d=C3=A9claratifs pour =
+la fouille de donn=C3=A9es, fouille de donn=C3=A9es sous contraintes, =
+m=C3=A9thodes incr=C3=A9mentales</span></div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; line-height: normal;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;">- algorithmes de =
+fouille de donn=C3=A9es robustes au passage =C3=A0 l=E2=80=99=C3=A9chelle,=
+ syst=C3=A8mes distribu=C3=A9s / parall=C3=A8les pour la fouille de =
+donn=C3=A9es</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">- m=C3=A9thodes statistiques en =
+fouille de donn=C3=A9es</span></div><div class=3D"" style=3D"margin: =
+0px; font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">- programmation logique =
+inductive</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">- apprentissage topologique, =
+vari=C3=A9t=C3=A9s math=C3=A9matiques</span></div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; line-height: normal;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;">- analyse des donn=C3=A9e=
+s symboliques</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">- d=C3=A9tection d'exceptions, =
+d'inattendus, d'anomalies, de signaux faibles.</span></div><div class=3D""=
+ style=3D"margin: 0px; font-stretch: normal; line-height: normal;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;">- visualisation et =
+fouille visuelle de donn=C3=A9es massives</span></div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; line-height: normal;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;">- interrogation et =
+raisonnement sur des donn=C3=A9es en pr=C3=A9sence =
+d=E2=80=99ontologies</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">- repr=C3=A9sentation, traitement =
+et =C3=A9change de donn=C3=A9es et connaissances sur le Web s=C3=A9mantiqu=
+e et le Web des donn=C3=A9es li=C3=A9es</span></div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; line-height: normal;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;">- vari=C3=A9t=C3=A9 des =
+donn=C3=A9es et donn=C3=A9es complexes : donn=C3=A9es structur=C3=A9es, =
+semi-structur=C3=A9es, textuelles ; donn=C3=A9es temporelles, spatiales, =
+g=C3=A9olocalis=C3=A9es ; donn=C3=A9es multim=C3=A9dia ; donn=C3=A9es =
+relationnelles ; donn=C3=A9es en r=C3=A9seau, en graphes ; donn=C3=A9es =
+dynamiques ; flux de donn=C3=A9es ; donn=C3=A9es annot=C3=A9es =C3=A0 =
+l'aide d'ontologies ; donn=C3=A9es h=C3=A9t=C3=A9rog=C3=A8nes =
+s=C3=A9mantiquement</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">- pr=C3=A9servation de la =
+confidentialit=C3=A9 et de l'anonymat</span></div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; line-height: normal;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;">- transparence, =
+=C3=A9quit=C3=A9 et explicabilit=C3=A9 des algorithmes de traitement et =
+d=E2=80=99analyse des donn=C3=A9es</span></div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; line-height: normal; =
+min-height: 14px;"><span class=3D"" style=3D"-webkit-font-kerning: =
+none;"></span><br class=3D""></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;"><b class=3D"">Aspects =
+m=C3=A9thodologiques</b>&nbsp;de l=E2=80=99extraction et de la gestion =
+de connaissances</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal; min-height: 14px;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;"></span><br =
+class=3D""></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">- acquisition, nettoyage, filtrage =
+des donn=C3=A9es,&nbsp; r=C3=A9duction de dimensions, s=C3=A9lection et =
+modification des caract=C3=A9ristiques</span></div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; line-height: normal;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;">- gestion des =
+connaissances et d'ontologies (acquisition, stockage, mise =C3=A0 jour, =
+interop=C3=A9rabilit=C3=A9, interconnexion, =C3=A9volution)</span></div><d=
+iv class=3D"" style=3D"margin: 0px; font-stretch: normal; line-height: =
+normal;"><span class=3D"" style=3D"-webkit-font-kerning: none;">- cycle =
+de vie et alignements des vocabulaires (ontologies, th=C3=A9saurus, =
+m=C3=A9ta-donn=C3=A9es) sur le Web</span></div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; line-height: normal;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;">- pr=C3=A9paration, =
+architecture et mod=C3=A8les de donn=C3=A9es li=C3=A9es sur le =
+Web.</span></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">- int=C3=A9gration de =
+connaissances dans le processus d'extraction (ontologies, =
+expertise,...)</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">- tra=C3=A7abilit=C3=A9, =
+s=C3=A9curit=C3=A9 et int=C3=A9grit=C3=A9 de l'information et des =
+donn=C3=A9es</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">- plateformes et syst=C3=A8mes =
+pour l'extraction et la gestion de donn=C3=A9es et de =
+connaissances</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">- =C3=A9tudes exp=C3=A9rimentales =
+sur des donn=C3=A9es volumineuses</span></div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; line-height: normal;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;">- interaction et =
+apprentissage actif</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">- visualisation, explication et =
+compr=C3=A9hension de r=C3=A9sultats</span></div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; line-height: normal;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;">- crit=C3=A8res et =
+=C3=A9valuation de la qualit=C3=A9 des donn=C3=A9es, des connaissances =
+extraites</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">- protocoles d'=C3=A9valuation et =
+validation de mod=C3=A8les =C3=A0 partir d'utilisateurs</span></div><div =
+class=3D"" style=3D"margin: 0px; font-stretch: normal; line-height: =
+normal;"><span class=3D"" style=3D"-webkit-font-kerning: none;">- =
+interaction homme-machine en fouille de donn=C3=A9es</span></div><div =
+class=3D"" style=3D"margin: 0px; font-stretch: normal; line-height: =
+normal; min-height: 14px;"><span class=3D"" style=3D"-webkit-font-kerning:=
+ none;"></span><br class=3D""></div><div class=3D"" style=3D"margin: =
+0px; font-stretch: normal; line-height: normal; min-height: 14px;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;"></span><br =
+class=3D""></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">Extraction et gestion de =
+connaissances dans des&nbsp;<b class=3D"">domaines =C3=A9mergents ou =
+connexes</b></span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal; min-height: 14px;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;"></span><br =
+class=3D""></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">- analyse de liens, communaut=C3=A9s=
+ en ligne, r=C3=A9seaux sociaux, m=C3=A9dias sociaux.</span></div><div =
+class=3D"" style=3D"margin: 0px; font-stretch: normal; line-height: =
+normal;"><span class=3D"" style=3D"-webkit-font-kerning: none;">- =
+fouille de donn=C3=A9es d'opinions, de d=C3=A9p=C3=AAches, de =
+microblogging</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">- mobilit=C3=A9, =
+g=C3=A9o-localisation, d=C3=A9couverte de connaissances et ubiquit=C3=A9, =
+intelligence ambiante, r=C3=A9seaux de capteurs, internet des =
+objets</span></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">- Big Data et nouveaux paradigmes =
+de traitement des donn=C3=A9es : calcul haute performance, =
+parall=C3=A9lisme, syst=C3=A8mes distribu=C3=A9s</span></div><div =
+class=3D"" style=3D"margin: 0px; font-stretch: normal; line-height: =
+normal;"><span class=3D"" style=3D"-webkit-font-kerning: none;">- =
+crowdsourcing, mod=C3=A9lisation de comportements</span></div><div =
+class=3D"" style=3D"margin: 0px; font-stretch: normal; line-height: =
+normal;"><span class=3D"" style=3D"-webkit-font-kerning: none;">- =
+fouille du Web de donn=C3=A9es, extraction pour le Web s=C3=A9mantique, =
+annotation de ressources multim=C3=A9dia pour le Web, annotation du Web =
+des Objets</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">- fertilisation crois=C3=A9e entre =
+extraction de connaissances et autres domaines de recherche ou =
+d'applications : intelligence artificielle, sciences sociales et =
+humanit=C3=A9s num=C3=A9riques, traitement automatique des langues, =
+traitement d=E2=80=99images, vision par ordinateur.</span></div><div =
+class=3D"" style=3D"margin: 0px; font-stretch: normal; line-height: =
+normal; min-height: 14px;"><span class=3D"" style=3D"-webkit-font-kerning:=
+ none;"></span><br class=3D""></div><div class=3D"" style=3D"margin: =
+0px; font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;"><b =
+class=3D"">Applications</b>&nbsp;de l'extraction et de la gestion de =
+connaissances</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal; min-height: 14px;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;"></span><br =
+class=3D""></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">- d=C3=A9veloppement durable, =
+transports et lieux intelligents</span></div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; line-height: normal;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;">- informatique verte =
+pour la gestion et l'extraction de connaissances</span></div><div =
+class=3D"" style=3D"margin: 0px; font-stretch: normal; line-height: =
+normal;"><span class=3D"" style=3D"-webkit-font-kerning: none;">- =
+mod=C3=A9lisation des =C3=A9pid=C3=A9mies, recherche clinique, =
+m=C3=A9decine, biologie</span></div><div class=3D"" style=3D"margin: =
+0px; font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">- d=C3=A9tection d'intrusion, =
+pr=C3=A9vention de fraude, s=C3=A9curit=C3=A9</span></div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; line-height: normal;"><span =
+class=3D"" style=3D"-webkit-font-kerning: none;">- m=C3=A9moires =
+d'entreprise, veille technologique, intelligence =
+=C3=A9conomique</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">- syst=C3=A8me de recommandation, =
+commerce =C3=A9lectronique, publicit=C3=A9 en ligne</span></div><div =
+class=3D"" style=3D"margin: 0px; font-stretch: normal; line-height: =
+normal;"><span class=3D"" style=3D"-webkit-font-kerning: none;">- =
+applications dans d'autres domaines comme la chimie, l'environnement, =
+les sciences sociales, l'=C3=A9ducation, l'=C3=A9conomie, la finance, le =
+tourisme, la d=C3=A9fense, le g=C3=A9nie logiciel.</span></div><div =
+class=3D"" style=3D"margin: 0px; font-stretch: normal; line-height: =
+normal; min-height: 14px;"><span class=3D"" style=3D"-webkit-font-kerning:=
+ none;"></span><br class=3D""></div><div class=3D"" style=3D"margin: =
+0px; font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: =
+none;">=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=
+=94</span></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">Antoine =
+Cornu=C3=A9jols</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">Professeur =C3=A0 AgroParisTech, =
+Paris (France)</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;"><a =
+href=3D"http://www2.agroparistech.fr/ufr-info/membres/cornuejols/" =
+class=3D"">http://www2.agroparistech.fr/ufr-info/membres/cornuejols/</a></=
+span></div><div class=3D"" style=3D"margin: 0px; font-stretch: normal; =
+line-height: normal; min-height: 14px;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;"></span><br class=3D""></div><div =
+class=3D"" style=3D"margin: 0px; font-stretch: normal; line-height: =
+normal;"><span class=3D"" style=3D"-webkit-font-kerning: =
+none;">______________________________________________________________</spa=
+n></div><div class=3D"" style=3D"margin: 0px; font-stretch: normal; =
+line-height: normal; min-height: 14px;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;"></span><br class=3D""></div><div =
+class=3D"" style=3D"margin: 0px; font-stretch: normal; line-height: =
+normal;"><span class=3D"" style=3D"-webkit-font-kerning: =
+none;">Association Extraction et Gestion des =
+Connaissances</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">Site Web :&nbsp;<a =
+href=3D"http://egc.asso.fr/" class=3D""><span class=3D"" =
+style=3D"-webkit-font-kerning: none; color: rgb(9, 79, =
+209);">egc.asso.fr</span></a></span></div><div class=3D"" style=3D"margin:=
+ 0px; font-stretch: normal; line-height: normal; min-height: =
+14px;"><span class=3D"" style=3D"-webkit-font-kerning: none;"></span><br =
+class=3D""></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; line-height: normal;"><span class=3D"" =
+style=3D"-webkit-font-kerning: none;">Suivez-nous aussi sur Twitter : =
+@associationEGC, et Facebook :&nbsp;<a =
+href=3D"http://facebook.com/AssociationEGC" class=3D""><span class=3D"" =
+style=3D"-webkit-font-kerning: none; color: rgb(9, 79, =
+209);">facebook.com/AssociationEGC</span></a></span></div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; line-height: normal; =
+min-height: 14px;"><span class=3D"" style=3D"-webkit-font-kerning: =
+none;"></span><br class=3D""></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal; color: rgb(9, 79, =
+209);"><span class=3D"" style=3D"-webkit-font-kerning: none; color: =
+rgb(0, 0, 0);">G=C3=A9rer votre abonnement :&nbsp;<a =
+href=3D"http://egc.asso.fr/13-FR-Liste_de_diffusion" class=3D""><span =
+class=3D"" style=3D"-webkit-font-kerning: =
+none;">egc.asso.fr/13-FR-Liste_de_diffusion</span></a></span></div><div =
+class=3D"" style=3D"margin: 0px; font-stretch: normal; line-height: =
+normal; color: rgb(9, 79, 209);"><span class=3D"" =
+style=3D"-webkit-font-kerning: none; color: rgb(0, 0, 0);">Informations =
+sur la liste :&nbsp;<a =
+href=3D"http://sympa.univ-nantes.fr/sympa/info/polytech_liste-egc" =
+class=3D""><span class=3D"" style=3D"-webkit-font-kerning: =
+none;">sympa.univ-nantes.fr/sympa/info/polytech_liste-egc</span></a></span=
+></div><div class=3D"" style=3D"margin: 0px; font-stretch: normal; =
+line-height: normal;"><span class=3D"" style=3D"-webkit-font-kerning: =
+none;">Le Mod=C3=A9rateur, Pierrick Bruneau,&nbsp;<a =
+href=3D"mailto:p_bruneau@hotmail.com" class=3D""><span class=3D"" =
+style=3D"-webkit-font-kerning: none; color: rgb(9, 79, =
+209);">p_bruneau@hotmail.com</span></a></span></div><div class=3D""><br =
+class=3D"webkit-block-placeholder"></div><div class=3D""><div class=3D"" =
+style=3D"word-wrap: break-word; -webkit-nbsp-mode: space; line-break: =
+after-white-space;"><div class=3D"" style=3D"word-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;"><div class=3D"" =
+style=3D"word-wrap: break-word; -webkit-nbsp-mode: space; line-break: =
+after-white-space;"><div class=3D""><div class=3D"" style=3D"orphans: 2; =
+widows: =
+2;">----------------------------------------------------------------------=
+--------------</div></div></div></div></div></div></div></body></html>=
+
+--Apple-Mail=_B948BE19-6FD5-4EF5-99F7-2CBB500E3EB2--

@@ -1,0 +1,574 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (bouncesmtp1.u12.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id D766B14017E3
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu,  1 Jun 2023 11:43:40 +0200 (CEST)
+Received: from mx1.localdomain (MX1.univ-nantes.fr [193.52.101.135])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id D40F0707D
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu,  1 Jun 2023 11:43:40 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.localdomain (Postfix) with ESMTP id CD23012001D
+	for <liste-egc@polytech.univ-nantes.fr>; Thu,  1 Jun 2023 11:43:40 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -8.969
+X-Spam-Level:
+X-Spam-Status: No, score=-8.969 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	NO_RDNS2=0.01, RCVD_IN_DNSWL_MED=-10, RCVD_IN_WSFF=0.01,
+	SPF_HELO_NONE=0.001, SPF_PASS=-0.001, T_KAM_HTML_FONT_INVALID=0.01,
+	UN_PHISHING_PW=0.1, VOWEL_URI_5=1] autolearn=disabled
+X-CRM114-Status: UNSURE ( 2.7570 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=tu-dresden.de
+Received: from mx1.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id BXbULIwJTxDp for <liste-egc@polytech.univ-nantes.fr>;
+	Thu,  1 Jun 2023 11:43:38 +0200 (CEST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=141.30.67.75; helo=mailout4.zih.tu-dresden.de; envelope-from=lucia.gomez_alvarez@tu-dresden.de; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=none dis=none) header.from=tu-dresden.de
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=lucia.gomez_alvarez@tu-dresden.de
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (2048-bit key; unprotected) header.d=tu-dresden.de header.i=@tu-dresden.de header.b="vhsTjcwy";
+	dkim-atps=neutral
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mailout4.zih.tu-dresden.de (mailout4.zih.tu-dresden.de [141.30.67.75])
+	by mx1.localdomain (Postfix) with ESMTPS id 4212E12065B
+	for <liste-egc@polytech.univ-nantes.fr>; Thu,  1 Jun 2023 11:43:38 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=tu-dresden.de; s=dkim2022; h=MIME-Version:Content-Type:Message-ID:Date:
+	Subject:To:From:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=45wmaSpLZmQEo0SnPeylkiIJHSrjDWVTTrvZ5giBhS0=; b=vhsTjcwyBpq3oSZqLAEWOzulcr
+	I8BiZik9eYiaO/F9YIjsKlIoBFBXXrydTzlQ5Zw4b8OC2bzaVBF8d61NMK9FI/xysPVLP7nMSC/jK
+	pL/ZlUHpox/C1XbpJf6rous+KeY0fQeAwclDlpzXSjWXrt2oBMjOrRjAlWUKksjY3VRNQSvyTGzQZ
+	dXbG3QfTX1qSxpzURq9Wqfm1ml4l0GUwg5lHtA6ea1G/fsq82BE3/jMn6UDTv7EeLYl8M3FRDyPkH
+	B23SfWMfgC+sQNxgwnd3zVaj+ouS4xjV62gQSxQkcbFGp5/yvd2RvRlYP5bql43WqcDvVuRbvxWuj
+	8Y9NYFTA==;
+Received: from [172.26.34.113] (helo=msx.tu-dresden.de)
+	by mailout4.zih.tu-dresden.de with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <lucia.gomez_alvarez@tu-dresden.de>)
+	id 1q4eq5-00FbWR-EV; Thu, 01 Jun 2023 11:43:26 +0200
+Received: from msx-l319.msx.ad.zih.tu-dresden.de (172.26.34.119) by
+ MSX-L313.msx.ad.zih.tu-dresden.de (172.26.34.113) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.23; Thu, 1 Jun 2023 11:42:26 +0200
+Received: from msx-l319.msx.ad.zih.tu-dresden.de ([172.26.34.119]) by
+ msx-l319.msx.ad.zih.tu-dresden.de ([172.26.34.119]) with mapi id
+ 15.01.2507.023; Thu, 1 Jun 2023 11:42:26 +0200
+From: Lucia Gomez Alvarez <lucia.gomez_alvarez@tu-dresden.de>
+To: "bull-i3@irit.fr" <bull-i3@irit.fr>, "dgkl@listserv.linguistlist.org"
+	<dgkl@listserv.linguistlist.org>, "dl@dl.kr.org" <dl@dl.kr.org>,
+	"fca-list@cs.uni-kassel.de" <fca-list@cs.uni-kassel.de>,
+	"logic@math.uni-bonn.de" <logic@math.uni-bonn.de>,
+	"obml@lists.informatik.uni-leipzig.de"
+	<obml@lists.informatik.uni-leipzig.de>, "planetkr@kr.org" <planetkr@kr.org>,
+	"agents@cs.umbc.edu" <agents@cs.umbc.edu>, "AI-SGES@JISCMAIL.AC.UK"
+	<AI-SGES@JISCMAIL.AC.UK>, "announcements@lists.cognitivesciencesociety.org"
+	<announcements@lists.cognitivesciencesociety.org>, "corpora@list.elra.info"
+	<corpora@list.elra.info>, "ifi-ci-event@lists.tu-clausthal.de"
+	<ifi-ci-event@lists.tu-clausthal.de>, "liste-egc@polytech.univ-nantes.fr"
+	<liste-egc@polytech.univ-nantes.fr>,
+	"madics-annonces-request@univ-grenoble-alpes.fr"
+	<madics-annonces-request@univ-grenoble-alpes.fr>,
+	"public-semweb-lifesci@w3.org" <public-semweb-lifesci@w3.org>,
+	"semantic-web@w3.org" <semantic-web@w3.org>,
+	"sigai-announce@listserv.acm.org" <sigai-announce@listserv.acm.org>,
+	"sigir@acm.org" <sigir@acm.org>, "uai@engr.orst.edu" <uai@engr.orst.edu>,
+	"web.semantique@lists-sop.inria.fr" <web.semantique@lists-sop.inria.fr>,
+	"grin-eventi@grin-informatica.it" <grin-eventi@grin-informatica.it>,
+	"dl@dl.kr.org" <dl@dl.kr.org>
+Thread-Topic: (EXTENDED DEADLINE: 12th June ) KoDis@KR 2023: Workshop on
+ Knowledge Diversity + Special Issue
+Thread-Index: AQHZlGf+rxv4IGut5UqppH1tvJIXPg==
+Date: Thu, 1 Jun 2023 09:42:26 +0000
+Message-ID: <53197dae600940e097caf433c0ae9b07@tu-dresden.de>
+Accept-Language: en-GB, de-DE, en-US
+Content-Language: en-GB
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-pmwin-version: 4.0.4, Antivirus-Engine: 3.87.0, Antivirus-Data: 6.01
+Content-Type: multipart/alternative;
+	boundary="_000_53197dae600940e097caf433c0ae9b07tudresdende_"
+MIME-Version: 1.0
+X-TUD-Virus-Scanned: mailout4.zih.tu-dresden.de
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] (EXTENDED DEADLINE: 12th June ) KoDis@KR 2023: Workshop
+ on Knowledge Diversity + Special Issue
+
+--_000_53197dae600940e097caf433c0ae9b07tudresdende_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+(Apologies for cross-posting)
+
+
+KoDis: Workshop on Knowledge Diversity
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+
+Co-located with the 20th International Conference on Principles of Knowledg=
+e Representation and Reasoning (KR 2023),
+
+September 2-8, 2023 Rhodes, Greece
+
+
+https://kodis23.wordpress.com<https://kodis23.wordpress.com/>
+
+
+
+=3D=3D IMPORTANT DATES (EXTENDED) =3D=3D
+
+
+Workshop paper submission deadline (EXTENDED) : June 12, 2023 (AOE)
+
+Workshop paper notification: July 4, 2023 (AOE)
+
+Workshop dates: September 2-4, 2023
+
+
+=3D=3D AIMS AND SCOPE =3D=3D
+
+
+KoDis intends to create a space of confluence and a forum for discussion fo=
+r researchers interested in knowledge diversity in a wide sense, including =
+diversity in terms of diverging perspectives, different beliefs, semantic h=
+eterogeneity and others. The importance of understanding and handling the d=
+ifferent forms of diversity that manifest between knowledge formalisations =
+(ontologies, knowledge bases, or knowledge graphs) is widely recognised and=
+ has led to the proposal of a variety of systems of representation, tacklin=
+g overlapping aspects of this phenomenon.
+
+
+Besides understanding the phenomenon and considering formal models for the =
+representation of knowledge diversity, we are interested in the variety of =
+reasoning problems that emerge in this context, including reasoning with po=
+ssibly conflicting sources, interpreting knowledge from alternative viewpoi=
+nts, consolidating the diversity as uncertainty, reasoning by means of argu=
+mentation between the sources and pursuing knowledge aggregations among oth=
+ers. The following is a non-exhaustive list of topics of interest.
+
+
+- Philosophical and cognitive analysis of knowledge diversity.
+
+- Formal models for the representation of knowledge diversity.
+
+- Ontological approaches capturing multiple perspectives and viewpoints.
+
+- Context and concept formation in such systems.
+
+- Consistency (or not) in multi-perspective systems; assessment and mitigat=
+ion of inconsistencies.
+
+- Communication between knowledge-diverse systems.
+
+- Argumentation-based approaches for dealing with inconsistency
+
+- Aggregation of diverse or inconsistent knowledge; judgement aggregation.
+
+- Uncertainty in the context of knowledge diversity.
+
+- Applications of formal models of knowledge diversity.
+
+
+=3D=3D SUBMISSIONS =3D=3D
+
+
+We encourage three types of contributions:
+
+
+- Full research papers: Submitted papers must not exceed 14 pages excluding=
+ the bibliography, and must include an abstract of no more than 300 words. =
+Please, note that the minimum length is 10 pages.
+
+
+- Short papers: Submitted papers must not exceed 6 pages excluding the bibl=
+iography, and must include an abstract of no more than 300 words. Please, n=
+ote that the minimum length is 5 pages (including the bibliography).
+
+
+- Extended abstracts (presentation only): should be 2-4 pages long includin=
+g the bibliography. Please, note that extended abstracts will not be includ=
+ed in the CEUR proceedings.
+
+
+
+More information at https://kodis23.wordpress.com<https://kodis23.wordpress=
+.com/>
+
+
+
+
+=3D=3D ORGANISATION =3D=3D
+
+
+Luc=EDa G=F3mez =C1lvarez (TU Dresden, Germany) ---- contact: lucia.gomez_a=
+lvarez@tu-dresden.de
+
+Rafael Pe=F1aloza (University of Milano-Bicocca, Italy)
+
+Srdjan Vesic (CNRS, France)
+
+_________________________
+Dr. Luc=EDa G=F3mez =C1lvarez
+Computational Logic Group
+Institute for Artificial Intelligence
+Faculty of Computer Science
+TU Dresden
+GERMANY
+
+--_000_53197dae600940e097caf433c0ae9b07tudresdende_
+Content-Type: text/html; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1">
+<style type=3D"text/css" style=3D"display:none;"><!-- P {margin-top:0;margi=
+n-bottom:0;} --></style>
+</head>
+<body dir=3D"ltr">
+<div id=3D"divtagdefaultwrapper" style=3D"font-size:12pt;color:#000000;font=
+-family:Arial,Helvetica,sans-serif;" dir=3D"ltr">
+<p></p>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<span style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont;=
+ font-size: 16px;">(Apologies for cross-posting)</span><br style=3D"font-fa=
+mily: Arial, Helvetica, sans-serif, serif, EmojiFont; font-size: 16px;">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif, serif, EmojiFont; =
+font-size: 16px;">
+<font face=3D"Arial,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><span =
+style=3D"font-size: 16px;"><b></b></span></font></div>
+<p></p>
+<span id=3D"docs-internal-guid-80447057-7fff-abdd-2ab2-e9fd97881d5f">
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Arial; background-color: trans=
+parent; font-weight: 700; font-variant-numeric: normal; font-variant-east-a=
+sian: normal; font-variant-alternates: normal; vertical-align: baseline; wh=
+ite-space: pre-wrap;">KoDis: Workshop
+ on Knowledge Diversity</span></p>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Arial; background-color: trans=
+parent; font-variant-numeric: normal; font-variant-east-asian: normal; font=
+-variant-alternates: normal; vertical-align: baseline; white-space: pre-wra=
+p;">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</span></p>
+<br>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Arial; background-color: trans=
+parent; font-variant-numeric: normal; font-variant-east-asian: normal; font=
+-variant-alternates: normal; vertical-align: baseline; white-space: pre-wra=
+p;">Co-located with the 20th International
+</span><span style=3D"font-size: 12pt; font-family: Arial; background-color=
+: transparent; font-weight: 700; font-variant-numeric: normal; font-variant=
+-east-asian: normal; font-variant-alternates: normal; vertical-align: basel=
+ine; white-space: pre-wrap;">Conference
+ on Principles of Knowledge Representation and Reasoning (KR 2023)</span><s=
+pan style=3D"font-size: 12pt; font-family: Arial; background-color: transpa=
+rent; font-variant-numeric: normal; font-variant-east-asian: normal; font-v=
+ariant-alternates: normal; vertical-align: baseline; white-space: pre-wrap;=
+">,&nbsp;</span></p>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Arial; background-color: trans=
+parent; font-variant-numeric: normal; font-variant-east-asian: normal; font=
+-variant-alternates: normal; vertical-align: baseline; white-space: pre-wra=
+p;">September 2-8, 2023 Rhodes, Greece&nbsp;</span></p>
+<br>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<a href=3D"https://kodis23.wordpress.com/" style=3D"text-decoration-line: n=
+one;"><span style=3D"font-size: 12pt; font-family: Arial; color: rgb(17, 85=
+, 204); background-color: transparent; font-variant-numeric: normal; font-v=
+ariant-east-asian: normal; font-variant-alternates: normal; text-decoration=
+-line: underline; text-decoration-skip-ink: none; vertical-align: baseline;=
+ white-space: pre-wrap;">https://kodis23.wordpress.com</span></a></p>
+<br>
+<br>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Arial; background-color: trans=
+parent; font-weight: 700; font-variant-numeric: normal; font-variant-east-a=
+sian: normal; font-variant-alternates: normal; vertical-align: baseline; wh=
+ite-space: pre-wrap;">=3D=3D IMPORTANT
+ DATES (EXTENDED) =3D=3D</span></p>
+<br>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Arial; background-color: trans=
+parent; font-variant-numeric: normal; font-variant-east-asian: normal; font=
+-variant-alternates: normal; vertical-align: baseline; white-space: pre-wra=
+p;">Workshop paper submission deadline
+ (EXTENDED) : June 12, 2023 (AOE)</span></p>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Arial; background-color: trans=
+parent; font-variant-numeric: normal; font-variant-east-asian: normal; font=
+-variant-alternates: normal; vertical-align: baseline; white-space: pre-wra=
+p;">Workshop paper notification: July
+ 4, 2023 (AOE)</span></p>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Arial; background-color: trans=
+parent; font-variant-numeric: normal; font-variant-east-asian: normal; font=
+-variant-alternates: normal; vertical-align: baseline; white-space: pre-wra=
+p;">Workshop dates: September 2-4,
+ 2023</span></p>
+<br>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Arial; background-color: trans=
+parent; font-weight: 700; font-variant-numeric: normal; font-variant-east-a=
+sian: normal; font-variant-alternates: normal; vertical-align: baseline; wh=
+ite-space: pre-wrap;">=3D=3D AIMS AND
+ SCOPE =3D=3D</span></p>
+<br>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Arial; background-color: trans=
+parent; font-variant-numeric: normal; font-variant-east-asian: normal; font=
+-variant-alternates: normal; vertical-align: baseline; white-space: pre-wra=
+p;">KoDis intends to create a space
+ of confluence and a forum for discussion for researchers interested in kno=
+wledge diversity in a wide sense, including diversity in terms of diverging=
+ perspectives, different beliefs, semantic heterogeneity and others. The im=
+portance of understanding and handling
+ the different forms of diversity that manifest between knowledge formalisa=
+tions (ontologies, knowledge bases, or knowledge graphs) is widely recognis=
+ed and has led to the proposal of a variety of systems of representation, t=
+ackling overlapping aspects of this
+ phenomenon.</span></p>
+<br>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Arial; background-color: trans=
+parent; font-variant-numeric: normal; font-variant-east-asian: normal; font=
+-variant-alternates: normal; vertical-align: baseline; white-space: pre-wra=
+p;">Besides understanding the phenomenon
+ and considering formal models for the representation of knowledge diversit=
+y, we are interested in the variety of reasoning problems that emerge in th=
+is context, including reasoning with possibly conflicting sources, interpre=
+ting knowledge from alternative
+ viewpoints, consolidating the diversity as uncertainty, reasoning by means=
+ of argumentation between the sources and pursuing knowledge aggregations a=
+mong others. The following is a non-exhaustive list of topics of interest.<=
+/span></p>
+<br>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Arial; background-color: trans=
+parent; font-variant-numeric: normal; font-variant-east-asian: normal; font=
+-variant-alternates: normal; vertical-align: baseline; white-space: pre-wra=
+p;">- Philosophical and cognitive
+ analysis of knowledge diversity.</span></p>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Arial; background-color: trans=
+parent; font-variant-numeric: normal; font-variant-east-asian: normal; font=
+-variant-alternates: normal; vertical-align: baseline; white-space: pre-wra=
+p;">- Formal models for the representation
+ of knowledge diversity.</span></p>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Arial; background-color: trans=
+parent; font-variant-numeric: normal; font-variant-east-asian: normal; font=
+-variant-alternates: normal; vertical-align: baseline; white-space: pre-wra=
+p;">- Ontological approaches capturing
+ multiple perspectives and viewpoints.</span></p>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Arial; background-color: trans=
+parent; font-variant-numeric: normal; font-variant-east-asian: normal; font=
+-variant-alternates: normal; vertical-align: baseline; white-space: pre-wra=
+p;">- Context and concept formation
+ in such systems.</span></p>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Arial; background-color: trans=
+parent; font-variant-numeric: normal; font-variant-east-asian: normal; font=
+-variant-alternates: normal; vertical-align: baseline; white-space: pre-wra=
+p;">- Consistency (or not) in multi-perspective
+ systems; assessment and mitigation of inconsistencies.</span></p>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Arial; background-color: trans=
+parent; font-variant-numeric: normal; font-variant-east-asian: normal; font=
+-variant-alternates: normal; vertical-align: baseline; white-space: pre-wra=
+p;">- Communication between knowledge-diverse
+ systems.</span></p>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Arial; background-color: trans=
+parent; font-variant-numeric: normal; font-variant-east-asian: normal; font=
+-variant-alternates: normal; vertical-align: baseline; white-space: pre-wra=
+p;">- Argumentation-based approaches
+ for dealing with inconsistency</span></p>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Arial; background-color: trans=
+parent; font-variant-numeric: normal; font-variant-east-asian: normal; font=
+-variant-alternates: normal; vertical-align: baseline; white-space: pre-wra=
+p;">- Aggregation of diverse or inconsistent
+ knowledge; judgement aggregation.</span></p>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Arial; background-color: trans=
+parent; font-variant-numeric: normal; font-variant-east-asian: normal; font=
+-variant-alternates: normal; vertical-align: baseline; white-space: pre-wra=
+p;">- Uncertainty in the context of
+ knowledge diversity.</span></p>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Arial; background-color: trans=
+parent; font-variant-numeric: normal; font-variant-east-asian: normal; font=
+-variant-alternates: normal; vertical-align: baseline; white-space: pre-wra=
+p;">- Applications of formal models
+ of knowledge diversity.</span></p>
+<br>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Arial; background-color: trans=
+parent; font-weight: 700; font-variant-numeric: normal; font-variant-east-a=
+sian: normal; font-variant-alternates: normal; vertical-align: baseline; wh=
+ite-space: pre-wrap;">=3D=3D SUBMISSIONS
+ =3D=3D&nbsp;</span></p>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Arial; background-color: trans=
+parent; font-weight: 700; font-variant-numeric: normal; font-variant-east-a=
+sian: normal; font-variant-alternates: normal; vertical-align: baseline; wh=
+ite-space: pre-wrap;"><br>
+</span></p>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Arial; background-color: trans=
+parent; font-variant-numeric: normal; font-variant-east-asian: normal; font=
+-variant-alternates: normal; vertical-align: baseline; white-space: pre-wra=
+p;">We encourage three types of contributions:</span></p>
+<br>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Arial; background-color: trans=
+parent; font-variant-numeric: normal; font-variant-east-asian: normal; font=
+-variant-alternates: normal; vertical-align: baseline; white-space: pre-wra=
+p;">- Full research papers: Submitted
+ papers must not exceed 14 pages excluding the bibliography, and must inclu=
+de an abstract of no more than 300 words. Please, note that the minimum len=
+gth is 10 pages.</span></p>
+<br>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Arial; background-color: trans=
+parent; font-variant-numeric: normal; font-variant-east-asian: normal; font=
+-variant-alternates: normal; vertical-align: baseline; white-space: pre-wra=
+p;">- Short papers: Submitted papers
+ must not exceed 6 pages excluding the bibliography, and must include an ab=
+stract of no more than 300 words. Please, note that the minimum length is 5=
+ pages (including the bibliography).</span></p>
+<br>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Arial; background-color: trans=
+parent; font-variant-numeric: normal; font-variant-east-asian: normal; font=
+-variant-alternates: normal; vertical-align: baseline; white-space: pre-wra=
+p;">- Extended abstracts (presentation
+ only): should be 2-4 pages long including the bibliography. Please, note t=
+hat extended abstracts will not be included in the CEUR proceedings.</span>=
+</p>
+<br>
+<br>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Arial; background-color: trans=
+parent; font-variant-numeric: normal; font-variant-east-asian: normal; font=
+-variant-alternates: normal; vertical-align: baseline; white-space: pre-wra=
+p;">More information at
+</span><a href=3D"https://kodis23.wordpress.com/" style=3D"text-decoration-=
+line: none;"><span style=3D"font-size: 12pt; font-family: Arial; color: rgb=
+(17, 85, 204); background-color: transparent; font-variant-numeric: normal;=
+ font-variant-east-asian: normal; font-variant-alternates: normal; text-dec=
+oration-line: underline; text-decoration-skip-ink: none; vertical-align: ba=
+seline; white-space: pre-wrap;">https://kodis23.wordpress.com</span></a></p=
+>
+<br>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Arial; background-color: trans=
+parent; font-variant-numeric: normal; font-variant-east-asian: normal; font=
+-variant-alternates: normal; vertical-align: baseline; white-space: pre-wra=
+p;">&nbsp;</span></p>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Arial; background-color: trans=
+parent; font-weight: 700; font-variant-numeric: normal; font-variant-east-a=
+sian: normal; font-variant-alternates: normal; vertical-align: baseline; wh=
+ite-space: pre-wrap;">=3D=3D ORGANISATION
+ =3D=3D&nbsp;</span></p>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Arial; background-color: trans=
+parent; font-weight: 700; font-variant-numeric: normal; font-variant-east-a=
+sian: normal; font-variant-alternates: normal; vertical-align: baseline; wh=
+ite-space: pre-wrap;"><br>
+</span></p>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Calibri, sans-serif; backgroun=
+d-color: transparent; font-variant-numeric: normal; font-variant-east-asian=
+: normal; font-variant-alternates: normal; vertical-align: baseline; white-=
+space: pre-wrap;">Luc=EDa G=F3mez =C1lvarez
+ (TU Dresden, Germany) ---- contact: lucia.gomez_alvarez@tu-dresden.de</spa=
+n></p>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Calibri, sans-serif; backgroun=
+d-color: transparent; font-variant-numeric: normal; font-variant-east-asian=
+: normal; font-variant-alternates: normal; vertical-align: baseline; white-=
+space: pre-wrap;">Rafael Pe=F1aloza
+ (University of Milano-Bicocca, Italy)</span></p>
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align: justify;margin-top:0pt=
+;margin-bottom:0pt;">
+<span style=3D"font-size: 12pt; font-family: Calibri, sans-serif; backgroun=
+d-color: transparent; font-variant-numeric: normal; font-variant-east-asian=
+: normal; font-variant-alternates: normal; vertical-align: baseline; white-=
+space: pre-wrap;">Srdjan Vesic (CNRS,
+ France)</span></p>
+</span>
+<div id=3D"Signature">
+<div name=3D"divtagdefaultwrapper" style=3D"font-family:Calibri,Arial,Helve=
+tica,sans-serif; font-size:; margin:0">
+<div class=3D"" style=3D"color:rgb(33,33,33); font-family:&quot;Segoe UI&qu=
+ot;,&quot;Segoe WP&quot;,&quot;Segoe UI WPC&quot;,Tahoma,Arial,sans-serif; =
+font-size:15px; background-color:rgb(255,255,255)">
+_________________________</div>
+<div class=3D"" style=3D"color:rgb(33,33,33); font-family:&quot;Segoe UI&qu=
+ot;,&quot;Segoe WP&quot;,&quot;Segoe UI WPC&quot;,Tahoma,Arial,sans-serif; =
+font-size:15px; background-color:rgb(255,255,255)">
+Dr. Luc=EDa G=F3mez =C1lvarez<br class=3D"">
+Computational Logic Group<br class=3D"">
+Institute for Artificial Intelligence<br class=3D"">
+Faculty of Computer Science<br class=3D"">
+TU Dresden<br class=3D"">
+GERMANY</div>
+</div>
+</div>
+</div>
+</body>
+</html>
+
+--_000_53197dae600940e097caf433c0ae9b07tudresdende_--

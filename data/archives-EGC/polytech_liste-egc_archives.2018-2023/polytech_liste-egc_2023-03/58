@@ -1,0 +1,732 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (bouncesmtp2.u12.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id A95E314017D8
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed, 22 Mar 2023 09:57:39 +0100 (CET)
+Received: from mx1.localdomain (MX1.univ-nantes.fr [193.52.101.135])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id A58A765D5
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed, 22 Mar 2023 09:57:39 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.localdomain (Postfix) with ESMTP id 9D1BA120709
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 22 Mar 2023 09:57:39 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: YES
+X-Spam-Score: 6.408
+X-Spam-Level: ******
+X-Spam-Status: Yes, score=6.408 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	NO_RDNS=0.5, NO_RDNS2=0.01, RCVD_IN_SBL=2.596, RCVD_IN_WSFF=0.01,
+	SARE_RMML_Stock19=0.816, SARE_SPEC_REPLICA_OBFU=1.812,
+	SPF_HELO_NONE=0.001, SPF_NEUTRAL=0.652, T_KAM_HTML_FONT_INVALID=0.01,
+	UN_PHISHING_PW=0.1] autolearn=disabled
+X-CRM114-Status: UNSURE ( 4.6149 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=fst.rnu.tn
+Received: from mx1.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id cWaQyWazY0dG for <liste-egc@polytech.univ-nantes.fr>;
+	Wed, 22 Mar 2023 09:57:36 +0100 (CET)
+Received-SPF: Neutral (mailfrom) identity=mailfrom; client-ip=196.203.233.58; helo=cckmail30.outgw.tn; envelope-from=sadok.benyahia@fst.rnu.tn; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=quarantine dis=none) header.from=fst.rnu.tn
+Authentication-Results: dmarc.univ-nantes.fr; spf=fail smtp.mailfrom=sadok.benyahia@fst.rnu.tn
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (2048-bit key; unprotected) header.d=fst.rnu.tn header.i=@fst.rnu.tn header.b="EmNIBeOl";
+	dkim-atps=neutral
+X-Greylist: delayed 00:05:31 by SQLgrey-1.6.7
+Received: from cckmail30.outgw.tn (cckmail30.outgw.tn [196.203.233.58])
+	by mx1.localdomain (Postfix) with ESMTP id 3353D1206FD
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 22 Mar 2023 09:57:36 +0100 (CET)
+Received: from cckmail20.outgw.tn (cckmail20.outgw.tn [196.203.250.158])
+	by cckmail30.outgw.tn (Postfix) with ESMTP id A59C04C0DAD;
+	Wed, 22 Mar 2023 09:51:58 +0100 (CET)
+Received: from smtp4.rnu.tn (smtp4.rnu.tn [196.203.126.181])
+	by cckmail20.outgw.tn (Postfix) with ESMTP id 8FB02565A8C;
+	Wed, 22 Mar 2023 09:51:57 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by smtp4.rnu.tn (Postfix) with ESMTP id 517EB41B529E;
+	Wed, 22 Mar 2023 09:51:57 +0100 (CET)
+Received: from smtp4.rnu.tn ([127.0.0.1])
+	by localhost (zmmta4.cck.rnu.tn [127.0.0.1]) (amavisd-new, port 10032)
+	with ESMTP id 9gUgmDRJKqoM; Wed, 22 Mar 2023 09:51:55 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by smtp4.rnu.tn (Postfix) with ESMTP id AADBB41B52A6;
+	Wed, 22 Mar 2023 09:51:55 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.10.3 smtp4.rnu.tn AADBB41B52A6
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fst.rnu.tn;
+	s=0DAF915E-EDF1-11EA-B003-E59CAD874094; t=1679475115;
+	bh=hRqKQEFRErklGhkaZGRo4coe01xRf3ucSj0WpanqNdI=;
+	h=Date:From:To:Message-ID:MIME-Version;
+	b=EmNIBeOlSQ/SmC/2yZNXDYYHX9XLv1T6SVUm+wzbrJEerKfK6y5xxe1Su/UIyl5oM
+	 a1QPVkWNu9EvJKaLlbOhY2H07fBPkdIMzNzpoEpM8+j7GtQ2N7p90vV2yFABgncR0/
+	 +b9uhiyuJZ/josRlQmejUmCTiaPna7wjDGRkJLKJtMffI14Zbo74ptMCAb49CxwGlp
+	 0elI00APelL9q4Nf/ENIXo7lqkYf+RI2w17qyqXz0rAzl7vKS0ZET6nQGt9kL3UlGb
+	 7H8ASJ6Xt4tts3uSl4xviUmAHxkhV8JNSf8gAFQ2c+Dup0o+LOaEzHr2koHWeByBnW
+	 LZmxi/7wyfSNg==
+X-Virus-Scanned: amavisd-new at 
+Received: from smtp4.rnu.tn ([127.0.0.1])
+	by localhost (zmmta4.cck.rnu.tn [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id 9Ld3xjHElg2O; Wed, 22 Mar 2023 09:51:55 +0100 (CET)
+Received: from zmstore7.cck.rnu.tn (unknown [10.10.125.12])
+	by smtp4.rnu.tn (Postfix) with ESMTP id 565B241B529E;
+	Wed, 22 Mar 2023 09:51:55 +0100 (CET)
+Date: Wed, 22 Mar 2023 09:51:55 +0100 (CET)
+From: Ben Yahia Sadok <sadok.benyahia@fst.rnu.tn>
+To: fca-list <fca-list@cs.uni-kassel.de>, 
+	liste-egc <liste-egc@polytech.univ-nantes.fr>, 
+	bull-i3 <bull-i3@irit.fr>
+Cc: akram hakiri <akram.hakiri@gmail.com>, a.gokhale@vanderbilt.edu, 
+	nedra melloulinauwynck <nedra.melloulinauwynck@gmail.com>, 
+	esposito@unisa.it, salvatoreflavio.pileggi@uts.edu.au, 
+	Sadok ben <Sadok.ben@taltech.ee>, martinsimon88@gmail.com, 
+	abioni@taltech.ee, eneko.chipi@ensea.fr, 
+	Anne Laurent <anne.laurent@umontpellier.fr>
+Message-ID: <1397858000.2547636.1679475115186.JavaMail.zimbra@fst.rnu.tn>
+In-Reply-To: <1852065471.1402711.1675938978881.JavaMail.zimbra@fst.rnu.tn>
+References: <1240595894.1263553.1675407803699.JavaMail.zimbra@fst.rnu.tn> <1852065471.1402711.1675938978881.JavaMail.zimbra@fst.rnu.tn>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="=_77248a3b-0a79-410c-9c1c-5829dcf2214b"
+X-Originating-IP: [10.10.31.24]
+X-Mailer: Zimbra 8.8.15_GA_4481 (ZimbraWebClient - GC111 (Mac)/8.8.15_GA_4481)
+Thread-Topic: 2nd CfFP SI in FGCS (Q1 journal): Digital Twin for Future Networks and Emerging IoT Applications (DT4IoT)
+Thread-Index: dFjn27z9pwqo5v4BWajzIjd7j1gRv8CBwwNtgAXqcaM=
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] [SPAM] 2nd  CfFP SI in FGCS (Q1 journal): Digital Twin
+ for Future Networks and Emerging IoT Applications (DT4IoT)
+
+--=_77248a3b-0a79-410c-9c1c-5829dcf2214b
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+
+
+
+
+(Apologies for the multiple postings. Appreciate it if you could distribute=
+ this CFP in your network)=20
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=20
+
+CFP Special Issue=20
+
+* Digital Twin for Future Networks and Emerging IoT Applications (DT4IoT)*=
+=20
+
+Future Generation Computer Systems - Elsevier Journal (IF 7.307, Cite Score=
+ 18.7)=20
+
+https://www.sciencedirect.com/journal/future-generation-computer-systems/ab=
+out/call-for-papers=20
+
+
+Deadline for paper submission: 26 June 2023=20
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Guest Editors=20
+
+
+    * Akram Hakiri, University of Carthage, Tunisia. [ mailto:akram.hakiri@=
+issatm.rnu.tn | akram.hakiri@issatm.rnu.tn ]=20
+    * Sadok Ben Yahia, Technology University of Tallinn, Estonia. [ mailto:=
+sadok.ben@taltech.ee | sadok.ben@taltech.ee ]=20
+    * Aniruddha S Gokhale, Vanderbilt University, USA. [ mailto:a.gokhale@v=
+anderbilt.edu | a.gokhale@vanderbilt.edu ]=20
+    * Nedra Mellouli, university of Paris8, France. [ mailto:n.mellouli@iut=
+.univ-paris8.fr | n.mellouli@iut.univ-paris8.fr ]=20
+
+Motivation and Scope=20
+
+
+The forthcoming 5G networks are expected to bring instantaneous connectivit=
+y to billions of IoT devices that enable the digital transformation of indu=
+stry 4.0 for companies, customers, and investors. It is expected that 85 pe=
+rcent of IoT platforms will contain some form of digital twinning by 2030, =
+driving market growth projections from $3.1 billion today to a $48.2 billio=
+n increase in the next few years. Digital twins, which are virtual represen=
+tations of real-world physical entities, have received significant interest=
+ from both the research and industrial communities.=20
+
+The concept is used nowadays in various domains such as manufacturing, heal=
+thcare, smart cities, smart agriculture, telecommunication, and utilities t=
+o deliver the automation, performance, and cognitive insight required by ma=
+ny industries. Typically, virtual twin systems are generated and then synch=
+ronized using data flows in both directions between the real-world physical=
+ components and their virtual replica counterparts. Furthermore, a digital =
+twin can enable continuous prototyping and testing on-demand, without inter=
+ruption, assuring and self-optimizing the forthcoming 5G network and beyond=
+. It creates virtual replicas of IoT devices in various application scenari=
+os and maintains a device twin for every connected device.=20
+
+The main goal of this Special Issue is to address the challenges of develop=
+ing digital twins in future networks and present advanced and innovative to=
+ols, techniques, and algorithms for emerging IoT applications and services.=
+ Contributions addressing both theoretical and practical applications.=20
+
+Topics of interest include, but are not limited to:=20
+
+DT for Future Networks=20
+
+    * DT Architecture, Protocols, Open Interfaces, and Standard for Emergin=
+g Networks=20
+    * Emerging Cloud, Edge, Fog, and Embedded ML for Digital Twin=20
+    * DT for Software-Defined Vehicular Networks=20
+    * Middleware Technologies for Network Digital Twins=20
+    * Cloud-hosted Digital Twin frameworks for IoT systems=20
+
+
+    *=20
+Federated learning, TinyML, and Edge AI for Real-Time Control in DTs=20
+    * Intelligent Edge, Fog and Cognitive aspects of DTs beyond 5G=20
+    * 5G-Powered Digital Twin for Cellular and Mobile Network Infrastructur=
+e Monitoring=20
+    * Digital Twin for Network Slicing and Admission Control in 5G and O-RA=
+N=20
+    * Digital twins for 5G and O-RAN Network Infrastructure-Sharing=20
+    * AI/ML-Powered DT Virtualization for IoT Beyond 5G Networks=20
+    * Digital Twins for Visualization and Mobility Management in 5G/6G Netw=
+orks.=20
+    * DT-aware resource allocation and task scheduling in IoT networks=20
+    * DT-based efficient resource allocation in 5G/6G=20
+    * DTs for Secure Access Service Edge (SASE)=20
+    * Digital Twins for SD-WAN Consolidation=20
+    * Digital Twin for Intent-Based Networking=20
+    * DT-based Machine learning Closed-Control Loops beyond 5G networks=20
+    * DT for Zero Touch Network slicing, augmentation and operations=20
+    * Blockchain-based trust mechanism for Digital Twin=20
+    * Traceability supported by distributed ledgers for DT emerging Network=
+s=20
+    * DT-enabled Cybersecurity and Privacy-Preserving for 5G and beyond=20
+    * AI-Powered Digital Twins for Anomaly Detection and Localization=20
+    * Digital Twins for Complex Systems in Big Data and Cognitive Computing=
+ DT in Emerging IoT application domains:=20
+
+
+    *=20
+Smart Cities Digital Twin=20
+    * DT for Robotics, UAVs, Cellular-Connected Drones, and Self-Driving Ve=
+hicles=20
+    * DT in smart farming and Agri-Food Sector=20
+    * DT in Smart Grids and Integrated Energy Systems=20
+    * Digital Therapeutics, Digital Twin for Mixed/Augmented Reality in Hea=
+lthcare=20
+    * AI-Powered Models and DT for Personalized and Patient-Specific Health=
+care=20
+    * DT for Metaverse and utility Digitalization with AI and Augmented Rea=
+lity=20
+    * Application of DT in industry 3D Visualization Platforms=20
+    * Application of DT in Metaverse Industrial Product's Manufacturing=20
+    * Application of DT in Spinning Intelligent Factory=20
+    * Application of DT in multi-dimensional intelligent manufacturing spac=
+e=20
+    * DT in Zero Defect Manufacturing=20
+    * Recent Developments and Future Perspectives of DT in Smart Industrial=
+ Systems=20
+    * DT for Smart Production and Logistics and Supply Chain=20
+
+
+    *=20
+Application of the digital twin in multi-dimensional intelligent manufactur=
+ing space=20
+Important Dates=20
+
+
+    * Deadline for paper submission: June 26, 2023=20
+    * Latest acceptance deadline for all papers: August 30, 2023=20
+
+
+
+Manuscript Submission Instructions=20
+
+The FGCS=E2=80=99s submission system ( [ https://www.editorialmanager.com/F=
+GCS/default.aspx | https://www.editorialmanager.com/FGCS/default.aspx ] ) w=
+ill be open for submissions to our Special Issue from January 26, 2023. Whe=
+n submitting your manuscript, please select the article type VSI: SI on DT4=
+IoT .=20
+
+All submissions deemed suitable by the editors to be sent for peer review w=
+ill be reviewed by at least two independent reviewers. Once your manuscript=
+ is accepted, it will go into production to be published in the special iss=
+ue.=20
+
+
+
+--=_77248a3b-0a79-410c-9c1c-5829dcf2214b
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><body><div style=3D"font-family: arial, helvetica, sans-serif; font-s=
+ize: 12pt; color: #000000"><div><br></div><div>&nbsp;</div><div data-marker=
+=3D"__QUOTED_TEXT__"><div style=3D"font-family:'arial' , 'helvetica' , sans=
+-serif;font-size:12pt;color:#000000"><br><div><div style=3D"font-family:'ar=
+ial' , 'helvetica' , sans-serif;font-size:12pt;color:#000000"><p align=3D"c=
+enter" style=3D"color:rgb( 36 , 36 , 36 );font-style:normal;font-weight:400=
+;letter-spacing:normal;text-indent:0px;text-transform:none;white-space:norm=
+al;word-spacing:0px;background-color:rgb( 255 , 255 , 255 );font-size:12pt;=
+font-family:'times new roman' , serif;text-align:center;margin:0px"><span l=
+ang=3D"en-US" style=3D"border:0px;font-style:inherit;font-variant:inherit;f=
+ont-weight:inherit;font-size:10.5pt;line-height:inherit;font-family:'segoe =
+ui' , sans-serif;margin:0px;padding:0px;vertical-align:baseline;color:black=
+;background-color:white">(Apologies for the multiple postings. Appreciate i=
+t if you could distribute this CFP in your network)</span><span lang=3D"en-=
+US" style=3D"border:0px;font:inherit;margin:0px;padding:0px;vertical-align:=
+baseline;color:inherit"></span>&nbsp;</p><p align=3D"center" style=3D"font-=
+size:12pt;font-family:'times new roman' , serif;text-align:center;backgroun=
+d-color:white;margin:0px"><span lang=3D"en-US" style=3D"border:0px;font-sty=
+le:inherit;font-variant:inherit;font-weight:inherit;font-size:10.5pt;line-h=
+eight:inherit;font-family:'segoe ui' , sans-serif;margin:0px;padding:0px;ve=
+rtical-align:baseline;color:black">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D&nbsp;</span></p><p align=3D"center" style=3D"font-size:12pt;font-fam=
+ily:'times new roman' , serif;text-align:center;background-color:white;marg=
+in:0px"><span lang=3D"en-US" style=3D"border:0px;font-style:inherit;font-va=
+riant:inherit;font-weight:inherit;font-size:10.5pt;line-height:inherit;font=
+-family:'segoe ui' , sans-serif;margin:0px;padding:0px;vertical-align:basel=
+ine;color:black">CFP&nbsp;<span style=3D"border:0px;font:inherit;margin:0px=
+;padding:0px;vertical-align:baseline;color:inherit"><span style=3D"border:0=
+px;font:inherit;margin:0px;padding:0px;vertical-align:baseline;color:inheri=
+t;background-color:#fffec4">Special</span></span>&nbsp;<span style=3D"borde=
+r:0px;font:inherit;margin:0px;padding:0px;vertical-align:baseline;color:inh=
+erit"><span style=3D"border:0px;font:inherit;margin:0px;padding:0px;vertica=
+l-align:baseline;color:inherit;background-color:#fffec4">Issue</span></span=
+>&nbsp;</span></p><p align=3D"center" style=3D"font-size:12pt;font-family:'=
+times new roman' , serif;text-align:center;background-color:white;margin:0p=
+x"><span lang=3D"en-US" style=3D"border:0px;font-style:inherit;font-variant=
+:inherit;font-weight:inherit;font-size:14pt;line-height:inherit;font-family=
+:'segoe ui' , sans-serif;margin:0px;padding:0px;vertical-align:baseline;col=
+or:black">*</span><b><span lang=3D"en-US" style=3D"border:0px;font-style:in=
+herit;font-variant:inherit;font-weight:inherit;font-size:14pt;line-height:i=
+nherit;font-family:'arial' , sans-serif;margin:0px;padding:0px;vertical-ali=
+gn:baseline;color:#222222;background-color:white">&nbsp;</span><span lang=
+=3D"en-US" style=3D"border:0px;font-style:inherit;font-variant:inherit;font=
+-weight:inherit;font-size:15pt;line-height:inherit;font-family:'arial' , sa=
+ns-serif;margin:0px;padding:0px;vertical-align:baseline;color:#222222;backg=
+round-color:white">Digital Twin for Future Networks and Emerging IoT Applic=
+ations (DT4IoT)*</span></b><span lang=3D"en-US" style=3D"border:0px;font-st=
+yle:inherit;font-variant:inherit;font-weight:inherit;font-size:10.5pt;line-=
+height:inherit;font-family:'segoe ui' , sans-serif;margin:0px;padding:0px;v=
+ertical-align:baseline;color:black">&nbsp;</span></p><p align=3D"center" st=
+yle=3D"font-size:12pt;font-family:'times new roman' , serif;text-align:cent=
+er;background-color:white;margin:0px"><span lang=3D"en-US" style=3D"border:=
+0px;font-style:inherit;font-variant:inherit;font-weight:inherit;font-size:1=
+4pt;line-height:inherit;font-family:'arial' , sans-serif;margin:0px;padding=
+:0px;vertical-align:baseline;color:#202124;background-color:white">Future G=
+eneration Computer Systems</span><span lang=3D"en-US" style=3D"border:0px;f=
+ont-style:inherit;font-variant:inherit;font-weight:inherit;font-size:14pt;l=
+ine-height:inherit;font-family:'segoe ui' , sans-serif;margin:0px;padding:0=
+px;vertical-align:baseline;color:black">&nbsp;</span><span lang=3D"en-US" s=
+tyle=3D"border:0px;font-style:inherit;font-variant:inherit;font-weight:inhe=
+rit;font-size:14pt;line-height:inherit;font-family:'arial' , sans-serif;mar=
+gin:0px;padding:0px;vertical-align:baseline;color:#202124;background-color:=
+white">- Elsevier Journal (IF 7.307, Cite Score 18.7)&nbsp;</span></p><p al=
+ign=3D"center" style=3D"text-align:center;background-color:white;margin:0px=
+"><span lang=3D"en-US" style=3D"border:0px;line-height:inherit;margin:0px;p=
+adding:0px;vertical-align:baseline;background-color:white"><font color=3D"#=
+202124" face=3D"Arial, sans-serif"><span style=3D"font-size:18.6667px">http=
+s://www.sciencedirect.com/journal/future-generation-computer-systems/about/=
+call-for-papers</span></font><br></span></p><p align=3D"center" style=3D"fo=
+nt-size:12pt;font-family:'times new roman' , serif;text-align:center;backgr=
+ound-color:white;margin:0px"><span lang=3D"en-US" style=3D"border:0px;font-=
+style:inherit;font-variant:inherit;font-weight:inherit;font-size:14pt;line-=
+height:inherit;font-family:'arial' , sans-serif;margin:0px;padding:0px;vert=
+ical-align:baseline;color:#202124;background-color:white"><span style=3D"bo=
+rder:0px;font:inherit;margin:0px;padding:0px;vertical-align:baseline;color:=
+inherit">Deadline for paper submission: 26 June 2023&nbsp;</span></span></p=
+><p style=3D"font-size:12pt;font-family:'times new roman' , serif;backgroun=
+d-color:white;margin:0px;text-align:center"><span lang=3D"en-US" style=3D"b=
+order:0px;font-style:inherit;font-variant:inherit;font-weight:inherit;font-=
+size:10.5pt;line-height:inherit;font-family:'segoe ui' , sans-serif;margin:=
+0px;padding:0px;vertical-align:baseline;color:black">=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D&nbsp;</span></p><h3 style=3D"margin:14pt 0px 4pt;f=
+ont-size:14pt;font-family:'calibri' , sans-serif;font-weight:bold;line-heig=
+ht:28px"><a style=3D"border:0px;font:inherit;margin:0px;padding:0px;vertica=
+l-align:baseline"></a><span lang=3D"en-US" style=3D"border:0px;font-style:i=
+nherit;font-variant:inherit;font-weight:inherit;font-size:13pt;line-height:=
+inherit;font-family:'arial' , sans-serif;margin:0px;padding:0px;vertical-al=
+ign:baseline;color:#605d5e">Guest Editors&nbsp;</span></h3><ul style=3D"mar=
+gin-bottom:0px"><li><span lang=3D"en-US" style=3D"border:0px;font-style:inh=
+erit;font-variant:inherit;font-weight:inherit;font-size:inherit;line-height=
+:inherit;font-family:'arial' , sans-serif;margin:0px;padding:0px;vertical-a=
+lign:baseline;color:inherit">Akram Hakiri, University of Carthage, Tunisia.=
+&nbsp;</span><span lang=3D"en-US" style=3D"border:0px;font:inherit;margin:0=
+px;padding:0px;vertical-align:baseline;color:inherit"><a href=3D"mailto:akr=
+am.hakiri@issatm.rnu.tn" rel=3D"noopener noreferrer nofollow noopener noref=
+errer nofollow noopener noreferrer" style=3D"border:0px;font:inherit;margin=
+:0px;padding:0px;vertical-align:baseline" target=3D"_blank"><span style=3D"=
+border:0px;font-style:inherit;font-variant:inherit;font-weight:inherit;font=
+-size:inherit;line-height:inherit;font-family:'arial' , sans-serif;margin:0=
+px;padding:0px;vertical-align:baseline;color:#1155cc">akram.hakiri@issatm.r=
+nu.tn</span></a></span><span lang=3D"en-US" style=3D"border:0px;font-style:=
+inherit;font-variant:inherit;font-weight:inherit;font-size:inherit;line-hei=
+ght:inherit;font-family:'arial' , sans-serif;margin:0px;padding:0px;vertica=
+l-align:baseline;color:inherit">&nbsp;</span></li><li><span lang=3D"en-US" =
+style=3D"border:0px;font-style:inherit;font-variant:inherit;font-weight:inh=
+erit;font-size:inherit;line-height:inherit;font-family:'arial' , sans-serif=
+;margin:0px;padding:0px;vertical-align:baseline;color:inherit">Sadok Ben Ya=
+hia, Technology University of Tallinn, Estonia.&nbsp;</span><span lang=3D"e=
+n-US" style=3D"border:0px;font:inherit;margin:0px;padding:0px;vertical-alig=
+n:baseline;color:inherit"><a href=3D"mailto:sadok.ben@taltech.ee" rel=3D"no=
+opener noreferrer nofollow noopener noreferrer nofollow noopener noreferrer=
+" style=3D"border:0px;font:inherit;margin:0px;padding:0px;vertical-align:ba=
+seline" target=3D"_blank"><span style=3D"border:0px;font-style:inherit;font=
+-variant:inherit;font-weight:inherit;font-size:inherit;line-height:inherit;=
+font-family:'arial' , sans-serif;margin:0px;padding:0px;vertical-align:base=
+line;color:#1155cc">sadok.ben@taltech.ee</span></a></span><span lang=3D"en-=
+US" style=3D"border:0px;font-style:inherit;font-variant:inherit;font-weight=
+:inherit;font-size:inherit;line-height:inherit;font-family:'arial' , sans-s=
+erif;margin:0px;padding:0px;vertical-align:baseline;color:inherit">&nbsp;</=
+span></li><li><span lang=3D"en-US" style=3D"border:0px;font-style:inherit;f=
+ont-variant:inherit;font-weight:inherit;font-size:inherit;line-height:inher=
+it;font-family:'arial' , sans-serif;margin:0px;padding:0px;vertical-align:b=
+aseline;color:inherit">Aniruddha S Gokhale, Vanderbilt University, USA.&nbs=
+p;</span><span lang=3D"en-US" style=3D"border:0px;font:inherit;margin:0px;p=
+adding:0px;vertical-align:baseline;color:inherit"><a href=3D"mailto:a.gokha=
+le@vanderbilt.edu" rel=3D"noopener noreferrer nofollow noopener noreferrer =
+nofollow noopener noreferrer" style=3D"border:0px;font:inherit;margin:0px;p=
+adding:0px;vertical-align:baseline" target=3D"_blank"><span style=3D"border=
+:0px;font-style:inherit;font-variant:inherit;font-weight:inherit;font-size:=
+inherit;line-height:inherit;font-family:'arial' , sans-serif;margin:0px;pad=
+ding:0px;vertical-align:baseline;color:#1155cc">a.gokhale@vanderbilt.edu</s=
+pan></a></span><span lang=3D"en-US" style=3D"border:0px;font-style:inherit;=
+font-variant:inherit;font-weight:inherit;font-size:inherit;line-height:inhe=
+rit;font-family:'arial' , sans-serif;margin:0px;padding:0px;vertical-align:=
+baseline;color:inherit">&nbsp;&nbsp;</span></li><li><span lang=3D"en-US" st=
+yle=3D"border:0px;font-style:inherit;font-variant:inherit;font-weight:inher=
+it;font-size:inherit;line-height:inherit;font-family:'arial' , sans-serif;m=
+argin:0px;padding:0px;vertical-align:baseline;color:inherit">Nedra Mellouli=
+, university of Paris8, France.&nbsp;</span><span lang=3D"en-US" style=3D"b=
+order:0px;font:inherit;margin:0px;padding:0px;vertical-align:baseline;color=
+:inherit"><a href=3D"mailto:n.mellouli@iut.univ-paris8.fr" rel=3D"noopener =
+noreferrer nofollow noopener noreferrer nofollow noopener noreferrer" style=
+=3D"border:0px;font:inherit;margin:0px;padding:0px;vertical-align:baseline"=
+ target=3D"_blank"><span style=3D"border:0px;font-style:inherit;font-varian=
+t:inherit;font-weight:inherit;font-size:inherit;line-height:inherit;font-fa=
+mily:'arial' , sans-serif;margin:0px;padding:0px;vertical-align:baseline;co=
+lor:inherit">n.mellouli@iut.univ-paris8.fr</span></a></span><a style=3D"bor=
+der:0px;font:inherit;margin:0px;padding:0px;vertical-align:baseline"></a><s=
+pan lang=3D"en-US" style=3D"border:0px;font-style:inherit;font-variant:inhe=
+rit;font-weight:inherit;font-size:inherit;line-height:inherit;font-family:'=
+arial' , sans-serif;margin:0px;padding:0px;vertical-align:baseline;color:in=
+herit">&nbsp;</span></li></ul><h3 style=3D"margin:14pt 0px 4pt;font-size:14=
+pt;font-family:'calibri' , sans-serif;font-weight:bold;line-height:28px"><s=
+pan lang=3D"en-US" style=3D"border:0px;font-style:inherit;font-variant:inhe=
+rit;font-weight:inherit;font-size:13pt;line-height:inherit;font-family:'ari=
+al' , sans-serif;margin:0px;padding:0px;vertical-align:baseline;color:#605d=
+5e;background-color:white">Motivation and Scope&nbsp;</span></h3><p style=
+=3D"font-size:12pt;font-family:'times new roman' , serif;text-align:justify=
+;margin:0px"><span lang=3D"en-US" style=3D"border:0px;font-style:inherit;fo=
+nt-variant:inherit;font-weight:inherit;font-size:inherit;line-height:inheri=
+t;font-family:'arial' , sans-serif;margin:0px;padding:0px;vertical-align:ba=
+seline;color:#222222;background-color:white">The forthcoming 5G networks ar=
+e expected to bring instantaneous connectivity to billions of IoT devices t=
+hat enable the digital transformation of industry 4.0 for companies, custom=
+ers, and investors. It is expected that 85 percent of IoT platforms will co=
+ntain some form of digital twinning by 2030, driving market growth projecti=
+ons from $3.1 billion today to a $48.2 billion increase in the next few yea=
+rs. Digital twins, which are virtual representations of real-world physical=
+ entities, have received significant interest from both the research and in=
+dustrial communities.<span style=3D"border:0px;font:inherit;margin:0px;padd=
+ing:0px;vertical-align:baseline;color:inherit">&nbsp;&nbsp;</span>&nbsp;</s=
+pan></p><p style=3D"font-size:12pt;font-family:'times new roman' , serif;te=
+xt-align:justify;margin:0px"><span lang=3D"en-US" style=3D"border:0px;font-=
+style:inherit;font-variant:inherit;font-weight:inherit;font-size:inherit;li=
+ne-height:inherit;font-family:'arial' , sans-serif;margin:0px;padding:0px;v=
+ertical-align:baseline;color:#222222;background-color:white">The concept is=
+ used nowadays in various domains such as manufacturing, healthcare, smart =
+cities, smart agriculture, telecommunication, and utilities to deliver the =
+automation, performance, and cognitive insight required by many industries.=
+ Typically, virtual twin systems are generated and then synchronized using =
+data flows in both directions between the real-world physical components an=
+d their virtual replica counterparts. Furthermore, a digital twin can enabl=
+e continuous prototyping and testing on-demand, without interruption, assur=
+ing and self-optimizing the forthcoming 5G network and beyond. It creates v=
+irtual replicas of IoT devices in various application scenarios and maintai=
+ns a device twin for every connected device.&nbsp;</span></p><p style=3D"fo=
+nt-size:12pt;font-family:'times new roman' , serif;text-align:justify;margi=
+n:0px"><a style=3D"border:0px;font:inherit;margin:0px;padding:0px;vertical-=
+align:baseline"></a><span lang=3D"en-US" style=3D"border:0px;font-style:inh=
+erit;font-variant:inherit;font-weight:inherit;font-size:inherit;line-height=
+:inherit;font-family:'arial' , sans-serif;margin:0px;padding:0px;vertical-a=
+lign:baseline;color:#222222;background-color:white">The main goal of this S=
+pecial Issue is to address the challenges of developing digital twins in fu=
+ture networks and present advanced and innovative tools, techniques, and al=
+gorithms for emerging IoT applications and services. Contributions addressi=
+ng both theoretical and practical applications.&nbsp;</span></p><p style=3D=
+"font-size:12pt;font-family:'times new roman' , serif;margin:0px"><span lan=
+g=3D"en-US" style=3D"border:0px;font-style:inherit;font-variant:inherit;fon=
+t-weight:inherit;font-size:inherit;line-height:inherit;font-family:'arial' =
+, sans-serif;margin:0px;padding:0px;vertical-align:baseline;color:#222222">=
+Topics of interest include, but are not limited to:&nbsp;</span></p><p styl=
+e=3D"font-size:12pt;font-family:'times new roman' , serif;margin:0px"><b><s=
+pan lang=3D"en-US" style=3D"border:0px;font-style:inherit;font-variant:inhe=
+rit;font-weight:inherit;font-size:inherit;line-height:inherit;font-family:'=
+arial' , sans-serif;margin:0px;padding:0px;vertical-align:baseline;color:#2=
+22222;background-color:white">DT for Future Networks&nbsp;</span></b><span =
+lang=3D"en-US" style=3D"border:0px;font-style:inherit;font-variant:inherit;=
+font-weight:inherit;font-size:inherit;line-height:inherit;font-family:'aria=
+l' , sans-serif;margin:0px;padding:0px;vertical-align:baseline;color:#22222=
+2;background-color:white"><span style=3D"border:0px;font:inherit;margin:0px=
+;padding:0px;vertical-align:baseline;color:inherit">&nbsp;</span>&nbsp;</sp=
+an></p><ul style=3D"margin-bottom:0px"><li><span lang=3D"en-US" style=3D"bo=
+rder:0px;font-style:inherit;font-variant:inherit;font-weight:inherit;font-s=
+ize:inherit;line-height:inherit;font-family:'arial' , sans-serif;margin:0px=
+;padding:0px;vertical-align:baseline;color:#222222;background-color:white">=
+DT Architecture, Protocols, Open Interfaces, and Standard for Emerging Netw=
+orks&nbsp;</span></li><li><span lang=3D"en-US" style=3D"border:0px;font-sty=
+le:inherit;font-variant:inherit;font-weight:inherit;font-size:inherit;line-=
+height:inherit;font-family:'arial' , sans-serif;margin:0px;padding:0px;vert=
+ical-align:baseline;color:#222222;background-color:white">Emerging Cloud, E=
+dge, Fog, and Embedded ML for Digital Twin&nbsp;</span></li><li><span lang=
+=3D"en-US" style=3D"border:0px;font-style:inherit;font-variant:inherit;font=
+-weight:inherit;font-size:inherit;line-height:inherit;font-family:'arial' ,=
+ sans-serif;margin:0px;padding:0px;vertical-align:baseline;color:#222222;ba=
+ckground-color:white">DT for Software-Defined Vehicular Networks&nbsp;</spa=
+n></li><li><span lang=3D"en-US" style=3D"border:0px;font-style:inherit;font=
+-variant:inherit;font-weight:inherit;font-size:inherit;line-height:inherit;=
+font-family:'arial' , sans-serif;margin:0px;padding:0px;vertical-align:base=
+line;color:#222222;background-color:white">Middleware Technologies for Netw=
+ork Digital Twins&nbsp;</span></li><li><span lang=3D"en-US" style=3D"border=
+:0px;font-style:inherit;font-variant:inherit;font-weight:inherit;font-size:=
+inherit;line-height:inherit;font-family:'arial' , sans-serif;margin:0px;pad=
+ding:0px;vertical-align:baseline;color:#222222;background-color:white">Clou=
+d-hosted Digital Twin frameworks for IoT systems&nbsp;</span></li></ul><ul =
+style=3D"margin-bottom:0px"><li><span lang=3D"en-US" style=3D"border:0px;fo=
+nt-style:inherit;font-variant:inherit;font-weight:inherit;font-size:inherit=
+;line-height:inherit;font-family:'arial' , sans-serif;margin:0px;padding:0p=
+x;vertical-align:baseline;color:#222222;background-color:white">Federated l=
+earning, TinyML, and Edge AI for Real-Time Control in DTs&nbsp;</span></li>=
+<li><span lang=3D"en-US" style=3D"border:0px;font-style:inherit;font-varian=
+t:inherit;font-weight:inherit;font-size:inherit;line-height:inherit;font-fa=
+mily:'arial' , sans-serif;margin:0px;padding:0px;vertical-align:baseline;co=
+lor:#222222;background-color:white">Intelligent Edge, Fog and Cognitive asp=
+ects of DTs beyond 5G&nbsp;</span></li><li><span lang=3D"en-US" style=3D"bo=
+rder:0px;font-style:inherit;font-variant:inherit;font-weight:inherit;font-s=
+ize:inherit;line-height:inherit;font-family:'arial' , sans-serif;margin:0px=
+;padding:0px;vertical-align:baseline;color:#222222;background-color:white">=
+5G-Powered Digital Twin for Cellular and Mobile Network Infrastructure Moni=
+toring&nbsp;</span></li><li><span lang=3D"en-US" style=3D"border:0px;font-s=
+tyle:inherit;font-variant:inherit;font-weight:inherit;font-size:inherit;lin=
+e-height:inherit;font-family:'arial' , sans-serif;margin:0px;padding:0px;ve=
+rtical-align:baseline;color:#222222;background-color:white">Digital Twin fo=
+r Network Slicing and Admission Control in 5G and O-RAN&nbsp;</span></li><l=
+i><span lang=3D"en-US" style=3D"border:0px;font-style:inherit;font-variant:=
+inherit;font-weight:inherit;font-size:inherit;line-height:inherit;font-fami=
+ly:'arial' , sans-serif;margin:0px;padding:0px;vertical-align:baseline;colo=
+r:#222222;background-color:white">Digital twins for 5G and O-RAN Network In=
+frastructure-Sharing&nbsp;</span></li><li><span lang=3D"en-US" style=3D"bor=
+der:0px;font-style:inherit;font-variant:inherit;font-weight:inherit;font-si=
+ze:inherit;line-height:inherit;font-family:'arial' , sans-serif;margin:0px;=
+padding:0px;vertical-align:baseline;color:#222222;background-color:white">A=
+I/ML-Powered DT Virtualization for IoT Beyond 5G Networks&nbsp;</span></li>=
+<li><span lang=3D"en-US" style=3D"border:0px;font-style:inherit;font-varian=
+t:inherit;font-weight:inherit;font-size:inherit;line-height:inherit;font-fa=
+mily:'arial' , sans-serif;margin:0px;padding:0px;vertical-align:baseline;co=
+lor:#222222;background-color:white">Digital Twins for Visualization and Mob=
+ility Management in 5G/6G Networks.&nbsp;</span></li><li><span lang=3D"en-U=
+S" style=3D"border:0px;font-style:inherit;font-variant:inherit;font-weight:=
+inherit;font-size:inherit;line-height:inherit;font-family:'arial' , sans-se=
+rif;margin:0px;padding:0px;vertical-align:baseline;color:#222222;background=
+-color:white">DT-aware resource allocation and task scheduling in IoT netwo=
+rks&nbsp;</span></li><li><span lang=3D"en-US" style=3D"border:0px;font-styl=
+e:inherit;font-variant:inherit;font-weight:inherit;font-size:inherit;line-h=
+eight:inherit;font-family:'arial' , sans-serif;margin:0px;padding:0px;verti=
+cal-align:baseline;color:#222222;background-color:white">DT-based efficient=
+ resource allocation in 5G/6G&nbsp;</span></li><li><span lang=3D"en-US" sty=
+le=3D"border:0px;font-style:inherit;font-variant:inherit;font-weight:inheri=
+t;font-size:inherit;line-height:inherit;font-family:'arial' , sans-serif;ma=
+rgin:0px;padding:0px;vertical-align:baseline;color:#222222;background-color=
+:white">DTs for Secure Access Service Edge (SASE) &nbsp;</span></li><li><sp=
+an lang=3D"en-US" style=3D"border:0px;font-style:inherit;font-variant:inher=
+it;font-weight:inherit;font-size:inherit;line-height:inherit;font-family:'a=
+rial' , sans-serif;margin:0px;padding:0px;vertical-align:baseline;color:#22=
+2222;background-color:white">Digital Twins for SD-WAN Consolidation<span st=
+yle=3D"border:0px;font:inherit;margin:0px;padding:0px;vertical-align:baseli=
+ne;color:inherit">&nbsp;&nbsp;</span>&nbsp;</span></li><li><span lang=3D"en=
+-US" style=3D"border:0px;font-style:inherit;font-variant:inherit;font-weigh=
+t:inherit;font-size:inherit;line-height:inherit;font-family:'arial' , sans-=
+serif;margin:0px;padding:0px;vertical-align:baseline;color:#222222;backgrou=
+nd-color:white">Digital Twin for Intent-Based Networking&nbsp;</span></li><=
+li><span lang=3D"en-US" style=3D"border:0px;font-style:inherit;font-variant=
+:inherit;font-weight:inherit;font-size:inherit;line-height:inherit;font-fam=
+ily:'arial' , sans-serif;margin:0px;padding:0px;vertical-align:baseline;col=
+or:#222222;background-color:white">DT-based Machine learning Closed-Control=
+ Loops beyond 5G networks&nbsp;</span></li><li><span lang=3D"en-US" style=
+=3D"border:0px;font-style:inherit;font-variant:inherit;font-weight:inherit;=
+font-size:inherit;line-height:inherit;font-family:'arial' , sans-serif;marg=
+in:0px;padding:0px;vertical-align:baseline;color:#222222;background-color:w=
+hite">DT for Zero Touch Network slicing, augmentation and operations &nbsp;=
+</span></li><li><span lang=3D"en-US" style=3D"border:0px;font-style:inherit=
+;font-variant:inherit;font-weight:inherit;font-size:inherit;line-height:inh=
+erit;font-family:'arial' , sans-serif;margin:0px;padding:0px;vertical-align=
+:baseline;color:#222222;background-color:white">Blockchain-based trust mech=
+anism for Digital Twin&nbsp;</span></li><li><span lang=3D"en-US" style=3D"b=
+order:0px;font-style:inherit;font-variant:inherit;font-weight:inherit;font-=
+size:inherit;line-height:inherit;font-family:'arial' , sans-serif;margin:0p=
+x;padding:0px;vertical-align:baseline;color:#222222;background-color:white"=
+>Traceability supported by distributed ledgers for DT emerging Networks&nbs=
+p;</span></li><li><span lang=3D"en-US" style=3D"border:0px;font-style:inher=
+it;font-variant:inherit;font-weight:inherit;font-size:inherit;line-height:i=
+nherit;font-family:'arial' , sans-serif;margin:0px;padding:0px;vertical-ali=
+gn:baseline;color:#222222;background-color:white">DT-enabled Cybersecurity =
+and Privacy-Preserving for 5G and beyond &nbsp;</span></li><li><span lang=
+=3D"en-US" style=3D"border:0px;font-style:inherit;font-variant:inherit;font=
+-weight:inherit;font-size:inherit;line-height:inherit;font-family:'arial' ,=
+ sans-serif;margin:0px;padding:0px;vertical-align:baseline;color:#222222;ba=
+ckground-color:white">AI-Powered Digital Twins for Anomaly Detection and Lo=
+calization&nbsp;</span></li><li><span lang=3D"en-US" style=3D"border:0px;fo=
+nt-style:inherit;font-variant:inherit;font-weight:inherit;font-size:inherit=
+;line-height:inherit;font-family:'arial' , sans-serif;margin:0px;padding:0p=
+x;vertical-align:baseline;color:#222222;background-color:white">Digital Twi=
+ns for Complex Systems in Big Data and Cognitive Computing</span><span lang=
+=3D"en-US" style=3D"border:0px;font-style:inherit;font-variant:inherit;font=
+-weight:inherit;font-size:inherit;line-height:inherit;font-family:'arial' ,=
+ sans-serif;margin:0px;padding:0px;vertical-align:baseline;color:inherit">&=
+nbsp;</span><br><br><b><span lang=3D"en-US" style=3D"border:0px;font-style:=
+inherit;font-variant:inherit;font-weight:inherit;font-size:inherit;line-hei=
+ght:inherit;font-family:'arial' , sans-serif;margin:0px;padding:0px;vertica=
+l-align:baseline;color:#222222;background-color:white">DT in Emerging IoT a=
+pplication domains:&nbsp;</span></b><span lang=3D"en-US" style=3D"border:0p=
+x;font-style:inherit;font-variant:inherit;font-weight:inherit;font-size:inh=
+erit;line-height:inherit;font-family:'arial' , sans-serif;margin:0px;paddin=
+g:0px;vertical-align:baseline;color:#222222;background-color:white"><span s=
+tyle=3D"border:0px;font:inherit;margin:0px;padding:0px;vertical-align:basel=
+ine;color:inherit">&nbsp;</span>&nbsp;</span></li></ul><ul style=3D"margin-=
+bottom:0px"><li><span lang=3D"en-US" style=3D"border:0px;font-style:inherit=
+;font-variant:inherit;font-weight:inherit;font-size:inherit;line-height:inh=
+erit;font-family:'arial' , sans-serif;margin:0px;padding:0px;vertical-align=
+:baseline;color:#222222;background-color:white">Smart Cities Digital Twin &=
+nbsp;</span></li><li><span lang=3D"en-US" style=3D"border:0px;font-style:in=
+herit;font-variant:inherit;font-weight:inherit;font-size:inherit;line-heigh=
+t:inherit;font-family:'arial' , sans-serif;margin:0px;padding:0px;vertical-=
+align:baseline;color:inherit">DT for&nbsp;<span style=3D"border:0px;font:in=
+herit;margin:0px;padding:0px;vertical-align:baseline;color:#222222;backgrou=
+nd-color:white">Robotics, UAVs, Cellular-Connected Drones, and Self-Driving=
+ Vehicles&nbsp;</span>&nbsp;</span></li><li><span lang=3D"en-US" style=3D"b=
+order:0px;font-style:inherit;font-variant:inherit;font-weight:inherit;font-=
+size:inherit;line-height:inherit;font-family:'arial' , sans-serif;margin:0p=
+x;padding:0px;vertical-align:baseline;color:#222222;background-color:white"=
+>DT in smart farming and Agri-Food Sector&nbsp;</span></li><li><span lang=
+=3D"en-US" style=3D"border:0px;font-style:inherit;font-variant:inherit;font=
+-weight:inherit;font-size:inherit;line-height:inherit;font-family:'arial' ,=
+ sans-serif;margin:0px;padding:0px;vertical-align:baseline;color:#222222;ba=
+ckground-color:white">DT in Smart Grids and Integrated Energy Systems &nbsp=
+;</span></li><li><span lang=3D"en-US" style=3D"border:0px;font-style:inheri=
+t;font-variant:inherit;font-weight:inherit;font-size:inherit;line-height:in=
+herit;font-family:'arial' , sans-serif;margin:0px;padding:0px;vertical-alig=
+n:baseline;color:#222222;background-color:white">Digital Therapeutics, Digi=
+tal Twin for Mixed/Augmented Reality in Healthcare&nbsp;</span></li><li><sp=
+an lang=3D"en-US" style=3D"border:0px;font-style:inherit;font-variant:inher=
+it;font-weight:inherit;font-size:inherit;line-height:inherit;font-family:'a=
+rial' , sans-serif;margin:0px;padding:0px;vertical-align:baseline;color:#22=
+2222;background-color:white">AI-Powered Models and DT for Personalized and =
+Patient-Specific Healthcare&nbsp;</span></li><li><span lang=3D"en-US" style=
+=3D"border:0px;font-style:inherit;font-variant:inherit;font-weight:inherit;=
+font-size:inherit;line-height:inherit;font-family:'arial' , sans-serif;marg=
+in:0px;padding:0px;vertical-align:baseline;color:#222222;background-color:w=
+hite">DT for Metaverse and utility Digitalization with AI and Augmented Rea=
+lity &nbsp;</span></li><li><span lang=3D"en-US" style=3D"border:0px;font-st=
+yle:inherit;font-variant:inherit;font-weight:inherit;font-size:inherit;line=
+-height:inherit;font-family:'arial' , sans-serif;margin:0px;padding:0px;ver=
+tical-align:baseline;color:#222222;background-color:white">Application of D=
+T in industry 3D Visualization Platforms&nbsp;</span></li><li><span lang=3D=
+"en-US" style=3D"border:0px;font-style:inherit;font-variant:inherit;font-we=
+ight:inherit;font-size:inherit;line-height:inherit;font-family:'arial' , sa=
+ns-serif;margin:0px;padding:0px;vertical-align:baseline;color:inherit">Appl=
+ication of DT in Metaverse Industrial Product's Manufacturing&nbsp;</span><=
+/li><li><span lang=3D"en-US" style=3D"border:0px;font-style:inherit;font-va=
+riant:inherit;font-weight:inherit;font-size:inherit;line-height:inherit;fon=
+t-family:'arial' , sans-serif;margin:0px;padding:0px;vertical-align:baselin=
+e;color:inherit">Application of DT in Spinning Intelligent Factory&nbsp;</s=
+pan></li><li><span lang=3D"en-US" style=3D"border:0px;font-style:inherit;fo=
+nt-variant:inherit;font-weight:inherit;font-size:inherit;line-height:inheri=
+t;font-family:'arial' , sans-serif;margin:0px;padding:0px;vertical-align:ba=
+seline;color:inherit">Application of DT in multi-dimensional intelligent ma=
+nufacturing space<span style=3D"border:0px;font:inherit;margin:0px;padding:=
+0px;vertical-align:baseline;color:#222222;background-color:white">&nbsp;</s=
+pan></span></li><li><span lang=3D"en-US" style=3D"border:0px;font-style:inh=
+erit;font-variant:inherit;font-weight:inherit;font-size:inherit;line-height=
+:inherit;font-family:'arial' , sans-serif;margin:0px;padding:0px;vertical-a=
+lign:baseline;color:inherit">DT in Zero Defect Manufacturing&nbsp;</span></=
+li><li><span lang=3D"en-US" style=3D"border:0px;font-style:inherit;font-var=
+iant:inherit;font-weight:inherit;font-size:inherit;line-height:inherit;font=
+-family:'arial' , sans-serif;margin:0px;padding:0px;vertical-align:baseline=
+;color:#222222;background-color:white">Recent Developments and Future Persp=
+ectives of DT in Smart Industrial Systems&nbsp;</span></li><li><span lang=
+=3D"en-US" style=3D"border:0px;font-style:inherit;font-variant:inherit;font=
+-weight:inherit;font-size:inherit;line-height:inherit;font-family:'arial' ,=
+ sans-serif;margin:0px;padding:0px;vertical-align:baseline;color:#222222;ba=
+ckground-color:white">DT for Smart Production and Logistics and Supply Chai=
+n&nbsp;</span></li></ul><ul style=3D"margin-bottom:0px"><li><span lang=3D"e=
+n-US" style=3D"border:0px;font-style:inherit;font-variant:inherit;font-weig=
+ht:inherit;font-size:inherit;line-height:inherit;font-family:'arial' , sans=
+-serif;margin:0px;padding:0px;vertical-align:baseline;color:#222222;backgro=
+und-color:white">Application of the digital twin in multi-dimensional intel=
+ligent manufacturing space&nbsp;</span></li></ul><h3 style=3D"margin:14pt 0=
+px 4pt;font-size:14pt;font-family:'calibri' , sans-serif;font-weight:bold;b=
+ackground-color:white"><a style=3D"border:0px;font:inherit;margin:0px;paddi=
+ng:0px;vertical-align:baseline"></a><span lang=3D"en-US" style=3D"border:0p=
+x;font-style:inherit;font-variant:inherit;font-weight:inherit;font-size:13p=
+t;line-height:inherit;font-family:'arial' , sans-serif;margin:0px;padding:0=
+px;vertical-align:baseline;color:#605d5e">Important Dates&nbsp;</span></h3>=
+<ul style=3D"margin-bottom:0px"><li style=3D"color:#222222;font-family:'ari=
+al' , sans-serif"><span lang=3D"en-US" style=3D"border:0px;font-style:inher=
+it;font-variant:inherit;font-weight:inherit;font-size:inherit;line-height:i=
+nherit;font-family:'arial' , sans-serif;margin:0px;padding:0px;vertical-ali=
+gn:baseline;color:#222222;background-color:white">Deadline for paper submis=
+sion: June 26, 2023 &nbsp;</span></li><li style=3D"color:#222222;font-famil=
+y:'arial' , sans-serif"><span lang=3D"en-US" style=3D"border:0px;font-style=
+:inherit;font-variant:inherit;font-weight:inherit;font-size:inherit;line-he=
+ight:inherit;font-family:'arial' , sans-serif;margin:0px;padding:0px;vertic=
+al-align:baseline;color:#222222;background-color:white">Latest acceptance d=
+eadline for all papers: August 30, 2023&nbsp;</span><div style=3D"border:0p=
+x;font-style:inherit;font-variant:inherit;font-weight:inherit;font-size:inh=
+erit;line-height:inherit;font-family:'arial' , sans-serif;margin:0px;paddin=
+g:0px;vertical-align:baseline;color:#222222"><span lang=3D"en-US" style=3D"=
+border:0px;font-style:inherit;font-variant:inherit;font-weight:inherit;font=
+-size:inherit;line-height:inherit;font-family:'arial' , sans-serif;margin:0=
+px;padding:0px;vertical-align:baseline;color:#222222;background-color:white=
+"><br></span></div></li></ul><p style=3D"font-size:12pt;font-family:'times =
+new roman' , serif;margin:0px"><a style=3D"border:0px;font:inherit;margin:0=
+px;padding:0px;vertical-align:baseline"></a><b><u><span lang=3D"en-US" styl=
+e=3D"border:0px;font-style:inherit;font-variant:inherit;font-weight:inherit=
+;font-size:13pt;line-height:inherit;font-family:'arial' , sans-serif;margin=
+:0px;padding:0px;vertical-align:baseline;color:#605d5e">Manuscript Submissi=
+on Instructions &nbsp;</span></u></b></p><p style=3D"font-size:12pt;font-fa=
+mily:'times new roman' , serif;margin:0px"><span lang=3D"en-US" style=3D"bo=
+rder:0px;font-style:inherit;font-variant:inherit;font-weight:inherit;font-s=
+ize:inherit;line-height:inherit;font-family:'arial' , sans-serif;margin:0px=
+;padding:0px;vertical-align:baseline;color:#2e2e2e">The FGCS=E2=80=99s subm=
+ission system (</span><span lang=3D"en-US" style=3D"border:0px;font:inherit=
+;margin:0px;padding:0px;vertical-align:baseline;color:inherit"><a href=3D"h=
+ttps://www.editorialmanager.com/FGCS/default.aspx" rel=3D"noopener noreferr=
+er nofollow noopener noreferrer nofollow noopener noreferrer" style=3D"bord=
+er:0px;font:inherit;margin:0px;padding:0px;vertical-align:baseline" target=
+=3D"_blank"><span style=3D"border:0px;font-style:inherit;font-variant:inher=
+it;font-weight:inherit;font-size:inherit;line-height:inherit;font-family:'a=
+rial' , sans-serif;margin:0px;padding:0px;vertical-align:baseline;color:inh=
+erit">https://www.editorialmanager.com/FGCS/default.aspx</span></a></span><=
+span lang=3D"en-US" style=3D"border:0px;font-style:inherit;font-variant:inh=
+erit;font-weight:inherit;font-size:inherit;line-height:inherit;font-family:=
+'arial' , sans-serif;margin:0px;padding:0px;vertical-align:baseline;color:#=
+2e2e2e">) will be open for submissions to our Special Issue from January 26=
+, 2023. When submitting your manuscript, please select the article type <st=
+rong><span style=3D"border:0px;font:inherit;margin:0px;padding:0px;vertical=
+-align:baseline;color:inherit">VSI: SI on DT4IoT</span></strong>.&nbsp;</sp=
+an></p><p style=3D"font-size:12pt;font-family:'times new roman' , serif;mar=
+gin:0px"><span lang=3D"en-US" style=3D"border:0px;font-style:inherit;font-v=
+ariant:inherit;font-weight:inherit;font-size:inherit;line-height:inherit;fo=
+nt-family:'arial' , sans-serif;margin:0px;padding:0px;vertical-align:baseli=
+ne;color:#2e2e2e">All submissions deemed suitable by the editors to be sent=
+ for peer review will be reviewed by at least two independent reviewers. On=
+ce your manuscript is accepted, it will go into production to be published =
+in the special issue.&nbsp;</span></p></div><br></div></div><br></div><div>=
+<quillbot-extension-portal></quillbot-extension-portal></div></div></body><=
+/html>
+--=_77248a3b-0a79-410c-9c1c-5829dcf2214b--
+
+
+

@@ -1,0 +1,573 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (BounceSMTP2.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 76FDA14017DE
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Sat,  2 Apr 2022 18:49:23 +0200 (CEST)
+Received: from mx3.d101.univ-nantes.fr (MX3.univ-nantes.fr [193.52.101.137])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id 73C9B5FB3
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Sat,  2 Apr 2022 18:49:23 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTP id 68392207BF
+	for <liste-egc@polytech.univ-nantes.fr>; Sat,  2 Apr 2022 18:49:23 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: YES
+X-Spam-Score: 10.651
+X-Spam-Level: **********
+X-Spam-Status: Yes, score=10.651 tagged_above=-1000 required=5
+	tests=[CRM114_SPAM=5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+	FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+	FREEMAIL_REPLYTO_END_DIGIT=0.25, HTML_MESSAGE=0.001,
+	HTTPS_HTTP_MISMATCH=0.1, MALFORMED_FREEMAIL=1.776,
+	MISSING_HEADERS=1.207, MR_NOT_ATTRIBUTED_IP=0.2,
+	RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+	RCVD_IN_WSFF=0.01, REPLYTO_WITHOUT_TO_CC=1.946, SPF_HELO_NONE=0.001,
+	SPF_PASS=-0.001, T_KAM_HTML_FONT_INVALID=0.01, UN_PHISHING_PW=0.1,
+	URIBL_BLOCKED=0.001] autolearn=disabled
+X-CRM114-Status: SPAM ( -7.5740 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=yahoo.fr
+Received: from mx3.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id lNkvdEkLvYU6 for <liste-egc@polytech.univ-nantes.fr>;
+	Sat,  2 Apr 2022 18:49:20 +0200 (CEST)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from sonic314-19.consmr.mail.ir2.yahoo.com (sonic314-19.consmr.mail.ir2.yahoo.com [77.238.177.145])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTPS id D5ACD20907
+	for <liste-egc@polytech.univ-nantes.fr>; Sat,  2 Apr 2022 18:49:20 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.fr; s=s2048; t=1648918160; bh=Bk6ZGrZqteBIaUdb7OVFX0MX9gECEbUnFaXfnZobFh0=; h=Date:From:Reply-To:Subject:References:From:Subject:Reply-To; b=EhVj7AmHpiX3p49G+S2pUcdrxOOb6CbjgM4MKTf9qfOPOrrBn+imjQSM/aqwo0kHoO5kdS3ZDaFkbKi+j6si71RBwnwdn+3oFJP6/NYqvATxKskTjMf82x7PXnkI4/A90Wy0y5z7X8VeI0kGMbNAA9XzN1L/1Aq+QsFuSio2Q1dfH0sQLPcLxdyi0AcXTLlZUzytoXybIJs3d0ZaVvhaWSQsMnX14ejNGchLKhEDPHjM++5NqfabzfzPWwaYGcvsWE9GKf1qbecKjeWDZ7zMyAk6/kmhlyG+SFCSWQ+aQqZhGWmOP1mBcA68PN+Ek+BiSnQzfqNCk0P9uxTgRn8h0A==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1648918160; bh=srapaXRjHHF2onWS+b9SjU9oovJ4/+7utt6BwHkPPbT=; h=X-Sonic-MF:Date:From:Subject:From:Subject; b=B+aw+XS+b7oWLhV0jqgc/5UpfBQLmdknnM0GlMaWP6nxB8029n5tVdV+8JeExfqcHJWgEJmDSBcWZiQMBVvvzDhW5MHYXTBp71IsEkr/3B/SlTAodNqU1kXbaR+k8J18HrI30NsO6AjhRsCmNIs+qI2KToFCB0klOmubeJywZ2N/ZQkNToV47bQMEjX3526qknxEplogM/WzIrh9OEyOk/52PbEvdb1LqxmpbJsUe6kDy7uLLjjGyjwow1zSNRpIVVug0MFe8Z22rZLJwUOr95rvnYObVLkshwSu36eDCqgI1m5c9Yc13sbvUehjp2K4+kJ/5MipU/LniQ3ZY6P93g==
+X-YMail-OSG: EtBUI4wVM1mhheiO3ZU0Yx0XCbhw4BTtrXgBHGcHvVyw4vWdR_L_XiMedhMCz07
+ A7AdWrIzgpMo3.2.C4TvZlYvGeGuKSjoj2zhrmbTQHSnl9clMgbSnre.UDjajNgXj_LQwK0hqxFc
+ ISISAvRN0TWrNLlanvFhYQEKEegNndRwQcfYDAUfoAPTtyiljGh_1YF99kaMFDc_eQfYXB4kA1iH
+ nEUvGBTIi_3HUsICO0U6TuoB4Ye5K8QHCOcFlPa3cqxnaJ5i9IwhP2NbobhXmI3FHgEllYEtnADl
+ MODcbHV_FPv7jtvIb3JRo89stMmtR9jk1gJJr9X5Hzp2AxDv84z.rCmOjj2605BgsmOXWrygq2mu
+ gSIBFCSmuwWdl.i1t2htCVWi_ihVG7iSNs0GDz3V3JbnhauJ.4ERMQCS6.kTZlCZyN1eMNskR3ol
+ 5gkYglGRbrUlaFQKfmEhRbdWsMgw_xfj2X7xtlypNBJAKY4JKPoNu0jDWGjkhD_Qjv74UnWfrDGk
+ n0s1hpUckmVvShwp59XKGRQd7llRxU4PbNuCCv9LPO9ukyz9NrIIVyOdU31H8AFaqxlB9U.ND.zb
+ YOPYZ.UxOr6UcYW09e3x_w6jSTZ91Uqj9EROpC84ESngeN8bBpOf9_4AVlo9uFh4Y.mCR.p3glX0
+ Yd8KI5zea4Q2LscOd.GmTmrhyIH5stY8wFvH8C1bzvrrPnz83bxO6Zse.ZDb4bhgLobq5hV7r8d_
+ qlFS4MUoGbgTZt4bPEuG7z7e9aFo484SuWW5wUl_gH42r3a3zMXKIMnRDPXuWhePFq.SYbh0srZY
+ hzLuN8S_URcbBMhXXBp3y4GPZdtiDjn5nxO.s07hH.FsULE3wi1Ma5mc0zf2P7C0ZyogRqUx_VRy
+ g1zFY.ZWOXe_ga9ppQDRKEwnmVhliQAbXob2hkmZyj2n0fvCVFXugsnqc_2JrDJRZhPbuVuke4o9
+ hH3G4gzqlIf56iQc0FOrvd57ypPGq.JfonaUdOwwx5q.416YDPKxhnudtAlpKuinrXXj8gWx7DSs
+ 2zZ3pnBQ6_r8qFrHOKRQ5_ouNv307_L4GU3HI_KV7evHb8F3ieMAlFWz8fPnT1e8L1VIQ4PNKEyY
+ IIvcZrDeabhUECLit8DjVUE6BbxZ3wy5RI_PHvAJqYdj667gdI7oqMHR5JoNjCFCmopt3FgcCLH9
+ 4YU5SDLTA5d2YNtp2kR5MAIZD.BP7kcLh57V9i.2Xx2615g3Uq0g9pJb2g2u_9mkepx6RwXL3xu4
+ RWluyY7yDEz1fro3FMO1Qh7pb7gTloshktzIjlixvCCREUofMXdzpTy3pus2nwiUWXHqGhnneeQx
+ WCEd2s9.rR.JkVuAwR_LfbTdcd1FCnyk___wBZZ9m8uCxMt53fLBFu95jSF_SO19L3IapS7X3VXf
+ EX6uDOFHGrbsJ.bRa70jqYl1BiBCsraCc6h9ZUbtQRHvRIaOkHV3_uedQlDTzXZF83xUbTc734Lk
+ 5PBJ44bvUcw57Lgfha1snVy7wBG7eeVjYH3N961f10IxtRs0rU7mhIeBGQJK4AspPfh1TWa2Vxk6
+ 7iWUHzfI6Q5MN.W2LmlrjGx_c3NoS_aVfinYJ6uIVW5P7sfuFuzH3_XzM2RKf6.lQR25MSIHxfYU
+ yTq_ONEPrUYJwOs6FF7xMQPTdwdlBYydhLzByttGzi_3amT95IMcSy22kAMKlBS4UdYgdfZQDB04
+ CddeT6eQyyfQOBXWbw46wTJZabDD1uKWelyZ.YfOoUttHzCwMGRktsdpM6hb.fDNHXI8mXPBm3yI
+ hgL2W.jNI4011fDj_jAA5FuKIH6INs5p3IiwjdICupCFfVrozyFtkrM6qmP8G0XGVcVygUW2wBe_
+ 21TYUw0JmkjHW.2Xj6oQvHDE.MEwIME_xs1kqCgAAPGWmRukXLWIH5n3aKifz_kG44T2hOcXgeD_
+ 6sGJ79Q6xp04btudD82qZlm4IPRAbHI2EJofncT2GQZG2TXjDvtVacI8hFdVmk_En40I1TnlWTwX
+ Bf0BH3E_J05w1W2u0g8NQ8aKDq4Ejsi56sbRmMHOK4N0XHk7NFG4bZ6q.pV9rwoHdpmQgCe.qQ9G
+ v1_xMKHs_P6Szzzw8r1DkSqeL7Y9QafY6myeG9iIuFaTIvRwx4oKBYSEJjt_AkXmImpr06XrjQ.l
+ bbrQBAHBiPQ2cwnHLmEohFEFsIdIBayjjVSUXROsy_m.aeFe14HF5uS_xs_rKJDNCbS1Dfut_5Du
+ canQ6QzxBMhrCgL1lyxYoIflbRzWS26iN
+X-Sonic-MF: <djeddi_2008@yahoo.fr>
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic314.consmr.mail.ir2.yahoo.com with HTTP; Sat, 2 Apr 2022 16:49:20 +0000
+Date: Sat, 2 Apr 2022 16:52:16 +0000 (UTC)
+From: Chawki Djeddi <djeddi_2008@yahoo.fr>
+Reply-To: Chawki Djeddi <djeddi_2008@yahoo.fr>
+Message-ID: <353154810.1563585.1648918336198@mail.yahoo.com>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_1563584_1377487556.1648918336193"
+References: <353154810.1563585.1648918336198.ref@mail.yahoo.com>
+X-Mailer: WebService/1.1.20001 YMailNorrin
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] [SPAM] CfP - MedPRAI 2022, Las Palmas de Gran Canaria,
+ Spain
+
+------=_Part_1563584_1377487556.1648918336193
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+
+The 6th Mediterranean Conference on Pattern Recognition and Artificial Inte=
+lligence (MedPRAI 2021) will take place on 25-27 November, 2022 in Las Palm=
+as de Gran Canaria, Spain.
+
+https://medprai2022.sciencesconf.org/
+
+Following the four successful previous editions of MedPRAI (Algeria 2016, M=
+orocco 2018, Turkey 2019, Tunisia 2020 and Turkey 2021), the 6th edition of=
+ MedPRAI will be held in Las Palmas de Gran Canaria (Spain) from 25 to 27 N=
+ovember 2022. MedPRAI is organized by the Instituto Universitario para el D=
+esarrollo Tecnol=C3=B3gico y la Innovaci=C3=B3n en Comunicaciones, Universi=
+dad de Las Palmas de Gran Canaria; it aims to provide researchers and pract=
+itioners from academia and industry with a forum on the latest developments=
+ in pattern recognition and artificial intelligence. The conference will al=
+so provide a unique opportunity for sharing experiences from different back=
+grounds with the common interest in advanced methods in the above-mentioned=
+ fields. The scientific program of MedPRAI 2022 will include the presentati=
+on of invited plenary talks, regular sessions, poster sessions and some spe=
+cial sessions.
+
+All submitted papers will be reviewed by at least 3 members of the internat=
+ional program committee; additional reviewers will be consulted if needed. =
+Paper acceptance will be based on originality, significance, technical soun=
+dness, and clarity of presentation.
+
+[Topics of Interest]
+
+Topics of interest for submission include, but are not limited to:
+
+- Artificial intelligence
+
+- Bioinformatics
+
+- Biomedical pattern analysis
+
+- Biometric technologies
+
+- Character, text and graphics recognition
+
+- Computational biology
+
+- Computer vision
+
+- Data, computer, or network security
+
+- Digital libraries
+
+- Document processing
+
+- Graph-based techniques for pattern recognition
+
+- Image analysis, coding and processing
+
+- Industrial Applications of Pattern Recognition
+
+- Information retrieval
+
+- Machine learning and data mining
+
+- Medical and forensic applications of pattern recognition
+
+- Multimedias systems
+
+- Music analysis
+
+- Natural language analysis
+
+- Neural networks
+
+- Object recognition
+
+- Pattern Recognition
+
+- Remote sensing
+
+- Robotics
+
+- Shape and texture analysis
+
+- Special Hardware Architectures
+
+- Speech recognition
+
+- Statistical and structural pattern recognition
+
+
+[Publication]
+
+Since the third edition of 2019, the proceedings are published in the Commu=
+nications in Computer and Information Science (CCIS) series of Springer:=C2=
+=A0https://link.springer.com/conference/medprai
+
+=C2=A0[Indexing]
+
+CCIS is abstracted/indexed in DBLP, Google Scholar, EI-Compendex, Mathemati=
+cal Reviews, SCImago, Scopus. CCIS volumes are also submitted for the inclu=
+sion in ISI Proceedings.
+
+=C2=A0[Important Dates]
+
+
+Paper deadline: June 6th, 2022
+
+Notification: August 7th, 2022
+
+Camera-ready due: August 21st, 2022
+
+Early bird registration: before August 21st, 2022
+
+Main conference: 25th-27th November, 2022
+
+
+[Inquiries]
+
+c.djeddi@univ-tebessa.dz
+--------------------------------------------------------------=C2=A0
+Chawki Djeddi=20
+Associate Professor=20
+Department of Mathematics and Computer Science=20
+Larbi Tebessi University, Tebessa, Algeria.=20
+Webpage:=C2=A0https://sites.google.com/site/cdjeddi/home
+
+
+------=_Part_1563584_1377487556.1648918336193
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><head></head><body><div class=3D"ydp5498932byahoo-style-wrap" style=
+=3D"font-family:times new roman, new york, times, serif;font-size:13px;"><d=
+iv><div><div><p class=3D"ydpb9749d09MsoNormal" style=3D"margin: 0cm 0cm 10p=
+t; color: rgb(34, 34, 34); text-align: justify; line-height: 16.8667px; fon=
+t-size: 11pt; font-family: Calibri, sans-serif;"><span lang=3D"EN-US" style=
+=3D"font-size: 9pt; line-height: 13.8px; font-family: Arial, sans-serif; co=
+lor: rgb(51, 51, 51); background-image: initial; background-position: initi=
+al; background-size: initial; background-repeat: initial; background-origin=
+: initial; background-clip: initial;">The 6th Mediterranean Conference on P=
+attern Recognition and Artificial Intelligence (MedPRAI 2021) will take pla=
+ce on 25-27 November, 2022 in Las Palmas de Gran Canaria, Spain.</span></p>=
+<p class=3D"ydpb9749d09MsoNormal" style=3D"margin: 0cm 0cm 10pt; color: rgb=
+(34, 34, 34); text-align: justify; line-height: 16.8667px; font-size: 11pt;=
+ font-family: Calibri, sans-serif;"><span style=3D"font-size: 9pt; line-hei=
+ght: 13.8px; font-family: Arial, sans-serif; color: rgb(51, 51, 51); backgr=
+ound-image: initial; background-position: initial; background-size: initial=
+; background-repeat: initial; background-origin: initial; background-clip: =
+initial;"><a href=3D"https://www.researchgate.net/deref/https%3A%2F%2Fmedpr=
+ai2022.sciencesconf.org%2F" data-saferedirecturl=3D"https://www.google.com/=
+url?q=3Dhttps://www.researchgate.net/deref/https%253A%252F%252Fmedprai2022.=
+sciencesconf.org%252F&amp;source=3Dgmail&amp;ust=3D1649004186367000&amp;usg=
+=3DAOvVaw27QyFcFcP4JlcpCJ_GACob" style=3D"color: blue;" rel=3D"nofollow" ta=
+rget=3D"_blank"><span lang=3D"EN-US" style=3D"font-family: inherit, serif; =
+border: 1pt none windowtext; padding: 0cm;">https://medprai2022.sciencescon=
+f.org/</span></a></span><span lang=3D"EN-US" style=3D"font-size: 9pt; line-=
+height: 13.8px; font-family: Arial, sans-serif; color: rgb(51, 51, 51);"><b=
+r><br><span style=3D"background-image: initial; background-position: initia=
+l; background-size: initial; background-repeat: initial; background-origin:=
+ initial; background-clip: initial;">Following the four successful previous=
+ editions of MedPRAI (Algeria 2016, Morocco 2018, Turkey 2019, Tunisia 2020=
+ and Turkey 2021), the 6th edition of MedPRAI will be held in Las Palmas de=
+ Gran Canaria (Spain) from 25 to 27 November 2022. MedPRAI is organized by =
+the Instituto Universitario para el Desarrollo Tecnol=C3=B3gico y la Innova=
+ci=C3=B3n en Comunicaciones, Universidad de Las Palmas de Gran Canaria; it =
+aims to provide researchers and practitioners from academia and industry wi=
+th a forum on the latest developments in pattern recognition and artificial=
+ intelligence. The conference will also provide a unique opportunity for sh=
+aring experiences from different backgrounds with the common interest in ad=
+vanced methods in the above-mentioned fields. The scientific program of Med=
+PRAI 2022 will include the presentation of invited plenary talks, regular s=
+essions, poster sessions and some special sessions.</span></span></p><p cla=
+ss=3D"ydpb9749d09MsoNormal" style=3D"margin: 0cm 0cm 10pt; color: rgb(34, 3=
+4, 34); text-align: justify; line-height: 16.8667px; font-size: 11pt; font-=
+family: Calibri, sans-serif;"><span lang=3D"EN-US" style=3D"font-size: 9pt;=
+ line-height: 13.8px; font-family: Arial, sans-serif; color: rgb(51, 51, 51=
+); background-image: initial; background-position: initial; background-size=
+: initial; background-repeat: initial; background-origin: initial; backgrou=
+nd-clip: initial;">All submitted papers will be reviewed by at least 3 memb=
+ers of the international program committee; additional reviewers will be co=
+nsulted if needed. Paper acceptance will be based on originality, significa=
+nce, technical soundness, and clarity of presentation.</span></p><p class=
+=3D"ydpb9749d09MsoNormal" style=3D"margin: 0cm 0cm 10pt; color: rgb(34, 34,=
+ 34); text-align: justify; line-height: 16.8667px; font-size: 11pt; font-fa=
+mily: Calibri, sans-serif;"><span lang=3D"EN-US" style=3D"font-size: 9pt; l=
+ine-height: 13.8px; font-family: Arial, sans-serif; color: rgb(51, 51, 51);=
+ background-image: initial; background-position: initial; background-size: =
+initial; background-repeat: initial; background-origin: initial; background=
+-clip: initial;">[Topics of Interest]</span></p><p class=3D"ydpb9749d09MsoN=
+ormal" style=3D"margin: 0cm 0cm 10pt; color: rgb(34, 34, 34); text-align: j=
+ustify; line-height: 16.8667px; font-size: 11pt; font-family: Calibri, sans=
+-serif;"><span lang=3D"EN-US" style=3D"font-size: 9pt; line-height: 13.8px;=
+ font-family: Arial, sans-serif; color: rgb(51, 51, 51); background-image: =
+initial; background-position: initial; background-size: initial; background=
+-repeat: initial; background-origin: initial; background-clip: initial;">To=
+pics of interest for submission include, but are not limited to:</span></p>=
+<p class=3D"ydpb9749d09MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; color:=
+ rgb(34, 34, 34); text-align: justify; line-height: normal; font-size: 11pt=
+; font-family: Calibri, sans-serif;"><span lang=3D"EN-US" style=3D"font-siz=
+e: 9pt; font-family: Arial, sans-serif; color: rgb(51, 51, 51); background-=
+image: initial; background-position: initial; background-size: initial; bac=
+kground-repeat: initial; background-origin: initial; background-clip: initi=
+al;">- Artificial intelligence</span></p><p class=3D"ydpb9749d09MsoNormal" =
+style=3D"margin: 0cm 0cm 0.0001pt; color: rgb(34, 34, 34); text-align: just=
+ify; line-height: normal; font-size: 11pt; font-family: Calibri, sans-serif=
+;"><span lang=3D"EN-US" style=3D"font-size: 9pt; font-family: Arial, sans-s=
+erif; color: rgb(51, 51, 51); background-image: initial; background-positio=
+n: initial; background-size: initial; background-repeat: initial; backgroun=
+d-origin: initial; background-clip: initial;">- Bioinformatics</span></p><p=
+ class=3D"ydpb9749d09MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; color: r=
+gb(34, 34, 34); text-align: justify; line-height: normal; font-size: 11pt; =
+font-family: Calibri, sans-serif;"><span lang=3D"EN-US" style=3D"font-size:=
+ 9pt; font-family: Arial, sans-serif; color: rgb(51, 51, 51); background-im=
+age: initial; background-position: initial; background-size: initial; backg=
+round-repeat: initial; background-origin: initial; background-clip: initial=
+;">- Biomedical pattern analysis</span></p><p class=3D"ydpb9749d09MsoNormal=
+" style=3D"margin: 0cm 0cm 0.0001pt; color: rgb(34, 34, 34); text-align: ju=
+stify; line-height: normal; font-size: 11pt; font-family: Calibri, sans-ser=
+if;"><span lang=3D"EN-US" style=3D"font-size: 9pt; font-family: Arial, sans=
+-serif; color: rgb(51, 51, 51); background-image: initial; background-posit=
+ion: initial; background-size: initial; background-repeat: initial; backgro=
+und-origin: initial; background-clip: initial;">- Biometric technologies</s=
+pan></p><p class=3D"ydpb9749d09MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt=
+; color: rgb(34, 34, 34); text-align: justify; line-height: normal; font-si=
+ze: 11pt; font-family: Calibri, sans-serif;"><span lang=3D"EN-US" style=3D"=
+font-size: 9pt; font-family: Arial, sans-serif; color: rgb(51, 51, 51); bac=
+kground-image: initial; background-position: initial; background-size: init=
+ial; background-repeat: initial; background-origin: initial; background-cli=
+p: initial;">- Character, text and graphics recognition</span></p><p class=
+=3D"ydpb9749d09MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; color: rgb(34,=
+ 34, 34); text-align: justify; line-height: normal; font-size: 11pt; font-f=
+amily: Calibri, sans-serif;"><span lang=3D"EN-US" style=3D"font-size: 9pt; =
+font-family: Arial, sans-serif; color: rgb(51, 51, 51); background-image: i=
+nitial; background-position: initial; background-size: initial; background-=
+repeat: initial; background-origin: initial; background-clip: initial;">- C=
+omputational biology</span></p><p class=3D"ydpb9749d09MsoNormal" style=3D"m=
+argin: 0cm 0cm 0.0001pt; color: rgb(34, 34, 34); text-align: justify; line-=
+height: normal; font-size: 11pt; font-family: Calibri, sans-serif;"><span l=
+ang=3D"EN-US" style=3D"font-size: 9pt; font-family: Arial, sans-serif; colo=
+r: rgb(51, 51, 51); background-image: initial; background-position: initial=
+; background-size: initial; background-repeat: initial; background-origin: =
+initial; background-clip: initial;">- Computer vision</span></p><p class=3D=
+"ydpb9749d09MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; color: rgb(34, 34=
+, 34); text-align: justify; line-height: normal; font-size: 11pt; font-fami=
+ly: Calibri, sans-serif;"><span lang=3D"EN-US" style=3D"font-size: 9pt; fon=
+t-family: Arial, sans-serif; color: rgb(51, 51, 51); background-image: init=
+ial; background-position: initial; background-size: initial; background-rep=
+eat: initial; background-origin: initial; background-clip: initial;">- Data=
+, computer, or network security</span></p><p class=3D"ydpb9749d09MsoNormal"=
+ style=3D"margin: 0cm 0cm 0.0001pt; color: rgb(34, 34, 34); text-align: jus=
+tify; line-height: normal; font-size: 11pt; font-family: Calibri, sans-seri=
+f;"><span lang=3D"EN-US" style=3D"font-size: 9pt; font-family: Arial, sans-=
+serif; color: rgb(51, 51, 51); background-image: initial; background-positi=
+on: initial; background-size: initial; background-repeat: initial; backgrou=
+nd-origin: initial; background-clip: initial;">- Digital libraries</span></=
+p><p class=3D"ydpb9749d09MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; colo=
+r: rgb(34, 34, 34); text-align: justify; line-height: normal; font-size: 11=
+pt; font-family: Calibri, sans-serif;"><span lang=3D"EN-US" style=3D"font-s=
+ize: 9pt; font-family: Arial, sans-serif; color: rgb(51, 51, 51); backgroun=
+d-image: initial; background-position: initial; background-size: initial; b=
+ackground-repeat: initial; background-origin: initial; background-clip: ini=
+tial;">- Document processing</span></p><p class=3D"ydpb9749d09MsoNormal" st=
+yle=3D"margin: 0cm 0cm 0.0001pt; color: rgb(34, 34, 34); text-align: justif=
+y; line-height: normal; font-size: 11pt; font-family: Calibri, sans-serif;"=
+><span lang=3D"EN-US" style=3D"font-size: 9pt; font-family: Arial, sans-ser=
+if; color: rgb(51, 51, 51); background-image: initial; background-position:=
+ initial; background-size: initial; background-repeat: initial; background-=
+origin: initial; background-clip: initial;">- Graph-based techniques for pa=
+ttern recognition</span></p><p class=3D"ydpb9749d09MsoNormal" style=3D"marg=
+in: 0cm 0cm 0.0001pt; color: rgb(34, 34, 34); text-align: justify; line-hei=
+ght: normal; font-size: 11pt; font-family: Calibri, sans-serif;"><span lang=
+=3D"EN-US" style=3D"font-size: 9pt; font-family: Arial, sans-serif; color: =
+rgb(51, 51, 51); background-image: initial; background-position: initial; b=
+ackground-size: initial; background-repeat: initial; background-origin: ini=
+tial; background-clip: initial;">- Image analysis, coding and processing</s=
+pan></p><p class=3D"ydpb9749d09MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt=
+; color: rgb(34, 34, 34); text-align: justify; line-height: normal; font-si=
+ze: 11pt; font-family: Calibri, sans-serif;"><span lang=3D"EN-US" style=3D"=
+font-size: 9pt; font-family: Arial, sans-serif; color: rgb(51, 51, 51); bac=
+kground-image: initial; background-position: initial; background-size: init=
+ial; background-repeat: initial; background-origin: initial; background-cli=
+p: initial;">- Industrial Applications of Pattern Recognition</span></p><p =
+class=3D"ydpb9749d09MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; color: rg=
+b(34, 34, 34); text-align: justify; line-height: normal; font-size: 11pt; f=
+ont-family: Calibri, sans-serif;"><span lang=3D"EN-US" style=3D"font-size: =
+9pt; font-family: Arial, sans-serif; color: rgb(51, 51, 51); background-ima=
+ge: initial; background-position: initial; background-size: initial; backgr=
+ound-repeat: initial; background-origin: initial; background-clip: initial;=
+">- Information retrieval</span></p><p class=3D"ydpb9749d09MsoNormal" style=
+=3D"margin: 0cm 0cm 0.0001pt; color: rgb(34, 34, 34); text-align: justify; =
+line-height: normal; font-size: 11pt; font-family: Calibri, sans-serif;"><s=
+pan lang=3D"EN-US" style=3D"font-size: 9pt; font-family: Arial, sans-serif;=
+ color: rgb(51, 51, 51); background-image: initial; background-position: in=
+itial; background-size: initial; background-repeat: initial; background-ori=
+gin: initial; background-clip: initial;">- Machine learning and data mining=
+</span></p><p class=3D"ydpb9749d09MsoNormal" style=3D"margin: 0cm 0cm 0.000=
+1pt; color: rgb(34, 34, 34); text-align: justify; line-height: normal; font=
+-size: 11pt; font-family: Calibri, sans-serif;"><span lang=3D"EN-US" style=
+=3D"font-size: 9pt; font-family: Arial, sans-serif; color: rgb(51, 51, 51);=
+ background-image: initial; background-position: initial; background-size: =
+initial; background-repeat: initial; background-origin: initial; background=
+-clip: initial;">- Medical and forensic applications of pattern recognition=
+</span></p><p class=3D"ydpb9749d09MsoNormal" style=3D"margin: 0cm 0cm 0.000=
+1pt; color: rgb(34, 34, 34); text-align: justify; line-height: normal; font=
+-size: 11pt; font-family: Calibri, sans-serif;"><span lang=3D"EN-US" style=
+=3D"font-size: 9pt; font-family: Arial, sans-serif; color: rgb(51, 51, 51);=
+ background-image: initial; background-position: initial; background-size: =
+initial; background-repeat: initial; background-origin: initial; background=
+-clip: initial;">- Multimedias systems</span></p><p class=3D"ydpb9749d09Mso=
+Normal" style=3D"margin: 0cm 0cm 0.0001pt; color: rgb(34, 34, 34); text-ali=
+gn: justify; line-height: normal; font-size: 11pt; font-family: Calibri, sa=
+ns-serif;"><span lang=3D"EN-US" style=3D"font-size: 9pt; font-family: Arial=
+, sans-serif; color: rgb(51, 51, 51); background-image: initial; background=
+-position: initial; background-size: initial; background-repeat: initial; b=
+ackground-origin: initial; background-clip: initial;">- Music analysis</spa=
+n></p><p class=3D"ydpb9749d09MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; =
+color: rgb(34, 34, 34); text-align: justify; line-height: normal; font-size=
+: 11pt; font-family: Calibri, sans-serif;"><span lang=3D"EN-US" style=3D"fo=
+nt-size: 9pt; font-family: Arial, sans-serif; color: rgb(51, 51, 51); backg=
+round-image: initial; background-position: initial; background-size: initia=
+l; background-repeat: initial; background-origin: initial; background-clip:=
+ initial;">- Natural language analysis</span></p><p class=3D"ydpb9749d09Mso=
+Normal" style=3D"margin: 0cm 0cm 0.0001pt; color: rgb(34, 34, 34); text-ali=
+gn: justify; line-height: normal; font-size: 11pt; font-family: Calibri, sa=
+ns-serif;"><span lang=3D"EN-US" style=3D"font-size: 9pt; font-family: Arial=
+, sans-serif; color: rgb(51, 51, 51); background-image: initial; background=
+-position: initial; background-size: initial; background-repeat: initial; b=
+ackground-origin: initial; background-clip: initial;">- Neural networks</sp=
+an></p><p class=3D"ydpb9749d09MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt;=
+ color: rgb(34, 34, 34); text-align: justify; line-height: normal; font-siz=
+e: 11pt; font-family: Calibri, sans-serif;"><span lang=3D"EN-US" style=3D"f=
+ont-size: 9pt; font-family: Arial, sans-serif; color: rgb(51, 51, 51); back=
+ground-image: initial; background-position: initial; background-size: initi=
+al; background-repeat: initial; background-origin: initial; background-clip=
+: initial;">- Object recognition</span></p><p class=3D"ydpb9749d09MsoNormal=
+" style=3D"margin: 0cm 0cm 0.0001pt; color: rgb(34, 34, 34); text-align: ju=
+stify; line-height: normal; font-size: 11pt; font-family: Calibri, sans-ser=
+if;"><span lang=3D"EN-US" style=3D"font-size: 9pt; font-family: Arial, sans=
+-serif; color: rgb(51, 51, 51); background-image: initial; background-posit=
+ion: initial; background-size: initial; background-repeat: initial; backgro=
+und-origin: initial; background-clip: initial;">- Pattern Recognition</span=
+></p><p class=3D"ydpb9749d09MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; c=
+olor: rgb(34, 34, 34); text-align: justify; line-height: normal; font-size:=
+ 11pt; font-family: Calibri, sans-serif;"><span lang=3D"EN-US" style=3D"fon=
+t-size: 9pt; font-family: Arial, sans-serif; color: rgb(51, 51, 51); backgr=
+ound-image: initial; background-position: initial; background-size: initial=
+; background-repeat: initial; background-origin: initial; background-clip: =
+initial;">- Remote sensing</span></p><p class=3D"ydpb9749d09MsoNormal" styl=
+e=3D"margin: 0cm 0cm 0.0001pt; color: rgb(34, 34, 34); text-align: justify;=
+ line-height: normal; font-size: 11pt; font-family: Calibri, sans-serif;"><=
+span lang=3D"EN-US" style=3D"font-size: 9pt; font-family: Arial, sans-serif=
+; color: rgb(51, 51, 51); background-image: initial; background-position: i=
+nitial; background-size: initial; background-repeat: initial; background-or=
+igin: initial; background-clip: initial;">- Robotics</span></p><p class=3D"=
+ydpb9749d09MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; color: rgb(34, 34,=
+ 34); text-align: justify; line-height: normal; font-size: 11pt; font-famil=
+y: Calibri, sans-serif;"><span lang=3D"EN-US" style=3D"font-size: 9pt; font=
+-family: Arial, sans-serif; color: rgb(51, 51, 51); background-image: initi=
+al; background-position: initial; background-size: initial; background-repe=
+at: initial; background-origin: initial; background-clip: initial;">- Shape=
+ and texture analysis</span></p><p class=3D"ydpb9749d09MsoNormal" style=3D"=
+margin: 0cm 0cm 0.0001pt; color: rgb(34, 34, 34); text-align: justify; line=
+-height: normal; font-size: 11pt; font-family: Calibri, sans-serif;"><span =
+lang=3D"EN-US" style=3D"font-size: 9pt; font-family: Arial, sans-serif; col=
+or: rgb(51, 51, 51); background-image: initial; background-position: initia=
+l; background-size: initial; background-repeat: initial; background-origin:=
+ initial; background-clip: initial;">- Special Hardware Architectures</span=
+></p><p class=3D"ydpb9749d09MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; c=
+olor: rgb(34, 34, 34); text-align: justify; line-height: normal; font-size:=
+ 11pt; font-family: Calibri, sans-serif;"><span lang=3D"EN-US" style=3D"fon=
+t-size: 9pt; font-family: Arial, sans-serif; color: rgb(51, 51, 51); backgr=
+ound-image: initial; background-position: initial; background-size: initial=
+; background-repeat: initial; background-origin: initial; background-clip: =
+initial;">- Speech recognition</span></p><p class=3D"ydpb9749d09MsoNormal" =
+style=3D"margin: 0cm 0cm 0.0001pt; color: rgb(34, 34, 34); text-align: just=
+ify; line-height: normal; font-size: 11pt; font-family: Calibri, sans-serif=
+;"><span lang=3D"EN-US" style=3D"font-size: 9pt; font-family: Arial, sans-s=
+erif; color: rgb(51, 51, 51); background-image: initial; background-positio=
+n: initial; background-size: initial; background-repeat: initial; backgroun=
+d-origin: initial; background-clip: initial;">- Statistical and structural =
+pattern recognition</span></p><p class=3D"ydpb9749d09MsoNormal" style=3D"ma=
+rgin: 0cm 0cm 10pt; color: rgb(34, 34, 34); text-align: justify; line-heigh=
+t: 16.8667px; font-size: 11pt; font-family: Calibri, sans-serif;"><span lan=
+g=3D"EN-US" style=3D"font-size: 9pt; line-height: 13.8px; font-family: Aria=
+l, sans-serif; color: rgb(51, 51, 51);"><br><span style=3D"background-image=
+: initial; background-position: initial; background-size: initial; backgrou=
+nd-repeat: initial; background-origin: initial; background-clip: initial;">=
+[Publication]</span><br><br><span style=3D"background-image: initial; backg=
+round-position: initial; background-size: initial; background-repeat: initi=
+al; background-origin: initial; background-clip: initial;">Since the third =
+edition of 2019, the proceedings are published in the Communications in Com=
+puter and Information Science (CCIS) series of Springer:&nbsp;</span><span =
+style=3D"font-size: 9pt; line-height: 13.8px; background-image: initial; ba=
+ckground-position: initial; background-size: initial; background-repeat: in=
+itial; background-origin: initial; background-clip: initial;"><a href=3D"ht=
+tps://www.researchgate.net/deref/https%3A%2F%2Flink.springer.com%2Fconferen=
+ce%2Fmedprai" data-saferedirecturl=3D"https://www.google.com/url?q=3Dhttps:=
+//www.researchgate.net/deref/https%253A%252F%252Flink.springer.com%252Fconf=
+erence%252Fmedprai&amp;source=3Dgmail&amp;ust=3D1649004186367000&amp;usg=3D=
+AOvVaw3znfOaoyz0DkIeGDe2rfDd" style=3D"color: inherit; outline: none; font-=
+size: inherit; font-weight: inherit; text-align: inherit;" rel=3D"nofollow"=
+ target=3D"_blank"><span lang=3D"EN-US" style=3D"font-family: inherit, seri=
+f; border: 1pt none windowtext; padding: 0cm;">https://link.springer.com/co=
+nference/medprai</span></a></span></span></p><p class=3D"ydpb9749d09MsoNorm=
+al" style=3D"margin: 0cm 0cm 10pt; color: rgb(34, 34, 34); text-align: just=
+ify; line-height: 16.8667px; font-size: 11pt; font-family: Calibri, sans-se=
+rif;"><span style=3D"font-size: 9pt; line-height: 13.8px; font-family: Aria=
+l, sans-serif; color: rgb(51, 51, 51); background-image: initial; backgroun=
+d-position: initial; background-size: initial; background-repeat: initial; =
+background-origin: initial; background-clip: initial;">&nbsp;<span lang=3D"=
+EN-US">[Indexing]</span></span><span lang=3D"EN-US" style=3D"font-size: 9pt=
+; line-height: 13.8px; font-family: Arial, sans-serif; color: rgb(51, 51, 5=
+1);"><br><br><span style=3D"background-image: initial; background-position:=
+ initial; background-size: initial; background-repeat: initial; background-=
+origin: initial; background-clip: initial;">CCIS is abstracted/indexed in D=
+BLP, Google Scholar, EI-Compendex, Mathematical Reviews, SCImago, Scopus. C=
+CIS volumes are also submitted for the inclusion in ISI Proceedings.</span>=
+</span></p><p class=3D"ydpb9749d09MsoNormal" style=3D"margin: 0cm 0cm 10pt;=
+ color: rgb(34, 34, 34); text-align: justify; line-height: 16.8667px; font-=
+size: 11pt; font-family: Calibri, sans-serif;"><span lang=3D"EN-US" style=
+=3D"font-size: 9pt; line-height: 13.8px; font-family: Arial, sans-serif; co=
+lor: rgb(51, 51, 51); background-image: initial; background-position: initi=
+al; background-size: initial; background-repeat: initial; background-origin=
+: initial; background-clip: initial;">&nbsp;[Important Dates]</span></p><p =
+class=3D"ydpb9749d09MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; color: rg=
+b(34, 34, 34); text-align: justify; line-height: normal; font-size: 11pt; f=
+ont-family: Calibri, sans-serif;"><span lang=3D"EN-US" style=3D"font-size: =
+9pt; font-family: Arial, sans-serif; color: rgb(51, 51, 51);"><br><span sty=
+le=3D"background-image: initial; background-position: initial; background-s=
+ize: initial; background-repeat: initial; background-origin: initial; backg=
+round-clip: initial;">Paper deadline: June 6th, 2022</span></span></p><p cl=
+ass=3D"ydpb9749d09MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; color: rgb(=
+34, 34, 34); text-align: justify; line-height: normal; font-size: 11pt; fon=
+t-family: Calibri, sans-serif;"><span lang=3D"EN-US" style=3D"font-size: 9p=
+t; font-family: Arial, sans-serif; color: rgb(51, 51, 51); background-image=
+: initial; background-position: initial; background-size: initial; backgrou=
+nd-repeat: initial; background-origin: initial; background-clip: initial;">=
+Notification: August 7th, 2022</span></p><p class=3D"ydpb9749d09MsoNormal" =
+style=3D"margin: 0cm 0cm 0.0001pt; color: rgb(34, 34, 34); text-align: just=
+ify; line-height: normal; font-size: 11pt; font-family: Calibri, sans-serif=
+;"><span lang=3D"EN-US" style=3D"font-size: 9pt; font-family: Arial, sans-s=
+erif; color: rgb(51, 51, 51); background-image: initial; background-positio=
+n: initial; background-size: initial; background-repeat: initial; backgroun=
+d-origin: initial; background-clip: initial;">Camera-ready due: August 21st=
+, 2022</span></p><p class=3D"ydpb9749d09MsoNormal" style=3D"margin: 0cm 0cm=
+ 0.0001pt; color: rgb(34, 34, 34); text-align: justify; line-height: normal=
+; font-size: 11pt; font-family: Calibri, sans-serif;"><span lang=3D"EN-US" =
+style=3D"font-size: 9pt; font-family: Arial, sans-serif; color: rgb(51, 51,=
+ 51); background-image: initial; background-position: initial; background-s=
+ize: initial; background-repeat: initial; background-origin: initial; backg=
+round-clip: initial;">Early bird registration: before August 21st, 2022</sp=
+an></p><p class=3D"ydpb9749d09MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt;=
+ color: rgb(34, 34, 34); text-align: justify; line-height: normal; font-siz=
+e: 11pt; font-family: Calibri, sans-serif;"><span lang=3D"EN-US" style=3D"f=
+ont-size: 9pt; font-family: Arial, sans-serif; color: rgb(51, 51, 51); back=
+ground-image: initial; background-position: initial; background-size: initi=
+al; background-repeat: initial; background-origin: initial; background-clip=
+: initial;">Main conference: 25th-27th November, 2022</span></p><p class=3D=
+"ydpb9749d09MsoNormal" style=3D"margin: 0cm 0cm 10pt; color: rgb(34, 34, 34=
+); text-align: justify; line-height: 16.8667px; font-size: 11pt; font-famil=
+y: Calibri, sans-serif;" dir=3D"ltr" data-setdir=3D"false"><span lang=3D"EN=
+-US" style=3D"font-size: 9pt; line-height: 13.8px; font-family: Arial, sans=
+-serif; color: rgb(51, 51, 51);"><br><span style=3D"background-image: initi=
+al; background-position: initial; background-size: initial; background-repe=
+at: initial; background-origin: initial; background-clip: initial;"></span>=
+[Inquiries]</span><br><br><span style=3D"font-size: 9pt; line-height: 13.8p=
+x; font-family: Arial, sans-serif; color: rgb(51, 51, 51); background-image=
+: initial; background-position: initial; background-size: initial; backgrou=
+nd-repeat: initial; background-origin: initial; background-clip: initial;">=
+<a href=3D"https://www.researchgate.net/deref/mailto%3Ac.djeddi%40univ-tebe=
+ssa.dz" data-saferedirecturl=3D"https://www.google.com/url?q=3Dhttps://www.=
+researchgate.net/deref/mailto%253Ac.djeddi%2540univ-tebessa.dz&amp;source=
+=3Dgmail&amp;ust=3D1649004186367000&amp;usg=3DAOvVaw0d9RJfl_xlF_SItGHg_hll"=
+ style=3D"color: inherit; outline: none; font-size: inherit; font-weight: i=
+nherit; text-align: inherit;" rel=3D"nofollow" target=3D"_blank"><span lang=
+=3D"EN-US" style=3D"font-family: inherit, serif; border: 1pt none windowtex=
+t; padding: 0cm;">c.djeddi@univ-tebessa.dz</span></a></span></p></div></div=
+><div class=3D"ydp5498932bsignature"><div style=3D"font-family:new times, s=
+erif;font-size:13px;"><div>------------------------------------------------=
+--------------&nbsp;<br></div><div>Chawki Djeddi <br>Associate Professor <b=
+r>Department of Mathematics and Computer Science <br>Larbi Tebessi Universi=
+ty, Tebessa, Algeria. <br><div>Webpage:&nbsp;https://sites.google.com/site/=
+cdjeddi/home</div><div><br></div><div><br></div><div></div></div></div></di=
+v></div></div></body></html>
+------=_Part_1563584_1377487556.1648918336193--

@@ -1,0 +1,608 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (bouncesmtp1.u12.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id B32A914006F3
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Tue, 31 May 2022 12:53:32 +0200 (CEST)
+Received: from mx3.d101.univ-nantes.fr (MX3.univ-nantes.fr [193.52.101.137])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id AED746D19BE
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Tue, 31 May 2022 12:53:32 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTP id A786D21176
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 31 May 2022 12:53:32 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -4.079
+X-Spam-Level:
+X-Spam-Status: No, score=-4.079 tagged_above=-1000 required=5
+	tests=[CRM114_GOOD=-5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	J_BACKHAIR_32=1, NO_RDNS2=0.01, RCVD_IN_DNSWL_NONE=-0.0001,
+	RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+	UN_PHISHING_PW=0.1] autolearn=disabled
+X-CRM114-Status: GOOD ( 5.7297 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=univ-tours.fr
+Received: from mx3.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id ZUowS2lIaAun for <liste-egc@polytech.univ-nantes.fr>;
+	Tue, 31 May 2022 12:53:30 +0200 (CEST)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from angelia.univ-tours.fr (angelia.univ-tours.fr [193.52.209.20])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTPS id 3C89920078
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 31 May 2022 12:53:30 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=univ-tours.fr; i=@univ-tours.fr; q=dns/txt; s=main;
+  t=1653994410; x=1685530410;
+  h=from:mime-version:subject:message-id:date:to;
+  bh=39RQ4GiJKWF0vhzbQZxYqi2LXq3LThTq10qFsorauaM=;
+  b=OjR8Udmpn7FmYObSXAU7QAb1e1o1PVZosIT1xXiOjmxYxm/hSoEsCY/j
+   Ui6xELt0RUdOVTlJSZF1bYWOM74VkwpVrseet2LI2Wn2xhvcr0iQgmF9o
+   vMbsbnjSN2XR7CQJTcpsOrtfvvjc3xYWbtwZLDejDM1o/0FL/+99s24Sf
+   0=;
+IronPort-SDR: xtiBU/zYnbkLiziyReSDfb5Ik51y8deeDQI9aI3xn7ssRWe4AUGDzhBTx5eP/SLmoWXIZRSLnQ
+ +zx3Np0tXaptp9KENsfR/e4bP3mD5CA6A=
+X-IPAS-Result: =?us-ascii?q?A2EbBABA85Vi/3sofwpaFgcBAQEBCQESAQUFAUmBRoEhg?=
+ =?us-ascii?q?gOBVoQSPZENgSyVboVkgSw8CwEBAQ83CwQBAQMDAYR7AoVGJjgTAQIEAQEBA?=
+ =?us-ascii?q?QMCAwEBAQEBAQMBAQYBAQEBAQEGBAEBAoEyZF06CAGDCwoEMQ2CNSJ8UDgBA?=
+ =?us-ascii?q?QEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQINUnkXM?=
+ =?us-ascii?q?BUqDgErAQIEAwJIGBKCfQGDJ5AsnBKBMRoCZYgZgWWBPYFmhVcBgmOEQjeBV?=
+ =?us-ascii?q?USBFSccgjdugmIEGIEIdIMgN4IuBJEZhT0HOgMJBgcFMzUSgSFxAQgGBgcKB?=
+ =?us-ascii?q?TIGAgwYFAQCExFNBgsSAhMMCgYWDg40EhkMDwMSAxEBBwILEggVLAgDAgMIA?=
+ =?us-ascii?q?wIDLgIDGAkHCgMdCAocEhAUAgQTHwsIAxofLQkCBA4DQwgLCgMRBAMTGAsWC?=
+ =?us-ascii?q?BAEBgMJLw0oCwMFDw8BBgMGAgUFAQMgAxQDBScHAyEHCyYNDQQjHQMDBSYDA?=
+ =?us-ascii?q?gIbBwICAwIGFwYCAhknMQooDQgECAQYBB4lDgUFAgcxBQQvAh4EBQYRCQIWA?=
+ =?us-ascii?q?gYEBQIEBBYCAhIIAggnGwcWNhkBBV0GCwkhFgYpEQUGFgMjUScFB0EPKTsGI?=
+ =?us-ascii?q?h2WPYILgSMXAWwBBI5Ys280B4F/gVIFgT4MiUyNcocyimCMGQORXocgiQqBE?=
+ =?us-ascii?q?IUuII0NlTgBhE01gUOBfzMaJ3YBgj0JNRABAgECDQECAgMBAgEBAWGOAIR5g?=
+ =?us-ascii?q?1aFTHMCOQIGAQoBAQMJAYI6i3FeAQE?=
+IronPort-PHdr: A9a23:/ykIQhRsCSVMnTAr6WRL+ntfwtpsolqYAWYlg6HPa5pwe6iut67vI
+ FbYra00ygOTBsOLu7kf0qL/iOPJYSQ4+5GPsXQPItRndiQuroEopTEmG9OPEkbhLfTnPGQQF
+ cVGU0J5rTngaRAGUMnxaEfPrXKs8DUcBgvwNRZvJuTyB4Xek9m72/q99pHNbQhEnjmwbLB9I
+ Bi4sAnaq9Ubj5ZlJqst0BXCv2FGe/5RxWNmJFKTmwjz68Kt95N98Cpepuws+ddYXar1Y6o3Q
+ 7pYDC87M28u/83kqQPDTQqU6XQCVGgdjwdFDBLE7BH+WZfxrzf6u+9g0ySUIcH6UbY5Uimk4
+ qx2ShHnlT0HOiY5/m7LhcN+kaFVrhy/qRJ42IPbep2ZNP9kc6PdYd8XR2xMVdtRWSxbBYO8a
+ pMCAfAbMuZEtYn9pkcBrRijDgerHuzv0CNHiWHy3aYn1OkvCxvJ3BA6H9IPrHvUr8/5OqAIX
+ uCv0KbH0zHDYuhL2Tf76YjIbAktoe2LXbJta8rR0lMjFw3fjliJr4HuIjya2PgXvWeB8+pgS
+ fygi3QhqwxppjWi2sgihpTJiI8Ly13J6yp0zZo7KNGmVEJ3fMOoHZlNuiyVNoZ7XswvTmJ0t
+ CsmxbAKpJC2cicExpop2hLSZPqKeJWG7BLkUeaeOzZ4hHR9db2hnRmy6kihxfH8Vsau0VZKt
+ DBJkt7WtnACzxDT986HSvpj/ku4xTaP0B3T6vtfIUwum6rbMZgsyaMzmJoLqUnPAzP6lF/rg
+ KOIdEgo4Oel5/j9brn7uJOROYl5gRzkPKs0gMywG+E4PxALX2ic5OuzyqXu/Vb8QLVWlv02l
+ bTZsIzCKcQbuKG5BwhV35446xa6EzemyMgXnX0GLF1bfhKHk5LlNEvWIPDgCfewnUygkDZtx
+ //YIr3sGojBImTZnLv8Y7pw6VRQxQUvwdxF+p5YFL8MLOr2WkDrtdzYChE5Mxazw+biENhzz
+ JkRWX6VAq+YLKzSskWE6OU1LOmWeIAapjL9JuM45/7ojH85h0YRfbWu3ZsKcnC4Be5qI0uDY
+ Xb0hNcOCn8FvhAiQ+zylF2CTTlTam68Uq4k/DE0FJqmDZvfRoCqmLGB2Ca7HoZKZm9YE1yDD
+ 3joeJmfVvcUbyKSJs9gkiAaWre9S48tzwyutAn7y7p5N+bU/DcXtZT/1Ndr/O3fjx8y9SZsA
+ 8SHz26NV310nn8PRzIuwq9wvFZyxk6H0ah5mPxYCcJc6uhNUgc7Lp7c0/J1C8voVgLceNeJS
+ UimTsyiATAxSdIxxcECb1xzG9W4lhzDxTalA6cJl7yXA5w56rnT32X1J8Z50nrG1acsgkInQ
+ stVNG2mmrRz9wbJB92Br0LMk6exaalZ0SHG3H+EyXuSsUpYFhN2ULuAW3kZekbN69rjogvPQ
+ 7brDbU8LgZpzc+ZNqZRLMDvjEsDQObkPo6YbXj1022tARLNx+ikbZDrZyMTxnbzEk8Bxjga4
+ WyHPgt2Iy67qG/aRGhWHE71Ykjvt8x3sni2SmcpyQCUKlFmyqCuvBAP06/PA8gP164J7X9y4
+ w5/G0ywioq+Ng==
+IronPort-Data: A9a23:45aGQ6zkHDCIWW/OuhJ6t+cgxirEfRIJ4+MujC+fZmUNrF6WrkVRm
+ GsYX22PaayIamWnct8gOYuxpxkAupeEm9BlS1NsrVhgHilAwSbn6XR1DW+rZn/PcZeTJK5Dx
+ 5xGAjUVBJlsFhcwnvopW1TYhSEUOZugH9IQM8aZfHEoLeNYYH1500g7xrVg2tQAbeWRWmthh
+ /uj+6UzB3f9s9JEGjp8B3Wr8U4HUFza4Vv0j3RmDRx5lAa2e0o9UPrzEZqMw07QGeG4KAIYq
+ 9Hrl9lV9kuBl/sk50jMfrzTKiXmSZaKVeSCZ+Y/twFPTXGuqwRrupvXOsbwZm9M1S6JgN1P8
+ +lLipuSbDsCLp3Ant4SBkww/yFWZcWq+ZfcJGSnusiSwkvaNXL02/FjZK00FdRAvL8tXicSr
+ bpBcmtlghOr3opaxJqDQ/V2h88gauziJogSvll9yzDHSOohXIrYBavQjTNd9GZh25EQRKqDD
+ yYfQQI3ST6bRB5QAwYeB745g/+LjSLVcCIN/Tp5ooJyuQA/1jdZ1Ln2LNeQd9OBbd1SmleEq
+ 2nGuXn/Aw9fMtWZ1TeetHy27sfCkSq+XIMJCLCQ8v9xnFCIgHEVCQNTUUq8p6P/hFTWc9hCL
+ 0hR+3EGrLIz6AqlVLHAswaQ+SbC50RDHYYIVbRgs2lh15bp3upQPUBcJhYpVTDsnJZeqeUC2
+ gDbktX3KyZotbHJG3uR+q3N9mGvPykLaHMFeDUfCwUfuoGxrIY2hxPJb9BiDK/q3o2kQG2gm
+ 2iH/HokmrEerc8XzKHnr1rJtDSh+8rSRQkv6wSLA2+ot1srZIOsa4Gyx0Lc6PJMcNSQQlWb5
+ SNWhs6f8qUSCoyXj2qDWrxVTr2u4v+ENhzagEJuQMlxpm3xqyb7cNkJsj9kJUpvPsIVQhPTY
+ Rfe6VFL+ZteHHq2dqsrMYi/PMInkPr7HtP/W/GIM9dDb8QjdAKD+y0yN0ec03q0zho3lL0nM
+ pOafMCwS38CEaBqlWLkS+AY2L4t5yY/2WKKG8mjkUT8geLCaS7HU6oBPXuPcvs9vfGNrwji+
+ tpCM9fRmStWCrOsbyTS6tdDdgI0JCFlV537rtcOKbfacAdrHXp5VMjRzLcmdtE3hK9SjOrJo
+ imwV0IwJIATXpEbxdhmskxeVY4=
+IronPort-HdrOrdr: A9a23:i2PDg6BTFYR+vTXlHeiisceALOsnbusQ8zAXPidKKCC9E/b1qy
+ nKpp536faaskdrZJhNo6HnBED4ewK6yXcX2+cs1NWZLWrbUQKTRekI0WKI+UyZJ8SRzJ8l6Y
+ 5daK1iANPrZGIUse/KpCK5AN4mztHvytHauc7ui1F3TQ9rbKlkqz1+Fh2QHglXfWB9dOYEPa
+ vZ3cZBryetYjAsYt+lCmIjV+zOzue75K7OUFo8Cxku9QWUyQmw4LrRGwSD0n4lIkJy6IZnym
+ TDmxH0/eGYqvm+8BXbzGO71eUppPLRjuBOA8SQhtNQECzljjy0bJlsMofywwwdkaWV6xIAmM
+ THon4bTqBOwkKURWLwhRf2wQHv3HIPxhbZqWOwsD/YpYjFXzoxCcBFhYhaGyGpjnYIjZVH1O
+ Z3xGqStZxPARSoplWe2/H4Ey1Bug6PvHI+jfR7tQ0kbaIuLIN6gcgj7FpYea1wYR7H1A==
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-AV: E=Sophos;i="5.91,265,1647298800"; 
+   d="scan'208,217";a="99596145"
+X-Amp-Result: SKIPPED(no attachment in message)
+Received: from unknown (HELO smtpclient.apple) ([10.127.40.123])
+  by angelia3.univ-tours.fr with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 May 2022 12:53:29 +0200
+From: Patrick Marcel <Patrick.Marcel@univ-tours.fr>
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_FEE893E2-9938-4DE9-9EBE-354A5E581BBE"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.80.82.1.1\))
+Message-Id: <566D300B-7B7E-4D37-9B44-360B3D570353@univ-tours.fr>
+Date: Tue, 31 May 2022 12:53:29 +0200
+To: liste-egc@polytech.univ-nantes.fr,
+ eda-liste@listes.univ-lyon2.fr,
+ bull-i3@irit.fr
+X-Mailer: Apple Mail (2.3696.80.82.1.1)
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Extension du deadline - 1er atelier pluridisciplinaire
+ : narration de =?UTF-8?Q?donn=C3=A9es=2C?= datajournalisme et engagement(s)
+
+
+--Apple-Mail=_FEE893E2-9938-4DE9-9EBE-354A5E581BBE
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
+
+*** Soumissions des r=C3=A9sum=C3=A9s possibles jusqu=E2=80=99au 7 juin =
+***=20
+
+NADA 22 : 1er atelier pluridisciplinaire : narration de donn=C3=A9es, =
+datajournalisme et engagement(s)
+12 juillet 2022, Lyon, Campus de La Doua
+Soumission : https://easychair.org/my/conference?conf=3Dnada2022 =
+<https://easychair.org/my/conference?conf=3Dnada2022>
+Une narration de donn=C3=A9es peut =C3=AAtre d=C3=A9finie comme la =
+composition structur=C3=A9e de messages (i) construits =C3=A0 partir de =
+r=C3=A9sultats d=E2=80=99explorations de donn=C3=A9es (ii) communiqu=C3=A9=
+s le plus souvent visuellement pour faciliter leur r=C3=A9ception.Ce =
+type d=E2=80=99activit=C3=A9 est omnipr=C3=A9sente lorsqu=E2=80=99il =
+s=E2=80=99agit de restituer des analyses exploratoires de donn=C3=A9es, =
+notamment en datajournalisme.
+
+L=E2=80=99=C3=A9tude de la narration de donn=C3=A9es est relativement =
+r=C3=A9cente et a attir=C3=A9 l=E2=80=99attention de diff=C3=A9rentes =
+communaut=C3=A9s de recherche en informatique (gestion de la donn=C3=A9e, =
+visualisation, recherche d=E2=80=99information,=E2=80=A6), en sciences =
+de l=E2=80=99information et de la communication, dans le champs des =
+humanit=C3=A9s num=C3=A9riques, tout comme des professionnels  =
+(journalistes, professionnels de la communication, =E2=80=A6) . Cette =
+=C3=A9tude repose notamment sur l=E2=80=99exploitation de corpus riches =
+(articles de presse, notebooks,...).=20
+
+L=E2=80=99objectif de cet atelier est de f=C3=A9d=C3=A9rer cette  =
+communaut=C3=A9 pluridisciplinaire en gestation autour de l=E2=80=99analys=
+e de la narration de donn=C3=A9es journalistique. Plus pr=C3=A9cis=C3=A9me=
+nt, il s=E2=80=99agit d=E2=80=99=C3=A9changer en premier lieu sur les =
+diff=C3=A9rents aspects de l=E2=80=99engagement dans la narration de =
+donn=C3=A9es journalistique. La notion d=E2=80=99engagement est =
+volontairement laiss=C3=A9e large ; l=E2=80=99engagement peut =C3=AAtre =
+en amont (engagement du journaliste narrateur dans le sujet trait=C3=A9, =
+vis-=C3=A0-vis de ses lecteurs) ou en aval (production d=E2=80=99une =
+narration ayant pour but de susciter l=E2=80=99engagement du lecteur par =
+des proc=C3=A9d=C3=A9s rh=C3=A9toriques ou des dispositifs interactifs =
+par exemple).
+
+Les th=C3=A8mes abord=C3=A9s seront (liste non exhaustive) :=20
+D=C3=A9finition de la notion d=E2=80=99engagement : amont, aval=E2=80=A6
+M=C3=A9dia et supports d=E2=80=99engagement : articles, notebooks, =
+r=C3=A9seaux sociaux, etc.
+Mesure de l=E2=80=99engagement : mesures objectives, mesures =
+subjectives, m=C3=A9thodes de mesure d=E2=80=99engagement, etc.
+Temporalit=C3=A9 de l=E2=80=99engagement : =C3=A9volution de =
+l=E2=80=99engagement dans le temps, etc.
+Engagement et d=C3=A9marche journalistique : l=C3=A9gitimation, =
+transparence, didactique, etc.
+Engagement et forme journalistique : journalisme ouvert, journalisme =
+citoyen et participatif, journalisme collaboratif sous forme de =
+consortium, journalisme de proximit=C3=A9, journalisme de terrain, =
+impact sur la vie sociale, etc.
+Engagement et forme discursive : controverse, argumentation, =
+interactivit=C3=A9, etc.
+
+L=E2=80=99atelier sera compos=C3=A9 d=E2=80=99interventions de 20 =
+minutes suivies de 10-15 minutes d=E2=80=99=C3=A9change, et d=E2=80=99une =
+table ronde bilan de la journ=C3=A9e. Pour ces interventions, nous =
+sollicitons des soumissions de r=C3=A9sum=C3=A9s (maximum 2 pages ou 500 =
+mots, =C3=A0 d=C3=A9poser sur : =
+https://easychair.org/conferences/?conf=3Dnada2022 =
+<https://easychair.org/conferences/?conf=3Dnada2022>) d=C3=A9crivant des =
+travaux et projets aboutis ou en cours, des retours d=E2=80=99exp=C3=A9rie=
+nces, des d=C3=A9clarations d=E2=80=99intention, prospectifs, etc. Nous =
+souhaitons dans une d=C3=A9marche transdisciplinaire accueillir des =
+intervenants d=E2=80=99horizons vari=C3=A9s, la participation de =
+professionnels est encourag=C3=A9e.
+
+Dates importantes :=20
+Diffusion de l=E2=80=99appel =C3=A0 r=C3=A9sum=C3=A9s :  10 mai 2022
+Soumission des r=C3=A9sum=C3=A9s : 7 juin 2022
+Acceptation : 13 juin 2022
+Atelier : mardi 12 juillet 2022
+       =20
+Comit=C3=A9 scientifique :=20
+Marie Chagnoux (Universit=C3=A9 Paris 8)
+Alexandre Chanson (Universit=C3=A9 de Tours)
+Raphael Da Silva (Journaliste free-lance)
+Faten El Outa (Universit=C3=A9 Tours)
+G=C3=A9rald Kembellec (CNAM)
+Nicolas Labroche (Universit=C3=A9 deTours)
+Patrick Marcel (Universit=C3=A9 de Tours)
+Veronika Peralta (Universit=C3=A9 deTours)
+Angelina Toursel (UPHF Valenciennes)
+Philippe Useille (UPHF Valenciennes/MESH)
+Contacts : Marie.Chagnoux@univ-paris8.fr =
+<mailto:Marie.Chagnoux@univ-paris8.fr> et Patrick.Marcel@univ-tours.fr =
+<mailto:Patrick.Marcel@univ-tours.fr>
+
+=E2=80=94
+Patrick Marcel, PhD
+CS Dept., LIFAT Lab.,
+University of Tours, France
++332 5455 2155
+http://www.info.univ-tours.fr/~marcel/ =
+<http://www.info.univ-tours.fr/~marcel/>
+=E2=80=94
+Patrick Marcel, PhD
+CS Dept., LIFAT Lab.,
+University of Tours, France
++332 5455 2155
+http://www.info.univ-tours.fr/~marcel/
+
+
+--Apple-Mail=_FEE893E2-9938-4DE9-9EBE-354A5E581BBE
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
+charset=3Dutf-8"></head><body style=3D"word-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;" class=3D""><div =
+class=3D"" style=3D"line-height: 1.38; margin-top: 0pt; margin-bottom: =
+0pt;"><span class=3D"" style=3D"font-size: 11pt; font-family: Arial; =
+font-variant-ligatures: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; vertical-align: baseline; white-space: =
+pre-wrap;">*** Soumissions des r=C3=A9sum=C3=A9s possibles jusqu=E2=80=99a=
+u 7 juin *** </span></div><div class=3D"" style=3D"line-height: 1.38; =
+margin-top: 0pt; margin-bottom: 0pt;"><span class=3D"" style=3D"font-size:=
+ 11pt; font-family: Arial; font-variant-ligatures: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+vertical-align: baseline; white-space: pre-wrap;"><br =
+class=3D""></span></div><div class=3D"" style=3D"line-height: 1.38; =
+margin-top: 0pt; margin-bottom: 0pt;"><span class=3D"" style=3D"font-size:=
+ 11pt; font-family: Arial; font-variant-ligatures: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+vertical-align: baseline; white-space: pre-wrap;">NADA 22 : 1er atelier =
+pluridisciplinaire : narration de donn=C3=A9es, datajournalisme et =
+engagement(s)</span></div><div class=3D"" style=3D"line-height: 1.38; =
+margin-top: 0pt; margin-bottom: 0pt;"><span class=3D"" style=3D"font-size:=
+ 11pt; font-family: Arial; font-variant-ligatures: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+vertical-align: baseline; white-space: pre-wrap;">12 juillet 2022, Lyon, =
+Campus de La Doua</span></div><div class=3D"" style=3D"line-height: =
+1.38; margin-top: 0pt; margin-bottom: 0pt;"><span class=3D"" =
+style=3D"font-size: 11pt; font-family: Arial; font-variant-ligatures: =
+normal; font-variant-east-asian: normal; font-variant-position: normal; =
+vertical-align: baseline; white-space: pre-wrap;">Soumission : <a =
+class=3D"moz-txt-link-freetext" =
+href=3D"https://easychair.org/my/conference?conf=3Dnada2022">https://easyc=
+hair.org/my/conference?conf=3Dnada2022</a></span></div><br class=3D""><div=
+ class=3D"" style=3D"line-height: 1.38; text-align: justify; margin-top: =
+0pt; margin-bottom: 0pt;"><span class=3D"" style=3D"font-size: 11pt; =
+font-family: Arial; font-variant-ligatures: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+vertical-align: baseline; white-space: pre-wrap;">Une narration de =
+donn=C3=A9es peut =C3=AAtre d=C3=A9finie comme la composition =
+structur=C3=A9e de messages (i) construits =C3=A0 partir de r=C3=A9sultats=
+ d=E2=80=99explorations de donn=C3=A9es (ii) communiqu=C3=A9s le plus =
+souvent visuellement pour faciliter leur r=C3=A9ception.Ce type =
+d=E2=80=99activit=C3=A9 est omnipr=C3=A9sente lorsqu=E2=80=99il s=E2=80=99=
+agit de restituer des analyses exploratoires de donn=C3=A9es, notamment =
+en datajournalisme.</span></div><br class=3D""><div class=3D"" =
+style=3D"line-height: 1.38; text-align: justify; margin-top: 0pt; =
+margin-bottom: 0pt;"><span class=3D"" style=3D"font-size: 11pt; =
+font-family: Arial; font-variant-ligatures: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+vertical-align: baseline; white-space: pre-wrap;">L=E2=80=99=C3=A9tude =
+de la narration de donn=C3=A9es est relativement r=C3=A9cente et a =
+attir=C3=A9 l=E2=80=99attention de diff=C3=A9rentes communaut=C3=A9s de =
+recherche en informatique (gestion de la donn=C3=A9e, visualisation, =
+recherche d=E2=80=99information,=E2=80=A6), en sciences de =
+l=E2=80=99information et de la communication, dans le champs des =
+humanit=C3=A9s num=C3=A9riques, tout comme des professionnels&nbsp; =
+(journalistes, professionnels de la communication, =E2=80=A6) . Cette =
+=C3=A9tude repose notamment sur l=E2=80=99exploitation de corpus riches =
+(articles de presse, notebooks,...).&nbsp;</span></div><br class=3D""><div=
+ class=3D"" style=3D"line-height: 1.38; text-align: justify; margin-top: =
+0pt; margin-bottom: 0pt;"><span class=3D"" style=3D"font-size: 11pt; =
+font-family: Arial; font-variant-ligatures: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+vertical-align: baseline; white-space: pre-wrap;">L=E2=80=99objectif de =
+cet atelier est de f=C3=A9d=C3=A9rer cette&nbsp; communaut=C3=A9 =
+pluridisciplinaire en gestation autour de l=E2=80=99analyse de la =
+narration de donn=C3=A9es journalistique. Plus pr=C3=A9cis=C3=A9ment, il =
+s=E2=80=99agit d=E2=80=99=C3=A9changer en premier lieu sur les =
+diff=C3=A9rents aspects de </span><span class=3D"" style=3D"font-size: =
+11pt; font-family: Arial; font-weight: 700; font-variant-ligatures: =
+normal; font-variant-east-asian: normal; font-variant-position: normal; =
+vertical-align: baseline; white-space: =
+pre-wrap;">l=E2=80=99engagement</span><span class=3D"" style=3D"font-size:=
+ 11pt; font-family: Arial; font-variant-ligatures: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+vertical-align: baseline; white-space: pre-wrap;"> dans la </span><span =
+class=3D"" style=3D"font-size: 11pt; font-family: Arial; font-weight: =
+700; font-variant-ligatures: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; vertical-align: baseline; white-space: =
+pre-wrap;">narration de donn=C3=A9es journalistique</span><span class=3D""=
+ style=3D"font-size: 11pt; font-family: Arial; font-variant-ligatures: =
+normal; font-variant-east-asian: normal; font-variant-position: normal; =
+vertical-align: baseline; white-space: pre-wrap;">. La notion =
+d=E2=80=99engagement est volontairement laiss=C3=A9e large ; =
+l=E2=80=99engagement peut =C3=AAtre en amont (engagement du journaliste =
+narrateur dans le sujet trait=C3=A9, vis-=C3=A0-vis de ses lecteurs) ou =
+en aval (production d=E2=80=99une narration ayant pour but de susciter =
+l=E2=80=99engagement du lecteur par des proc=C3=A9d=C3=A9s rh=C3=A9torique=
+s ou des dispositifs interactifs par exemple).</span></div><br =
+class=3D""><div class=3D"" style=3D"line-height: 1.38; text-align: =
+justify; margin-top: 0pt; margin-bottom: 0pt;"><span class=3D"" =
+style=3D"font-size: 11pt; font-family: Arial; font-variant-ligatures: =
+normal; font-variant-east-asian: normal; font-variant-position: normal; =
+vertical-align: baseline; white-space: pre-wrap;">Les th=C3=A8mes =
+abord=C3=A9s seront (liste non exhaustive) :&nbsp;</span></div><ul =
+class=3D"" style=3D"margin-top: 0px; margin-bottom: 0px; =
+padding-inline-start: 48px;"><li dir=3D"ltr" aria-level=3D"1" class=3D"" =
+style=3D"list-style-type: disc; font-size: 11pt; font-family: Arial; =
+font-variant-ligatures: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; vertical-align: baseline; white-space: =
+pre; margin-left: 36pt;"><div class=3D"" style=3D"line-height: 1.38; =
+text-align: justify; margin-top: 0pt; margin-bottom: 0pt;"><span =
+class=3D"" style=3D"font-size: 11pt; font-variant-ligatures: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+vertical-align: baseline; white-space: pre-wrap;"><b =
+class=3D"">D=C3=A9finition de la notion d=E2=80=99engagement </b>: =
+amont, aval=E2=80=A6</span></div></li><li dir=3D"ltr" aria-level=3D"1" =
+class=3D"" style=3D"list-style-type: disc; font-size: 11pt; font-family: =
+Arial; font-variant-ligatures: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; vertical-align: baseline; white-space: =
+pre; margin-left: 36pt;"><div class=3D"" style=3D"line-height: 1.38; =
+text-align: justify; margin-top: 0pt; margin-bottom: 0pt;"><span =
+class=3D"" style=3D"font-size: 11pt; font-variant-ligatures: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+vertical-align: baseline; white-space: pre-wrap;"><b class=3D"">M=C3=A9dia=
+ et supports d=E2=80=99engagement</b> : articles, notebooks, r=C3=A9seaux =
+sociaux, etc.</span></div></li><li dir=3D"ltr" aria-level=3D"1" class=3D""=
+ style=3D"list-style-type: disc; font-size: 11pt; font-family: Arial; =
+font-variant-ligatures: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; vertical-align: baseline; white-space: =
+pre; margin-left: 36pt;"><div class=3D"" style=3D"line-height: 1.38; =
+text-align: justify; margin-top: 0pt; margin-bottom: 0pt;"><span =
+class=3D"" style=3D"font-size: 11pt; font-variant-ligatures: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+vertical-align: baseline; white-space: pre-wrap;"><b class=3D"">Mesure =
+de l=E2=80=99engagement</b> : mesures objectives, mesures subjectives, =
+m=C3=A9thodes de mesure d=E2=80=99engagement, etc.</span></div></li><li =
+dir=3D"ltr" aria-level=3D"1" class=3D"" style=3D"list-style-type: disc; =
+font-size: 11pt; font-family: Arial; font-variant-ligatures: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+vertical-align: baseline; white-space: pre; margin-left: 36pt;"><div =
+class=3D"" style=3D"line-height: 1.38; text-align: justify; margin-top: =
+0pt; margin-bottom: 0pt;"><span class=3D"" style=3D"font-size: 11pt; =
+font-variant-ligatures: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; vertical-align: baseline; white-space: =
+pre-wrap;"><b class=3D"">Temporalit=C3=A9 de l=E2=80=99engagement</b> : =
+=C3=A9volution de l=E2=80=99engagement dans le temps, =
+etc.</span></div></li><li dir=3D"ltr" aria-level=3D"1" class=3D"" =
+style=3D"list-style-type: disc; font-size: 11pt; font-family: Arial; =
+font-variant-ligatures: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; vertical-align: baseline; white-space: =
+pre; margin-left: 36pt;"><div class=3D"" style=3D"line-height: 1.38; =
+text-align: justify; margin-top: 0pt; margin-bottom: 0pt;"><span =
+class=3D"" style=3D"font-size: 11pt; font-variant-ligatures: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+vertical-align: baseline; white-space: pre-wrap;"><b class=3D"">Engagement=
+ et d=C3=A9marche journalistique</b> : l=C3=A9gitimation, transparence, =
+didactique, etc.</span></div></li><li dir=3D"ltr" aria-level=3D"1" =
+class=3D"" style=3D"list-style-type: disc; font-size: 11pt; font-family: =
+Arial; font-variant-ligatures: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; vertical-align: baseline; white-space: =
+pre; margin-left: 36pt;"><div class=3D"" style=3D"line-height: 1.38; =
+text-align: justify; margin-top: 0pt; margin-bottom: 0pt;"><span =
+class=3D"" style=3D"font-size: 11pt; font-variant-ligatures: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+vertical-align: baseline; white-space: pre-wrap;"><b class=3D"">Engagement=
+ et forme journalistique</b> : journalisme ouvert, journalisme citoyen =
+et participatif, journalisme collaboratif sous forme de consortium, =
+journalisme de proximit=C3=A9, journalisme de terrain, impact sur la vie =
+sociale, etc.</span></div></li><li dir=3D"ltr" aria-level=3D"1" class=3D""=
+ style=3D"list-style-type: disc; font-size: 11pt; font-family: Arial; =
+font-variant-ligatures: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; vertical-align: baseline; white-space: =
+pre; margin-left: 36pt;"><div class=3D"" style=3D"line-height: 1.38; =
+text-align: justify; margin-top: 0pt; margin-bottom: 0pt;"><span =
+class=3D"" style=3D"font-size: 11pt; font-variant-ligatures: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+vertical-align: baseline; white-space: pre-wrap;"><b class=3D"">Engagement=
+ et forme discursive</b> : controverse, argumentation, interactivit=C3=A9,=
+ etc.</span></div></li></ul><br class=3D""><div class=3D"" =
+style=3D"line-height: 1.38; text-align: justify; margin-top: 0pt; =
+margin-bottom: 0pt;"><span class=3D"" style=3D"font-size: 11pt; =
+font-family: Arial; font-variant-ligatures: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+vertical-align: baseline; white-space: pre-wrap;">L=E2=80=99atelier sera =
+compos=C3=A9 d=E2=80=99interventions de 20 minutes suivies de 10-15 =
+minutes d=E2=80=99=C3=A9change, et d=E2=80=99une table ronde bilan de la =
+journ=C3=A9e. Pour ces interventions, nous sollicitons des soumissions =
+de r=C3=A9sum=C3=A9s (maximum 2 pages ou 500 mots, =C3=A0 d=C3=A9poser =
+sur : <a moz-do-not-send=3D"true" =
+href=3D"https://easychair.org/conferences/?conf=3Dnada2022" =
+class=3D"moz-txt-link-freetext">https://easychair.org/conferences/?conf=3D=
+nada2022</a>) d=C3=A9crivant des travaux et projets aboutis ou en cours, =
+des retours d=E2=80=99exp=C3=A9riences, des d=C3=A9clarations =
+d=E2=80=99intention, prospectifs, etc. Nous souhaitons dans une =
+d=C3=A9marche transdisciplinaire accueillir des intervenants =
+d=E2=80=99horizons vari=C3=A9s, la participation de professionnels est =
+encourag=C3=A9e.</span></div><br class=3D""><div class=3D"" =
+style=3D"line-height: 1.38; text-align: justify; margin-top: 0pt; =
+margin-bottom: 0pt;"><b class=3D""><span class=3D"" style=3D"font-size: =
+11pt; font-family: Arial; font-variant-ligatures: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+vertical-align: baseline; white-space: pre-wrap;">Dates importantes : =
+</span></b></div><ul class=3D"" style=3D"margin-top: 0px; margin-bottom: =
+0px; padding-inline-start: 48px;"><li dir=3D"ltr" aria-level=3D"1" =
+class=3D"" style=3D"list-style-type: disc; font-size: 11pt; font-family: =
+Arial; font-variant-ligatures: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; vertical-align: baseline; white-space: =
+pre; margin-left: 36pt;"><div class=3D"" style=3D"line-height: 1.38; =
+text-align: justify; margin-top: 0pt; margin-bottom: 0pt;"><span =
+class=3D"" style=3D"font-size: 11pt; font-variant-ligatures: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+vertical-align: baseline; white-space: pre-wrap;">Diffusion de l=E2=80=99a=
+ppel =C3=A0 r=C3=A9sum=C3=A9s :&nbsp; 10 mai 2022</span></div></li><li =
+dir=3D"ltr" aria-level=3D"1" class=3D"" style=3D"list-style-type: disc; =
+font-size: 11pt; font-family: Arial; font-variant-ligatures: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+vertical-align: baseline; white-space: pre; margin-left: 36pt;"><div =
+class=3D"" style=3D"line-height: 1.38; text-align: justify; margin-top: =
+0pt; margin-bottom: 0pt;"><span class=3D"" style=3D"font-size: 11pt; =
+font-variant-ligatures: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; vertical-align: baseline; white-space: =
+pre-wrap;">Soumission des r=C3=A9sum=C3=A9s : 7 juin =
+2022</span></div></li><li dir=3D"ltr" aria-level=3D"1" class=3D"" =
+style=3D"list-style-type: disc; font-size: 11pt; font-family: Arial; =
+font-variant-ligatures: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; vertical-align: baseline; white-space: =
+pre; margin-left: 36pt;"><div class=3D"" style=3D"line-height: 1.38; =
+text-align: justify; margin-top: 0pt; margin-bottom: 0pt;"><span =
+class=3D"" style=3D"font-size: 11pt; font-variant-ligatures: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+vertical-align: baseline; white-space: pre-wrap;">Acceptation : 13 juin =
+2022</span></div></li><li dir=3D"ltr" aria-level=3D"1" class=3D"" =
+style=3D"list-style-type: disc; font-size: 11pt; font-family: Arial; =
+font-variant-ligatures: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; vertical-align: baseline; white-space: =
+pre; margin-left: 36pt;"><div class=3D"" style=3D"line-height: 1.38; =
+text-align: justify; margin-top: 0pt; margin-bottom: 0pt;"><span =
+class=3D"" style=3D"font-size: 11pt; font-variant-ligatures: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+vertical-align: baseline; white-space: pre-wrap;">Atelier : mardi 12 =
+juillet 2022</span></div></li></ul><p dir=3D"ltr" class=3D"" =
+style=3D"line-height: 1.38; text-align: justify; margin-top: 0pt; =
+margin-bottom: 0pt;"><span class=3D"" style=3D"font-size: 11pt; =
+font-family: Arial; font-variant-ligatures: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+vertical-align: baseline; white-space: pre-wrap;">&nbsp;&nbsp;&nbsp; =
+</span><span class=3D"" style=3D"font-size: 11pt; font-family: Arial; =
+font-variant-ligatures: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; vertical-align: baseline; white-space: =
+pre-wrap;">&nbsp;&nbsp;&nbsp; </span></p><div class=3D"" =
+style=3D"line-height: 1.38; text-align: justify; margin-top: 0pt; =
+margin-bottom: 0pt;"><b class=3D""><span class=3D"" style=3D"font-size: =
+11pt; font-family: Arial; font-variant-ligatures: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+vertical-align: baseline; white-space: pre-wrap;">Comit=C3=A9 =
+scientifique :&nbsp;</span></b></div><ul class=3D"" style=3D"margin-top: =
+0px; margin-bottom: 0px; padding-inline-start: 48px;"><li dir=3D"ltr" =
+aria-level=3D"1" class=3D"" style=3D"list-style-type: disc; font-size: =
+11pt; font-family: Arial; font-variant-ligatures: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+vertical-align: baseline; white-space: pre;"><div class=3D"" =
+style=3D"line-height: 1.38; text-align: justify; margin-top: 0pt; =
+margin-bottom: 0pt;"><span class=3D"" style=3D"font-size: 11pt; =
+font-variant-ligatures: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; vertical-align: baseline; white-space: =
+pre-wrap;">Marie Chagnoux (Universit=C3=A9 Paris 8)</span></div></li><li =
+dir=3D"ltr" aria-level=3D"1" class=3D"" style=3D"list-style-type: disc; =
+font-size: 11pt; font-family: Arial; font-variant-ligatures: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+vertical-align: baseline; white-space: pre;"><div class=3D"" =
+style=3D"line-height: 1.38; text-align: justify; margin-top: 0pt; =
+margin-bottom: 0pt;"><span class=3D"" style=3D"font-size: 11pt; =
+font-variant-ligatures: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; vertical-align: baseline; white-space: =
+pre-wrap;">Alexandre Chanson (Universit=C3=A9 de =
+Tours)</span></div></li><li dir=3D"ltr" aria-level=3D"1" class=3D"" =
+style=3D"list-style-type: disc; font-size: 11pt; font-family: Arial; =
+font-variant-ligatures: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; vertical-align: baseline; white-space: =
+pre;"><div class=3D"" style=3D"line-height: 1.38; text-align: justify; =
+margin-top: 0pt; margin-bottom: 0pt;"><span class=3D"" style=3D"font-size:=
+ 11pt; font-variant-ligatures: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; vertical-align: baseline; white-space: =
+pre-wrap;">Raphael Da Silva (Journaliste =
+free-lance)</span></div></li><li dir=3D"ltr" aria-level=3D"1" class=3D"" =
+style=3D"list-style-type: disc; font-size: 11pt; font-family: Arial; =
+font-variant-ligatures: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; vertical-align: baseline; white-space: =
+pre;"><div class=3D"" style=3D"line-height: 1.38; text-align: justify; =
+margin-top: 0pt; margin-bottom: 0pt;"><span class=3D"" style=3D"font-size:=
+ 11pt; font-variant-ligatures: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; vertical-align: baseline; white-space: =
+pre-wrap;">Faten El Outa (Universit=C3=A9 Tours)</span></div></li><li =
+dir=3D"ltr" aria-level=3D"1" class=3D"" style=3D"list-style-type: disc; =
+font-size: 11pt; font-family: Arial; font-variant-ligatures: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+vertical-align: baseline; white-space: pre;"><div class=3D"" =
+style=3D"line-height: 1.38; text-align: justify; margin-top: 0pt; =
+margin-bottom: 0pt;"><span class=3D"" style=3D"font-size: 11pt; =
+font-variant-ligatures: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; vertical-align: baseline; white-space: =
+pre-wrap;">G=C3=A9rald Kembellec (CNAM)</span></div></li><li dir=3D"ltr" =
+aria-level=3D"1" class=3D"" style=3D"list-style-type: disc; font-size: =
+11pt; font-family: Arial; font-variant-ligatures: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+vertical-align: baseline; white-space: pre;"><div class=3D"" =
+style=3D"line-height: 1.38; text-align: justify; margin-top: 0pt; =
+margin-bottom: 0pt;"><span class=3D"" style=3D"font-size: 11pt; =
+font-variant-ligatures: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; vertical-align: baseline; white-space: =
+pre-wrap;">Nicolas Labroche (Universit=C3=A9 =
+deTours)</span></div></li><li dir=3D"ltr" aria-level=3D"1" class=3D"" =
+style=3D"list-style-type: disc; font-size: 11pt; font-family: Arial; =
+font-variant-ligatures: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; vertical-align: baseline; white-space: =
+pre;"><div class=3D"" style=3D"line-height: 1.38; text-align: justify; =
+margin-top: 0pt; margin-bottom: 0pt;"><span class=3D"" style=3D"font-size:=
+ 11pt; font-variant-ligatures: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; vertical-align: baseline; white-space: =
+pre-wrap;">Patrick Marcel (Universit=C3=A9 de =
+Tours)</span></div></li><li dir=3D"ltr" aria-level=3D"1" class=3D"" =
+style=3D"list-style-type: disc; font-size: 11pt; font-family: Arial; =
+font-variant-ligatures: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; vertical-align: baseline; white-space: =
+pre;"><div class=3D"" style=3D"line-height: 1.38; text-align: justify; =
+margin-top: 0pt; margin-bottom: 0pt;"><span class=3D"" style=3D"font-size:=
+ 11pt; font-variant-ligatures: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; vertical-align: baseline; white-space: =
+pre-wrap;">Veronika Peralta (Universit=C3=A9 =
+deTours)</span></div></li><li dir=3D"ltr" aria-level=3D"1" class=3D"" =
+style=3D"list-style-type: disc; font-size: 11pt; font-family: Arial; =
+font-variant-ligatures: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; vertical-align: baseline; white-space: =
+pre;"><div class=3D"" style=3D"line-height: 1.38; text-align: justify; =
+margin-top: 0pt; margin-bottom: 0pt;"><span class=3D"" style=3D"font-size:=
+ 11pt; font-variant-ligatures: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; vertical-align: baseline; white-space: =
+pre-wrap;">Angelina Toursel (UPHF Valenciennes)</span></div></li><li =
+dir=3D"ltr" aria-level=3D"1" class=3D"" style=3D"list-style-type: disc; =
+font-size: 11pt; font-family: Arial; font-variant-ligatures: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+vertical-align: baseline; white-space: pre;"><div class=3D"" =
+style=3D"line-height: 1.38; text-align: justify; margin-top: 0pt; =
+margin-bottom: 0pt;"><span class=3D"" style=3D"font-size: 11pt; =
+font-variant-ligatures: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; vertical-align: baseline; white-space: =
+pre-wrap;">Philippe Useille (UPHF =
+Valenciennes/MESH)</span></div></li></ul><p class=3D"">Contacts =
+:&nbsp;<a class=3D"moz-txt-link-abbreviated" =
+href=3D"mailto:Marie.Chagnoux@univ-paris8.fr">Marie.Chagnoux@univ-paris8.f=
+r</a>&nbsp;et&nbsp;<a class=3D"moz-txt-link-abbreviated" =
+href=3D"mailto:Patrick.Marcel@univ-tours.fr">Patrick.Marcel@univ-tours.fr<=
+/a><br class=3D""></p><div class=3D""><br class=3D""></div><div =
+class=3D""><div dir=3D"auto" class=3D"" style=3D"word-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;"><div =
+class=3D"">=E2=80=94</div><div class=3D"">Patrick Marcel, PhD<br =
+class=3D"">CS Dept., LIFAT Lab.,<br class=3D"">University of Tours, =
+France<br class=3D"">+332 5455 2155<br class=3D""><a =
+href=3D"http://www.info.univ-tours.fr/~marcel/" =
+class=3D"">http://www.info.univ-tours.fr/~marcel/</a></div></div></div><di=
+v class=3D"">
+<div dir=3D"auto" style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, =
+0); letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; word-wrap: =
+break-word; -webkit-nbsp-mode: space; line-break: after-white-space;" =
+class=3D""><div>=E2=80=94</div><div>Patrick Marcel, PhD<br class=3D"">CS =
+Dept., LIFAT Lab.,<br class=3D"">University of Tours, France<br =
+class=3D"">+332 5455 2155<br class=3D""><a =
+href=3D"http://www.info.univ-tours.fr/~marcel/" =
+class=3D"">http://www.info.univ-tours.fr/~marcel/</a></div></div>
+</div>
+
+<br class=3D""></body></html>=
+
+--Apple-Mail=_FEE893E2-9938-4DE9-9EBE-354A5E581BBE--

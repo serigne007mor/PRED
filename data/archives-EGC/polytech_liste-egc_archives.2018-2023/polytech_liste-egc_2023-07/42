@@ -1,0 +1,416 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (bouncesmtp1.u12.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 8AA4F14017CD
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon, 24 Jul 2023 11:44:51 +0200 (CEST)
+Received: from mx3.localdomain (MX3.univ-nantes.fr [193.52.101.137])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id 827497048
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon, 24 Jul 2023 11:44:51 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.localdomain (Postfix) with ESMTP id 76B9120615
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 24 Jul 2023 11:44:51 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 2.023
+X-Spam-Level: **
+X-Spam-Status: No, score=2.023 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	IMPRONONCABLE_2=1.5, NO_RDNS=0.5, NO_RDNS2=0.01,
+	RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_WSFF=0.01,
+	SPF_HELO_NONE=0.001, SPF_PASS=-0.001, UN_PHISHING_PW=0.1]
+	autolearn=disabled
+X-CRM114-Status: UNSURE ( 3.0991 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=unistra.fr
+Received: from mx3.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id G7rcqoPPLOJ3 for <liste-egc@polytech.univ-nantes.fr>;
+	Mon, 24 Jul 2023 11:44:49 +0200 (CEST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=194.254.240.33; helo=smtpout01-ext2.partage.renater.fr; envelope-from=gancarski@unistra.fr; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=none (p=none dis=none) header.from=unistra.fr
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=gancarski@unistra.fr
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (2048-bit key; unprotected) header.d=unistra.fr header.i=@unistra.fr header.b="tUG65h5k";
+	dkim-atps=neutral
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from smtpout01-ext2.partage.renater.fr (smtpout01-ext2.partage.renater.fr [194.254.240.33])
+	by mx3.localdomain (Postfix) with ESMTPS id 57F5820066
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 24 Jul 2023 11:44:49 +0200 (CEST)
+Received: from zmtaauth03.partage.renater.fr (zmtaauth03.partage.renater.fr [194.254.240.26])
+	by smtpout10.partage.renater.fr (Postfix) with ESMTP id 00718637F7;
+	Mon, 24 Jul 2023 11:44:36 +0200 (CEST)
+Received: from zmtaauth03.partage.renater.fr (localhost [127.0.0.1])
+	by zmtaauth03.partage.renater.fr (Postfix) with ESMTPS id D62238001A;
+	Mon, 24 Jul 2023 11:44:36 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zmtaauth03.partage.renater.fr (Postfix) with ESMTP id B26A3800C6;
+	Mon, 24 Jul 2023 11:44:36 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zmtaauth03.partage.renater.fr B26A3800C6
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unistra.fr;
+	s=CF279DD4-6F58-4C59-BB33-73FDC6DFC1E3; t=1690191876;
+	bh=YtORRJulHFxSpaDREPjPcIZ4dTAl/G611n17Jy1Z180=;
+	h=Message-ID:Date:MIME-Version:From:To;
+	b=tUG65h5kzfSUqIuIIF0Sp/A/SRsKp/oXPCPv7mNGrk8igXWCMxPWBJo7AE1ltkr13
+	 FrFWh9/yP8syL5ETut9GSXrJhTAnpoVCOe23hnvB8DFeyiQorHbH9T3oVUUCyA9Jhl
+	 /0mdQPGwmtHfCYRadZ3ND2lzdaaOQv9oCQajn1Py+nmKqieUlUuUczs+Jjs6i6jhvv
+	 C57pwD8RbyFP66jAx4Fh/jworas/2r/B9FQp/IP0eJvSZ8FAwtumX1wNIGZOCzdO8E
+	 FSFbGAZrhSEwLaLlrK2bHKlnsGpGk0Y8ggbemRPcZajcwLNAidSbrfYLJTMN/XHF74
+	 PlmKr1L0Zn3Hg==
+Received: from zmtaauth03.partage.renater.fr ([127.0.0.1])
+	by localhost (zmtaauth03.partage.renater.fr [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id umRCZBB8BAlN; Mon, 24 Jul 2023 11:44:36 +0200 (CEST)
+Received: from [130.79.91.71] (unknown [194.254.241.251])
+	by zmtaauth03.partage.renater.fr (Postfix) with ESMTPA id 23B688001A;
+	Mon, 24 Jul 2023 11:44:36 +0200 (CEST)
+Content-Type: multipart/alternative;
+ boundary="------------rr06is9qHUlf6ZPhM0oS8l9A"
+Message-ID: <7167df4e-df03-8fee-02c5-c66d5aed4c3a@unistra.fr>
+Date: Mon, 24 Jul 2023 11:44:35 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.13.0
+From: =?UTF-8?Q?Pierre_Gan=c3=a7arski_=28Unistra=29?= <gancarski@unistra.fr>
+To: info-ic@inria.fr, bull-i3@irit.fr, gazettebd3@imag.fr,
+ liste-egc@polytech.univ-nantes.fr, bull-ia@gdria.fr,
+ annonces@societe-informatique-de-france.fr
+Cc: Baptiste Lafabregue <lafabregue@unistra.fr>,
+ Joris Ravaglia <ravaglia@unistra.fr>,
+ "antoine.cornuejols@agroparistech.fr" <antoine.cornuejols@agroparistech.fr>
+References: <2b228ffb-8674-07f5-d764-bddcc04754e3@unistra.fr>
+ <1096671481.197178766.1689781006091.JavaMail.zimbra@unistra.fr>
+Content-Language: fr
+In-Reply-To: <1096671481.197178766.1689781006091.JavaMail.zimbra@unistra.fr>
+X-Virus-Scanned: clamav-milter 0.103.8 at clamav01
+X-Virus-Status: Clean
+X-Renater-Ptge-SpamState: clean
+X-Renater-Ptge-SpamScore: -100
+X-Renater-Ptge-SpamCause: gggruggvucftvghtrhhoucdtuddrgedviedrheekgddukecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucftgffptefvgfftnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpegtkfffgggfhffuvfevfhgjsegrtderredtfeejnecuhfhrohhmpefrihgvrhhrvgcuifgrnhoprghrshhkihculdgfnhhishhtrhgrmdcuoehgrghntggrrhhskhhisehunhhishhtrhgrrdhfrheqnecuggftrfgrthhtvghrnhepkedtvdfftdfhjeekvdefhfdtgfetffefveekjedukeejteekveehtdekteektedtnecuffhomhgrihhnpehunhhishhtrhgrrdhfrhenucfkphepudelgedrvdehgedrvdeguddrvdehudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduleegrddvheegrddvgedurddvhedupdhhvghloheplgdufedtrdejledrledurdejudgnpdhmrghilhhfrhhomheppeerfgfvhfdqkeersferrfhivghrrhgvpgfirghnpegtfeeprgejrghrshhkihgppedvkegfnhhishhtrhgrpedvleerpecuoehgrghntggrrhhskhhisehunhhishhtrhgrrdhfrheqpdhnsggprhgtphhtthhopedugedprhgtphhtthhopehinhhfohdqihgtsehinhhrihgrrdhfrhdprhgtphhtthhopegsuhhllhdqihefsehirhhithdrfhhrpdhrtghpthhtohepghgriigvthhtvggsugefsehimhgrghdrfhhrpdhrtghpthht
+ oheplhhishhtvgdqvghgtgesphholhihthgvtghhrdhunhhivhdqnhgrnhhtvghsrdhfrhdprhgtphhtthhopegsuhhllhdqihgrsehgughrihgrrdhfrhdprhgtphhtthhopegrnhhnohhntggvshesshhotghivghtvgdqihhnfhhorhhmrghtihhquhgvqdguvgdqfhhrrghntggvrdhfrh
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Offre =?UTF-8?Q?ING=C3=89NIEUR_D=27=C3=89TUDE?= EN
+ INFORMATIQUE / DESIGN ENGINEER FOR IT PROJECTS (version en ligne)
+
+This is a multi-part message in MIME format.
+--------------rr06is9qHUlf6ZPhM0oS8l9A
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+
+// N=E2=80=99h=C3=A9sitez pas =C3=A0 diffuser tr=C3=A8s largement =C3=A0 =
+vos connaissances et=20
+=C3=A9tudiants //
+
+Une (super) offre d'un CDD-BAC+5 d'une dur=C3=A9e de 24 mois dans le cadr=
+e=20
+tr=C3=A8s innovant et stimulant d'un laboratoire de recherche (ICube -=20
+Universit=C3=A9 de Strasbourg)
+
+-->https://seafile.unistra.fr/d/536cbdd0fb6a46f0a4f4/
+(includes an English version)
+
+*Ing=C3=A9nieur d=E2=80=99=C3=A9tude en informatique*=C2=A0 / *Design eng=
+ineer for IT projects*
+
+  * Int=C3=A9grez une plateforme de services li=C3=A9s =C3=A0 l'intellige=
+nce
+    artificielle (GAIA)
+  * Intervenez sur un logiciel d'aide aux services d=E2=80=99urgence lors=
+ de
+    catastrophes (tremblements de terre , inondations...)
+  * DEVENEZ MA=C3=8ETRE D=E2=80=99=C5=92UVRE D'UN IMPORTANT LOGICIEL DE C=
+LASSIFICATION
+    D'IMAGES DE TELEDETECTION
+
+/D=C3=A9butant accept=C3=A9/
+
+Nous r=C3=A9pondrons avec plaisir =C3=A0 toute demande de renseignements=20
+compl=C3=A9mentaires : Joris Ravaglia (ravaglia@unistra.fr) _et_ Pierre=20
+Gan=C3=A7arski (gancarski@unistra.fr)
+
+-- JR/PG
+
+--------------rr06is9qHUlf6ZPhM0oS8l9A
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+  <head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF=
+-8">
+  </head>
+  <body>
+    <p>// N=E2=80=99h=C3=A9sitez pas =C3=A0 diffuser tr=C3=A8s largement =
+=C3=A0 vos connaissances et
+      =C3=A9tudiants //
+      <style>@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:-536870145 1107305727 0 0 415 0;}@font-face
+	{font-family:"Unistra A";
+	panose-1:2 11 6 4 2 2 2 2 2 4;
+	mso-font-alt:Corbel;
+	mso-font-charset:0;
+	mso-generic-font-family:auto;
+	mso-font-pitch:auto;
+	mso-font-signature:0 0 0 0 0 0;}p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-parent:"";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:4.8pt;
+	margin-left:7.8pt;
+	text-indent:-.5pt;
+	line-height:107%;
+	mso-pagination:widow-orphan;
+	border:none;
+	mso-border-alt:solid black .5pt;
+	padding:0cm;
+	mso-padding-alt:0cm 0cm 0cm 0cm;
+	font-size:12.0pt;
+	mso-bidi-font-size:11.0pt;
+	font-family:"Unistra A";
+	mso-fareast-font-family:"Unistra A";
+	mso-bidi-font-family:"Unistra A";
+	color:black;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}.MsoChpDefault
+	{mso-style-type:export-only;
+	mso-default-props:yes;
+	font-size:11.0pt;
+	mso-ansi-font-size:11.0pt;
+	mso-bidi-font-size:11.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:Arial;
+	mso-fareast-theme-font:minor-fareast;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;}.MsoPapDefault
+	{mso-style-type:export-only;
+	margin-bottom:8.0pt;
+	line-height:107%;}div.WordSection1
+	{page:WordSection1;}</style></p>
+    <p>Une (super) offre d'un CDD-BAC+5 d'une dur=C3=A9e de 24 mois dans =
+le
+      cadre tr=C3=A8s innovant et stimulant d'un laboratoire de recherche
+      (ICube - Universit=C3=A9 de Strasbourg)</p>
+    <pre class=3D"moz-quote-pre" wrap=3D"">--&gt;  <a class=3D"moz-txt-li=
+nk-freetext" href=3D"https://seafile.unistra.fr/d/536cbdd0fb6a46f0a4f4/">=
+https://seafile.unistra.fr/d/536cbdd0fb6a46f0a4f4/</a>
+(includes an English version)
+</pre>
+    <p> </p>
+    <p> <b style=3D"mso-bidi-font-weight:normal"><span
+style=3D"font-size:12.0pt;mso-bidi-font-size:10.0pt;line-height:107%;font=
+-family:&quot;Unistra
+          A&quot;;mso-fareast-font-family:&quot;Unistra
+          A&quot;;mso-bidi-font-family:&quot;Unistra A&quot;;
+color:teal;mso-ansi-language:FR;mso-fareast-language:FR;mso-bidi-language=
+:AR-SA">Ing=C3=A9nieur
+          d=E2=80=99=C3=A9tude en informatique</span></b>=C2=A0 / <b
+        style=3D"mso-bidi-font-weight:normal"><span
+style=3D"font-size:12.0pt;mso-bidi-font-size:10.0pt;line-height:107%;font=
+-family:&quot;Unistra
+          A&quot;;mso-fareast-font-family:&quot;Unistra
+          A&quot;;mso-bidi-font-family:&quot;Unistra A&quot;;
+color:teal;mso-ansi-language:EN-US;mso-fareast-language:FR;mso-bidi-langu=
+age:
+          AR-SA" lang=3D"EN-US">Design engineer for IT projects</span></b=
+>
+      <style>@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:-536870145 1107305727 0 0 415 0;}@font-face
+	{font-family:"Unistra A";
+	panose-1:2 11 6 4 2 2 2 2 2 4;
+	mso-font-alt:Corbel;
+	mso-font-charset:0;
+	mso-generic-font-family:auto;
+	mso-font-pitch:auto;
+	mso-font-signature:0 0 0 0 0 0;}p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-parent:"";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:4.8pt;
+	margin-left:7.8pt;
+	text-indent:-.5pt;
+	line-height:107%;
+	mso-pagination:widow-orphan;
+	border:none;
+	mso-border-alt:solid black .5pt;
+	padding:0cm;
+	mso-padding-alt:0cm 0cm 0cm 0cm;
+	font-size:12.0pt;
+	mso-bidi-font-size:11.0pt;
+	font-family:"Unistra A";
+	mso-fareast-font-family:"Unistra A";
+	mso-bidi-font-family:"Unistra A";
+	color:black;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}.MsoChpDefault
+	{mso-style-type:export-only;
+	mso-default-props:yes;
+	font-size:11.0pt;
+	mso-ansi-font-size:11.0pt;
+	mso-bidi-font-size:11.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:Arial;
+	mso-fareast-theme-font:minor-fareast;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;}.MsoPapDefault
+	{mso-style-type:export-only;
+	margin-bottom:8.0pt;
+	line-height:107%;}div.WordSection1
+	{page:WordSection1;}</style>
+      <style>@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:-536870145 1107305727 0 0 415 0;}@font-face
+	{font-family:"Unistra A";
+	panose-1:2 11 6 4 2 2 2 2 2 4;
+	mso-font-alt:Corbel;
+	mso-font-charset:0;
+	mso-generic-font-family:auto;
+	mso-font-pitch:auto;
+	mso-font-signature:0 0 0 0 0 0;}p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-parent:"";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:4.8pt;
+	margin-left:7.8pt;
+	text-indent:-.5pt;
+	line-height:107%;
+	mso-pagination:widow-orphan;
+	border:none;
+	mso-border-alt:solid black .5pt;
+	padding:0cm;
+	mso-padding-alt:0cm 0cm 0cm 0cm;
+	font-size:12.0pt;
+	mso-bidi-font-size:11.0pt;
+	font-family:"Unistra A";
+	mso-fareast-font-family:"Unistra A";
+	mso-bidi-font-family:"Unistra A";
+	color:black;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}.MsoChpDefault
+	{mso-style-type:export-only;
+	mso-default-props:yes;
+	font-size:11.0pt;
+	mso-ansi-font-size:11.0pt;
+	mso-bidi-font-size:11.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:Arial;
+	mso-fareast-theme-font:minor-fareast;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;}.MsoPapDefault
+	{mso-style-type:export-only;
+	margin-bottom:8.0pt;
+	line-height:107%;}div.WordSection1
+	{page:WordSection1;}</style></p>
+    <ul>
+      <li>Int=C3=A9grez une plateforme de services li=C3=A9s =C3=A0 l'int=
+elligence
+        artificielle (GAIA)</li>
+      <li>Intervenez sur un logiciel d'aide aux services d=E2=80=99urgenc=
+e lors
+        de catastrophes (tremblements de terre , inondations...)<br>
+      </li>
+      <li>DEVENEZ MA=C3=8ETRE D=E2=80=99=C5=92UVRE D'UN IMPORTANT LOGICIE=
+L DE
+        CLASSIFICATION D'IMAGES DE TELEDETECTION</li>
+    </ul>
+    <p><i>D=C3=A9butant accept=C3=A9</i><br>
+    </p>
+    <p>Nous r=C3=A9pondrons avec plaisir =C3=A0 toute demande de renseign=
+ements
+      compl=C3=A9mentaires : Joris Ravaglia (<a
+        class=3D"moz-txt-link-abbreviated moz-txt-link-freetext"
+        href=3D"mailto:ravaglia@unistra.fr" moz-do-not-send=3D"true">rava=
+glia@unistra.fr</a>)
+      <u>et</u> Pierre Gan=C3=A7arski (<a class=3D"moz-txt-link-abbreviat=
+ed
+        moz-txt-link-freetext" href=3D"mailto:gancarski@unistra.fr"
+        moz-do-not-send=3D"true">gancarski@unistra.fr</a>)</p>
+    <p>-- JR/PG<br>
+    </p>
+    <p>
+      <style></style></p>
+    <p>
+      <style>@font-face
+	{font-family:"Unistra A";
+	panose-1:2 11 6 4 2 2 2 2 2 4;
+	mso-font-alt:Corbel;
+	mso-font-charset:0;
+	mso-generic-font-family:auto;
+	mso-font-pitch:auto;
+	mso-font-signature:0 0 0 0 0 0;}p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-parent:"";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:4.8pt;
+	margin-left:7.8pt;
+	text-indent:-.5pt;
+	line-height:107%;
+	mso-pagination:widow-orphan;
+	border:none;
+	mso-border-alt:solid black .5pt;
+	padding:0cm;
+	mso-padding-alt:0cm 0cm 0cm 0cm;
+	font-size:12.0pt;
+	mso-bidi-font-size:11.0pt;
+	font-family:"Unistra A";
+	mso-fareast-font-family:"Unistra A";
+	mso-bidi-font-family:"Unistra A";
+	color:black;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}.MsoChpDefault
+	{mso-style-type:export-only;
+	mso-default-props:yes;
+	font-size:11.0pt;
+	mso-ansi-font-size:11.0pt;
+	mso-bidi-font-size:11.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:Arial;
+	mso-fareast-theme-font:minor-fareast;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;}.MsoPapDefault
+	{mso-style-type:export-only;
+	margin-bottom:8.0pt;
+	line-height:107%;}div.WordSection1
+	{page:WordSection1;}</style></p>
+  </body>
+</html>
+
+--------------rr06is9qHUlf6ZPhM0oS8l9A--

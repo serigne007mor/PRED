@@ -1,0 +1,668 @@
+Return-Path: <omar.boussaid@univ-lyon2.fr>
+X-Original-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (BounceSMTP2.univ-nantes.prive [172.20.12.67])
+	by sympa6.univ-nantes.prive (Postfix) with ESMTP id C76522292950
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Wed, 15 May 2019 15:16:50 +0200 (CEST)
+Received: from mx2.d101.univ-nantes.fr (MX2.univ-nantes.fr [193.52.101.136])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id C5F5562882E
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Wed, 15 May 2019 15:16:50 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTP id C0FBCB4A245
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 15 May 2019 15:16:50 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -8.89
+X-Spam-Level:
+X-Spam-Status: No, score=-8.89 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_MED=-10,
+	RCVD_IN_WSFF=0.01, SARE_LWHUGE=1, SPF_HELO_PASS=-0.001,
+	SPF_PASS=-0.001, UN_PHISHING_PW=0.1, URIBL_BLOCKED=0.001]
+	autolearn=disabled
+X-CRM114-Status: UNSURE ( -4.4977 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=univ-lyon2.fr
+Received: from mx2.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 7HM1DT4Ya4Ym for <liste-egc@polytech.univ-nantes.fr>;
+	Wed, 15 May 2019 15:16:48 +0200 (CEST)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from smtp.univ-lyon2.fr (smtp.univ-lyon2.fr [159.84.182.45])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTPS id 087536523EC
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 15 May 2019 15:16:48 +0200 (CEST)
+Received: from ru.univ-lyon2.fr (localhost [127.0.0.1])
+	by smtp.univ-lyon2.fr (Postfix) with ESMTP id 8DED9139A03;
+	Wed, 15 May 2019 15:16:47 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=univ-lyon2.fr;
+	s=201509-490482f6; t=1557926207;
+	bh=uLWemu/Wo2r6E4m9N7B5GoksQfpDqwpCVbsiz+bVuHc=;
+	h=From:To:CC:Subject:Date;
+	b=z4dGFsNRaQWr1xPbe9LA4jIgZ63NfbV/k/mWtjFWKnIfp6lJMEXRjJ+wxvSn58Fch
+	 LBpoeveyhMbFzfTMlwRmKj5i1O9mxRXqFTx/55ClWIHqIwXSQe6rWPJF/FQz5RuzlJ
+	 /vrgU/DyvAhUhjKOgKCkX7VL9JxSsbhbgEqJtHcD4KwlD5mbO2H5TQNN7kAEVy6NkO
+	 2RPMsAwLBtMg5NvkN2iIgrN1LNxm7L++OgzBXllYBk6djUebj6aM7eL/jzk5tlBURh
+	 9Kizst7urdVvqWJdFCBnl5H3atLxjhQunHGyt4vVj8Xunu5JLJiNYIE7Lxkte/SZen
+	 4ZdFdfx+BALwg==
+X-Virus-Scanned: amavisd-new at univ-lyon2.fr
+Received: from amavis.at.univ-lyon2.fr ([127.0.0.1])
+	by ru.univ-lyon2.fr (smtp.univ-lyon2.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id zdYTRJSxfhlY; Wed, 15 May 2019 15:16:46 +0200 (CEST)
+Received: from EXCHG-6-Q.ADLYON2.UNIV-LYON2.FR (exchg-6-q.univ-lyon2.fr [159.84.182.197])
+	by smtp.univ-lyon2.fr (Postfix) with ESMTP;
+	Wed, 15 May 2019 15:16:46 +0200 (CEST)
+Received: from EXCHG-5-Q.ADLYON2.UNIV-LYON2.FR (159.84.182.196) by
+ EXCHG-6-Q.ADLYON2.UNIV-LYON2.FR (159.84.182.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1591.10; Wed, 15 May 2019 15:16:45 +0200
+Received: from EXCHG-5-Q.ADLYON2.UNIV-LYON2.FR ([fe80::edd0:9567:7f47:3c32])
+ by EXCHG-5-Q.ADLYON2.UNIV-LYON2.FR ([fe80::edd0:9567:7f47:3c32%2]) with mapi
+ id 15.01.1591.008; Wed, 15 May 2019 15:16:44 +0200
+From: Omar Boussaid <omar.boussaid@univ-lyon2.fr>
+To: Fadila Bentayeb <fadila.Bentayeb@univ-lyon2.fr>, Omar Boussaid
+	<omar.boussaid@univ-lyon2.fr>
+CC: "Bull i3 Bull-i3@irit.fr" <Bull-i3@irit.fr>,
+	"madics-annonces-request@univ-grenoble-alpes.fr"
+	<madics-annonces-request@univ-grenoble-alpes.fr>, All Madics <all@madics.fr>,
+	"La Gazette bd3 " <gazettebd3@imag.fr>, "EDA "
+	<eda-liste@listes.univ-lyon2.fr>, "EGC " <liste-egc@polytech.univ-nantes.fr>
+Thread-Topic: BBIGAPP Workshop CFP:  deadline extension
+Thread-Index: AQHVCxqhKA35wNL3OkSqXhmTuhtWAQ==
+Date: Wed, 15 May 2019 13:16:44 +0000
+Message-ID: <363327fda614416dbf74676b06019b2b@univ-lyon2.fr>
+Accept-Language: fr-FR, en-US
+Content-Language: fr-FR
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+Content-Type: multipart/alternative;
+	boundary="_000_363327fda614416dbf74676b06019b2bunivlyon2fr_"
+MIME-Version: 1.0
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] BBIGAPP Workshop CFP:  deadline extension
+
+--_000_363327fda614416dbf74676b06019b2bunivlyon2fr_
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+Please kindly circulate this to interested graduate students, post-docs and=
+ faculty.
+
+-- Apologies if you receive multiple copies of this announcement --
+---------------------------------------------------------------------------=
+----------------------------------
+
+
+The deadline for paper submissions to the International Workshop on BI & Bi=
+g Data Applications (BBIGAPP 2019) has been extended to May 24, 2019 !
+
+You are cordially invited to submit your papers to BBIGAP@ADBIS 2019  throu=
+gh online submission page at
+online easychair submission system<https://easychair.org/conferences/?conf=
+=3Dbbigap2019>
+
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+CALL FOR PAPERS
+
+
+BBIGAP:<http://eric.univ-lyon2.fr/bbigap/> 1st International Workshop on BI=
+ & Big Data APPLICATIONS
+Bled, Slovenia,
+September 8, 2019
+http://eric.univ-lyon2.fr/bbigap/ -
+ In conjunction with the 23rd European Conference on Advances in Databases =
+and Information Systems - https://adbis2019.um.si/
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+
+Workshop Overview
+Big Data becomes a huge opportunity for computer science research but it al=
+so revolutionizes many fields, including business, social science, medicine=
+, public administration and so on. For example particular recent trend for =
+researchers from social sciences is to understand the potential of big data=
+ in complementing traditional research methods and their value in making de=
+cisions. In this case, big data requires a revisit of data management and d=
+ata analysis techniques in fundamental ways at all stages from data acquisi=
+tion and storage to data transformation and interpretation. In particular, =
+the task of collecting and analyzing data =97 which is at the heart of the =
+big data analytics pipeline =97 underwent pressing (and somewhat daunting) =
+challenges in the domain of Social Sciences. The types of available data fa=
+ll into various categories: social data (e.g., Twitter feeds, Facebook like=
+s), data about mobility and geospatial locations (e.g., sensor data collect=
+ed through mobile phones or satellite images), data collected from governme=
+nt administrative sources and multilingual text datasets, only to name a fe=
+w. Big data bring us into a new scientific and technological era offering a=
+rchitectures and infrastructure (clouds, Hadoop-like computing, NoSQL datab=
+ases) that allow better data management and analytics for decision-making.
+
+BBIGAP main goal
+BBIGAP workshop aims to provide a forum to discuss recent advancements, exc=
+hange ideas and share experiences on new issues and challenges in BI and bi=
+g data applications in several domains mainly in humanities and social scie=
+nces but also in medicine, agriculture=85 Papers presenting recent results,=
+ research issues, practical applications and case studies as well as indust=
+rial implementations are welcome. Moreover, the submission of ongoing resea=
+rch, position, visionary and student papers are encouraged to fuel up the d=
+iscussion.
+
+Topics of interest
+Several major issues have to be closely investigated around BI & big data a=
+pplications in various fields.
+Topics include, but are not limited to (* refers to social, medicine, agric=
+ulture and so on):
+
+  *   Data warehousing, OLAP and ETL tools for *data
+  *   BI applications: administration, science, health, society, bioinforma=
+tics...
+  *   BI for social networks
+  *   BI analytics
+  *   Big data Applications: administration, science, health, society, bioi=
+nformatics...
+  *   Big data analytics for social and humanities, medicine=85
+  *   BI & Big Data for Text, graph, stream=85 data
+  *   Novel decision information systems applications
+  *   Digital humanities
+  *   NoSQL data storage
+  *   Data Lakes, Metadata management
+  *   Data Heterogeneity issues in Social data
+  *   Novel data collection techniques for reliable Social data
+  *   Open data exploitation
+  *   Alert systems
+  *   =85
+
+
+  Important dates
+
+  *   Workshop paper submission: May 24
+  *   Workshop paper acceptance notification: June 10
+  *   Workshop paper camera ready: June 23
+
+Submission Instructions
+
+Submitted papers should present substantially original results not currentl=
+y under review or published elsewhere. Papers should be written in English =
+and must comply with the Springer formatting guidelines instructions for au=
+thors are available at:
+https://www.springer.com/gp/authors-editors/conference-proceedings/conferen=
+ce-proceedings-guidelines.
+Papers should be formatted in Latex (strongly recommended) or *. doc, and a=
+re limited to 12 pages and submitted in PDF format using the online easycha=
+ir submission system<https://easychair.org/conferences/?conf=3Dbbigap2019>.
+Accepted (and presented) papers will be published in Springer=92s Communica=
+tions in Computer and Information Science series (Springer CCIS). We also p=
+lan to invite selected papers for publication in a journal.
+
+PC Chairs
+
+  *   Fadila Bentayeb, Associate Professor, University of Lyon 2
+  *   Omar Boussaid, Professor, University of Lyon 2
+
+
+Mail to : bbigap@eric.univ-lyon2.fr<mailto:bbigap@eric.univ-lyon2.fr>
+
+
+
+
+
+
+
+
+
+
+
+--_000_363327fda614416dbf74676b06019b2bunivlyon2fr_
+Content-Type: text/html; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DWindows-1=
+252">
+<style type=3D"text/css" style=3D"display:none;"><!-- P {margin-top:0;margi=
+n-bottom:0;} --></style>
+</head>
+<body dir=3D"ltr">
+<div id=3D"divtagdefaultwrapper" style=3D"font-size:14pt;color:#000000;font=
+-family:Arial,Helvetica,sans-serif;" dir=3D"ltr">
+<p><font style=3D"font-family: Calibri, Arial, Helvetica, sans-serif, serif=
+, &quot;EmojiFont&quot;;" size=3D"2" face=3D"Calibri,Arial,Helvetica,sans-s=
+erif" color=3D"black"><span style=3D"font-size:10pt;background-color:white;=
+" dir=3D"ltr"><font style=3D"font-family: Calibri, Arial, Helvetica, sans-s=
+erif, serif, &quot;EmojiFont&quot;;" size=3D"2" face=3D"Calibri,Arial,Helve=
+tica,sans-serif" color=3D"black"><span style=3D"font-size:10pt;background-c=
+olor:white;"></span></font></span></font></p>
+<div><font style=3D"font-family: Calibri, Arial, Helvetica, sans-serif, ser=
+if, &quot;EmojiFont&quot;;" size=3D"2" face=3D"Calibri,Arial,Helvetica,sans=
+-serif" color=3D"black"><font style=3D"font-family: Calibri, Arial, Helveti=
+ca, sans-serif, serif, &quot;EmojiFont&quot;;" size=3D"2" face=3D"Calibri,A=
+rial,Helvetica,sans-serif" color=3D"black"></font></font><font style=3D"fon=
+t-family: Calibri, Arial, Helvetica, sans-serif, serif, &quot;EmojiFont&quo=
+t;;" size=3D"2" face=3D"Calibri,Arial,Helvetica,sans-serif" color=3D"black"=
+><font style=3D"font-family: Calibri, Arial, Helvetica, sans-serif, serif, =
+&quot;EmojiFont&quot;;" size=3D"2" face=3D"Calibri,Arial,Helvetica,sans-ser=
+if" color=3D"black">
+<div><span style=3D"font-family: Arial, Helvetica, sans-serif;">
+<div style=3D"margin-top:0;margin-bottom:0;" align=3D"justify"><font style=
+=3D"font-family: Arial, Helvetica, sans-serif, serif, &quot;EmojiFont&quot;=
+;" size=3D"4" face=3D"Arial,Helvetica,sans-serif" color=3D"black"><font siz=
+e=3D"4"><font size=3D"2" face=3D"Arial,Helvetica,sans-serif,serif,EmojiFont=
+" color=3D"#333333"><span style=3D"font-size: 12pt;">Please
+ kindly circulate this to interested graduate students, post-docs and facul=
+ty.</span></font></font></font></div>
+<br>
+</span></div>
+<div><span style=3D"font-family: Arial, Helvetica, sans-serif;"><span style=
+=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12pt;">-- Apologi=
+es if you receive multiple copies of this announcement --</span></span></di=
+v>
+</font></font><font style=3D"font-family: Calibri, Arial, Helvetica, sans-s=
+erif, serif, &quot;EmojiFont&quot;;" size=3D"2" face=3D"Calibri,Arial,Helve=
+tica,sans-serif" color=3D"black"><font style=3D"font-family: Calibri, Arial=
+, Helvetica, sans-serif, serif, &quot;EmojiFont&quot;;" size=3D"2" face=3D"=
+Calibri,Arial,Helvetica,sans-serif" color=3D"black"><span style=3D"font-fam=
+ily: Arial, Helvetica, sans-serif;"></span>
+<div><span style=3D"font-family: Arial, Helvetica, sans-serif;"><font style=
+=3D"font-family: Calibri, Arial, Helvetica, sans-serif, serif, &quot;EmojiF=
+ont&quot;;" size=3D"2" face=3D"Calibri,Arial,Helvetica,sans-serif" color=3D=
+"black"><font style=3D"font-family: Calibri, Arial, Helvetica, sans-serif, =
+serif, &quot;EmojiFont&quot;;" size=3D"2" face=3D"Calibri,Arial,Helvetica,s=
+ans-serif" color=3D"black"><span style=3D"font-family: Arial, Helvetica, sa=
+ns-serif;"><span style=3D"font-family: Arial, Helvetica, sans-serif; font-s=
+ize: 12pt;">---------------------------------------------------------------=
+----------------------------------------------</span></span></font></font>&=
+nbsp;</span></div>
+<span style=3D"font-family: Arial, Helvetica, sans-serif;"></span>
+<div><span style=3D"font-family: Arial, Helvetica, sans-serif;"><span style=
+=3D"font-size: 12pt;"><br>
+</span></span></div>
+<div><span style=3D"font-family: Arial, Helvetica, sans-serif;"><span style=
+=3D"font-size: 12pt;"><br>
+</span></span></div>
+<div><span style=3D"font-family: Arial, Helvetica, sans-serif;"><span style=
+=3D"font-size: 12pt;">T</span><span style=3D"font-size: 12pt;">he deadline =
+for paper submissions to the International Workshop on BI &amp; Big Data Ap=
+plications</span><span style=3D"font-size: 12pt;">
+ (BBIGAPP</span><span style=3D"font-size: 12pt;"> 2019) has been extended t=
+o </span>
+</span><b><span style=3D"font-family: Arial, Helvetica, sans-serif;"><span =
+style=3D"font-size: 12pt; color: rgb(255, 0, 0);">May 24,</span><span style=
+=3D"font-size: 12pt; color: rgb(255, 0, 0);"> 2019</span></span></b><span s=
+tyle=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12pt; color: =
+rgb(255, 0, 0);">
+ !</span></div>
+<span style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12pt;"=
+></span>
+<div><span style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 1=
+2pt;">&nbsp;</span></div>
+<span style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12pt;"=
+></span>
+<div><span style=3D"font-family: Arial, Helvetica, sans-serif;"><span style=
+=3D"font-size: 12pt;">You are cordially invited to submit your papers to BB=
+IGAP@ADBIS 2019</span><span style=3D"font-size: 12pt;">&nbsp;</span><span s=
+tyle=3D"font-size: 12pt;"> through online submission
+ page at <br>
+</span></span></div>
+</font></font></div>
+<font style=3D"font-family: Arial, Helvetica, sans-serif, serif, &quot;Emoj=
+iFont&quot;;" size=3D"4" face=3D"Arial,Helvetica,sans-serif" color=3D"black=
+"><font size=3D"4"><span style=3D"font-size:14pt;" id=3D"divtagdefaultwrapp=
+er"><a href=3D"https://easychair.org/conferences/?conf=3Dbbigap2019" target=
+=3D"_blank" rel=3D"noopener noreferrer"><font color=3D"#0432FF"><span style=
+=3D"font-size: 12pt;" lang=3D"en-US">online
+</span></font><font color=3D"#0432FF"><span style=3D"font-size: 12pt;">easy=
+chair</span></font><font color=3D"#0432FF"><span style=3D"font-size: 12pt;"=
+>
+</span></font><font color=3D"#0432FF"><span style=3D"font-size: 12pt;" lang=
+=3D"en-US">submission system</span></font></a></span></font></font><br>
+<p></p>
+<p><span style=3D"font-size:10pt;background-color:white;" dir=3D"ltr"><font=
+ style=3D"font-family: Calibri, Arial, Helvetica, sans-serif, serif, &quot;=
+EmojiFont&quot;;" size=3D"2" face=3D"Calibri,Arial,Helvetica,sans-serif" co=
+lor=3D"black"><span style=3D"font-size:10pt;background-color:white;"></span=
+></font></span></p>
+<br>
+<p></p>
+<p><font style=3D"font-family: Arial, Helvetica, sans-serif, serif, &quot;E=
+mojiFont&quot;;" size=3D"4" face=3D"Arial,Helvetica,sans-serif" color=3D"bl=
+ack"><span style=3D"font-size:14pt;" id=3D"divtagdefaultwrapper"><font size=
+=3D"4"><span style=3D"font-size:14pt;" id=3D"divtagdefaultwrapper"></span><=
+/font></span></font></p>
+<font style=3D"font-family: Arial, Helvetica, sans-serif, serif, &quot;Emoj=
+iFont&quot;;" size=3D"4" face=3D"Arial,Helvetica,sans-serif" color=3D"black=
+"><font size=3D"4"><font face=3D"Arial,Helvetica,sans-serif,serif,EmojiFont=
+"><br>
+</font></font></font><font style=3D"font-family: Arial, Helvetica, sans-ser=
+if, serif, &quot;EmojiFont&quot;;" size=3D"4" face=3D"Arial,Helvetica,sans-=
+serif" color=3D"black"><font size=3D"4"><span style=3D"font-size:14pt;" id=
+=3D"divtagdefaultwrapper">
+<div>
+<div>
+<div><br>
+<div style=3D"margin-top:0;margin-bottom:0;" align=3D"justify"><font size=
+=3D"4" color=3D"black"><span style=3D"font-size:14pt;" lang=3D"en-US"><b><f=
+ont style=3D"font-family: Calibri, Arial, Helvetica, sans-serif, serif, &qu=
+ot;EmojiFont&quot;;" size=3D"2" face=3D"Calibri,Arial,Helvetica,sans-serif"=
+ color=3D"black"><span style=3D"font-family: Arial, Helvetica, sans-serif;"=
+>=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</span></font><br>
+</b></span></font></div>
+<div style=3D"margin-top:0;margin-bottom:0;" align=3D"left"><font size=3D"4=
+" color=3D"black"><span style=3D"font-size:14pt;" lang=3D"en-US"><span styl=
+e=3D"font-size: 12pt;">CALL FOR PAPERS</span><br>
+</span></font></div>
+<div style=3D"margin-top: 0px; margin-bottom: 0px;" align=3D"left"><font si=
+ze=3D"4" color=3D"black"><span style=3D"font-size:14pt;" lang=3D"en-US"><br=
+>
+</span></font></div>
+<div style=3D"margin-top: 0px; margin-bottom: 0px;" align=3D"left"><font si=
+ze=3D"4" color=3D"black"><span style=3D"font-size: 12pt;" lang=3D"en-US"><b=
+r>
+</span></font></div>
+<span style=3D"font-size: 12pt;"></span>
+<div style=3D"margin-top: 0px; margin-bottom: 0px;" align=3D"left"><a href=
+=3D"http://eric.univ-lyon2.fr/bbigap/" target=3D"_blank" rel=3D"noopener no=
+referrer"><font size=3D"4" color=3D"blue"><span style=3D"font-size: 12pt;" =
+lang=3D"en-US">B</span></font><font size=3D"4" color=3D"blue"><span style=
+=3D"font-size: 12pt;" lang=3D"en-US">BIGAP</span></font><font size=3D"4"><s=
+pan style=3D"font-size: 12pt;" lang=3D"en-US">:</span></font></a><font size=
+=3D"4" color=3D"#FF8000"><span style=3D"font-size: 12pt;" lang=3D"en-US">
+</span></font><font size=3D"4" color=3D"black"><span style=3D"font-size: 12=
+pt;" lang=3D"en-US">1st International Workshop on
+</span></font><font size=3D"4" color=3D"blue"><span style=3D"font-size: 12p=
+t;" lang=3D"en-US">B</span></font><font size=3D"4" color=3D"black"><span st=
+yle=3D"font-size: 12pt;" lang=3D"en-US">I &amp;</span></font><font size=3D"=
+4" color=3D"#FF8000"><span style=3D"font-size: 12pt;" lang=3D"en-US">
+</span></font><font size=3D"4" color=3D"blue"><span style=3D"font-size: 12p=
+t;" lang=3D"en-US">B</span></font><font size=3D"4" color=3D"black"><span st=
+yle=3D"font-size: 12pt;" lang=3D"en-US">ig</span></font><font size=3D"4" co=
+lor=3D"#FF8000"><span style=3D"font-size: 12pt;" lang=3D"en-US">
+</span></font><font size=3D"4" color=3D"black"><span style=3D"font-size: 12=
+pt;" lang=3D"en-US">Data APPLICATIONS</span></font></div>
+<div style=3D"margin: 6pt 0px;" align=3D"left"><span style=3D"font-size: 12=
+pt;" lang=3D"en-US">Bled, Slovenia,
+<br>
+</span></div>
+<div style=3D"margin: 6pt 0px;" align=3D"left"><span style=3D"font-size: 12=
+pt;" lang=3D"en-US">September 8, 2019</span></div>
+<div style=3D"margin: 6pt 0px;" align=3D"left"><span style=3D"font-size: 12=
+pt;" lang=3D"en-US"><font style=3D"font-family: Arial, Helvetica, sans-seri=
+f, serif, &quot;EmojiFont&quot;;" size=3D"4" face=3D"Arial,Helvetica,sans-s=
+erif" color=3D"black"><font size=3D"4"><span style=3D"font-size:14pt;" id=
+=3D"divtagdefaultwrapper"><a href=3D"http://eric.univ-lyon2.fr/bbigap/" tar=
+get=3D"_blank" rel=3D"noopener noreferrer"><span style=3D"font-size: 12pt;"=
+ lang=3D"en-US">http://eric.univ-lyon2.fr/bbigap/</span></a><span style=3D"=
+font-size: 12pt;" lang=3D"en-US">&nbsp;</span><span style=3D"font-size: 12p=
+t;" lang=3D"en-US">-
+</span></span></font></font><br>
+</span><span style=3D"font-size: 12pt;" lang=3D"en-US"></span></div>
+<span style=3D"font-size: 12pt;"></span>
+<div style=3D"margin: 6pt 0px;" align=3D"left"><span style=3D"font-size: 12=
+pt;" lang=3D"en-US">&nbsp;In conjunction with the 23rd European Conference =
+on Advances in Databases and Information Systems -
+</span><a href=3D"https://adbis2019.um.si/" target=3D"_blank" rel=3D"noopen=
+er noreferrer" title=3D"Cmd&#43;Cliquer ou appuyer pour suivre le lien"><sp=
+an style=3D"font-size: 12pt;" lang=3D"en-US">https://adbis2019.um.si/</span=
+></a><span style=3D"font-size: 12pt;" lang=3D"en-US">&nbsp;</span></div>
+<span style=3D"font-size: 12pt;"></span><font color=3D"blue"><span lang=3D"=
+en-US"></span></font><font color=3D"blue"><span lang=3D"en-US"><b><font sty=
+le=3D"font-family: Arial, Helvetica, sans-serif, serif, &quot;EmojiFont&quo=
+t;;" size=3D"4" face=3D"Arial,Helvetica,sans-serif" color=3D"black"><font s=
+ize=3D"4"><span style=3D"font-size:14pt;" id=3D"divtagdefaultwrapper">
+<div style=3D"margin-top:0;margin-bottom:0;" align=3D"justify"><font size=
+=3D"4" color=3D"black"><span style=3D"font-size:14pt;" lang=3D"en-US"><b><f=
+ont style=3D"font-family: Calibri, Arial, Helvetica, sans-serif, serif, &qu=
+ot;EmojiFont&quot;;" size=3D"2" face=3D"Calibri,Arial,Helvetica,sans-serif"=
+ color=3D"black"><span style=3D"font-family: Arial, Helvetica, sans-serif;"=
+>=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</span></font></b></span></fon=
+t></div>
+</span></font></font></b></span></font><br>
+<font color=3D"blue"><span lang=3D"en-US"><b><font style=3D"font-family: Ar=
+ial, Helvetica, sans-serif, serif, &quot;EmojiFont&quot;;" size=3D"4" face=
+=3D"Arial,Helvetica,sans-serif" color=3D"black"><font size=3D"4"><span styl=
+e=3D"font-size:14pt;" id=3D"divtagdefaultwrapper">
+<div style=3D"margin-top:0;margin-bottom:0;" align=3D"justify"><font size=
+=3D"4" color=3D"black"><span style=3D"font-size:14pt;" lang=3D"en-US"></spa=
+n></font></div>
+</span></font></font></b></span></font>
+<div style=3D"margin-top:0;margin-bottom:0;" align=3D"justify"><font color=
+=3D"blue"><span lang=3D"en-US"><b>&nbsp;</b></span></font></div>
+<div style=3D"margin:6pt 0;" align=3D"justify"><font color=3D"blue"><span l=
+ang=3D"en-US"><b>Workshop Overview</b></span></font></div>
+<div style=3D"margin-top:0;margin-bottom:0;" align=3D"justify"><span style=
+=3D"font-size: 12pt;" lang=3D"en-US">Big Data becomes a huge opportunity fo=
+r computer science research but it also revolutionizes many fields, includi=
+ng business, social science, medicine, public
+ administration and so on. For example particular recent trend for research=
+ers from social sciences is to understand the potential of big data in comp=
+lementing traditional research methods and their value in making decisions.=
+ In this case, big data requires
+ a revisit of data management and data analysis techniques in fundamental w=
+ays at all stages from data acquisition and storage to data transformation =
+and interpretation. In particular, the task of collecting and analyzing dat=
+a =97 which is at the heart of the
+ big data analytics pipeline =97 underwent pressing (and somewhat daunting)=
+ challenges in the domain of Social Sciences. The types of available data f=
+all into various categories: social data (e.g., Twitter feeds, Facebook lik=
+es), data about mobility and geospatial
+ locations (e.g., sensor data collected through mobile phones or satellite =
+images), data collected from government administrative sources and multilin=
+gual text datasets, only to name a few. Big data bring us into a new scient=
+ific and technological era offering
+ architectures and infrastructure (clouds, Hadoop-like computing, NoSQL dat=
+abases) that allow better data management and analytics for decision-making=
+.
+</span></div>
+<div style=3D"margin:12pt 0 6pt 0;" align=3D"justify"><font color=3D"blue">=
+<span lang=3D"en-US"><b>&nbsp;</b></span></font></div>
+<div style=3D"margin:12pt 0 6pt 0;" align=3D"justify"><font color=3D"blue">=
+<span lang=3D"en-US"><b>BBIGAP main goal</b></span></font></div>
+<div style=3D"margin-top:0;margin-bottom:0;" align=3D"justify"><font color=
+=3D"blue"><span lang=3D"en-US"><b><span style=3D"font-size: 12pt;">BBIGAP</=
+span></b></span></font><font size=3D"4" color=3D"#FF8000"><span style=3D"fo=
+nt-size: 12pt;" lang=3D"en-US">
+</span></font><span style=3D"font-size: 12pt;" lang=3D"en-US">workshop aims=
+ to provide a forum to discuss recent advancements, exchange ideas and shar=
+e experiences on new issues and challenges in BI and big data applications =
+in several domains mainly in humanities
+ and social sciences but also in medicine, agriculture=85 Papers presenting=
+ recent results, research issues, practical applications and case studies a=
+s well as industrial implementations are welcome. Moreover, the</span><span=
+ style=3D"font-size: 12pt;" lang=3D"en-US">
+ submission of ongoing research, position, visionary and student papers are=
+ encouraged to fuel up the discussion.</span></div>
+<div style=3D"margin:12pt 0 6pt 0;" align=3D"justify"><font color=3D"blue">=
+<span lang=3D"en-US"><b>&nbsp;</b></span></font></div>
+<div style=3D"margin:12pt 0 6pt 0;" align=3D"justify"><font color=3D"blue">=
+<span lang=3D"en-US"><b>Topics of interest</b></span></font></div>
+<div style=3D"margin-top:0;margin-bottom:0;" align=3D"justify"><span style=
+=3D"font-size: 12pt;" lang=3D"en-US">Several major issues have to be closel=
+y investigated around BI &amp; big data applications in various fields.
+</span></div>
+<span style=3D"font-size: 12pt;"></span>
+<div style=3D"margin-top:0;margin-bottom:0;" align=3D"justify"><span style=
+=3D"font-size: 12pt;" lang=3D"en-US">Topics include, but are not limited to
+</span><font size=3D"2"><span style=3D"font-size:10.5pt;" lang=3D"en-US"><i=
+><span style=3D"font-size: 12pt;">(* refers to social, medicine, agricultur=
+e and so on</span></i></span></font><span style=3D"font-size: 12pt;" lang=
+=3D"en-US">):</span></div>
+<span style=3D"font-size: 12pt;"></span>
+<ul style=3D"margin-top:0;margin-bottom:0;">
+<li><span style=3D"font-size: 12pt;" lang=3D"en-US">Data warehousing, OLAP =
+and ETL tools for *data</span></li><li><span style=3D"font-size: 12pt;" lan=
+g=3D"en-US">BI applications: administration, science, health, society, bioi=
+nformatics...</span></li><li><span style=3D"font-size: 12pt;" lang=3D"en-US=
+">BI for social networks</span></li><li><span style=3D"font-size: 12pt;" la=
+ng=3D"en-US">BI analytics</span></li><li><span style=3D"font-size: 12pt;" l=
+ang=3D"en-US">Big data Applications</span><span style=3D"font-size: 12pt;" =
+lang=3D"en-US">: administration, science, health, society, bioinformatics..=
+.</span></li><li><span style=3D"font-size: 12pt;" lang=3D"en-US">Big data a=
+nalytics for social and humanities, medicine=85</span></li><li><span style=
+=3D"font-size: 12pt;" lang=3D"en-US">BI &amp; Big Data for Text, graph, str=
+eam=85 data</span></li><li><span style=3D"font-size: 12pt;" lang=3D"en-US">=
+Novel decision information systems applications</span></li><li><span style=
+=3D"font-size: 12pt;" lang=3D"en-US">Digital humanities</span></li><li><spa=
+n style=3D"font-size: 12pt;" lang=3D"en-US">NoSQL data storage </span></li>=
+<li><span style=3D"font-size: 12pt;" lang=3D"en-US">Data Lakes, Metadata ma=
+nagement</span></li><li><span style=3D"font-size: 12pt;" lang=3D"en-US">Dat=
+a Heterogeneity issues in Social data</span></li><li><span style=3D"font-si=
+ze: 12pt;">Novel data collection techniques for reliable Social data</span>=
+</li><li><span style=3D"font-size: 12pt;">Open data exploitation</span></li=
+><li><span style=3D"font-size: 12pt;">Alert systems</span></li><li><span st=
+yle=3D"font-size: 12pt;">=85</span></li></ul>
+<div><br>
+</div>
+<div><br>
+</div>
+&nbsp; <font color=3D"blue"><span lang=3D"en-US"><b>Important dates</b></sp=
+an></font></div>
+<div>
+<ul style=3D"margin-top:14pt;margin-bottom:14pt;">
+<li><font size=3D"4" face=3D"Arial,Helvetica,sans-serif,serif,EmojiFont"><s=
+pan style=3D"font-size: 12pt;" lang=3D"en-US">Workshop paper submission:
+</span></font><font size=3D"4" face=3D"Arial,Helvetica,sans-serif,serif,Emo=
+jiFont" color=3D"red"><span style=3D"font-size:14pt;" lang=3D"en-US"><b><i>=
+<span style=3D"font-size: 12pt;">May 24</span></i></b></span></font></li><l=
+i><font size=3D"4" face=3D"Arial,Helvetica,sans-serif,serif,EmojiFont"><spa=
+n style=3D"font-size: 12pt;" lang=3D"en-US">Workshop paper acceptance notif=
+ication:
+</span></font><font size=3D"4" face=3D"Arial,Helvetica,sans-serif,serif,Emo=
+jiFont" color=3D"red"><span style=3D"font-size:14pt;" lang=3D"en-US"><b><i>=
+<span style=3D"font-size: 12pt;">June 10</span></i></b></span></font></li><=
+li><font size=3D"4" face=3D"Arial,Helvetica,sans-serif,serif,EmojiFont"><sp=
+an style=3D"font-size: 12pt;" lang=3D"en-US">Work</span></font><font size=
+=3D"4" face=3D"Arial,Helvetica,sans-serif,serif,EmojiFont" color=3D"black">=
+<span style=3D"font-size: 12pt;" lang=3D"en-US">shop</span></font><font siz=
+e=3D"4" face=3D"Arial,Helvetica,sans-serif,serif,EmojiFont"><span style=3D"=
+font-size: 12pt;" lang=3D"en-US">
+ paper camera ready: </span></font><font size=3D"4" face=3D"Arial,Helvetica=
+,sans-serif,serif,EmojiFont" color=3D"red"><span style=3D"font-size:14pt;" =
+lang=3D"en-US"><b><i><span style=3D"font-size: 12pt;">June 23</span></i></b=
+></span></font></li></ul>
+<div style=3D"margin:12pt 0 6pt 0;" align=3D"justify"><font color=3D"blue">=
+<span lang=3D"en-US"><b><br>
+</b></span></font></div>
+<font color=3D"blue"><span lang=3D"en-US"><b>Submission Instructions</b></s=
+pan></font>
+<div style=3D"margin-top:0;margin-bottom:0;" align=3D"justify"><span style=
+=3D"font-size: 12pt;" lang=3D"en-US"><br>
+</span></div>
+<div style=3D"margin-top:0;margin-bottom:0;" align=3D"justify"><span style=
+=3D"font-size: 12pt;" lang=3D"en-US">Submitted papers should present substa=
+ntially original results not currently under review or published elsewhere.=
+ Papers should be written in English and
+ must comply with the Springer formatting guidelines instructions for autho=
+rs are available at:</span></div>
+<span style=3D"font-size: 12pt;"></span>
+<div style=3D"margin-top:0;margin-bottom:0;margin-left:0;" align=3D"justify=
+"><a href=3D"https://www.springer.com/gp/authors-editors/conference-proceed=
+ings/conference-proceedings-guidelines" target=3D"_blank" rel=3D"noopener n=
+oreferrer"><font color=3D"#0432FF"><span style=3D"font-size: 12pt;" lang=3D=
+"en-US">h</span></font><font color=3D"#0432FF"><span style=3D"font-size: 12=
+pt;" lang=3D"en-US">ttps://www.springer.com/gp/authors-editors/conference-p=
+roceedings/conference-proceedings-guidelines</span></font></a><font color=
+=3D"#0432FF"><span style=3D"font-size: 12pt;" lang=3D"en-US">.
+</span></font></div>
+<span style=3D"font-size: 12pt;"></span>
+<div style=3D"margin-top:0;margin-bottom:0;margin-left:0;"><span style=3D"f=
+ont-size: 12pt;" lang=3D"en-US">Papers should be formatted in Latex (strong=
+ly recommended) or *. doc, and are limited to 12 pages and submitted in PDF=
+ format using
+</span><font color=3D"black"><span style=3D"font-size: 12pt;" lang=3D"en-US=
+">the</span></font><font color=3D"red"><span style=3D"font-size: 12pt;" lan=
+g=3D"en-US">
+</span></font><a href=3D"https://easychair.org/conferences/?conf=3Dbbigap20=
+19" target=3D"_blank" rel=3D"noopener noreferrer"><font color=3D"#0432FF"><=
+span style=3D"font-size: 12pt;" lang=3D"en-US">online
+</span></font><font color=3D"#0432FF"><span style=3D"font-size: 12pt;">easy=
+chair</span></font><font color=3D"#0432FF"><span style=3D"font-size: 12pt;"=
+>
+</span></font><font color=3D"#0432FF"><span style=3D"font-size: 12pt;" lang=
+=3D"en-US">submission system</span></font></a><font color=3D"#0432FF"><span=
+ lang=3D"en-US"><u><span style=3D"font-size: 12pt;">.</span></u></span></fo=
+nt></div>
+<span style=3D"font-size: 12pt;"></span>
+<div style=3D"margin-top:0;margin-bottom:0;" align=3D"justify"><span style=
+=3D"font-size: 12pt;" lang=3D"en-US">Accepted (and presented) papers will b=
+e published in Springer=92s Communications in Computer and Information Scie=
+nce series (Springer CCIS). We also plan to
+ invite selected papers for publication in a journal.</span></div>
+<div style=3D"margin:12pt 0 6pt 0;" align=3D"justify"><font color=3D"blue">=
+<span lang=3D"en-US"><b>&nbsp;</b></span></font></div>
+<div style=3D"margin:12pt 0 6pt 0;" align=3D"justify"><font color=3D"blue">=
+<span lang=3D"en-US"><b>PC Chairs</b></span></font></div>
+<ul style=3D"margin-top:14pt;margin-bottom:14pt;">
+<li><span style=3D"font-size: 12pt;" lang=3D"en-US">Fadila Bentayeb, Associ=
+ate Professor, University of Lyon 2
+</span></li><li><span style=3D"font-size: 12pt;" lang=3D"en-US">Omar Boussa=
+id, Professor, University of Lyon 2
+</span></li></ul>
+<div style=3D"text-indent:-28.34pt;margin:0 0 0 28.34pt;" align=3D"justify"=
+><span style=3D"font-size: 12pt;" lang=3D"en-US">&nbsp;</span></div>
+<span style=3D"font-size: 12pt;"></span>
+<div style=3D"text-indent:-28.34pt;margin:0 0 0 28.34pt;" align=3D"justify"=
+><span style=3D"font-size: 12pt;" lang=3D"en-US">Mail to :
+</span><a href=3D"mailto:bbigap@eric.univ-lyon2.fr" target=3D"_blank" rel=
+=3D"noopener noreferrer"><font size=3D"2" face=3D"Arial,sans-serif,serif,Em=
+ojiFont"><span style=3D"font-size: 12pt;" lang=3D"en-US">bbigap@eric.univ-l=
+yon2.fr</span></font></a></div>
+</div>
+</div>
+</div>
+</span></font></font><br>
+<p></p>
+<p><br>
+</p>
+<p><br>
+</p>
+<p><br>
+</p>
+<p><br>
+</p>
+<p><br>
+</p>
+<div id=3D"Signature">
+<div id=3D"divtagdefaultwrapper" dir=3D"ltr" style=3D"font-size: 14pt; colo=
+r: rgb(0, 0, 0); font-family: Arial, Helvetica, sans-serif, &quot;EmojiFont=
+&quot;, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, NotoColo=
+rEmoji, &quot;Segoe UI Symbol&quot;, &quot;Android Emoji&quot;, EmojiSymbol=
+s;">
+<p></p>
+<div>
+<table class=3D"MsoNormalTable" style=3D"width:319.5pt; border-collapse:col=
+lapse" width=3D"426" cellspacing=3D"0" cellpadding=3D"0" border=3D"0">
+<tbody>
+<tr style=3D"">
+<td style=3D"width:105.95pt; padding:.75pt .75pt .75pt .75pt" width=3D"141"=
+><br>
+</td>
+<td style=3D"width:213.55pt; padding:.75pt .75pt .75pt .75pt" width=3D"285"=
+><br>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<span></span><span style=3D"font-size:12.0pt; font-family:Calibri"></span>
+<p></p>
+<br>
+<p></p>
+</div>
+</div>
+</div>
+</body>
+</html>
+
+--_000_363327fda614416dbf74676b06019b2bunivlyon2fr_--

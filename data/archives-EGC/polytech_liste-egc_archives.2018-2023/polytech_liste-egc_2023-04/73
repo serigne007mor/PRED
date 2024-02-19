@@ -1,0 +1,226 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (bouncesmtp2.u12.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 553A114017C4
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon, 24 Apr 2023 09:48:25 +0200 (CEST)
+Received: from mx1.localdomain (MX1.univ-nantes.fr [193.52.101.135])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id 4DA73665B
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon, 24 Apr 2023 09:48:25 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.localdomain (Postfix) with ESMTP id 435BF120588
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 24 Apr 2023 09:48:25 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 2.51
+X-Spam-Level: **
+X-Spam-Status: No, score=2.51 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+	MANGLED_DEALS=2.3, MR_NOT_ATTRIBUTED_IP=0.2,
+	RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+	RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+	UN_PHISHING_PW=0.1] autolearn=disabled
+X-CRM114-Status: UNSURE ( 1.1507 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=yahoo.fr
+Received: from mx1.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id kwPpf2LZsKdT for <liste-egc@polytech.univ-nantes.fr>;
+	Mon, 24 Apr 2023 09:48:23 +0200 (CEST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=77.238.177.147; helo=sonic314-21.consmr.mail.ir2.yahoo.com; envelope-from=sassisalma@yahoo.fr; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=reject dis=none) header.from=yahoo.fr
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=sassisalma@yahoo.fr
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (2048-bit key; unprotected) header.d=yahoo.fr header.i=@yahoo.fr header.b="G4NyEQpW";
+	dkim-atps=neutral
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from sonic314-21.consmr.mail.ir2.yahoo.com (sonic314-21.consmr.mail.ir2.yahoo.com [77.238.177.147])
+	by mx1.localdomain (Postfix) with ESMTPS id 04E6E120025
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 24 Apr 2023 09:48:22 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.fr; s=s2048; t=1682322502; bh=96y1Adg3Ps9no4jP7hYjQ9NFbo/1uIJS5N1lo40qcYs=; h=Date:From:Reply-To:To:Cc:Subject:References:From:Subject:Reply-To; b=G4NyEQpW8KBI+IUoG3i6Imf+iVV9s4Qi0BO/lc7v96DjrQuRBktiNvFCRE/2L6QaNDB72pZCNsv+5NfJFbLX2duKowWI144Htna4sRBplwmD63Iwhn/ETaUlRKv2e0fGs+bE2sMX/piw+U/+/LzPjVEuUN8DWdYCi3YrrL6MhB6EDHpJjXk8E1f8GBXKHMDMliUhmDZGplxtobjlmJ/XbciGdV0cqlORDCplEcf9IFvleRYaY4j3MR3MgnKFsNhm5YEewAw94TGhbGtUGEvGeupP1T+pyWcPQWo8BGPvHUE8QFYDdaCn3d/MK0PxoMzcOrk78bGoboz3ord8QIo2sQ==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1682322502; bh=oCbi7EkUTRW328s9H0o3t/k61lwkT6GXQk2HBjmZyYl=; h=X-Sonic-MF:Date:From:To:Subject:From:Subject; b=kt4L8F98MBsLUYJV0zATuNZfoMttrhFRWdD8c6BnKdSIaHz0SXKgDOfC36zMu3ybPMDJ/qj3FdnzFMkT7xM9RK8X2ivA/zumY5JHdKtoFGzVjcdCwUHC5Zbud9+v0+G3I+xlh6JFf4BNoDpAYVr4LMKsKv53nkLf7QTqw/1JgPuB2FtIXT+s39MX7iilAdgycAOy4lUJbNwCqJ9tPEmvQNkTpaOAAVgGsC9r1LK3gaOT2t1WpGk81aYe+QPIPKwlYEqmkEpIik3UhrFsivrz2EydhbEsV0WLQs+3FEPd8BLdgjRuHBMb0EB+p7t2Nk3cLPD7DOC+XA9B00sgzVtwWQ==
+X-YMail-OSG: 5UDkFZcVM1mHKBjQVOOB0lNO88hTCEFgq53QK48V31kPi00iAACSjn7MlkKVpwB
+ eQaMriwX5kX2Q.nz5wVi6CLtz8wxqgaC4VsOsKO22OcPEFYZv6qerLD6cJoAcKlUiLQEH3LYh.aF
+ Xqzcavvm1wSZ7vqmK8zBS0QrnATEvP.jnjw9vvUF1USaARu9bn9KN0hHm1NZv7gaXOyEtYko.jl0
+ 8h9DDVX0xvqiXiQdh5HklrJPKypPALtDoK_AWnzTit7.FKo3gdlIShXfzfkzSuK81FWbL9.UwjyP
+ zYYxPYOMnyOl6iQn09QLmBIVUG5mbqorZBsAkTzEZ2EX0dQPT3NBBGrFFr6eQtr9JYPIdHt2I6iT
+ 8S0Kd0VAGQwU2lcwRDzejO98lruU7mVLBMa_4fU7yjtryAUya_eEy2U1YfjDA9GMpghcUASxD5pK
+ XCSBdNx6rVBEqtOy1S4tqafqNLSH8BCx.PnBI2YWYORgAQERR4HM.hV9qdsL2._H34oza_Vr7TVP
+ D6MqRFdEdIOEKyZeBYZltNygb7PFubQbYLqmYsVQyKTTEKbEugsq12KnfHOtSRYWctWozHe2mGhR
+ iq94Ks1gu98cG4fRITTXnB1k12zE72Ndkn0d7HCs_JzwB1dfksztKUizOZJyFTAmBFAfuY3N_TMo
+ 4Rk5iiYAvCiCcrU9bM2bQ0t._sB7D1fh0O.sHTI6SK4Zv0yLalnlciIhHUR457oYaTgryLJKtDh6
+ taBJ2wmm2oGMxGrCKN2hDcEzwHge3hICe7HrskkUgS.WcE.h3J57m1z4QfgnOASVPvnVcldGlsqQ
+ xUmTPOvzsruraMnd88EMWeR7ErTjial690F2HQrxQrYQW1OFI04CvHupZKghYzhXZfI_YktK6bB4
+ _AXE6ct9sTiHCaNnFvpLh4jvdrCfiah0jlsGZ7T_MzjW4zLrl4C8Iu.Dvhiyj8uiA2tIm.OOo0eg
+ tvkddK.wYN8KM_UHYUq7fjEmGVJA0kszfo6JUen.Tu158JWxCkySHr2nP28fZQOnicy9O2Y0aAaP
+ 7SDjbnz_0D7AhU7n.Z1XZIFfFqmW8Kqkk5WaV09_xCBWBdoaIPykrcaYFpm9NihVZdm5IwUKi6xw
+ RsXIqoX0AK36gw4WI.ExB1y9TnHNNu7sCF0jY0ABfLs4WGsW.fFWFnRYRCEL0HqPGqlq3GfROsJI
+ CDSPMN3OLaRTey6XzfifbSXmuT74mknXePlEF9wVv4w3H9BE5EAtGLa_TeXrpMnx0D45v53H7Tam
+ SnH.nQkf44iGhnn1q.5CWEd84gWff3b0dVa9KcON1grqsKllY6.NM7xVNHthyGRfbnjDJ.7M6nZi
+ Kqt.6Shh.rIVs2XhEnACq7f3JdtnMn0rGesQSLGo65pLS5HVaz_8Y_b4sdYYd8BX76N4CgFnRAE5
+ kIFre5ccIu5k46rjbwDoSLFS1usB5XDjgU.vERXJ2tRlyPeey1Tc4xuG7sTI9nT_eR755sGKQPhj
+ _8cNw.fbtohFnn1jiKD7RqtZh2gppETLXzbgF5Mv4nJkNLX.GPqM7Y3RMt9HyKL3c0IxNIWszp4F
+ kQYuki8IiXZ5qaOQu_VtxNOPGC5E2WftGisrYjtL83iSm8Dsc.HqrOkFL6UA56zvqzE5gl.93qPn
+ h_NZUnt_mGW12LrGOh81hCnGMaR_z7Tef_EhGrLfbcomzcBZnagsAIA4rais4lXAVYURISFR4.EH
+ vR50tDXNgIR4pG1.flAsWAz9pEzIo2UYaUlthV_0IG1oFUe_AUseWrW7a93iQEAU_nMVFH8R6hKJ
+ q_WGUrJtUB7fHR0FInofxbpCtiMiXjl2tiHV5tz.rJx9WjOLa1H4I77vVeO2cmu3TMbbkTq_7UuR
+ wIKZENc1iLX4O0e6lkS6IAOnMv94o1DAJKKi6AZwcqxhD0q5wnk3_8ym6aKnvIJyOmXPyHUXiYJ9
+ GL5sXuci0r38JTx1E6TZiA.ptUJTO6HPXmqo2mr0wgs_XXqeeJ1QyAvrP3r9VVFQm9I2_8mt5hX6
+ OlO7DMQjVTnp.O2EJUDhvBkmcJMwHI3HB9uBfUv2G5EC3BnwKp0TvrcwvIV4FmbvUSf8fwvoz5c1
+ 5WmKp9S0Ur9JVi0UCOoqUV_HwFSkiU_dvEAls5_SDjgO0hOx.g30Lk7s0UaV3OlDUFxMtIDlt4ve
+ 2lHAUzvBRsuybl9GqL2ybq4vtL44vPQkAAUxdUM1LzlWWe.bxdzb1X3xPGGGuqyICXq2.7FP2Ffg
+ JYkxUiuKTbWGOoYwVSH6lkNE-
+X-Sonic-MF: <sassisalma@yahoo.fr>
+X-Sonic-ID: 78f4832c-0c53-46cf-8e4f-838c380b2485
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic314.consmr.mail.ir2.yahoo.com with HTTP; Mon, 24 Apr 2023 07:48:22 +0000
+Date: Mon, 24 Apr 2023 07:48:21 +0000 (UTC)
+From: Salma Sassi <sassisalma@yahoo.fr>
+Reply-To: sassisalma@yahoo.fr
+To: salma.sassi@univ-pau.fr
+Cc: richard.chbeir@univ-pau.fr
+Message-ID: <232255286.1655791.1682322501530@mail.yahoo.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+References: <232255286.1655791.1682322501530.ref@mail.yahoo.com>
+X-Mailer: WebService/1.1.21365 YMailNodin
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] [IEEE INISTA 2023] (Submission Deadline Approaching:
+ June 1st, 2023)
+
+*************************************************************************
+Call=C2=A0for=C2=A0Papers
+
+The=C2=A017th=C2=A0International=C2=A0Symposium=C2=A0on=C2=A0INnovations=C2=
+=A0in=C2=A0Intelligent=C2=A0SysTems=C2=A0and=C2=A0Applications=C2=A0(INISTA=
+=C2=A02023)
+September=C2=A020-23,=C2=A02023,=C2=A0Hammamet,=C2=A0Tunisia
+https://conferences.sigappfr.org/inista2023/
+
+*************************************************************************
+
+The=C2=A0International=C2=A0Symposium=C2=A0on=C2=A0INnovations=C2=A0in=C2=
+=A0Intelligent=C2=A0SysTems=C2=A0and=C2=A0Applications=C2=A0(INISTA)=C2=A0h=
+as=C2=A0been=C2=A0organized=C2=A0since=C2=A02005.=C2=A0It=C2=A0aims=C2=A0to=
+=C2=A0bring=C2=A0together=C2=A0researchers=C2=A0from=C2=A0the=C2=A0entire=
+=C2=A0spectrum=C2=A0of=C2=A0the=C2=A0multi-disciplinary=C2=A0fields=C2=A0of=
+=C2=A0intelligent=C2=A0systems=C2=A0and=C2=A0to=C2=A0establish=C2=A0effecti=
+ve=C2=A0means=C2=A0of=C2=A0communication=C2=A0between=C2=A0them.=C2=A0In=C2=
+=A0particular,=C2=A0it=C2=A0focuses=C2=A0on=C2=A0all=C2=A0aspects=C2=A0of=
+=C2=A0intelligent=C2=A0systems=C2=A0and=C2=A0the=C2=A0related=C2=A0applicat=
+ions=C2=A0from=C2=A0the=C2=A0points=C2=A0of=C2=A0view=C2=A0of=C2=A0both=C2=
+=A0theory=C2=A0and=C2=A0practice.=C2=A0Apart=C2=A0from=C2=A0the=C2=A0main=
+=C2=A0track,=C2=A0it=C2=A0includes=C2=A0workshops,=C2=A0tutorials,=C2=A0spe=
+cial=C2=A0sessions,=C2=A0and=C2=A0plenary=C2=A0talks=C2=A0by=C2=A0invited=
+=C2=A0speakers.
+
+**=C2=A0SUBMISSIONS=C2=A0**
+All=C2=A0paper=C2=A0submissions=C2=A0for=C2=A0INISTA=C2=A02023=C2=A0will=C2=
+=A0be=C2=A0via=C2=A0Easychair=C2=A0at
+https://easychair.org/my/conference?conf=3Dinista2023
+
+**=C2=A0TOPICS=C2=A0**
+A=C2=A0list=C2=A0of=C2=A0non-exhaustive=C2=A0topics=C2=A0can=C2=A0be=C2=A0f=
+ound=C2=A0at:
+https://conferences.sigappfr.org/inista2023/call-for-papers/
+INISTA=C2=A02023=C2=A0will=C2=A0also=C2=A0include=C2=A0tutorials=C2=A0and=
+=C2=A0special=C2=A0tracks/targeted=C2=A0sessions=C2=A0on=C2=A0current=C2=A0=
+topics=C2=A0of=C2=A0interest=C2=A0to=C2=A0the=C2=A0community.
+
+**=C2=A0GUIDELINES=C2=A0**
+Papers=C2=A0must=C2=A0be=C2=A0prepared=C2=A0using=C2=A0IEEE=C2=A0templates=
+=C2=A0for=C2=A0symposium=C2=A0proceedings.=C2=A0Papers=C2=A0have=C2=A0a=C2=
+=A0maximum=C2=A0page=C2=A0limit=C2=A0of=C2=A06=C2=A0pages=C2=A0including=C2=
+=A0references=C2=A0and=C2=A0graphs.=C2=A0INISTA=C2=A0will=C2=A0offer=C2=A0t=
+he=C2=A0option=C2=A0to=C2=A0buy=C2=A0a=C2=A0limited=C2=A0number=C2=A0of=C2=
+=A0extra=C2=A0pages=C2=A0for=C2=A0submission=C2=A0(there=C2=A0will=C2=A0be=
+=C2=A0a=C2=A0charge=C2=A0of=C2=A0100=C2=A0euros=C2=A0per=C2=A0extra=C2=A0pa=
+ge).=C2=A0The=C2=A0official=C2=A0language=C2=A0for=C2=A0the=C2=A0symposium=
+=C2=A0is=C2=A0English.=C2=A0Less=C2=A0than=C2=A0satisfactory=C2=A0English=
+=C2=A0usage=C2=A0may=C2=A0form=C2=A0the=C2=A0sole=C2=A0basis=C2=A0for=C2=A0=
+rejection=C2=A0of=C2=A0a=C2=A0paper=C2=A0and=C2=A0omission=C2=A0of=C2=A0any=
+=C2=A0such=C2=A0final=C2=A0paper=C2=A0version=C2=A0from=C2=A0the=C2=A0sympo=
+sium=C2=A0proceedings.=C2=A0Authors=C2=A0whose=C2=A0native=C2=A0language=C2=
+=A0is=C2=A0not=C2=A0English=C2=A0are=C2=A0encouraged=C2=A0to=C2=A0check=C2=
+=A0their=C2=A0papers=C2=A0for=C2=A0proper=C2=A0English=C2=A0spelling=C2=A0a=
+nd=C2=A0grammar=C2=A0using=C2=A0tools=C2=A0such=C2=A0as=C2=A0English=C2=A0g=
+rammar=C2=A0checkers=C2=A0available=C2=A0with=C2=A0most=C2=A0word=C2=A0proc=
+essing=C2=A0application=C2=A0software.=C2=A0Alternatively,=C2=A0proofreadin=
+g=C2=A0support=C2=A0from=C2=A0a=C2=A0native=C2=A0English-speaking=C2=A0coll=
+eague=C2=A0or=C2=A0technical=C2=A0editor=C2=A0may=C2=A0suffice.=C2=A0Some=
+=C2=A0authors=C2=A0may=C2=A0be=C2=A0interested=C2=A0in=C2=A0the=C2=A0paid=
+=C2=A0service=C2=A0available=C2=A0at=C2=A0the=C2=A0following=C2=A0link:=C2=
+=A0http://www.prof-editing.com/ieee/=C2=A0(pending)=C2=A0for=C2=A0the=C2=A0=
+final=C2=A0version=C2=A0of=C2=A0the=C2=A0paper.
+
+**=C2=A0IMPORTANT=C2=A0DATES=C2=A0**
+*=C2=A0Full=C2=A0Paper=C2=A0Submission:=C2=A0June=C2=A01st,=C2=A02023
+*=C2=A0Notification=C2=A0of=C2=A0Acceptance:=C2=A0July=C2=A01st,=C2=A02023
+*=C2=A0Camera-ready=C2=A0Submission=C2=A0&=C2=A0Registration:=C2=A0July=C2=
+=A010th,=C2=A02023
+*=C2=A0Special=C2=A0Session/track=C2=A0Proposal=C2=A0Submission:=C2=A0Febru=
+ary=C2=A015th,=C2=A02023
+*=C2=A0Special=C2=A0Session/track=C2=A0Notification=C2=A0of=C2=A0Acceptance=
+:=C2=A0February=C2=A028th,=C2=A02023
+*=C2=A0Tutorial=C2=A0Proposal=C2=A0Submission:=C2=A0May=C2=A016th,=C2=A0202=
+3
+*=C2=A0Tutorial=C2=A0Proposal=C2=A0Notification=C2=A0of=C2=A0Acceptance:=C2=
+=A0May=C2=A030th,=C2=A02023
+
+**=C2=A0SYMPOSIUM=C2=A0PROCEEDINGS=C2=A0**
+Accepted=C2=A0papers=C2=A0will=C2=A0appear=C2=A0in=C2=A0the=C2=A0symposium=
+=C2=A0proceedings=C2=A0and=C2=A0be=C2=A0indexed=C2=A0in=C2=A0the=C2=A0Web=
+=C2=A0of=C2=A0Science=C2=A0Core=C2=A0Collection=C2=A0databases.=C2=A0The=C2=
+=A0authors=C2=A0of=C2=A0selected=C2=A0best=C2=A0papers=C2=A0will=C2=A0be=C2=
+=A0invited=C2=A0to=C2=A0extend=C2=A0their=C2=A0contributions=C2=A0to=C2=A0s=
+pecial=C2=A0issues.
+
+**=C2=A0KEYNOTE=C2=A0SPEAKERS=C2=A0**
+Mirjana=C2=A0Ivanovic,=C2=A0University=C2=A0of=C2=A0Novi=C2=A0Sad,=C2=A0Ser=
+bia
+Dimitrios=C2=A0Tzovaras,=C2=A0CERTH,=C2=A0Greece
+
+**=C2=A0VENUE=C2=A0**
+The=C2=A0Symposium=C2=A0will=C2=A0take=C2=A0place=C2=A0at=C2=A0Alhambra=C2=
+=A0Thalasso,=C2=A0Hammamet,=C2=A0Tunisia
+
+**=C2=A0SYMPOSIUM=C2=A0CHAIRS=C2=A0**
+General=C2=A0Chair
+Tulay=C2=A0Yildirim,=C2=A0Yildiz=C2=A0Technical=C2=A0University,=C2=A0Turke=
+y
+Program=C2=A0Chairs
+Costin=C2=A0Badica,=C2=A0University=C2=A0of=C2=A0Craiova,=C2=A0Romania
+Ladjel=C2=A0Bellatreche,=C2=A0ISAE-ENSMA,=C2=A0France
+Richard=C2=A0Chbeir,=C2=A0University=C2=A0of=C2=A0Pau=C2=A0&=C2=A0Pays=C2=
+=A0Adour,=C2=A0France
+Special=C2=A0Sessions=C2=A0Chairs
+Ayseg=C2=B8l=C2=A0U=C3=81ar,=C2=A0Firat=C2=A0University,=C2=A0Turkey
+B=C2=B8lent=C2=A0Bolat,=C2=A0Yildiz=C2=A0Technical=C2=A0University,=C2=A0Tu=
+rkey
+Special=C2=A0Issues=C2=A0Chairs
+Djamal=C2=A0Benslimane,=C2=A0Lyon=C2=A01=C2=A0University,=C2=A0France
+Yannis=C2=A0Manolopoulos,=C2=A0Open=C2=A0University=C2=A0of=C2=A0Cyprus,=C2=
+=A0Cyprus
+
+
+-----------------------------------------------------
+Salma=C2=A0SASSI,=C2=A0Ph.D.=C2=A0in=C2=A0Computer=C2=A0Science
+Associate=C2=A0Professor=C2=A0in=C2=A0Computer=C2=A0Science
+Researcher=C2=A0at=C2=A0OpenCEMS=C2=A0Industrial=C2=A0Chair,=C2=A0France
+LIUPPA=C2=A0Laboratory
+Universit=C3=A9=C2=A0de=C2=A0Pau=C2=A0et=C2=A0des=C2=A0Pays=C2=A0de=C2=A0l'=
+Adour=C2=A0(UPPA)
+IUT=C2=A0de=C2=A0Bayonne
+2=C2=A0All=C3=A9e=C2=A0du=C2=A0Parc=C2=A0de=C2=A0Montaury
+Campus=C2=A0Montaury/Anglet
+64600=C2=A0Anglet
+France
+
+Email:=C2=A0sassisalma@yahoo.fr,=C2=A0salma.sassi@fsjegj.rnu.tn
+Home=C2=A0Page:=C2=A0https://sites.google.com/view/salma-sassi/home
+OpenCEMS:=C2=A0https://opencems.sigappfr.org
+Spider=C2=A0Team:=C2=A0https://spider.sigappfr.org
+
+=C2=A0----------------------------

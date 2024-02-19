@@ -1,0 +1,612 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (bouncesmtp1.u12.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id C251914017C0
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Fri, 28 Apr 2023 17:27:54 +0200 (CEST)
+Received: from mx2.localdomain (MX2.univ-nantes.fr [193.52.101.136])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id B9DCB704C
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Fri, 28 Apr 2023 17:27:54 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.localdomain (Postfix) with ESMTP id AD2D41015E5
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 28 Apr 2023 17:27:54 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 1.054
+X-Spam-Level: *
+X-Spam-Status: No, score=1.054 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_WSFF=0.01,
+	SARE_LWSHORT=0.833, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+	T_KAM_HTML_FONT_INVALID=0.01, UN_PHISHING_PW=0.1] autolearn=disabled
+X-CRM114-Status: UNSURE ( -4.1737 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=dimes-unical-it.20221208.gappssmtp.com
+Received: from mx2.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id eNEqh_EaRIDh for <liste-egc@polytech.univ-nantes.fr>;
+	Fri, 28 Apr 2023 17:27:48 +0200 (CEST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=2a00:1450:4864:20::22f; helo=mail-lj1-x22f.google.com; envelope-from=r.interdonato@dimes.unical.it; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=none (p=none dis=none) header.from=dimes.unical.it
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=r.interdonato@dimes.unical.it
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (2048-bit key; unprotected) header.d=dimes-unical-it.20221208.gappssmtp.com header.i=@dimes-unical-it.20221208.gappssmtp.com header.b="x3RQeFJ+";
+	dkim-atps=neutral
+X-Greylist: delayed 00:05:07 by SQLgrey-1.6.7
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+	by mx2.localdomain (Postfix) with ESMTPS id BC0A31015D5
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 28 Apr 2023 17:27:47 +0200 (CEST)
+Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2a8c28158e2so98633571fa.0
+        for <liste-egc@polytech.univ-nantes.fr>; Fri, 28 Apr 2023 08:27:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dimes-unical-it.20221208.gappssmtp.com; s=20221208; t=1682695666; x=1685287666;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=iJbhek79Tjt83JPCuHuwLPWa5FoTCJaZD00NsGlxe98=;
+        b=x3RQeFJ+zoLQLuTOsF13BJR8N1LBj3lIf2gMrJ3iHd6T7+Tjr7Y5XzOH2gNO4tClbR
+         7evApp1H3muUfm+dxx+5gr2F679DzVKUF+knbZsFaRYKjQjklmC+VgDvzpAOzB63zFjd
+         Fpjk61EysoqG5J0aE+6Y5JHpfFL8eTQcZlvgkfe0JBfQ+JQ+cVd4+kMSR+BA1dGC6cpW
+         58LPhK7Duaagai7vft4MMCFRxXQiFcM7Yg0IdE+z7oJX1iJeU4Szomo8kMs0hZS0wdYK
+         Re+fdqj7bU7U6fTQyxNCfl5TLKKliaVlYHQZ7zhCE6LL58OtqYrjR/yPrpbLpHW3J4KY
+         w1FQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682695666; x=1685287666;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=iJbhek79Tjt83JPCuHuwLPWa5FoTCJaZD00NsGlxe98=;
+        b=UkU/MCwGX+U87VnSe0V8Jy52kpT8pDTrhnbv2M96kl4bS/+3Am6xEEdj0xCB7ZeZUr
+         1fa+BSjmWOJKfHwXySeZ9dus6Pu/6rOX80Y8+6htxASx+n0YirGU0zZGMxit0zbxwPvC
+         8pHm2fbjLSDp36zd7dvwkLBYseUXhTMllSgCqWApoO8x2ljgrqjQlt8jQtHk8oFgJ1p7
+         lUakHIeGWYGjQE185V8qExz20puE4mZXtWcf++Wbx/PaJNUCuD3Ez/eWi8mRmnEGToLs
+         Cx397jl1eGzbM2TKBtF/yS7jllztuBfrqJQ93V1MedNwytkKTSnnhWknxMPiXlklY+PA
+         /JQA==
+X-Gm-Message-State: AC+VfDxKOMtqNRor9Y2lBbYCDkWELxtj+pOB2FwVVRpWZNcDy9KHr43+
+	LTl2y7jUWum2lQuKbS7TuSBNzCi0iKNV/eDZ5d+F5sfjz3k1B+d2P6Y=
+X-Google-Smtp-Source: ACHHUZ5f5HTEYCtrVowpkSq03L4ePL2GoVimCIl4bkSP6XwxFydcnMMAchju0mhP76QsXzMJ3Fgb7zv3HAX1sRpIFaU=
+X-Received: by 2002:a05:6512:14a:b0:4f0:af5:5560 with SMTP id
+ m10-20020a056512014a00b004f00af55560mr1810737lfo.19.1682695358557; Fri, 28
+ Apr 2023 08:22:38 -0700 (PDT)
+MIME-Version: 1.0
+From: Roberto Interdonato <rinterdonato@dimes.unical.it>
+Date: Fri, 28 Apr 2023 17:22:27 +0200
+Message-ID: <CAG4i7in6Z7Ds-6Ob9idWbgxhAgzdaQkpTt1FpVbhee_4p+PD6Q@mail.gmail.com>
+To: liste-egc@polytech.univ-nantes.fr
+Content-Type: multipart/alternative; boundary="0000000000001cd38305fa670b69"
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] CfP: MACLEAN - MAChine Learning for EArth ObservatioN
+ (workshop @ECML/PKDD2023)
+
+--0000000000001cd38305fa670b69
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+*MACLEAN: MAChine Learning for EArth ObservatioN*
+
+September 2023 (18 or 22)
+
+https://sites.google.com/view/maclean23/
+
+
+
+
+
+KEY DATES
+
+
+
+Paper submission deadline: June 12, 2023
+
+Paper acceptance notification: July 12, 2023
+
+
+
+CONTEXT
+
+The vast amount of data currently produced by modern Earth Observation (EO)
+missions and measurements on the surface has raised new challenges for the
+Remote Sensing Community and atmospheric modelers. EO sensors can now offer
+(very) high spatial resolution images with revisit time frequencies never
+achieved before considering different signals, e.g., multi-(hyper)spectral
+optical, radar, LiDAR, and Digital Surface Models.
+
+On the other hand, atmospheric composition and processes are measured on
+the surface, starting from molecular scale measurements with mass
+spectrometers, particle counters, and more traditional meteorological
+instruments. Modern machine learning techniques can be crucial in dealing
+with such heterogeneous, multi-scale, and multi-modal data.
+
+Some methods gaining attention in this domain include deep learning, domain
+adaptation, semi-supervised approach, time series analysis, active
+learning, explainable artificial intelligence, uncertainty quantification,
+and interactive model building and visualization. Even though machine
+learning and the development of ad-hoc techniques are gaining popularity,
+we still see a significant need for more interaction between domain experts
+and machine learning researchers.
+
+This workshop aims to be an international forum where machine learning
+researchers and domain experts can meet each other to exchange, debate, and
+draw short and long-term research objectives around the exploitation and
+analysis of EO and atmospheric data via Machine Learning techniques. Among
+the workshop=E2=80=99s goals, we want to give an overview of the current
+machine-learning research dealing with EO and other atmospheric measurement
+data. On the other hand, we want to stimulate concrete discussions to pave
+the way to new machine learning frameworks especially tailored to deal with
+such data.
+
+
+
+TOPICS
+
+
+
+The non-exclusive list of topics for the workshop includes, to the extent
+related to the EO and atmospheric procesess:
+
+=C2=B7       Supervised and unsupervised machine learning methods
+
+=C2=B7       Semi-supervised classification, domain adoptation, active lear=
+ning,
+structured output learning, multi-task learning, and online learning
+
+=C2=B7       Interpretability and explainability of machine learning method=
+s
+
+=C2=B7       Bayesian modelling of various parts of EO or atmospheric proce=
+sess
+
+=C2=B7       Dimensionality reduction and feature selection, finding embedd=
+ings
+and latent variables
+
+=C2=B7       Visualisation and interaction with EO and atmospheric data
+
+=C2=B7       Interactive model building and eliciting expert knowledge
+
+=C2=B7       Applications of high-performance computing
+
+
+
+SUBMISSION
+
+
+
+We welcome original contributions, either theoretical or empirical,
+describing ongoing
+
+projects or completed work. Contributions can be of two types: either short
+position papers (up to 6 pages including references) or full research
+papers (up to 10 pages including references). Papers must be written in
+LNCS format, i.e., accordingly to the ECML-PKDD 2023 submission format.
+Accepted contributions will be made available electronically through the
+Workshop web page. Post-proceedings will be published by Springer.
+
+
+
+WORKSHOP WEBSITE:
+
+
+
+https://sites.google.com/view/maclean23/
+
+
+
+SUBMISSION WEBSITE:
+
+
+
+*(tba)*
+
+
+
+PC-CHAIRS
+
+
+
+Thomas Corpetti, CNRS, LETG-Rennes COSTEL UMR 6554 CNRS, Rennes, France,
+
+thomas.corp <thomas.corpetti@cnrs.fr>etti@cnrs.fr
+
+Dino Ienco, INRAE, UMR Tetis, Montpellier, France, di <dino.ienco@inrae.fr>
+no.ienco@inrae.fr
+
+Roberto Interdonato, CIRAD, UMR Tetis, Montpellier, France, roberto.in
+<roberto.interdonato@cirad.fr>terdonato@cirad.fr
+
+Minh-Tan Pham, Univ. Bretagne-Sud, UMR 6074, IRISA, Vannes, France,
+minh-tan.pham@irisa.fr
+
+Patrick Rinke, Aalto University, Helsinki, patrick.rinke@aalto.fi
+
+Kai Puolam=C3=A4ki, University of Helsinki, Helsinki, Finland,
+kai.puolamaki@helsinki.fi
+
+
+
+
+
+
+
+--=20
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Roberto Interdonato, PhD
+Research Scientist
+CIRAD
+UMR TETIS
+Montpellier
+France
+email: roberto.interdonato@cirad.fr
+tel: +33 (0) 467558615
+ =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+--0000000000001cd38305fa670b69
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div id=3D"gmail-:6v2" class=3D"gmail-Ar gmail-Au gmail-Ao=
+"><div id=3D"gmail-:6uy" class=3D"gmail-Am gmail-Al editable gmail-LW-avf g=
+mail-tS-tW gmail-tS-tY" aria-label=3D"Message Body" role=3D"textbox" aria-m=
+ultiline=3D"true" tabindex=3D"1" style=3D"direction:ltr;min-height:324px" a=
+ria-controls=3D":6xr"><p class=3D"MsoNormal" style=3D"margin:0cm 0cm 0cm 1p=
+t;line-height:10.65pt;font-size:11pt;font-family:&quot;Times New Roman&quot=
+;,serif"><b><span lang=3D"EN-US" style=3D"font-size:10pt">MACLEAN:
+MAChine Learning for EArth<span style=3D"letter-spacing:2.6pt"> </span>Obse=
+rvatioN</span></b><b><span lang=3D"EN-US" style=3D"font-size:10pt"></span><=
+/b></p>
+
+<p class=3D"gmail-MsoBodyText" style=3D"margin:0.45pt 0cm 0cm 1pt;font-size=
+:10pt;font-family:&quot;Times New Roman&quot;,serif"><span lang=3D"EN-US">S=
+eptember 2023 (18 or 22) </span><span lang=3D"EN-US"></span></p>
+
+<p class=3D"gmail-MsoBodyText" style=3D"line-height:10.65pt;margin:0cm 0cm =
+0cm 1pt;font-size:10pt;font-family:&quot;Times New Roman&quot;,serif"><span=
+ lang=3D"EN-US"><a href=3D"https://sites.google.com/view/maclean23/" style=
+=3D"color:rgb(5,99,193)">https://sites.google.com/view/maclean23/</a></span=
+></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:11pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US">=C2=A0</span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:11pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US">=C2=A0</span></p>
+
+<p class=3D"gmail-MsoBodyText" style=3D"line-height:10.65pt;margin:0cm 0cm =
+0cm 1pt;font-size:10pt;font-family:&quot;Times New Roman&quot;,serif"><span=
+ lang=3D"EN-US">KEY DATES</span><span lang=3D"EN-US"></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:11pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US">=C2=A0</span></p>
+
+<p class=3D"gmail-MsoBodyText" style=3D"line-height:10.65pt;margin:0cm 0cm =
+0cm 1pt;font-size:10pt;font-family:&quot;Times New Roman&quot;,serif"><span=
+ lang=3D"EN-US">Paper submission deadline: June 12, 2023</span><span lang=
+=3D"EN-US"></span></p>
+
+<p class=3D"gmail-MsoBodyText" style=3D"margin:0.45pt 0cm 0cm 1pt;font-size=
+:10pt;font-family:&quot;Times New Roman&quot;,serif"><span lang=3D"EN-US">P=
+aper<span style=3D"letter-spacing:1.25pt"> </span>acceptance<span style=3D"=
+letter-spacing:1.25pt"> </span>notification:<span style=3D"letter-spacing:1=
+.25pt"> </span>July<span style=3D"letter-spacing:1.25pt"> </span>12,<span s=
+tyle=3D"letter-spacing:1.25pt"> </span>2023</span><span lang=3D"EN-US"></sp=
+an></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:11pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US">=C2=A0</span></p>
+
+<p class=3D"gmail-MsoBodyText" style=3D"line-height:10.65pt;margin:0cm 0cm =
+0cm 1pt;font-size:10pt;font-family:&quot;Times New Roman&quot;,serif"><span=
+ lang=3D"EN-US">CONTEXT</span><span lang=3D"EN-US"></span></p>
+
+<p class=3D"gmail-western" style=3D"margin-left:0cm;text-align:justify;marg=
+in-right:0cm;margin-bottom:0cm;font-size:10pt;font-family:&quot;Times New R=
+oman&quot;,serif;color:black"><span lang=3D"EN-US" style=3D"font-size:11pt"=
+>The vast amount of data
+currently produced by modern Earth Observation (EO) missions and measuremen=
+ts
+on the surface has raised new challenges for the Remote Sensing Community a=
+nd
+atmospheric modelers. EO sensors can now offer (very) high spatial resoluti=
+on
+images with revisit time frequencies never achieved before considering
+different signals, e.g., multi-(hyper)spectral optical, radar, LiDAR, and
+Digital Surface Models. </span></p>
+
+<p class=3D"gmail-western" style=3D"margin-left:0cm;text-align:justify;marg=
+in-right:0cm;margin-bottom:0cm;font-size:10pt;font-family:&quot;Times New R=
+oman&quot;,serif;color:black"><span lang=3D"EN-US" style=3D"font-size:11pt"=
+>On the other hand,
+atmospheric composition and processes are measured on the surface, starting
+from molecular scale measurements with mass spectrometers, particle counter=
+s,
+and more traditional meteorological instruments. Modern machine learning
+techniques can be crucial in dealing with such heterogeneous, multi-scale, =
+and
+multi-modal data. </span></p>
+
+<p class=3D"gmail-western" style=3D"margin-left:0cm;text-align:justify;marg=
+in-right:0cm;margin-bottom:0cm;font-size:10pt;font-family:&quot;Times New R=
+oman&quot;,serif;color:black"><span lang=3D"EN-US" style=3D"font-size:11pt"=
+>Some methods gaining
+attention in this domain include deep learning, domain adaptation,
+semi-supervised approach, time series analysis, active learning, explainabl=
+e
+artificial intelligence, uncertainty quantification, and interactive model
+building and visualization. Even though machine learning and the developmen=
+t of
+ad-hoc techniques are gaining popularity, we still see a significant need f=
+or
+more interaction between domain experts and machine learning researchers. <=
+/span></p>
+
+<p class=3D"gmail-western" style=3D"margin-left:0cm;text-align:justify;marg=
+in-right:0cm;margin-bottom:0cm;font-size:10pt;font-family:&quot;Times New R=
+oman&quot;,serif;color:black"><span lang=3D"EN-US" style=3D"font-size:11pt"=
+>This workshop aims to be an
+international forum where machine learning researchers and domain experts c=
+an
+meet each other to exchange, debate, and draw short and long-term research
+objectives around the exploitation and analysis of EO and atmospheric data =
+via
+Machine Learning techniques. Among the workshop=E2=80=99s goals, we want to=
+ give an
+overview of the current machine-learning research dealing with EO and other
+atmospheric measurement data. On the other hand, we want to stimulate concr=
+ete
+discussions to pave the way to new machine learning frameworks especially
+tailored to deal with such data.</span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:11pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US">=C2=A0</span></p>
+
+<p class=3D"gmail-MsoBodyText" style=3D"line-height:10.65pt;margin:0cm 0cm =
+0cm 1pt;font-size:10pt;font-family:&quot;Times New Roman&quot;,serif"><span=
+ lang=3D"EN-US">TOPICS</span></p>
+
+<p class=3D"gmail-MsoBodyText" style=3D"margin:0cm;font-size:10pt;font-fami=
+ly:&quot;Times New Roman&quot;,serif"><span lang=3D"EN-US">=C2=A0</span></p=
+>
+
+<p class=3D"gmail-MsoBodyText" style=3D"margin:0cm 0cm 0cm 1pt;font-size:10=
+pt;font-family:&quot;Times New Roman&quot;,serif"><span lang=3D"EN-GB">The
+non-exclusive list of topics for the workshop includes, to the extent relat=
+ed
+to the EO and atmospheric procesess:</span><span lang=3D"EN-US">=C2=A0</spa=
+n></p>
+
+<p class=3D"gmail-MsoBodyText" style=3D"margin:0cm 0cm 0cm 36pt;font-size:1=
+0pt;font-family:&quot;Times New Roman&quot;,serif"><span lang=3D"EN-US" sty=
+le=3D"font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:normal;=
+font-variant-east-asian:normal;font-variant-alternates:normal;font-kerning:=
+auto;font-feature-settings:normal;font-stretch:normal;font-size:7pt;line-he=
+ight:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0
+</span></span><span lang=3D"EN-US">Supervised and unsupervised
+machine learning methods </span></p>
+
+<p class=3D"gmail-MsoBodyText" style=3D"margin:0cm 0cm 0cm 36pt;font-size:1=
+0pt;font-family:&quot;Times New Roman&quot;,serif"><span lang=3D"EN-US" sty=
+le=3D"font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:normal;=
+font-variant-east-asian:normal;font-variant-alternates:normal;font-kerning:=
+auto;font-feature-settings:normal;font-stretch:normal;font-size:7pt;line-he=
+ight:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0
+</span></span><span lang=3D"EN-US">Semi-supervised classification,
+domain adoptation, active learning, structured output learning, multi-task
+learning, and online learning</span></p>
+
+<p class=3D"gmail-MsoBodyText" style=3D"margin:0cm 0cm 0cm 36pt;font-size:1=
+0pt;font-family:&quot;Times New Roman&quot;,serif"><span lang=3D"EN-US" sty=
+le=3D"font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:normal;=
+font-variant-east-asian:normal;font-variant-alternates:normal;font-kerning:=
+auto;font-feature-settings:normal;font-stretch:normal;font-size:7pt;line-he=
+ight:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0
+</span></span><span lang=3D"EN-US">Interpretability and
+explainability of machine learning methods</span></p>
+
+<p class=3D"gmail-MsoBodyText" style=3D"margin:0cm 0cm 0cm 36pt;font-size:1=
+0pt;font-family:&quot;Times New Roman&quot;,serif"><span lang=3D"EN-US" sty=
+le=3D"font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:normal;=
+font-variant-east-asian:normal;font-variant-alternates:normal;font-kerning:=
+auto;font-feature-settings:normal;font-stretch:normal;font-size:7pt;line-he=
+ight:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0
+</span></span><span lang=3D"EN-US">Bayesian modelling of various
+parts of EO or atmospheric procesess</span></p>
+
+<p class=3D"gmail-MsoBodyText" style=3D"margin:0cm 0cm 0cm 36pt;font-size:1=
+0pt;font-family:&quot;Times New Roman&quot;,serif"><span lang=3D"EN-US" sty=
+le=3D"font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:normal;=
+font-variant-east-asian:normal;font-variant-alternates:normal;font-kerning:=
+auto;font-feature-settings:normal;font-stretch:normal;font-size:7pt;line-he=
+ight:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0
+</span></span><span lang=3D"EN-US">Dimensionality reduction and
+feature selection, finding embeddings and latent variables</span></p>
+
+<p class=3D"gmail-MsoBodyText" style=3D"margin:0cm 0cm 0cm 36pt;font-size:1=
+0pt;font-family:&quot;Times New Roman&quot;,serif"><span lang=3D"EN-US" sty=
+le=3D"font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:normal;=
+font-variant-east-asian:normal;font-variant-alternates:normal;font-kerning:=
+auto;font-feature-settings:normal;font-stretch:normal;font-size:7pt;line-he=
+ight:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0
+</span></span><span lang=3D"EN-US">Visualisation and interaction
+with EO and atmospheric data</span></p>
+
+<p class=3D"gmail-MsoBodyText" style=3D"margin:0cm 0cm 0cm 36pt;font-size:1=
+0pt;font-family:&quot;Times New Roman&quot;,serif"><span lang=3D"EN-US" sty=
+le=3D"font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:normal;=
+font-variant-east-asian:normal;font-variant-alternates:normal;font-kerning:=
+auto;font-feature-settings:normal;font-stretch:normal;font-size:7pt;line-he=
+ight:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0
+</span></span><span lang=3D"EN-US">Interactive model building and
+eliciting expert knowledge</span></p>
+
+<p class=3D"gmail-MsoBodyText" style=3D"margin:0cm 0cm 0cm 36pt;font-size:1=
+0pt;font-family:&quot;Times New Roman&quot;,serif"><span lang=3D"EN-US" sty=
+le=3D"font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:normal;=
+font-variant-east-asian:normal;font-variant-alternates:normal;font-kerning:=
+auto;font-feature-settings:normal;font-stretch:normal;font-size:7pt;line-he=
+ight:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0
+</span></span><span lang=3D"EN-US">Applications of
+high-performance computing </span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:11pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US">=C2=A0</span></p>
+
+<p class=3D"gmail-MsoBodyText" style=3D"line-height:10.65pt;margin:0cm 0cm =
+0cm 1pt;font-size:10pt;font-family:&quot;Times New Roman&quot;,serif"><span=
+ lang=3D"EN-US">SUBMISSION</span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:11pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US">=C2=A0</span></p>
+
+<p class=3D"gmail-MsoBodyText" style=3D"text-align:justify;line-height:10.6=
+5pt;margin:0cm 0cm 0cm 1pt;font-size:10pt;font-family:&quot;Times New Roman=
+&quot;,serif"><span lang=3D"EN-US">We welcome original
+contributions, either theoretical or empirical, describing ongoing</span><s=
+pan lang=3D"EN-US"></span></p>
+
+<p class=3D"gmail-MsoBodyText" style=3D"margin:0.45pt 0.85pt 0.0001pt 1pt;t=
+ext-align:justify;line-height:102%;font-size:10pt;font-family:&quot;Times N=
+ew Roman&quot;,serif"><span lang=3D"EN-US">projects or completed work.
+Contributions can be of two types: either short position papers (up to 6 pa=
+ges
+including references) or full research papers (up to 10 pages including
+references). Papers must be written in LNCS format, i.e., accordingly to th=
+e ECML-PKDD
+2023 submission format. Accepted contributions will be made available
+electronically through the Workshop web page. Post-proceedings will be publ=
+ished
+by Springer. </span><span lang=3D"EN-US"></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:11pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US">=C2=A0</span></p>
+
+<p class=3D"gmail-MsoBodyText" style=3D"line-height:10.65pt;margin:0cm 0cm =
+0cm 1pt;font-size:10pt;font-family:&quot;Times New Roman&quot;,serif"><span=
+ lang=3D"EN-US">WORKSHOP<span style=3D"letter-spacing:-1.15pt"> </span>WEBS=
+ITE:</span></p>
+
+<p class=3D"gmail-MsoBodyText" style=3D"line-height:10.65pt;margin:0cm 0cm =
+0cm 1pt;font-size:10pt;font-family:&quot;Times New Roman&quot;,serif"><span=
+ lang=3D"EN-US">=C2=A0</span></p>
+
+<p class=3D"gmail-MsoBodyText" style=3D"line-height:10.65pt;margin:0cm 0cm =
+0cm 1pt;font-size:10pt;font-family:&quot;Times New Roman&quot;,serif"><span=
+ lang=3D"EN-US"><a href=3D"https://sites.google.com/view/maclean23/" style=
+=3D"color:rgb(5,99,193)">https://sites.google.com/view/maclean23/</a></span=
+></p>
+
+<p class=3D"gmail-MsoBodyText" style=3D"line-height:10.65pt;margin:0cm 0cm =
+0cm 1pt;font-size:10pt;font-family:&quot;Times New Roman&quot;,serif"><span=
+ lang=3D"EN-US">=C2=A0</span></p>
+
+<p class=3D"gmail-MsoBodyText" style=3D"line-height:10.65pt;margin:0cm 0cm =
+0cm 1pt;font-size:10pt;font-family:&quot;Times New Roman&quot;,serif"><span=
+ lang=3D"EN-US">SUBMISSION WEBSITE:</span></p>
+
+<p class=3D"gmail-MsoBodyText" style=3D"line-height:10.65pt;margin:0cm 0cm =
+0cm 1pt;font-size:10pt;font-family:&quot;Times New Roman&quot;,serif"><span=
+ lang=3D"EN-US">=C2=A0</span></p>
+
+<p class=3D"gmail-MsoBodyText" style=3D"margin:0.45pt 0cm 0cm 1pt;font-size=
+:10pt;font-family:&quot;Times New Roman&quot;,serif"><span lang=3D"EN-US"><=
+b>(tba)</b></span><span lang=3D"EN-US"></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:11pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US">=C2=A0</span></p>
+
+<p class=3D"gmail-MsoBodyText" style=3D"line-height:10.65pt;margin:0cm 0cm =
+0cm 1pt;font-size:10pt;font-family:&quot;Times New Roman&quot;,serif"><span=
+ lang=3D"EN-US">PC-CHAIRS</span><span lang=3D"EN-US"></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:11pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US">=C2=A0</span></p>
+
+<p class=3D"gmail-MsoBodyText" style=3D"line-height:10.65pt;margin:0cm 0cm =
+0cm 1pt;font-size:10pt;font-family:&quot;Times New Roman&quot;,serif"><span=
+ lang=3D"EN-US">Thomas Corpetti, CNRS, LETG-Rennes
+COSTEL UMR 6554 CNRS, Rennes, France,</span><span lang=3D"EN-US"></span></p=
+><p class=3D"gmail-MsoBodyText" style=3D"margin:0.45pt 0cm 0cm 1pt;font-siz=
+e:10pt;font-family:&quot;Times New Roman&quot;,serif"><span lang=3D"EN-US">=
+<a href=3D"mailto:thomas.corpetti@cnrs.fr"><span style=3D"color:windowtext;=
+text-decoration-line:none">thomas.corp</span></a><a href=3D"mailto:etti@cnr=
+s.fr"><span style=3D"color:windowtext;text-decoration-line:none">etti@cnrs.=
+fr</span></a></span></p><p class=3D"gmail-MsoBodyText" style=3D"margin:0.45=
+pt 0cm 0cm 1pt;font-size:10pt;font-family:&quot;Times New Roman&quot;,serif=
+"><span lang=3D"EN-US">Dino Ienco, INRAE, UMR Tetis, Montpellier, France, <=
+/span><span lang=3D"EN-US"><a href=3D"mailto:dino.ienco@inrae.fr"><span sty=
+le=3D"color:windowtext;text-decoration-line:none">di</span></a><a href=3D"m=
+ailto:no.ienco@inrae.fr"><span style=3D"color:windowtext;text-decoration-li=
+ne:none">no.ienco@inrae.fr</span></a></span></p><p class=3D"gmail-MsoBodyTe=
+xt" style=3D"margin:0.45pt 0.85pt 0.0001pt 1pt;line-height:102%;font-size:1=
+0pt;font-family:&quot;Times New Roman&quot;,serif"><span lang=3D"EN-US">Rob=
+erto Interdonato, CIRAD, UMR Tetis, Montpellier,
+France, </span><span lang=3D"EN-US"><a href=3D"mailto:roberto.interdonato@c=
+irad.fr"><span style=3D"color:windowtext;text-decoration-line:none">roberto=
+.in</span></a><a href=3D"mailto:terdonato@cirad.fr"><span style=3D"color:wi=
+ndowtext;text-decoration-line:none">terdonato@cirad.fr</span></a> </span></=
+p><p class=3D"gmail-MsoBodyText" style=3D"margin:0.45pt 0.85pt 0.0001pt 1pt=
+;line-height:102%;font-size:10pt;font-family:&quot;Times New Roman&quot;,se=
+rif">Minh-Tan Pham, Univ.
+Bretagne-Sud, UMR 6074, IRISA, Vannes, France, <a href=3D"mailto:minh-tan.p=
+ham@irisa.fr">minh-tan.pham@irisa.fr</a></p><p class=3D"gmail-MsoBodyText" =
+style=3D"margin:0.45pt 0.85pt 0.0001pt 1pt;line-height:102%;font-size:10pt;=
+font-family:&quot;Times New Roman&quot;,serif"><span lang=3D"EN-US">Patrick=
+ Rinke, Aalto University, Helsinki,
+<a href=3D"mailto:patrick.rinke@aalto.fi">patrick.rinke@aalto.fi</a></span>=
+<span lang=3D"EN-US"></span></p><p class=3D"gmail-MsoBodyText" style=3D"lin=
+e-height:10.65pt;margin:0cm 0cm 0cm 1pt;font-size:10pt;font-family:&quot;Ti=
+mes New Roman&quot;,serif">
+
+
+
+
+
+
+
+
+
+
+
+</p><p class=3D"MsoNormal" style=3D"margin:0cm;font-size:11pt;font-family:&=
+quot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:1=
+0pt">Kai Puolam=C3=A4ki,
+University of Helsinki, Helsinki, Finland, <a href=3D"mailto:kai.puolamaki@=
+helsinki.fi">kai.puolamaki@helsinki.fi</a></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:11pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US">=C2=A0</span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:11pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US">=C2=A0</span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:11pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US">=C2=A0</span></p></div><=
+/div><div><br></div><span class=3D"gmail_signature_prefix">-- </span><br><d=
+iv dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_signature"=
+><div dir=3D"ltr"><div><div dir=3D"ltr"><div><div dir=3D"ltr"><div><div dir=
+=3D"ltr"><div><div dir=3D"ltr"><div dir=3D"ltr"><br><span><font color=3D"#9=
+99999">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<br>
+Roberto Interdonato, PhD<br><div dir=3D"ltr">Research Scientist=C2=A0</div>=
+<div dir=3D"ltr">CIRAD=C2=A0</div><div dir=3D"ltr">UMR TETIS</div>Montpelli=
+er</font></span></div><div dir=3D"ltr"><span><font color=3D"#999999">France=
+<br></font><font color=3D"#999999">
+email:=C2=A0</font></span><span style=3D"color:rgb(85,85,85);white-space:no=
+wrap"><a href=3D"mailto:roberto.interdonato@cirad.fr" target=3D"_blank">rob=
+erto.interdonato@cirad.fr</a><br></span><span style=3D"color:rgb(153,153,15=
+3)">tel: +33 (0) 467558615</span></div><div><span><font color=3D"#999999">=
+=C2=A0=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</font><b=
+r></span></div></div></div></div></div></div></div></div></div></div></div>=
+</div>
+
+--0000000000001cd38305fa670b69--

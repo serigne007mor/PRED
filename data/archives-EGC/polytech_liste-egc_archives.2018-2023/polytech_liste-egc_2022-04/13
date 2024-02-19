@@ -1,0 +1,548 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (BounceSMTP2.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 7941F14014ED
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Tue,  5 Apr 2022 13:33:10 +0200 (CEST)
+Received: from mx2.d101.univ-nantes.fr (MX2.univ-nantes.fr [193.52.101.136])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id 75AC65F9E
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Tue,  5 Apr 2022 13:33:10 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTP id 6BCC61011C8
+	for <liste-egc@polytech.univ-nantes.fr>; Tue,  5 Apr 2022 13:33:05 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 3.31
+X-Spam-Level: ***
+X-Spam-Status: No, score=3.31 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	J_CHICKENPOX_26=0.6, J_CHICKENPOX_52=0.6, MR_NOT_ATTRIBUTED_IP=0.2,
+	NO_RDNS2=0.01, RCVD_IN_SORBS=1, RCVD_IN_WSFF=0.01,
+	SARE_HEAD_8BIT_SPAM=0.888, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+	UN_PHISHING_PW=0.1, URIBL_BLOCKED=0.001] autolearn=disabled
+X-CRM114-Status: UNSURE ( 0.3971 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=unicaen.fr
+Received: from mx2.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id oRHB0gh_z7zZ for <liste-egc@polytech.univ-nantes.fr>;
+	Tue,  5 Apr 2022 13:32:59 +0200 (CEST)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mailout.unicaen.fr (mailoutvip1.unicaen.fr [194.199.107.40])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTP id A47E11006E1
+	for <liste-egc@polytech.univ-nantes.fr>; Tue,  5 Apr 2022 13:32:59 +0200 (CEST)
+Received: from wzproxy1.unicaen.fr (wzproxy1.unicaen.fr [193.55.120.52])
+	by mailout.unicaen.fr (Postfix) with ESMTP id 954E082C68;
+	Tue,  5 Apr 2022 13:32:59 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=unicaen.fr; s=mail;
+	t=1649158379; bh=9kizy4ZJWauTUZEsQmX6AgFLQrSgYwQ1wTneR+D/qUg=;
+	h=Date:Subject:References:To:Cc:From:In-Reply-To:From;
+	b=AqbNZRSnl3Ig2LJjYBkVmp1xy5rWLlzrRq3nt2w64xMLmBhrEye83dOFBLTaPgwkN
+	 hYeTQ6MAmNxN8DlQygxAUDXb7YRqsNQe9Zsmf2bKm8mVb5Jw3DEi+gWkd/Xb/AEQ8z
+	 4OaltYd4JI063tZowXlBg3DKlLqU/uhEdlWhJf7s=
+Received: from localhost (localhost [127.0.0.1])
+	by wzproxy1.unicaen.fr (Postfix) with ESMTP id 9064666845;
+	Tue,  5 Apr 2022 13:32:59 +0200 (CEST)
+X-Amavis-Modified: Mail body modified (using disclaimer) - wzproxy1.unicaen.fr
+X-Virus-Scanned: amavisd-new at wzproxy1.unicaen.fr
+Received: from wzproxy1.unicaen.fr ([127.0.0.1])
+	by localhost (wzproxy1.unicaen.fr [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id l70ddmJjhTuT; Tue,  5 Apr 2022 13:32:59 +0200 (CEST)
+Received: from lsmtp1.unicaen.fr (lsmtp1.unicaen.fr [193.55.120.32])
+	by wzproxy1.unicaen.fr (Postfix) with ESMTP id 674A2668C6;
+	Tue,  5 Apr 2022 13:32:59 +0200 (CEST)
+Received: from [192.168.43.210] (216.197.204.77.rev.sfr.net [77.204.197.216])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	(No client certificate requested)
+	by lsmtp1.unicaen.fr (Postfix) with ESMTPSA id 5ED181001C8;
+	Tue,  5 Apr 2022 13:32:54 +0200 (CEST)
+Content-Type: multipart/alternative;
+ boundary="------------9wiwERanVm0KIIY8n6g07E0l"
+Message-ID: <02e9c2a9-d93e-9056-739b-8d45b8d48161@unicaen.fr>
+Date: Tue, 5 Apr 2022 13:32:52 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Content-Language: fr
+References: <102658b7-39cb-3e08-15c9-ac026938df49@unicaen.fr>
+To: liste-egc@polytech.univ-nantes.fr
+Cc: =?UTF-8?Q?Ga=c3=abl_Dias?= <gael.dias@unicaen.fr>,
+ Gauthier Picard <gauthier.picard@onera.fr>,
+ REINER Valerie <valerie.reiner@berger-levrault.com>
+From: =?UTF-8?Q?Ga=c3=abl_Dias?= <gael.dias@unicaen.fr>
+In-Reply-To: <102658b7-39cb-3e08-15c9-ac026938df49@unicaen.fr>
+X-Forwarded-Message-Id: <102658b7-39cb-3e08-15c9-ac026938df49@unicaen.fr>
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] ECOSIA 2022 - Ecole =?UTF-8?Q?Saisonni=C3=A8re?= en IA
+ et =?UTF-8?Q?Sant=C3=A9?= de =?UTF-8?Q?l=E2=80=99AFIA?= - 22-25 Mai -
+ =?UTF-8?Q?H=C3=B4tel_R=C3=A9gina?= & Spa =?UTF-8?Q?=C3=A0?=
+ Berck-sur-Mer || **Appel =?UTF-8?Q?=C3=A0?= Candidatures
+ jusqu'au 2 Mai 2022**
+
+This is a multi-part message in MIME format.
+--------------9wiwERanVm0KIIY8n6g07E0l
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+
+** Désolé pour les doublons **
+
+L’AFIA (Association Française pour l’Intelligence Artificielle) et son 
+groupe de travail en enseignement organisent la 1^ère édition de 
+*l’École**Saisonnière en Intelligence Artificielle *(ECOSIA 2022) sur la 
+thématique de la *Santé*.
+
+ECOSIA 2022 se déroulera *du Dimanche 22 Mai au Mercredi 25 Mai 2022* à 
+l’Hôtel Regina & Spa de *Berck-sur-Mer* dans le Pas-de-Calais.
+
+ECOSIA 2022 couvrira des *thématiques propres aux six Collèges* de 
+l’AFIA grâce à des experts renommés du domaine de l’Intelligence 
+Artificielle appliquée à la Santé.
+
+  * *Ninon BURGOS*(Institut du Cerveau - /Paris AI Research Institute/ -
+    CNRS) | IA pour l'imagerie médicale : de l'acquisition des images au
+    pronostic | Collège Apprentissage
+  * *Adrien COULET*(INRIA Paris - CRC UMRS 1138 INSERM - Université
+    Paris Cité) | Raisonnement et fouille sur les graphes de
+    connaissances biomédicaux | Collège Représentation et Raisonnement
+  * *Natalia GRABAR*(Université de Lille - STL UMR 8163 - CNRS) | IA
+    pour l’analyse des documents médicaux : classification,
+    simplification, extraction d’information | Collège Technologies du
+    Langage Humain
+  * *Ghilès MOSTAFAOUI*(CY Cergy Paris Université - ETIS UMR 8051) |
+    Architectures sensori-motrices pour les coordinations
+    interpersonnelles Homme-Robot : modélisation pluridisciplinaire et
+    application à la santé | Collège Systèmes Multi-agents et Agents
+    Autonomes
+  * *Fleur MOUGIN*(Université de Bordeaux - AHeaD UMR 1219 - INSERM) |
+    Ontologies : définition, construction et applications en santé |
+    Collège Science de l’Ingénierie et des Connaissances
+  * *Alexandre PAUCHET*(INSA de Rouen - LITIS EA 4108 - Fédération de
+    Recherche CNRS Normastic) | Modèles d'interaction pour agents
+    virtuels et robots interactifs en contexte médical | Collège
+    Interaction avec l’Humain
+
+En plus des sessions théoriques, ECOSIA 2022 permettra aux étudiants une 
+immersion dans le domaine de l’Intelligence Artificielle et de la Santé 
+à travers *des travaux pratiques, des sessions posters, des tables 
+rondes, des orateurs invités et des séances cinéma*.
+
+  * *Navneet AGARWAL*(Université de Caen Normandie - GREYC UMR 6072) |
+    /Machine learning strategies for the estimation of depression level
+    severity/ | Collège Technologies du Langage Humain
+  * *Youssef CHAHIR*(Université de Caen Normandie - GREYC UMR 6072) |
+    Segmentation de tissus cancéreux par Intelligence Artificielle |
+    Collège Apprentissage
+
+Si vous avez un*niveau Bac+5 (ou plus), *que vous venez du monde 
+*académique ou privé, *et que**vous avez un *profil* *Intelligence 
+Artificielle* avec un fort intérêt pour la Santé, ou un *profil Santé* 
+avec une fort intérêt pour l’Intelligence Artificielle, vous pouvez 
+candidater à l’une des *25 places disponibles*.
+
+Pour *candidater*, il vous faudra envoyer les documents 
+listés ci-dessous aux adresses suivantes: gael.dias@afia.asso.fr, 
+gauthier.picard@onera.fr, valerie.reiner@berger-levrault.com.
+
+  * Un CV
+  * Une lettre de motivation (maximum 1/2 page)
+  * Une lettre de recommandation (si possible)
+
+La *date limite* pour les candidatures est fixée au *2 Mai 2022*.Les 
+résultats du processus de sélection seront rendus disponible au plus 
+tard le *9 Mai 2022*. L’organisation s’engage à adopter une *politique 
+de diversité* pour la sélection des candidatures afin de former un panel 
+éclectique de participants.
+
+Les frais d’inscription seront de *300 euros maximum* et couvriront 
+l’intégralité des coûts de la formation (hébergement/repas/tutoriels), 
+seuls les frais de transports restent à la charge des participants.
+
+
+De plus amples informations seront disponibles sur le site de l’AFIA 
+(https://afia.asso.fr/ecosia-2022) au fur et à mesure de l’avancée de 
+l’organisation d’ECOSIA 2022.
+
+Au plaisir de vous recevoir à Berck-sur-Mer pour ECOSIA 2022, et en 
+attendant vos candidatures.
+
+L’organisation: Gaël, Gauthier, Valérie.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--------------9wiwERanVm0KIIY8n6g07E0l
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <span style="mso-ansi-language:FR">** Désolé pour les doublons **</span>
+    <div class="moz-forward-container">
+      <div class="moz-forward-container">
+        <div class="moz-forward-container">
+          <div class="moz-forward-container">
+            <div class="moz-forward-container">
+              <div class="moz-forward-container">
+                <div class="moz-forward-container">
+                  <div class="moz-forward-container">
+                    <div class="moz-forward-container">
+                      <div class="moz-forward-container">
+                        <p class="MsoNormal" style="text-align:justify"><span
+                            style="mso-ansi-language: FR">L’AFIA
+                            (Association Française pour l’Intelligence
+                            Artificielle) et son groupe de travail en
+                            enseignement organisent la 1<sup>ère</sup>
+                            édition de <b>l’École</b><b
+                              style="mso-bidi-font-weight:normal">
+                              Saisonnière en Intelligence Artificielle </b>(ECOSIA
+                            2022) sur la thématique de la <b
+                              style="mso-bidi-font-weight: normal">Santé</b>.
+                          </span></p>
+                        <p class="MsoNormal" style="text-align:justify"><span
+                            style="mso-ansi-language: FR">ECOSIA 2022 se
+                            déroulera <b
+                              style="mso-bidi-font-weight:normal">du
+                              Dimanche 22 Mai au Mercredi 25 Mai 2022</b>
+                            à l’Hôtel Regina &amp; Spa de <b
+                              style="mso-bidi-font-weight:normal">Berck-sur-Mer</b>
+                            dans le Pas-de-Calais.</span></p>
+                        <p class="MsoNormal" style="text-align:justify"><span
+                            style="mso-ansi-language: FR">ECOSIA 2022
+                            couvrira des <b
+                              style="mso-bidi-font-weight:normal">thématiques
+                              propres aux six Collèges</b> de l’AFIA
+                            grâce à des experts renommés du domaine de
+                            l’Intelligence Artificielle appliquée à la
+                            Santé.</span></p>
+                        <ul>
+                          <li><b style="mso-bidi-font-weight:normal"><span
+                                style="mso-ansi-language:FR">Ninon
+                                BURGOS</span></b><span
+                              style="mso-ansi-language: FR"> (Institut
+                              du Cerveau - <i
+                                style="mso-bidi-font-style:normal">Paris
+                                AI Research Institute</i> - CNRS) | IA
+                              pour l'imagerie médicale : de
+                              l'acquisition des images au pronostic |
+                              Collège Apprentissage</span></li>
+                          <li><span style="mso-ansi-language: FR"></span><b
+                              style="mso-bidi-font-weight:normal"><span
+                                style="mso-ansi-language:FR">Adrien
+                                COULET</span></b><span
+                              style="mso-ansi-language: FR"> (</span><span
+                              style="mso-ansi-language: FR"><span
+                                class="">INRIA Paris - </span></span><span
+                              style="mso-ansi-language: FR"><span
+                                class=""><span style="color: rgb(77, 81,
+                                  86); font-family: arial, sans-serif;
+                                  font-size: 14px; font-style: normal;
+                                  font-variant-ligatures: normal;
+                                  font-variant-caps: normal;
+                                  font-weight: 400; letter-spacing:
+                                  normal; orphans: 2; text-align: left;
+                                  text-indent: 0px; text-transform:
+                                  none; white-space: normal; widows: 2;
+                                  word-spacing: 0px;
+                                  -webkit-text-stroke-width: 0px;
+                                  background-color: rgb(255, 255, 255);
+                                  text-decoration-thickness: initial;
+                                  text-decoration-style: initial;
+                                  text-decoration-color: initial;
+                                  display: inline !important; float:
+                                  none;"></span>CRC UMRS 1138 INSERM -
+                                Université Paris Cité</span>) |
+                              Raisonnement et fouille sur les graphes de
+                              connaissances biomédicaux | Collège
+                              Représentation et Raisonnement</span></li>
+                          <li><span style="mso-ansi-language: FR"></span><span
+                              style="font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol;mso-ansi-language:
+                              FR"><span style="mso-list:Ignore"><span
+                                  style="font:7.0pt &quot;Times New
+                                  Roman&quot;"></span></span></span><b
+                              style="mso-bidi-font-weight:normal"><span
+                                style="mso-ansi-language:FR">Natalia
+                                GRABAR</span></b><span
+                              style="mso-ansi-language: FR"> (Université
+                              de Lille - STL UMR 8163 - CNRS) | IA pour
+                              l’analyse des documents médicaux :
+                              classification, simplification, extraction
+                              d’information | Collège Technologies du
+                              Langage Humain</span></li>
+                          <li><span style="mso-ansi-language: FR"></span><b
+                              style="mso-bidi-font-weight:normal"><span
+                                style="mso-ansi-language:FR">Ghilès
+                                MOSTAFAOUI</span></b><span
+                              style="mso-ansi-language:FR"> (</span><span
+                              style="mso-ansi-language:FR">CY Cergy
+                              Paris Université - </span><span
+                              style="mso-ansi-language:FR">ETIS UMR
+                              8051) | Architectures sensori-motrices
+                              pour les coordinations interpersonnelles
+                              Homme-Robot : modélisation
+                              pluridisciplinaire et application à la
+                              santé | Collège Systèmes Multi-agents et
+                              Agents Autonomes</span></li>
+                          <li><span style="mso-ansi-language:FR"></span><b
+                              style="mso-bidi-font-weight:normal"><span
+                                style="mso-ansi-language:FR">Fleur
+                                MOUGIN</span></b><span
+                              style="mso-ansi-language: FR"> (</span><span
+                              style="mso-ansi-language: FR"><span
+                                style="caret-color: #000000; color:
+                                #000000; font-family: arial, helvetica,
+                                sans-serif; font-size: 16px; font-style:
+                                normal; font-variant-caps: normal;
+                                font-weight: normal; letter-spacing:
+                                normal; orphans: auto; text-align: left;
+                                text-indent: 0px; text-transform: none;
+                                white-space: normal; widows: auto;
+                                word-spacing: 0px;
+                                -webkit-text-size-adjust: auto;
+                                -webkit-text-stroke-width: 0px;
+                                background-color: #ffffff;
+                                text-decoration: none; display: inline
+                                !important; float: none;"
+                                data-mce-style="caret-color: #000000;
+                                color: #000000; font-family: arial,
+                                helvetica, sans-serif; font-size: 16px;
+                                font-style: normal; font-variant-caps:
+                                normal; font-weight: normal;
+                                letter-spacing: normal; orphans: auto;
+                                text-align: left; text-indent: 0px;
+                                text-transform: none; white-space:
+                                normal; widows: auto; word-spacing: 0px;
+                                -webkit-text-size-adjust: auto;
+                                -webkit-text-stroke-width: 0px;
+                                background-color: #ffffff;
+                                text-decoration: none; display: inline
+                                !important; float: none;">Université de
+                                Bordeaux - AHeaD UMR 1219 -<span
+                                  class="Apple-converted-space"> INSERM</span></span>)
+                              | Ontologies : définition, construction et
+                              applications en santé | Collège Science de
+                              l’Ingénierie et des Connaissances</span><span
+                              style="font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol;mso-ansi-language:
+                              FR"><span style="mso-list:Ignore"><span
+                                  style="font:7.0pt &quot;Times New
+                                  Roman&quot;"></span></span></span></li>
+                          <li><span style="font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol;mso-ansi-language:
+                              FR"><span style="mso-list:Ignore"><span
+                                  style="font:7.0pt &quot;Times New
+                                  Roman&quot;"></span></span></span><b
+                              style="mso-bidi-font-weight:normal"><span
+                                style="mso-ansi-language:FR">Alexandre
+                                PAUCHET</span></b><span
+                              style="mso-ansi-language:FR"> (INSA de
+                              Rouen - LITIS EA 4108 - Fédération de
+                              Recherche CNRS Normastic) | Modèles
+                              d'interaction pour agents virtuels et
+                              robots interactifs en contexte médical |
+                              Collège Interaction avec l’Humain</span></li>
+                        </ul>
+                        <p class="MsoListParagraphCxSpMiddle"
+                          style="margin-left:0cm;mso-add-space:auto;
+                          text-align:justify"><span
+                            style="mso-ansi-language:FR">En plus des
+                            sessions théoriques, ECOSIA 2022 permettra
+                            aux étudiants une immersion dans le domaine
+                            de l’Intelligence Artificielle et de la
+                            Santé à travers <b
+                              style="mso-bidi-font-weight: normal">des
+                              travaux pratiques, des sessions posters,
+                              des tables rondes, des orateurs invités et
+                              des séances cinéma</b>.</span></p>
+                        <ul>
+                          <li><span
+style="font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol;mso-ansi-language:FR"><span
+                                style="mso-list:Ignore"><span
+                                  style="font:7.0pt &quot;Times New
+                                  Roman&quot;"></span></span></span><b
+                              style="mso-bidi-font-weight:normal"><span
+                                style="mso-ansi-language:FR">Navneet
+                                AGARWAL</span></b><span
+                              style="mso-ansi-language: FR"> (Université
+                              de Caen Normandie - GREYC UMR 6072) | <i>Machine
+                                learning strategies for the estimation
+                                of depression level severity</i> |
+                              Collège Technologies du Langage Humain</span><span
+style="font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol;mso-ansi-language:FR"><span
+                                style="mso-list:Ignore"><span
+                                  style="font:7.0pt &quot;Times New
+                                  Roman&quot;"></span></span></span></li>
+                          <li><span
+style="font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol;mso-ansi-language:FR"><span
+                                style="mso-list:Ignore"><span
+                                  style="font:7.0pt &quot;Times New
+                                  Roman&quot;"></span></span></span><b
+                              style="mso-bidi-font-weight:normal"><span
+                                style="mso-ansi-language:FR">Youssef
+                                CHAHIR</span></b><span
+                              style="mso-ansi-language: FR"> (Université
+                              de Caen Normandie - GREYC UMR 6072) |
+                              Segmentation de tissus cancéreux par
+                              Intelligence Artificielle | Collège
+                              Apprentissage</span></li>
+                        </ul>
+                        <p class="MsoNormal" style="text-align:justify"><span
+                            style="mso-ansi-language: FR">Si vous avez
+                            un<b style="mso-bidi-font-weight:normal">
+                              niveau Bac+5 (ou plus), </b>que vous
+                            venez du monde <b
+                              style="mso-bidi-font-weight:normal">académique
+                              ou privé, </b>et que<b
+                              style="mso-bidi-font-weight:normal"> </b>vous
+                            avez un <b
+                              style="mso-bidi-font-weight:normal">profil</b>
+                            <b style="mso-bidi-font-weight: normal">Intelligence
+                              Artificielle</b> avec un fort intérêt pour
+                            la Santé, ou un <b
+                              style="mso-bidi-font-weight:normal">profil
+                              Santé</b> avec une fort intérêt pour
+                            l’Intelligence Artificielle, vous pouvez
+                            candidater à l’une des <b
+                              style="mso-bidi-font-weight:normal">25
+                              places disponibles</b>.</span></p>
+                        <p class="MsoNormal" style="text-align:justify"><span
+                            style="mso-ansi-language: FR">Pour <b
+                              style="mso-bidi-font-weight:normal">candidater</b>,
+                            il vous faudra envoyer les documents
+                            listés ci-dessous aux adresses suivantes: <a
+                              href="mailto:gael.dias@afia.asso.fr"
+                              class="moz-txt-link-freetext"
+                              moz-do-not-send="true">gael.dias@afia.asso.fr</a>,
+                            <a href="mailto:gauthier.picard@onera.fr"
+                              class="moz-txt-link-freetext"
+                              moz-do-not-send="true">gauthier.picard@onera.fr</a>,
+                            <a
+                              href="mailto:valerie.reiner@berger-levrault.com"
+                              class="moz-txt-link-freetext"
+                              moz-do-not-send="true">valerie.reiner@berger-levrault.com</a>.</span></p>
+                        <ul>
+                          <li><span style="font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol;mso-ansi-language:
+                              FR"><span style="mso-list:Ignore"><span
+                                  style="font:7.0pt &quot;Times New
+                                  Roman&quot;"></span></span></span><span
+                              style="mso-ansi-language:FR">Un CV</span></li>
+                          <li><span style="mso-ansi-language:FR"></span><span
+                              style="mso-ansi-language:FR">Une lettre de
+                              motivation (maximum 1/2 page)</span></li>
+                          <li><span style="mso-ansi-language:FR"></span><span
+                              style="mso-ansi-language:FR">Une lettre de
+                              recommandation (si possible)</span></li>
+                        </ul>
+                        <p class="MsoNormal" style="text-align:justify"><span
+                            style="mso-ansi-language: FR">La <b
+                              style="mso-bidi-font-weight:normal">date
+                              limite</b> pour les candidatures est fixée
+                            au <b style="mso-bidi-font-weight:normal">2
+                              Mai 2022</b>.</span><span
+                            style="mso-ansi-language: FR"> Les résultats
+                            du processus de sélection seront rendus
+                            disponible au plus tard le <b
+                              style="mso-bidi-font-weight:normal">9 Mai
+                              2022</b>. L’organisation s’engage à
+                            adopter une <b
+                              style="mso-bidi-font-weight:normal">politique
+                              de diversité</b> pour la sélection des
+                            candidatures afin de former un panel
+                            éclectique de participants.</span><span
+                            style="mso-ansi-language: FR"></span><br>
+                          <span style="mso-ansi-language: FR"></span></p>
+                        <p class="MsoNormal" style="text-align:justify"><span
+                            style="mso-ansi-language: FR">Les frais
+                            d’inscription seront de <b
+                              style="mso-bidi-font-weight:normal">300
+                              euros maximum</b> et couvriront
+                            l’intégralité des coûts de la formation
+                            (hébergement/repas/tutoriels)</span>, seuls
+                          les frais de transports restent à la charge
+                          des participants.<span
+                            style="mso-ansi-language: FR"></span><br>
+                          <span style="mso-ansi-language: FR"></span></p>
+                        <p class="MsoNormal" style="text-align:justify"><span
+                            style="mso-ansi-language: FR"><br>
+                          </span></p>
+                        <p class="MsoNormal" style="text-align:justify"><span
+                            style="mso-ansi-language: FR">De plus amples
+                            informations seront disponibles sur le site
+                            de l’AFIA (<a class="moz-txt-link-freetext"
+                              href="https://afia.asso.fr/ecosia-2022"
+                              moz-do-not-send="true">https://afia.asso.fr/ecosia-2022</a>)
+                            au fur et à mesure de l’avancée de
+                            l’organisation d’ECOSIA 2022.</span><span
+                            style="mso-ansi-language: FR"></span><br>
+                          <span style="mso-ansi-language: FR"></span></p>
+                        <p><span style="mso-ansi-language: FR">Au
+                            plaisir de vous recevoir à Berck-sur-Mer
+                            pour ECOSIA 2022, et en attendant vos
+                            candidatures.</span></p>
+                        <p class="MsoNormal" style="text-align:justify"><span
+                            style="mso-ansi-language: FR">L’organisation:
+                            Gaël, Gauthier, Valérie.</span></p>
+                        <br>
+                        <br>
+                      </div>
+                      <br>
+                      <br>
+                    </div>
+                    <br>
+                    <br>
+                  </div>
+                  <br>
+                  <br>
+                </div>
+                <br>
+                <br>
+              </div>
+              <br>
+              <br>
+            </div>
+            <br>
+            <br>
+          </div>
+          <br>
+          <br>
+        </div>
+        <br>
+        <br>
+      </div>
+      <br>
+      <br>
+    </div>
+  
+<br>
+
+<br>
+</body>
+</html>
+
+--------------9wiwERanVm0KIIY8n6g07E0l--

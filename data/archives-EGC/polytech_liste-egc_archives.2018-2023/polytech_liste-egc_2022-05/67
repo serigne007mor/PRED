@@ -1,0 +1,651 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (bouncesmtp2.u12.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 1DEB114014E0
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Fri, 27 May 2022 18:19:42 +0200 (CEST)
+Received: from mx1.d101.univ-nantes.fr (MX1.univ-nantes.fr [193.52.101.135])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id 1A87F662F
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Fri, 27 May 2022 18:19:42 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.d101.univ-nantes.fr (Postfix) with ESMTP id 145524821ABE
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 27 May 2022 18:19:42 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: YES
+X-Spam-Score: 6.775
+X-Spam-Level: ******
+X-Spam-Status: Yes, score=6.775 tagged_above=-1000 required=5
+	tests=[CRM114_SPAM=5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	LONGWORDS=1.844, NO_RDNS2=0.01, RCVD_IN_WSFF=0.01,
+	SPF_HELO_NONE=0.001, SPF_PASS=-0.001, T_KAM_HTML_FONT_INVALID=0.01,
+	UN_PHISHING_PW=0.1] autolearn=disabled
+X-CRM114-Status: SPAM ( -6.1643 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=unicaen.fr
+Received: from mx1.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id cPgsaw-IDylQ for <liste-egc@polytech.univ-nantes.fr>;
+	Fri, 27 May 2022 18:19:39 +0200 (CEST)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mailout.unicaen.fr (mailoutvip1.unicaen.fr [194.199.107.40])
+	by mx1.d101.univ-nantes.fr (Postfix) with ESMTP id 70E5B47EC046
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 27 May 2022 18:19:39 +0200 (CEST)
+Received: from wzproxy2.unicaen.fr (wzproxy2.unicaen.fr [193.55.120.53])
+	by mailout.unicaen.fr (Postfix) with ESMTP id 5E7CC40624
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 27 May 2022 18:19:39 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=unicaen.fr; s=mail;
+	t=1653668379; bh=1W7sYb3KeDwJc/1v8xAO9hYHEq1DcL5SJyaJjMLTw1E=;
+	h=Date:From:To:Subject:From;
+	b=HyxEDO1jLr381Hx7C3tqEe3iTI3CUyM1o7w9VuEoQKH6B7PFQ7q7MNey3RudZPaah
+	 hfKfJ+suLC9k+yRyZbVi11+B0zGxRQghQvf0UKsX+0+VwyODGvgENeSkH8Db6LNdp4
+	 CVVGAeevpe37jzbCApf8YfYz/Pb6k0hNexneFmOo=
+Received: from localhost (localhost [127.0.0.1])
+	by wzproxy2.unicaen.fr (Postfix) with ESMTP id 5BA656682F
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 27 May 2022 18:19:39 +0200 (CEST)
+X-Amavis-Modified: Mail body modified (using disclaimer) - wzproxy2.unicaen.fr
+X-Virus-Scanned: amavisd-new at wzproxy2.unicaen.fr
+Received: from wzproxy2.unicaen.fr ([127.0.0.1])
+	by localhost (wzproxy2.unicaen.fr [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id Sq0CHbpyE9U4 for <liste-egc@polytech.univ-nantes.fr>;
+	Fri, 27 May 2022 18:19:39 +0200 (CEST)
+Received: from lsmtp1.unicaen.fr (lsmtp1.unicaen.fr [193.55.120.32])
+	by wzproxy2.unicaen.fr (Postfix) with ESMTP id 3B77D66CE9
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 27 May 2022 18:19:39 +0200 (CEST)
+Received: from wzstore5.unicaen.fr (wzstore5.unicaen.fr [10.14.129.119])
+	by lsmtp1.unicaen.fr (Postfix) with ESMTP id 368AC1001C3
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 27 May 2022 18:19:38 +0200 (CEST)
+Date: Fri, 27 May 2022 18:19:38 +0200 (CEST)
+From: Youssef Chahir <youssef.chahir@unicaen.fr>
+To: liste-egc@polytech.univ-nantes.fr
+Message-ID: <163300863.178413.1653668378184.JavaMail.zimbra@unicaen.fr>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="=_bde21001-a37a-47a1-9102-f3daccad1882"
+X-Originating-IP: [31.37.232.105]
+X-Mailer: Zimbra 8.8.15_GA_4272 (ZimbraWebClient - SAF15.3 (Mac)/8.8.15_GA_4257)
+Thread-Index: SjZSTOixj14AapPs3NwBPitKx441Aw==
+Thread-Topic: Call for submission Special Issue Sensors Journal "Sensors for Biometric Recognition and Authentication" - Dead line 30 September 2022
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] [SPAM] Call for submission Special Issue Sensors
+ Journal "Sensors for Biometric Recognition and Authentication" - Dead line
+ 30 September 2022
+
+--=_bde21001-a37a-47a1-9102-f3daccad1882
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+Special Issue "Sensors for Biometric Recognition and Authentication"=20
+
+
+[ https://www.mdpi.com/journal/sensors/special_issues/SBRA | https://www.md=
+pi.com/journal/sensors/special_issues/SBRA ]=20
+
+
+
+
+Deadline for manuscript submissions: 30 September 2022=20
+Guest Editors=20
+Dr. Youssef Chahir=20
+CNRS, GREYC, Electronics and Computer Science Laboratory, Caen University, =
+14000 Caen, France=20
+Dr. Hassen Drira=20
+IMT Nord Europe, Institut Mines-T=C3=A9l=C3=A9com, Center for Digital Syste=
+ms, 59000 Lille, France=20
+Special Issue Information=20
+
+
+In addition to computing power and improved sensors capable of capturing no=
+vel biological signals such as heartbeat and brain waves via EEG or EKG, be=
+havioral analysis and activity recognition are increasingly being used for =
+a variety of purposes from healthcare to law enforcement. An important tren=
+d is the development of multimodal biometrics and the increasing use of bio=
+metrics, focusing on various behavioral patterns. In addition to traditiona=
+l biometric methods such as face recognition, biometric methods also includ=
+e gesture dynamics, gait features, and behavioral characteristics, as long =
+as the behavior is analyzed to determine the genetic, physical, physiologic=
+al, behavioral or emotional nature characterizing a specific individual.=20
+
+This special issue focuses on new biometric modalities and recent developme=
+nts in behavioral biometrics that rely on specific data technologies relate=
+d to the physical, physiological, or behavioral aspects of the human body (=
+including when in motion). Its purpose is to highlight recent advances in t=
+he development of human authentication technologies and the categorization =
+of humans based on physiological characteristics (including predicting futu=
+re behavior).=20
+
+Topics to be covered including, but not limited to:=20
+
+    * Machine learning for biometrics=20
+    * Machine learning for behavioral recognition=20
+    * Biometric Fusion framework=20
+    * A comparative study of the existing learning approaches of Behavioral=
+ Biometric Datasets=20
+
+
+
+
+
+Manuscript Submission Information=20
+
+Manuscripts should be submitted online at [ https://www.mdpi.com/ | www.mdp=
+i.com ] by [ https://www.mdpi.com/user/register/ | registering ] and [ http=
+s://www.mdpi.com/user/login/ | logging in to this website ] . Once you are =
+registered, [ https://susy.mdpi.com/user/manuscripts/upload/?journal=3Dentr=
+opy | click here to go to the submission form ] . Manuscripts can be submit=
+ted until the deadline. All submissions that pass pre-check are peer-review=
+ed. Accepted papers will be published continuously in the journal (as soon =
+as accepted) and will be listed together on the special issue website. Rese=
+arch articles, review articles as well as short communications are invited.=
+ For planned papers, a title and short abstract (about 100 words) can be se=
+nt to the Editorial Office for announcement on this website.=20
+
+Submitted manuscripts should not have been published previously, nor be und=
+er consideration for publication elsewhere (except conference proceedings p=
+apers). All manuscripts are thoroughly refereed through a single-blind peer=
+-review process. A guide for authors and other relevant information for sub=
+mission of manuscripts is available on the [ https://www.mdpi.com/journal/e=
+ntropy/instructions | Instructions for Authors ] page. [ https://www.mdpi.c=
+om/journal/entropy/ | Entropy ] is an international peer-reviewed open acce=
+ss monthly journal published by MDPI .=20
+
+Please visit the [ https://www.mdpi.com/journal/entropy/instructions | Inst=
+ructions for Authors ] page before submitting a manuscript. The [ https://w=
+ww.mdpi.com/about/apc/ | Article Processing Charge (APC) ] for publication =
+in this [ https://www.mdpi.com/about/openaccess/ | open access ] journal is=
+ 1800 CHF (Swiss Francs). Submitted papers should be well formatted and use=
+ good English. Authors may use MDPI 's [ https://www.mdpi.com/authors/engli=
+sh | English editing service ] prior to publication or during author revisi=
+ons.=20
+Keywords=20
+
+
+    * behavioral recognition=20
+    * gait recognition=20
+    * gesture recognition=20
+    * soft biometrics=20
+    * physiological biometrics=20
+    * biometric categorization=20
+    * facial attribute recognition=20
+    * gender recognition=20
+    * age estimation=20
+    * model-free approaches=20
+___________________________________________________________=20
+Ma=C3=AEtre de Conf=C3=A9rences HDR, Normandie Universit=C3=A9, UNICAEN=20
+GREYC Lab., UMR CNRS 6072.=20
+Campus 2, 6 bd. Mal Juin.=20
+F-14032, Caen=20
+Tel: [ callto:+33 2 31 53 81 80 | +33 2 31 45 54 55 ]=20
+Fax: [ callto:+33 2 31 53 81 80 | +33 2 31 45 26 98 ] URL : [ https://chahi=
+r.users.greyc.fr/ | https://chahir.users.greyc.fr ]=20
+--=20
+
+
+
+
+=0A
+--=_bde21001-a37a-47a1-9102-f3daccad1882
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><body><div style=3D"font-family: arial, helvetica, sans-serif; font-s=
+ize: 12pt; color: #000000"><div data-marker=3D"__QUOTED_TEXT__"><div style=
+=3D"font-family: arial, helvetica, sans-serif; font-size: 12pt; color: #000=
+000"><div><div style=3D"font-family: arial, helvetica, sans-serif; font-siz=
+e: 12pt; color: #000000"><div><div style=3D"font-family: arial, helvetica, =
+sans-serif; font-size: 12pt; color: #000000;"><div style=3D"color: #000000;=
+ font-family: arial, helvetica, sans-serif; font-size: 12pt;"><div style=3D=
+"font-family: arial, helvetica, sans-serif; font-size: 12pt; color: #000000=
+;"><div><div style=3D"font-family: arial, helvetica, sans-serif; font-size:=
+ 12pt; color: #000000;"><div><div style=3D"font-family: arial, helvetica, s=
+ans-serif; font-size: 12pt; color: #000000;"><div style=3D"caret-color: #00=
+0000; color: #000000; font-family: 'Segoe UI', 'Lucida Sans', sans-serif; f=
+ont-size: 14.15999984741211px; font-style: normal; font-variant-caps: norma=
+l; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: =
+start; text-indent: 0px; text-transform: none; white-space: normal; widows:=
+ auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stro=
+ke-width: 0px; text-decoration: none;"><h1 style=3D"box-sizing: border-box;=
+ margin: 0px 0px 15px; padding: 0px; color: #1a1a1a; font-family: arial; fo=
+nt-style: normal; font-weight: bold; line-height: 1.5; text-rendering: opti=
+mizeLegibility; font-size: 26px; max-height: 1000000px; font-variant-ligatu=
+res: normal; font-variant-caps: normal; letter-spacing: normal; orphans: 2;=
+ text-align: start; text-indent: 0px; text-transform: none; white-space: no=
+rmal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-de=
+coration-thickness: initial;"><span style=3D"font-size: 10pt;">Special Issu=
+e <strong><span style=3D"color: #000000; font-family: 'Segoe UI', 'Lucida S=
+ans', sans-serif;">"Sensors for Biometric Recognition and Authentication"</=
+span></strong></span></h1><p style=3D"margin: 0px;"><span class=3D"Object" =
+style=3D"color: darkblue; text-decoration: none; cursor: pointer;"><a href=
+=3D"https://www.mdpi.com/journal/sensors/special_issues/SBRA" target=3D"_bl=
+ank" rel=3D"noopener">https://www.mdpi.com/journal/sensors/special_issues/S=
+BRA</a></span></p><p style=3D"margin: 0px;"><span style=3D"orphans: 2; wido=
+ws: 2; caret-color: #222222; color: #222222; font-family: Arial; font-size:=
+ 12px; float: none; display: inline !important;"></span><br></p><p style=3D=
+"margin: 0px;"><span style=3D"orphans: 2; widows: 2; caret-color: #222222; =
+color: #222222; font-family: Arial; font-size: 12px; float: none; display: =
+inline !important;">Deadline for manuscript submissions:&nbsp;</span><b sty=
+le=3D"orphans: 2; widows: 2; box-sizing: border-box; line-height: inherit; =
+max-height: 1000000px; caret-color: #222222; color: #222222; font-family: A=
+rial; font-size: 12px;">30 September 2022</b><span style=3D"orphans: 2; wid=
+ows: 2; caret-color: #222222; color: #222222; font-family: Arial; font-size=
+: 12px; float: none; display: inline !important;">&nbsp;</span></p><div cla=
+ss=3D"no-margin" style=3D"box-sizing: border-box; padding: 0px; max-height:=
+ 1000000px; color: #222222; font-family: arial; font-size: 12px; font-style=
+: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-w=
+eight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-ind=
+ent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacin=
+g: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial;=
+ margin: 0px !important;"><div class=3D"generic-item editor-div img-exists"=
+ style=3D"box-sizing: border-box; margin: 15px 0px 0px; padding: 0px; max-h=
+eight: 1000000px; position: relative; min-height: 100px; font-family: arial=
+; font-weight: 400; line-height: 1.5; border: 0px; font-size: 12px;"><div c=
+lass=3D"editor-div__content img-exists" style=3D"box-sizing: border-box; ma=
+rgin: 0px 95px 0px 0px; padding: 0px; max-height: 1000000px;">Guest Editors=
+<br></div><div class=3D"editor-div__content img-exists" style=3D"box-sizing=
+: border-box; margin: 0px 95px 0px 0px; padding: 0px; max-height: 1000000px=
+;"><b style=3D"box-sizing: border-box; font-weight: bold; line-height: inhe=
+rit; max-height: 1000000px;">Dr. Youssef Chahir</b><span><span class=3D"App=
+le-converted-space">&nbsp;</span><br></span></div><div class=3D"editor-div_=
+_content img-exists" style=3D"box-sizing: border-box; margin: 0px 95px 0px =
+0px; padding: 0px; max-height: 1000000px;">CNRS, GREYC, Electronics and Com=
+puter Science Laboratory, Caen University, 14000 Caen, France</div><div cla=
+ss=3D"editor-div__content img-exists" style=3D"box-sizing: border-box; marg=
+in: 0px 95px 0px 0px; padding: 0px; max-height: 1000000px;"><b style=3D"box=
+-sizing: border-box; line-height: inherit; max-height: 1000000px;">Dr. Hass=
+en Drira</b>&nbsp;</div><div class=3D"editor-div__content img-exists" style=
+=3D"box-sizing: border-box; margin: 0px 95px 0px 0px; padding: 0px; max-hei=
+ght: 1000000px;"><span style=3D"caret-color: #222222; font-family: Arial;">=
+IMT Nord Europe, Institut Mines-T=C3=A9l=C3=A9com, Center for Digital Syste=
+ms, 59000 Lille, France</span></div></div></div><h2 style=3D"box-sizing: bo=
+rder-box; margin: 30px 0px 10px; padding: 0px; color: rgba(0, 128, 128, 0.7=
+5); font-family: arial; font-style: normal; font-weight: bold; line-height:=
+ 1.5; text-rendering: optimizeLegibility; font-size: 20px; max-height: 1000=
+000px; font-variant-ligatures: normal; font-variant-caps: normal; letter-sp=
+acing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transf=
+orm: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-=
+stroke-width: 0px; text-decoration-thickness: initial;"><span style=3D"font=
+-size: small;">Special Issue Information</span></h2><div style=3D"box-sizin=
+g: border-box; margin: 0px; padding: 0px; max-height: 1000000px; color: #22=
+2222; font-family: arial; font-size: 12px; font-style: normal; font-variant=
+-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spa=
+cing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transfo=
+rm: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-s=
+troke-width: 0px; text-decoration-thickness: initial;"><p style=3D"font-sty=
+le: normal; font-variant-caps: normal; font-weight: normal; letter-spacing:=
+ normal; text-align: start; text-indent: 0px; text-transform: none; white-s=
+pace: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decor=
+ation: none; box-sizing: border-box; margin: 0px; padding: 0px; font-family=
+: Arial; font-size: 12px; line-height: 1.6; text-rendering: optimizeLegibil=
+ity; max-height: 1000000px; caret-color: #222222; color: #222222;"><span st=
+yle=3D"font-size: 8pt;">In addition to computing power and improved sensors=
+ capable of capturing novel biological signals such as heartbeat and brain =
+waves via EEG or EKG, behavioral analysis and activity recognition are incr=
+easingly being used for a variety of purposes from healthcare to law enforc=
+ement. An important trend is the development of multimodal biometrics and t=
+he increasing use of biometrics, focusing on various behavioral patterns.&n=
+bsp; In addition to traditional biometric methods such as face recognition,=
+ biometric methods also include gesture dynamics, gait features, and behavi=
+oral characteristics, as long as the behavior is analyzed to determine the =
+genetic, physical, physiological, behavioral or emotional nature characteri=
+zing a specific individual.<span class=3D"Apple-converted-space">&nbsp;</sp=
+an></span></p><p style=3D"font-style: normal; font-variant-caps: normal; fo=
+nt-weight: normal; letter-spacing: normal; text-align: start; text-indent: =
+0px; text-transform: none; white-space: normal; word-spacing: 0px; -webkit-=
+text-stroke-width: 0px; text-decoration: none; box-sizing: border-box; marg=
+in: 0px; padding: 0px; font-family: Arial; font-size: 12px; line-height: 1.=
+6; text-rendering: optimizeLegibility; max-height: 1000000px; caret-color: =
+#222222; color: #222222;"><span style=3D"font-size: 8pt;">This special issu=
+e focuses on new biometric modalities and recent developments in behavioral=
+ biometrics that rely on specific data technologies related to the physical=
+, physiological, or behavioral aspects of the human body (including when in=
+ motion). Its purpose is to highlight recent advances in the development of=
+ human authentication technologies and the categorization of humans based o=
+n physiological characteristics (including predicting future behavior).<spa=
+n class=3D"Apple-converted-space">&nbsp;</span></span></p><p style=3D"font-=
+style: normal; font-variant-caps: normal; font-weight: normal; letter-spaci=
+ng: normal; text-align: start; text-indent: 0px; text-transform: none; whit=
+e-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-de=
+coration: none; box-sizing: border-box; margin: 0px; padding: 0px; font-fam=
+ily: Arial; font-size: 12px; line-height: 1.6; text-rendering: optimizeLegi=
+bility; max-height: 1000000px; caret-color: #222222; color: #222222;"><span=
+ style=3D"font-size: 8pt;">Topics to be covered including, but not limited =
+to:</span></p><ul style=3D"font-style: normal; font-variant-caps: normal; f=
+ont-weight: normal; letter-spacing: normal; orphans: auto; text-align: star=
+t; text-indent: 0px; text-transform: none; white-space: normal; widows: aut=
+o; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-w=
+idth: 0px; text-decoration: none; box-sizing: border-box; margin: 10px 0px =
+1.25rem 1.1rem; padding: 0px; font-family: Arial; font-size: 12px; line-hei=
+ght: inherit; list-style-position: outside; max-height: 1000000px; caret-co=
+lor: #222222; color: #222222;"><li style=3D"box-sizing: border-box; margin:=
+ 0px 0px 10px; padding: 0px; max-height: 1000000px; break-inside: avoid;"><=
+span style=3D"font-size: 8pt;">Machine learning for biometrics</span></li><=
+li style=3D"box-sizing: border-box; margin: 0px 0px 10px; padding: 0px; max=
+-height: 1000000px; break-inside: avoid;"><span style=3D"font-size: 8pt;">M=
+achine learning for behavioral recognition</span></li><li style=3D"box-sizi=
+ng: border-box; margin: 0px 0px 10px; padding: 0px; max-height: 1000000px; =
+break-inside: avoid;"><span style=3D"font-size: 8pt;">Biometric Fusion fram=
+ework</span></li><li style=3D"box-sizing: border-box; margin: 0px 0px 10px;=
+ padding: 0px; max-height: 1000000px; break-inside: avoid;"><span style=3D"=
+font-size: 8pt;">A comparative study of the existing learning approaches of=
+ Behavioral Biometric Datasets</span></li></ul><p style=3D"box-sizing: bord=
+er-box; margin: 0px; padding: 0px; font-family: inherit; font-size: 1rem; f=
+ont-weight: 400; line-height: 1.6; text-rendering: optimizeLegibility; max-=
+height: 1000000px;"><br></p><p style=3D"box-sizing: border-box; margin: 0px=
+; padding: 0px; font-family: inherit; font-size: 1rem; font-weight: 400; li=
+ne-height: 1.6; text-rendering: optimizeLegibility; max-height: 1000000px;"=
+><strong style=3D"box-sizing: border-box; font-weight: bold; line-height: i=
+nherit; max-height: 1000000px;">Manuscript Submission Information</strong><=
+/p><p style=3D"box-sizing: border-box; margin: 0px; padding: 0px; font-fami=
+ly: inherit; font-size: 1rem; font-weight: 400; line-height: 1.6; text-rend=
+ering: optimizeLegibility; max-height: 1000000px;"><span style=3D"font-size=
+: xx-small;">Manuscripts should be submitted online at<span>&nbsp;</span><s=
+pan class=3D"Object" id=3D"OBJ_PREFIX_DWT208_com_zimbra_url" style=3D"color=
+: darkblue; text-decoration: none; cursor: pointer;"><a href=3D"https://www=
+.mdpi.com/" target=3D"_blank" style=3D"color: rgba(0, 128, 128, 0.75); text=
+-decoration: none; cursor: pointer; box-sizing: border-box; line-height: in=
+herit; max-height: 1000000px; font-weight: bold;" rel=3D"noopener">www.mdpi=
+.com</a></span><span>&nbsp;</span>by<span>&nbsp;</span><span class=3D"Objec=
+t" id=3D"OBJ_PREFIX_DWT209_com_zimbra_url" style=3D"color: darkblue; text-d=
+ecoration: none; cursor: pointer;"><a href=3D"https://www.mdpi.com/user/reg=
+ister/" target=3D"_blank" style=3D"color: rgba(0, 128, 128, 0.75); text-dec=
+oration: none; cursor: pointer; box-sizing: border-box; line-height: inheri=
+t; max-height: 1000000px; font-weight: bold;" rel=3D"noopener">registering<=
+/a></span><span>&nbsp;</span>and<span>&nbsp;</span><span class=3D"Object" i=
+d=3D"OBJ_PREFIX_DWT210_com_zimbra_url" style=3D"color: darkblue; text-decor=
+ation: none; cursor: pointer;"><a href=3D"https://www.mdpi.com/user/login/"=
+ target=3D"_blank" style=3D"color: rgba(0, 128, 128, 0.75); text-decoration=
+: none; cursor: pointer; box-sizing: border-box; line-height: inherit; max-=
+height: 1000000px; font-weight: bold;" rel=3D"noopener">logging in to this =
+website</a></span>. Once you are registered,<span>&nbsp;</span><span class=
+=3D"Object" id=3D"OBJ_PREFIX_DWT211_com_zimbra_url" style=3D"color: darkblu=
+e; text-decoration: none; cursor: pointer;"><a href=3D"https://susy.mdpi.co=
+m/user/manuscripts/upload/?journal=3Dentropy" target=3D"_blank" style=3D"co=
+lor: rgba(0, 128, 128, 0.75); text-decoration: none; cursor: pointer; box-s=
+izing: border-box; line-height: inherit; max-height: 1000000px; font-weight=
+: bold;" rel=3D"noopener">click here to go to the submission form</a></span=
+>. Manuscripts can be submitted until the deadline. All submissions that pa=
+ss pre-check are peer-reviewed. Accepted papers will be published continuou=
+sly in the journal (as soon as accepted) and will be listed together on the=
+ special issue website. Research articles, review articles as well as short=
+ communications are invited. For planned papers, a title and short abstract=
+ (about 100 words) can be sent to the Editorial Office for announcement on =
+this website.</span></p><p style=3D"box-sizing: border-box; margin: 0px; pa=
+dding: 0px; font-family: inherit; font-size: 1rem; font-weight: 400; line-h=
+eight: 1.6; text-rendering: optimizeLegibility; max-height: 1000000px;"><sp=
+an style=3D"font-size: xx-small;">Submitted manuscripts should not have bee=
+n published previously, nor be under consideration for publication elsewher=
+e (except conference proceedings papers). All manuscripts are thoroughly re=
+fereed through a single-blind peer-review process. A guide for authors and =
+other relevant information for submission of manuscripts is available on th=
+e<span>&nbsp;</span><span class=3D"Object" id=3D"OBJ_PREFIX_DWT212_com_zimb=
+ra_url" style=3D"color: darkblue; text-decoration: none; cursor: pointer;">=
+<a href=3D"https://www.mdpi.com/journal/entropy/instructions" target=3D"_bl=
+ank" style=3D"color: rgba(0, 128, 128, 0.75); text-decoration: none; cursor=
+: pointer; box-sizing: border-box; line-height: inherit; max-height: 100000=
+0px; font-weight: bold;" rel=3D"noopener">Instructions for Authors</a></spa=
+n><span>&nbsp;</span>page.<span>&nbsp;</span><span class=3D"Object" id=3D"O=
+BJ_PREFIX_DWT213_com_zimbra_url" style=3D"color: darkblue; text-decoration:=
+ none; cursor: pointer;"><a href=3D"https://www.mdpi.com/journal/entropy/" =
+target=3D"_blank" style=3D"color: rgba(0, 128, 128, 0.75); text-decoration:=
+ none; cursor: pointer; box-sizing: border-box; line-height: inherit; max-h=
+eight: 1000000px; font-weight: bold;" rel=3D"noopener"><em style=3D"box-siz=
+ing: border-box; font-style: italic; line-height: inherit; max-height: 1000=
+000px;">Entropy</em></a></span><span>&nbsp;</span>is an international peer-=
+reviewed open access monthly journal published by<span class=3D"Apple-conve=
+rted-space">&nbsp;</span><span id=3D"DWT215" class=3D"ZmSearchResult" style=
+=3D"background-color: #fffec4;">MDPI</span>.</span></p><p style=3D"box-sizi=
+ng: border-box; margin: 0px; padding: 0px; font-family: inherit; font-size:=
+ 1rem; font-weight: 400; line-height: 1.6; text-rendering: optimizeLegibili=
+ty; max-height: 1000000px;"><span style=3D"font-size: xx-small;">Please vis=
+it the<span>&nbsp;</span><span class=3D"Object" id=3D"OBJ_PREFIX_DWT216_com=
+_zimbra_url" style=3D"color: darkblue; text-decoration: none; cursor: point=
+er;"><a href=3D"https://www.mdpi.com/journal/entropy/instructions" target=
+=3D"_blank" style=3D"color: rgba(0, 128, 128, 0.75); text-decoration: none;=
+ cursor: pointer; box-sizing: border-box; line-height: inherit; max-height:=
+ 1000000px; font-weight: bold;" rel=3D"noopener">Instructions for Authors</=
+a></span><span>&nbsp;</span>page before submitting a manuscript. The<span>&=
+nbsp;</span><span class=3D"Object" id=3D"OBJ_PREFIX_DWT217_com_zimbra_url" =
+style=3D"color: darkblue; text-decoration: none; cursor: pointer;"><a href=
+=3D"https://www.mdpi.com/about/apc/" target=3D"_blank" style=3D"color: rgba=
+(0, 128, 128, 0.75); text-decoration: none; cursor: pointer; box-sizing: bo=
+rder-box; line-height: inherit; max-height: 1000000px; font-weight: bold;" =
+rel=3D"noopener">Article Processing Charge (APC)</a></span><span>&nbsp;</sp=
+an>for publication in this<span>&nbsp;</span><span class=3D"Object" id=3D"O=
+BJ_PREFIX_DWT218_com_zimbra_url" style=3D"color: darkblue; text-decoration:=
+ none; cursor: pointer;"><a href=3D"https://www.mdpi.com/about/openaccess/"=
+ target=3D"_blank" style=3D"color: rgba(0, 128, 128, 0.75); text-decoration=
+: none; cursor: pointer; box-sizing: border-box; line-height: inherit; max-=
+height: 1000000px; font-weight: bold;" rel=3D"noopener">open access</a></sp=
+an><span>&nbsp;</span>journal is 1800 CHF (Swiss Francs). Submitted papers =
+should be well formatted and use good English. Authors may use<span class=
+=3D"Apple-converted-space">&nbsp;</span><span id=3D"DWT220" class=3D"ZmSear=
+chResult" style=3D"background-color: #fffec4;">MDPI</span>'s<span>&nbsp;</s=
+pan><span class=3D"Object" id=3D"OBJ_PREFIX_DWT221_com_zimbra_url" style=3D=
+"color: darkblue; text-decoration: none; cursor: pointer;"><a href=3D"https=
+://www.mdpi.com/authors/english" target=3D"_blank" style=3D"color: rgba(0, =
+128, 128, 0.75); text-decoration: none; cursor: pointer; box-sizing: border=
+-box; line-height: inherit; max-height: 1000000px; font-weight: bold;" rel=
+=3D"noopener">English editing service</a></span><span>&nbsp;</span>prior to=
+ publication or during author revisions.</span></p></div><h2 style=3D"box-s=
+izing: border-box; margin: 30px 0px 10px; padding: 0px; color: rgba(0, 128,=
+ 128, 0.75); font-family: arial; font-style: normal; font-weight: bold; lin=
+e-height: 1.5; text-rendering: optimizeLegibility; font-size: 20px; max-hei=
+ght: 1000000px; font-variant-ligatures: normal; font-variant-caps: normal; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; te=
+xt-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -web=
+kit-text-stroke-width: 0px; text-decoration-thickness: initial;"><span styl=
+e=3D"font-size: small;">Keywords</span><a name=3D"keywords" style=3D"box-si=
+zing: border-box; color: #4f5671; line-height: inherit; text-decoration: no=
+ne; max-height: 1000000px; font-weight: bold;"></a></h2><div style=3D"font-=
+style: normal; font-variant-caps: normal; font-weight: normal; letter-spaci=
+ng: normal; orphans: auto; text-align: start; text-indent: 0px; text-transf=
+orm: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-te=
+xt-size-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: none=
+; box-sizing: border-box; margin: 0px; padding: 0px; max-height: 1000000px;=
+ caret-color: #222222; color: #222222; font-family: Arial; font-size: 12px;=
+ background-color: #ffffff;"><ul style=3D"box-sizing: border-box; margin: 1=
+0px 0px 1.25rem 1.1rem; padding: 0px; font-family: inherit; font-size: inhe=
+rit; line-height: inherit; list-style-position: outside; max-height: 100000=
+0px;"><li style=3D"box-sizing: border-box; margin: 0px 0px 10px; padding: 0=
+px; max-height: 1000000px; break-inside: avoid;">behavioral recognition</li=
+><li style=3D"box-sizing: border-box; margin: 0px 0px 10px; padding: 0px; m=
+ax-height: 1000000px; break-inside: avoid;">gait recognition</li><li style=
+=3D"box-sizing: border-box; margin: 0px 0px 10px; padding: 0px; max-height:=
+ 1000000px; break-inside: avoid;">gesture recognition</li><li style=3D"box-=
+sizing: border-box; margin: 0px 0px 10px; padding: 0px; max-height: 1000000=
+px; break-inside: avoid;">soft biometrics</li><li style=3D"box-sizing: bord=
+er-box; margin: 0px 0px 10px; padding: 0px; max-height: 1000000px; break-in=
+side: avoid;">physiological biometrics</li><li style=3D"box-sizing: border-=
+box; margin: 0px 0px 10px; padding: 0px; max-height: 1000000px; break-insid=
+e: avoid;">biometric categorization</li><li style=3D"box-sizing: border-box=
+; margin: 0px 0px 10px; padding: 0px; max-height: 1000000px; break-inside: =
+avoid;">facial attribute recognition</li><li style=3D"box-sizing: border-bo=
+x; margin: 0px 0px 10px; padding: 0px; max-height: 1000000px; break-inside:=
+ avoid;">gender recognition</li><li style=3D"box-sizing: border-box; margin=
+: 0px 0px 10px; padding: 0px; max-height: 1000000px; break-inside: avoid;">=
+age estimation</li><li style=3D"box-sizing: border-box; margin: 0px 0px 10p=
+x; padding: 0px; max-height: 1000000px; break-inside: avoid;">model-free ap=
+proaches</li></ul></div></div></div></div></div></div></div><span style=3D"=
+font-size: 10pt;"></span></div><div style=3D"color: #000000; font-family: a=
+rial, helvetica, sans-serif; font-size: 12pt;"><div style=3D"caret-color: #=
+000000; color: #000000; font-family: arial, helvetica, sans-serif; font-siz=
+e: 12pt; font-style: normal; font-variant-caps: normal; font-weight: normal=
+; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0p=
+x; text-transform: none; white-space: normal; widows: auto; word-spacing: 0=
+px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-de=
+coration: none;"><div style=3D"font-style: normal; font-variant-caps: norma=
+l; font-weight: normal; letter-spacing: normal; text-align: start; text-ind=
+ent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; -we=
+bkit-text-stroke-width: 0px; text-decoration: none; font-family: arial, hel=
+vetica, sans-serif; font-size: 12pt; color: rg;"><div><div><div><span style=
+=3D"font-size: 10pt;"><span style=3D"font-family: 'courier new', courier, m=
+onaco, monospace, sans-serif;">____________________________________________=
+_______________</span></span></div></div></div></div></div><span style=3D"f=
+ont-size: 10pt;"></span></div><div><span style=3D"font-size: 10pt;"><span s=
+tyle=3D"font-size: 10pt;"><span style=3D"text-align: start; text-indent: 0p=
+x; background-color: #fdfdfd; float: none; display: inline !important;"><sp=
+an class=3D"Apple-converted-space"><span style=3D"font-family: Tahoma;"><sp=
+an style=3D"caret-color: #333333; color: #333333; font-family: monospace; f=
+ont-size: 14.15999984741211px; font-style: normal; font-variant-caps: norma=
+l; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: =
+start; text-indent: 0px; text-transform: none; white-space: normal; widows:=
+ auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stro=
+ke-width: 0px; background-color: #fdfdfd; text-decoration: none; display: i=
+nline !important; float: none;">Ma=C3=AEtre de Conf=C3=A9rences HDR, Norman=
+die Universit=C3=A9, UNICAEN</span><br style=3D"caret-color: #333333; color=
+: #333333; font-family: monospace; font-size: 14.15999984741211px; font-sty=
+le: normal; font-variant-caps: normal; font-weight: normal; letter-spacing:=
+ normal; orphans: auto; text-align: start; text-indent: 0px; text-transform=
+: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-=
+size-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: none;">=
+<span style=3D"caret-color: #333333; color: #333333; font-family: monospace=
+; font-size: 14.15999984741211px; font-style: normal; font-variant-caps: no=
+rmal; font-weight: normal; letter-spacing: normal; orphans: auto; text-alig=
+n: start; text-indent: 0px; text-transform: none; white-space: normal; wido=
+ws: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-s=
+troke-width: 0px; background-color: #fdfdfd; text-decoration: none; display=
+: inline !important; float: none;">GREYC Lab., UMR CNRS 6072. &nbsp;&nbsp;<=
+/span><br style=3D"caret-color: #333333; color: #333333; font-family: monos=
+pace; font-size: 14.15999984741211px; font-style: normal; font-variant-caps=
+: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-=
+align: start; text-indent: 0px; text-transform: none; white-space: normal; =
+widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-te=
+xt-stroke-width: 0px; text-decoration: none;"><span style=3D"caret-color: #=
+333333; color: #333333; font-family: monospace; font-size: 14.1599998474121=
+1px; font-style: normal; font-variant-caps: normal; font-weight: normal; le=
+tter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; t=
+ext-transform: none; white-space: normal; widows: auto; word-spacing: 0px; =
+-webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-=
+color: #fdfdfd; text-decoration: none; display: inline !important; float: n=
+one;">Campus 2, 6 bd. Mal Juin. &nbsp;&nbsp;</span><br style=3D"caret-color=
+: #333333; color: #333333; font-family: monospace; font-size: 14.1599998474=
+1211px; font-style: normal; font-variant-caps: normal; font-weight: normal;=
+ letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px=
+; text-transform: none; white-space: normal; widows: auto; word-spacing: 0p=
+x; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-dec=
+oration: none;"><span style=3D"caret-color: #333333; color: #333333; font-f=
+amily: monospace; font-size: 14.15999984741211px; font-style: normal; font-=
+variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans:=
+ auto; text-align: start; text-indent: 0px; text-transform: none; white-spa=
+ce: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto=
+; -webkit-text-stroke-width: 0px; background-color: #fdfdfd; text-decoratio=
+n: none; display: inline !important; float: none;">F-14032, Caen &nbsp; &nb=
+sp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span><br style=3D"caret-color=
+: #333333; color: #333333; font-family: monospace; font-size: 14.1599998474=
+1211px; font-style: normal; font-variant-caps: normal; font-weight: normal;=
+ letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px=
+; text-transform: none; white-space: normal; widows: auto; word-spacing: 0p=
+x; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-dec=
+oration: none;"><span style=3D"caret-color: #333333; color: #333333; font-f=
+amily: monospace; font-size: 14.15999984741211px; font-style: normal; font-=
+variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans:=
+ auto; text-align: start; text-indent: 0px; text-transform: none; white-spa=
+ce: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto=
+; -webkit-text-stroke-width: 0px; background-color: #fdfdfd; text-decoratio=
+n: none; display: inline !important; float: none;"></span></span></span></s=
+pan></span></span></div><div><span style=3D"font-size: 10pt;"><span style=
+=3D"font-size: 10pt;"><span style=3D"text-align: start; text-indent: 0px; b=
+ackground-color: #fdfdfd; float: none; display: inline !important;"><span c=
+lass=3D"Apple-converted-space"><span style=3D"font-family: Tahoma;"><span s=
+tyle=3D"caret-color: #333333; color: #333333; font-family: monospace; font-=
+size: 14.15999984741211px; font-style: normal; font-variant-caps: normal; f=
+ont-weight: normal; letter-spacing: normal; orphans: auto; text-align: star=
+t; text-indent: 0px; text-transform: none; white-space: normal; widows: aut=
+o; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-w=
+idth: 0px; background-color: #fdfdfd; text-decoration: none; display: inlin=
+e !important; float: none;">Tel:</span><span style=3D"caret-color: #333333;=
+ color: #333333; font-family: monospace; font-size: 14.15999984741211px; fo=
+nt-style: normal; font-variant-caps: normal; font-weight: normal; letter-sp=
+acing: normal; orphans: auto; text-align: start; text-indent: 0px; text-tra=
+nsform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit=
+-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: =
+#fdfdfd; text-decoration: none; display: inline !important; float: none;">&=
+nbsp;</span><span class=3D"Object" id=3D"OBJ_PREFIX_DWT5679_com_zimbra_phon=
+e" style=3D"color: darkblue; text-decoration: none; cursor: pointer; font-f=
+amily: monospace; font-size: 14.15999984741211px; font-style: normal; font-=
+variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans:=
+ auto; text-align: start; text-indent: 0px; text-transform: none; white-spa=
+ce: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto=
+; -webkit-text-stroke-width: 0px;"><a href=3D"callto:+33 2 31 53 81 80" sty=
+le=3D"color: darkblue; text-decoration: none; cursor: pointer;" target=3D"_=
+blank">+33 2 31 45 54 55</a></span><span style=3D"caret-color: #333333; col=
+or: #333333; font-family: monospace; font-size: 14.15999984741211px; font-s=
+tyle: normal; font-variant-caps: normal; font-weight: normal; letter-spacin=
+g: normal; orphans: auto; text-align: start; text-indent: 0px; text-transfo=
+rm: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-tex=
+t-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: #fdf=
+dfd; text-decoration: none; display: inline !important; float: none;">&nbsp=
+;&nbsp; &nbsp; &nbsp;</span></span></span></span></span></span></div><div><=
+span style=3D"font-size: 10pt;"><span style=3D"font-size: 10pt;"><span styl=
+e=3D"font-size: 10pt;"><span style=3D"text-align: start; text-indent: 0px; =
+background-color: #fdfdfd; float: none; display: inline !important;"><span =
+class=3D"Apple-converted-space"><span style=3D"font-family: Tahoma;"><span =
+style=3D"font-style: normal; font-variant-caps: normal; font-weight: normal=
+; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0p=
+x; text-transform: none; white-space: normal; widows: auto; word-spacing: 0=
+px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-de=
+coration: none; caret-color: rgb(51, 51, 51); color: rgb(51, 51, 51); font-=
+family: monospace; font-size: 14.15999984741211px; background-color: rgb(25=
+3, 253, 253); float: none; display: inline !important;">Fax:</span><span st=
+yle=3D"font-style: normal; font-variant-caps: normal; font-weight: normal; =
+letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px;=
+ text-transform: none; white-space: normal; widows: auto; word-spacing: 0px=
+; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-deco=
+ration: none; caret-color: rgb(51, 51, 51); color: rgb(51, 51, 51); font-fa=
+mily: monospace; font-size: 14.15999984741211px; background-color: rgb(253,=
+ 253, 253); float: none; display: inline !important;">&nbsp;</span><span cl=
+ass=3D"Object" id=3D"OBJ_PREFIX_DWT5679_com_zimbra_phone" style=3D"font-sty=
+le: normal; font-variant-caps: normal; font-weight: normal; letter-spacing:=
+ normal; orphans: auto; text-align: start; text-indent: 0px; text-transform=
+: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-=
+size-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: none; c=
+olor: darkblue; cursor: pointer; font-family: monospace; font-size: 14.1599=
+9984741211px;"><a href=3D"callto:+33 2 31 53 81 80" style=3D"color: darkblu=
+e; text-decoration: none; cursor: pointer;" target=3D"_blank">+33 2 31 45 2=
+6 98<br></a></span></span></span></span></span></span></span><span style=3D=
+"font-size: 10pt;"><span style=3D"font-size: 10pt;"><span style=3D"text-ali=
+gn: start; text-indent: 0px; background-color: #fdfdfd; float: none; displa=
+y: inline !important;"><span class=3D"Apple-converted-space"><span style=3D=
+"font-family: Tahoma;"><span style=3D"caret-color: #333333; color: #333333;=
+ font-family: monospace; font-size: 14.15999984741211px; font-style: normal=
+; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; o=
+rphans: auto; text-align: start; text-indent: 0px; text-transform: none; wh=
+ite-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjus=
+t: auto; -webkit-text-stroke-width: 0px; background-color: #fdfdfd; text-de=
+coration: none; display: inline !important; float: none;">URL :</span><span=
+ style=3D"caret-color: #333333; color: #333333; font-family: monospace; fon=
+t-size: 14.15999984741211px; font-style: normal; font-variant-caps: normal;=
+ font-weight: normal; letter-spacing: normal; orphans: auto; text-align: st=
+art; text-indent: 0px; text-transform: none; white-space: normal; widows: a=
+uto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke=
+-width: 0px; background-color: #fdfdfd; text-decoration: none; display: inl=
+ine !important; float: none;">&nbsp;<a href=3D"https://chahir.users.greyc.f=
+r" target=3D"_blank">https://chahir.users.greyc.fr</a>&nbsp;</span></span><=
+/span></span></span></span></div><div><span style=3D"font-size: 12pt;"><spa=
+n style=3D"font-size: 12pt;"><span style=3D"font-style: normal; font-varian=
+t-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto;=
+ text-align: start; text-indent: 0px; text-transform: none; white-space: no=
+rmal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -web=
+kit-text-stroke-width: 0px; text-decoration: none; caret-color: rgb(51, 51,=
+ 51); color: rgb(51, 51, 51); font-family: monospace; font-size: 14.1599998=
+4741211px; background-color: rgb(253, 253, 253); float: none; display: inli=
+ne !important;">--</span><span style=3D"font-style: normal; font-variant-ca=
+ps: normal; font-weight: normal; letter-spacing: normal; orphans: auto; tex=
+t-align: start; text-indent: 0px; text-transform: none; white-space: normal=
+; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-=
+text-stroke-width: 0px; text-decoration: none; caret-color: rgb(51, 51, 51)=
+; color: rgb(51, 51, 51); font-family: monospace; font-size: 14.15999984741=
+211px; background-color: rgb(253, 253, 253); float: none; display: inline !=
+important;">&nbsp;</span></span></span><div style=3D"clear: both;"><br></di=
+v></div><div><span><span style=3D"text-align: start; text-indent: 0px; back=
+ground-color: #fdfdfd; float: none; display: inline !important;"><span clas=
+s=3D"Apple-converted-space"><span style=3D"font-family: Tahoma; font-size: =
+small;"></span></span></span></span><br></div></div></div></div></div></div=
+><br></div></div>
+<br>=
+=0A<br>=
+</body></html>
+--=_bde21001-a37a-47a1-9102-f3daccad1882--
+
+

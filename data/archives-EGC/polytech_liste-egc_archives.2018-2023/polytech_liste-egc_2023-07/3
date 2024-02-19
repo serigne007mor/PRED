@@ -1,0 +1,419 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (bouncesmtp2.u12.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 2EDB314014F3
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Fri, 30 Jun 2023 13:47:13 +0200 (CEST)
+Received: from mx3.localdomain (MX3.univ-nantes.fr [193.52.101.137])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id 2B6A46608
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Fri, 30 Jun 2023 13:47:13 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.localdomain (Postfix) with ESMTP id 23E66208C7
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 30 Jun 2023 13:47:13 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=univ-nantes.fr header.b=Vtd9F8N4; dkim=pass (2048-bit key)
+	header.d=univ-nantes.fr header.b=Vtd9F8N4
+Received: from mx3.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id vT6xpDuWqovr for <liste-egc@polytech.univ-nantes.fr>;
+	Fri, 30 Jun 2023 13:47:13 +0200 (CEST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=2001:660:7220:385:193:52:103:113; helo=smtp-tls.univ-nantes.fr; envelope-from=emmanuel.morin@univ-nantes.fr; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=none dis=none) header.from=univ-nantes.fr
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=emmanuel.morin@univ-nantes.fr
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (2048-bit key; unprotected) header.d=univ-nantes.fr header.i=@univ-nantes.fr header.b="Vtd9F8N4";
+	dkim=pass (2048-bit key) header.d=univ-nantes.fr header.i=@univ-nantes.fr header.b="Vtd9F8N4";
+	dkim-atps=neutral
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from smtp-tls.univ-nantes.fr (smtptls1-cha.cpub.univ-nantes.fr [IPv6:2001:660:7220:385:193:52:103:113])
+	by mx3.localdomain (Postfix) with ESMTPS id 068E220063
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 30 Jun 2023 13:47:12 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by smtp-tls.univ-nantes.fr (Postfix) with ESMTP id D280C20681;
+	Fri, 30 Jun 2023 13:47:12 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-nantes.fr;
+	s=mailv2; t=1688125632;
+	bh=z43o027xhyOOAu0Xytw7m1/+frqskwnpA6QuTTdhtZs=;
+	h=From:Subject:Date:To:From;
+	b=Vtd9F8N49xdMX+Vb05x7YIp3c27uv3XTt9iDXRnFRnN6fkSVTskAmTrB5nyP+Mnoi
+	 lSQScLC5Jzyf9h25kcoJUjrgsoi5A/R+L4aIIop0QY/iIShDFzYLYAkUCL/FzXDxmg
+	 QkyP6QSKe7fS9tl9SfDDQqdJ+8jWaKGmVtPPzm6kJx99wOlSaHjCr/tUwitfr62tXk
+	 sZK5Fmabo0D3Nw/w8bfVDnmJlWmDQ5Lw5SJBmVFmmuh1XN+uxs4+uesaKl5JvgQqrW
+	 ncFavJWQeNC+JyVimHqvOpWfHvGgvX9Gv6BxyIuWFFcpmCnhDpkVVdk6lRAC1K1Sq9
+	 7jwT1jb7XbEtQ==
+X-Virus-Scanned: Debian amavisd-new at smtptls1-lmb.cpub.univ-nantes.fr
+Received: from smtp-tls.univ-nantes.fr ([127.0.0.1])
+	by localhost (smtptls1-cha.cpub.univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id OHM7Ti-LnDdX; Fri, 30 Jun 2023 13:47:12 +0200 (CEST)
+Received: from smtpclient.apple (aorleans-651-1-121-139.w90-20.abo.wanadoo.fr [90.20.132.139])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp-tls.univ-nantes.fr (Postfix) with ESMTPSA id 100682067E;
+	Fri, 30 Jun 2023 13:47:11 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-nantes.fr;
+	s=mailv2; t=1688125632;
+	bh=z43o027xhyOOAu0Xytw7m1/+frqskwnpA6QuTTdhtZs=;
+	h=From:Subject:Date:To:From;
+	b=Vtd9F8N49xdMX+Vb05x7YIp3c27uv3XTt9iDXRnFRnN6fkSVTskAmTrB5nyP+Mnoi
+	 lSQScLC5Jzyf9h25kcoJUjrgsoi5A/R+L4aIIop0QY/iIShDFzYLYAkUCL/FzXDxmg
+	 QkyP6QSKe7fS9tl9SfDDQqdJ+8jWaKGmVtPPzm6kJx99wOlSaHjCr/tUwitfr62tXk
+	 sZK5Fmabo0D3Nw/w8bfVDnmJlWmDQ5Lw5SJBmVFmmuh1XN+uxs4+uesaKl5JvgQqrW
+	 ncFavJWQeNC+JyVimHqvOpWfHvGgvX9Gv6BxyIuWFFcpmCnhDpkVVdk6lRAC1K1Sq9
+	 7jwT1jb7XbEtQ==
+From: Emmanuel Morin <emmanuel.morin@univ-nantes.fr>
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_8D4BFFDA-948C-444C-97F5-8C4886E3D6A7"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.1\))
+Message-Id: <0AB65D54-9347-4A9A-BD8F-7B6BFE7B1590@univ-nantes.fr>
+Date: Fri, 30 Jun 2023 13:47:11 +0200
+To: ln@groupes.renater.fr,
+ liste-egc <liste-egc@polytech.univ-nantes.fr>,
+ info-aria <info-aria@liste.lis-lab.fr>,
+ parole@listes.afcp-parole.org,
+ bull-ia@gdria.fr
+X-Mailer: Apple Mail (2.3696.120.41.1.1)
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Appel TAL 65-1 : =?UTF-8?Q?Num=C3=A9ro?= non
+ =?UTF-8?Q?th=C3=A9matique?= au fil de l'eau
+
+
+--Apple-Mail=_8D4BFFDA-948C-444C-97F5-8C4886E3D6A7
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
+
+2024 Volume 65 Num=C3=A9ro 1 - Num=C3=A9ro non th=C3=A9matique
+
+Date limite de soumission :  au fil de l=E2=80=99eau jusqu=E2=80=99au =
+31/12/2023=20
+
+Direction : Maxime Amblard, C=C3=A9cile Fabre, Emmanuel Morin et Sophie =
+Rosset
+
+
+NOUVEAUT=C3=89
+
+Les num=C3=A9ros non th=C3=A9matiques de la revue Traitement automatique =
+des langues deviennent au =C2=AB fil de l=E2=80=99eau =C2=BB . Ainsi, =
+chaque article du num=C3=A9ro 65-1 sera =C3=A9valu=C3=A9 au fur et =C3=A0 =
+mesure de sa soumission et sera publi=C3=A9, sous r=C3=A9serve de son =
+acceptation, sous un d=C3=A9lai indicatif de six mois apr=C3=A8s sa =
+soumission. L=E2=80=99appel pour le volume 65-1 est ainsi ouvert =
+jusqu=E2=80=99au 31 d=C3=A9cembre 2023.=20
+
+
+TH=C3=88MES
+
+La revue Traitement automatique des langues lance un appel =C3=A0 =
+contributions ouvert. Les propositions de soumissions peuvent =C3=AAtre =
+d=E2=80=99ordre th=C3=A9orique ou exp=C3=A9rimental et concerner tous =
+les aspects du traitement automatique des langues =C3=A9crites, parl=C3=A9=
+es et sign=C3=A9es et de la linguistique computationnelle, par exemple :
+
+   -   Mod=C3=A8les computationnels de la langue
+   -   Apprentissage et mod=C3=A9lisation statistiques
+   -   Intermodalit=C3=A9 et multimodalit=C3=A9
+   -   Multiplicit=C3=A9 et diversit=C3=A9 des langues
+   -   S=C3=A9mantique et compr=C3=A9hension
+   -   Acc=C3=A8s =C3=A0 l=E2=80=99information et fouille de textes
+   -   Productions langagi=C3=A8res et traitement/G=C3=A9n=C3=A9ration/syn=
+th=C3=A8se
+   -   Evaluation
+   -   Ressources linguistiques
+   -   Explicabilit=C3=A9 et reproductibilit=C3=A9
+   -   TAL en interaction avec d=E2=80=99autres disciplines, humanit=C3=A9=
+s
+       num=C3=A9riques
+
+La liste ci-dessus n'est pas exhaustive. Il est primordial, quel que =
+soit le th=C3=A8me, que les aspects li=C3=A9s au traitement automatique =
+des langues soient mis en valeur.
+
+Les articles de type =C2=AB prise de position =C2=BB et =C2=AB =
+pr=C3=A9sentation de l=E2=80=99=C3=A9tat de l'art =C2=BB sont =C3=A9galeme=
+nt les bienvenus.
+
+
+LANGUE
+
+Les articles sont =C3=A9crits en fran=C3=A7ais ou en anglais.
+
+
+LA REVUE
+
+La revue TAL (Traitement Automatique des Langues, =
+http://www.atala.org/revuetal <http://www.atala.org/revuetal>) est une =
+revue internationale =C3=A9dit=C3=A9e depuis 1960 par l=E2=80=99ATALA =
+(Association pour le Traitement Automatique des Langues) avec le =
+concours du CNRS. Elle est publi=C3=A9e en format =C3=A9lectronique, =
+avec acc=C3=A8s gratuit imm=C3=A9diat aux articles publi=C3=A9s.
+
+
+DATES IMPORTANTES
+
+Date limite de soumission : au fil de l=E2=80=99eau jusqu=E2=80=99au 31 =
+d=C3=A9cembre 2023
+Notification aux auteurs apr=C3=A8s premi=C3=A8re relecture : deux mois =
+apr=C3=A8s la soumission=20
+Notification aux auteurs apr=C3=A8s seconde relecture : deux mois apr=C3=A8=
+s premi=C3=A8re relecture=20
+Publication : deux mois apr=C3=A8s seconde relecture=20
+
+
+FORMAT
+
+Les articles doivent faire entre 20 et 25 pages, r=C3=A9f=C3=A9rences et =
+annexes incluses (sans d=C3=A9rogation possible sur la longueur).
+
+La revue TAL a un processus de relecture en double-aveugle. Merci =
+d=E2=80=99anonymiser votre article, le nom du fichier, et de veiller =C3=A0=
+ =C3=A9viter les auto-r=C3=A9f=C3=A9rences.
+
+Les feuilles de style sont disponibles en ligne sur le site de la revue =
+(http://www.atala.org/content/instructions-aux-auteurs-feuilles-de-style-0=
+ =
+<http://www.atala.org/content/instructions-aux-auteurs-feuilles-de-style-0=
+>).
+
+
+Les chercheurs ayant l=E2=80=99intention de soumettre une contribution =
+sont invit=C3=A9s =C3=A0 d=C3=A9poser leur article en cliquant sur le =
+menu "Soumission d=E2=80=99un article" (format PDF). Pour cela, si ce =
+n=E2=80=99est d=C3=A9j=C3=A0 fait, s=E2=80=99inscrire sur le site =
+_http://www.sciencesconf.org_ <http://www.sciencesconf.org_/> (en haut =
+=C3=A0 gauche, "cr=C3=A9er un compte"), puis revenir sur la page =
+http://tal-65-1.sciencesconf.org/ <http://tal-65-1.sciencesconf.org/>, =
+se connecter et effectuer le d=C3=A9p=C3=B4t.
+
+
+--Apple-Mail=_8D4BFFDA-948C-444C-97F5-8C4886E3D6A7
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
+charset=3Dutf-8"></head><body style=3D"word-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;" class=3D""><div =
+class=3D""><div class=3D"" style=3D"margin: 0px; font-stretch: normal; =
+font-size: 13px; line-height: normal; font-family: &quot;Helvetica =
+Neue&quot;;">2024 Volume 65 Num=C3=A9ro 1 - Num=C3=A9ro non =
+th=C3=A9matique</div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; font-size: 13px; line-height: normal; font-family: =
+&quot;Helvetica Neue&quot;; min-height: 15px;"><br class=3D""></div><div =
+class=3D"" style=3D"margin: 0px; font-stretch: normal; line-height: =
+normal;"><font class=3D""><span class=3D""><font face=3D"Helvetica Neue" =
+size=3D"2" class=3D""><b class=3D"">Date limite de soumission : &nbsp;au =
+fil de l=E2=80=99eau&nbsp;jusqu=E2=80=99au =
+31/12/2023&nbsp;</b></font></span></font></div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; font-size: 13px; =
+line-height: normal; font-family: &quot;Helvetica Neue&quot;; =
+min-height: 15px;"><br class=3D""></div><div class=3D"" style=3D"margin: =
+0px; font-stretch: normal; line-height: normal;"><span =
+style=3D"font-family: &quot;Helvetica Neue&quot;; font-size: small;" =
+class=3D"">Direction :&nbsp;Maxime Amblard, C=C3=A9cile Fabre, Emmanuel =
+Morin et Sophie Rosset</span></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; font-size: 13px; line-height: normal; font-family: =
+&quot;Helvetica Neue&quot;;"><br class=3D""></div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; line-height: normal; =
+min-height: 15px;"><font face=3D"Helvetica Neue" size=3D"2" class=3D""><br=
+ class=3D""></font></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal; min-height: 15px;"><font =
+face=3D"Helvetica Neue" size=3D"2" class=3D""><b =
+class=3D"">NOUVEAUT=C3=89</b><br class=3D""><br =
+class=3D"">Les&nbsp;num=C3=A9ros non th=C3=A9matiques de la revue =
+Traitement automatique des langues&nbsp;deviennent au =C2=AB fil de =
+l=E2=80=99eau =C2=BB . Ainsi, chaque article du num=C3=A9ro =
+65-1&nbsp;sera =C3=A9valu=C3=A9 au fur et =C3=A0 mesure de sa soumission =
+et sera&nbsp;publi=C3=A9, sous&nbsp;r=C3=A9serve de son acceptation, =
+sous un d=C3=A9lai indicatif de six mois apr=C3=A8s sa&nbsp;soumission. =
+L=E2=80=99appel pour le volume 65-1 est ainsi ouvert jusqu=E2=80=99au =
+31&nbsp;d=C3=A9cembre 2023.&nbsp;</font></div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; line-height: normal; =
+min-height: 15px;"><br class=3D""></div><div class=3D"" style=3D"margin: =
+0px; font-stretch: normal; font-size: 13px; line-height: normal; =
+font-family: &quot;Helvetica Neue&quot;; min-height: 15px;"><br =
+class=3D""></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; font-size: 13px; line-height: normal; font-family: =
+&quot;Helvetica Neue&quot;;"><b class=3D"">TH=C3=88MES</b></div><div =
+class=3D"" style=3D"margin: 0px; font-stretch: normal; font-size: 13px; =
+line-height: normal; font-family: &quot;Helvetica Neue&quot;; =
+min-height: 15px;"><br class=3D""></div><div class=3D"" style=3D"margin: =
+0px; font-stretch: normal; font-size: 13px; line-height: normal; =
+font-family: &quot;Helvetica Neue&quot;;">La revue Traitement =
+automatique des langues lance un appel =C3=A0 contributions ouvert. Les =
+propositions de soumissions peuvent =C3=AAtre d=E2=80=99ordre th=C3=A9oriq=
+ue ou exp=C3=A9rimental et concerner tous les aspects du traitement =
+automatique des langues =C3=A9crites, parl=C3=A9es et sign=C3=A9es et de =
+la linguistique computationnelle, par exemple :</div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; font-size: 13px; =
+line-height: normal; font-family: &quot;Helvetica Neue&quot;; =
+min-height: 15px;"><br class=3D""></div><div class=3D"" style=3D"margin: =
+0px; font-stretch: normal; font-size: 13px; line-height: normal; =
+font-family: &quot;Helvetica Neue&quot;;">&nbsp;&nbsp; - &nbsp; Mod=C3=A8l=
+es computationnels de la langue</div><div class=3D"" style=3D"margin: =
+0px; font-stretch: normal; font-size: 13px; line-height: normal; =
+font-family: &quot;Helvetica Neue&quot;;">&nbsp;&nbsp; - &nbsp; =
+Apprentissage et mod=C3=A9lisation statistiques</div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; font-size: 13px; =
+line-height: normal; font-family: &quot;Helvetica =
+Neue&quot;;">&nbsp;&nbsp; - &nbsp; Intermodalit=C3=A9 et =
+multimodalit=C3=A9</div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; font-size: 13px; line-height: normal; font-family: =
+&quot;Helvetica Neue&quot;;">&nbsp;&nbsp; - &nbsp; Multiplicit=C3=A9 et =
+diversit=C3=A9 des langues</div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; font-size: 13px; line-height: normal; font-family: =
+&quot;Helvetica Neue&quot;;">&nbsp;&nbsp; - &nbsp; S=C3=A9mantique et =
+compr=C3=A9hension</div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; font-size: 13px; line-height: normal; font-family: =
+&quot;Helvetica Neue&quot;;">&nbsp;&nbsp; - &nbsp; Acc=C3=A8s =C3=A0 =
+l=E2=80=99information et fouille de textes</div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; font-size: 13px; =
+line-height: normal; font-family: &quot;Helvetica =
+Neue&quot;;">&nbsp;&nbsp; - &nbsp; Productions langagi=C3=A8res et =
+traitement/G=C3=A9n=C3=A9ration/synth=C3=A8se</div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; font-size: 13px; =
+line-height: normal; font-family: &quot;Helvetica =
+Neue&quot;;">&nbsp;&nbsp; - &nbsp; Evaluation</div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; font-size: 13px; =
+line-height: normal; font-family: &quot;Helvetica =
+Neue&quot;;">&nbsp;&nbsp; - &nbsp; Ressources linguistiques</div><div =
+class=3D"" style=3D"margin: 0px; font-stretch: normal; font-size: 13px; =
+line-height: normal; font-family: &quot;Helvetica =
+Neue&quot;;">&nbsp;&nbsp; - &nbsp; Explicabilit=C3=A9 et =
+reproductibilit=C3=A9</div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; font-size: 13px; line-height: normal; font-family: =
+&quot;Helvetica Neue&quot;;">&nbsp;&nbsp; - &nbsp; TAL en interaction =
+avec d=E2=80=99autres disciplines, humanit=C3=A9s</div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; font-size: 13px; =
+line-height: normal; font-family: &quot;Helvetica =
+Neue&quot;;">&nbsp;&nbsp; &nbsp; &nbsp; num=C3=A9riques</div><div =
+class=3D"" style=3D"margin: 0px; font-stretch: normal; font-size: 13px; =
+line-height: normal; font-family: &quot;Helvetica Neue&quot;; =
+min-height: 15px;"><br class=3D""></div><div class=3D"" style=3D"margin: =
+0px; font-stretch: normal; font-size: 13px; line-height: normal; =
+font-family: &quot;Helvetica Neue&quot;;">La liste ci-dessus n'est pas =
+exhaustive. Il est primordial, quel que soit le th=C3=A8me, que les =
+aspects li=C3=A9s au traitement automatique des langues soient mis en =
+valeur.</div><div class=3D"" style=3D"margin: 0px; font-stretch: normal; =
+font-size: 13px; line-height: normal; font-family: &quot;Helvetica =
+Neue&quot;;"><br class=3D""></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; font-size: 13px; line-height: normal; font-family: =
+&quot;Helvetica Neue&quot;;">Les articles de type =C2=AB prise de =
+position =C2=BB et =C2=AB pr=C3=A9sentation de l=E2=80=99=C3=A9tat de =
+l'art =C2=BB sont =C3=A9galement les bienvenus.</div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; font-size: 13px; =
+line-height: normal; font-family: &quot;Helvetica Neue&quot;; =
+min-height: 15px;"><br class=3D""></div><div class=3D"" style=3D"margin: =
+0px; font-stretch: normal; font-size: 13px; line-height: normal; =
+font-family: &quot;Helvetica Neue&quot;; min-height: 15px;"><br =
+class=3D""></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; font-size: 13px; line-height: normal; font-family: =
+&quot;Helvetica Neue&quot;;">LANGUE</div><div class=3D"" style=3D"margin: =
+0px; font-stretch: normal; font-size: 13px; line-height: normal; =
+font-family: &quot;Helvetica Neue&quot;; min-height: 15px;"><br =
+class=3D""></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; font-size: 13px; line-height: normal; font-family: =
+&quot;Helvetica Neue&quot;;">Les articles sont =C3=A9crits en fran=C3=A7ai=
+s ou en anglais.</div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; font-size: 13px; line-height: normal; font-family: =
+&quot;Helvetica Neue&quot;;"><br class=3D""></div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; font-size: 13px; =
+line-height: normal; font-family: &quot;Helvetica Neue&quot;; =
+min-height: 15px;"><br class=3D""></div><div class=3D"" style=3D"margin: =
+0px; font-stretch: normal; font-size: 13px; line-height: normal; =
+font-family: &quot;Helvetica Neue&quot;;"><b class=3D"">LA =
+REVUE</b></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; font-size: 13px; line-height: normal; font-family: =
+&quot;Helvetica Neue&quot;; min-height: 15px;"><br class=3D""></div><div =
+class=3D"" style=3D"margin: 0px; font-stretch: normal; font-size: 13px; =
+line-height: normal; font-family: &quot;Helvetica Neue&quot;;">La revue =
+TAL (Traitement Automatique des Langues,&nbsp;<span class=3D"" =
+style=3D"text-decoration: underline; color: rgb(220, 161, 13);"><a =
+href=3D"http://www.atala.org/revuetal" =
+class=3D"">http://www.atala.org/revuetal</a></span>) est une revue =
+internationale =C3=A9dit=C3=A9e depuis 1960 par l=E2=80=99ATALA =
+(Association pour le Traitement Automatique des Langues) avec le =
+concours du CNRS. Elle est publi=C3=A9e en format =C3=A9lectronique, =
+avec acc=C3=A8s gratuit imm=C3=A9diat aux articles publi=C3=A9s.</div><div=
+ class=3D"" style=3D"margin: 0px; font-stretch: normal; font-size: 13px; =
+line-height: normal; font-family: &quot;Helvetica Neue&quot;; =
+min-height: 15px;"><br class=3D""></div><div class=3D"" style=3D"margin: =
+0px; font-stretch: normal; font-size: 13px; line-height: normal; =
+font-family: &quot;Helvetica Neue&quot;; min-height: 15px;"><br =
+class=3D""></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; font-size: 13px; line-height: normal; font-family: =
+&quot;Helvetica Neue&quot;;"><font class=3D""><b class=3D"">DATES =
+IMPORTANTES</b></font></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; font-size: 13px; line-height: normal; font-family: =
+&quot;Helvetica Neue&quot;; min-height: 15px;"><font class=3D""><br =
+class=3D""></font></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; line-height: normal;"><font class=3D""><font =
+face=3D"Helvetica Neue" size=3D"2" class=3D"">Date limite de soumission =
+: au fil de l=E2=80=99eau&nbsp;jusqu=E2=80=99au&nbsp;31 d=C3=A9cembre =
+2023</font></font></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; font-size: 13px; line-height: normal; font-family: =
+&quot;Helvetica Neue&quot;;"><font class=3D"">Notification aux auteurs =
+apr=C3=A8s premi=C3=A8re relecture : deux mois apr=C3=A8s la =
+soumission&nbsp;</font></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; font-size: 13px; line-height: normal; font-family: =
+&quot;Helvetica Neue&quot;;"><font class=3D"">Notification aux auteurs =
+apr=C3=A8s seconde relecture : deux mois apr=C3=A8s premi=C3=A8re =
+relecture&nbsp;</font></div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; font-size: 13px; line-height: normal; font-family: =
+&quot;Helvetica Neue&quot;;"><font class=3D"">Publication : deux mois =
+apr=C3=A8s seconde relecture&nbsp;</font></div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; font-size: 13px; =
+line-height: normal; font-family: &quot;Helvetica Neue&quot;; =
+min-height: 15px;"><br class=3D""></div><div class=3D"" style=3D"margin: =
+0px; font-stretch: normal; font-size: 13px; line-height: normal; =
+font-family: &quot;Helvetica Neue&quot;; min-height: 15px;"><br =
+class=3D""></div><div class=3D"" style=3D"margin: 0px; font-stretch: =
+normal; font-size: 13px; line-height: normal; font-family: =
+&quot;Helvetica Neue&quot;;"><b class=3D"">FORMAT</b></div><div class=3D""=
+ style=3D"margin: 0px; font-stretch: normal; font-size: 13px; =
+line-height: normal; font-family: &quot;Helvetica Neue&quot;; =
+min-height: 15px;"><br class=3D""></div><div class=3D"" style=3D"margin: =
+0px; font-stretch: normal; font-size: 13px; line-height: normal; =
+font-family: &quot;Helvetica Neue&quot;;">Les articles doivent faire =
+entre 20 et 25 pages, r=C3=A9f=C3=A9rences et annexes incluses (sans =
+d=C3=A9rogation possible sur la longueur).</div><div class=3D"" =
+style=3D"margin: 0px; font-stretch: normal; font-size: 13px; =
+line-height: normal; font-family: &quot;Helvetica Neue&quot;; =
+min-height: 15px;"><br class=3D""></div><div class=3D"" style=3D"margin: =
+0px; font-stretch: normal; font-size: 13px; line-height: normal; =
+font-family: &quot;Helvetica Neue&quot;;">La revue TAL a un processus de =
+relecture en double-aveugle. Merci d=E2=80=99anonymiser votre article, =
+le nom du fichier, et de veiller =C3=A0 =C3=A9viter les =
+auto-r=C3=A9f=C3=A9rences.</div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; font-size: 13px; line-height: normal; font-family: =
+&quot;Helvetica Neue&quot;; min-height: 15px;"><br class=3D""></div><div =
+class=3D"" style=3D"margin: 0px; font-stretch: normal; font-size: 13px; =
+line-height: normal; font-family: &quot;Helvetica Neue&quot;;">Les =
+feuilles de style sont disponibles en ligne sur le site de la revue (<a =
+href=3D"http://www.atala.org/content/instructions-aux-auteurs-feuilles-de-=
+style-0" =
+class=3D"">http://www.atala.org/content/instructions-aux-auteurs-feuilles-=
+de-style-0</a>).</div><div class=3D"" style=3D"margin: 0px; =
+font-stretch: normal; font-size: 13px; line-height: normal; font-family: =
+&quot;Helvetica Neue&quot;; min-height: 15px;"><br class=3D""></div><div =
+class=3D"" style=3D"margin: 0px; font-stretch: normal; font-size: 13px; =
+line-height: normal; font-family: &quot;Helvetica Neue&quot;; =
+min-height: 15px;"><br class=3D""></div><div class=3D"" style=3D"margin: =
+0px; font-stretch: normal; font-size: 13px; line-height: normal; =
+font-family: &quot;Helvetica Neue&quot;;">Les chercheurs ayant =
+l=E2=80=99intention de soumettre une contribution sont invit=C3=A9s =C3=A0=
+ d=C3=A9poser leur article en cliquant sur le menu "Soumission d=E2=80=99u=
+n article" (format PDF). Pour cela, si ce n=E2=80=99est d=C3=A9j=C3=A0 =
+fait, s=E2=80=99inscrire sur le site _<a =
+href=3D"http://www.sciencesconf.org_/" class=3D""><span class=3D"" =
+style=3D"color: rgb(220, 161, =
+13);">http://www.sciencesconf.org_</span></a>&nbsp;(en haut =C3=A0 =
+gauche, "cr=C3=A9er un compte"), puis revenir sur la page&nbsp;<span =
+class=3D"" style=3D"text-decoration: underline;"><a =
+href=3D"http://tal-65-1.sciencesconf.org/" =
+class=3D"">http://tal-65-1.sciencesconf.org/</a></span>, se connecter et =
+effectuer le d=C3=A9p=C3=B4t.</div><div class=3D""><br =
+class=3D""></div></div></body></html>=
+
+--Apple-Mail=_8D4BFFDA-948C-444C-97F5-8C4886E3D6A7--

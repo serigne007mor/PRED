@@ -1,0 +1,898 @@
+Return-Path: <maxime.lefrancois@emse.fr>
+X-Original-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (BounceSMTP2.univ-nantes.prive [172.20.12.67])
+	by sympa6.univ-nantes.prive (Postfix) with ESMTP id 35ADE2292950
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Fri,  1 Mar 2019 14:00:38 +0100 (CET)
+Received: from mx3.d101.univ-nantes.fr (MX3.univ-nantes.fr [193.52.101.137])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id 2ACD062882B
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Fri,  1 Mar 2019 14:00:38 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTP id 265FF462A467
+	for <liste-egc@polytech.univ-nantes.fr>; Fri,  1 Mar 2019 14:00:38 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -3.979
+X-Spam-Level:
+X-Spam-Status: No, score=-3.979 tagged_above=-1000 required=5
+	tests=[CRM114_GOOD=-5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, HTML_MESSAGE=0.001, NO_RDNS2=0.01,
+	RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SORBS=1, RCVD_IN_WSFF=0.01,
+	SPF_PASS=-0.001, UN_PHISHING_PW=0.1, URIBL_BLOCKED=0.001]
+	autolearn=disabled
+X-CRM114-Status: GOOD ( 7.4448 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=emse.fr
+Received: from mx3.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id XQ_FuPUvljym for <liste-egc@polytech.univ-nantes.fr>;
+	Fri,  1 Mar 2019 14:00:30 +0100 (CET)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mincen.emse.fr (mincen.emse.fr [193.49.172.150])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTPS id A3FC84019C06
+	for <liste-egc@polytech.univ-nantes.fr>; Fri,  1 Mar 2019 14:00:30 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mincen.emse.fr (Postfix) with ESMTP id 3E5F23FA3E
+	for <liste-egc@polytech.univ-nantes.fr>; Fri,  1 Mar 2019 14:00:30 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=emse.fr; h=
+	content-type:content-type:subject:subject:message-id:date:date
+	:from:from:mime-version:received:received:received; s=default;
+	 t=1551445230; x=1553259631; bh=FAkSxtlubjrt7U2M9jckcTZVsphaOWSF
+	RHmSHoYiOn4=; b=WSZGYPg2Y+p8FEP/567Ca0KWwspdGCXjHRWLDs2IpO2R1BaS
+	EB/QyfB7tlEzzu6bh0qX2vwrH/WhBWRqK90Cn+26YW/3kcMSYeFsO9HtZKvWcmS7
+	WmqV49BlAQknT2LHS1tPY3aXf1Y7pLTjjVu2FLoJFLn3P5GmabF3qRhrzOA=
+X-Virus-Scanned: Debian amavisd-new at mincen.emse.fr
+Received: from mincen.emse.fr ([127.0.0.1])
+	by localhost (mincen.emse.fr [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id w0N7XaQL7gm5 for <liste-egc@polytech.univ-nantes.fr>;
+	Fri,  1 Mar 2019 14:00:30 +0100 (CET)
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: maxime.lefrancois)
+	by mincen.emse.fr (Postfix) with ESMTPSA id D22DF3FA36
+	for <liste-egc@polytech.univ-nantes.fr>; Fri,  1 Mar 2019 14:00:29 +0100 (CET)
+Received: by mail-lj1-f172.google.com with SMTP id 199so297646ljj.5
+        for <liste-egc@polytech.univ-nantes.fr>; Fri, 01 Mar 2019 05:00:29 -0800 (PST)
+X-Gm-Message-State: APjAAAXmvOR1gEfSREb/Mag5GPNO9spj4HcdDZP9WeveVqlqdt5SgRM0
+	zdxMTITCE2kTngjrbi4OdWI4DKWrlqECglaYXgM=
+X-Google-Smtp-Source: APXvYqxxYmzzs3Yoy5gp01mdzWLwG5D259txMPPPiThDEwgLDWVjtt6vnqIVpGHmMMTdohMK4eH3C/1FfAbvLP6p1CE=
+X-Received: by 2002:a2e:870c:: with SMTP id m12mr2552752lji.24.1551445229066;
+ Fri, 01 Mar 2019 05:00:29 -0800 (PST)
+MIME-Version: 1.0
+From: =?UTF-8?Q?Maxime_Lefran=C3=A7ois?= <maxime.lefrancois@emse.fr>
+Date: Fri, 1 Mar 2019 14:00:18 +0100
+X-Gmail-Original-Message-ID: <CALsPASWKNrrjgVZU_tUdj3fkv5omsgWRiDhb4und670N=zA7xA@mail.gmail.com>
+Message-ID: <CALsPASWKNrrjgVZU_tUdj3fkv5omsgWRiDhb4und670N=zA7xA@mail.gmail.com>
+To: =?UTF-8?Q?Maxime_Lefran=C3=A7ois?= <maxime.lefrancois@emse.fr>
+Cc: =?UTF-8?B?4oCcd2ViLnNlbWFudGlxdWVAbGlzdHMtc29wLmlucmlhLmZy4oCd?= <web.semantique@lists-sop.inria.fr>, 
+	=?UTF-8?B?4oCcbGlzdGUtZWdjQHBvbHl0ZWNoLnVuaXYtbmFudGVzLmZy4oCd?= <liste-egc@polytech.univ-nantes.fr>, 
+	=?UTF-8?B?4oCcYnVsbC1pM0Bpcml0LmZy4oCd?= <bull-i3@irit.fr>
+Content-Type: multipart/alternative; boundary="000000000000c46157058307fdf9"
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] ISWC 2019 - Call for Research, In-use, Resource and
+ Doctoral Consortium papers
+
+--000000000000c46157058307fdf9
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+18th International Semantic Web Conference (ISWC 2019)
+=E2=80=9CKnowledge Graphs, Linked Data, Linked Schemas and AI on the Web=E2=
+=80=9D
+Auckland, New Zealand, 26-30 October, 2019
+https://iswc2019.semanticweb.org/
+
+The International Semantic Web Conference (ISWC) is the premier venue for
+presenting fundamental research, innovative technology, and applications
+concerning semantics, data, and the Web. It is the most important
+international venue to discuss and present latest advances and applications
+of the semantic Web, knowledge graphs, linked data, ontologies and
+artificial intelligence (AI) on the Web.
+
+ISWC attracts a large number of high quality submissions every year and
+participants from both industry and academia. ISWC brings together
+researchers from different areas, such as artificial intelligence,
+databases, natural language processing, information systems, human computer
+interaction, information retrieval, web science, etc., who investigate,
+develop and use novel methods and technologies for accessing, interpreting
+and using information on the Web in a more effective way.
+
+Follow us:
+Twitter: @iswc_conf  , #iswc_conf ( https://twitter.com/iswc_conf )
+LinkedIn: https://www.linkedin.com/groups/13612370
+Facebook: https://www.facebook.com/ISWConf/
+
+Become part of ISWC 2019 by submitting to the following tracks & activities
+or just attend them!
+(All deadlines are midnight Hawaii time.)
+
+
+
+In this announcement:
+*  Highlights
+1. Call for Research papers
+2. Call for In-use papers
+3. Call for Resource papers
+4. Call for Doctoral Consortium
+
+
+
+*  Highlights
+*******************************************
+ * Research, In-use and Resource tracks: submission of the same work to
+multiple tracks is not allowed and may result in a rejection of the work
+across all tracks without a review. Before submitting, authors are asked to
+consult the calls of the other tracks featured at ISWC 2019 and to choose
+the track that best suits their contribution. Please consult the following
+page as well when deciding to which track to submit:
+https://iswc2019.semanticweb.org/paper-features-per-track/
+ * Research track: papers submitted to the research track will be subject
+to **double blind** peer review.
+ * Research track: a reproducibility certification with a dedicated review
+board will be proposed to the accepted research track papers that include a
+significant experimental evaluation.
+*  Doctoral Consortium: papers submitted to the doctoral consortium will be
+subject to **double blind** peer review.
+
+
+
+1. Call for Research papers
+*******************************************
+In this track of ISWC 2019, we are looking for novel and significant
+research contributions addressing theoretical, analytical and empirical
+aspects of the Semantic Web. While we welcome work that relates to the W3C
+Semantic Web recommendations (e.g., RDF, OWL, SPARQL, etc.), we also
+encourage contributions to research at the intersection of Semantic Web and
+other scientific disciplines. Submissions to the research track should
+describe original, significant, and replicable research on the Semantic
+Web. All papers must include method evaluations that are rigorous,
+repeatable and reproducible. This will be one of the key paper reviewing
+criteria. We also strongly encourage papers that provide material such as
+data sets, source code, queries used to evaluate their approach, and/or
+live deployments. To comply with the double blind review policy we
+encourage the usage of non-personal storage spaces or the  additional
+material facility available at submission time.
+
+Topics of interest include, but are not limited to:
+ * Database, information retrieval, information extraction, natural
+language processing and artificial intelligence techniques for the Semantic
+Web
+ * Knowledge representation and reasoning on the Web
+ * Knowledge graphs and deep semantics
+ * Machine learning and data mining methods for the Semantic Web
+ * Data mining and knowledge discovery in Linked data and ontologies
+ * Robust and scalable management of semantics and data on the Web and in
+Linked Data
+ * Processing and storage of semantic data on the blockchain
+ * Methods to investigate and catalogue semantic primitives used in
+ontology definitions
+ * Enabling access to ontologies and knowledge bases by rendering the
+knowledge in different modalities, e.g. as natural language text,
+explanatory video, interactive elements, etc.
+ * Languages, tools, and methodologies for representing and managing
+semantics and data on the Web
+ * Programming the Semantic Web
+ * Architectures and algorithms for extreme volume, heterogeneity,
+dynamicity, and decentralization of Semantic Web data
+ * Cleaning, quality assurance, and provenance of Semantic Web data,
+services, and processes
+ * Ontology-based data access and integration/exchange on the Web
+ * Ontology engineering and ontology patterns for the Web
+ * Ontology modularity, mapping, merging, and alignment for the Web
+ * Search, query, integration, and analysis on the Semantic Web
+ * Supporting multi-linguality in the Semantic Web
+ * Question answering over Linked Data and ontologies
+ * Information visualization and exploratory analysis methods for Semantic
+Web data
+ * Semantic social network mining, analysis, representation, and management
+ * Crowdsourcing semantics; methods, dynamics, and challenges
+ * Geospatial semantics and data on the Web
+ * Data streams and the Internet of Things
+ * Semantic technologies for mobile platforms
+ * Trust, privacy, and security on the Semantic Web
+ * Semantic Web and Linked Data for cloud environments
+ * Access control and privacy in semantic data
+
+Further info:
+https://iswc2019.semanticweb.org/call-for-research-track-papers/
+
+=3D=3D Important Dates =3D=3D
+Abstracts:     April 3, 2019
+Full papers:     April 10, 2019
+
+=3D=3D Program Chairs =3D=3D
+Contact: iswc2019-program@inria.fr
+Chiara Ghidini, Fondazione Bruno Kessler (FBK), Italy
+Olaf Hartig, Link=C3=B6ping University, Sweden
+
+
+
+2. Call for In-use papers
+*******************************************
+
+The adoption of Semantic Web technologies has accelerated in recent years,
+where they are now deployed in a variety of real-world settings at a
+variety of scales. The In-Use Track at ISWC 2019 continues the tradition of
+demonstrating and learning from the increasing adoption of Semantic Web
+technologies by providing a forum for the community to explore the benefits
+and challenges of applying such technologies in concrete, practical use
+cases, beyond the research communities from which they originate, in
+contexts ranging from industry to government and science.
+
+The In-Use Track thus seeks submissions describing applied and validated
+solutions such as software tools, systems or architectures that benefit
+from the use of Semantic Web technologies (including, but not limited to,
+technologies based on the Semantic Web standards). Importantly, submitted
+papers should provide convincing evidence of the use of the proposed
+application or tool by the target user group, preferably outside the group
+that conducted the development and, more broadly, outside the Semantic Web
+research community. A main focus of the submissions should be on the
+benefits of Semantic Web technologies for the intended use case, as well as
+(if relevant) the added challenges they introduce.
+
+We welcome submissions that demonstrate the use of Semantic Web
+technologies such as those mentioned in the Call for Papers of the Research
+Track, and additionally cover one or more of the following topics:
+ * Applications in domain-specific areas (e.g., libraries, cultural
+heritage, healthcare, life sciences, engineering, smart manufacturing,
+smart cities, open government)
+ * Description and analysis of concrete and novel problems or use cases in
+a specific domain in which Semantic Web technologies were applied (this
+should be part of submissions presenting a concrete application)
+ * Descriptions of how Semantic Web resources (ontologies, datasets,
+software, standards, etc) are being used in practice
+ * Assessment of the Semantic Web technologies from diverse points of view,
+such as:
+         - Usability and acceptance by stakeholder groups
+         - Uptake outside the Semantic Web research community
+         - Scalability of Semantic Web solutions and their large scale
+deployment
+         - Technical strengths and weaknesses especially in comparison with
+alternative technologies (e.g., database management systems, model-driven
+engineering)
+         - Costs and benefits of implementing, deploying, using, and
+managing Semantic Web technologies
+         - Risks and opportunities of using Semantic Web technologies in
+organizations with respect to their businesses and customers
+ * Lessons learned and best practices from deploying and using an
+application or service based on Semantic Web technologies
+ * Comparison of Semantic Web technologies with alternative approaches that
+use conventional or competing technologies
+
+Further info: https://iswc2019.semanticweb.org/call-for-in-use-track-papers=
+/
+
+=3D=3D Important Dates =3D=3D
+Abstracts:     April 3, 2019
+Full papers:     April 10, 2019
+
+=3D=3D Program Chairs =3D=3D
+Contact: iswc2019-in-use@inria.fr
+Isabel Cruz,  University of Illinois at Chicago, USA
+Aidan Hogan, Universidad de Chile, Chile
+
+
+
+3. Call for Resource papers
+*******************************************
+Resources are of paramount importance as they foster scientific
+advancement. For example, the DBpedia resource had a major influence on the
+Semantic Web community by enabling the Linked (Open) Data movement.
+Validating a research hypothesis or providing answers to a research
+question often goes together with developing new resources that support
+these achievements. Sharing resources is key to allow other researchers to
+compare new results, reproduce experimental settings and explore new lines
+of research, in accordance with the FAIR principles for scientific data
+management. Yet, resources themselves rarely get the same recognition as
+the scientific advances they facilitate.
+
+The ISWC 2019 Resources Track aims to promote the sharing of resources
+including, but not restricted to: datasets, ontologies/vocabularies,
+ontology design patterns, evaluation benchmarks or methods, software
+tools/services, APIs and software frameworks, workflows, crowdsourcing task
+designs, protocols, methodologies and metrics, that contribute to the
+generation of novel scientific work. In particular, we encourage the
+sharing of such resources following best practices within the Semantic Web
+community. This track calls for contributions that provide a concise and
+clear description of a resource and its usage.
+
+A typical Resource track paper has its focus set on reporting on one of the
+following categories of resources:
+ * Datasets produced
+         - to support specific evaluation tasks;
+         - to support novel research methods;
+         - by novel algorithms;
+ * Ontologies, vocabularies and ontology design patterns, with a focus on
+describing the modelling process and decisions underlying their creation;
+ * Benchmarking activities focusing on datasets and algorithms for
+comprehensible and systematic evaluation of existing and future systems;
+ * Reusable research prototypes / services supporting a given research
+hypothesis;
+ * Community-shared software frameworks that can be extended or adapted to
+support scientific study and experimentation;
+ * Scientific and experimental workflows used and reused in practical
+studies;
+ * Novel evaluation methodologies and metrics, and their demonstration in
+an experimental study.
+
+Further info:
+https://iswc2019.semanticweb.org/call-for-resources-track-papers/
+
+=3D=3D Important Dates =3D=3D
+Abstracts:     April 3, 2019
+Full papers:     April 10, 2019
+
+=3D=3D Program Chairs =3D=3D
+Contact: iswc2019-resource@inria.fr
+Maria Maleshkova, SDA, University of Bonn, Bonn, Germany
+Vojt=C4=9Bch Sv=C3=A1tek, University of Economics, Prague, Czech Republic
+
+
+
+4. Call for Doctoral Consortium Papers
+**********************************************
+The ISWC 2019 Doctoral Consortium will take place as part of the 18th
+International Semantic Web Conference in Auckland, New Zealand. This forum
+will provide PhD students an opportunity to share and develop their
+research ideas in a critical but supportive environment, to get feedback
+from mentors who are senior members of the Semantic Web research community,
+to explore issues related to academic and research careers, and to build
+relationships with other Semantic Web PhD students from around the world.
+
+The Consortium aims to broaden the perspectives and to improve the research
+and communication skills of these students.
+
+The Doctoral Consortium is intended for students who have a specific
+research proposal and some preliminary results, but who have sufficient
+time prior to completing their dissertation to benefit from the consortium
+experience. Generally, students in their second or third year of PhD will
+benefit the most from the Doctoral Consortium. In the Consortium, the
+students will present their proposals and get specific feedback and advice
+on how to improve their research plan.
+
+All proposals submitted to the Doctoral Consortium will undergo a thorough
+reviewing process with a view to providing detailed and constructive
+feedback. The international program committee will select - submissions for
+presentation at the Doctoral Consortium.
+
+Students with accepted submissions at the Doctoral Consortium will be
+eligible to apply for  travel fellowships to offset some of the travel
+costs but they will be asked to attend the whole day of the Doctoral
+Consortium.
+
+We ask the PhD students to submit a 12 page description of their PhD
+research proposal. All proposal have to be submitted electronically via the
+EasyChair conference submission System. The proposal text must have at
+least 8 sections (some can be very short), addressing each of the following
+questions:
+1. Problem statement: What is the problem that you are addressing?
+2. Relevancy: Why is the problem important? Who will benefit if you
+succeed? Who should care?
+3. Related work: How have others attempted to address this problem? Why is
+the problem difficult?
+4. Research question(s): What are the research questions that you plan to
+address?
+5. Hypotheses: What hypotheses are related to your research questions? See
+Is This Really Science? The Semantic Webber=E2=80=99s Guide to Evaluating R=
+esearch
+Contributions.
+6. Preliminary results: Do you have any preliminary results that
+demonstrate that your approach is promising?
+7. Approach: How are you planning to address your research questions and
+test your hypotheses? What is the main idea behind your approach? The key
+innovation?
+8. Evaluation plan: How will you measure your success =E2=80=93 faster/ mor=
+e
+accurate/ less failures/ etc.? How do you plan to test your hypothesis?
+What will you measure? What will you compare to?
+9. Reflections: Why do you think you will succeed where others failed?
+Provide an argument, based either on common knowledge or on evidence that
+you have accumulated, that your approach is likely to succeed.
+
+Further info:
+https://iswc2019.semanticweb.org/call-for-doctoral-consortium-papers/
+
+=3D=3D Important Dates =3D=3D
+Full papers due                       April 17, 2019
+Notifications                            May 15, 2019
+Camera-ready papers due     June 14, 2019
+
+=3D=3D Program Chairs =3D=3D
+Contact: iswc2019-doctoral-consortium@inria.fr
+Miao Qiao, Computer Science Department, the University of Auckland,
+Auckland, New Zealand
+Mauro Dragoni, Fondazione Bruno Kessler, Trento, Italy
+
+
+
+See you all in Auckland!
+
+The ISWC 2019 Organising Team (
+https://iswc2019.semanticweb.org/organizing-committee/ )
+
+--000000000000c46157058307fdf9
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><span style=3D"color:rgb(33,33,33);font-size:13px">18th In=
+ternational Semantic Web Conference (ISWC 2019)</span><br style=3D"color:rg=
+b(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13=
+px">=E2=80=9CKnowledge Graphs, Linked Data, Linked Schemas and AI on the We=
+b=E2=80=9D</span><br style=3D"color:rgb(33,33,33);font-size:13px"><span sty=
+le=3D"color:rgb(33,33,33);font-size:13px">Auckland, New Zealand, 26-30 Octo=
+ber, 2019</span><br style=3D"color:rgb(33,33,33);font-size:13px"><a href=3D=
+"https://iswc2019.semanticweb.org/" rel=3D"noreferrer" target=3D"_blank" st=
+yle=3D"font-size:13px">https://iswc2019.semanticweb.org/</a><br style=3D"co=
+lor:rgb(33,33,33);font-size:13px"><br style=3D"color:rgb(33,33,33);font-siz=
+e:13px"><span style=3D"color:rgb(33,33,33);font-size:13px">The Internationa=
+l Semantic Web Conference (ISWC) is the premier venue for presenting fundam=
+ental research, innovative technology, and applications concerning semantic=
+s, data, and the Web. It is the most important international venue to discu=
+ss and present latest advances and applications of the semantic Web, knowle=
+dge graphs, linked data, ontologies and artificial intelligence (AI) on the=
+ Web.</span><br style=3D"color:rgb(33,33,33);font-size:13px"><br style=3D"c=
+olor:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-=
+size:13px">ISWC attracts a large number of high quality submissions every y=
+ear and participants from both industry and academia. ISWC brings together =
+researchers from different areas, such as artificial intelligence, database=
+s, natural language processing, information systems, human computer interac=
+tion, information retrieval, web science, etc., who investigate, develop an=
+d use novel methods and technologies for accessing, interpreting and using =
+information on the Web in a more effective way.</span><br style=3D"color:rg=
+b(33,33,33);font-size:13px"><br style=3D"color:rgb(33,33,33);font-size:13px=
+"><span style=3D"color:rgb(33,33,33);font-size:13px">Follow us:</span><br s=
+tyle=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,=
+33);font-size:13px">Twitter: @iswc_conf=C2=A0 , #iswc_conf (=C2=A0</span><a=
+ href=3D"https://twitter.com/iswc_conf" rel=3D"noreferrer" target=3D"_blank=
+" style=3D"font-size:13px">https://twitter.com/iswc_conf</a><span style=3D"=
+color:rgb(33,33,33);font-size:13px">=C2=A0)</span><br style=3D"color:rgb(33=
+,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13px">=
+LinkedIn:=C2=A0</span><a href=3D"https://www.linkedin.com/groups/13612370" =
+rel=3D"noreferrer" target=3D"_blank" style=3D"font-size:13px">https://www.l=
+inkedin.com/groups/13612370</a><br style=3D"color:rgb(33,33,33);font-size:1=
+3px"><span style=3D"color:rgb(33,33,33);font-size:13px">Facebook:=C2=A0</sp=
+an><a href=3D"https://www.facebook.com/ISWConf/" rel=3D"noreferrer" target=
+=3D"_blank" style=3D"font-size:13px">https://www.facebook.com/ISWConf/</a><=
+br style=3D"color:rgb(33,33,33);font-size:13px"><br style=3D"color:rgb(33,3=
+3,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13px">Be=
+come part of ISWC 2019 by submitting to the following tracks &amp; activiti=
+es or just attend them!</span><br style=3D"color:rgb(33,33,33);font-size:13=
+px"><span style=3D"color:rgb(33,33,33);font-size:13px">(All deadlines are m=
+idnight Hawaii time.)</span><br style=3D"color:rgb(33,33,33);font-size:13px=
+"><br style=3D"color:rgb(33,33,33);font-size:13px"><br style=3D"color:rgb(3=
+3,33,33);font-size:13px"><br style=3D"color:rgb(33,33,33);font-size:13px"><=
+span style=3D"color:rgb(33,33,33);font-size:13px">In this announcement:</sp=
+an><br style=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"color:rg=
+b(33,33,33);font-size:13px">*=C2=A0 Highlights</span><br style=3D"color:rgb=
+(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13p=
+x">1. Call for Research papers</span><br style=3D"color:rgb(33,33,33);font-=
+size:13px"><span style=3D"color:rgb(33,33,33);font-size:13px">2. Call for I=
+n-use papers</span><br style=3D"color:rgb(33,33,33);font-size:13px"><span s=
+tyle=3D"color:rgb(33,33,33);font-size:13px">3. Call for Resource papers</sp=
+an><br style=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"color:rg=
+b(33,33,33);font-size:13px">4. Call for Doctoral Consortium</span><br style=
+=3D"color:rgb(33,33,33);font-size:13px"><br style=3D"color:rgb(33,33,33);fo=
+nt-size:13px"><br style=3D"color:rgb(33,33,33);font-size:13px"><br style=3D=
+"color:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);fon=
+t-size:13px">*=C2=A0 Highlights</span><br style=3D"color:rgb(33,33,33);font=
+-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13px">************=
+******************</span><span style=3D"color:rgb(33,33,33);font-size:13px"=
+>*************</span><br style=3D"color:rgb(33,33,33);font-size:13px"><span=
+ style=3D"color:rgb(33,33,33);font-size:13px">=C2=A0* Research, In-use and =
+Resource tracks: submission of the same work to multiple tracks is not allo=
+wed and may result in a rejection of the work across all tracks without a r=
+eview. Before submitting, authors are asked to consult the calls of the oth=
+er tracks featured at ISWC 2019 and to choose the track that best suits the=
+ir contribution. Please consult the following page as well when deciding to=
+ which track to submit:=C2=A0</span><a href=3D"https://iswc2019.semanticweb=
+.org/paper-features-per-track/" rel=3D"noreferrer" target=3D"_blank" style=
+=3D"font-size:13px">https://iswc2019.semanticweb.org/paper-features-per-tra=
+ck/</a><br style=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"colo=
+r:rgb(33,33,33);font-size:13px">=C2=A0* Research track: papers submitted to=
+ the research track will be subject to **double blind** peer review.</span>=
+<br style=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(3=
+3,33,33);font-size:13px">=C2=A0* Research track: a reproducibility certific=
+ation with a dedicated review board will be proposed to the accepted resear=
+ch track papers that include a significant experimental evaluation.</span><=
+br style=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33=
+,33,33);font-size:13px">*=C2=A0 Doctoral Consortium: papers submitted to th=
+e doctoral consortium will be subject to **double blind** peer review.</spa=
+n><br style=3D"color:rgb(33,33,33);font-size:13px"><br style=3D"color:rgb(3=
+3,33,33);font-size:13px"><br style=3D"color:rgb(33,33,33);font-size:13px"><=
+br style=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33=
+,33,33);font-size:13px">1. Call for Research papers</span><br style=3D"colo=
+r:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-siz=
+e:13px">******************************</span><span style=3D"color:rgb(33,33=
+,33);font-size:13px">*************</span><br style=3D"color:rgb(33,33,33);f=
+ont-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13px">In this t=
+rack of ISWC 2019, we are looking for novel and significant research contri=
+butions addressing theoretical, analytical and empirical aspects of the Sem=
+antic Web. While we welcome work that relates to the W3C Semantic Web recom=
+mendations (e.g., RDF, OWL, SPARQL, etc.), we also encourage contributions =
+to research at the intersection of Semantic Web and other scientific discip=
+lines. Submissions to the research track should describe original, signific=
+ant, and replicable research on the Semantic Web. All papers must include m=
+ethod evaluations that are rigorous, repeatable and reproducible. This will=
+ be one of the key paper reviewing criteria. We also strongly encourage pap=
+ers that provide material such as data sets, source code, queries used to e=
+valuate their approach, and/or live deployments. To comply with the double =
+blind review policy we encourage the usage of non-personal storage spaces o=
+r the=C2=A0 additional material facility available at submission time.</spa=
+n><br style=3D"color:rgb(33,33,33);font-size:13px"><br style=3D"color:rgb(3=
+3,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13px"=
+>Topics of interest include, but are not limited to:</span><br style=3D"col=
+or:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-si=
+ze:13px">=C2=A0* Database, information retrieval, information extraction, n=
+atural language processing and artificial intelligence techniques for the S=
+emantic Web</span><br style=3D"color:rgb(33,33,33);font-size:13px"><span st=
+yle=3D"color:rgb(33,33,33);font-size:13px">=C2=A0* Knowledge representation=
+ and reasoning on the Web</span><br style=3D"color:rgb(33,33,33);font-size:=
+13px"><span style=3D"color:rgb(33,33,33);font-size:13px">=C2=A0* Knowledge =
+graphs and deep semantics</span><br style=3D"color:rgb(33,33,33);font-size:=
+13px"><span style=3D"color:rgb(33,33,33);font-size:13px">=C2=A0* Machine le=
+arning and data mining methods for the Semantic Web</span><br style=3D"colo=
+r:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-siz=
+e:13px">=C2=A0* Data mining and knowledge discovery in Linked data and onto=
+logies</span><br style=3D"color:rgb(33,33,33);font-size:13px"><span style=
+=3D"color:rgb(33,33,33);font-size:13px">=C2=A0* Robust and scalable managem=
+ent of semantics and data on the Web and in Linked Data</span><br style=3D"=
+color:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font=
+-size:13px">=C2=A0* Processing and storage of semantic data on the blockcha=
+in</span><br style=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"co=
+lor:rgb(33,33,33);font-size:13px">=C2=A0* Methods to investigate and catalo=
+gue semantic primitives used in ontology definitions</span><br style=3D"col=
+or:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-si=
+ze:13px">=C2=A0* Enabling access to ontologies and knowledge bases by rende=
+ring the knowledge in different modalities, e.g. as natural language text, =
+explanatory video, interactive elements, etc.</span><br style=3D"color:rgb(=
+33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13px=
+">=C2=A0* Languages, tools, and methodologies for representing and managing=
+ semantics and data on the Web</span><br style=3D"color:rgb(33,33,33);font-=
+size:13px"><span style=3D"color:rgb(33,33,33);font-size:13px">=C2=A0* Progr=
+amming the Semantic Web</span><br style=3D"color:rgb(33,33,33);font-size:13=
+px"><span style=3D"color:rgb(33,33,33);font-size:13px">=C2=A0* Architecture=
+s and algorithms for extreme volume, heterogeneity, dynamicity, and decentr=
+alization of Semantic Web data</span><br style=3D"color:rgb(33,33,33);font-=
+size:13px"><span style=3D"color:rgb(33,33,33);font-size:13px">=C2=A0* Clean=
+ing, quality assurance, and provenance of Semantic Web data, services, and =
+processes</span><br style=3D"color:rgb(33,33,33);font-size:13px"><span styl=
+e=3D"color:rgb(33,33,33);font-size:13px">=C2=A0* Ontology-based data access=
+ and integration/exchange on the Web</span><br style=3D"color:rgb(33,33,33)=
+;font-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13px">=C2=A0*=
+ Ontology engineering and ontology patterns for the Web</span><br style=3D"=
+color:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font=
+-size:13px">=C2=A0* Ontology modularity, mapping, merging, and alignment fo=
+r the Web</span><br style=3D"color:rgb(33,33,33);font-size:13px"><span styl=
+e=3D"color:rgb(33,33,33);font-size:13px">=C2=A0* Search, query, integration=
+, and analysis on the Semantic Web</span><br style=3D"color:rgb(33,33,33);f=
+ont-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13px">=C2=A0* S=
+upporting multi-linguality in the Semantic Web</span><br style=3D"color:rgb=
+(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13p=
+x">=C2=A0* Question answering over Linked Data and ontologies</span><br sty=
+le=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33=
+);font-size:13px">=C2=A0* Information visualization and exploratory analysi=
+s methods for Semantic Web data</span><br style=3D"color:rgb(33,33,33);font=
+-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13px">=C2=A0* Sema=
+ntic social network mining, analysis, representation, and management</span>=
+<br style=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(3=
+3,33,33);font-size:13px">=C2=A0* Crowdsourcing semantics; methods, dynamics=
+, and challenges</span><br style=3D"color:rgb(33,33,33);font-size:13px"><sp=
+an style=3D"color:rgb(33,33,33);font-size:13px">=C2=A0* Geospatial semantic=
+s and data on the Web</span><br style=3D"color:rgb(33,33,33);font-size:13px=
+"><span style=3D"color:rgb(33,33,33);font-size:13px">=C2=A0* Data streams a=
+nd the Internet of Things</span><br style=3D"color:rgb(33,33,33);font-size:=
+13px"><span style=3D"color:rgb(33,33,33);font-size:13px">=C2=A0* Semantic t=
+echnologies for mobile platforms</span><br style=3D"color:rgb(33,33,33);fon=
+t-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13px">=C2=A0* Tru=
+st, privacy, and security on the Semantic Web</span><br style=3D"color:rgb(=
+33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13px=
+">=C2=A0* Semantic Web and Linked Data for cloud environments</span><br sty=
+le=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33=
+);font-size:13px">=C2=A0* Access control and privacy in semantic data</span=
+><br style=3D"color:rgb(33,33,33);font-size:13px"><br style=3D"color:rgb(33=
+,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13px">=
+Further info:=C2=A0</span><a href=3D"https://iswc2019.semanticweb.org/call-=
+for-research-track-papers/" rel=3D"noreferrer" target=3D"_blank" style=3D"f=
+ont-size:13px">https://iswc2019.semanticweb.org/call-for-research-track-pap=
+ers/</a><br style=3D"color:rgb(33,33,33);font-size:13px"><br style=3D"color=
+:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-size=
+:13px">=3D=3D Important Dates =3D=3D</span><br style=3D"color:rgb(33,33,33)=
+;font-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13px">Abstrac=
+ts:=C2=A0 =C2=A0 =C2=A0April 3, 2019</span><br style=3D"color:rgb(33,33,33)=
+;font-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13px">Full pa=
+pers:=C2=A0 =C2=A0 =C2=A0April 10, 2019</span><br style=3D"color:rgb(33,33,=
+33);font-size:13px"><br style=3D"color:rgb(33,33,33);font-size:13px"><span =
+style=3D"color:rgb(33,33,33);font-size:13px">=3D=3D Program Chairs =3D=3D</=
+span><br style=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"color:=
+rgb(33,33,33);font-size:13px">Contact:=C2=A0</span><a href=3D"mailto:iswc20=
+19-program@inria.fr" target=3D"_blank" style=3D"font-size:13px">iswc2019-pr=
+ogram@inria.fr</a><br style=3D"color:rgb(33,33,33);font-size:13px"><span st=
+yle=3D"color:rgb(33,33,33);font-size:13px">Chiara Ghidini, Fondazione Bruno=
+ Kessler (FBK), Italy</span><br style=3D"color:rgb(33,33,33);font-size:13px=
+"><span style=3D"color:rgb(33,33,33);font-size:13px">Olaf Hartig, Link=C3=
+=B6ping University, Sweden</span><br style=3D"color:rgb(33,33,33);font-size=
+:13px"><br style=3D"color:rgb(33,33,33);font-size:13px"><br style=3D"color:=
+rgb(33,33,33);font-size:13px"><br style=3D"color:rgb(33,33,33);font-size:13=
+px"><span style=3D"color:rgb(33,33,33);font-size:13px">2. Call for In-use p=
+apers</span><br style=3D"color:rgb(33,33,33);font-size:13px"><span style=3D=
+"color:rgb(33,33,33);font-size:13px">******************************</span><=
+span style=3D"color:rgb(33,33,33);font-size:13px">*************</span><br s=
+tyle=3D"color:rgb(33,33,33);font-size:13px"><br style=3D"color:rgb(33,33,33=
+);font-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13px">The ad=
+option of Semantic Web technologies has accelerated in recent years, where =
+they are now deployed in a variety of real-world settings at a variety of s=
+cales. The In-Use Track at ISWC 2019 continues the tradition of demonstrati=
+ng and learning from the increasing adoption of Semantic Web technologies b=
+y providing a forum for the community to explore the benefits and challenge=
+s of applying such technologies in concrete, practical use cases, beyond th=
+e research communities from which they originate, in contexts ranging from =
+industry to government and science.</span><br style=3D"color:rgb(33,33,33);=
+font-size:13px"><br style=3D"color:rgb(33,33,33);font-size:13px"><span styl=
+e=3D"color:rgb(33,33,33);font-size:13px">The In-Use Track thus seeks submis=
+sions describing applied and validated solutions such as software tools, sy=
+stems or architectures that benefit from the use of Semantic Web technologi=
+es (including, but not limited to, technologies based on the Semantic Web s=
+tandards). Importantly, submitted papers should provide convincing evidence=
+ of the use of the proposed application or tool by the target user group, p=
+referably outside the group that conducted the development and, more broadl=
+y, outside the Semantic Web research community. A main focus of the submiss=
+ions should be on the benefits of Semantic Web technologies for the intende=
+d use case, as well as (if relevant) the added challenges they introduce.</=
+span><br style=3D"color:rgb(33,33,33);font-size:13px"><br style=3D"color:rg=
+b(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13=
+px">We welcome submissions that demonstrate the use of Semantic Web technol=
+ogies such as those mentioned in the Call for Papers of the Research Track,=
+ and additionally cover one or more of the following topics:</span><br styl=
+e=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33)=
+;font-size:13px">=C2=A0* Applications in domain-specific areas (e.g., libra=
+ries, cultural heritage, healthcare, life sciences, engineering, smart manu=
+facturing, smart cities, open government)</span><br style=3D"color:rgb(33,3=
+3,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13px">=
+=C2=A0* Description and analysis of concrete and novel problems or use case=
+s in a specific domain in which Semantic Web technologies were applied (thi=
+s should be part of submissions presenting a concrete application)</span><b=
+r style=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,=
+33,33);font-size:13px">=C2=A0* Descriptions of how Semantic Web resources (=
+ontologies, datasets, software, standards, etc) are being used in practice<=
+/span><br style=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"color=
+:rgb(33,33,33);font-size:13px">=C2=A0* Assessment of the Semantic Web techn=
+ologies from diverse points of view, such as:</span><br style=3D"color:rgb(=
+33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13px=
+">=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0- Usability and acceptance by stakehold=
+er groups</span><br style=3D"color:rgb(33,33,33);font-size:13px"><span styl=
+e=3D"color:rgb(33,33,33);font-size:13px">=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+- Uptake outside the Semantic Web research community</span><br style=3D"col=
+or:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-si=
+ze:13px">=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0- Scalability of Semantic Web so=
+lutions and their large scale deployment</span><br style=3D"color:rgb(33,33=
+,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13px">=C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0- Technical strengths and weaknesses especia=
+lly in comparison with alternative technologies (e.g., database management =
+systems, model-driven engineering)</span><br style=3D"color:rgb(33,33,33);f=
+ont-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13px">=C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0- Costs and benefits of implementing, deploying,=
+ using, and managing Semantic Web technologies</span><br style=3D"color:rgb=
+(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13p=
+x">=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0- Risks and opportunities of using Sem=
+antic Web technologies in organizations with respect to their businesses an=
+d customers</span><br style=3D"color:rgb(33,33,33);font-size:13px"><span st=
+yle=3D"color:rgb(33,33,33);font-size:13px">=C2=A0* Lessons learned and best=
+ practices from deploying and using an application or service based on Sema=
+ntic Web technologies</span><br style=3D"color:rgb(33,33,33);font-size:13px=
+"><span style=3D"color:rgb(33,33,33);font-size:13px">=C2=A0* Comparison of =
+Semantic Web technologies with alternative approaches that use conventional=
+ or competing technologies</span><br style=3D"color:rgb(33,33,33);font-size=
+:13px"><br style=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"colo=
+r:rgb(33,33,33);font-size:13px">Further info:=C2=A0</span><a href=3D"https:=
+//iswc2019.semanticweb.org/call-for-in-use-track-papers/" rel=3D"noreferrer=
+" target=3D"_blank" style=3D"font-size:13px">https://iswc2019.semanticweb.o=
+rg/call-for-in-use-track-papers/</a><br style=3D"color:rgb(33,33,33);font-s=
+ize:13px"><br style=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"c=
+olor:rgb(33,33,33);font-size:13px">=3D=3D Important Dates =3D=3D</span><br =
+style=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33=
+,33);font-size:13px">Abstracts:=C2=A0 =C2=A0 =C2=A0April 3, 2019</span><br =
+style=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33=
+,33);font-size:13px">Full papers:=C2=A0 =C2=A0 =C2=A0April 10, 2019</span><=
+br style=3D"color:rgb(33,33,33);font-size:13px"><br style=3D"color:rgb(33,3=
+3,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13px">=
+=3D=3D Program Chairs =3D=3D</span><br style=3D"color:rgb(33,33,33);font-si=
+ze:13px"><span style=3D"color:rgb(33,33,33);font-size:13px">Contact:=C2=A0<=
+/span><a href=3D"mailto:iswc2019-in-use@inria.fr" target=3D"_blank" style=
+=3D"font-size:13px">iswc2019-in-use@inria.fr</a><br style=3D"color:rgb(33,3=
+3,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13px">Is=
+abel Cruz,=C2=A0 University of Illinois at Chicago, USA</span><br style=3D"=
+color:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font=
+-size:13px">Aidan Hogan, Universidad de Chile, Chile</span><br style=3D"col=
+or:rgb(33,33,33);font-size:13px"><br style=3D"color:rgb(33,33,33);font-size=
+:13px"><br style=3D"color:rgb(33,33,33);font-size:13px"><br style=3D"color:=
+rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-size:=
+13px">3. Call for Resource papers</span><br style=3D"color:rgb(33,33,33);fo=
+nt-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13px">**********=
+********************</span><span style=3D"color:rgb(33,33,33);font-size:13p=
+x">*************</span><br style=3D"color:rgb(33,33,33);font-size:13px"><sp=
+an style=3D"color:rgb(33,33,33);font-size:13px">Resources are of paramount =
+importance as they foster scientific advancement. For example, the DBpedia =
+resource had a major influence on the Semantic Web community by enabling th=
+e Linked (Open) Data movement. Validating a research hypothesis or providin=
+g answers to a research question often goes together with developing new re=
+sources that support these achievements. Sharing resources is key to allow =
+other researchers to compare new results, reproduce experimental settings a=
+nd explore new lines of research, in accordance with the FAIR principles fo=
+r scientific data management. Yet, resources themselves rarely get the same=
+ recognition as the scientific advances they facilitate.</span><br style=3D=
+"color:rgb(33,33,33);font-size:13px"><br style=3D"color:rgb(33,33,33);font-=
+size:13px"><span style=3D"color:rgb(33,33,33);font-size:13px">The ISWC 2019=
+ Resources Track aims to promote the sharing of resources including, but no=
+t restricted to: datasets, ontologies/vocabularies, ontology design pattern=
+s, evaluation benchmarks or methods, software tools/services, APIs and soft=
+ware frameworks, workflows, crowdsourcing task designs, protocols, methodol=
+ogies and metrics, that contribute to the generation of novel scientific wo=
+rk. In particular, we encourage the sharing of such resources following bes=
+t practices within the Semantic Web community. This track calls for contrib=
+utions that provide a concise and clear description of a resource and its u=
+sage.</span><br style=3D"color:rgb(33,33,33);font-size:13px"><br style=3D"c=
+olor:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-=
+size:13px">A typical Resource track paper has its focus set on reporting on=
+ one of the following categories of resources:</span><br style=3D"color:rgb=
+(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13p=
+x">=C2=A0* Datasets produced</span><br style=3D"color:rgb(33,33,33);font-si=
+ze:13px"><span style=3D"color:rgb(33,33,33);font-size:13px">=C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0- to support specific evaluation tasks;</span><br style=
+=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);=
+font-size:13px">=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0- to support novel resear=
+ch methods;</span><br style=3D"color:rgb(33,33,33);font-size:13px"><span st=
+yle=3D"color:rgb(33,33,33);font-size:13px">=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0- by novel algorithms;</span><br style=3D"color:rgb(33,33,33);font-size:=
+13px"><span style=3D"color:rgb(33,33,33);font-size:13px">=C2=A0* Ontologies=
+, vocabularies and ontology design patterns, with a focus on describing the=
+ modelling process and decisions underlying their creation;</span><br style=
+=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);=
+font-size:13px">=C2=A0* Benchmarking activities focusing on datasets and al=
+gorithms for comprehensible and systematic evaluation of existing and futur=
+e systems;</span><br style=3D"color:rgb(33,33,33);font-size:13px"><span sty=
+le=3D"color:rgb(33,33,33);font-size:13px">=C2=A0* Reusable research prototy=
+pes / services supporting a given research hypothesis;</span><br style=3D"c=
+olor:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-=
+size:13px">=C2=A0* Community-shared software frameworks that can be extende=
+d or adapted to support scientific study and experimentation;</span><br sty=
+le=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33=
+);font-size:13px">=C2=A0* Scientific and experimental workflows used and re=
+used in practical studies;</span><br style=3D"color:rgb(33,33,33);font-size=
+:13px"><span style=3D"color:rgb(33,33,33);font-size:13px">=C2=A0* Novel eva=
+luation methodologies and metrics, and their demonstration in an experiment=
+al study.</span><br style=3D"color:rgb(33,33,33);font-size:13px"><br style=
+=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);=
+font-size:13px">Further info:=C2=A0</span><a href=3D"https://iswc2019.seman=
+ticweb.org/call-for-resources-track-papers/" rel=3D"noreferrer" target=3D"_=
+blank" style=3D"font-size:13px">https://iswc2019.semanticweb.org/call-for-r=
+esources-track-papers/</a><br style=3D"color:rgb(33,33,33);font-size:13px">=
+<br style=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(3=
+3,33,33);font-size:13px">=3D=3D Important Dates =3D=3D</span><br style=3D"c=
+olor:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-=
+size:13px">Abstracts:=C2=A0 =C2=A0 =C2=A0April 3, 2019</span><br style=3D"c=
+olor:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-=
+size:13px">Full papers:=C2=A0 =C2=A0 =C2=A0April 10, 2019</span><br style=
+=3D"color:rgb(33,33,33);font-size:13px"><br style=3D"color:rgb(33,33,33);fo=
+nt-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13px">=3D=3D Pro=
+gram Chairs =3D=3D</span><br style=3D"color:rgb(33,33,33);font-size:13px"><=
+span style=3D"color:rgb(33,33,33);font-size:13px">Contact:=C2=A0</span><a h=
+ref=3D"mailto:iswc2019-resource@inria.fr" target=3D"_blank" style=3D"font-s=
+ize:13px">iswc2019-resource@inria.fr</a><br style=3D"color:rgb(33,33,33);fo=
+nt-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13px">Maria Male=
+shkova, SDA, University of Bonn, Bonn, Germany</span><br style=3D"color:rgb=
+(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13p=
+x">Vojt=C4=9Bch Sv=C3=A1tek, University of Economics, Prague, Czech Republi=
+c</span><br style=3D"color:rgb(33,33,33);font-size:13px"><br style=3D"color=
+:rgb(33,33,33);font-size:13px"><br style=3D"color:rgb(33,33,33);font-size:1=
+3px"><br style=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"color:=
+rgb(33,33,33);font-size:13px">4. Call for Doctoral Consortium Papers</span>=
+<br style=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(3=
+3,33,33);font-size:13px">******************************</span><span style=
+=3D"color:rgb(33,33,33);font-size:13px">****************</span><br style=3D=
+"color:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);fon=
+t-size:13px">The ISWC 2019 Doctoral Consortium will take place as part of t=
+he 18th International Semantic Web Conference in Auckland, New Zealand. Thi=
+s forum will provide PhD students an opportunity to share and develop their=
+ research ideas in a critical but supportive environment, to get feedback f=
+rom mentors who are senior members of the Semantic Web research community, =
+to explore issues related to academic and research careers, and to build re=
+lationships with other Semantic Web PhD students from around the world.</sp=
+an><br style=3D"color:rgb(33,33,33);font-size:13px"><br style=3D"color:rgb(=
+33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13px=
+">The Consortium aims to broaden the perspectives and to improve the resear=
+ch and communication skills of these students.</span><br style=3D"color:rgb=
+(33,33,33);font-size:13px"><br style=3D"color:rgb(33,33,33);font-size:13px"=
+><span style=3D"color:rgb(33,33,33);font-size:13px">The Doctoral Consortium=
+ is intended for students who have a specific research proposal and some pr=
+eliminary results, but who have sufficient time prior to completing their d=
+issertation to benefit from the consortium experience. Generally, students =
+in their second or third year of PhD will benefit the most from the Doctora=
+l Consortium. In the Consortium, the students will present their proposals =
+and get specific feedback and advice on how to improve their research plan.=
+</span><br style=3D"color:rgb(33,33,33);font-size:13px"><br style=3D"color:=
+rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-size:=
+13px">All proposals submitted to the Doctoral Consortium will undergo a tho=
+rough reviewing process with a view to providing detailed and constructive =
+feedback. The international program committee will select - submissions for=
+ presentation at the Doctoral Consortium.</span><br style=3D"color:rgb(33,3=
+3,33);font-size:13px"><br style=3D"color:rgb(33,33,33);font-size:13px"><spa=
+n style=3D"color:rgb(33,33,33);font-size:13px">Students with accepted submi=
+ssions at the Doctoral Consortium will be eligible to apply for=C2=A0 trave=
+l fellowships to offset some of the travel costs but they will be asked to =
+attend the whole day of the Doctoral Consortium.</span><br style=3D"color:r=
+gb(33,33,33);font-size:13px"><br style=3D"color:rgb(33,33,33);font-size:13p=
+x"><span style=3D"color:rgb(33,33,33);font-size:13px">We ask the PhD studen=
+ts to submit a 12 page description of their PhD research proposal. All prop=
+osal have to be submitted electronically via the EasyChair conference submi=
+ssion System. The proposal text must have at least 8 sections (some can be =
+very short), addressing each of the following questions:</span><br style=3D=
+"color:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);fon=
+t-size:13px">1. Problem statement: What is the problem that you are address=
+ing?</span><br style=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"=
+color:rgb(33,33,33);font-size:13px">2. Relevancy: Why is the problem import=
+ant? Who will benefit if you succeed? Who should care?</span><br style=3D"c=
+olor:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-=
+size:13px">3. Related work: How have others attempted to address this probl=
+em? Why is the problem difficult?</span><br style=3D"color:rgb(33,33,33);fo=
+nt-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13px">4. Researc=
+h question(s): What are the research questions that you plan to address?</s=
+pan><br style=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"color:r=
+gb(33,33,33);font-size:13px">5. Hypotheses: What hypotheses are related to =
+your research questions? See Is This Really Science? The Semantic Webber=E2=
+=80=99s Guide to Evaluating Research Contributions.</span><br style=3D"colo=
+r:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-siz=
+e:13px">6. Preliminary results: Do you have any preliminary results that de=
+monstrate that your approach is promising?</span><br style=3D"color:rgb(33,=
+33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-size:13px">7=
+. Approach: How are you planning to address your research questions and tes=
+t your hypotheses? What is the main idea behind your approach? The key inno=
+vation?</span><br style=3D"color:rgb(33,33,33);font-size:13px"><span style=
+=3D"color:rgb(33,33,33);font-size:13px">8. Evaluation plan: How will you me=
+asure your success =E2=80=93 faster/ more accurate/ less failures/ etc.? Ho=
+w do you plan to test your hypothesis? What will you measure? What will you=
+ compare to?</span><br style=3D"color:rgb(33,33,33);font-size:13px"><span s=
+tyle=3D"color:rgb(33,33,33);font-size:13px">9. Reflections: Why do you thin=
+k you will succeed where others failed? Provide an argument, based either o=
+n common knowledge or on evidence that you have accumulated, that your appr=
+oach is likely to succeed.</span><br style=3D"color:rgb(33,33,33);font-size=
+:13px"><br style=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"colo=
+r:rgb(33,33,33);font-size:13px">Further info:=C2=A0</span><a href=3D"https:=
+//iswc2019.semanticweb.org/call-for-doctoral-consortium-papers/" rel=3D"nor=
+eferrer" target=3D"_blank" style=3D"font-size:13px">https://iswc2019.semant=
+icweb.org/call-for-doctoral-consortium-papers/</a><br style=3D"color:rgb(33=
+,33,33);font-size:13px"><br style=3D"color:rgb(33,33,33);font-size:13px"><s=
+pan style=3D"color:rgb(33,33,33);font-size:13px">=3D=3D Important Dates =3D=
+=3D</span><br style=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"c=
+olor:rgb(33,33,33);font-size:13px">Full papers due=C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0April 17, 2019</=
+span><br style=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"color:=
+rgb(33,33,33);font-size:13px">Notifications=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 May 15, =
+2019</span><br style=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"=
+color:rgb(33,33,33);font-size:13px">Camera-ready papers due=C2=A0 =C2=A0 =
+=C2=A0June 14, 2019</span><br style=3D"color:rgb(33,33,33);font-size:13px">=
+<br style=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(3=
+3,33,33);font-size:13px">=3D=3D Program Chairs =3D=3D</span><br style=3D"co=
+lor:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);font-s=
+ize:13px">Contact:=C2=A0</span><a href=3D"mailto:iswc2019-doctoral-consorti=
+um@inria.fr" target=3D"_blank" style=3D"font-size:13px">iswc2019-doctoral-c=
+onsortium@inria.fr</a><br style=3D"color:rgb(33,33,33);font-size:13px"><spa=
+n style=3D"color:rgb(33,33,33);font-size:13px">Miao Qiao, Computer Science =
+Department, the University of Auckland, Auckland, New Zealand</span><br sty=
+le=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33=
+);font-size:13px">Mauro Dragoni, Fondazione Bruno Kessler, Trento, Italy</s=
+pan><br style=3D"color:rgb(33,33,33);font-size:13px"><br style=3D"color:rgb=
+(33,33,33);font-size:13px"><br style=3D"color:rgb(33,33,33);font-size:13px"=
+><br style=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(=
+33,33,33);font-size:13px">See you all in Auckland!</span><br style=3D"color=
+:rgb(33,33,33);font-size:13px"><br style=3D"color:rgb(33,33,33);font-size:1=
+3px"><span style=3D"color:rgb(33,33,33);font-size:13px">The ISWC 2019 Organ=
+ising Team (=C2=A0</span><a href=3D"https://iswc2019.semanticweb.org/organi=
+zing-committee/" rel=3D"noreferrer" target=3D"_blank" style=3D"font-size:13=
+px">https://iswc2019.semanticweb.org/organizing-committee/</a><span style=
+=3D"color:rgb(33,33,33);font-size:13px">=C2=A0)</span>=C2=A0=C2=A0<br></div=
+>
+
+--000000000000c46157058307fdf9--

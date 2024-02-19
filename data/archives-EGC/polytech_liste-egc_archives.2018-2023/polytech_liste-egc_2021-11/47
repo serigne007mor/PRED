@@ -1,0 +1,603 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (BounceSMTP1.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id B6EA714017D7
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon, 22 Nov 2021 14:10:52 +0100 (CET)
+Received: from mx1.d101.univ-nantes.fr (MX1.univ-nantes.fr [193.52.101.135])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id B52016D1A01
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon, 22 Nov 2021 14:10:52 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.d101.univ-nantes.fr (Postfix) with ESMTP id AFD034821B1B
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 22 Nov 2021 14:10:52 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -5.079
+X-Spam-Level:
+X-Spam-Status: No, score=-5.079 tagged_above=-1000 required=5
+	tests=[CRM114_GOOD=-5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	NO_RDNS2=0.01, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+	RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+	UN_PHISHING_PW=0.1, URIBL_BLOCKED=0.001] autolearn=disabled
+X-CRM114-Status: GOOD ( 10.5772 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=univ-tours.fr
+Received: from mx1.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id FqFotqprbp7c for <liste-egc@polytech.univ-nantes.fr>;
+	Mon, 22 Nov 2021 14:10:50 +0100 (CET)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from angelia.univ-tours.fr (angelia.univ-tours.fr [193.52.209.20])
+	by mx1.d101.univ-nantes.fr (Postfix) with ESMTPS id 250FB47EC04E
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 22 Nov 2021 14:10:50 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=univ-tours.fr; i=@univ-tours.fr; q=dns/txt; s=main;
+  t=1637586650; x=1669122650;
+  h=from:to:subject:date:message-id:mime-version;
+  bh=aw6wfPjAqDMWJ44VmksghWK0VR3z431/bkwRFOY5GOE=;
+  b=0f+mUmS48JRa4OiW2hZpNUD+t5cIxqBUbUaSKVSqYUiYq8ZO9ryoaMBd
+   FOv8tghVeyiCJRbCG907H55oU3OA4YBVi8iqF0pKu5J8xGPtnC2AxPaqc
+   3i4Lori+pSxO2do3o46C0lzu+oiFnqqm7Q9ovTIAvOtXluEtTjfdbE9c/
+   U=;
+IronPort-SDR: TyMyaFqypmAu1MBp5tOLFcUfK06suWrUV7oa3lmTi9ULlWmK/0RTQN7h7hCzEK7XcvjqveaNXO
+ 6H1xefunxeKjeFx1qJmH8hVbuo+kZUQSE=
+X-IPAS-Result: =?us-ascii?q?A2F8BADOlZth/yEDWQpagQkJgVCBIYIAlx2BFpAViyeBL?=
+ =?us-ascii?q?DwLAQEBDzcKBAEBAwMBh3ImNwYOAQIEAQEBAQMCAwEBAQEBAQMBAQYBAQEBA?=
+ =?us-ascii?q?QEFBAEBAoEyZIEkgwcKBDENgjUMLy80UAM1AQEBAQEBAQEBAQEBAQEBAQEBA?=
+ =?us-ascii?q?QEBAQEBAQEBAQEBAQEBAQEBAQEBAQECgVQCAiExDxkFFisnPwEEAR0FBYJdg?=
+ =?us-ascii?q?X6BGK8LgTMaAmWDTgETQYVPBoE6gWaFRIc/gVVEgRWCc4F6gV4CAoEpARIBh?=
+ =?us-ascii?q?h4Ej0qBKwpZcQpcY6BinXMzBwOBd4FDgToCCYkNlGOWEwMBkReHAo8TH4xXl?=
+ =?us-ascii?q?HWERzWBQl8wcHSDNj4PAQIBAg0BAgIGAQGOQoNbgT6JIYErAgYBCgEBAwkBk?=
+ =?us-ascii?q?iMBAQ?=
+IronPort-PHdr: A9a23:HG0c1xyeOKlNmMvXCzIUzVBlVkEcU1XcAAcZ59Idhq5Udez7ptK+Z
+ hWZuakm1wKBdL6YwsoMs/DRvaHkVD5Iyre6m1dGTqZxUQQYg94dhQ0qDZ3NI0T6KPn3c35yR
+ 5waBxdq8H6hLEdaBtv1aUHMrX2u9z4SHQj0ORZoKujvFYPekdm72/q99pDcbAlFijqwaq5uI
+ RurqgncqtMYipZ4JKYrzRvJrHpIe+BIym5tOFmegRXy6Nqu8ZB66yhftO4v+MBGUaXhYqQ3V
+ qdYAyg8M2A0/8Lkqx/ORhaS63QGU2UWlh1IAxXZ7Bz/Q5z8vDf2uvZ71SKHOsL4UK00WS+67
+ 6h1VBDolCkJNzk88G7Ni8xwir9QrBauqhF7xoLZZpyeOvhjcaPHZd4URXRPUNtfWSJCDYyzc
+ 4wBD/YaMOlCs4X9qEMDoQWiCQWxAu7k1z9GhmXx3a0/y+ktHx3L3BYmH90UrXTbscj+OroVU
+ eCoyKnH0ynDY/1L0jr68ofIaBYhruuRXb1ta8bR0k4vFx7BjlqOtYzoJC6V1uIMs2iF9uZgS
+ eWvi3M9qwFquDSvyN0sh5DPi4kIxV/K6T93z5wpJd2kVkF7e9ikHYNeuiyGN4V4QsMvTmFnt
+ Ss+1rELp5C2cSsExZg7xRPTd/iKfoyI7B/gW+icIjh1iXBmdb+jgxu/7Vasx+3+W8Wo1ltBs
+ yRLkt7Jtn8X1hzT7NCKSuZ7/kegxzaDzhzT6uZZIUAujqrXMZAhwqQompoctkTDGSD2mEHog
+ 6OMakok/e2o5uL6abvlvp+RL5J4hh3kPqktnsGzG+o1PhIAUmWV/+m3yaft8lfjQLpQi/07i
+ qzZsJfHKssFvqO5GApV0po76xa4EjemzMwUnXkZI1JBfxKKl5XmO1DVL/zkA/qyg1WhkC9lx
+ vzeP73hBIvCLmTbnbv8Ybpx8U1RxQ4pwd1R/Z5ZBL8MLOr2WkDrtdzYChE5Mxazw+biENhyz
+ JkeWWSVDa+ELazeq0SI5uUyI+mIeoAVpC3wK+Uj5/7vk381gEMdfa603ZsNc3C0BPpmI1+Bb
+ Xr2ntgBCXsKvhY5TOHyk1KCTDpTZ3KrU6I96Dw2E4OmDZ3CRoCxmrCB0j27FIVMZm9aElCMD
+ Wvod4KcVvgXdSKSJsthniUFVbe7UIIh2gyhtBX7y7V9NObU9DcYv4r51Ndp/+3TiQ0y9TtsA
+ sSc1WGNQWZ0knoJRzAqx61/pU19ykyf0admmPxUD91T5+lIUgchL5HQ1eJ6C8rqUALbYtiJU
+ EqmQsmhATwpStIxwsQOY1pjFNm7kB/D0DalDqQNl7yMAJw18r7c0GbtKMZ90XrGya8hj1g4Q
+ sdWM22pnKh/9xTNCI7SiUmZmbyqJuwg23uZ8GaY0WfLsU5TeBZ3VbTZUHsfIFbQrMq84ErEU
+ 7K1T7o9ZE8JncSfLq8Pa4bBjE9HWLHtIoKaKzawnWm3QBeD7reNd5bnYCMcxiTGAQ4KiVZXt
+ SKMKAw6Qyaoi23SFj1nU1z1NRDC6+57/TmSVEk90g3CVEp807epsFZBjOaaQu4fmKkDpSMst
+ x1pGlejms7RFsCb4QR7KvYPKegh6UtKgDqK/zd2OYatevwz7mM=
+IronPort-Data: A9a23:Q+Ympq3SpEOYVsXKAvbD5Whwkn2cJEfYwER7XKvMYLTBsI5bp2QFx
+ jdJCjrVM//cYmeheo1+PI228hwOsMeDmt9hGgY/3Hw8FHgiRegppTi6BhypY37NdJ2roGZPt
+ p12hgzodZhsJpPkS5PE3oHJ9RGQ74nRLlbHILOCan8ZqTNMEn970Es6wbRh2+aEvPDga++zk
+ YKqyyHgEAfNNw5cagr4PIra9XuDFNyr0N8plgRWicJj5TcypFFJZH4rHpxdGlOjKmVi8kxWc
+ M6YpF2x1juxEx7AkbpJmJ6jGqEBaua60QRjFhO68kVt6/RPjnVa70o1CBYTQWtRiSimk/Ep8
+ /tqlKS5SDoqH/DnqPtIBnG0EwkmVUFH0LPGKyDk7JKL0CUqcVO1m7M+XQdte9ZDkgp0KTgmG
+ fgwISoLZw2Pwfmx3ba2VsFxgMU9adXsIZkE/H96pd3cJaZ4H86cG/2RjTNe9BYOh/poAvn/X
+ Po+aWAwYx2HXC1FE1hCXfrSm8/t3BETaQZwok+Roe82uEDS1g1tlrb3WPLfZ9iOAMRctkmUv
+ GPPuWrjajkbMtKYjDuO2natnfPChmX6QoMJHfu27JZChFyI2mFWBRIdfUO8peilh0W+Hc9ZK
+ lJR/CMosaUpskKxJuQRRDXh+DjU71hHHYELewEn1DywJmPvy17xLgA5ovRpMbTKbec6Gm4n0
+ EGnhdTsCWA9ubGZUyvGpKqSrC33JS8IN3REazVdFVkJ5NzqoYcSiBPTT4kzQP/s0o2tQTygk
+ SqXqCUehqkIiZJZ3auM+12a0SmnoYLET1Jo6wiOBjCl4wp1aZSLfYut7VSHv/9MIJzAFQucu
+ nka3tSZ8foVS5+XzXTfTOIIFbCvxvCELDyD0Q4+RsVxr2ygoifxc5pR7TdyIFZSHvwFITK5M
+ lXOvQ5x5YNIOCf4Z6FAZY/sWd8hyrLtFIi4W/3ZMohOb5x2eFPV9S1ifx/C02HnyBNxz7kga
+ cWBbMKhLXcGEqA+lWi4WtAd3Lss8SE4227eSPgXFfh8PWZyuZJNdYo4DQ==
+IronPort-HdrOrdr: A9a23:/oK84aDejfDOHC7lHele55DYdb4zR+YMi2TDsHoBMSC9E/bo7v
+ xG88566faZskdzZJhCo6HnBEDjewK4yXcd2+B4VtrPYOCBghrLEGgI1+XfKlPbdBHWx6p03r
+ t7f+xCDrTLfCJHZL7BkW2F+wBJ+ri62ZHtv/7XyzNcSg1xcchbhTtRO0KgDkZzRBRaCZd8H4
+ r03Ls9mxOQPXgSZsS/MHkJNtKzwOHjpdb8awcaQxQh9WC1/E6V1II=
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-AV: E=Sophos;i="5.87,254,1631570400"; 
+   d="scan'208,217";a="86667003"
+X-Amp-Result: SKIPPED(no attachment in message)
+Received: from unknown (HELO dib0356pw) ([10.89.3.33])
+  by angelia3.univ-tours.fr with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Nov 2021 14:10:49 +0100
+From: "Arnaud Soulet" <arnaud.soulet@univ-tours.fr>
+To: <liste-egc@polytech.univ-nantes.fr>,
+	<bull-i3@irit.fr>,
+	<info-ic@listes.irisa.fr>,
+	<bull-ia@gdria.fr>
+Date: Mon, 22 Nov 2021 14:10:49 +0100
+Message-ID: <066901d7dfa2$5e58c190$1b0a44b0$@univ-tours.fr>
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_000_066A_01D7DFAA.C01E6210"
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AdffoYjkKLvTiinUTTuKnO0OI3WnGg==
+Content-Language: fr
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Appel =?ISO-8859-1?Q?=E0?= participation
+ =?ISO-8859-1?Q?=E0?= la =?ISO-8859-1?Q?conf=E9rence?=
+ EGC2022 - 24 au 28 janvier 2022 - Blois
+
+This is a multipart message in MIME format.
+
+------=_NextPart_000_066A_01D7DFAA.C01E6210
+Content-Type: text/plain;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+Toutes nos excuses en cas de r=E9ception multiple de cet email.
+
+************************************************************************
+
+APPEL =C0 PARTICIPATION
+
+22e conf=E9rence francophone sur l'Extraction et la Gestion des =
+Connaissances
+(EGC2022)
+
+Du 24 au 28 janvier 2022 - Blois
+
+ <https://egc2022.univ-tours.fr/> https://egc2022.univ-tours.fr/
+
+************************************************************************
+
+Inscriptions ouvertes :  <https://egc2022.univ-tours.fr/inscription/>
+https://egc2022.univ-tours.fr/inscription/
+
+Tarif r=E9duit jusqu=92au 31 d=E9cembre 2021
+
+************************************************************************
+
+=20
+
+La 22e =E9dition de la conf=E9rence EGC aura lieu =E0 Blois du 24 au 28 =
+janvier
+2022 sur le campus de l'antenne de l=92Universit=E9 de Tours. Il s'agit =
+d'un
+=E9v=E9nement annuel r=E9unissant des chercheurs et praticiens de =
+disciplines
+relevant de l=92intelligence artificielle, des sciences des donn=E9es et =
+des
+connaissances.
+
+=20
+
+C'est habituellement l=92occasion de faire se rencontrer acad=E9miques =
+et
+industriels afin de confronter des travaux th=E9oriques et des =
+applications
+pratiques sur des donn=E9es. Pour cette 22e =E9dition, une journ=E9e =
+publique sera
+organis=E9e le mercredi 26 janvier, intitul=E9e =AB Impact soci=E9tal de
+l=92Intelligence artificielle =BB. Plusieurs conf=E9rences pl=E9ni=E8res =
+(keynotes)
+seront pr=E9sent=E9es sur le th=E8me de l'intelligence artificielle. Une =
+session
+sp=E9ciale "minutes of madness" pr=E9sentera un aper=E7u des meilleurs =
+travaux.
+Des d=E9monstrations logicielles et des posters scientifiques seront =
+aussi
+visibles lors du buffet et d=92une session d=E9di=E9e. La journ=E9e se =
+terminera par
+une table ronde sur le th=E8me =AB Diversit=E9 et inclusion en =
+Intelligence
+Artificielle =BB, anim=E9e par nos conf=E9renci=E8res invit=E9es et la =
+pr=E9sidente du
+comit=E9 scientifique de la conf=E9rence, Sihem Amer-Yahia.
+
+=20
+
+Apr=E8s cet =E9v=E9nement public, le programme scientifique classique =
+reprendra
+ses droits pour les journ=E9es de jeudi et de vendredi. La liste des =
+articles
+accept=E9s est disponible :
+<https://egc2022.univ-tours.fr/articles-acceptes/>
+https://egc2022.univ-tours.fr/articles-acceptes/=20
+
+=20
+
+EGC2022 aura le plaisir d'accueillir les conf=E9renci=E8res invit=E9es =
+suivantes :
+
+- Vanessa Murdock (Alexa Shopping Research, Amazon.com) : =93Helping =
+People
+Shop on Alexa=94
+
+- Sonia Ben Mokhtar (LIRIS) : =93Latest Advances in ML-enabled Location
+Privacy Attacks and Protection Mechanisms=94
+
+- Sarah Cohen-Boulakia (LRI) : =AB FAIR Scientific Workflows: Status,
+Challenges and Research opportunities=94
+
+- Fr=E9d=E9rique Segond (INELCO) : =93Influence, Radicalization and =
+Dangerous
+Things: What AI Can Reveal About the Phenomena=94
+
+- Maya Ramanath (IIT Delhi) : =93Domain-specific Knowledge Graph =
+Construction
+and Applications=94
+
+=20
+
+7 ateliers sont aussi propos=E9s =E0 EGC 2022 le mardi 25 janvier. Les =
+appels =E0
+soumission sont encore ouverts :  =
+<https://egc2022.univ-tours.fr/ateliers/>
+https://egc2022.univ-tours.fr/ateliers/
+
+- TextMine - Atelier sur la Fouille de Textes
+
+- Le num=E9rique : impact et applications dans l=92environnement
+
+- APTA - Apprentissage Profond : Th=E9orie et Applications
+
+- DL for NLP - Deep Learning pour le traitement automatique des langues
+
+- EXPLAIN=92AI
+
+- GAST - Gestion et Analyse des donn=E9es Spatiales et Temporelles
+
+- DAHLIA =96 DigitAl Humanities and cuLtural herItAge: data and =
+knowledge
+management and analysis
+
+=20
+
+5 prix scientifiques seront d=E9cern=E9s lors de la conf=E9rence :
+<https://egc2022.univ-tours.fr/les-prix/>
+https://egc2022.univ-tours.fr/les-prix/
+
+=20
+
+La 8e =E9dition de l'=E9cole d=92hiver =E9-EGC sera organis=E9e les 24 =
+et 25 janvier,
+avec pour th=E8me : "L=92humain dans la boucle de l=92exploration des =
+donn=E9es et
+de l=92apprentissage" ( <https://egc2022.univ-tours.fr/ecole/>
+https://egc2022.univ-tours.fr/ecole/). Les inscriptions sont encore
+ouvertes.
+
+=20
+
+Un moment festif se d=E9roulera en fin de journ=E9e le mardi 25 janvier =
+avec de
+la musique et des surprises. Si vous jouez d=92un instrument, =
+inscrivez-vous
+aussi pour que nous puissions profiter de vos talents musicaux :
+<https://docs.google.com/forms/d/e/1FAIpQLSfY35I822ZwsbZ1CK7d_XH9hK5wrQGM=
+UV8
+5XQXu4WRW2wMWXw/viewform>
+https://docs.google.com/forms/d/e/1FAIpQLSfY35I822ZwsbZ1CK7d_XH9hK5wrQGMU=
+V85
+XQXu4WRW2wMWXw/viewform
+
+=20
+
+************************************************************************
+
+Pr=E9sidente du Comit=E9 de Programme
+
+Sihem Amer-Yahia (LIG, Universit=E9 Grenoble Alpes)
+
+=20
+
+Pr=E9sident du Comit=E9 d=92organisation
+
+Arnaud Soulet (LIFAT, Universit=E9 de Tours)
+
+=20
+
+
+------=_NextPart_000_066A_01D7DFAA.C01E6210
+Content-Type: text/html;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" =
+xmlns:o=3D"urn:schemas-microsoft-com:office:office" =
+xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:x=3D"urn:schemas-microsoft-com:office:excel" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" =
+xmlns=3D"http://www.w3.org/TR/REC-html40"><head><meta =
+http-equiv=3DContent-Type content=3D"text/html; =
+charset=3Diso-8859-1"><meta name=3DGenerator content=3D"Microsoft Word =
+15 (filtered medium)"><style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-fareast-language:EN-US;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;
+	mso-fareast-language:EN-US;}
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:70.85pt 70.85pt 70.85pt 70.85pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]--></head><body lang=3DFR =
+link=3D"#0563C1" vlink=3D"#954F72"><div class=3DWordSection1><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span =
+style=3D'color:black;mso-fareast-language:FR'>Toutes nos excuses en cas =
+de r=E9ception multiple de cet email.</span><span =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span =
+style=3D'color:black;mso-fareast-language:FR'>***************************=
+*********************************************</span><span =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span =
+style=3D'color:black;mso-fareast-language:FR'>APPEL =C0 =
+PARTICIPATION</span><span style=3D'font-size:12.0pt;font-family:"Times =
+New Roman",serif;mso-fareast-language:FR'><o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span =
+style=3D'color:black;mso-fareast-language:FR'>22e conf=E9rence =
+francophone sur l'Extraction et la Gestion des Connaissances =
+(EGC2022)</span><span style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span =
+style=3D'color:black;mso-fareast-language:FR'>Du 24 au 28 janvier 2022 - =
+Blois</span><span style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><a =
+href=3D"https://egc2022.univ-tours.fr/"><span =
+style=3D'font-size:11.0pt;font-family:"Calibri",sans-serif;color:#0563C1'=
+>https://egc2022.univ-tours.fr/</span></a><o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span =
+style=3D'color:black;mso-fareast-language:FR'>***************************=
+*********************************************</span><span =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span =
+style=3D'color:black;mso-fareast-language:FR'>Inscriptions =
+ouvertes&nbsp;: </span><span =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><a =
+href=3D"https://egc2022.univ-tours.fr/inscription/"><span =
+style=3D'font-size:11.0pt;font-family:"Calibri",sans-serif;color:#0563C1'=
+>https://egc2022.univ-tours.fr/inscription/</span></a><o:p></o:p></span><=
+/p><p class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span =
+style=3D'color:black;mso-fareast-language:FR'>Tarif r=E9duit =
+jusqu&#8217;au 31 d=E9cembre 2021</span><span =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span =
+style=3D'color:black;mso-fareast-language:FR'>***************************=
+*********************************************</span><span =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p></o:p></span></p><p =
+class=3DMsoNormal><span style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p>&nbsp;</o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span =
+style=3D'color:black;mso-fareast-language:FR'>La 22e =E9dition de la =
+conf=E9rence EGC aura lieu =E0 Blois du 24 au 28 janvier 2022 sur le =
+campus de l'antenne de l&#8217;Universit=E9 de Tours. Il s'agit d'un =
+=E9v=E9nement annuel r=E9unissant des chercheurs et praticiens de =
+disciplines relevant de l&#8217;intelligence artificielle, des sciences =
+des donn=E9es et des connaissances.</span><span =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p></o:p></span></p><p =
+class=3DMsoNormal><span style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p>&nbsp;</o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span =
+style=3D'color:black;mso-fareast-language:FR'>C'est habituellement =
+l&#8217;occasion de faire se rencontrer acad=E9miques et industriels =
+afin de confronter des travaux th=E9oriques et des applications =
+pratiques sur des donn=E9es. Pour cette 22e =E9dition, une journ=E9e =
+publique sera organis=E9e le mercredi 26 janvier, intitul=E9e =AB Impact =
+soci=E9tal de l&#8217;Intelligence artificielle =BB. Plusieurs =
+conf=E9rences pl=E9ni=E8res (keynotes) seront pr=E9sent=E9es sur le =
+th=E8me de l'intelligence artificielle. Une session sp=E9ciale =
+&quot;minutes of madness&quot; pr=E9sentera un aper=E7u des meilleurs =
+travaux. Des d=E9monstrations logicielles et des posters scientifiques =
+seront aussi visibles lors du buffet et d&#8217;une session d=E9di=E9e. =
+La journ=E9e se terminera par une table ronde sur le th=E8me =AB =
+Diversit=E9 et inclusion en Intelligence Artificielle =BB, anim=E9e par =
+nos conf=E9renci=E8res invit=E9es et la pr=E9sidente du comit=E9 =
+scientifique de la conf=E9rence, Sihem Amer-Yahia.</span><span =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p></o:p></span></p><p =
+class=3DMsoNormal><span style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p>&nbsp;</o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span =
+style=3D'color:black;mso-fareast-language:FR'>Apr=E8s cet =E9v=E9nement =
+public, le programme scientifique classique reprendra ses droits pour =
+les journ=E9es de jeudi et de vendredi. La liste des articles accept=E9s =
+est disponible : </span><span =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><a =
+href=3D"https://egc2022.univ-tours.fr/articles-acceptes/"><span =
+style=3D'font-size:11.0pt;font-family:"Calibri",sans-serif;color:#1155CC'=
+>https://egc2022.univ-tours.fr/articles-acceptes/</span></a></span><span =
+style=3D'color:black;mso-fareast-language:FR'>&nbsp;</span><span =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p></o:p></span></p><p =
+class=3DMsoNormal><span style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p>&nbsp;</o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span =
+style=3D'color:black;mso-fareast-language:FR'>EGC2022 aura le plaisir =
+d'accueillir les conf=E9renci=E8res invit=E9es suivantes :</span><span =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span lang=3DEN-US =
+style=3D'color:black;mso-fareast-language:FR'>- Vanessa Murdock (Alexa =
+Shopping Research, Amazon.com) : &#8220;Helping People Shop on =
+Alexa&#8221;</span><span lang=3DEN-US =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span lang=3DEN-US =
+style=3D'color:black;mso-fareast-language:FR'>- Sonia Ben Mokhtar =
+(LIRIS) : &#8220;Latest Advances in ML-enabled Location Privacy Attacks =
+and Protection Mechanisms&#8221;</span><span lang=3DEN-US =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span lang=3DEN-US =
+style=3D'color:black;mso-fareast-language:FR'>- Sarah Cohen-Boulakia =
+(LRI)&nbsp;: =AB&nbsp;FAIR Scientific Workflows: Status, Challenges and =
+Research opportunities&#8221;</span><span lang=3DEN-US =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span lang=3DEN-US =
+style=3D'color:black;mso-fareast-language:FR'>- Fr=E9d=E9rique Segond =
+(INELCO) : &#8220;Influence, Radicalization and Dangerous Things: What =
+AI Can Reveal About the Phenomena&#8221;</span><span lang=3DEN-US =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span lang=3DEN-US =
+style=3D'color:black;mso-fareast-language:FR'>- Maya Ramanath (IIT =
+Delhi) : &#8220;Domain-specific Knowledge Graph Construction and =
+Applications&#8221;</span><span lang=3DEN-US =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p></o:p></span></p><p =
+class=3DMsoNormal><span lang=3DEN-US =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p>&nbsp;</o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span =
+style=3D'color:black;mso-fareast-language:FR'>7 ateliers sont aussi =
+propos=E9s =E0 EGC 2022 le mardi 25 janvier. Les appels =E0 soumission =
+sont encore ouverts : </span><span =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><a =
+href=3D"https://egc2022.univ-tours.fr/ateliers/"><span =
+style=3D'font-size:11.0pt;font-family:"Calibri",sans-serif;color:#0563C1'=
+>https://egc2022.univ-tours.fr/ateliers/</span></a><o:p></o:p></span></p>=
+<p class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span =
+style=3D'color:black;mso-fareast-language:FR'>- TextMine - Atelier sur =
+la Fouille de Textes</span><span =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span =
+style=3D'color:black;mso-fareast-language:FR'>- Le num=E9rique : impact =
+et applications dans l&#8217;environnement</span><span =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span =
+style=3D'color:black;mso-fareast-language:FR'>- APTA - Apprentissage =
+Profond : Th=E9orie et Applications</span><span =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span =
+style=3D'color:black;mso-fareast-language:FR'>- DL for NLP - Deep =
+Learning pour le traitement automatique des langues</span><span =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span =
+style=3D'color:black;mso-fareast-language:FR'>- =
+EXPLAIN&#8217;AI</span><span =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span =
+style=3D'color:black;mso-fareast-language:FR'>- GAST&nbsp;- Gestion et =
+Analyse des donn=E9es Spatiales et Temporelles</span><span =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span lang=3DEN-US =
+style=3D'color:black;mso-fareast-language:FR'>- DAHLIA &#8211; DigitAl =
+Humanities and cuLtural herItAge: data and knowledge management and =
+analysis</span><span lang=3DEN-US =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p></o:p></span></p><p =
+class=3DMsoNormal><span lang=3DEN-US =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p>&nbsp;</o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span =
+style=3D'color:black;mso-fareast-language:FR'>5 prix scientifiques =
+seront d=E9cern=E9s lors de la conf=E9rence&nbsp;: </span><span =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><a =
+href=3D"https://egc2022.univ-tours.fr/les-prix/"><span =
+style=3D'font-size:11.0pt;font-family:"Calibri",sans-serif;color:#0563C1'=
+>https://egc2022.univ-tours.fr/les-prix/</span></a><o:p></o:p></span></p>=
+<p class=3DMsoNormal><span style=3D'font-size:12.0pt;font-family:"Times =
+New Roman",serif;mso-fareast-language:FR'><o:p>&nbsp;</o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span =
+style=3D'color:black;mso-fareast-language:FR'>La 8e =E9dition de =
+l'=E9cole d&#8217;hiver =E9-EGC sera organis=E9e les 24 et 25 janvier, =
+avec pour th=E8me : &quot;L&#8217;humain dans la boucle de =
+l&#8217;exploration des donn=E9es et de l&#8217;apprentissage&quot; =
+(</span><span style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><a =
+href=3D"https://egc2022.univ-tours.fr/ecole/"><span =
+style=3D'font-size:11.0pt;font-family:"Calibri",sans-serif;color:#0563C1'=
+>https://egc2022.univ-tours.fr/ecole/</span></a></span><span =
+style=3D'color:black;mso-fareast-language:FR'>). Les inscriptions sont =
+encore ouvertes.</span><span =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p></o:p></span></p><p =
+class=3DMsoNormal><span style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p>&nbsp;</o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span =
+style=3D'color:black;mso-fareast-language:FR'>Un moment festif se =
+d=E9roulera en fin de journ=E9e le mardi 25 janvier avec de la musique =
+et des surprises. Si vous jouez d&#8217;un instrument, inscrivez-vous =
+aussi pour que nous puissions profiter de vos talents musicaux&nbsp;: =
+</span><span style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><a =
+href=3D"https://docs.google.com/forms/d/e/1FAIpQLSfY35I822ZwsbZ1CK7d_XH9h=
+K5wrQGMUV85XQXu4WRW2wMWXw/viewform"><span =
+style=3D'font-size:11.0pt;font-family:"Calibri",sans-serif;color:#1155CC'=
+>https://docs.google.com/forms/d/e/1FAIpQLSfY35I822ZwsbZ1CK7d_XH9hK5wrQGM=
+UV85XQXu4WRW2wMWXw/viewform</span></a><o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span =
+style=3D'color:black;mso-fareast-language:FR'>&nbsp;</span><span =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span =
+style=3D'color:black;mso-fareast-language:FR'>***************************=
+*********************************************</span><span =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span =
+style=3D'color:black;mso-fareast-language:FR'>Pr=E9sidente du Comit=E9 =
+de Programme</span><span style=3D'font-size:12.0pt;font-family:"Times =
+New Roman",serif;mso-fareast-language:FR'><o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span =
+style=3D'color:black;mso-fareast-language:FR'>Sihem Amer-Yahia (LIG, =
+Universit=E9 Grenoble Alpes)</span><span =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p></o:p></span></p><p =
+class=3DMsoNormal><span style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p>&nbsp;</o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span =
+style=3D'color:black;mso-fareast-language:FR'>Pr=E9sident du Comit=E9 =
+d&#8217;organisation</span><span =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'margin-bottom:8.0pt'><span =
+style=3D'color:black;mso-fareast-language:FR'>Arnaud Soulet (LIFAT, =
+Universit=E9 de Tours)</span><span =
+style=3D'font-size:12.0pt;font-family:"Times New =
+Roman",serif;mso-fareast-language:FR'><o:p></o:p></span></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p></div></body></html>
+------=_NextPart_000_066A_01D7DFAA.C01E6210--
+

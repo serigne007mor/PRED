@@ -1,0 +1,630 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (bouncesmtp2.u12.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 9222F14017DC
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon, 12 Jun 2023 10:24:37 +0200 (CEST)
+Received: from mx2.localdomain (MX2.univ-nantes.fr [193.52.101.136])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id 8D4456693
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon, 12 Jun 2023 10:24:37 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.localdomain (Postfix) with ESMTP id 805281014C2
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 12 Jun 2023 10:24:37 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 0.012
+X-Spam-Level:
+X-Spam-Status: No, score=0.012 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+	HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_WSFF=0.01,
+	SPF_HELO_NONE=0.001, SPF_PASS=-0.001, UN_PHISHING_PW=0.1]
+	autolearn=disabled
+X-CRM114-Status: UNSURE ( -0.2757 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=gmail.com
+Received: from mx2.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id gZgmuBCxGUwR for <liste-egc@polytech.univ-nantes.fr>;
+	Mon, 12 Jun 2023 10:24:31 +0200 (CEST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=2607:f8b0:4864:20::235; helo=mail-oi1-x235.google.com; envelope-from=elsa.negre@gmail.com; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=elsa.negre@gmail.com
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.b="ELj5SfI5";
+	dkim-atps=neutral
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+	by mx2.localdomain (Postfix) with ESMTPS id 553881015DD
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 12 Jun 2023 10:24:31 +0200 (CEST)
+Received: by mail-oi1-x235.google.com with SMTP id 5614622812f47-392116ae103so2162794b6e.0
+        for <liste-egc@polytech.univ-nantes.fr>; Mon, 12 Jun 2023 01:24:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1686558270; x=1689150270;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=wVubkIt8MfDdQF8LECp9MLcvCGZteJK8v9b24eYfnDk=;
+        b=ELj5SfI5s3AecUkPE3OrKZjd2BKX2SN6753ZqDpdU9lcfkktnI5UI44n2BzCHn28g9
+         yvGLItJzCta32usTv3MWCs4xk69oyES6iBPg8QoJerPXqfOm7R4s4OZd1b6YVWHCBxfi
+         pOgKHI8r4Ix1clXzf/Q0ePgctZpY50EtesuRAXgkQLt9fecO/74AG0+u3mTraYPCAsRS
+         C12a+cukyE5WCpVZ1YbxSBrBTY98jh+1jUZtZdunWHz0ZMdeOCo26EfHveLoiA/hUy0V
+         DJzTdM8BPNarg1EQoSBDHDyihKMOf13XZ8soIPjm+oR6uwxPtWbS7FHPZ7UbgGH70cKZ
+         mWSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686558270; x=1689150270;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wVubkIt8MfDdQF8LECp9MLcvCGZteJK8v9b24eYfnDk=;
+        b=Wo5uxGyVMK0YZ3BmNWldrS8ssXH4LSaTgQz+thSy3uIYIb4OroM9RBpQ6r6lm5pSHk
+         h6okJ18EOfDJWxqHEYpMWDcxwS6pGQi0+bxAexlCpDwagva9+YrCHJaFfk1D/dzga7q/
+         ct0Xm4kk+gm2ZMAghASrgpmPYmLkXLflwBRkC6zKsn232et1jCsGo6Qr4E5qtMfshS5+
+         QdC/nxbGIOC01rBwry1Hqgyy51XSIvbHYpkvG7lvh7/jsEr/Ws6quDgmQXp3thebDlfl
+         dUiX8O11PoBEEFmK7r1aVJK/ek0axG35ZXxSuPqvHRwVEF87dmIqzAgouOUpd7i0c0Yg
+         HMUg==
+X-Gm-Message-State: AC+VfDws20FZXdRIHAux1spueFbCxP6FJLQuF4ZQCZxyT5qfWlHceRKZ
+	PEZXxH7iJkUlehwptYES1aF1zeCiDTjdVw6z6ZiRm+AdLw0=
+X-Google-Smtp-Source: ACHHUZ4AoFcGUaN0KaAB3lirKRJf94AtkxUvGZM09DjDyL8SrAFiYMvx1CdJD/gFsdxtCCPrnTG9pEHkhI4LgJuG0+8=
+X-Received: by 2002:aca:1714:0:b0:39a:62f7:9463 with SMTP id
+ j20-20020aca1714000000b0039a62f79463mr3438751oii.41.1686558269721; Mon, 12
+ Jun 2023 01:24:29 -0700 (PDT)
+MIME-Version: 1.0
+From: Elsa Negre <elsa.negre@gmail.com>
+Date: Mon, 12 Jun 2023 10:24:21 +0200
+Message-ID: <CAHHkKw1ENBKzBYYDUqUWC0Q8n8Qq6W=5SFEYRNFD4rD2SCnGwA@mail.gmail.com>
+To: liste-egc@polytech.univ-nantes.fr, 
+	polytech_liste-egc-request@sympa6.univ-nantes.prive
+Content-Type: multipart/alternative; boundary="0000000000008f5ebf05fdea72a5"
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] URGENT : Offre de =?UTF-8?Q?th=C3=A8se?= -
+ Participation citoyenne et Gestion de crise
+
+--0000000000008f5ebf05fdea72a5
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Bonjour,
+D=C3=A9sol=C3=A9e pour les r=C3=A9ceptions multiples.
+
+N'h=C3=A9sitez pas =C3=A0 diffuser cette offre de th=C3=A8se :
+
+Deadline : 20/06/2023
+
+*Participation citoyenne et Gestion de crise.*
+
+
+
+
+
+*Localisation* : Universit=C3=A9 Paris-Dauphine, LAMSADE
+
+
+
+*Encadrantes* : Elsa Negre, MCF HDR (elsa.negre@lamsade.dauphine.fr) et
+Juliette Rouchier, DR CNRS (juliette.rouchier@lamsade.dauphine.fr)
+
+
+
+*Mots-cl=C3=A9s* : Participation citoyenne, Gestion de crise, Informatique
+ubiquitaire, Syst=C3=A8mes de recommandation, *Machine learning*, Syst=C3=
+=A8mes
+d=E2=80=99Informations.
+
+
+
+*Candidatures : *Les candidats int=C3=A9ress=C3=A9s sont invit=C3=A9s =C3=
+=A0 envoyer une lettre
+de motivation, un CV, leurs relev=C3=A9s de notes (Licence + Master) avec
+classements (Master 2 =C3=A9galement, =C3=A9ventuellement partiel), et une =
+ou
+plusieurs lettres de recommandation, *avant le 20 JUIN 2023*.
+
+
+
+*Profil recherch=C3=A9 : *Titulaire d=E2=80=99un M2 en informatique avec un=
+ int=C3=A9r=C3=AAt fort
+pour les SHS.
+
+
+
+*Contexte* :
+
+La gestion de crise est un cadre dans lequel les applications num=C3=A9riqu=
+es,
+en particulier portables, sont de plus en plus utilis=C3=A9es pour coordonn=
+er
+les acteurs, en particulier par la circulation des informations en temps
+r=C3=A9el, et potentiellement selon un syst=C3=A8me peer-to-peer. Si cet us=
+age se
+d=C3=A9veloppe pour les professionnels de la gestion de crise (pompiers,
+services d=E2=80=99urgence), la question de l=E2=80=99int=C3=A9gration des =
+populations dans la
+r=C3=A9action locale =C3=A0 une catastrophe reste un domaine d=E2=80=99inve=
+stigation.
+
+
+
+Pour cette th=C3=A8se nous souhaitons =C3=A9tudier l=E2=80=99implication de=
+ la population
+dans le d=C3=A9veloppement et l=E2=80=99utilisation d=E2=80=99outils num=C3=
+=A9riques pour permettre
+la coordination en temps r=C3=A9el face aux catastrophes naturelles et nota=
+mment
+face aux inondations. Lors d=E2=80=99inondations, un certain nombre de prob=
+l=C3=A8mes
+peuvent se poser, en particulier le signalement des zones =C3=A0 =C3=A9vacu=
+er,
+l=E2=80=99organisation de la logistique pour l=E2=80=99=C3=A9vacuation (v=
+=C3=A9hicules d=C3=A9plac=C3=A9s sur
+place) ou pour l=E2=80=99accueil de population d=C3=A9plac=C3=A9es (gite et=
+ couvert). La
+vitesse de r=C3=A9action est en g=C3=A9n=C3=A9ral un facteur clef pour =C3=
+=A9viter les pertes
+humaines.
+
+
+
+La mise =C3=A0 disposition d=E2=80=99un outil g=C3=A9n=C3=A9rique (quelle q=
+ue soit la zone
+g=C3=A9ographique touch=C3=A9e, voire la catastrophe qui survient) appropri=
+able par
+les experts locaux pour calibrer en fonction de la situation pr=C3=A9cise e=
+st
+n=C3=A9cessaire.
+
+Dans une logique de d=C3=A9mocratie technique qui vise =C3=A0 l=E2=80=99emp=
+ouvoirement des
+populations face aux risques, il semble important de se saisir d=E2=80=99un=
+e
+logique d=E2=80=99informatique ubiquitaire pour t=C3=A2cher d=E2=80=99int=
+=C3=A9grer en sus les
+populations qui seraient aptes =C3=A0 fournir des aides mat=C3=A9rielles ou
+organisationnelles, des v=C3=A9hicules, des informations, en temps r=C3=A9e=
+l sur la
+crise. On peut m=C3=AAme penser que cela pourrait =C3=A9viter des erreurs e=
+t
+mauvaises d=C3=A9cisions prises dans le but d=E2=80=99aider d=E2=80=99autre=
+s habitants. Cela
+semble d=E2=80=99autant plus pertinent que la population est sur place et r=
+=C3=A9partie
+dans des zones qui ne peuvent pas forc=C3=A9ment =C3=AAtre atteintes par le=
+s services
+sp=C3=A9cialis=C3=A9s, limit=C3=A9s en nombre d=E2=80=99acteurs.
+
+
+
+Il s=E2=80=99agirait donc de proposer un outil logiciel adaptable au
+smartphone/tablette, qui permettrait la participation des populations
+locales =C3=A0 la gestion de crise, s=E2=80=99appuyant sur du peer-to-peer =
+comme ressort
+principal. Les enjeux pour imaginer ce type d=E2=80=99outil sont multiples,=
+ car il
+faut dans un premier lieu construire une communaut=C3=A9 de pratique qui se=
+rait
+moteur pour imaginer les outils de base de ce logiciel, et pour cela il
+s=E2=80=99agirait de m=C3=AAler experts et citoyens profanes, que l=E2=80=
+=99on reconna=C3=AEt comme
+experts de leur espace de vie et des comp=C3=A9tences qu=E2=80=99ils peuven=
+t offrir.
+Trois =C3=A9tapes sont donc n=C3=A9cessaires pour =C3=A9laborer ce travail =
+: la premi=C3=A8re
+est l=E2=80=99identification des besoins et des possibilit=C3=A9s d=E2=80=
+=99actions dans la
+communaut=C3=A9 locale, ainsi que des diff=C3=A9rentes voies utilis=C3=A9es=
+ par le pass=C3=A9
+ou connues. La seconde est le travail de construction du logiciel. Enfin,
+le dernier est une =C3=A9valuation du dispositif en situation-pilote. La
+dynamique du projet pousse ainsi =C3=A0 d=C3=A9finir les modalit=C3=A9s =C3=
+=A0 travers des
+processus participatifs, qui sont connus pour aider fortement =C3=A0 l=E2=
+=80=99adoption
+des innovations techniques.
+
+
+
+
+
+
+
+*Implications : *
+
+Ce travail pourra s=E2=80=99appuyer sur les travaux de th=C3=A8se de Maude =
+Arru
+(Introduction de connaissances relatives aux comportements des populations
+dans les syst=C3=A8mes d'alerte pr=C3=A9coce), sur les travaux de recherche=
+ des
+encadrantes ainsi que de certains membres du LAMSADE (notamment les membres
+de l=E2=80=99=C3=A9quipe =C2=AB Science des Donn=C3=A9es =C2=BB et ceux du =
+groupe =C2=AB Policy
+analytics =C2=BB). Des relations sont =C3=A9galement d=C3=A9j=C3=A0 tiss=C3=
+=A9es avec des
+sp=C3=A9cialistes des inondations de l=E2=80=99INRAE et du CIRAD.
+
+
+
+
+
+
+
+*Publications des encadrantes en rapport avec le sujet : *
+
+
+
+=C2=A7  Luyen Le Ngoc, Jinfeng Zhong, *Elsa Negre*, Marie-H=C3=A9l=C3=A8ne =
+Abel.
+Constraint-based recommender system for crisis management simulations.
+HICSS 2023
+
+
+
+=C2=A7  Nortes Mart=C3=ADnez D., Grelot F., Br=C3=A9mond P., Farolfi S., *R=
+ouchier J.*,
+2021, Are interactions important in estimating flood damage to economic
+entities? The case of wine-making in France, Natural Hazards and Earth
+System Science, 21, 3057=E2=80=933084.
+
+
+
+=C2=A7  Meinard Y., Barreteau O., Boschet C., Daniell K., Ferrand N., et al=
+..
+2021, What is policy analytics? An exploration of 5 years of environmental
+management applications. Environmental Management, Springer Verlag
+(Germany).
+
+
+
+=C2=A7  *Elsa Negre.* *Recommender Systems =E2=80=93 Introduction. *Livre -=
+ WILEY, 2016.
+
+
+
+=C2=A7  *Elsa Negre**.* *Towards a Knowledge (Experience)-Based Recommender
+System for Crisis Management*. 3PGCIC 2013
+<http://www.informatik.uni-trier.de/%7Eley/db/conf/3pgcic/3pgcic2013.html#N=
+egre13>:
+713-718
+
+--0000000000008f5ebf05fdea72a5
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">
+<p>Bonjour,</p>
+D=C3=A9sol=C3=A9e pour les r=C3=A9ceptions multiples.<br>
+<br>
+<p>N&#39;h=C3=A9sitez pas =C3=A0 diffuser cette offre de th=C3=A8se :</p><p=
+>Deadline : 20/06/2023<br></p><p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p><p class=3D"MsoNormal" style=3D"margin:0cm;text-align:center;line-heigh=
+t:normal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif" align=
+=3D"center"><b><span style=3D"font-size:16pt">Participation citoyenne et
+Gestion de crise.<span></span></span></b></p>
+
+<pre style=3D"text-align:justify;margin:0cm 0cm 0.0001pt;font-size:10pt;fon=
+t-family:&quot;Courier New&quot;"><span style=3D"font-size:11pt;font-family=
+:&quot;Calibri&quot;,sans-serif"><span>=C2=A0</span></span></pre><pre style=
+=3D"text-align:justify;margin:0cm 0cm 0.0001pt;font-size:10pt;font-family:&=
+quot;Courier New&quot;"><span style=3D"font-size:11pt;font-family:&quot;Cal=
+ibri&quot;,sans-serif"><span>=C2=A0</span></span></pre>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:n=
+ormal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif"><b><span>L=
+ocalisation</span></b><span>=C2=A0:
+Universit=C3=A9 Paris-Dauphine, LAMSADE<span></span></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:n=
+ormal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif"><span styl=
+e=3D"font-size:10pt"><span>=C2=A0</span></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:n=
+ormal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif"><b><span>E=
+ncadrantes</span></b><span>=C2=A0:
+Elsa Negre, MCF HDR (</span><a href=3D"mailto:elsa.negre@lamsade.dauphine.f=
+r" style=3D"color:blue;text-decoration:underline"><span>elsa.negre@lamsade.=
+dauphine.fr</span></a><span>) et
+Juliette Rouchier, DR CNRS (</span><a href=3D"mailto:juliette.rouchier@lams=
+ade.dauphine.fr" style=3D"color:blue;text-decoration:underline"><span>julie=
+tte.rouchier@lamsade.dauphine.fr</span></a><span>)<span></span></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:n=
+ormal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif"><span styl=
+e=3D"font-size:10pt"><span>=C2=A0</span></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:n=
+ormal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif"><b><span>M=
+ots-cl=C3=A9s</span></b><span>=C2=A0: Participation
+citoyenne, Gestion de crise, Informatique ubiquitaire, Syst=C3=A8mes de rec=
+ommandation,
+<i>Machine learning</i>, Syst=C3=A8mes
+d=E2=80=99Informations.<span></span></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:n=
+ormal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif"><span styl=
+e=3D"font-size:10pt"><span>=C2=A0</span></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:n=
+ormal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif"><b><span>C=
+andidatures=C2=A0: </span></b><span>Les candidats int=C3=A9ress=C3=A9s sont=
+ invit=C3=A9s =C3=A0 envoyer une
+lettre de motivation, un CV, leurs relev=C3=A9s de notes (Licence + Master)=
+ avec
+classements (Master 2 =C3=A9galement, =C3=A9ventuellement partiel), et une =
+ou plusieurs
+lettres de recommandation, <b>avant le 20 JUIN 2023</b>. <span></span></spa=
+n></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:n=
+ormal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif"><span styl=
+e=3D"font-size:10pt"><span>=C2=A0</span></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:n=
+ormal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif"><b><span>P=
+rofil recherch=C3=A9=C2=A0: </span></b><span>Titulaire d=E2=80=99un M2 en i=
+nformatique avec un int=C3=A9r=C3=AAt fort
+pour les SHS.<span></span></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:n=
+ormal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif"><span styl=
+e=3D"font-size:10pt"><span>=C2=A0</span></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:n=
+ormal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif"><b><span>C=
+ontexte</span></b><span>=C2=A0: <span></span></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:n=
+ormal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif">La gestion=
+ de crise est un cadre dans lequel les applications
+num=C3=A9riques, en particulier portables, sont de plus en plus utilis=C3=
+=A9es pour
+coordonner les acteurs, en particulier par la circulation des informations =
+en
+temps r=C3=A9el, et potentiellement selon un syst=C3=A8me peer-to-peer. Si =
+cet usage se
+d=C3=A9veloppe pour les professionnels de la gestion de crise (pompiers, se=
+rvices
+d=E2=80=99urgence), la question de l=E2=80=99int=C3=A9gration des populatio=
+ns dans la r=C3=A9action
+locale =C3=A0 une catastrophe reste un domaine d=E2=80=99investigation. <sp=
+an></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:n=
+ormal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif"><span styl=
+e=3D"font-size:7pt"><span>=C2=A0</span></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:n=
+ormal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif">Pour cette=
+ th=C3=A8se nous souhaitons =C3=A9tudier l=E2=80=99implication de la popula=
+tion
+dans le d=C3=A9veloppement et l=E2=80=99utilisation d=E2=80=99outils num=C3=
+=A9riques pour permettre la
+coordination en temps r=C3=A9el face aux catastrophes naturelles et notamme=
+nt face
+aux inondations. Lors d=E2=80=99inondations, un certain nombre de probl=C3=
+=A8mes peuvent se
+poser, en particulier le signalement des zones =C3=A0 =C3=A9vacuer, l=E2=80=
+=99organisation de la
+logistique pour l=E2=80=99=C3=A9vacuation (v=C3=A9hicules d=C3=A9plac=C3=A9=
+s sur place) ou pour l=E2=80=99accueil
+de population d=C3=A9plac=C3=A9es (gite et couvert). La vitesse de r=C3=A9a=
+ction est en
+g=C3=A9n=C3=A9ral un facteur clef pour =C3=A9viter les pertes humaines. <sp=
+an></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:n=
+ormal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif"><span styl=
+e=3D"font-size:7pt"><span>=C2=A0</span></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:n=
+ormal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif">La mise =
+=C3=A0 disposition d=E2=80=99un outil g=C3=A9n=C3=A9rique (quelle que soit =
+la zone
+g=C3=A9ographique touch=C3=A9e, voire la catastrophe qui survient) appropri=
+able par les
+experts locaux pour calibrer en fonction de la situation pr=C3=A9cise est n=
+=C3=A9cessaire.
+<span></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:n=
+ormal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif">Dans une l=
+ogique de d=C3=A9mocratie technique qui vise =C3=A0 l=E2=80=99empouvoiremen=
+t
+des populations face aux risques, il semble important de se saisir d=E2=80=
+=99une
+logique d=E2=80=99informatique ubiquitaire pour t=C3=A2cher d=E2=80=99int=
+=C3=A9grer en sus les
+populations qui seraient aptes =C3=A0 fournir des aides mat=C3=A9rielles ou
+organisationnelles, des v=C3=A9hicules, des informations, en temps r=C3=A9e=
+l sur la
+crise. On peut m=C3=AAme penser que cela pourrait =C3=A9viter des erreurs e=
+t mauvaises
+d=C3=A9cisions prises dans le but d=E2=80=99aider d=E2=80=99autres habitant=
+s. Cela semble d=E2=80=99autant
+plus pertinent que la population est sur place et r=C3=A9partie dans des zo=
+nes qui
+ne peuvent pas forc=C3=A9ment =C3=AAtre atteintes par les services sp=C3=A9=
+cialis=C3=A9s, limit=C3=A9s
+en nombre d=E2=80=99acteurs. <span></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:n=
+ormal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif"><span styl=
+e=3D"font-size:7pt"><span>=C2=A0</span></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:n=
+ormal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif">Il s=E2=80=
+=99agirait donc de proposer un outil logiciel adaptable au smartphone/table=
+tte,
+qui permettrait la participation des populations locales =C3=A0 la gestion =
+de crise,
+s=E2=80=99appuyant sur du peer-to-peer comme ressort principal. Les enjeux =
+pour
+imaginer ce type d=E2=80=99outil sont multiples, car il faut dans un premie=
+r lieu
+construire une communaut=C3=A9 de pratique qui serait moteur pour imaginer =
+les
+outils de base de ce logiciel, et pour cela il s=E2=80=99agirait de m=C3=AA=
+ler experts et
+citoyens profanes, que l=E2=80=99on reconna=C3=AEt comme experts de leur es=
+pace de vie et
+des comp=C3=A9tences qu=E2=80=99ils peuvent offrir. Trois =C3=A9tapes sont =
+donc n=C3=A9cessaires pour
+=C3=A9laborer ce travail=C2=A0: la premi=C3=A8re est l=E2=80=99identificati=
+on des besoins et des
+possibilit=C3=A9s d=E2=80=99actions dans la communaut=C3=A9 locale, ainsi q=
+ue des diff=C3=A9rentes
+voies utilis=C3=A9es par le pass=C3=A9 ou connues. La seconde est le travai=
+l de
+construction du logiciel. Enfin, le dernier est une =C3=A9valuation du disp=
+ositif en
+situation-pilote. La dynamique du projet pousse ainsi =C3=A0 d=C3=A9finir l=
+es modalit=C3=A9s =C3=A0
+travers des processus participatifs, qui sont connus pour aider fortement =
+=C3=A0
+l=E2=80=99adoption des innovations techniques. <span></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:n=
+ormal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif"><span><spa=
+n>=C2=A0</span></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:n=
+ormal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif"><span><spa=
+n>=C2=A0</span></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:n=
+ormal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif"><b><span s=
+tyle=3D"font-size:8pt"><span>=C2=A0</span></span></b></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:n=
+ormal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif"><b><span>I=
+mplications=C2=A0:
+<span></span></span></b></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:n=
+ormal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif"><span>Ce t=
+ravail pourra s=E2=80=99appuyer sur les
+travaux de th=C3=A8se de Maude Arru (Introduction de connaissances relative=
+s aux
+comportements des populations dans les syst=C3=A8mes d&#39;alerte pr=C3=A9c=
+oce), sur les
+travaux de recherche des encadrantes ainsi que de certains membres du LAMSA=
+DE (notamment
+les membres de l=E2=80=99=C3=A9quipe =C2=AB=C2=A0Science des Donn=C3=A9es=
+=C2=A0=C2=BB et ceux du groupe
+=C2=AB=C2=A0Policy analytics=C2=A0=C2=BB). Des relations sont =C3=A9galemen=
+t d=C3=A9j=C3=A0 tiss=C3=A9es avec
+des sp=C3=A9cialistes des inondations de l=E2=80=99INRAE et du CIRAD.<span>=
+</span></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:n=
+ormal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif"><span styl=
+e=3D"font-size:8pt"><span>=C2=A0</span></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:n=
+ormal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif"><span styl=
+e=3D"font-size:8pt"><span>=C2=A0</span></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:n=
+ormal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif"><span styl=
+e=3D"font-size:8pt"><span>=C2=A0</span></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:n=
+ormal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif"><b><span>P=
+ublications
+des encadrantes en rapport avec le sujet : <span></span></span></b></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:n=
+ormal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif"><b><span s=
+tyle=3D"font-size:7pt"><span>=C2=A0</span></span></b></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpFirst" style=3D"margin:0cm 0cm 0cm 36=
+pt;text-align:justify;line-height:normal;font-size:11pt;font-family:&quot;C=
+alibri&quot;,sans-serif"><span style=3D"font-family:Wingdings"><span>=C2=A7=
+<span style=3D"font:7pt &quot;Times New Roman&quot;">=C2=A0
+</span></span></span>Luyen Le Ngoc, Jinfeng Zhong, <b>Elsa Negre</b>,
+Marie-H=C3=A9l=C3=A8ne Abel. Constraint-based recommender system for crisis=
+ management
+simulations. HICSS 2023<span><span></span></span></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D"margin:0cm 0cm 0cm 3=
+6pt;text-align:justify;line-height:normal;font-size:11pt;font-family:&quot;=
+Calibri&quot;,sans-serif"><span style=3D"font-size:7pt"><span>=C2=A0</span>=
+</span></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpLast" style=3D"margin:0cm 0cm 0cm 36p=
+t;text-align:justify;line-height:normal;font-size:11pt;font-family:&quot;Ca=
+libri&quot;,sans-serif"><span style=3D"font-family:Wingdings"><span>=C2=A7<=
+span style=3D"font:7pt &quot;Times New Roman&quot;">=C2=A0
+</span></span></span>Nortes Mart=C3=ADnez D., Grelot F., Br=C3=A9mond P.,
+Farolfi S., <b>Rouchier J.</b>, 2021, Are interactions important in estimat=
+ing
+flood damage to economic entities? The case of wine-making in France, Natur=
+al
+Hazards and Earth System Science, 21, 3057=E2=80=933084.<span></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:n=
+ormal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif"><span styl=
+e=3D"font-size:6pt"><span>=C2=A0</span></span></p>
+
+<p class=3D"gmail-MsoListParagraph" style=3D"margin:0cm 0cm 0cm 36pt;text-a=
+lign:justify;line-height:normal;font-size:11pt;font-family:&quot;Calibri&qu=
+ot;,sans-serif"><span style=3D"font-family:Wingdings"><span>=C2=A7<span sty=
+le=3D"font:7pt &quot;Times New Roman&quot;">=C2=A0
+</span></span></span>Meinard Y., Barreteau O., Boschet C., Daniell
+K., Ferrand N., et al.. 2021, What is policy analytics? An exploration of 5
+years of environmental management applications. Environmental Management,
+Springer Verlag (Germany).<span></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:n=
+ormal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif"><span styl=
+e=3D"font-size:7pt"><span>=C2=A0</span></span></p>
+
+<p class=3D"gmail-MsoListParagraph" style=3D"margin:0cm 0cm 0cm 36pt;text-a=
+lign:justify;line-height:normal;font-size:11pt;font-family:&quot;Calibri&qu=
+ot;,sans-serif"><span style=3D"font-family:Wingdings"><span>=C2=A7<span sty=
+le=3D"font:7pt &quot;Times New Roman&quot;">=C2=A0
+</span></span></span><b>Elsa Negre.</b> <i><span>Recommender Systems =E2=80=
+=93 Introduction. </span></i>Livre - WILEY, 2016.<span><span></span></span>=
+</p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:n=
+ormal;font-size:11pt;font-family:&quot;Calibri&quot;,sans-serif"><span styl=
+e=3D"font-size:7pt"><span>=C2=A0</span></span></p>
+
+<p class=3D"gmail-MsoListParagraph" style=3D"margin:0cm 0cm 0cm 36pt;text-a=
+lign:justify;line-height:normal;font-size:11pt;font-family:&quot;Calibri&qu=
+ot;,sans-serif"><span style=3D"font-family:Wingdings"><span>=C2=A7<span sty=
+le=3D"font:7pt &quot;Times New Roman&quot;">=C2=A0
+</span></span></span><span class=3D"gmail-this-person"><b>Elsa Negre</b></s=
+pan><b>.</b>
+<span class=3D"gmail-Titre1"><i>Towards a Knowledge
+(Experience)-Based Recommender System for Crisis Management</i>.</span> <a =
+href=3D"http://www.informatik.uni-trier.de/%7Eley/db/conf/3pgcic/3pgcic2013=
+.html#Negre13" style=3D"color:blue;text-decoration:underline">3PGCIC
+2013</a>: 713-718<span></span></p>
+
+
+
+
+
+
+
+</div>
+
+--0000000000008f5ebf05fdea72a5--

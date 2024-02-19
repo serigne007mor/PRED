@@ -1,0 +1,646 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (bouncesmtp2.u12.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id C3ECB14014E0
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon, 13 Mar 2023 10:59:08 +0100 (CET)
+Received: from mx2.localdomain (MX2.univ-nantes.fr [193.52.101.136])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id C0A8165E0
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon, 13 Mar 2023 10:59:08 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.localdomain (Postfix) with ESMTP id B6A5E100462
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 13 Mar 2023 10:59:03 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -1.172
+X-Spam-Level:
+X-Spam-Status: No, score=-1.172 tagged_above=-1000 required=5
+	tests=[CRM114_GOOD=-5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	HTML_MESSAGE=0.001, J_BACKHAIR_13=1, MR_NOT_ATTRIBUTED_IP=0.2,
+	MR_STRANGE_QUESTION=1.5, RCVD_IN_DNSWL_NONE=-0.0001,
+	RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_WSFF=0.01, SARE_OBFUMONEY2=1,
+	SPF_HELO_PASS=-0.001, SPF_PASS=-0.001, UN_JPG_ATTACH=0.01,
+	UN_PHISHING_PW=0.1, UN_PNG_ATTACH=0.01] autolearn=disabled
+X-CRM114-Status: GOOD ( 8.1367 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=ina1.onmicrosoft.com
+Received: from mx2.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id nHLRGjEdqTeO for <liste-egc@polytech.univ-nantes.fr>;
+	Mon, 13 Mar 2023 10:58:57 +0100 (CET)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=40.107.247.124; helo=eur02-am0-obe.outbound.protection.outlook.com; envelope-from=alezer@ina.fr; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=none (p=none dis=none) header.from=ina.fr
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=alezer@ina.fr
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (1024-bit key; unprotected) header.d=INA1.onmicrosoft.com header.i=@INA1.onmicrosoft.com header.b="A/H5R/3N";
+	dkim-atps=neutral
+X-Greylist: whitelisted by SQLgrey-1.6.7
+Received: from EUR02-AM0-obe.outbound.protection.outlook.com (mail-am0eur02on2124.outbound.protection.outlook.com [40.107.247.124])
+	by mx2.localdomain (Postfix) with ESMTPS id BD30C1015DD
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 13 Mar 2023 10:58:57 +0100 (CET)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=itZy9LU9Eqft+g+XRaiK3aUM+GebQKKucttf9hOTdLQsCi01ODe92Chif0Q82rkMe1EmPaKhIWm/Q8RU3iNk66oqTWkOniVb22b10sskw+kAQMlEIEi4fWxihBX8hYsuM2eF8/sWVcC8OHbKdT1RB0Hq8VIB9oabYKRi2Hqq8UvakdWAUdvYHnmt6kPV97deLmYw0RBhKyT9+0+IXyggN0B8bh2BqWo1ErxCUs9vJJbV9l9RTBSD9JvZdILpRLS+kGXHLi56cHQiF+RjmJWyqHS00xJF6bzsgttI9sf2CgYHkSYzAAIyvyV7/UWeO0dal6wgBf8zSpySWOWhD9RomA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Jqiz5DnJxdYkSd3fTAXUwhpJo0gQT6mcmzuOsiiegSQ=;
+ b=m0kScgnIOTNi/gktcAyZ0WRjPqgWJP3nZqoCLUQxugiVuccgVgQCdjxb8TF5zrpZEg6QoKz5oohTIojWINSYjBAAiirTmIGYMqPqK4h/Wbc/C8U3KJydphqo90wNZWzsatKf6eLN3ho8l5UuVQbS2Bi2+xMSCs8ChpxKurvX0jBSTdRA/T++4XjPG9aVLjgfXAujEEq0pVusXzGmyFoyobY1H0Sr+avga/JGFrPc6b69wF6+u8MhmipMwRenmP7gU3Zkdm1ld1yB5+jmqoeaiZwDQj6aJLb6wVJM9+6owjIb6zztnjDVq0SViyEpXVqaF593G/Wv4FEpJXlEEEVLGw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=ina.fr; dmarc=pass action=none header.from=ina.fr; dkim=pass
+ header.d=ina.fr; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=INA1.onmicrosoft.com;
+ s=selector2-INA1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Jqiz5DnJxdYkSd3fTAXUwhpJo0gQT6mcmzuOsiiegSQ=;
+ b=A/H5R/3NW0i7rEj3gQBhvtqWqI4D7muPudbyCkI7NN+nS2Fb7FSQEDEl7g3KvIKLyldZtMpCZn27DZNR8j0c8pAs4JxmZm4SUT+WZqgrNKEEK0yvMpHI1gCduI6wp8OMJMJdk0Sg14FhG+kLxvmVwfX4JT/r41x2DRaCgRzRUzs=
+Received: from DB7PR04MB5001.eurprd04.prod.outlook.com (2603:10a6:10:16::28)
+ by PAXPR04MB8304.eurprd04.prod.outlook.com (2603:10a6:102:1bc::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6178.24; Mon, 13 Mar
+ 2023 09:58:55 +0000
+Received: from DB7PR04MB5001.eurprd04.prod.outlook.com
+ ([fe80::4aca:bb1c:d14f:c304]) by DB7PR04MB5001.eurprd04.prod.outlook.com
+ ([fe80::4aca:bb1c:d14f:c304%5]) with mapi id 15.20.6178.024; Mon, 13 Mar 2023
+ 09:58:55 +0000
+From: Arthur Lezer <alezer@ina.fr>
+To: "liste-egc@polytech.univ-nantes.fr" <liste-egc@polytech.univ-nantes.fr>
+Thread-Topic:
+ =?windows-1256?Q?S=E9minaire_INA_le_lab,_vendredi_17_mars_|_"Information,?=
+ =?windows-1256?Q?_d=E9sinformation_:_entre_analyses_quantitative_et_quali?=
+ =?windows-1256?Q?tative"?=
+Thread-Index: AdlVkb8mcR34R412TQChgs4wj3/Alw==
+Date: Mon, 13 Mar 2023 09:58:55 +0000
+Message-ID:
+ <DB7PR04MB5001F3BA0732BDD29EE10096A3B99@DB7PR04MB5001.eurprd04.prod.outlook.com>
+Accept-Language: fr-FR, en-US
+Content-Language: fr-FR
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=ina.fr;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DB7PR04MB5001:EE_|PAXPR04MB8304:EE_
+x-ms-office365-filtering-correlation-id: 7b6a287e-9417-4e14-9984-08db23a98ec7
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:
+ zFva1aY9Ffqf047Uh9uE+tYreZXgp87Dxrmixnhzq/xj7tavrC0JG9m8i3hUujyKLrORez0ZrU8vkGRyJFX+pAdamFhDayk8bJ2SLXGj8VQl1DIvv8D9ExUps5cTaIWhiDl5Cjz3I8CgjV8IycHA5OLTOGdaqapbnJzvi6tMC5pq0y2FZj1v4GOvotYF43dkb9nAK/Ii1C0DItXQLBge0DP5yZQ4C3kgaK2kGFRk/kX4qg5e4gPLuk99fZemTYxRVBqWWdgHc+nySWAm3co5zQJ7QV2Y9bszcWLUPaO2DKYnbvRyXGsUs2Dn/c12G+aLeqyKl7rH/6jL84U7XHfdYjrr5HLPct/clJXbIQO2fJQmizNR3pn72sb39N8DGk44PEtU3bgFcqFXbOqwCwYnp1HIa1CsrQzzIqyPpWtYTsUgemp/vvl14/6Pea1yhAipWrnqeJ5j5VleVCII2iwV7iTaCMLDyHbo1njPEDhsuWHxPR26qJj2ujNMpg/X2tWzfrrCtcKjo/cHJpdlkR9HGyBBkKRwhXtWHZzezLtGT/2j30DKmmf0pSeNhCeKdi+YtlC9jTyyIz2eiVP4OB3cKGGGM/eQpoi3Pc4e8KQEN5C/iQS8R+j/JRh24J3j6NwIJc6Kx3mLC23Cnm4tK9XD5v7oVBzTzTss3rsfRqAwAjGP53UXb1cs9rJ5ABKSyWbP0X6l92CxaSclr8/Ow87XMbiv0oTkGRkI5+nv0I7QxqI=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:fr;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DB7PR04MB5001.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(4636009)(366004)(39850400004)(396003)(376002)(136003)(346002)(451199018)(224303003)(38100700002)(7696005)(166002)(76116006)(71200400001)(2906002)(41300700001)(66556008)(66446008)(33656002)(66476007)(64756008)(55016003)(786003)(478600001)(316002)(66946007)(6916009)(86362001)(122000001)(99936003)(5660300002)(38070700005)(26005)(6506007)(186003)(9686003)(8936002)(52536014);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?windows-1256?Q?dcHjf67T7NoQLWhUrB8bpPna86PddzZkn+95YsLGjLrc6ts3eIKh5aDp?=
+ =?windows-1256?Q?o+9wPIG6COrTv/Om2Q5nCLoq4P4KD+24SpcZpBzfVtUA1airAYC9GiEW?=
+ =?windows-1256?Q?9h7bNsFDGY0ltLcVyRrOdlf9yzUeKaD4ilBlsQ6TN3QjRpLPxPprue1V?=
+ =?windows-1256?Q?nlg8+IShJSVAVhyZP1raKpNF1T1zSqRCJZe4XHy7OI8/dpEwrokjXp7d?=
+ =?windows-1256?Q?q9j6DyJMTa6ffU8eegfZbRmDszuDrN6vlVCDCsvaAnpWm3IhajHttTjV?=
+ =?windows-1256?Q?OX3lkYuc5hdP0PoMuHypqjkLeJR09yCAeRvEfSe2lhGrPNCK7ErV17Fy?=
+ =?windows-1256?Q?A3c1bewHrqTJbUwRPJmvZpexodqU92XCEbPFPSSSnEGWjjAOklZbrjzD?=
+ =?windows-1256?Q?KaNwuBCvt+2kESGZqdiCk2WvUoegcBef5LOTU3q9LnKYcstGC9zFPyF8?=
+ =?windows-1256?Q?H5zKifnUF4mPcK4JOfePuZyJfgPZVOm5FMwGm6PJYjmBr044Debo1a4w?=
+ =?windows-1256?Q?w26/Ka8a3guOc3LgWDCz08DtCjTHKhO+I8ra3bFDrWiiwV49MHTGq7ya?=
+ =?windows-1256?Q?WAQuOIYyvFK5DGpJI56X+nYhTN6y0un5H0y0TN4Le+tWyJ6I7OlojOMY?=
+ =?windows-1256?Q?tzRvva2AFHLiD6snlYjiXvPsTrwP8T3H69nz9/CpPULC2YbMT8xs6tJ7?=
+ =?windows-1256?Q?0FgURBAt1SJ+S25/KZpyLOwqNGbfVaIgN3uQNZUvMmv7sje3F1r57LPf?=
+ =?windows-1256?Q?KUYVWoLV3X304WQ4xxowS9lGqoaWjj+lQIt8T9GeUSTjWNgNi2Y39b6k?=
+ =?windows-1256?Q?9OeLeAdBxKpR4ORXZWuXw2ENi8m4P64kEnyTAGcrIMh6YmIJWCl+8iu6?=
+ =?windows-1256?Q?6Q5eEJz41C7R6DR6g3Q2v0nh0hnQHokOX4vaela6Vh8Zb6Tmm65Wn2lL?=
+ =?windows-1256?Q?c530ZbgWDzO06wOKqrl8BjRmQC/Eevl1nQyTYfge7I8ER/mWeaOGkFkl?=
+ =?windows-1256?Q?nUNUymFAatWuQmY9+4RyZ7Y2qgkjGri7lqSqYrswHR9RBc0FUkl2ba9k?=
+ =?windows-1256?Q?D0ox4Uu6HyDleYKYnPvzPCheuYH19zOeAZD9T9xdYzaYzM8fE8WXeahC?=
+ =?windows-1256?Q?FE7wOA9eDDGSfWvqBDpKwR0Rctbp8YjQi5PtZYIiK7W6LxM3ROQ/DbAy?=
+ =?windows-1256?Q?BAqappCsrkHpFCxsKAl6GoHJJXe4VFFmpOgkdRqUNfOZ5Y2Vgv/cNLdh?=
+ =?windows-1256?Q?qCvRco5QPrlRc2ChNPpkAk8Y8zWjw5o9YyYKDh0matFbLfNZWS3rUiK4?=
+ =?windows-1256?Q?/ykAUeeOZ1e1OaTgAbIHTYeMya6CuMdDvOrBSddSXy0KLXyGd4jW80Z9?=
+ =?windows-1256?Q?rwEIqbph8pK2IXyrBUrklTTzJefjNBWaEU+OG6bQk3Wrsiws7h3qOfHI?=
+ =?windows-1256?Q?fETJHWNnBq6HNmb6FHpy2uarrz0NMOHlTs67eCGHIzV4DEgSUcS3V5IS?=
+ =?windows-1256?Q?Pwh/Vz8xE55mPlcrbuvUyrVGclJhgLJfHbNheQq4y1dm4LXgez/WW/ju?=
+ =?windows-1256?Q?+ocUjwoUyFFtmsJVx7oIOkNuadCPQmRTb2LJp6/U2gBES6oGQ0ONx/G1?=
+ =?windows-1256?Q?Gk0IpFsHyVoSl4MXJjFCnNEMOffSCf8ZeXUIPHo7si34zNwB1vM7hwST?=
+ =?windows-1256?Q?jYQ8cnAtk/c=3D?=
+Content-Type: multipart/related;
+	boundary="_005_DB7PR04MB5001F3BA0732BDD29EE10096A3B99DB7PR04MB5001eurp_";
+	type="multipart/alternative"
+MIME-Version: 1.0
+X-OriginatorOrg: ina.fr
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DB7PR04MB5001.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7b6a287e-9417-4e14-9984-08db23a98ec7
+X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Mar 2023 09:58:55.4479
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 884113ac-9e9c-40dd-b29b-edfe77e79656
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: VJMf8tqv9ye7pUctG4W2DUUPa9XYH8WTMusdC4Lb6wbVMYBSt9Ri7ZfX1oHAjgJw
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR04MB8304
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] =?WINDOWS-1256?Q?S=E9minaire?= INA le lab, vendredi 17
+ mars | "Information, =?WINDOWS-1256?Q?d=E9sinformation?= : entre analyses
+ quantitative et qualitative"
+
+--_005_DB7PR04MB5001F3BA0732BDD29EE10096A3B99DB7PR04MB5001eurp_
+Content-Type: multipart/alternative;
+	boundary="_000_DB7PR04MB5001F3BA0732BDD29EE10096A3B99DB7PR04MB5001eurp_"
+
+--_000_DB7PR04MB5001F3BA0732BDD29EE10096A3B99DB7PR04MB5001eurp_
+Content-Type: text/plain; charset="windows-1256"
+Content-Transfer-Encoding: quoted-printable
+
+[Avec les excuses habituelles pour les doublons]
+Ch=E8res colisti=E8res, chers colistiers,
+Nous avons le plaisir de vous inviter =E0 la s=E9ance du s=E9minaire du lab=
+ INA<https://inalelab.hypotheses.org/?p=3D6329&preview=3Dtrue>, sur les enj=
+eux, m=E9thodes, et outils d=92analyse de la production et circulation des =
+informations et des =AB fake news =BB dans l=92=E9cosyst=E8me m=E9diatique,=
+ avec Sylvain Parasie, Ys=E9 Vauchez et Nicolas Herv=E9.
+La s=E9ance se d=E9roulera en format hybride, ce vendredi 17 mars de 14h30 =
+=E0 16h30 dans le loft du cin=E9ma MK2, 135, boulevard Diderot, 75012 Paris=
+.  Elle est ouverte =E0 tous sur inscription pr=E9alable<https://website-31=
+24.eventmaker.io/fr/registration/63f38c61c25e191cc653776c>.
+
+
+S=E9minaire INA - le lab
+Information, d=E9sinformation : entre analyses quantitative et qualitative
+
+Recherches et explorations
+Cartographier les promoteurs d'=E9v=E9nements m=E9diatiques dans l'espace p=
+ublic num=E9rique
+Sylvain Parasie (Sciences Po - M=E9dialab)
+
+Analyser la construction m=E9diatique du probl=E8me des "fake news". Un tra=
+itement qualitatif de donn=E9es quantitatives
+Ys=E9 Vauchez (CESSP=96 Universit=E9 Paris I)
+
+Discutants : Jean Carrive (INA), Marta Severo (Professeure, Universit=E9 Pa=
+ris Nanterre)
+
+Focus outils et m=E9thodes
+Analyse de corpus de transcriptions automatiques : retour d'exp=E9rience et=
+ questionnements m=E9thodologiques
+Nicolas Herv=E9 (Chef du service Recherche & IA, INA)
+
+Vendredi 17 mars  de 14h30 =E0 16H30
+Loft MK2 Nation
+135 boulevard Diderot
+75012 Paris
+S=92inscrire =E0 l=92=E9v=E8nement<https://website-3124.eventmaker.io/fr/re=
+gistration/63f38c61c25e191cc653776c>
+
+L=92ambition du s=E9minaire est multiple : exposer, voire confronter de nou=
+velles approches d=92exploitation scientifique des collections de l=92INA, =
+favoriser les =E9changes entre communaut=E9s de chercheurs, d=E9velopper un=
+e r=E9flexion =E9pist=E9mologique et m=E9thodologique sur ces convergences =
+et articulations disciplinaires en m=EAme temps qu=92=E9clairer des sujets =
+qui sont au c=9Cur du d=E9bat public. Pour celles et ceux qui n=92ont pas p=
+u y assister, la captation de la premi=E8re s=E9ance<https://inalelab.hypot=
+heses.org/6254> avec Julia Cag=E9, Benjamin Monnery et Pierre Letessier, es=
+t en ligne.
+
+Au plaisir de vous y retrouver,
+
+[logo-ina.jpg]
+Arthur Lezer
+Ing=E9nieur de recherche
+Le Lab
+Direction data & technologies - INA th=E8que
+
+
+institut.ina.fr<https://institut.ina.fr/>
+[cid:image002.png@01D9559A.71BC9850]
+@Ina_audiovisuel<https://twitter.com/ina_audiovisuel>
+
+
+--_000_DB7PR04MB5001F3BA0732BDD29EE10096A3B99DB7PR04MB5001eurp_
+Content-Type: text/html; charset="windows-1256"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dwindows-1=
+256">
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<!--[if !mso]><style>v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style><![endif]--><style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Lato;
+	panose-1:2 15 5 2 2 2 4 3 2 3;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-ligatures:standardcontextual;
+	mso-fareast-language:EN-US;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;
+	mso-ligatures:standardcontextual;
+	mso-fareast-language:EN-US;}
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:70.85pt 70.85pt 70.85pt 70.85pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"FR" link=3D"#0563C1" vlink=3D"#954F72" style=3D"word-wrap:bre=
+ak-word">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif">[Avec les excuses habituelles pour les doublons]<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:&quot;Ar=
+ial&quot;,sans-serif">Ch=E8res colisti=E8res, chers colistiers,&nbsp;</span=
+><span style=3D"font-family:&quot;Arial&quot;,sans-serif;mso-ligatures:none=
+;mso-fareast-language:FR"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:&quot;Ar=
+ial&quot;,sans-serif">Nous avons le plaisir de vous inviter =E0 la s=E9ance=
+ du
+<a href=3D"https://inalelab.hypotheses.org/?p=3D6329&amp;preview=3Dtrue">s=
+=E9minaire du lab INA</a>, sur les
+<b>enjeux,</b> <b>m=E9thodes, et outils d=92analyse de la production et cir=
+culation des informations et des =AB&nbsp;fake news&nbsp;=BB dans&nbsp;l=92=
+=E9cosyst=E8me&nbsp;m=E9diatique</b>, avec Sylvain&nbsp;Parasie, Ys=E9 Vauc=
+hez et&nbsp;Nicolas Herv=E9.&nbsp;</span><span style=3D"font-family:&quot;A=
+rial&quot;,sans-serif;border:none windowtext 1.0pt;padding:0cm">
+<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:&quot;Ar=
+ial&quot;,sans-serif">La s=E9ance&nbsp;</span><span style=3D"font-family:&q=
+uot;Arial&quot;,sans-serif;color:black;border:none windowtext 1.0pt;padding=
+:0cm;background:white">s</span><span style=3D"font-size:10.5pt;font-family:=
+&quot;Arial&quot;,sans-serif;color:black;border:none windowtext 1.0pt;paddi=
+ng:0cm;background:white">e
+ d=E9roulera&nbsp;</span><span style=3D"font-size:10.5pt;font-family:&quot;=
+Arial&quot;,sans-serif;color:black;background:white">en format hybride,&nbs=
+p;</span><b><span style=3D"font-size:10.5pt;font-family:&quot;Arial&quot;,s=
+ans-serif">ce vendredi 17 mars&nbsp;de 14h30 =E0 16h30&nbsp;</span></b><spa=
+n style=3D"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif">d<spa=
+n style=3D"color:black;background:white">ans
+ le loft du&nbsp;cin=E9ma MK2,&nbsp;135, boulevard Diderot, 75012 Paris</sp=
+an><b>.&nbsp;&nbsp;</b><span style=3D"color:black;background:white">Elle es=
+t ouverte =E0 tous&nbsp;</span></span><span style=3D"font-family:&quot;Aria=
+l&quot;,sans-serif;color:#0070C0"><a href=3D"https://website-3124.eventmake=
+r.io/fr/registration/63f38c61c25e191cc653776c" target=3D"_blank"><span styl=
+e=3D"font-size:10.5pt;color:#0070C0">sur
+ inscription pr=E9alable</span></a></span><span style=3D"font-size:10.5pt;f=
+ont-family:&quot;Arial&quot;,sans-serif;color:black;background:white">.</sp=
+an><span style=3D"font-family:&quot;Arial&quot;,sans-serif"><o:p></o:p></sp=
+an></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;backgrou=
+nd:white"><b><span style=3D"font-size:22.0pt;font-family:&quot;Lato&quot;,s=
+ans-serif;color:#00BCD4">S=E9minaire INA -<em><span style=3D"font-family:&q=
+uot;Lato&quot;,sans-serif">&nbsp;le lab</span></em></span></b><span style=
+=3D"font-size:10.0pt;font-family:&quot;Lato&quot;,sans-serif;color:#333333"=
+><o:p></o:p></span></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;backgrou=
+nd:white"><span style=3D"font-size:16.0pt;font-family:&quot;Lato&quot;,sans=
+-serif;color:#00BCD4">Information, d=E9sinformation : entre analyses quanti=
+tative et qualitative</span><span style=3D"font-size:10.0pt;font-family:&qu=
+ot;Lato&quot;,sans-serif;color:#333333"><o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"background:white"><span style=3D"font-size:=
+10.5pt;font-family:&quot;Lato&quot;,sans-serif;color:#333333"><o:p>&nbsp;</=
+o:p></span></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;backgrou=
+nd:white"><b><span style=3D"font-size:17.0pt;font-family:&quot;Lato&quot;,s=
+ans-serif;color:#333333">Recherches et explorations<o:p></o:p></span></b></=
+p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;backgrou=
+nd:white"><em><b><span style=3D"font-size:10.5pt;font-family:&quot;Lato&quo=
+t;,sans-serif;color:#333333">Cartographier les promoteurs d'=E9v=E9nements =
+m=E9diatiques dans l'espace public num=E9rique</span></b></em><span style=
+=3D"font-size:10.5pt;font-family:&quot;Lato&quot;,sans-serif;color:#333333"=
+><o:p></o:p></span></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;backgrou=
+nd:white"><span style=3D"font-size:10.5pt;font-family:&quot;Lato&quot;,sans=
+-serif;color:#004D65">Sylvain Parasie (Sciences Po - M=E9dialab)</span><spa=
+n style=3D"font-size:10.5pt;font-family:&quot;Lato&quot;,sans-serif"><o:p><=
+/o:p></span></p>
+<p class=3D"MsoNormal" style=3D"background:white"><span style=3D"font-size:=
+10.5pt;font-family:&quot;Lato&quot;,sans-serif;color:#333333"><o:p>&nbsp;</=
+o:p></span></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;backgrou=
+nd:white"><em><b><span style=3D"font-size:10.5pt;font-family:&quot;Lato&quo=
+t;,sans-serif;color:#333333">Analyser la construction m=E9diatique du probl=
+=E8me des &quot;fake news&quot;. Un traitement qualitatif de donn=E9es
+ quantitatives</span></b></em><span style=3D"font-size:10.5pt;font-family:&=
+quot;Lato&quot;,sans-serif;color:#333333"><o:p></o:p></span></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;backgrou=
+nd:white"><span style=3D"font-size:10.5pt;font-family:&quot;Lato&quot;,sans=
+-serif;color:#003649">Ys=E9 Vauchez (CESSP=96 Universit=E9 Paris I)</span><=
+span style=3D"font-size:10.5pt;font-family:&quot;Lato&quot;,sans-serif"><o:=
+p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"background:white"><span style=3D"font-size:=
+10.5pt;font-family:&quot;Lato&quot;,sans-serif;color:#333333"><o:p>&nbsp;</=
+o:p></span></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;backgrou=
+nd:white"><span style=3D"font-size:10.5pt;font-family:&quot;Lato&quot;,sans=
+-serif;color:#333333">Discutants : Jean Carrive (INA), Marta Severo (Profes=
+seure, Universit=E9 Paris Nanterre)<o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"background:white"><span style=3D"font-size:=
+10.5pt;font-family:&quot;Lato&quot;,sans-serif;color:#333333"><o:p>&nbsp;</=
+o:p></span></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;backgrou=
+nd:white"><b><span style=3D"font-size:17.0pt;font-family:&quot;Lato&quot;,s=
+ans-serif;color:#333333">Focus outils et m=E9thodes<o:p></o:p></span></b></=
+p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;backgrou=
+nd:white"><em><b><span style=3D"font-size:10.5pt;font-family:&quot;Lato&quo=
+t;,sans-serif;color:#333333">Analyse de corpus de transcriptions automatiqu=
+es : retour d'exp=E9rience et questionnements m=E9thodologiques</span></b><=
+/em><span style=3D"font-size:10.5pt;font-family:&quot;Lato&quot;,sans-serif=
+;color:#333333"><o:p></o:p></span></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;backgrou=
+nd:white"><span style=3D"font-size:10.5pt;font-family:&quot;Lato&quot;,sans=
+-serif;color:#333333">Nicolas Herv=E9 (Chef du service Recherche &amp; IA, =
+INA)<o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"background:white"><b><span style=3D"font-si=
+ze:10.5pt;font-family:&quot;Lato&quot;,sans-serif;color:#333333">&nbsp;</sp=
+an></b><span style=3D"font-size:10.5pt;font-family:&quot;Lato&quot;,sans-se=
+rif;color:#333333"><o:p></o:p></span></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;backgrou=
+nd:white"><b><span style=3D"font-size:16.0pt;font-family:&quot;Lato&quot;,s=
+ans-serif;color:#00BCD4">Vendredi 17 mars &nbsp;de 14h30 =E0 16H30</span></=
+b><span style=3D"font-size:10.0pt;font-family:&quot;Lato&quot;,sans-serif;c=
+olor:#333333"><o:p></o:p></span></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;backgrou=
+nd:white"><b><span style=3D"font-size:16.0pt;font-family:&quot;Lato&quot;,s=
+ans-serif;color:#FFEB3B">Loft MK2 Nation</span></b><span style=3D"font-size=
+:10.0pt;font-family:&quot;Lato&quot;,sans-serif;color:#333333"><o:p></o:p><=
+/span></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;backgrou=
+nd:white"><b><span style=3D"font-size:16.0pt;font-family:&quot;Lato&quot;,s=
+ans-serif;color:#FFEB3B">135 boulevard Diderot</span></b><span style=3D"fon=
+t-size:10.0pt;font-family:&quot;Lato&quot;,sans-serif;color:#333333"><o:p><=
+/o:p></span></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"margin-bottom:12.0pt;text-=
+align:center;background:white">
+<b><span style=3D"font-size:16.0pt;font-family:&quot;Lato&quot;,sans-serif;=
+color:#FFEB3B">75012 Paris</span></b><span style=3D"font-size:10.5pt;font-f=
+amily:&quot;Lato&quot;,sans-serif;color:#333333"><o:p></o:p></span></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center"><b><spa=
+n style=3D"font-size:18.0pt;font-family:&quot;Lato&quot;,sans-serif;color:#=
+004D65;border:none windowtext 1.0pt;padding:0cm"><a href=3D"https://website=
+-3124.eventmaker.io/fr/registration/63f38c61c25e191cc653776c">S=92inscrire
+ =E0 l=92=E9v=E8nement</a></span></b><span style=3D"font-family:&quot;Lato&=
+quot;,sans-serif"><o:p></o:p></span></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"margin-bottom:12.0pt;text-=
+align:center">
+<o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:&quot;Ar=
+ial&quot;,sans-serif;color:black;border:none windowtext 1.0pt;padding:0cm;b=
+ackground:white">L=92ambition&nbsp;du s=E9minaire est&nbsp;multiple : expos=
+er, voire confronter de nouvelles approches&nbsp;d=92exploitation scientifi=
+que
+ des&nbsp;collections de l=92INA,<strong><span style=3D"font-family:&quot;A=
+rial&quot;,sans-serif">&nbsp;</span></strong>favoriser les&nbsp;=E9changes =
+entre communaut=E9s de chercheurs, d=E9velopper une&nbsp;r=E9flexion&nbsp;=
+=E9pist=E9mologique et m=E9thodologique sur ces convergences et&nbsp;articu=
+lations&nbsp;disciplinaires
+ en m=EAme temps qu=92=E9clairer des sujets qui sont au c=9Cur du d=E9bat p=
+ublic. Pour celles et ceux qui n=92ont pas pu y assister, la
+</span><span style=3D"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-s=
+erif;border:none windowtext 1.0pt;padding:0cm"><a href=3D"https://inalelab.=
+hypotheses.org/6254">captation de la premi=E8re s=E9ance</a> avec Julia Cag=
+=E9, Benjamin Monnery et Pierre Letessier, est en ligne.<span style=3D"back=
+ground:white"><o:p></o:p></span></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:&quot;Ar=
+ial&quot;,sans-serif;border:none windowtext 1.0pt;padding:0cm;background:wh=
+ite"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:&quot;Ar=
+ial&quot;,sans-serif;color:black;border:none windowtext 1.0pt;padding:0cm;b=
+ackground:white">Au plaisir de vous y retrouver,</span><span style=3D"font-=
+size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;border:none windowtext=
+ 1.0pt;padding:0cm"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<table class=3D"MsoNormalTable" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0" style=3D"background:white;border-collapse:collapse">
+<tbody>
+<tr>
+<td width=3D"65" colspan=3D"2" valign=3D"top" style=3D"width:49.0pt;border:=
+solid white 1.0pt;padding:0cm 0cm 0cm 0cm">
+<p class=3D"MsoNormal"><span style=3D"font-size:7.0pt;font-family:&quot;Tre=
+buchet MS&quot;,sans-serif;color:black;mso-fareast-language:FR"><img border=
+=3D"0" width=3D"64" height=3D"64" style=3D"width:.6666in;height:.6666in" id=
+=3D"yiv2447406020gmail-m_-6675440649914323777Image_x0020_2" src=3D"cid:imag=
+e001.jpg@01D9559A.71BC9850" alt=3D"logo-ina.jpg"></span><span style=3D"mso-=
+fareast-language:FR"><o:p></o:p></span></p>
+</td>
+<td width=3D"513" colspan=3D"3" valign=3D"top" style=3D"width:384.45pt;bord=
+er:solid white 1.0pt;border-left:none;padding:0cm 0cm 0cm 0cm">
+<p class=3D"MsoNormal"><b><span style=3D"font-size:10.0pt;font-family:&quot=
+;Trebuchet MS&quot;,sans-serif;color:#0099CC;mso-fareast-language:FR">Arthu=
+r Lezer</span></b><span style=3D"mso-fareast-language:FR"><o:p></o:p></span=
+></p>
+<p class=3D"MsoNormal" style=3D"line-height:9.0pt"><b><span style=3D"font-s=
+ize:8.0pt;font-family:&quot;Trebuchet MS&quot;,sans-serif;color:black;mso-f=
+areast-language:FR">Ing=E9nieur de recherche</span></b><b><span style=3D"fo=
+nt-size:8.0pt;font-family:&quot;Trebuchet MS&quot;,sans-serif;mso-fareast-l=
+anguage:FR"><o:p></o:p></span></b></p>
+<p class=3D"MsoNormal" style=3D"line-height:9.0pt"><span style=3D"font-size=
+:8.0pt;font-family:&quot;Trebuchet MS&quot;,sans-serif;color:#666666;mso-fa=
+reast-language:FR">Le Lab</span><b><span style=3D"font-size:8.0pt;font-fami=
+ly:&quot;Trebuchet MS&quot;,sans-serif;mso-fareast-language:FR"><o:p></o:p>=
+</span></b></p>
+<p class=3D"MsoNormal" style=3D"line-height:9.0pt"><span style=3D"font-size=
+:8.0pt;font-family:&quot;Trebuchet MS&quot;,sans-serif;color:#666666;mso-fa=
+reast-language:FR">Direction data &amp; technologies - INA th=E8que<o:p></o=
+:p></span></p>
+</td>
+<td width=3D"50" style=3D"width:37.5pt;padding:0cm 0cm 0cm 0cm">
+<p class=3D"MsoNormal"><span style=3D"color:black">&nbsp;</span><o:p></o:p>=
+</p>
+</td>
+</tr>
+<tr style=3D"height:22.4pt">
+<td width=3D"1" style=3D"width:.75pt;padding:0cm 0cm 0cm 0cm;height:22.4pt"=
+>
+<p class=3D"MsoNormal"><span style=3D"color:black">&nbsp;</span><o:p></o:p>=
+</p>
+</td>
+<td width=3D"417" colspan=3D"2" style=3D"width:312.9pt;border-top:none;bord=
+er-left:solid #EEEEEE 1.0pt;border-bottom:solid white 1.0pt;border-right:so=
+lid #EEEEEE 1.0pt;background:#EEEEEE;padding:0cm 0cm 0cm 5.65pt;height:22.4=
+pt">
+<p class=3D"MsoNormal"><span style=3D"font-size:7.0pt;font-family:&quot;Tre=
+buchet MS&quot;,sans-serif;color:black;mso-fareast-language:FR"><a href=3D"=
+https://institut.ina.fr/" target=3D"_blank"><b><span style=3D"font-size:7.5=
+pt;color:#666666">institut.ina.fr</span></b></a></span><span style=3D"color=
+:#201F1E;mso-fareast-language:FR"><o:p></o:p></span></p>
+</td>
+<td width=3D"27" style=3D"width:20.3pt;border-top:none;border-left:none;bor=
+der-bottom:solid white 1.0pt;border-right:solid #EEEEEE 1.0pt;background:#E=
+EEEEE;padding:.75pt .75pt .75pt .75pt;height:22.4pt">
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center"><span s=
+tyle=3D"font-size:5.0pt;font-family:&quot;Trebuchet MS&quot;,sans-serif;col=
+or:black;mso-fareast-language:FR"><img border=3D"0" width=3D"12" height=3D"=
+10" style=3D"width:.125in;height:.1041in" id=3D"Image_x0020_2" src=3D"cid:i=
+mage002.png@01D9559A.71BC9850"></span><span style=3D"color:#201F1E;mso-fare=
+ast-language:FR"><o:p></o:p></span></p>
+</td>
+<td width=3D"182" colspan=3D"2" style=3D"width:136.6pt;border-top:none;bord=
+er-left:none;border-bottom:solid white 1.0pt;border-right:solid #EEEEEE 1.0=
+pt;background:#EEEEEE;padding:.75pt .75pt .75pt .75pt;height:22.4pt">
+<p class=3D"MsoNormal"><span style=3D"font-size:7.0pt;font-family:&quot;Tre=
+buchet MS&quot;,sans-serif;color:black;mso-fareast-language:FR"><a href=3D"=
+https://twitter.com/ina_audiovisuel" target=3D"_blank"><span style=3D"font-=
+size:7.5pt;color:#666666">@Ina_audiovisuel</span></a></span><span style=3D"=
+color:#201F1E;mso-fareast-language:FR"><o:p></o:p></span></p>
+</td>
+</tr>
+<tr height=3D"0">
+<td width=3D"4" style=3D"border:none"></td>
+<td width=3D"64" style=3D"border:none"></td>
+<td width=3D"353" style=3D"border:none"></td>
+<td width=3D"27" style=3D"border:none"></td>
+<td width=3D"133" style=3D"border:none"></td>
+<td width=3D"50" style=3D"border:none"></td>
+</tr>
+</tbody>
+</table>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+</body>
+</html>
+
+--_000_DB7PR04MB5001F3BA0732BDD29EE10096A3B99DB7PR04MB5001eurp_--
+
+--_005_DB7PR04MB5001F3BA0732BDD29EE10096A3B99DB7PR04MB5001eurp_
+Content-Type: image/jpeg; name="image001.jpg"
+Content-Description: image001.jpg
+Content-Disposition: inline; filename="image001.jpg"; size=4351;
+	creation-date="Mon, 13 Mar 2023 09:58:55 GMT";
+	modification-date="Mon, 13 Mar 2023 09:58:55 GMT"
+Content-ID: <image001.jpg@01D9559A.71BC9850>
+Content-Transfer-Encoding: base64
+
+/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABaAAD/4QOqaHR0cDov
+L25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENl
+aGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4
+OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjMtYzAxMSA2Ni4xNDU2NjEsIDIwMTIvMDIvMDYtMTQ6
+NTY6MjcgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5
+OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHht
+bG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0i
+aHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1sbnM6eG1w
+PSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3Jn
+L2RjL2VsZW1lbnRzLzEuMS8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QzM1MkEyMENDNDgx
+MTFFM0ExOUU4QkU1MzIxRTJCNkUiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QzM1MkEyMEJD
+NDgxMTFFM0ExOUU4QkU1MzIxRTJCNkUiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgSWxsdXN0cmF0
+b3IgQ1MzIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NDQz
+OEJEMjFCQzAwMTFFM0JFNjBCOUQzRkIxNTMyRDIiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6
+NDQzOEJEMjJCQzAwMTFFM0JFNjBCOUQzRkIxNTMyRDIiLz4gPGRjOnRpdGxlPiA8cmRmOkFsdD4g
+PHJkZjpsaSB4bWw6bGFuZz0ieC1kZWZhdWx0Ij5JbXByaW1lcjwvcmRmOmxpPiA8L3JkZjpBbHQ+
+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
+K9pyvacr2nK9oIYfaf/ZAAAAAA==
+
+--_005_DB7PR04MB5001F3BA0732BDD29EE10096A3B99DB7PR04MB5001eurp_
+Content-Type: image/png; name="image002.png"
+Content-Description: image002.png
+Content-Disposition: inline; filename="image002.png"; size=522;
+	creation-date="Mon, 13 Mar 2023 09:58:55 GMT";
+	modification-date="Mon, 13 Mar 2023 09:58:55 GMT"
+Content-ID: <image002.png@01D9559A.71BC9850>
+Content-Transfer-Encoding: base64
+
+iVBORw0KGgoAAAANSUhEUgAAAAwAAAAKCAYAAACALL/6AAAB0UlEQVQoU01RO2gTcRz+fnf/uyS9
+GHMmxNQQKUKiCFGw0qiDbynYKh26iEO1Q7OIk7ooLiLSRXQRi4jQofhAsGDBokgpDsWiQwlFWkmN
+kaaPtLk0TXK5118SUPrN35OPshpXb0wXnTfndpSwBaOZzZ3Pf27cnNfMRE9UGdqmYDYiCzJdm1y+
+9W3NOLkvwPpeHG9dbWg45+KVieV3w3Pl7t0KAxMIkgD0xX2DdG+6ePHhzPpoIujK7Vfluz/sysu9
+Qsv5ibw+XDZsJaIwLNZsqG4h9/RY6DKNZDYPPEuXxr+u1MKqS0TML2VNy1lbN3mCAIkRsFSzkAy5
+X/e2iv30ZFY7+3hG+0gcYCKhoNvNCqpLaC5iRPhdNtHT5h2MInSHFjh3P/iy8ujVXDnV5pP+z7Y4
+IAtAsc5h2BxX476j948EpqjByFWNZNdYfipfsRDxMpgOIBKaSd/zNVw/6B/pioUGOsNUaQoa6Hz/
+55Rm2EOFuhPzSSJMhyNdqON0tCV9uz3QfWaXJ9vg0cDnpeTYYvVC1MvabZtOrOqWR3c4LAfoCLo+
+9caUVH/cn/lnTG+z2p7xX/ql+Q2ro1R3JJmEasQrLhwKez4Eze2TqcNkbj30L651ufHTGIcoAAAA
+AElFTkSuQmCC
+
+--_005_DB7PR04MB5001F3BA0732BDD29EE10096A3B99DB7PR04MB5001eurp_--

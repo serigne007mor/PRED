@@ -1,0 +1,555 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (BounceSMTP1.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 6D4C514006F3
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed, 22 Jul 2020 12:55:36 +0200 (CEST)
+Received: from mx3.d101.univ-nantes.fr (MX3.univ-nantes.fr [193.52.101.137])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id 5A9DB6D1ABA
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed, 22 Jul 2020 12:55:36 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTP id 56926414ACA7
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 22 Jul 2020 12:55:36 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -10.778
+X-Spam-Level:
+X-Spam-Status: No, score=-10.778 tagged_above=-1000 required=5
+	tests=[CRM114_GOOD=-5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	IMPRONONCABLE_2=1.5, J_BACKHAIR_25=1, J_CHICKENPOX_65=0.6,
+	MONOTONE_WORDS_15_2=1, MR_NOT_ATTRIBUTED_IP=0.2, NO_RDNS2=0.01,
+	RCVD_IN_DNSWL_MED=-10, RCVD_IN_MSPIKE_H4=0.001,
+	RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_WSFF=0.01, SPF_HELO_PASS=-0.001,
+	SPF_PASS=-0.001, UN_PHISHING_PW=0.1, URIBL_BLOCKED=0.001]
+	autolearn=disabled
+X-CRM114-Status: GOOD ( 10.7341 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=univ-eiffel.fr
+Received: from mx3.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id GW2ZZ2EAtDYV for <liste-egc@polytech.univ-nantes.fr>;
+	Wed, 22 Jul 2020 12:55:32 +0200 (CEST)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from smtp-out.ifsttar.fr (smtp-out.ifsttar.fr [137.121.250.9])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTP id B158041466C0
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 22 Jul 2020 12:55:32 +0200 (CEST)
+Received: from mail.ifsttar.fr (mail.ifsttar.fr [137.121.250.44])
+	by smtp-out.ifsttar.fr (Postfix) with ESMTPS id C0A43605F1;
+	Wed, 22 Jul 2020 12:55:30 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-eiffel.fr;
+	s=mail; t=1595415332;
+	bh=vt8TQGbptq1kTW9AHwIYLn0xwebEWHXTOM6pgNTJr8U=;
+	h=From:Reply-To:Date:Subject:Cc:To:From;
+	b=KzWkfBEurSEvMqaH5jH7rbhfxP74+7JbhyvYhBcGwDV3cu6XiLTVj0M2hDPLbzABn
+	 /5/UVAjjLjLFDmuuaXajHEdmYz34z5ItPz8+wHy0aPFsbn9WxMuoe61w50sC5tBwbr
+	 hZxHXsFXDP2V/MryqafAaIUSJmiO/Zb+W3I0KwGO68HTPGMTePv9AIlI2S6+sGiI97
+	 dnO/71BJLgJLUKysZlUNdjxNdo+jBHAG4hhHd8Yzy368leWvRj2F84AB+Kt97Y6mPu
+	 xEBQZWBD3+kcQztPtI7WuFq7u2vBf2jUufDOuveV2mvzYTBxLJ9toWKUi4WWHCK+hc
+	 0/43Bwnu8JsRA==
+Received: from mail.ifsttar.fr (localhost.localdomain [127.0.0.1])
+	by mail.ifsttar.fr (Postfix) with ESMTPS id 90E989FCE1;
+	Wed, 22 Jul 2020 12:55:30 +0200 (CEST)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.ifsttar.fr (Postfix) with ESMTP id 5D7A29FD0A;
+	Wed, 22 Jul 2020 12:55:30 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mail.ifsttar.fr
+Received: from mail.ifsttar.fr ([127.0.0.1])
+	by localhost (mail.ifsttar.fr [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id 23SHF6Ibph4a; Wed, 22 Jul 2020 12:55:30 +0200 (CEST)
+Received: from [192.168.1.94] (176-171-138-217.abo.bbox.fr [176.171.138.217])
+	by mail.ifsttar.fr (Postfix) with ESMTPSA id 6D4B39FC3F;
+	Wed, 22 Jul 2020 12:55:28 +0200 (CEST)
+From: Angelo Furno <angelo.furno@univ-eiffel.fr>
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_3078DED8-E0CD-45E4-9909-6C1025BD9E20"
+Reply-To: Angelo Furno <angelo.furno@univ-eiffel.fr>,
+ "N.-E. EL FAOUZI" <nour-eddin.elfaouzi@univ-eiffel.fr>
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.1\))
+Date: Wed, 22 Jul 2020 12:55:27 +0200
+Cc: "N.-E. EL FAOUZI" <nour-eddin.elfaouzi@univ-eiffel.fr>
+To: postdoc.cs@maillist.au.dk,
+ socnet@lists.ufl.edu,
+ rsd-forum@cines.fr,
+ gdr.gpl@imag.fr,
+ mycolleagues@mailman.ufsc.br,
+ dbworld@cs.wisc.edu,
+ seworld@sigsoft.org,
+ annonces@madics.fr,
+ abj30-friends@chrispy.net,
+ calls@datasciences.info,
+ liste-egc@polytech.univ-nantes.fr,
+ ucam-cnn@lists.cam.ac.uk,
+ lcn2@googlegroups.com,
+ redes@listserv.rediris.es,
+ simsoc@jiscmail.ac.uk,
+ polmeth@listserv.wustl.edu,
+ privacy-list@lists.fas.harvard.edu,
+ contactcom@iscpif.fr,
+ comunicacion@c3.unam.mx,
+ gazettebd3@univ-grenoble-alpes.fr,
+ netmob@listes.uclouvain.be,
+ distributed-computing-announce@datasys.cs.iit.edu,
+ ai-sges@jiscmail.ac.uk,
+ cloud-sig@jiscmail.ac.uk,
+ distributed-ai@jiscmail.ac.uk,
+ infosys-research@jiscmail.ac.uk,
+ performance@merlot.usc.edu
+Message-Id: <77597795-D4C6-4FA3-B6AB-ADCF82519D89@univ-eiffel.fr>
+X-Mailer: Apple Mail (2.3608.120.23.2.1)
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] [Call for postdoc at LICIT, University Gustave Eiffel]
+ Improving security for Paris 2024 Olympique Games: discovering anomalous
+ urban situations via real-time analysis of mobile phone data
+
+
+--Apple-Mail=_3078DED8-E0CD-45E4-9909-6C1025BD9E20
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
+
+Dear colleagues,
+
+We are looking for an enthusiastic research fellow (with a Phd or with a =
+Phd defence scheduled in=20
+the upcoming months on a topic related to CS, ML, signal processing or =
+Applied Maths), =20
+potentially interested in our nationally funded open post-doctoral =
+position, entitled:
+
+Improving security for Paris 2024 Olympique Games: discovering anomalous =
+urban situations via real-time analysis of mobile phone data
+
+Please, consider sharing this call among potential candidates and =
+colleagues.
+
+If interested to apply, please send the following documents to =
+angelo.furno@univ-eiffel.fr <mailto:angelo.furno@univ-eiffel.fr> and =
+nour-eddin.elfaouzi@univ-eiffel.fr =
+<mailto:nour-eddin.elfaouzi@univ-eiffel.fr> :
+A curriculum vitae;
+Transcript of records (marks) up to the Master degree;
+The Phd Thesis manuscript;
+A research letter discussing a personal vision of the position, wrt =
+references proposed in the call (see below)
+At least, one recommendation letter and a list of references to contact.
+A PhD on a computer science / data analysis / machine learning / applied =
+maths / statistics topic is required.
+
+Apologies for cross-posting.
+Thanks!
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=20
+Title: Improving security for Paris 2024 Olympique Games: discovering =
+anomalous urban situations via real-time analysis of mobile phone data
+Postdoctoral position (12 months)
+Primary research field: Computer Science - Machine Learning - Data =
+Science
+Secondary research field: Statistics - Signal Processing
+Start date: September 2020
+
+Program Benefits=20
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=20
+Net salary: ~2,000-2300 Euros per month. Some additional income can be =
+earned by teaching.=20
+Academic and industrial professional development including travel =
+support.
+Interaction with world-renowned external board members and speakers=20
+Travel grant for attending conferences and workshops.=20
+
+Research Center: University Gustave Eiffel - Campus Lyon, LICIT =
+laboratory
+(25 avenue Francois Mitterand, Bron, France).
+
+Project Team
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Angelo FURNO (Researcher), LICIT, University of Lyon, ENTPE, UNIVERSIT=C3=89=
+ GUSTAVE EIFFEL-COSYS
+Nour-Eddin EL FAOUZI (Lab Director), LICIT, University of Lyon, ENTPE, =
+UNIVERSIT=C3=89 GUSTAVE EIFFEL-COSYS
+Marco FIORE (Researcher), IMDEA, Madrid, Spain
+Zbigniew SMOREDA (Researcher) and Tamara TOSIC (Researcher), Orange, =
+France
+Eric GAUME (Lab Director), UNIVERSIT=C3=89 GUSTAVE EIFFEL-GERS
+
+Postdoc project description
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=20
+The goal of the project is to demonstrate the possibility to detect and =
+locate, in real-time, unusual or critical situations=20
+in urban areas (e.g., attacks, fires, sudden weather-related events, =
+etc.), based on the analysis of mobile phone probe
+network data.=20
+This detection will be complemented with information extracted from =
+social networks (i.e., Twitter in the context of the=20
+project) and other sources of contextual data.
+
+The Postdoc will have the unique opportunity to work on large-scale, =
+already available mobile phone datasets, collected=20
+by the Orange French network provider, consisting in 2G, 3G and 4G =
+network probe data, as well as more traditional=20
+Call Detail Records (CDR).=20
+Additionally, novel highly-detailed datasets on the usages of Internet =
+mobile phone apps from mobile phone users will=20
+be specifically collected in the framework of the project, as well as =
+detailed information on the nature, occurrence and=20
+location of possible incidents during the observed events.=20
+
+In a first phase, the activity of the postdoctoral candidate will =
+consist in analyzing the collected data and extracting,=20
+via machine learning techniques and previous work from the team [2, 3].
+In a second phase, the postdoctoral fellow is expected to explore and =
+define efficient classification techniques [4, 5]=20
+for the inference of atypical situations (increase in the volume of the =
+communication and consumption activity of certain
+services, sudden growth of mobility-related events, change of signal =
+shape, etc.).
+
+=46rom a methodological point of view, the main challenge is to develop =
+a classification method that can work in real time.=20
+To achieve this goal, a method combining artificial intelligence (AI) =
+and statistical learning will be designed and implemented=20
+(neural networks-based approaches, curve classification method, kernel =
+method or generative method).=20
+
+As the volume of data to be analyzed is expected to be significant, the =
+detection of anomalies and the periodic update
+of local signatures will have to be carried out as close as possible to =
+the source of the data flows so as to minimize network=20
+load and latency (Mobile Edge Computing).
+
+=46rom a technology perspective, the computational complexity of data =
+mining requires the use of appropriate solutions=20
+for real-time and scalable implementation.=20
+As part of the project we will explore the use of Apache Kafka, =
+TensorFlow and Apache Flink open source platforms=20
+to meet this criterion.
+
+It is expected that the successful candidate will contribute to top-tier =
+computer networks, self-adaptive distributed systems,=20
+big data and machine-learning conferences and journals (IEEE INFOCOM, =
+IEEE ICDM, ACM SIGKDD, IEEE Big Data,=20
+IEEE Transactions on Autonomous and Adaptive Systems, IEEE Intelligent =
+Transportation Systems, etc.).
+
+Please do not hesitate to contact me angelo.furno@univ-eiffel.fr =
+<mailto:angelo.furno@univ-eiffel.fr> or Pr. Nour-Eddin EL FAOUZI
+nour-eddin.elfaouzi@univ-eiffel.fr =
+<mailto:nour-eddin.elfaouzi@univ-eiffel.fr> and share CVs of any contact =
+potentially interested to our proposal.=20
+
+We are ready to schedule a Skype interview to discuss more about the =
+available position.
+The postdoctoral position is expected to start in September/October 2020 =
+at latest.
+
+The link to the full call is available here:=20
+=
+https://www.dropbox.com/s/t85oukwe1huyh3g/Call%20for%20postdoc%20-%20DISCR=
+ET.pdf?dl=3D0 =
+<https://www.dropbox.com/s/t85oukwe1huyh3g/Call%20for%20postdoc%20-%20DISC=
+RET.pdf?dl=3D0>=20
+
+
+Bib references
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=20
+[1] D. Naboulsi, M. Fiore, S. Ribot, and R. Stanica, =E2=80=9CLarge-scale =
+mobile traffic analysis: a survey,=E2=80=9D IEEE Communications Surveys =
+& Tutorials, vol. 18, no. 1, pp. 124=E2=80=93161, 2015.
+[2] A. Furno, M. Fiore and R. Stanica, "Joint spatial and temporal =
+classification of mobile traffic demands," in INFOCOM 2017-IEEE =
+Conference on Computer Communications, IEEE, 2017.
+[3] A. Furno, M. Fiore, R. Stanica, C. Ziemlicki and Z. Smoreda, "A tale =
+of ten cities: Characterizing signatures of mobile traffic in urban =
+areas," IEEE Transactions on Mobile Computing, vol. 16, pp. 2682-2696, =
+2017.=20
+[4] L. Fahrmeir, T. Kneib, S. Lang, B. Marx. =E2=80=9CRegression : =
+Models, Methods and Applications=E2=80=9D. Berlin: Springer. p. 663, =
+2013.
+[5] A. Ben-Aissa, N.-E. El Faouzi, and E. Lefevre, =E2=80=9CClassification=
+ multisource via la th=C3=A9orie des fonctions de croyance: application =
+=C3=A0 l=E2=80=99estimation du temps de parcours,=E2=80=9D Revue de =
+Statistique Appliqu=C3=A9e, p. 17p, 2009.
+[6] X. Wang, Y. Han, C. Wang, Q. Zhao, X. Chen, and M. Chen, =E2=80=9CIn-e=
+dge ai: Intelligentizing mobile edge computing, caching and =
+communication by federated learning,=E2=80=9D arXiv preprint =
+arXiv:1809.07857, 2018.
+[7] N. di Pietro, M. Merluzzi, E. C. Strinati, and S. Barbarossa, =
+=E2=80=9CResilient design of 5g mobile-edge computing over intermittent =
+mmwave links,=E2=80=9D arXiv preprint arXiv:1901.01894, 2019.
+Thank you in advance for your support.
+
+Best regards,
+Angelo Furno
+____________________________________
+Researcher,=20
+LICIT laboratory (Lyon, France),
+University of Lyon & University Gustave-Eiffel,
+ENTPE, INRIA - AGORA, IXXI,
+web: http://people.licit-lyon.eu/furno =
+<http://people.licit-lyon.eu/furno>
+phone: +33 (0)4 78 65 68 70
+skype: angelo.furno
+
+
+--Apple-Mail=_3078DED8-E0CD-45E4-9909-6C1025BD9E20
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
+charset=3Dutf-8"></head><body style=3D"word-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;" class=3D""><div =
+dir=3D"auto" class=3D"" style=3D"word-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;"><div =
+class=3D"">Dear colleagues,</div><div class=3D""><br class=3D""></div><div=
+ class=3D""><span class=3D"">We are looking for</span><b =
+class=3D"">&nbsp;an enthusiastic research fellow&nbsp;</b><b =
+class=3D"">(with a Phd&nbsp;</b><b class=3D"">or with a&nbsp;</b><b =
+class=3D"">Phd defence&nbsp;scheduled in&nbsp;</b></div><div class=3D""><b=
+ class=3D"">the upcoming months on a topic related to CS, ML, =
+signal&nbsp;</b><b class=3D"">processing&nbsp;</b><b class=3D"">or =
+Applied Maths), &nbsp;</b></div><div class=3D""><b class=3D"">potentially =
+interested in our nationally funded&nbsp;</b><b class=3D"">open =
+post-doctoral position, entitled:</b></div><div class=3D""><b =
+class=3D""><br class=3D""></b></div><div class=3D""><b class=3D""><i =
+class=3D"">Improving security for Paris 2024 Olympique&nbsp;Games: =
+discovering anomalous&nbsp;</i></b><b class=3D""><i class=3D"">urban =
+situations via real-time analysis of mobile&nbsp;phone =
+data</i></b></div><div class=3D""><br class=3D""></div>Please, consider =
+sharing this call among potential candidates and colleagues.</div><div =
+dir=3D"auto" class=3D"" style=3D"word-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;"><div =
+class=3D""><div class=3D""><div class=3D""><br class=3D""></div><div =
+class=3D""><div class=3D"">If interested to apply, please send the =
+following documents to&nbsp;<a href=3D"mailto:angelo.furno@univ-eiffel.fr"=
+ class=3D"">angelo.furno@univ-eiffel.fr</a>&nbsp;and&nbsp;<a =
+href=3D"mailto:nour-eddin.elfaouzi@univ-eiffel.fr" =
+class=3D"">nour-eddin.elfaouzi@univ-eiffel.fr</a>&nbsp;:</div><div =
+class=3D""><ul class=3D""><li class=3D""><b class=3D"">A curriculum =
+vitae;</b></li><li class=3D""><b class=3D"">Transcript of records =
+(marks) up to the Master degree;</b></li><li class=3D""><b class=3D"">The =
+Phd Thesis manuscript;</b></li><li class=3D""><b class=3D"">A research =
+letter discussing a personal&nbsp;vision of the position, wrt references =
+proposed in the call (see below)</b></li><li class=3D""><b class=3D"">At =
+least, one recommendation letter and a list of references to =
+contact.</b></li></ul><div class=3D"">A PhD on a computer science / data =
+analysis / machine learning / applied maths / statistics topic is =
+required.</div></div><div class=3D""><br class=3D""></div><div =
+class=3D"">Apologies for cross-posting.</div><div =
+class=3D"">Thanks!</div></div></div><div class=3D""><span class=3D"" =
+style=3D"background-color: rgb(255, 255, 255);"><br =
+class=3D""></span></div><div class=3D""><span class=3D"" =
+style=3D"background-color: rgb(255, 255, =
+255);">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D&nbsp;</span></div><div class=3D""><span =
+class=3D""><span class=3D""><b class=3D""><span =
+class=3D"">Title:&nbsp;</span><i class=3D"">Improving security for Paris =
+2024 Olympique Games: discovering anomalous urban situations via =
+real-time analysis of mobile phone data</i></b></span></span></div><div =
+class=3D""><b class=3D"">Postdoctoral position (12 months)</b></div><div =
+class=3D""><span class=3D""><b class=3D"">Primary research =
+field:</b>&nbsp;Computer Science - Machine Learning - Data =
+Science</span></div><div class=3D""><b class=3D"">Secondary research =
+field:&nbsp;</b>Statistics - Signal Processing</div><div class=3D""><b =
+class=3D"">Start date: </b><span class=3D"">September =
+2020</span></div><div class=3D""><br class=3D""></div><div =
+class=3D""><span class=3D"" style=3D"background-color: rgb(255, 255, =
+255);">Program Benefits&nbsp;</span><br class=3D"" =
+style=3D"background-color: rgb(255, 255, 255);"><span class=3D"" =
+style=3D"background-color: rgb(255, 255, =
+255);">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D&nbsp;</span><br =
+class=3D"" style=3D"background-color: rgb(255, 255, 255);"><span =
+class=3D"" style=3D"background-color: rgb(255, 255, 255);">Net salary: =
+~2,000-2300 Euros per month.&nbsp;</span><span class=3D"" =
+style=3D"background-color: rgb(255, 255, 255);">Some additional income =
+can be earned by teaching.&nbsp;</span></div><div class=3D""><span =
+class=3D"" style=3D"background-color: rgb(255, 255, 255);">Academic and =
+industrial professional development including travel support.</span><br =
+class=3D"" style=3D"background-color: rgb(255, 255, 255);"><span =
+class=3D"" style=3D"background-color: rgb(255, 255, 255);">Interaction =
+with world-renowned external board members and speakers&nbsp;</span><br =
+class=3D"" style=3D"background-color: rgb(255, 255, 255);"><span =
+class=3D"" style=3D"background-color: rgb(255, 255, 255);">Travel grant =
+for attending conferences and workshops.&nbsp;</span><br class=3D"" =
+style=3D"background-color: rgb(255, 255, 255);"><br class=3D"" =
+style=3D"background-color: rgb(255, 255, 255);"><span class=3D"" =
+style=3D"background-color: rgb(255, 255, 255);"><b class=3D"">Research =
+Center: University Gustave Eiffel - Campus Lyon, LICIT =
+laboratory</b></span></div><div class=3D""><span class=3D"" =
+style=3D"background-color: rgb(255, 255, 255);"><b class=3D"">(25 avenue =
+Francois Mitterand, Bron, France).</b></span></div><div class=3D""><span =
+class=3D"" style=3D"background-color: rgb(255, 255, 255);"><br =
+class=3D""></span></div><div class=3D""><span class=3D"" =
+style=3D"background-color: rgb(255, 255, 255);">Project =
+Team</span></div><div class=3D""><span class=3D"" =
+style=3D"background-color: rgb(255, 255, =
+255);">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</span></div><div =
+class=3D""><span style=3D"font-size: 10pt; font-family: Arial, =
+sans-serif; text-indent: -18pt; background-color: rgb(255, 255, 255);" =
+class=3D"">Angelo FURNO (Researcher), LICIT, University of Lyon, ENTPE, =
+UNIVERSIT=C3=89 GUSTAVE EIFFEL-COSYS</span></div><div class=3D""><span =
+style=3D"font-family: Arial, sans-serif; font-size: 10pt; text-indent: =
+-18pt; background-color: rgb(255, 255, 255);" class=3D"">Nour-Eddin EL =
+FAOUZI (Lab Director), LICIT, University
+of Lyon, ENTPE, UNIVERSIT=C3=89 GUSTAVE EIFFEL-COSYS</span></div><div =
+class=3D""><span style=3D"font-family: Arial, sans-serif; font-size: =
+10pt; text-indent: -18pt; background-color: rgb(255, 255, 255);" =
+class=3D"">Marco FIORE (Researcher), IMDEA, Madrid, =
+Spain</span></div><div class=3D""><span style=3D"font-family: Arial, =
+sans-serif; font-size: 10pt; text-indent: -18pt; background-color: =
+rgb(255, 255, 255);" class=3D"">Zbigniew SMOREDA&nbsp;</span><span =
+style=3D"font-family: Arial, sans-serif; font-size: =
+13.333333015441895px; text-indent: -24px; background-color: rgb(255, =
+255, 255);" class=3D"">(Researcher)&nbsp;</span><span =
+style=3D"font-family: Arial, sans-serif; font-size: 10pt; text-indent: =
+-18pt; background-color: rgb(255, 255, 255);" class=3D"">and Tamara =
+TOSIC (Researcher), Orange, France</span></div><div class=3D""><span =
+style=3D"font-family: Arial, sans-serif; font-size: 10pt; text-indent: =
+-18pt; background-color: rgb(255, 255, 255);" class=3D"">Eric GAUME (Lab =
+Director), UNIVERSIT=C3=89 GUSTAVE
+EIFFEL-GERS</span></div><div class=3D""><span class=3D"" =
+style=3D"background-color: rgb(255, 255, 255);"><br =
+class=3D""></span></div><div class=3D""><span class=3D"" =
+style=3D"background-color: rgb(255, 255, 255);">Postdoc project =
+description</span></div><span class=3D"" style=3D"background-color: =
+rgb(255, 255, 255);">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D&nbsp=
+;</span><div class=3D"">The goal of the project is to&nbsp;demonstrate =
+the possibility to detect and locate, in real-time, unusual =
+or&nbsp;critical situations&nbsp;</div><div class=3D"">in urban areas =
+(e.g., attacks, fires, sudden&nbsp;weather-related events, etc.), based =
+on the analysis of <b class=3D"">mobile phone probe</b></div><div =
+class=3D""><b class=3D"">network data.&nbsp;</b></div><div class=3D"">This=
+ detection will be complemented with&nbsp;information =
+extracted&nbsp;from social networks (i.e., Twitter in the context of =
+the&nbsp;</div><div class=3D"">project) and other&nbsp;sources of =
+contextual data.</div><div class=3D""><br class=3D""></div><div =
+class=3D""><div class=3D""><b class=3D"">The Postdoc will have the =
+unique opportunity to work on large-scale, already available mobile =
+phone datasets, collected&nbsp;</b></div><div class=3D""><b class=3D"">by =
+the Orange French network provider, consisting in 2G, 3G and 4G network =
+probe data, as well as more traditional&nbsp;</b></div><div class=3D""><b =
+class=3D"">Call Detail Records (CDR).&nbsp;</b></div><div =
+class=3D"">Additionally, novel highly-detailed datasets on the usages of =
+Internet mobile phone apps from mobile phone users will&nbsp;</div><div =
+class=3D"">be specifically collected in the framework of the project, as =
+well as detailed information on the nature, occurrence =
+and&nbsp;</div><div class=3D"">location of possible incidents during the =
+observed events.&nbsp;</div><div class=3D""><br class=3D""></div><div =
+class=3D"">In a first phase, the activity of the postdoctoral candidate =
+will consist in analyzing the collected data and =
+extracting,&nbsp;</div><div class=3D"">via machine learning techniques =
+and previous work from the team [2, 3].</div><div class=3D"">In a second =
+phase, the postdoctoral fellow is expected to explore and define =
+efficient classification techniques [4, 5]&nbsp;</div><div class=3D"">for =
+the inference of atypical situations (increase in the volume of the =
+communication and consumption activity of certain</div><div =
+class=3D"">services, sudden growth of mobility-related events, change of =
+signal shape, etc.).</div><div class=3D""><br class=3D""></div><div =
+class=3D"">=46rom a methodological point of view, the main challenge is =
+to develop a classification method that can work in real =
+time.&nbsp;</div><div class=3D"">To achieve this goal, a method =
+combining artificial intelligence (AI) and statistical learning will be =
+designed and implemented&nbsp;</div><div class=3D"">(neural =
+networks-based approaches, curve classification method, kernel method or =
+generative method).&nbsp;</div><div class=3D""><br class=3D""></div><div =
+class=3D"">As the volume of data to be&nbsp;analyzed is expected to be =
+significant, the detection of anomalies and the&nbsp;periodic =
+update</div><div class=3D"">of local signatures will have to be carried =
+out as&nbsp;close as possible to the source of the data flows so as to =
+minimize network&nbsp;</div><div class=3D"">load and latency (Mobile =
+Edge Computing).</div><div class=3D""><br class=3D"">=46rom a technology =
+perspective, the&nbsp;computational complexity of data mining requires =
+the use of appropriate&nbsp;solutions&nbsp;</div><div class=3D"">for =
+real-time and scalable implementation.&nbsp;</div><div class=3D"">As =
+part of the project we&nbsp;will explore the use of Apache Kafka, =
+TensorFlow and Apache Flink open source&nbsp;platforms&nbsp;</div><div =
+class=3D"">to meet this criterion.</div><div class=3D""><br class=3D"">It =
+is expected that the successful&nbsp;candidate will contribute to =
+top-tier computer networks, self-adaptive&nbsp;distributed =
+systems,&nbsp;</div><div class=3D"">big data and machine-learning =
+conferences and journals&nbsp;(IEEE INFOCOM, IEEE ICDM, ACM SIGKDD, IEEE =
+Big Data,&nbsp;</div><div class=3D"">IEEE Transactions =
+on&nbsp;Autonomous and Adaptive&nbsp;Systems, IEEE&nbsp;Intelligent =
+Transportation Systems, etc.).</div></div><div class=3D""><br =
+class=3D""></div><div class=3D"">Please do not hesitate to contact =
+me&nbsp;<a href=3D"mailto:angelo.furno@univ-eiffel.fr" =
+class=3D"">angelo.furno@univ-eiffel.fr</a>&nbsp;or Pr. Nour-Eddin EL =
+FAOUZI</div><div class=3D""><a =
+href=3D"mailto:nour-eddin.elfaouzi@univ-eiffel.fr" =
+class=3D"">nour-eddin.elfaouzi@univ-eiffel.fr</a>&nbsp;and share CVs of =
+any contact potentially interested to our proposal.&nbsp;</div><div =
+class=3D""><br class=3D""></div><div class=3D"">We are ready to schedule =
+a Skype interview to discuss more about the available =
+position.</div><div class=3D""><b class=3D"">The postdoctoral position =
+is expected to start in September/October 2020 at latest.</b></div><div =
+class=3D""><b class=3D""><br class=3D""></b></div><div class=3D"">The =
+link to the full call is available here:&nbsp;</div><div class=3D""><a =
+href=3D"https://www.dropbox.com/s/t85oukwe1huyh3g/Call for postdoc - =
+DISCRET.pdf?dl=3D0" =
+class=3D"">https://www.dropbox.com/s/t85oukwe1huyh3g/Call%20for%20postdoc%=
+20-%20DISCRET.pdf?dl=3D0</a>&nbsp;</div><div class=3D""><br =
+class=3D""></div><div class=3D""><b class=3D""><br =
+class=3D""></b></div><div class=3D""><span class=3D"">Bib =
+references</span></div><div class=3D""><span class=3D""><span =
+style=3D"background-color: rgb(255, 255, 255);" =
+class=3D"">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D&nbsp;</span><f=
+ont face=3D"Arial, sans-serif" size=3D"2" class=3D""><div class=3D"" =
+style=3D"text-align: justify;">[1] D. Naboulsi, M. Fiore, S. Ribot, and =
+R. Stanica, =E2=80=9CLarge-scale mobile traffic analysis: a survey,=E2=80=9D=
+ IEEE Communications Surveys &amp; Tutorials, vol. 18, no. 1, pp. =
+124=E2=80=93161, 2015.</div><div class=3D"" style=3D"text-align: =
+justify;">[2] A. Furno, M. Fiore and R. Stanica, "Joint spatial and =
+temporal classification of mobile traffic demands," in INFOCOM 2017-IEEE =
+Conference on Computer Communications, IEEE, 2017.</div><div class=3D"" =
+style=3D"text-align: justify;">[3] A. Furno, M. Fiore, R. Stanica, C. =
+Ziemlicki and Z. Smoreda, "A tale of ten cities: Characterizing =
+signatures of mobile traffic in urban areas," IEEE Transactions on =
+Mobile Computing, vol. 16, pp. 2682-2696, 2017.&nbsp;</div><div class=3D""=
+ style=3D"text-align: justify;">[4] L. Fahrmeir, T. Kneib, S. Lang, B. =
+Marx. =E2=80=9CRegression : Models, Methods and Applications=E2=80=9D. =
+Berlin: Springer. p. 663, 2013.</div><div class=3D"" style=3D"text-align: =
+justify;">[5] A. Ben-Aissa, N.-E. El Faouzi, and E. Lefevre, =
+=E2=80=9CClassification multisource via la th=C3=A9orie des fonctions de =
+croyance: application =C3=A0 l=E2=80=99estimation du temps de =
+parcours,=E2=80=9D Revue de Statistique Appliqu=C3=A9e, p. 17p, =
+2009.</div><div class=3D"" style=3D"text-align: justify;">[6] X. Wang, =
+Y. Han, C. Wang, Q. Zhao, X. Chen, and M. Chen, =E2=80=9CIn-edge ai: =
+Intelligentizing mobile edge computing, caching and communication by =
+federated learning,=E2=80=9D arXiv preprint arXiv:1809.07857, =
+2018.</div><div class=3D"" style=3D"text-align: justify;">[7] N. di =
+Pietro, M. Merluzzi, E. C. Strinati, and S. Barbarossa, =E2=80=9CResilient=
+ design of 5g mobile-edge computing over intermittent mmwave links,=E2=80=9D=
+ arXiv preprint arXiv:1901.01894, 2019.</div></font></span></div><div =
+class=3D""><span class=3D""><div class=3D""><p class=3D"MsoNormal">Thank =
+you in advance for your support.</p></div></span></div><div =
+class=3D"">Best regards,</div></div></div><div class=3D"">
+<div dir=3D"auto" style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, =
+0); letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; word-wrap: =
+break-word; -webkit-nbsp-mode: space; line-break: after-white-space;" =
+class=3D""><div dir=3D"auto" style=3D"caret-color: rgb(0, 0, 0); color: =
+rgb(0, 0, 0); letter-spacing: normal; text-align: start; text-indent: =
+0px; text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; word-wrap: =
+break-word; -webkit-nbsp-mode: space; line-break: after-white-space;" =
+class=3D""><div dir=3D"auto" style=3D"caret-color: rgb(0, 0, 0); color: =
+rgb(0, 0, 0); letter-spacing: normal; text-align: start; text-indent: =
+0px; text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; word-wrap: =
+break-word; -webkit-nbsp-mode: space; line-break: after-white-space;" =
+class=3D""><div>Angelo =
+Furno</div><div>____________________________________<br =
+class=3D"">Researcher,&nbsp;<br class=3D"">LICIT laboratory (Lyon, =
+France),<br class=3D"">University of Lyon&nbsp;&amp;&nbsp;University =
+Gustave-Eiffel,<br class=3D"">ENTPE,&nbsp;INRIA - AGORA,&nbsp;IXXI,<br =
+class=3D"">web:&nbsp;<a href=3D"http://people.licit-lyon.eu/furno" =
+class=3D"">http://people.licit-lyon.eu/furno</a><br class=3D"">phone: =
++33 (0)4 78 65 68 70<br class=3D"">skype: =
+angelo.furno</div></div></div></div>
+</div>
+<br class=3D""></body></html>=
+
+--Apple-Mail=_3078DED8-E0CD-45E4-9909-6C1025BD9E20--

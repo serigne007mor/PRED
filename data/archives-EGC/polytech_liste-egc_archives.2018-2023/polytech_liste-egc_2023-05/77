@@ -1,0 +1,658 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (bouncesmtp2.u12.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id CFEEC14017C4
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon, 22 May 2023 08:38:10 +0200 (CEST)
+Received: from mx3.localdomain (MX3.univ-nantes.fr [193.52.101.137])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id CC6C7665B
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon, 22 May 2023 08:38:10 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.localdomain (Postfix) with ESMTP id C47842007A
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 22 May 2023 08:38:10 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -4.282
+X-Spam-Level:
+X-Spam-Status: No, score=-4.282 tagged_above=-1000 required=5
+	tests=[CRM114_GOOD=-5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	NO_RDNS=0.5, NO_RDNS2=0.01, RCVD_HELO_IP_MISMATCH=1.186,
+	RCVD_IN_DNSWL_LOW=-1, RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001,
+	SPF_PASS=-0.001, UN_JPG_ATTACH=0.01, UN_PHISHING_COMPTE=0.1,
+	UN_PHISHING_PW=0.1, URI_TRUNCATED=0.001] autolearn=disabled
+X-CRM114-Status: GOOD ( 7.9093 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=insa-strasbourg.fr
+Received: from mx3.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id JPL_vQz5EsRL for <liste-egc@polytech.univ-nantes.fr>;
+	Mon, 22 May 2023 08:38:08 +0200 (CEST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=194.254.241.31; helo=smtpout02-ext4.partage.renater.fr; envelope-from=ahmed.samet@insa-strasbourg.fr; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=none dis=none) header.from=insa-strasbourg.fr
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=ahmed.samet@insa-strasbourg.fr
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (2048-bit key; unprotected) header.d=insa-strasbourg.fr header.i=@insa-strasbourg.fr header.b="GkaEm97u";
+	dkim-atps=neutral
+X-Greylist: delayed 00:09:27 by SQLgrey-1.6.7
+Received: from smtpout02-ext4.partage.renater.fr (smtpout02-ext4.partage.renater.fr [194.254.241.31])
+	by mx3.localdomain (Postfix) with ESMTPS id 6430120067
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 22 May 2023 08:38:08 +0200 (CEST)
+Received: from zmtaauth02.partage.renater.fr (zmtaauth02.partage.renater.fr [194.254.241.25])
+	by smtpout20.partage.renater.fr (Postfix) with ESMTP id 87231C0DC4;
+	Mon, 22 May 2023 08:28:29 +0200 (CEST)
+Received: from zmtaauth02.partage.renater.fr (localhost [127.0.0.1])
+	by zmtaauth02.partage.renater.fr (Postfix) with ESMTPS id 6E629A4CC1;
+	Mon, 22 May 2023 08:28:29 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zmtaauth02.partage.renater.fr (Postfix) with ESMTP id 4E82DA4CC6;
+	Mon, 22 May 2023 08:28:29 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zmtaauth02.partage.renater.fr 4E82DA4CC6
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=insa-strasbourg.fr;
+	s=5ADFFECF-ADBC-4CE4-8CE5-5C2D6BA330BE; t=1684736909;
+	bh=bDNfQTm/e+PtQ2PVtoPOvU9gUxjhHPvxxlwgfg7ImcM=;
+	h=From:Mime-Version:Message-Id:Date:To;
+	b=GkaEm97umGRXJZNDKBUJspadhIVPwiTguMOMuH9vjqY4mMmF4hAK4VXml7h4e4Ezc
+	 Y6Q+RDEGlHnFyh7x0hjVlASSVbW7yBZaIVyO5/QfxX5Na9l0paoDS1+IW4jtSJoMUQ
+	 xsGXw+s86fv6OZtFZjOTSEVUX0X2HBttGfpQlFQN5R9q+p8/l7ImQtwIfgLTSSo97b
+	 zh0bBdAqw+wB5DB9cdAeg7iRn3OOnTq3o16fTBCSEQwexuWZUmevAAjzZx9oeQgP3r
+	 bUKiJ6Bz6R8bdosGC7VYPD4Zy9xZzHyrYOGR8Wmsvb/oOagAgxtEuzazd6bX+ZslEx
+	 /loqhBIWwwJGA==
+Received: from zmtaauth02.partage.renater.fr ([127.0.0.1])
+	by localhost (zmtaauth02.partage.renater.fr [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id oNVtrFLvsP8W; Mon, 22 May 2023 08:28:29 +0200 (CEST)
+Received: from 130.79.220.122 (unknown [194.254.241.250])
+	by zmtaauth02.partage.renater.fr (Postfix) with ESMTPA id DE501A4CC1;
+	Mon, 22 May 2023 08:28:28 +0200 (CEST)
+From: Ahmed Samet <ahmed.samet@insa-strasbourg.fr>
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_67FC1794-202C-4C3A-B592-57844ACA9915"
+Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.20.0.1.32\))
+Message-Id: <A36F5155-4A1A-466C-8C1F-4F134CEA5EC1@insa-strasbourg.fr>
+Date: Mon, 22 May 2023 08:28:28 +0200
+Cc: Driss Sadoub <driss.sadoun@postlab.fr>
+To: bull-ia@gdria.fr,
+ bull-i3@irit.fr,
+ liste-egc@polytech.univ-nantes.fr,
+ liste-proml@lri.fr
+X-Mailer: Apple Mail (2.3693.20.0.1.32)
+X-Virus-Scanned: clamav-milter 0.103.8 at clamav01
+X-Virus-Status: Clean
+X-Renater-Ptge-SpamState: clean
+X-Renater-Ptge-SpamScore: 0
+X-Renater-Ptge-SpamCause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeejtddguddthecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucftgffptefvgfftnecuuegrihhlohhuthemuceftddtnecunecujfgurhephfgtggfukfffvefvofesrgdtmherhhdtjeenucfhrhhomheptehhmhgvugcuufgrmhgvthcuoegrhhhmvggurdhsrghmvghtsehinhhsrgdqshhtrhgrshgsohhurhhgrdhfrheqnecuggftrfgrthhtvghrnhepkeehtdelffdvudetffethfdvueeukeehjeekudffkeejiedujeejffeutddtleegnecuffhomhgrihhnpegrfhhirgdrrghsshhordhfrhdpphhoshhtlhgrsgdrfhhrpdhunhhishhtrhgrrdhfrhdpfhhrrghmrghfohhrmhhsrdhorhhgpdhfrhgvvgdrfhhrnecukfhppeduleegrddvheegrddvgedurddvhedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepudelgedrvdehgedrvdeguddrvdehtddphhgvlhhopedufedtrdejledrvddvtddruddvvddpmhgrihhlfhhrohhmpeethhhmvgguucfurghmvghtuceorghhmhgvugdrshgrmhgvthesihhnshgrqdhsthhrrghssghouhhrghdrfhhrqedpnhgspghrtghpthhtohephedprhgtphhtthhopegsuhhllhdqihgrsehgughrihgrrdhfrhdprhgtphhtthhopegsuhhllhdqihefsehirhhithdrfhhrpdhrtghpthhtoheplhhishhtvgdqvghgtgesphholhihthgvtghhrdhunhhivhdqnhgrnhht
+ vghsrdhfrhdprhgtphhtthhopehlihhsthgvqdhprhhomhhlsehlrhhirdhfrhdprhgtphhtthhopegurhhishhsrdhsrgguohhunhesphhoshhtlhgrsgdrfhhr
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Appel =?UTF-8?Q?=C3=A0_d=C3=A9monstrations=40PFIA2023?=
+
+
+--Apple-Mail=_67FC1794-202C-4C3A-B592-57844ACA9915
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
+
+Cette ann=C3=A9e, l'AFIA <https://afia.asso.fr/> et la soci=C3=A9t=C3=A9 =
+POSTLAB <https://www.postlab.fr/> vous invitent =C3=A0 participer =C3=A0 =
+l'appel =C3=A0 d=C3=A9monstrations de logiciels et prototypes de =
+recherche qui seront organis=C3=A9es dans le cadre de La Plate-Forme =
+Intelligence Artificielle (PFIA 2023 =
+<https://pfia23.icube.unistra.fr/>).  PFIA constitue un point de =
+rencontre unique et convivial pour la communaut=C3=A9 IA permettant de =
+rapprocher les diff=C3=A9rentes disciplines qui la composent et =
+d=E2=80=99=C3=A9tablir des passerelles entre elles. L=E2=80=99=C3=A9dition=
+ 2023 se tiendra du 3 au 7 juillet 2023 =C3=A0 Strasbourg, dans les =
+locaux de l=E2=80=99Universit=C3=A9 de Strasbourg.
+
+
+Trois prix sont d=C3=A9cern=C3=A9s en 2023 r=C3=A9compensant =C2=AB la =
+meilleure interface =C2=BB, =C2=ABl'innovation et la maturit=C3=A9 =
+technologique =C2=BB et =C2=AB l'originalit=C3=A9 =C2=BB. Les laur=C3=A9at=
+s recevront un prix financier de 500=E2=82=AC, accompagn=C3=A9 d'un pack =
+communication (articles, tutoriels et vid=C3=A9os sur le blog de PostLab =
+et posts sur les r=C3=A9seaux sociaux), un h=C3=A9bergement de 2 ans sur =
+les serveurs de PostLab et, au besoin, la cr=C3=A9ation d=E2=80=99une =
+interface web de d=C3=A9mo.
+Prix AFIA Postlab du d=C3=A9monstrateur avec la meilleure interface: Ce =
+prix prend en compte des crit=C3=A8res esth=C3=A9tiques, la facilit=C3=A9 =
+d=E2=80=99utilisation ou encore l'originalit=C3=A9 des possibilit=C3=A9s =
+d=E2=80=99interaction entre l=E2=80=99utilisateur et l=E2=80=99IA. Ce =
+prix a pour objectif de mettre en avant une d=C3=A9monstration dont =
+l=E2=80=99interface avec les utilisateurs est particuli=C3=A8rement =
+=C3=A9volu=C3=A9e (ex ergonomie, accessibilit=C3=A9, =
+utilisabilit=C3=A9).Total des prix 500=E2=82=AC=20
+Prix AFIA Postlab innovation et maturit=C3=A9 technologique: Ce prix =
+sera d=C3=A9cern=C3=A9 au d=C3=A9monstrateur dont la fonctionnalit=C3=A9 =
+propos=C3=A9e a un fort impact potentiel. Ce prix tiendra en particulier =
+compte de la maturit=C3=A9 technologique des d=C3=A9veloppements =
+(qualit=C3=A9 du code, diffusion du code, existence d=E2=80=99une =
+communaut=C3=A9 d=E2=80=99utilisateurs, int=C3=A9gration =C3=A0 =
+d=E2=80=99autres logiciels). L'engagement dans une d=C3=A9marche de =
+science ouverte pourra =C3=A9galement =C3=AAtre appr=C3=A9ci=C3=A9.Total =
+des prix 500=E2=82=AC=20
+Prix AFIA Postlab du d=C3=A9monstrateur le plus originale: Ce prix =
+recompense le d=C3=A9monstrateur qui montre une originalit=C3=A9 de =
+l=E2=80=99application ou d=E2=80=99une technologie d=E2=80=99IA: soit =
+parce que l=E2=80=99utilisation de l=E2=80=99IA dans un domaine est =
+nouvelle, soit parce que la technologie d=E2=80=99IA traite un probl=C3=A8=
+me nouveau.Total des prix 500=E2=82=AC
+
+Ces appel =C3=A0 participation aux d=C3=A9monstrations s'adresse aussi =
+bien aux soumissions originales qu'aux d=C3=A9monstrateurs d=C3=A9j=C3=A0 =
+s=C3=A9lectionn=C3=A9s dans le cadre des conf=C3=A9rences de PFIA 2023. =
+Une v=C3=A9rification de l'ad=C3=A9quation th=C3=A9matique des =
+d=C3=A9monstrations sera effectu=C3=A9 pour s=C3=A9lectionner les =
+d=C3=A9monstrateurs
+Chaque d=C3=A9monstration devra =C3=AAtre pr=C3=A9sent=C3=A9e lors de =
+PFIA23 et b=C3=A9n=C3=A9ficiera pour cela d'un espace d=C3=A9di=C3=A9. =
+Les prix seront d=C3=A9cern=C3=A9es =C3=A0 la suite d'un vote des =
+participants et par un jury.=20
+ =20
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=20
+Dates importantes=20
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=20
+Date limite de soumission : 10 Juin 2023
+Notification aux auteurs : 12 Juin 2023
+=3D=3D=3D=3D=3D=3D=3D=20
+Th=C3=A8mes=20
+=3D=3D=3D=3D=3D=3D=3D=20
+Les th=C3=A8mes couvrent =C3=A0 la fois la recherche th=C3=A9orique sur =
+l=E2=80=99intelligence artificielle et ses applications.
+
+Les sujets d'int=C3=A9r=C3=AAt incluent (mais ne sont pas limit=C3=A9s =
+=C3=A0) :
+Recherche heuristique et r=C3=A9solution de probl=C3=A8mes,
+incertitude et intelligence artificielle,
+logique, satisfiabilit=C3=A9 et satisfaction de contraintes,
+apprentissage automatique,
+extraction, ing=C3=A9nierie et gestion des connaissances,
+repr=C3=A9sentation des connaissances et raisonnement,
+planification, contr=C3=B4le,
+aide =C3=A0 la d=C3=A9cision,
+causalit=C3=A9,
+agents autonomes et syst=C3=A8mes multi-agents,
+reconnaissance des formes et vision par ordinateur,
+traitement automatique des langues naturelles et de la parole, recherche =
+d=E2=80=99information,
+interactions avec l=E2=80=99humain,
+perception et robotique,
+IA et web,
+environnements informatiques d=E2=80=99apprentissage humain et =
+apprentissage =C3=A0 distance,
+IA responsable, IA de confiance (incluant explicabilit=C3=A9)
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=20
+Soumissions=20
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=20
+
+Les soumissions doivent =C3=AAtre d=C3=A9pos=C3=A9 via ce formulaire =
+incluant un descriptif du d=C3=A9monstrateur (un pdf de 2 =C3=A0 4 =
+pages): =
+https://framaforms.org/pfia2023-appel-aux-demonstrateurs-pour-le-prix-afia=
+-1681481062 =
+<https://framaforms.org/pfia2023-appel-aux-demonstrateurs-pour-le-prix-afi=
+a-1681481062>
+
+=09
+Ahmed SAMET
+Asso. prof in computer science at INSA Strasbourg=20
+ahmed.samet@insa-strasbourg.fr  <mailto: ahmed.samet@insa-strasbourg.fr>
+http://ahmed.samet.free.fr  <http://ahmed.samet.free.fr/>
+
+
+
+--Apple-Mail=_67FC1794-202C-4C3A-B592-57844ACA9915
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
+charset=3Dutf-8"></head><body style=3D"word-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;" class=3D""><div =
+class=3D"">Cette ann=C3=A9e, l'<a href=3D"https://afia.asso.fr" =
+class=3D"">AFIA</a>&nbsp;et la soci=C3=A9t=C3=A9&nbsp;<a =
+href=3D"https://www.postlab.fr" class=3D"">POSTLAB</a>&nbsp;vous =
+invitent =C3=A0 participer =C3=A0 l'appel =C3=A0 d=C3=A9monstrations de =
+logiciels et prototypes de recherche qui seront organis=C3=A9es dans le =
+cadre de La Plate-Forme Intelligence Artificielle (<a =
+href=3D"https://pfia23.icube.unistra.fr" class=3D"">PFIA 2023</a>). =
+&nbsp;PFIA constitue un point de rencontre unique et convivial pour la =
+communaut=C3=A9 IA permettant de rapprocher les diff=C3=A9rentes =
+disciplines qui la composent et d=E2=80=99=C3=A9tablir des passerelles =
+entre elles. L=E2=80=99=C3=A9dition 2023 se tiendra du 3 au 7 juillet =
+2023 =C3=A0 Strasbourg, dans les locaux de l=E2=80=99Universit=C3=A9 de =
+Strasbourg.</div><div class=3D""><br class=3D""></div><div class=3D""><br =
+class=3D""></div><div class=3D"">Trois prix sont d=C3=A9cern=C3=A9s en =
+2023 r=C3=A9compensant =C2=AB la meilleure interface =C2=BB, =
+=C2=ABl'innovation et la maturit=C3=A9 technologique =C2=BB et =C2=AB =
+l'originalit=C3=A9 =C2=BB. Les laur=C3=A9ats recevront un prix financier =
+de 500=E2=82=AC, accompagn=C3=A9 d'un pack communication (articles, =
+tutoriels et vid=C3=A9os sur le blog de PostLab et posts sur les =
+r=C3=A9seaux sociaux), un h=C3=A9bergement de 2 ans sur les serveurs de =
+PostLab et, au besoin, la cr=C3=A9ation d=E2=80=99une interface web de =
+d=C3=A9mo.</div><div class=3D"">Prix AFIA Postlab du d=C3=A9monstrateur =
+avec la meilleure interface: Ce prix prend en compte des crit=C3=A8res =
+esth=C3=A9tiques, la facilit=C3=A9 d=E2=80=99utilisation ou encore =
+l'originalit=C3=A9 des possibilit=C3=A9s d=E2=80=99interaction entre =
+l=E2=80=99utilisateur et l=E2=80=99IA. Ce prix a pour objectif de mettre =
+en avant une d=C3=A9monstration dont l=E2=80=99interface avec les =
+utilisateurs est particuli=C3=A8rement =C3=A9volu=C3=A9e (ex ergonomie, =
+accessibilit=C3=A9, utilisabilit=C3=A9).Total des prix =
+500=E2=82=AC&nbsp;</div><div class=3D"">Prix AFIA Postlab innovation et =
+maturit=C3=A9 technologique: Ce prix sera d=C3=A9cern=C3=A9 au =
+d=C3=A9monstrateur dont la fonctionnalit=C3=A9 propos=C3=A9e a un fort =
+impact potentiel. Ce prix tiendra en particulier compte de la maturit=C3=A9=
+ technologique des d=C3=A9veloppements (qualit=C3=A9 du code, diffusion =
+du code, existence d=E2=80=99une communaut=C3=A9 d=E2=80=99utilisateurs, =
+int=C3=A9gration =C3=A0 d=E2=80=99autres logiciels). L'engagement dans =
+une d=C3=A9marche de science ouverte pourra =C3=A9galement =C3=AAtre =
+appr=C3=A9ci=C3=A9.Total des prix 500=E2=82=AC&nbsp;</div><div =
+class=3D"">Prix AFIA Postlab du d=C3=A9monstrateur le plus originale: Ce =
+prix recompense le d=C3=A9monstrateur qui montre une originalit=C3=A9 de =
+l=E2=80=99application ou d=E2=80=99une technologie d=E2=80=99IA: soit =
+parce que l=E2=80=99utilisation de l=E2=80=99IA dans un domaine est =
+nouvelle, soit parce que la technologie d=E2=80=99IA traite un probl=C3=A8=
+me nouveau.Total des prix 500=E2=82=AC</div><div class=3D""><br =
+class=3D""></div><div class=3D"">Ces appel =C3=A0 participation aux =
+d=C3=A9monstrations s'adresse aussi bien aux soumissions originales =
+qu'aux d=C3=A9monstrateurs d=C3=A9j=C3=A0 s=C3=A9lectionn=C3=A9s dans le =
+cadre des conf=C3=A9rences de PFIA 2023. Une v=C3=A9rification de =
+l'ad=C3=A9quation th=C3=A9matique des d=C3=A9monstrations sera effectu=C3=A9=
+ pour s=C3=A9lectionner les d=C3=A9monstrateurs</div><div =
+class=3D"">Chaque d=C3=A9monstration devra =C3=AAtre pr=C3=A9sent=C3=A9e =
+lors de PFIA23 et b=C3=A9n=C3=A9ficiera pour cela d'un espace d=C3=A9di=C3=
+=A9. Les prix seront d=C3=A9cern=C3=A9es =C3=A0 la suite d'un vote des =
+participants et par un jury.&nbsp;</div><div =
+class=3D"">&nbsp;&nbsp;</div><div =
+class=3D"">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D&nbsp;</div><div =
+class=3D"">Dates importantes&nbsp;</div><div =
+class=3D"">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D&nbsp;</div><div =
+class=3D"">Date limite de soumission : 10 Juin 2023</div><div =
+class=3D"">Notification aux auteurs : 12 Juin 2023</div><div =
+class=3D"">=3D=3D=3D=3D=3D=3D=3D&nbsp;</div><div =
+class=3D"">Th=C3=A8mes&nbsp;</div><div class=3D"">=3D=3D=3D=3D=3D=3D=3D&nb=
+sp;</div><div class=3D"">Les th=C3=A8mes couvrent =C3=A0 la fois la =
+recherche th=C3=A9orique sur l=E2=80=99intelligence artificielle et ses =
+applications.</div><div class=3D""><br class=3D""></div><div =
+class=3D"">Les sujets d'int=C3=A9r=C3=AAt incluent (mais ne sont pas =
+limit=C3=A9s =C3=A0) :</div><div class=3D"">Recherche heuristique et =
+r=C3=A9solution de probl=C3=A8mes,</div><div class=3D"">incertitude et =
+intelligence artificielle,</div><div class=3D"">logique, satisfiabilit=C3=A9=
+ et satisfaction de contraintes,</div><div class=3D"">apprentissage =
+automatique,</div><div class=3D"">extraction, ing=C3=A9nierie et gestion =
+des connaissances,</div><div class=3D"">repr=C3=A9sentation des =
+connaissances et raisonnement,</div><div class=3D"">planification, =
+contr=C3=B4le,</div><div class=3D"">aide =C3=A0 la d=C3=A9cision,</div><di=
+v class=3D"">causalit=C3=A9,</div><div class=3D"">agents autonomes et =
+syst=C3=A8mes multi-agents,</div><div class=3D"">reconnaissance des =
+formes et vision par ordinateur,</div><div class=3D"">traitement =
+automatique des langues naturelles et de la parole, recherche =
+d=E2=80=99information,</div><div class=3D"">interactions avec =
+l=E2=80=99humain,</div><div class=3D"">perception et =
+robotique,</div><div class=3D"">IA et web,</div><div =
+class=3D"">environnements informatiques d=E2=80=99apprentissage humain =
+et apprentissage =C3=A0 distance,</div><div class=3D"">IA responsable, =
+IA de confiance (incluant explicabilit=C3=A9)</div><div class=3D""><br =
+class=3D""></div><div class=3D""><br class=3D""></div><div =
+class=3D"">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D&nbsp;</div><div =
+class=3D"">Soumissions&nbsp;</div><div =
+class=3D"">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D&nbsp;</div><div class=3D""><br =
+class=3D""></div><div class=3D"">Les soumissions doivent =C3=AAtre =
+d=C3=A9pos=C3=A9 via ce formulaire incluant un descriptif du =
+d=C3=A9monstrateur (un pdf de 2 =C3=A0 4 pages):&nbsp;<a =
+href=3D"https://framaforms.org/pfia2023-appel-aux-demonstrateurs-pour-le-p=
+rix-afia-1681481062" =
+class=3D"">https://framaforms.org/pfia2023-appel-aux-demonstrateurs-pour-l=
+e-prix-afia-1681481062</a></div><div class=3D""><br class=3D""></div><div =
+class=3D"">
+
+<table border=3D"0" cellpadding=3D"5" style=3D"background-color:#006EAF; =
+font-family: 'Avenir', sans-serif; color: white; font-size: 12px; =
+margin-left: 0; margin-bottom: 3px; width:400px;" class=3D"">=20
+<tbody class=3D""><tr class=3D"">=20
+<td class=3D""><img =
+src=3D"data:image/jpeg;base64,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3D=3D" =
+class=3D"">  </td>
+   <td class=3D"">=20
+      <div style=3D"font-size: 16px;width:200px;" class=3D""><b =
+class=3D"">Ahmed SAMET</b> </div>=20
+      <div class=3D"">=20
+        Asso. prof in computer science at INSA Strasbourg <br class=3D""> =
+                  =20
+        <a style=3D"color: white;" href=3D"mailto: =
+ahmed.samet@insa-strasbourg.fr" class=3D""> =
+ahmed.samet@insa-strasbourg.fr </a> <br class=3D"">
+
+        <a style=3D"color: black; font-weight: bold" =
+href=3D"http://ahmed.samet.free.fr" class=3D""> =
+http://ahmed.samet.free.fr </a> <br class=3D"">
+      </div>=20
+   </td>=20
+   <td class=3D""><img =
+src=3D"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/7QA4UGhvdG9zaG9w=
+IDMuMAA4QklNBAQAAAAAAAA4QklNBCUAAAAAABDUHYzZjwCyBOmACZjs+EJ+/+EAjEV4aWYAAE=
+1NACoAAAAIAAUBBgADAAAAAQACAAABEgADAAAAAQABAAABGgAFAAAAAQAAAEoBGwAFAAAAAQAA=
+AFKHaQAEAAAAAQAAAFoAAAAAAAAASAAAAAEAAABIAAAAAQADoAEAAwAAAAEAAQAAoAIABAAAAA=
+EAAADIoAMABAAAAAEAAADGAAAAAP/iDFhJQ0NfUFJPRklMRQABAQAADEhMaW5vAhAAAG1udHJS=
+R0IgWFlaIAfOAAIACQAGADEAAGFjc3BNU0ZUAAAAAElFQyBzUkdCAAAAAAAAAAAAAAAAAAD21g=
+ABAAAAANMtSFAgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+AAAAEWNwcnQAAAFQAAAAM2Rlc2MAAAGEAAAAbHd0cHQAAAHwAAAAFGJrcHQAAAIEAAAAFHJYWV=
+oAAAIYAAAAFGdYWVoAAAIsAAAAFGJYWVoAAAJAAAAAFGRtbmQAAAJUAAAAcGRtZGQAAALEAAAA=
+iHZ1ZWQAAANMAAAAhnZpZXcAAAPUAAAAJGx1bWkAAAP4AAAAFG1lYXMAAAQMAAAAJHRlY2gAAA=
+QwAAAADHJUUkMAAAQ8AAAIDGdUUkMAAAQ8AAAIDGJUUkMAAAQ8AAAIDHRleHQAAAAAQ29weXJp=
+Z2h0IChjKSAxOTk4IEhld2xldHQtUGFja2FyZCBDb21wYW55AABkZXNjAAAAAAAAABJzUkdCIE=
+lFQzYxOTY2LTIuMQAAAAAAAAAAAAAAEnNSR0IgSUVDNjE5NjYtMi4xAAAAAAAAAAAAAAAAAAAA=
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYWVogAAAAAAAA81EAAQAAAAEWzF=
+hZWiAAAAAAAAAAAAAAAAAAAAAAWFlaIAAAAAAAAG+iAAA49QAAA5BYWVogAAAAAAAAYpkAALeF=
+AAAY2lhZWiAAAAAAAAAkoAAAD4QAALbPZGVzYwAAAAAAAAAWSUVDIGh0dHA6Ly93d3cuaWVjLm=
+NoAAAAAAAAAAAAAAAWSUVDIGh0dHA6Ly93d3cuaWVjLmNoAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGRlc2MAAAAAAAAALklFQyA2MTk2Ni0yLjEgRGVmYX=
+VsdCBSR0IgY29sb3VyIHNwYWNlIC0gc1JHQgAAAAAAAAAAAAAALklFQyA2MTk2Ni0yLjEgRGVm=
+YXVsdCBSR0IgY29sb3VyIHNwYWNlIC0gc1JHQgAAAAAAAAAAAAAAAAAAAAAAAAAAAABkZXNjAA=
+AAAAAAACxSZWZlcmVuY2UgVmlld2luZyBDb25kaXRpb24gaW4gSUVDNjE5NjYtMi4xAAAAAAAA=
+AAAAAAAsUmVmZXJlbmNlIFZpZXdpbmcgQ29uZGl0aW9uIGluIElFQzYxOTY2LTIuMQAAAAAAAA=
+AAAAAAAAAAAAAAAAAAAAAAAAAAdmlldwAAAAAAE6T+ABRfLgAQzxQAA+3MAAQTCwADXJ4AAAAB=
+WFlaIAAAAAAATAlWAFAAAABXH+dtZWFzAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAACjwAAAA=
+JzaWcgAAAAAENSVCBjdXJ2AAAAAAAABAAAAAAFAAoADwAUABkAHgAjACgALQAyADcAOwBAAEUA=
+SgBPAFQAWQBeAGMAaABtAHIAdwB8AIEAhgCLAJAAlQCaAJ8ApACpAK4AsgC3ALwAwQDGAMsA0A=
+DVANsA4ADlAOsA8AD2APsBAQEHAQ0BEwEZAR8BJQErATIBOAE+AUUBTAFSAVkBYAFnAW4BdQF8=
+AYMBiwGSAZoBoQGpAbEBuQHBAckB0QHZAeEB6QHyAfoCAwIMAhQCHQImAi8COAJBAksCVAJdAm=
+cCcQJ6AoQCjgKYAqICrAK2AsECywLVAuAC6wL1AwADCwMWAyEDLQM4A0MDTwNaA2YDcgN+A4oD=
+lgOiA64DugPHA9MD4APsA/kEBgQTBCAELQQ7BEgEVQRjBHEEfgSMBJoEqAS2BMQE0wThBPAE/g=
+UNBRwFKwU6BUkFWAVnBXcFhgWWBaYFtQXFBdUF5QX2BgYGFgYnBjcGSAZZBmoGewaMBp0GrwbA=
+BtEG4wb1BwcHGQcrBz0HTwdhB3QHhgeZB6wHvwfSB+UH+AgLCB8IMghGCFoIbgiCCJYIqgi+CN=
+II5wj7CRAJJQk6CU8JZAl5CY8JpAm6Cc8J5Qn7ChEKJwo9ClQKagqBCpgKrgrFCtwK8wsLCyIL=
+OQtRC2kLgAuYC7ALyAvhC/kMEgwqDEMMXAx1DI4MpwzADNkM8w0NDSYNQA1aDXQNjg2pDcMN3g=
+34DhMOLg5JDmQOfw6bDrYO0g7uDwkPJQ9BD14Peg+WD7MPzw/sEAkQJhBDEGEQfhCbELkQ1xD1=
+ERMRMRFPEW0RjBGqEckR6BIHEiYSRRJkEoQSoxLDEuMTAxMjE0MTYxODE6QTxRPlFAYUJxRJFG=
+oUixStFM4U8BUSFTQVVhV4FZsVvRXgFgMWJhZJFmwWjxayFtYW+hcdF0EXZReJF64X0hf3GBsY=
+QBhlGIoYrxjVGPoZIBlFGWsZkRm3Gd0aBBoqGlEadxqeGsUa7BsUGzsbYxuKG7Ib2hwCHCocUh=
+x7HKMczBz1HR4dRx1wHZkdwx3sHhYeQB5qHpQevh7pHxMfPh9pH5Qfvx/qIBUgQSBsIJggxCDw=
+IRwhSCF1IaEhziH7IiciVSKCIq8i3SMKIzgjZiOUI8Ij8CQfJE0kfCSrJNolCSU4JWgllyXHJf=
+cmJyZXJocmtyboJxgnSSd6J6sn3CgNKD8ocSiiKNQpBik4KWspnSnQKgIqNSpoKpsqzysCKzYr=
+aSudK9EsBSw5LG4soizXLQwtQS12Last4S4WLkwugi63Lu4vJC9aL5Evxy/+MDUwbDCkMNsxEj=
+FKMYIxujHyMioyYzKbMtQzDTNGM38zuDPxNCs0ZTSeNNg1EzVNNYc1wjX9Njc2cjauNuk3JDdg=
+N5w31zgUOFA4jDjIOQU5Qjl/Obw5+To2OnQ6sjrvOy07azuqO+g8JzxlPKQ84z0iPWE9oT3gPi=
+A+YD6gPuA/IT9hP6I/4kAjQGRApkDnQSlBakGsQe5CMEJyQrVC90M6Q31DwEQDREdEikTORRJF=
+VUWaRd5GIkZnRqtG8Ec1R3tHwEgFSEtIkUjXSR1JY0mpSfBKN0p9SsRLDEtTS5pL4kwqTHJMuk=
+0CTUpNk03cTiVObk63TwBPSU+TT91QJ1BxULtRBlFQUZtR5lIxUnxSx1MTU19TqlP2VEJUj1Tb=
+VShVdVXCVg9WXFapVvdXRFeSV+BYL1h9WMtZGllpWbhaB1pWWqZa9VtFW5Vb5Vw1XIZc1l0nXX=
+hdyV4aXmxevV8PX2Ffs2AFYFdgqmD8YU9homH1YklinGLwY0Njl2PrZEBklGTpZT1lkmXnZj1m=
+kmboZz1nk2fpaD9olmjsaUNpmmnxakhqn2r3a09rp2v/bFdsr20IbWBtuW4SbmtuxG8eb3hv0X=
+ArcIZw4HE6cZVx8HJLcqZzAXNdc7h0FHRwdMx1KHWFdeF2Pnabdvh3VnezeBF4bnjMeSp5iXnn=
+ekZ6pXsEe2N7wnwhfIF84X1BfaF+AX5ifsJ/I3+Ef+WAR4CogQqBa4HNgjCCkoL0g1eDuoQdhI=
+CE44VHhauGDoZyhteHO4efiASIaYjOiTOJmYn+imSKyoswi5aL/IxjjMqNMY2Yjf+OZo7OjzaP=
+npAGkG6Q1pE/kaiSEZJ6kuOTTZO2lCCUipT0lV+VyZY0lp+XCpd1l+CYTJi4mSSZkJn8mmia1Z=
+tCm6+cHJyJnPedZJ3SnkCerp8dn4uf+qBpoNihR6G2oiailqMGo3aj5qRWpMelOKWpphqmi6b9=
+p26n4KhSqMSpN6mpqhyqj6sCq3Wr6axcrNCtRK24ri2uoa8Wr4uwALB1sOqxYLHWskuywrM4s6=
+60JbSctRO1irYBtnm28Ldot+C4WbjRuUq5wro7urW7LrunvCG8m70VvY++Cr6Evv+/er/1wHDA=
+7MFnwePCX8Lbw1jD1MRRxM7FS8XIxkbGw8dBx7/IPci8yTrJuco4yrfLNsu2zDXMtc01zbXONs=
+62zzfPuNA50LrRPNG+0j/SwdNE08bUSdTL1U7V0dZV1tjXXNfg2GTY6Nls2fHadtr724DcBdyK=
+3RDdlt4c3qLfKd+v4DbgveFE4cziU+Lb42Pj6+Rz5PzlhOYN5pbnH+ep6DLovOlG6dDqW+rl63=
+Dr++yG7RHtnO4o7rTvQO/M8Fjw5fFy8f/yjPMZ86f0NPTC9VD13vZt9vv3ivgZ+Kj5OPnH+lf6=
+5/t3/Af8mP0p/br+S/7c/23////hCSBodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvADw/eH=
+BhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4Onht=
+cG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDUuNC4wIj=
+4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1z=
+eW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIvPiA8L3JkZjpSREY+ID=
+wveDp4bXBtZXRhPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg=
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC=
+AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg=
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC=
+AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg=
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC=
+AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg=
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC=
+AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg=
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC=
+AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg=
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC=
+AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg=
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC=
+AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg=
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC=
+AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg=
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC=
+AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg=
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC=
+AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg=
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC=
+AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg=
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC=
+AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg=
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC=
+AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg=
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC=
+AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg=
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC=
+AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg=
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC=
+AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg=
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC=
+AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg=
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC=
+AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg=
+ICAgICAgIDw/eHBhY2tldCBlbmQ9InciPz7/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQ=
+EBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/2wBDAQEBAQEBAQEBAQEB=
+AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wA=
+ARCABPAFADAREAAhEBAxEB/8QAHwAAAgEEAwEBAAAAAAAAAAAACQoIAAQHCwEDBQIG/8QAMRAA=
+AQQBAwMDAgUEAwEAAAAAAwECBAUGBwgRABIhCRMxIkEKFBVRcRYjgZEyUmGh/8QAHQEAAgICAw=
+EAAAAAAAAAAAAABwgGCQADAQIFBP/EAD4RAAICAQIFAgUCAggDCQAAAAECAwQRBQYABxIhMRNB=
+CBQiUWEycRWRIyQzQoGhsfAW0eEXNENTYnJzwfH/2gAMAwEAAhEDEQA/AH+Os4zius4zjhVRPn=
++f8J8r/CfdfhPuvWZ/5/7/AN/6cZwOLch6s2wva3Om0epGvWOWmXwFRknB9OhydRcrAVVVvsTY=
+WLtmQ6syPRRkHa2ENwXo5pkGrHcEHb3K7fG5lSbTtDsR1HGVu6gV0+qynwyPa6GlUjv1RI4IwR=
+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3D=3D" class=3D"">
+   </td>=20
+</tr>=20
+</tbody></table>
+</div>
+<br class=3D""></body></html>=
+
+--Apple-Mail=_67FC1794-202C-4C3A-B592-57844ACA9915--
+
+
