@@ -1,0 +1,594 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (bouncesmtp1.u12.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id A3DC914017DB
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu, 10 Nov 2022 14:41:49 +0100 (CET)
+Received: from mx3.localdomain (MX3.univ-nantes.fr [193.52.101.137])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id A03C06745
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu, 10 Nov 2022 14:41:49 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.localdomain (Postfix) with ESMTP id 986C420F62
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 10 Nov 2022 14:41:49 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 1.621
+X-Spam-Level: *
+X-Spam-Status: No, score=1.621 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	IMPRONONCABLE_2=1.5, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_WSFF=0.01,
+	SPF_HELO_NONE=0.001, SPF_PASS=-0.001, T_REMOTE_IMAGE=0.01,
+	UN_PHISHING_COMPTE=0.1, UN_PHISHING_PW=0.1] autolearn=disabled
+X-CRM114-Status: UNSURE ( 4.1891 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=outscale.com
+Received: from mx3.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id cikja-1JWqon for <liste-egc@polytech.univ-nantes.fr>;
+	Thu, 10 Nov 2022 14:41:47 +0100 (CET)
+X-Greylist: delayed 00:07:31 by SQLgrey-1.6.7
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+	by mx3.localdomain (Postfix) with ESMTPS id 0896420060
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 10 Nov 2022 14:41:47 +0100 (CET)
+Received: by mail-wr1-x432.google.com with SMTP id bs21so2313859wrb.4
+        for <liste-egc@polytech.univ-nantes.fr>; Thu, 10 Nov 2022 05:41:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=outscale.com; s=google;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=NeVh0bmYJl+y5twpXqSCxCKCoMwXorZtxGiyGvqeCJM=;
+        b=NeD0vMfWLvpSbFthklwVpZihADWRrKs0TFPpVjB5apQBy6YIobOCVqeYAcVNai4bMl
+         h875Af0x+FbSz88xbXaqs0DidSp/jyOLrFYokEscgfvOnG7mT82+lVtD6Aq7QGZd+ROd
+         xd1NzixxIKqlj4AfBJ0hJU3dktDpi8SYujHO4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=NeVh0bmYJl+y5twpXqSCxCKCoMwXorZtxGiyGvqeCJM=;
+        b=n4G6kz6NwOiJR+G+rVQOjxFXIgSYuU1G9HtZmKyNzERuVhHAJImVj6vUgXMT9QOjdi
+         bIDdFHxkiBbyB68wyPGvdkhwk46PaUMtC08V7T/n77D8g+VLklNmSPSgFHj05WvLC1f+
+         Ve1C5q43xudoLO5IW3fXo0FuKhLmeO38ZQ6SWFhCIiukQ85/krgbd+wzjoOLxbJTqrEs
+         kJbQ9zgeMkuCZedNUa7P6BKRRVkbGAVEpK6CyMgzYjYTvDKX0gYgnrCbf2NEYpixBBgG
+         PM4+7/6dMplynCb9li+R3Yacg9rHWhMGUMdWYObiyQfITn/ywMHBp6LbgnSH+UQwMZeL
+         +UUQ==
+X-Gm-Message-State: ACrzQf2ASLSDhrUd0FOShSobGpQwueTA9uMRW9lPexPK4iP2v81fSUad
+	Rc4A4K8Y7oAHpnSda+DPyPtfRKxcqz0PDjh2FHMYRJ6nrdqDtg==
+X-Google-Smtp-Source: AMsMyM4CRVnhhDKzuibjQr0SXo6zBr00yHVLZAwp6arThaRa/lTdJth4LoVC1b2mmYcUHaiu3m78SPEB/6mwR3H2Q60=
+X-Received: by 2002:a5d:4fc8:0:b0:236:9c57:248 with SMTP id
+ h8-20020a5d4fc8000000b002369c570248mr41468145wrw.193.1668087328529; Thu, 10
+ Nov 2022 05:35:28 -0800 (PST)
+MIME-Version: 1.0
+From: Raja Chiky <raja.chiky@outscale.com>
+Date: Thu, 10 Nov 2022 14:35:17 +0100
+Message-ID: <CAOfaeOgduA18jSy6bw79kVwWVQ1E00pbTco+VRZJ222AiSpZ8g@mail.gmail.com>
+To: liste-egc@polytech.univ-nantes.fr
+Content-Type: multipart/alternative; boundary="000000000000abf37a05ed1dd851"
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] =?UTF-8?Q?Conf=C3=A9rence=3A?= l'IA au service des
+ territoires et des villes - 29 Novembre 2022 - ISEP Issy Les Moulineaux
+
+--000000000000abf37a05ed1dd851
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+*A l=E2=80=99occasion du mois de l=E2=80=99Innovation publique la Gendarmer=
+ie Nationale,
+3DS OUTSCALE et l=E2=80=99ISEP organisent une conf=C3=A9rence sur le sujet =
+de l=E2=80=99IA au
+service des territoires et des villes intelligentes*
+
+L=E2=80=99Intelligence artificielle IA est aujourd=E2=80=99hui au c=C5=93ur=
+ des pr=C3=A9occupations.
+Elle est utilis=C3=A9e comme solution principale pour faciliter et d=C3=A9v=
+elopper
+des services pour les citoyens. L=E2=80=99IA a fait ses preuves dans nombre=
+uses
+applications que ce soit pour l=E2=80=99environnement, la s=C3=A9curit=C3=
+=A9 des individus,
+la sant=C3=A9, l=E2=80=99agriculture, etc. Elle a boulevers=C3=A9 toute la =
+soci=C3=A9t=C3=A9 et est
+m=C3=AAme consid=C3=A9r=C3=A9e comme la quatri=C3=A8me r=C3=A9volution indu=
+strielle.
+
+Dans le cadre du mois de l=E2=80=99Innovation publique, la *Gendarmerie Nat=
+ionale
+(GN)*, *3DS OUTSCALE *(Fournisseur de Cloud) et l=E2=80=99*ISEP *(Ecole d=
+=E2=80=99ing=C3=A9nieur
+du Num=C3=A9rique) organisent une demi-journ=C3=A9e de sensibilisation =C3=
+=A0 l=E2=80=99usage de
+l=E2=80=99IA pour inventer des Territoires connect=C3=A9s et les villes int=
+elligentes de
+demain qui prennent en compte les facteurs soci=C3=A9taux et environnementa=
+ux.
+Cette demi-journ=C3=A9e sera consacr=C3=A9e =C3=A0 la question d=E2=80=99=
+=C3=A9thique li=C3=A9e =C3=A0
+l=E2=80=99utilisation de l=E2=80=99IA mais aussi =C3=A0 des t=C3=A9moignage=
+s tels que:
+
+- des retours d=E2=80=99exp=C3=A9riences =C3=A0 Issy les Moulineaux (une de=
+s villes
+europ=C3=A9ennes pionni=C3=A8res en mati=C3=A8re de num=C3=A9rique et d=E2=
+=80=99innovation au service
+des citoyens)
+
+- des projets d=C3=A9di=C3=A9s aux territoires et villes intelligentes mis =
+en places
+par la Gendarmerie Nationale et Dassault Syst=C3=A8mes
+
+- l=E2=80=99importance du Cloud pour r=C3=A9pondre aux enjeux de l=E2=80=99=
+usage de l=E2=80=99IA pour
+les Territoires et les villes intelligentes
+
+Le programme de cette demi-journ=C3=A9e :
+
+- 9h-9h20 Accueil des participants
+
+- 9h20-9h30 Mots de bienvenue par Lionel Trojam (directeur de recherche et
+innovation de l=E2=80=99ISEP) et Ysens de France (PhD. Docteur en droit, sp=
+=C3=A9cialis=C3=A9
+en IA / robotique militaire)
+
+- 9H30-10h30 : Keynote de Laurence Vanin, PhD/HDR (RC - Lieutenant-Colonel
+de la Gendarmerie Nationale, directrice de la chaire =C2=AB Smart City :
+philosophie & =C3=A9thique =C2=BB de l'Institut m=C3=A9diterran=C3=A9en du =
+risque, de
+l'environnement et du d=C3=A9veloppement durable (IMREDD) de l=E2=80=99Univ=
+ersit=C3=A9 C=C3=B4te
+d'Azur
+
+- 11030-11h : Pause caf=C3=A9
+
+- 11h -12h00 : Table ronde : Retours d=E2=80=99exp=C3=A9riences autour de l=
+=E2=80=99IA et ses
+applications dans le d=C3=A9veloppement des smart cities avec :
+
+o Ugo Simon, =C2=AB Ville de Demain =C2=BB =C3=A0 Station F
+
+o Xun Zhang , Professeur =C3=A0 l=E2=80=99Isep
+
+o Eric Legale, Directeur d=E2=80=99Issy M=C3=A9dia
+
+o Marion Milosevich, Directrice Solution Strat=C3=A9gique SmartCity Dassaul=
+t
+
+o David Chassan, Directeur strat=C3=A9gie de 3DS OUTSCALE
+
+o Le G=C3=A9n=C3=A9ral Patrick Perrot, Coordonnateur de la strat=C3=A9gie I=
+A de la
+Gendarmerie nationale
+
+- 12h30 : buffet D=C3=A9jeuner
+
+Cet =C3=A9v=C3=A8nement se passera en physique dans les locaux de l=E2=80=
+=99ISEP au *10 Rue
+de Vanves Issy les Moulineaux*, et un cocktail d=C3=A9jeunatoire cl=C3=B4tu=
+rera cette
+demi-journ=C3=A9e pour favoriser les =C3=A9changes et le r=C3=A9seautage.
+
+Lien pour s'inscrire
+<https://www.eventbrite.fr/e/billets-conference-lia-au-service-des-territoi=
+res-et-des-villes-463637842267>
+
+
+--
+
+
+[image: Logo] <https://fr.outscale.com/>
+
+Raja Chiky
+Innovation Program Manager
+[image: Phone] +33 1 53 27 52 70 (ext : 2035)
+[image: Mobile] 06 66 19 27 90
+[image: Website] fr.outscale.com
+[image: Envelope] raja.chiky@outscale.com
+[image: Map-marker] 1 rue royale - 319 Bureaux de la Colline
+92210, Saint-Cloud - France
+<https://data.sigilium.com/signatures/rcf-mnqqugcvrzoro3nwzbzbsxuu0rc/link?=
+element=3Dmap_marker>
+[image: Facebook] <https://www.facebook.com/outscalefrance/>
+[image: Twitter] <https://twitter.com/outscale_fr>
+[image: Linkedin] <https://www.linkedin.com/company/outscale-france>
+IMPORTANT : The information contained in this message may be privileged and
+confidential and protected from disclosure. If the reader of this message
+is not the intended recipient, or an employee or agent responsible for
+delivering this message to the intended recipient, you are hereby notified
+that any dissemination, distribution or copying of this communication is
+strictly prohibited. If you have received this communication in error,
+please notify us immediately by replying to the message and deleting it
+from your computer.
+Outscale informs you that your personal data are processed in accordance
+with our data protection policy, available on our website. If you have any
+inquiries please contact us at personal-data@outscale.com.
+
+--=20
+
+
+[image: Logo] <https://fr.outscale.com/>
+
+Raja Chiky
+Innovation Program Manager
+[image: Phone] +33 1 53 27 52 70 (ext : 2035)
+[image: Mobile] 06 66 19 27 90
+[image: Website] fr.outscale.com
+[image: Envelope] raja.chiky@outscale.com
+[image: Map-marker] 1 rue royale - 319 Bureaux de la Colline
+92210, Saint-Cloud - France
+<https://data.sigilium.com/signatures/rcf-mnqqugcvrzoro3nwzbzbsxuu0rc/link?=
+element=3Dmap_marker>
+[image: Facebook] <https://www.facebook.com/outscalefrance/>
+[image: Twitter] <https://twitter.com/outscale_fr>
+[image: Linkedin] <https://www.linkedin.com/company/outscale-france>
+IMPORTANT : The information contained in this message may be privileged and
+confidential and protected from disclosure. If the reader of this message
+is not the intended recipient, or an employee or agent responsible for
+delivering this message to the intended recipient, you are hereby notified
+that any dissemination, distribution or copying of this communication is
+strictly prohibited. If you have received this communication in error,
+please notify us immediately by replying to the message and deleting it
+from your computer.
+Outscale informs you that your personal data are processed in accordance
+with our data protection policy, available on our website. If you have any
+inquiries please contact us at personal-data@outscale.com.
+
+--000000000000abf37a05ed1dd851
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><p><strong>A l=E2=80=99occasion du mois de l=E2=80=99Innov=
+ation publique la Gendarmerie Nationale, 3DS OUTSCALE et l=E2=80=99ISEP org=
+anisent une conf=C3=A9rence sur le sujet de l=E2=80=99IA au service des ter=
+ritoires et des villes intelligentes</strong></p><p></p><p>L=E2=80=99Intell=
+igence artificielle IA est aujourd=E2=80=99hui au c=C5=93ur des pr=C3=A9occ=
+upations. Elle est utilis=C3=A9e comme solution principale pour faciliter e=
+t d=C3=A9velopper des services pour les citoyens. L=E2=80=99IA a fait ses p=
+reuves dans nombreuses applications que ce soit pour l=E2=80=99environnemen=
+t, la s=C3=A9curit=C3=A9 des individus, la sant=C3=A9, l=E2=80=99agricultur=
+e, etc. Elle a boulevers=C3=A9 toute la soci=C3=A9t=C3=A9 et est m=C3=AAme =
+consid=C3=A9r=C3=A9e comme la quatri=C3=A8me r=C3=A9volution industrielle.<=
+/p><p>Dans le cadre du mois de l=E2=80=99Innovation publique, la=C2=A0<stro=
+ng>Gendarmerie Nationale (GN)</strong>,=C2=A0<strong>3DS OUTSCALE=C2=A0</st=
+rong>(Fournisseur de Cloud) et l=E2=80=99<strong>ISEP=C2=A0</strong>(Ecole =
+d=E2=80=99ing=C3=A9nieur du Num=C3=A9rique) organisent une demi-journ=C3=A9=
+e de sensibilisation =C3=A0 l=E2=80=99usage de l=E2=80=99IA pour inventer d=
+es Territoires connect=C3=A9s et les villes intelligentes de demain qui pre=
+nnent en compte les facteurs soci=C3=A9taux et environnementaux. Cette demi=
+-journ=C3=A9e sera consacr=C3=A9e =C3=A0 la question d=E2=80=99=C3=A9thique=
+ li=C3=A9e =C3=A0 l=E2=80=99utilisation de l=E2=80=99IA mais aussi =C3=A0 d=
+es t=C3=A9moignages tels que:</p><p>- des retours d=E2=80=99exp=C3=A9rience=
+s =C3=A0 Issy les Moulineaux (une des villes europ=C3=A9ennes pionni=C3=A8r=
+es en mati=C3=A8re de num=C3=A9rique et d=E2=80=99innovation au service des=
+ citoyens)</p><p>- des projets d=C3=A9di=C3=A9s aux territoires et villes i=
+ntelligentes mis en places par la Gendarmerie Nationale et Dassault Syst=C3=
+=A8mes</p><p>- l=E2=80=99importance du Cloud pour r=C3=A9pondre aux enjeux =
+de l=E2=80=99usage de l=E2=80=99IA pour les Territoires et les villes intel=
+ligentes</p><p>Le programme de cette demi-journ=C3=A9e :</p><p>- 9h-9h20 Ac=
+cueil des participants</p><p>- 9h20-9h30 Mots de bienvenue par Lionel Troja=
+m (directeur de recherche et innovation de l=E2=80=99ISEP) et Ysens de Fran=
+ce (PhD. Docteur en droit, sp=C3=A9cialis=C3=A9 en IA / robotique militaire=
+)</p><p>- 9H30-10h30 : Keynote de Laurence Vanin, PhD/HDR (RC - Lieutenant-=
+Colonel de la Gendarmerie Nationale, directrice de la chaire =C2=AB Smart C=
+ity : philosophie &amp; =C3=A9thique =C2=BB de l&#39;Institut m=C3=A9diterr=
+an=C3=A9en du risque, de l&#39;environnement et du d=C3=A9veloppement durab=
+le (IMREDD) de l=E2=80=99Universit=C3=A9 C=C3=B4te d&#39;Azur</p><p>- 11030=
+-11h : Pause caf=C3=A9</p><p>- 11h -12h00 : Table ronde : Retours d=E2=80=
+=99exp=C3=A9riences autour de l=E2=80=99IA et ses applications dans le d=C3=
+=A9veloppement des smart cities avec :</p><p>o Ugo Simon, =C2=AB Ville de D=
+emain =C2=BB =C3=A0 Station F</p><p>o Xun Zhang , Professeur =C3=A0 l=E2=80=
+=99Isep</p><p>o Eric Legale, Directeur d=E2=80=99Issy M=C3=A9dia</p><p>o Ma=
+rion Milosevich, Directrice Solution Strat=C3=A9gique SmartCity Dassault</p=
+><p>o David Chassan, Directeur strat=C3=A9gie de 3DS OUTSCALE</p><p>o Le G=
+=C3=A9n=C3=A9ral Patrick Perrot, Coordonnateur de la strat=C3=A9gie IA de l=
+a Gendarmerie nationale</p><p>- 12h30 : buffet D=C3=A9jeuner</p><p></p><p>C=
+et =C3=A9v=C3=A8nement se passera en physique dans les locaux de l=E2=80=99=
+ISEP au=C2=A0<strong>10 Rue de Vanves Issy les Moulineaux</strong>, et un c=
+ocktail d=C3=A9jeunatoire cl=C3=B4turera cette demi-journ=C3=A9e pour favor=
+iser les =C3=A9changes et le r=C3=A9seautage.</p><p><a href=3D"https://www.=
+eventbrite.fr/e/billets-conference-lia-au-service-des-territoires-et-des-vi=
+lles-463637842267">Lien pour s&#39;inscrire</a></p><p></p><div><br></div>--=
+<br><div dir=3D"ltr" class=3D"gmail_signature"><div dir=3D"ltr"><br><br><ta=
+ble width=3D"450"><tbody><tr><td style=3D"padding:0px 10px 0px 0px;vertical=
+-align:top;border-right:1px solid rgb(255,88,89);width:120px"><a href=3D"ht=
+tps://fr.outscale.com/" target=3D"_blank"><img src=3D"https://data.sigilium=
+.com/images/logos/rccvundcc1vivhzmspdaybrjnba8arc/auto/logo.png" width=3D"1=
+20" height=3D"33" alt=3D"Logo" style=3D"border-style: none; display: block;=
+ width: 120px; height: 33px;"></a></td><td style=3D"padding:0px;vertical-al=
+ign:top"><table><tbody><tr><td colspan=3D"1" style=3D"padding:0px 0px 0px 1=
+0px;vertical-align:top;min-width:250px"><p style=3D"margin:0px;padding:0px;=
+font-family:Arial,sans-serif;font-size:12px;color:rgb(15,25,69);font-weight=
+:bold">Raja Chiky</p></td></tr><tr><td colspan=3D"1" style=3D"padding:0px 0=
+px 0px 10px;vertical-align:top"><span style=3D"font-family:Arial,sans-serif=
+;font-size:12px;color:rgb(255,88,89)">Innovation Program Manager</span></td=
+></tr><tr><td style=3D"padding:0px 0px 0px 10px;vertical-align:top"><table>=
+<tbody><tr><td style=3D"padding:0px 4px 0px 0px;vertical-align:top;font-fam=
+ily:Arial,sans-serif;font-size:12px;color:rgb(15,25,69)"><img src=3D"https:=
+//data.sigilium.com/img/0f1945/30/phone.png" border=3D"0" width=3D"15" heig=
+ht=3D"15" alt=3D"Phone" style=3D"border-style: none; width: 15px; height: 1=
+5px;"></td><td><span style=3D"font-family:Arial,sans-serif;font-size:12px;c=
+olor:rgb(15,25,69)">+33 1 53 27 52 70 (ext : 2035)</span></td></tr><tr><td =
+style=3D"padding:0px 4px 0px 0px;vertical-align:top;font-family:Arial,sans-=
+serif;font-size:12px;color:rgb(15,25,69)"><img src=3D"https://data.sigilium=
+.com/img/0f1945/30/mobile.png" border=3D"0" width=3D"15" height=3D"15" alt=
+=3D"Mobile" style=3D"border-style: none; width: 15px; height: 15px;"></td><=
+td><span style=3D"font-family:Arial,sans-serif;font-size:12px;color:rgb(15,=
+25,69)">06 66 19 27 90</span></td></tr><tr><td style=3D"padding:0px 4px 0px=
+ 0px;vertical-align:top;font-family:Arial,sans-serif;font-size:12px;color:r=
+gb(15,25,69)"><img src=3D"https://data.sigilium.com/img/0f1945/30/website.p=
+ng" border=3D"0" width=3D"15" height=3D"15" alt=3D"Website" style=3D"border=
+-style: none; width: 15px; height: 15px;"></td><td style=3D"padding:0px;ver=
+tical-align:top;font-family:Arial,sans-serif;font-size:12px;color:rgb(15,25=
+,69)"><a href=3D"https://fr.outscale.com/" target=3D"_blank" style=3D"color=
+:rgb(15,25,69);text-decoration-line:none">fr.outscale.com</a></td></tr><tr>=
+<td style=3D"padding:0px 4px 0px 0px;vertical-align:top;font-family:Arial,s=
+ans-serif;font-size:12px;color:rgb(15,25,69)"><img src=3D"https://data.sigi=
+lium.com/img/0f1945/30/envelope.png" border=3D"0" width=3D"15" height=3D"15=
+" alt=3D"Envelope" style=3D"border-style: none; width: 15px; height: 15px;"=
+></td><td><span style=3D"font-family:Arial,sans-serif;font-size:12px;color:=
+rgb(15,25,69)"><a href=3D"mailto:raja.chiky@outscale.com" target=3D"_blank"=
+>raja.chiky@outscale.com</a></span></td></tr><tr><td style=3D"padding:0px 4=
+px 0px 0px;vertical-align:top;font-family:Arial,sans-serif;font-size:12px;c=
+olor:rgb(15,25,69)"><img src=3D"https://data.sigilium.com/img/0f1945/30/map=
+-marker.png" border=3D"0" width=3D"15" height=3D"15" alt=3D"Map-marker" sty=
+le=3D"border-style: none; width: 15px; height: 15px;"></td><td style=3D"pad=
+ding:0px;vertical-align:top;font-family:Arial,sans-serif;font-size:12px;col=
+or:rgb(15,25,69)"><a href=3D"https://data.sigilium.com/signatures/rcf-mnqqu=
+gcvrzoro3nwzbzbsxuu0rc/link?element=3Dmap_marker" target=3D"_blank" style=
+=3D"color:rgb(15,25,69);text-decoration-line:none">1 rue royale - 319 Burea=
+ux de la Colline<br>92210, Saint-Cloud - France</a></td></tr></tbody></tabl=
+e></td></tr></tbody></table></td><td style=3D"padding:0px 0px 0px 10px;vert=
+ical-align:top"><table><tbody><tr><td><a href=3D"https://www.facebook.com/o=
+utscalefrance/" target=3D"_blank" style=3D"text-decoration-line:none"><img =
+src=3D"https://data.sigilium.com/img/ff5859/50/facebook.png" border=3D"0" w=
+idth=3D"25" height=3D"25" alt=3D"Facebook" style=3D"border-style: none; wid=
+th: 25px; height: 25px; display: block;"></a></td></tr><tr><td><a href=3D"h=
+ttps://twitter.com/outscale_fr" target=3D"_blank" style=3D"text-decoration-=
+line:none"><img src=3D"https://data.sigilium.com/img/ff5859/50/twitter.png"=
+ border=3D"0" width=3D"25" height=3D"25" alt=3D"Twitter" style=3D"border-st=
+yle: none; width: 25px; height: 25px; display: block;"></a></td></tr><tr><t=
+d><a href=3D"https://www.linkedin.com/company/outscale-france" target=3D"_b=
+lank" style=3D"text-decoration-line:none"><img src=3D"https://data.sigilium=
+.com/img/ff5859/50/linkedin.png" border=3D"0" width=3D"25" height=3D"25" al=
+t=3D"Linkedin" style=3D"border-style: none; width: 25px; height: 25px; disp=
+lay: block;"></a></td></tr></tbody></table></td></tr><tr><td colspan=3D"3" =
+style=3D"font-family:Arial,sans-serif;font-size:10px">IMPORTANT : The infor=
+mation contained in this message may be privileged and confidential and pro=
+tected from disclosure. If the reader of this message is not the intended r=
+ecipient, or an employee or agent responsible for delivering this message t=
+o the intended recipient, you are hereby notified that any dissemination, d=
+istribution or copying of this communication is strictly prohibited. If you=
+ have received this communication in error, please notify us immediately by=
+ replying to the message and deleting it from your computer.<br>Outscale in=
+forms you that your personal data are processed in accordance with our data=
+ protection policy, available on our website. If you have any inquiries ple=
+ase contact us at=C2=A0<a href=3D"mailto:personal-data@outscale.com" target=
+=3D"_blank">personal-data@outscale.com</a>.</td></tr></tbody></table></div>=
+</div><div><br></div>-- <br><div dir=3D"ltr" class=3D"gmail_signature" data=
+-smartmail=3D"gmail_signature"><div dir=3D"ltr"><br>
+<br>
+
+
+
+
+
+
+
+
+
+<table width=3D"450">
+ <tbody>
+=20
+
+ <tr>
+ <td style=3D"margin:0;padding:0;vertical-align:top;padding-right:10px;bord=
+er-right:1px solid #ff5859;width:120px">
+=20
+ <a href=3D"https://fr.outscale.com/" target=3D"_blank"><img src=3D"https:/=
+/data.sigilium.com/images/logos/rccvundcc1vivhzmspdaybrjnba8arc/auto/logo.p=
+ng" style=3D"border-style:none;display:block;width:120px;height:33px" width=
+=3D"120" height=3D"33" alt=3D"Logo"></a>
+=20
+ </td>
+ <td style=3D"margin:0;padding:0;vertical-align:top">
+ <table>
+ <tbody>
+ <tr>
+ <td style=3D"margin:0;padding:0;vertical-align:top;min-width:250px;padding=
+-left:10px" colspan=3D"1">
+ <p style=3D"margin:0;padding:0;font-family:Arial,sans-serif;font-size:12px=
+;color:#0f1945;font-weight:bold">
+ <span style=3D"font-family:Arial,sans-serif;font-size:12px;color:#0f1945">
+ Raja Chiky
+ </span>
+=20
+
+ </p>
+ </td>
+ </tr>
+=20
+ <tr>
+ <td style=3D"margin:0;padding:0;vertical-align:top;padding-left:10px" cols=
+pan=3D"1">
+
+ <span style=3D"font-family:Arial,sans-serif;font-size:12px;color:#ff5859">
+ Innovation Program Manager
+=20
+=20
+ </span>
+
+ </td>
+ </tr>
+=20
+ <tr>
+ <td style=3D"margin:0;padding:0 0 0 10px;vertical-align:top">
+ <table>
+ <tbody>
+=20
+ <tr>
+ <td style=3D"margin:0;padding:0;vertical-align:top;font-family:Arial,sans-=
+serif;font-size:12px;color:#0f1945;padding-right:4px">
+ <img src=3D"https://data.sigilium.com/img/0f1945/30/phone.png" style=3D"bo=
+rder-style:none;width:15px;height:15px" border=3D"0" width=3D"15" height=3D=
+"15" alt=3D"Phone">
+
+ </td>
+ <td>
+ <span style=3D"font-family:Arial,sans-serif;font-size:12px;color:#0f1945">
+ +33 1 53 27 52 70 (ext : 2035)
+=20
+ </span>
+ </td>
+ </tr>
+=20
+=20
+=20
+ <tr>
+ <td style=3D"margin:0;padding:0;vertical-align:top;font-family:Arial,sans-=
+serif;font-size:12px;color:#0f1945;padding-right:4px">
+ <img src=3D"https://data.sigilium.com/img/0f1945/30/mobile.png" style=3D"b=
+order-style:none;width:15px;height:15px" border=3D"0" width=3D"15" height=
+=3D"15" alt=3D"Mobile">
+
+ </td>
+ <td>
+ <span style=3D"font-family:Arial,sans-serif;font-size:12px;color:#0f1945">
+ 06 66 19 27 90</span></td>
+ </tr>
+=20
+=20
+ <tr>
+ <td style=3D"margin:0;padding:0;vertical-align:top;font-family:Arial,sans-=
+serif;font-size:12px;color:#0f1945;padding-right:4px">
+ <img src=3D"https://data.sigilium.com/img/0f1945/30/website.png" style=3D"=
+border-style:none;width:15px;height:15px" border=3D"0" width=3D"15" height=
+=3D"15" alt=3D"Website">
+
+ </td>
+ <td style=3D"margin:0;padding:0;vertical-align:top;font-family:Arial,sans-=
+serif;font-size:12px;color:#0f1945">
+ <a style=3D"text-decoration:none!important;text-decoration:none;color:#0f1=
+945;font-family:Arial,sans-serif;font-size:12px" href=3D"https://fr.outscal=
+e.com/" target=3D"_blank">
+ fr.outscale.com
+ </a>
+ </td>
+ </tr>
+
+=20
+ <tr>
+ <td style=3D"margin:0;padding:0;vertical-align:top;font-family:Arial,sans-=
+serif;font-size:12px;color:#0f1945;padding-right:4px">
+ <img src=3D"https://data.sigilium.com/img/0f1945/30/envelope.png" style=3D=
+"border-style:none;width:15px;height:15px" border=3D"0" width=3D"15" height=
+=3D"15" alt=3D"Envelope">
+
+ </td>
+ <td>
+ <span style=3D"font-family:Arial,sans-serif;font-size:12px;color:#0f1945">
+ <a href=3D"mailto:raja.chiky@outscale.com" target=3D"_blank">raja.chiky@ou=
+tscale.com</a></span>
+ </td>
+ </tr>
+
+
+=20
+ <tr>
+ <td style=3D"margin:0;padding:0;vertical-align:top;font-family:Arial,sans-=
+serif;font-size:12px;color:#0f1945;padding-right:4px">
+ <img src=3D"https://data.sigilium.com/img/0f1945/30/map-marker.png" style=
+=3D"border-style:none;width:15px;height:15px" border=3D"0" width=3D"15" hei=
+ght=3D"15" alt=3D"Map-marker">
+
+ </td>
+ <td style=3D"margin:0;padding:0;vertical-align:top;font-family:Arial,sans-=
+serif;font-size:12px;color:#0f1945">
+ <a style=3D"text-decoration:none!important;text-decoration:none;color:#0f1=
+945;font-family:Arial,sans-serif;font-size:12px" href=3D"https://data.sigil=
+ium.com/signatures/rcf-mnqqugcvrzoro3nwzbzbsxuu0rc/link?element=3Dmap_marke=
+r" target=3D"_blank">
+ 1 rue royale - 319 Bureaux de la Colline <br>92210, Saint-Cloud - France
+ </a>
+ </td>
+ </tr>
+
+=20
+
+ </tbody>
+ </table>
+ </td>
+ </tr>
+=20
+ </tbody>
+ </table>
+ </td>
+ <td style=3D"margin:0;padding:0;vertical-align:top;padding-left:10px">
+ <table>
+ <tbody>
+=20
+=20
+=20
+=20
+=20
+ <tr>
+ <td>
+ <a style=3D"text-decoration:none" href=3D"https://www.facebook.com/outscal=
+efrance/" target=3D"_blank"><img src=3D"https://data.sigilium.com/img/ff585=
+9/50/facebook.png" style=3D"border-style:none;width:25px;height:25px;displa=
+y:block" border=3D"0" width=3D"25" height=3D"25" alt=3D"Facebook"></a>
+ </td>
+ </tr>
+=20
+=20
+=20
+=20
+=20
+ <tr>
+ <td>
+ <a style=3D"text-decoration:none" href=3D"https://twitter.com/outscale_fr"=
+ target=3D"_blank"><img src=3D"https://data.sigilium.com/img/ff5859/50/twit=
+ter.png" style=3D"border-style:none;width:25px;height:25px;display:block" b=
+order=3D"0" width=3D"25" height=3D"25" alt=3D"Twitter"></a>
+ </td>
+ </tr>
+=20
+=20
+=20
+=20
+=20
+ <tr>
+ <td>
+ <a style=3D"text-decoration:none" href=3D"https://www.linkedin.com/company=
+/outscale-france" target=3D"_blank"><img src=3D"https://data.sigilium.com/i=
+mg/ff5859/50/linkedin.png" style=3D"border-style:none;width:25px;height:25p=
+x;display:block" border=3D"0" width=3D"25" height=3D"25" alt=3D"Linkedin"><=
+/a>
+ </td>
+ </tr>
+=20
+=20
+ </tbody>
+ </table>
+ </td>
+ </tr>
+=20
+=20
+ <tr>
+ <td colspan=3D"3" style=3D"font-family:Arial,sans-serif;font-size:10px">IM=
+PORTANT : The information contained in this message may be privileged and c=
+onfidential and protected from disclosure. If the reader of this message is=
+ not the intended recipient, or an employee or agent responsible for delive=
+ring this message to the intended recipient, you are hereby notified that a=
+ny dissemination, distribution or copying of this communication is strictly=
+ prohibited. If you have received this communication in error, please notif=
+y us immediately by replying to the message and deleting it from your compu=
+ter.
+<br>Outscale informs you that your personal data are processed in accordanc=
+e with our data protection policy, available on our website. If you have an=
+y inquiries please contact us at <a href=3D"mailto:personal-data@outscale.c=
+om" target=3D"_blank">personal-data@outscale.com</a>.</td>
+ </tr>
+=20
+</tbody>
+</table></div></div></div>
+
+--000000000000abf37a05ed1dd851--

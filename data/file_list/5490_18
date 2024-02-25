@@ -1,0 +1,872 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (bouncesmtp2.u12.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id AD21714017D7
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Fri,  3 Jun 2022 16:06:52 +0200 (CEST)
+Received: from mx3.d101.univ-nantes.fr (MX3.univ-nantes.fr [193.52.101.137])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id A91CC5FB5
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Fri,  3 Jun 2022 16:06:52 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTP id A0A7B211BF
+	for <liste-egc@polytech.univ-nantes.fr>; Fri,  3 Jun 2022 16:06:52 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 0
+X-Spam-Level:
+X-Spam-Status: No, score=x tagged_above=-1000 required=5 WHITELISTED tests=[]
+	autolearn=unavailable
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=univ-rennes1.fr
+Received: from mx3.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id vt9Zr2Fbc_7A for <liste-egc@polytech.univ-nantes.fr>;
+	Fri,  3 Jun 2022 16:06:52 +0200 (CEST)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from smtpout02-ext4.partage.renater.fr (smtpout02-ext4.partage.renater.fr [194.254.241.31])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTP id 76BC621166
+	for <liste-egc@polytech.univ-nantes.fr>; Fri,  3 Jun 2022 16:06:52 +0200 (CEST)
+Received: from zmtaauth04.partage.renater.fr (zmtaauth04.partage.renater.fr [194.254.241.26])
+	by smtpout20.partage.renater.fr (Postfix) with ESMTP id 3D48BC0187;
+	Fri,  3 Jun 2022 16:06:48 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zmtaauth04.partage.renater.fr (Postfix) with ESMTP id 462471C01A6;
+	Fri,  3 Jun 2022 16:05:55 +0200 (CEST)
+Received: from zmtaauth04.partage.renater.fr ([127.0.0.1])
+	by localhost (zmtaauth04.partage.renater.fr [127.0.0.1]) (amavisd-new, port 10032)
+	with ESMTP id 64oDaEkwmxRO; Fri,  3 Jun 2022 16:05:54 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zmtaauth04.partage.renater.fr (Postfix) with ESMTP id B5A001C01D9;
+	Fri,  3 Jun 2022 16:05:54 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zmtaauth04.partage.renater.fr B5A001C01D9
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-rennes1.fr;
+	s=985DBB1A-FF8B-4311-B8B4-4A7A53527F32; t=1654265154;
+	bh=Np2USbHMg+HRj8o3vx4xzZz7bgGMpb1QJNOQ3f65/E4=;
+	h=From:Mime-Version:Date:To:Message-Id;
+	b=N8rfU7AQslpyGtGCAVWR5EmtniM3lRTBjbK5IknIaKSKDpDq3Pf9Cu5Aj1RErf9FT
+	 HhkgnuLSyD00B29PeSJlu8VVrxjgSbFBtkuWeDOYG20Pqr95arrj8mv3aAkWDT9Kpc
+	 YasqgpY7r+4U8XiiFI8yy+oyN9mhTPDkfSa/6VTrwpD4G1lG6SQwuMKPi0I0GV/O/X
+	 /pOhY2Rl4senntXKafKcP/fhBYmV9i6trMM2bo/L9rzWC+v04sba83G6AXll20dohR
+	 82of7DVIlecrNu7KbrheY9mjaAsiiMEq/qP4mIMNhhb/G5nSlWS2fKfoZshyXF3Qh3
+	 uHAoBJamhRqkA==
+X-Virus-Scanned: amavisd-new at zmtaauth04.partage.renater.fr
+Received: from zmtaauth04.partage.renater.fr ([127.0.0.1])
+	by localhost (zmtaauth04.partage.renater.fr [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id Nu9o_KRrFcqz; Fri,  3 Jun 2022 16:05:54 +0200 (CEST)
+Received: from 91.171.25.196 (unknown [194.254.241.249])
+	by zmtaauth04.partage.renater.fr (Postfix) with ESMTPA id 510701C01BE;
+	Fri,  3 Jun 2022 16:05:54 +0200 (CEST)
+From: Laurent d'Orazio <laurent.dorazio@univ-rennes1.fr>
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_E32F3B42-8870-47B4-B0DF-9420BCD57E66"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.100.31\))
+Date: Fri, 3 Jun 2022 16:05:54 +0200
+References: <01be01d87752$32e2d620$98a88260$@ensta-bretagne.fr>
+To: bull-i3@irit.fr,
+ gazettebd3@univ-grenoble-alpes.fr,
+ liste-egc@polytech.univ-nantes.fr
+Message-Id: <235F8512-3998-4A2E-869C-914FE95F8F05@univ-rennes1.fr>
+X-Mailer: Apple Mail (2.3696.100.31)
+X-Renater-Ptge-SpamState: clean
+X-Renater-Ptge-SpamScore: 49
+X-Renater-Ptge-SpamCause: gggruggvucftvghtrhhoucdtuddrgedvfedrleeigdejtdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucftgffptefvgfftnecuuegrihhlohhuthemuceftddtnecuogfuuhhsphgvtghtffhomhgrihhnucdlgeelmdenucfjughrpefhtgggfffufhfvkffosegrtdhmrehhtdejnecuhfhrohhmpefnrghurhgvnhhtucgukdfqrhgriihiohcuoehlrghurhgvnhhtrdguohhrrgiiihhosehunhhivhdqrhgvnhhnvghsuddrfhhrqeenucggtffrrghtthgvrhhnpeefvdelkefgfeelffeivdfhtdefgfdtkeetheduheekueelfeehhfehieefteevtdenucffohhmrghinhepghhithhhuhgsrdhiohdpvghnshhtrgdqsghrvghtrghgnhgvrdhfrhdplhgrsghsthhitggtrdhfrhdprghvrghsthdrtghomhenucfkphepudelgedrvdehgedrvdeguddrvdegleenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduleegrddvheegrddvgedurddvgeelpdhhvghlohepledurddujedurddvhedrudeliedpmhgrihhlfhhrohhmpefnrghurhgvnhhtucgukdfqrhgriihiohcuoehlrghurhgvnhhtrdguohhrrgiiihhosehunhhivhdqrhgvnhhnvghsuddrfhhrqedpnhgspghrtghpthhtohepgedprhgtphhtthhopegsuhhllhdqihefsehirhhithdrfhhrpdhrtghpthhtohepghgriigvthhtvggsugefsehunhhivhdqghhrvghnohgslhgvqdgrlhhpvghsrdhf
+ rhdprhgtphhtthhopehlihhsthgvqdgvghgtsehpohhlhihtvggthhdruhhnihhvqdhnrghnthgvshdrfhhrpdhrtghpthhtoheplhgruhhrvghnthdrughorhgriihiohesuhhnihhvqdhrvghnnhgvshdurdhfrh
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Fwd: [rsd-cfp] appel =?UTF-8?Q?=C3=A0?= participation
+ Per3S 13 Juin IMT Palaiseau
+
+
+--Apple-Mail=_E32F3B42-8870-47B4-B0DF-9420BCD57E66
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
+
+>=20
+> =20
+> ****** APPEL A PARTICIPATION ******
+> =20
+> Quoi: 6=C3=A8me =C3=A9dition du Workshop Performance and Scalability =
+of Storage Systems
+> Quand: 13 Juin=20
+> O=C3=B9: IMT Palaiseau (19 place Marguerite Perey 91120 Palaiseau =
+91120 Palaiseau)
+> Un lien: https://per3s.github.io/ <https://per3s.github.io/>
+> =C3=A7a coute combien: c'est gratuit mais il faut s'inscrire =
+https://per3s.github.io/#inscription =
+<https://per3s.github.io/#inscription>
+> =20
+> et le programme :
+> =20
+>                9h-9h30 Accueil des Participants
+>                9h30-12h Storage at Scale
+>                12h-12h30 Pr=C3=A9sentation Flash des Doctorants
+>                12h30-14h ** Buffet et Posters **
+>                14h-15h30 Cloud and Storage
+>                15h30-16h ** Pause caf=C3=A9 **
+>                16h-17h30 Lowlevel and Scale enablers
+> =20
+> Plus de d=C3=A9tails :
+> =20
+> Storage at Scale :
+>                - Towards a Better Understanding and Evaluation of Tree =
+Structures on SSDs, Radu Stoica, IBM Zurich
+>                - IO-SETS: Simple and efficient approaches for I/O, =
+Guillaume Pallez, Inria Bordeaux
+>                - Using metadata matching for prefetching strategy =
+auto-optimization,=20
+> Sophie Robert-Hayek, Atos
+>                - =46rom small files to no files, Marco Aldinucci, =
+University of Torino, Italy
+>                - Investigating IO bottlenecks with EZTrace, Fran=C3=A7oi=
+s Trahay, IMT-Palaiseau
+>               =20
+> Pr=C3=A9sentation Flash des Doctorants :
+>                - Partage des noeuds E/S entre applications, Alexis =
+Bandet
+>                - Pythia: Runtime decisions based on prediction, Alexis =
+Colin, T=C3=A9l=C3=A9com SudParis
+>                - Revisiting storage virtualization for modern devices, =
+Damien Thenot, VATES, T=C3=A9l=C3=A9com SudParis
+>                - Conception d'un algorithme d'entrainement de for=C3=AAt=
+ al=C3=A9atoire =C3=A9conome en E/S, Cam=C3=A9lia Slimani,  Lab-STICC =
+Univ. Bretagne Occidentale.=20
+>                - Placement de donn=C3=A9es dans un cloud f=C3=A9d=C3=A9r=
+=C3=A9 =C3=A0 base de syst=C3=A8me de stockage hybride, Amina Chikhaoui, =
+universit=C3=A9 des sciences et de la technologie Houari Boumediene, =
+Univ. Bretagne Occidentale, Lab-STICC.
+>                - Investigating allocation of heterogeneous storage =
+resources on HPC systems, Julien Monniot, INRIA Rennes
+>               =20
+> Cloud and Storage :
+>                - Object Storage - What shirt suits you?, Charlotte =
+Letamendia, OVHCloud
+>                - Time to Revisit Erasure Codes in Data-intensive =
+Clusters, Shadi Ibrahim, Inria
+>                - Leaderless State-Machine Replication: An Overview, =
+Pierre SUTRA, T=C3=A9l=C3=A9com SudParis
+> =20
+> Lowlevel and Scale enablers :
+>                - Phobos: a scale-out object store implementing tape =
+library support, Patrice Lucas, CEA - Philippe Deniel, CEA - Thomas =
+Leibovici, CEA
+>                - Handling IO data with PDI and Optimizing away IO with =
+PDI/Deisa, Amal GUEROUDJI, Maison de la Simulation
+>                - Spintronics: from device to system for low-power, =
+reliable applications and non-conventional computing, Guillaume PRENAT, =
+Universit=C3=A9 Grenoble Alpes, CEA-Grenoble
+>               =20
+> Comit=C3=A9 local d'organisation :
+>                - Fran=C3=A7ois Trahay, IMT SudPAris, IPP
+> =20
+> Comit=C3=A9 de pilotage:
+>                - Jean-Thomas Acquaviva, DDN Storage=20
+>                - Jalil Boukhobza, Lab-STICC UMR6283, ENSTA-Bretagne=20
+>                - Philppe Deniel, CEA-DAM=20
+>                - Philippe Raipin, Orange labs
+> =20
+>  <https://www.ensta-bretagne.fr/> <https://www.labsticc.fr/en/index/>=09=
+
+> Jalil Boukhobza
+> Professeur / Professor
+> +33 (0)2 98 34 88 90
+> Lab-STICC =E2=80=93 UMR CNRS 6285
+> www.labsticc.fr <http://www.labsticc.fr/>
+>=20
+> ENSTA Bretagne
+> Grande =C3=A9cole d'ing=C3=A9nieurs et centre de recherche
+> French State Graduate, Post-Graduate and Research Institute
+> 2 rue Fran=C3=A7ois Verny - 29806 Brest Cedex 9 - France
+> www.ensta-bretagne.fr <https://www.ensta-bretagne.fr/>
+> =20
+> =20
+> =20
+>  =
+<https://www.avast.com/sig-email?utm_medium=3Demail&utm_source=3Dlink&utm_=
+campaign=3Dsig-email&utm_content=3Demailclient>=09
+> Garanti sans virus. www.avast.com =
+<https://www.avast.com/sig-email?utm_medium=3Demail&utm_source=3Dlink&utm_=
+campaign=3Dsig-email&utm_content=3Demailclient>
+
+--Apple-Mail=_E32F3B42-8870-47B4-B0DF-9420BCD57E66
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="Apple-Mail=_5E4A3F4F-4341-46B4-B2BD-68BDFB5FDCB2"
+
+
+--Apple-Mail=_5E4A3F4F-4341-46B4-B2BD-68BDFB5FDCB2
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
+charset=3Dutf-8"></head><body style=3D"word-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;" =
+class=3D""><div><blockquote type=3D"cite" class=3D""><div =
+class=3D"WordSection1" style=3D"page: WordSection1; caret-color: rgb(0, =
+0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;"><br class=3D""><div style=3D"margin: 0cm; =
+font-size: 11pt; font-family: Calibri, sans-serif;" class=3D""><o:p =
+class=3D"">&nbsp;</o:p></div><div style=3D"margin: 0cm; font-size: 11pt; =
+font-family: Calibri, sans-serif;" class=3D""><span lang=3D"EN-US" =
+class=3D"">****** APPEL A PARTICIPATION ******<o:p =
+class=3D""></o:p></span></div><div style=3D"margin: 0cm; font-size: =
+11pt; font-family: Calibri, sans-serif;" class=3D""><span lang=3D"EN-US" =
+class=3D""><o:p class=3D"">&nbsp;</o:p></span></div><div style=3D"margin: =
+0cm; font-size: 11pt; font-family: Calibri, sans-serif;" class=3D""><span =
+lang=3D"EN-US" class=3D"">Quoi: 6=C3=A8me =C3=A9dition du<span =
+class=3D"Apple-converted-space">&nbsp;</span><i class=3D"">Workshop =
+Performance and Scalability of Storage Systems</i><o:p =
+class=3D""></o:p></span></div><div style=3D"margin: 0cm; font-size: =
+11pt; font-family: Calibri, sans-serif;" class=3D"">Quand: 13 Juin<span =
+class=3D"Apple-converted-space">&nbsp;</span><o:p =
+class=3D""></o:p></div><div style=3D"margin: 0cm; font-size: 11pt; =
+font-family: Calibri, sans-serif;" class=3D"">O=C3=B9: IMT Palaiseau (19 =
+place Marguerite Perey 91120 Palaiseau 91120 Palaiseau)<o:p =
+class=3D""></o:p></div><div style=3D"margin: 0cm; font-size: 11pt; =
+font-family: Calibri, sans-serif;" class=3D"">Un lien:<span =
+class=3D"Apple-converted-space">&nbsp;</span><a =
+href=3D"https://per3s.github.io/" style=3D"color: rgb(5, 99, 193); =
+text-decoration: underline;" class=3D"">https://per3s.github.io/</a><o:p =
+class=3D""></o:p></div><div style=3D"margin: 0cm; font-size: 11pt; =
+font-family: Calibri, sans-serif;" class=3D"">=C3=A7a coute combien: =
+c'est gratuit mais il faut s'inscrire<span =
+class=3D"Apple-converted-space">&nbsp;</span><a =
+href=3D"https://per3s.github.io/#inscription" style=3D"color: rgb(5, 99, =
+193); text-decoration: underline;" =
+class=3D"">https://per3s.github.io/#inscription</a><o:p =
+class=3D""></o:p></div><div style=3D"margin: 0cm; font-size: 11pt; =
+font-family: Calibri, sans-serif;" class=3D""><o:p =
+class=3D"">&nbsp;</o:p></div><div style=3D"margin: 0cm; font-size: 11pt; =
+font-family: Calibri, sans-serif;" class=3D"">et le programme :<o:p =
+class=3D""></o:p></div><div style=3D"margin: 0cm; font-size: 11pt; =
+font-family: Calibri, sans-serif;" class=3D""><o:p =
+class=3D"">&nbsp;</o:p></div><div style=3D"margin: 0cm; font-size: 11pt; =
+font-family: Calibri, sans-serif;" =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp; 9h-9h30 Accueil des Participants<o:p =
+class=3D""></o:p></div><div style=3D"margin: 0cm; font-size: 11pt; =
+font-family: Calibri, sans-serif;" =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp; 9h30-12h Storage at Scale<o:p =
+class=3D""></o:p></div><div style=3D"margin: 0cm; font-size: 11pt; =
+font-family: Calibri, sans-serif;" =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp; 12h-12h30 Pr=C3=A9sentation Flash des =
+Doctorants<o:p class=3D""></o:p></div><div style=3D"margin: 0cm; =
+font-size: 11pt; font-family: Calibri, sans-serif;" =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp; 12h30-14h ** Buffet et Posters **<o:p =
+class=3D""></o:p></div><div style=3D"margin: 0cm; font-size: 11pt; =
+font-family: Calibri, sans-serif;" =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp; 14h-15h30 Cloud and Storage<o:p =
+class=3D""></o:p></div><div style=3D"margin: 0cm; font-size: 11pt; =
+font-family: Calibri, sans-serif;" =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;<span =
+class=3D"Apple-converted-space">&nbsp;</span><span lang=3D"EN-US" =
+class=3D"">15h30-16h ** Pause caf=C3=A9 **<o:p =
+class=3D""></o:p></span></div><div style=3D"margin: 0cm; font-size: =
+11pt; font-family: Calibri, sans-serif;" class=3D""><span lang=3D"EN-US" =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp; 16h-17h30 Lowlevel and Scale enablers<o:p =
+class=3D""></o:p></span></div><div style=3D"margin: 0cm; font-size: =
+11pt; font-family: Calibri, sans-serif;" class=3D""><span lang=3D"EN-US" =
+class=3D""><o:p class=3D"">&nbsp;</o:p></span></div><div style=3D"margin: =
+0cm; font-size: 11pt; font-family: Calibri, sans-serif;" class=3D"">Plus =
+de d=C3=A9tails :<o:p class=3D""></o:p></div><div style=3D"margin: 0cm; =
+font-size: 11pt; font-family: Calibri, sans-serif;" class=3D""><o:p =
+class=3D"">&nbsp;</o:p></div><div style=3D"margin: 0cm; font-size: 11pt; =
+font-family: Calibri, sans-serif;" class=3D"">Storage at Scale :<o:p =
+class=3D""></o:p></div><div style=3D"margin: 0cm; font-size: 11pt; =
+font-family: Calibri, sans-serif;" =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;<span =
+class=3D"Apple-converted-space">&nbsp;</span><span lang=3D"EN-US" =
+class=3D"">- Towards a Better Understanding and Evaluation of Tree =
+Structures on SSDs, Radu Stoica, IBM Zurich<o:p =
+class=3D""></o:p></span></div><div style=3D"margin: 0cm; font-size: =
+11pt; font-family: Calibri, sans-serif;" class=3D""><span lang=3D"EN-US" =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp; - IO-SETS: Simple and efficient approaches for =
+I/O, Guillaume Pallez, Inria Bordeaux<o:p =
+class=3D""></o:p></span></div><div style=3D"margin: 0cm; font-size: =
+11pt; font-family: Calibri, sans-serif;" class=3D""><span lang=3D"EN-US" =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp; - Using metadata matching for prefetching strategy =
+auto-optimization,<span class=3D"Apple-converted-space">&nbsp;</span><o:p =
+class=3D""></o:p></span></div><div style=3D"margin: 0cm; font-size: =
+11pt; font-family: Calibri, sans-serif;" class=3D""><span lang=3D"EN-US" =
+class=3D"">Sophie Robert-Hayek, Atos<o:p =
+class=3D""></o:p></span></div><div style=3D"margin: 0cm; font-size: =
+11pt; font-family: Calibri, sans-serif;" class=3D""><span lang=3D"EN-US" =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp; - =46rom small files to no files, Marco Aldinucci, =
+University of Torino, Italy<o:p class=3D""></o:p></span></div><div =
+style=3D"margin: 0cm; font-size: 11pt; font-family: Calibri, =
+sans-serif;" class=3D""><span lang=3D"EN-US" =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;<span =
+class=3D"Apple-converted-space">&nbsp;</span></span>- Investigating IO =
+bottlenecks with EZTrace, Fran=C3=A7ois Trahay, IMT-Palaiseau<o:p =
+class=3D""></o:p></div><div style=3D"margin: 0cm; font-size: 11pt; =
+font-family: Calibri, sans-serif;" =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;<span =
+class=3D"Apple-converted-space">&nbsp;</span><o:p =
+class=3D""></o:p></div><div style=3D"margin: 0cm; font-size: 11pt; =
+font-family: Calibri, sans-serif;" class=3D"">Pr=C3=A9sentation Flash =
+des Doctorants :<o:p class=3D""></o:p></div><div style=3D"margin: 0cm; =
+font-size: 11pt; font-family: Calibri, sans-serif;" =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp; - Partage des noeuds E/S entre applications, =
+Alexis Bandet<o:p class=3D""></o:p></div><div style=3D"margin: 0cm; =
+font-size: 11pt; font-family: Calibri, sans-serif;" =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;<span =
+class=3D"Apple-converted-space">&nbsp;</span><span lang=3D"EN-US" =
+class=3D"">- Pythia: Runtime decisions based on prediction, Alexis =
+Colin, T=C3=A9l=C3=A9com SudParis<o:p class=3D""></o:p></span></div><div =
+style=3D"margin: 0cm; font-size: 11pt; font-family: Calibri, =
+sans-serif;" class=3D""><span lang=3D"EN-US" =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp; - Revisiting storage virtualization for modern =
+devices, Damien Thenot, VATES, T=C3=A9l=C3=A9com SudParis<o:p =
+class=3D""></o:p></span></div><div style=3D"margin: 0cm; font-size: =
+11pt; font-family: Calibri, sans-serif;" class=3D""><span lang=3D"EN-US" =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;<span =
+class=3D"Apple-converted-space">&nbsp;</span></span>- Conception d'un =
+algorithme d'entrainement de for=C3=AAt al=C3=A9atoire =C3=A9conome en =
+E/S, Cam=C3=A9lia Slimani,&nbsp; Lab-STICC Univ. Bretagne =
+Occidentale.<span class=3D"Apple-converted-space">&nbsp;</span><o:p =
+class=3D""></o:p></div><div style=3D"margin: 0cm; font-size: 11pt; =
+font-family: Calibri, sans-serif;" =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp; - Placement de donn=C3=A9es dans un cloud =
+f=C3=A9d=C3=A9r=C3=A9 =C3=A0 base de syst=C3=A8me de stockage hybride, =
+Amina Chikhaoui, universit=C3=A9 des sciences et de la technologie =
+Houari Boumediene, Univ. Bretagne Occidentale, Lab-STICC.<o:p =
+class=3D""></o:p></div><div style=3D"margin: 0cm; font-size: 11pt; =
+font-family: Calibri, sans-serif;" =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp; - Investigating allocation of heterogeneous =
+storage resources on HPC systems, Julien Monniot, INRIA Rennes<o:p =
+class=3D""></o:p></div><div style=3D"margin: 0cm; font-size: 11pt; =
+font-family: Calibri, sans-serif;" =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;<span =
+class=3D"Apple-converted-space">&nbsp;</span><o:p =
+class=3D""></o:p></div><div style=3D"margin: 0cm; font-size: 11pt; =
+font-family: Calibri, sans-serif;" class=3D"">Cloud and Storage :<o:p =
+class=3D""></o:p></div><div style=3D"margin: 0cm; font-size: 11pt; =
+font-family: Calibri, sans-serif;" =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;<span =
+class=3D"Apple-converted-space">&nbsp;</span><span lang=3D"EN-US" =
+class=3D"">- Object Storage - What shirt suits you?, Charlotte =
+Letamendia, OVHCloud<o:p class=3D""></o:p></span></div><div =
+style=3D"margin: 0cm; font-size: 11pt; font-family: Calibri, =
+sans-serif;" class=3D""><span lang=3D"EN-US" =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp; - Time to Revisit Erasure Codes in Data-intensive =
+Clusters, Shadi Ibrahim, Inria<o:p class=3D""></o:p></span></div><div =
+style=3D"margin: 0cm; font-size: 11pt; font-family: Calibri, =
+sans-serif;" class=3D""><span lang=3D"EN-US" =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp; - Leaderless State-Machine Replication: An =
+Overview, Pierre SUTRA, T=C3=A9l=C3=A9com SudParis<o:p =
+class=3D""></o:p></span></div><div style=3D"margin: 0cm; font-size: =
+11pt; font-family: Calibri, sans-serif;" class=3D""><span lang=3D"EN-US" =
+class=3D""><o:p class=3D"">&nbsp;</o:p></span></div><div style=3D"margin: =
+0cm; font-size: 11pt; font-family: Calibri, sans-serif;" class=3D""><span =
+lang=3D"EN-US" class=3D"">Lowlevel and Scale enablers :<o:p =
+class=3D""></o:p></span></div><div style=3D"margin: 0cm; font-size: =
+11pt; font-family: Calibri, sans-serif;" class=3D""><span lang=3D"EN-US" =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp; - Phobos: a scale-out object store implementing =
+tape library support, Patrice Lucas, CEA - Philippe Deniel, CEA - Thomas =
+Leibovici, CEA<o:p class=3D""></o:p></span></div><div style=3D"margin: =
+0cm; font-size: 11pt; font-family: Calibri, sans-serif;" class=3D""><span =
+lang=3D"EN-US" =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp; - Handling IO data with PDI and Optimizing away IO =
+with PDI/Deisa, Amal GUEROUDJI, Maison de la Simulation<o:p =
+class=3D""></o:p></span></div><div style=3D"margin: 0cm; font-size: =
+11pt; font-family: Calibri, sans-serif;" class=3D""><span lang=3D"EN-US" =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp; - Spintronics: from device to system for =
+low-power, reliable applications and non-conventional computing, =
+Guillaume PRENAT, Universit=C3=A9 Grenoble Alpes, CEA-Grenoble<o:p =
+class=3D""></o:p></span></div><div style=3D"margin: 0cm; font-size: =
+11pt; font-family: Calibri, sans-serif;" class=3D""><span lang=3D"EN-US" =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;<span =
+class=3D"Apple-converted-space">&nbsp;</span><o:p =
+class=3D""></o:p></span></div><div style=3D"margin: 0cm; font-size: =
+11pt; font-family: Calibri, sans-serif;" class=3D"">Comit=C3=A9 local =
+d'organisation :<o:p class=3D""></o:p></div><div style=3D"margin: 0cm; =
+font-size: 11pt; font-family: Calibri, sans-serif;" =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp; - Fran=C3=A7ois Trahay, IMT SudPAris, IPP<o:p =
+class=3D""></o:p></div><div style=3D"margin: 0cm; font-size: 11pt; =
+font-family: Calibri, sans-serif;" class=3D""><o:p =
+class=3D"">&nbsp;</o:p></div><div style=3D"margin: 0cm; font-size: 11pt; =
+font-family: Calibri, sans-serif;" class=3D"">Comit=C3=A9 de =
+pilotage:<o:p class=3D""></o:p></div><div style=3D"margin: 0cm; =
+font-size: 11pt; font-family: Calibri, sans-serif;" =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp; - Jean-Thomas Acquaviva, DDN Storage<span =
+class=3D"Apple-converted-space">&nbsp;</span><o:p =
+class=3D""></o:p></div><div style=3D"margin: 0cm; font-size: 11pt; =
+font-family: Calibri, sans-serif;" =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp; - Jalil Boukhobza, Lab-STICC UMR6283, =
+ENSTA-Bretagne<span class=3D"Apple-converted-space">&nbsp;</span><o:p =
+class=3D""></o:p></div><div style=3D"margin: 0cm; font-size: 11pt; =
+font-family: Calibri, sans-serif;" =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp; - Philppe Deniel, CEA-DAM<span =
+class=3D"Apple-converted-space">&nbsp;</span><o:p =
+class=3D""></o:p></div><div style=3D"margin: 0cm; font-size: 11pt; =
+font-family: Calibri, sans-serif;" =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp; - Philippe Raipin, Orange labs<o:p =
+class=3D""></o:p></div><div style=3D"margin: 0cm; font-size: 11pt; =
+font-family: Calibri, sans-serif;" class=3D""><o:p =
+class=3D"">&nbsp;</o:p></div><table class=3D"MsoNormalTable" border=3D"0" =
+cellspacing=3D"0" cellpadding=3D"0" style=3D"background-color: rgb(242, =
+242, 242); border-collapse: collapse;"><tbody class=3D""><tr =
+class=3D""><td width=3D"170" style=3D"width: 127.5pt; padding: 7.5pt;" =
+class=3D""><div style=3D"margin: 0cm; font-size: 11pt; font-family: =
+Calibri, sans-serif; text-align: center;" class=3D""><span style=3D"" =
+class=3D""><a href=3D"https://www.ensta-bretagne.fr/" style=3D"color: =
+rgb(5, 99, 193); text-decoration: underline;" class=3D""><span =
+style=3D"font-size: 10.5pt; font-family: Helvetica, sans-serif; color: =
+rgb(51, 122, 183); text-decoration: none;" class=3D""><img border=3D"0" =
+id=3D"Image_x0020_1" alt=3D"Logo ENSTA Bretagne" style=3D"" class=3D"" =
+apple-inline=3D"yes" =
+src=3D"cid:image001.png@01D876AD.F821E3E0"></span></a><a =
+href=3D"https://www.labsticc.fr/en/index/" style=3D"color: rgb(5, 99, =
+193); text-decoration: underline;" class=3D""><span style=3D"font-size: =
+10.5pt; font-family: Helvetica, sans-serif; color: rgb(51, 122, 183); =
+text-decoration: none;" class=3D""><img border=3D"0" id=3D"Image_x0020_2" =
+alt=3D"Logo LabSTIC" style=3D"" class=3D"" apple-inline=3D"yes" =
+src=3D"cid:image002.png@01D876AD.F821E3E0"></span></a></span><span =
+style=3D"font-size: 10.5pt; font-family: Helvetica, sans-serif; color: =
+rgb(51, 51, 51);" class=3D""><o:p class=3D""></o:p></span></div></td><td =
+width=3D"396" style=3D"width: 297.3pt; padding: 3.75pt 0cm 3.75pt =
+37.5pt;" class=3D""><p class=3D"MsoNormal" style=3D"margin: 0cm 0cm =
+7.5pt; font-size: 11pt; font-family: Calibri, sans-serif;"><b =
+class=3D""><span style=3D"font-size: 9.5pt; color: rgb(1, 166, 170);" =
+class=3D"">Jalil Boukhobza</span></b><span style=3D"font-size: 9.5pt; =
+color: rgb(68, 89, 108);" class=3D""><br class=3D""><b =
+class=3D"">Professeur</b><i class=3D"">&nbsp;/ Professor</i><br =
+class=3D""><b class=3D"">+33 (0)2 98 34 88 90<br class=3D"">Lab-STICC =
+=E2=80=93 UMR CNRS 6285<br class=3D""><a href=3D"http://www.labsticc.fr/" =
+style=3D"color: rgb(5, 99, 193); text-decoration: underline;" =
+class=3D"">www.labsticc.fr</a><br class=3D""></b><br class=3D""></span><b =
+class=3D""><span style=3D"font-size: 9.5pt; color: rgb(1, 166, 170);" =
+class=3D"">ENSTA Bretagne</span></b><span style=3D"font-size: 9.5pt; =
+color: rgb(68, 89, 108);" class=3D""><br class=3D""><b class=3D"">Grande =
+=C3=A9cole d'ing=C3=A9nieurs et centre de recherche</b><br class=3D""><i =
+class=3D"">French State Graduate, Post-Graduate and Research =
+Institute<br class=3D""></i>2 rue Fran=C3=A7ois Verny - 29806 Brest =
+Cedex 9 - France<br class=3D""><a href=3D"https://www.ensta-bretagne.fr/" =
+style=3D"color: rgb(5, 99, 193); text-decoration: underline;" =
+class=3D""><b class=3D""><span style=3D"color: rgb(1, 166, 170);" =
+class=3D"">www.ensta-bretagne.fr</span></b></a><o:p =
+class=3D""></o:p></span></p></td></tr></tbody></table><div =
+style=3D"margin: 0cm; font-size: 11pt; font-family: Calibri, =
+sans-serif;" class=3D""><span class=3D""><o:p =
+class=3D"">&nbsp;</o:p></span></div><div style=3D"margin: 0cm; =
+font-size: 11pt; font-family: Calibri, sans-serif;" class=3D""><o:p =
+class=3D"">&nbsp;</o:p></div><div =
+id=3D"DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2" class=3D""><div =
+style=3D"margin: 0cm; font-size: 11pt; font-family: Calibri, =
+sans-serif;" class=3D""><span class=3D""><o:p =
+class=3D"">&nbsp;</o:p></span></div><table class=3D"MsoNormalTable" =
+border=3D"1" cellspacing=3D"5" cellpadding=3D"0" style=3D"border-style: =
+solid none none; border-top-width: 1pt; border-top-color: rgb(211, 212, =
+222);"><tbody class=3D""><tr class=3D""><td width=3D"55" style=3D"width: =
+41.25pt; border: none; padding: 13.5pt 0.75pt 0.75pt;" class=3D""><div =
+style=3D"margin: 0cm; font-size: 11pt; font-family: Calibri, =
+sans-serif;" class=3D""><a =
+href=3D"https://www.avast.com/sig-email?utm_medium=3Demail&amp;utm_source=3D=
+link&amp;utm_campaign=3Dsig-email&amp;utm_content=3Demailclient" =
+target=3D"_blank" style=3D"color: rgb(5, 99, 193); text-decoration: =
+underline;" class=3D""><span style=3D"border: 1pt solid windowtext; =
+padding: 0cm; text-decoration: none;" class=3D""><img border=3D"0" =
+id=3D"Image_x0020_3" alt=3D"Image supprim=C3=A9e par l'exp=C3=A9diteur." =
+style=3D"" class=3D"" apple-inline=3D"yes" =
+src=3D"cid:~WRD0678.jpg"></span></a><span class=3D""><o:p =
+class=3D""></o:p></span></div></td><td width=3D"470" style=3D"width: =
+352.5pt; border: none; padding: 12.75pt 0.75pt 0.75pt;" class=3D""><div =
+style=3D"margin: 0cm; font-size: 11pt; font-family: Calibri, sans-serif; =
+line-height: 13.5pt;" class=3D""><span style=3D"font-size: 10pt; =
+font-family: Arial, sans-serif; color: rgb(65, 66, 78);" =
+class=3D"">Garanti sans virus.<span =
+class=3D"Apple-converted-space">&nbsp;</span><a =
+href=3D"https://www.avast.com/sig-email?utm_medium=3Demail&amp;utm_source=3D=
+link&amp;utm_campaign=3Dsig-email&amp;utm_content=3Demailclient" =
+target=3D"_blank" style=3D"color: rgb(5, 99, 193); text-decoration: =
+underline;" class=3D""><span style=3D"color: rgb(68, 83, 234);" =
+class=3D"">www.avast.com</span></a></span></div></td></tr></tbody></table>=
+</div></div></blockquote></div><br class=3D""></body></html>=
+
+--Apple-Mail=_5E4A3F4F-4341-46B4-B2BD-68BDFB5FDCB2
+Content-Transfer-Encoding: base64
+Content-Disposition: inline;
+	filename=image001.png
+Content-Type: image/png;
+	x-unix-mode=0644;
+	name="image001.png"
+Content-Id: <image001.png@01D876AD.F821E3E0>
+
+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
+1QAAAABJRU5ErkJggg==
+--Apple-Mail=_5E4A3F4F-4341-46B4-B2BD-68BDFB5FDCB2
+Content-Transfer-Encoding: base64
+Content-Disposition: inline;
+	filename=image002.png
+Content-Type: image/png;
+	x-unix-mode=0644;
+	name="image002.png"
+Content-Id: <image002.png@01D876AD.F821E3E0>
+
+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
+RK5CYII=
+--Apple-Mail=_5E4A3F4F-4341-46B4-B2BD-68BDFB5FDCB2
+Content-Transfer-Encoding: base64
+Content-Disposition: inline;
+	filename=~WRD0678.jpg
+Content-Type: image/jpeg;
+	x-unix-mode=0644;
+	name="~WRD0678.jpg"
+Content-Id: <~WRD0678.jpg>
+
+/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0a
+HBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIy
+MjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCABkAGQDASIA
+AhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQA
+AAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3
+ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWm
+p6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEA
+AwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSEx
+BhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElK
+U1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3
+uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD3+iii
+gAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKA
+CiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAK
+KKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAoo
+ooAKKKKACiiigAooooAKKKKACiiigD//2Q==
+--Apple-Mail=_5E4A3F4F-4341-46B4-B2BD-68BDFB5FDCB2--
+
+--Apple-Mail=_E32F3B42-8870-47B4-B0DF-9420BCD57E66--

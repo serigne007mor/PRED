@@ -1,0 +1,345 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (bouncesmtp2.u12.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id AB02214017DB
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed, 22 Feb 2023 08:45:44 +0100 (CET)
+Received: from mx2.localdomain (MX2.univ-nantes.fr [193.52.101.136])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id A36A6666E
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed, 22 Feb 2023 08:45:44 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.localdomain (Postfix) with ESMTP id 972C11015E2
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 22 Feb 2023 08:45:44 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 1.231
+X-Spam-Level: *
+X-Spam-Status: No, score=1.231 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	MR_NOT_ATTRIBUTED_IP=0.2, NO_RDNS2=0.01, RCVD_IN_SORBS=1,
+	RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+	T_KAM_HTML_FONT_INVALID=0.01, UN_PHISHING_PW=0.1] autolearn=disabled
+X-CRM114-Status: UNSURE ( 4.4687 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=unicaen.fr
+Received: from mx2.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id LBlMMXEpkJgI for <liste-egc@polytech.univ-nantes.fr>;
+	Wed, 22 Feb 2023 08:45:39 +0100 (CET)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=194.199.107.75; helo=mailout.unicaen.fr; envelope-from=bruno.cremilleux@unicaen.fr; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=none dis=none) header.from=unicaen.fr
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=bruno.cremilleux@unicaen.fr
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (1024-bit key; unprotected) header.d=unicaen.fr header.i=@unicaen.fr header.b="I5jP7nX/";
+	dkim-atps=neutral
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mailout.unicaen.fr (mailout.unicaen.fr [194.199.107.75])
+	by mx2.localdomain (Postfix) with ESMTP id 0FAF91015D5
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 22 Feb 2023 08:45:38 +0100 (CET)
+Received: from wzproxy2.unicaen.fr (wzproxy2.unicaen.fr [193.55.120.53])
+	by mailout.unicaen.fr (Postfix) with ESMTP id E0AC980C8D;
+	Wed, 22 Feb 2023 08:45:38 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=unicaen.fr; s=mail;
+	t=1677051938; bh=98GX6weo1GauxFaC+oTKT/92jjyQGXscM+m0MVxeJPM=;
+	h=Date:From:To:Subject:From;
+	b=I5jP7nX/lSRIKzI22o6Zcq/A6JeSs5HEcEIAKPZjWrq+fFaG/TbjdfqOf85w3ndSV
+	 FuSPO+f3NQXn3YBtpqS7WDegfl2wszxzPAy2Qkbzv2uQDoQq9EfgIEAyEsQqNqs8Z9
+	 EYdEFmP/jvW4sdR/HTxjcGVwoeQXpLEUtlbDi4dw=
+Received: from localhost (localhost [127.0.0.1])
+	by wzproxy2.unicaen.fr (Postfix) with ESMTP id DA6EA66827;
+	Wed, 22 Feb 2023 08:45:38 +0100 (CET)
+X-Amavis-Modified: Mail body modified (using disclaimer) - wzproxy2.unicaen.fr
+X-Virus-Scanned: amavisd-new at wzproxy2.unicaen.fr
+Received: from wzproxy2.unicaen.fr ([127.0.0.1])
+	by localhost (wzproxy2.unicaen.fr [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id 9Cd_OAltZyWf; Wed, 22 Feb 2023 08:45:38 +0100 (CET)
+Received: from lsmtp2.unicaen.fr (lsmtp2.unicaen.fr [193.55.120.33])
+	by wzproxy2.unicaen.fr (Postfix) with ESMTP id BC91E66C80;
+	Wed, 22 Feb 2023 08:45:38 +0100 (CET)
+Received: from wzstore5.unicaen.fr (wzstore5.unicaen.fr [10.14.129.119])
+	by lsmtp2.unicaen.fr (Postfix) with ESMTP id A2D73C063B;
+	Wed, 22 Feb 2023 08:45:33 +0100 (CET)
+Date: Wed, 22 Feb 2023 08:45:33 +0100 (CET)
+From: Bruno Cremilleux <bruno.cremilleux@unicaen.fr>
+To: bull-i3 <bull-i3@irit.fr>, liste-proml@lisn.upsaclay.fr, 
+	liste-egc <liste-egc@polytech.univ-nantes.fr>, 
+	bull-ia <bull-ia@gdria.fr>, info-ic <info-ic@listes.irisa.fr>
+Message-ID: <1159239593.5841307.1677051933560.JavaMail.zimbra@unicaen.fr>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="=_bc6561fb-2ee0-4439-a906-6053e06e737c"
+X-Originating-IP: [90.22.54.72]
+X-Mailer: Zimbra 8.8.15_GA_4484 (ZimbraWebClient - FF110 (Linux)/8.8.15_GA_4481)
+Thread-Index: 3oqtU6GEmJ5x43MB6U4OC6olwJhg7A==
+Thread-Topic: Appel =?utf-8?Q?=C3=A0_posters_pour_le_symposium_du_GDR_MaDICS_2023_=C3=A0?= Troyes
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Appel =?UTF-8?Q?=C3=A0?= posters pour le symposium du
+ GDR MaDICS 2023 =?UTF-8?Q?=C3=A0?= Troyes
+
+--=_bc6561fb-2ee0-4439-a906-6053e06e737c
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+
+
+Appel =C3=A0 posters pour le symposium du GDR MaDICS 2023 =C3=A0 Troyes (s =
+ession "poster" sp=C3=A9cialement consacr=C3=A9e aux jeunes chercheuses et =
+jeunes chercheurs au symposium du GDR MaDICS, date limite : 7 avril 2023)=
+=20
+
+
+
+
+Le GDR CNRS MaDICS organise son 5e Symposium les 24 et 25 mai 2023 =C3=A0 T=
+royes ( [ https://www.madics.fr/event/symposium-madics-5/ | https://www.mad=
+ics.fr/event/symposium-madics-5/  ] )=20
+
+
+=C3=80 cette occasion, le GDR MaDICS organise une session poster sp=C3=A9ci=
+alement consacr=C3=A9e aux jeunes chercheuses et jeunes chercheurs souhaita=
+nt pr=C3=A9senter leurs travaux en science des donn=C3=A9es ou big data. Il=
+s auront ainsi l'occasion de rencontrer des coll=C3=A8gues acad=C3=A9miques=
+ et acteurs industriels int=C3=A9ress=C3=A9s par ces th=C3=A9matiques et pr=
+=C3=A9sents lors de cette journ=C3=A9e.=20
+
+
+Pour soumettre un poster, il suffit :=20
+
+- d'=C3=AAtre membre du GDR Madics (inscription sur le site [ https://www.m=
+adics.fr/intranet/adhesion/adhesion-academique/ | http://www.madics.fr ] )=
+=20
+
+- de remplir le formulaire de soumission de poster pour le 7 avril 2023 , m=
+=C3=AAme sans le PDF du poster, afin de pouvoir traiter les demandes de bou=
+rses.=20
+
+
+Toutes les indications sont =C3=A0 :=20
+
+[ https://www.madics.fr/event/symposium-madics-5/#appelPosters | https://ww=
+w.madics.fr/event/symposium-madics-5/#appelPosters ]=20
+
+Il est possible de r=C3=A9utiliser un poster en indiquant l'=C3=A9v=C3=A9ne=
+ment auquel il a d=C3=A9j=C3=A0 =C3=A9t=C3=A9 pr=C3=A9sent=C3=A9.=20
+
+
+
+
+
+Bourses : Le GDR MaDICS offre un certain nombre de bourses aux jeunes cherc=
+heuses et jeunes chercheurs pr=C3=A9sentant un poster, permettant de couvri=
+r leurs frais de mission pour la participation =C3=A0 l'ensemble du symposi=
+um, selon les r=C3=A8gles habituelles de la fonction publique. La demande d=
+=E2=80=99une bourse doit =C3=AAtre formul=C3=A9e via le formulaire de soumi=
+ssion de poster et avant le 7 avril 2023 .=20
+
+
+La s=C3=A9lection pour les posters et les bourses sera faite selon l'ad=C3=
+=A9quation des travaux aux th=C3=A8mes du GDR et, pour les bourses, selon l=
+e nombre de demandes par laboratoire. Les r=C3=A9sultats seront diffus=C3=
+=A9s le 18 avril 2023 .=20
+
+
+Site web du Symposium : [ https://www.madics.fr/event/symposium-madics-5/ |=
+ https://www.madics.fr/event/symposium-madics-5/ ]=20
+Bernd Amann et Khalid Belhajjame=20
+Pour MaDICS=20
+
+
+=0A
+--=_bc6561fb-2ee0-4439-a906-6053e06e737c
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><body><div style=3D"font-family: arial, helvetica, sans-serif; font-s=
+ize: 12pt; color: #000000"><div data-marker=3D"__QUOTED_TEXT__"><div style=
+=3D"font-family: arial, helvetica, sans-serif; font-size: 12pt; color: #000=
+000"><div><p dir=3D"ltr" style=3D"line-height: 1.656; margin: 0px;" id=3D"d=
+ocs-internal-guid-48fd0404-7fff-1d6f-4c89-023ea54a4c14"><span style=3D"font=
+-size: 11pt; font-family: Arial; color: #000000; background-color: transpar=
+ent; font-weight: bold; font-style: normal; font-variant: normal; text-deco=
+ration: none; vertical-align: baseline; white-space: pre-wrap;">Appel =C3=
+=A0 posters pour le symposium du GDR MaDICS 2023 =C3=A0 Troyes </span><span=
+ style=3D"font-size: 11pt; font-family: Arial; color: rgb(0, 0, 0); backgro=
+und-color: transparent; font-style: normal; font-variant: normal; text-deco=
+ration: none; vertical-align: baseline; white-space: pre-wrap;">(s</span><s=
+pan style=3D"font-size: 11pt; font-family: Arial; color: #000000; backgroun=
+d-color: transparent; font-weight: 400; font-style: normal; font-variant: n=
+ormal; text-decoration: none; vertical-align: baseline; white-space: pre-wr=
+ap;">ession "poster" sp=C3=A9cialement consacr=C3=A9e aux jeunes chercheuse=
+s et jeunes chercheurs au symposium du GDR MaDICS, date limite : 7 avril 20=
+23)</span></p><p dir=3D"ltr" style=3D"line-height: 1.656; margin: 0px;"><sp=
+an style=3D"font-size: 11pt; font-family: Arial; color: #000000; background=
+-color: transparent; font-weight: 400; font-style: normal; font-variant: no=
+rmal; text-decoration: none; vertical-align: baseline; white-space: pre-wra=
+p;"><br></span></p><p dir=3D"ltr" style=3D"line-height: 1.2; text-align: ju=
+stify; margin: 0px;"><span style=3D"font-size: 11pt; font-family: Arial; co=
+lor: #000000; background-color: transparent; font-weight: 400; font-style: =
+normal; font-variant: normal; text-decoration: none; vertical-align: baseli=
+ne; white-space: pre-wrap;">Le </span><span style=3D"font-size: 11pt; font-=
+family: Arial; color: #000000; background-color: transparent; font-weight: =
+bold; font-style: normal; font-variant: normal; text-decoration: none; vert=
+ical-align: baseline; white-space: pre-wrap;">GDR CNRS MaDICS</span><span s=
+tyle=3D"font-size: 11pt; font-family: Arial; color: #000000; background-col=
+or: transparent; font-weight: 400; font-style: normal; font-variant: normal=
+; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;">=
+ organise son </span><span style=3D"font-size: 11pt; font-family: Arial; co=
+lor: #000000; background-color: transparent; font-weight: bold; font-style:=
+ normal; font-variant: normal; text-decoration: none; vertical-align: basel=
+ine; white-space: pre-wrap;">5e</span><span style=3D"font-size: 11pt; font-=
+family: Arial; color: #000000; background-color: transparent; font-weight: =
+400; font-style: normal; font-variant: normal; text-decoration: none; verti=
+cal-align: baseline; white-space: pre-wrap;"> </span><span style=3D"font-si=
+ze: 11pt; font-family: Arial; color: #000000; background-color: transparent=
+; font-weight: bold; font-style: normal; font-variant: normal; text-decorat=
+ion: none; vertical-align: baseline; white-space: pre-wrap;">Symposium les =
+24 et 25 mai 2023 =C3=A0 Troyes</span><span style=3D"font-size: 11pt; font-=
+family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-sty=
+le: normal; font-variant: normal; text-decoration: none; vertical-align: ba=
+seline; white-space: pre-wrap;"> (<a href=3D"https://www.madics.fr/event/sy=
+mposium-madics-5/" target=3D"_blank">https://www.madics.fr/event/symposium-=
+madics-5/ </a>)</span></p><br><p dir=3D"ltr" style=3D"line-height: 1.2; tex=
+t-align: justify; margin: 0px;"><span style=3D"font-size: 11pt; font-family=
+: Arial; color: #000000; background-color: transparent; font-weight: 400; f=
+ont-style: normal; font-variant: normal; text-decoration: none; vertical-al=
+ign: baseline; white-space: pre-wrap;">=C3=80 cette occasion, le GDR MaDICS=
+ organise une </span><span style=3D"font-size: 11pt; font-family: Arial; co=
+lor: #000000; background-color: transparent; font-weight: bold; font-style:=
+ normal; font-variant: normal; text-decoration: none; vertical-align: basel=
+ine; white-space: pre-wrap;">session poster</span><span style=3D"font-size:=
+ 11pt; font-family: Arial; color: #000000; background-color: transparent; f=
+ont-weight: 400; font-style: normal; font-variant: normal; text-decoration:=
+ none; vertical-align: baseline; white-space: pre-wrap;"> sp=C3=A9cialement=
+ consacr=C3=A9e aux jeunes chercheuses et jeunes chercheurs souhaitant pr=
+=C3=A9senter leurs travaux en science des donn=C3=A9es ou big data. Ils aur=
+ont ainsi l'occasion de rencontrer des coll=C3=A8gues acad=C3=A9miques et a=
+cteurs industriels int=C3=A9ress=C3=A9s par ces th=C3=A9matiques et pr=C3=
+=A9sents lors de cette journ=C3=A9e.</span></p><br><p dir=3D"ltr" style=3D"=
+line-height: 1.2; text-align: justify; margin: 0px;"><span style=3D"font-si=
+ze: 11pt; font-family: Arial; color: #000000; background-color: transparent=
+; font-weight: 400; font-style: normal; font-variant: normal; text-decorati=
+on: none; vertical-align: baseline; white-space: pre-wrap;">Pour soumettre =
+un poster, il suffit :</span></p><p dir=3D"ltr" style=3D"line-height: 1.2; =
+text-align: justify; margin: 0px;"><span style=3D"font-size: 11pt; font-fam=
+ily: Arial; color: #000000; background-color: transparent; font-weight: 400=
+; font-style: normal; font-variant: normal; text-decoration: none; vertical=
+-align: baseline; white-space: pre-wrap;">- d'=C3=AAtre membre du GDR Madic=
+s (inscription sur le site </span><a href=3D"https://www.madics.fr/intranet=
+/adhesion/adhesion-academique/" style=3D"text-decoration: none;" target=3D"=
+_blank"><span style=3D"font-size: 11pt; font-family: Arial; color: #1155cc;=
+ background-color: transparent; font-weight: 400; font-style: normal; font-=
+variant: normal; text-decoration: underline; -webkit-text-decoration-skip: =
+none; text-decoration-skip-ink: none; vertical-align: baseline; white-space=
+: pre-wrap;">http://www.madics.fr</span></a><span style=3D"font-size: 11pt;=
+ font-family: Arial; color: #000000; background-color: transparent; font-we=
+ight: 400; font-style: normal; font-variant: normal; text-decoration: none;=
+ vertical-align: baseline; white-space: pre-wrap;">)</span></p><p dir=3D"lt=
+r" style=3D"line-height: 1.2; text-align: justify; margin: 0px;"><span styl=
+e=3D"font-size: 11pt; font-family: Arial; color: #000000; background-color:=
+ transparent; font-weight: 400; font-style: normal; font-variant: normal; t=
+ext-decoration: none; vertical-align: baseline; white-space: pre-wrap;">- d=
+e remplir le formulaire de soumission de poster pour le </span><span style=
+=3D"font-size: 11pt; font-family: Arial; color: #000000; background-color: =
+transparent; font-weight: bold; font-style: normal; font-variant: normal; t=
+ext-decoration: none; vertical-align: baseline; white-space: pre-wrap;">7 a=
+vril 2023</span><span style=3D"font-size: 11pt; font-family: Arial; color: =
+#000000; background-color: transparent; font-weight: 400; font-style: norma=
+l; font-variant: normal; text-decoration: none; vertical-align: baseline; w=
+hite-space: pre-wrap;">, m=C3=AAme sans le PDF du poster, afin de pouvoir t=
+raiter les demandes de bourses.</span></p><br><p dir=3D"ltr" style=3D"line-=
+height: 1.2; text-align: justify; margin: 0px;"><span style=3D"font-size: 1=
+1pt; font-family: Arial; color: #000000; background-color: transparent; fon=
+t-weight: 400; font-style: normal; font-variant: normal; text-decoration: n=
+one; vertical-align: baseline; white-space: pre-wrap;">Toutes les indicatio=
+ns sont =C3=A0 :</span></p><p dir=3D"ltr" style=3D"line-height: 1.2; text-a=
+lign: justify; margin: 0px;"><a href=3D"https://www.madics.fr/event/symposi=
+um-madics-5/#appelPosters" style=3D"text-decoration: none;" target=3D"_blan=
+k"><span style=3D"font-size: 11pt; font-family: Arial; color: #1155cc; back=
+ground-color: transparent; font-weight: 400; font-style: normal; font-varia=
+nt: normal; text-decoration: underline; -webkit-text-decoration-skip: none;=
+ text-decoration-skip-ink: none; vertical-align: baseline; white-space: pre=
+-wrap;">https://www.madics.fr/event/symposium-madics-5/#appelPosters</span>=
+</a><br></p><span style=3D"font-size: 11pt; font-family: Arial; color: #000=
+000; background-color: transparent; font-weight: 400; font-style: normal; f=
+ont-variant: normal; text-decoration: none; vertical-align: baseline; white=
+-space: pre-wrap;"></span></div><div><span style=3D"font-size: 11pt; font-f=
+amily: Arial; color: #000000; background-color: transparent; font-weight: 4=
+00; font-style: normal; font-variant: normal; text-decoration: none; vertic=
+al-align: baseline; white-space: pre-wrap;"><br></span></div><div><span sty=
+le=3D"font-size: 11pt; font-family: Arial; color: #000000; background-color=
+: transparent; font-weight: 400; font-style: normal; font-variant: normal; =
+text-decoration: none; vertical-align: baseline; white-space: pre-wrap;">Il=
+ est possible de r=C3=A9utiliser un poster en indiquant l'=C3=A9v=C3=A9neme=
+nt auquel il a d=C3=A9j=C3=A0 =C3=A9t=C3=A9 pr=C3=A9sent=C3=A9.</span><br><=
+p dir=3D"ltr" style=3D"line-height: 1.2; text-align: justify; margin: 0px;"=
+><span style=3D"font-size: 11pt; font-family: Arial; color: #000000; backgr=
+ound-color: transparent; font-weight: bold; font-style: normal; font-varian=
+t: normal; text-decoration: none; vertical-align: baseline; white-space: pr=
+e-wrap;"><br></span></p><p dir=3D"ltr" style=3D"line-height: 1.2; text-alig=
+n: justify; margin: 0px;"><span style=3D"font-size: 11pt; font-family: Aria=
+l; color: #000000; background-color: transparent; font-weight: bold; font-s=
+tyle: normal; font-variant: normal; text-decoration: none; vertical-align: =
+baseline; white-space: pre-wrap;">Bourses </span><span style=3D"font-size: =
+11pt; font-family: Arial; color: #000000; background-color: transparent; fo=
+nt-weight: 400; font-style: normal; font-variant: normal; text-decoration: =
+none; vertical-align: baseline; white-space: pre-wrap;">: Le GDR MaDICS off=
+re un certain nombre de bourses aux jeunes chercheuses et jeunes chercheurs=
+ pr=C3=A9sentant un poster, permettant de couvrir leurs frais de mission po=
+ur la participation =C3=A0 l'ensemble du symposium, selon les r=C3=A8gles h=
+abituelles de la fonction publique. </span><span style=3D"font-size: 11pt; =
+font-family: Arial; color: #000000; background-color: #ffffff; font-weight:=
+ 400; font-style: normal; font-variant: normal; text-decoration: none; vert=
+ical-align: baseline; white-space: pre-wrap;">La demande d=E2=80=99une bour=
+se doit =C3=AAtre formul=C3=A9e via le formulaire de soumission de poster e=
+t avant le </span><span style=3D"font-size: 11pt; font-family: Arial; color=
+: #000000; background-color: #ffffff; font-weight: bold; font-style: normal=
+; font-variant: normal; text-decoration: none; vertical-align: baseline; wh=
+ite-space: pre-wrap;">7 avril 2023</span><span style=3D"font-size: 11pt; fo=
+nt-family: Arial; color: #000000; background-color: #ffffff; font-weight: 4=
+00; font-style: normal; font-variant: normal; text-decoration: none; vertic=
+al-align: baseline; white-space: pre-wrap;">.</span></p><br><p dir=3D"ltr" =
+style=3D"line-height: 1.2; text-align: justify; margin: 0px;"><span style=
+=3D"font-size: 11pt; font-family: Arial; color: #000000; background-color: =
+transparent; font-weight: 400; font-style: normal; font-variant: normal; te=
+xt-decoration: none; vertical-align: baseline; white-space: pre-wrap;">La s=
+=C3=A9lection pour les posters et les bourses sera faite selon l'ad=C3=A9qu=
+ation des travaux aux th=C3=A8mes du GDR et, pour les bourses, selon le nom=
+bre de demandes par laboratoire. Les r=C3=A9sultats seront diffus=C3=A9s le=
+ </span><span style=3D"font-size: 11pt; font-family: Arial; color: #000000;=
+ background-color: transparent; font-weight: bold; font-style: normal; font=
+-variant: normal; text-decoration: none; vertical-align: baseline; white-sp=
+ace: pre-wrap;">18 avril 2023</span><span style=3D"font-size: 11pt; font-fa=
+mily: Arial; color: #000000; background-color: transparent; font-weight: 40=
+0; font-style: normal; font-variant: normal; text-decoration: none; vertica=
+l-align: baseline; white-space: pre-wrap;">.</span></p><br><p dir=3D"ltr" s=
+tyle=3D"line-height: 1.2; text-align: justify; margin: 0px;"><span style=3D=
+"font-size: 11pt; font-family: Arial; color: #000000; background-color: tra=
+nsparent; font-weight: 400; font-style: normal; font-variant: normal; text-=
+decoration: none; vertical-align: baseline; white-space: pre-wrap;">Site we=
+b du Symposium : </span><a href=3D"https://www.madics.fr/event/symposium-ma=
+dics-5/" style=3D"text-decoration: none;" target=3D"_blank"><span style=3D"=
+font-size: 11pt; font-family: Arial; color: #1155cc; background-color: tran=
+sparent; font-weight: 400; font-style: normal; font-variant: normal; text-d=
+ecoration: underline; -webkit-text-decoration-skip: none; text-decoration-s=
+kip-ink: none; vertical-align: baseline; white-space: pre-wrap;">https://ww=
+w.madics.fr/event/symposium-madics-5/</span></a><span style=3D"font-size: 1=
+1pt; font-family: Arial; color: #000000; background-color: transparent; fon=
+t-weight: 400; font-style: normal; font-variant: normal; text-decoration: n=
+one; vertical-align: baseline; white-space: pre-wrap;">&nbsp;</span></p><br=
+><span style=3D"font-size: 11pt; font-family: Arial; color: #000000; backgr=
+ound-color: transparent; font-weight: 400; font-style: normal; font-variant=
+: normal; text-decoration: none; vertical-align: baseline; white-space: pre=
+-wrap;">Bernd Amann et Khalid Belhajjame </span><span style=3D"font-size: 1=
+1pt; font-family: Arial; color: #000000; background-color: transparent; fon=
+t-weight: 400; font-style: normal; font-variant: normal; text-decoration: n=
+one; vertical-align: baseline; white-space: pre-wrap;"> </span></div><div><=
+span style=3D"font-size: 11pt; font-family: Arial; color: #000000; backgrou=
+nd-color: transparent; font-weight: 400; font-style: normal; font-variant: =
+normal; text-decoration: none; vertical-align: baseline; white-space: pre-w=
+rap;">Pour MaDICS</span></div></div><br></div></div>
+<br>=
+=0A<br>=
+</body></html>
+--=_bc6561fb-2ee0-4439-a906-6053e06e737c--

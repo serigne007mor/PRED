@@ -1,0 +1,674 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (bouncesmtp2.u12.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 5AD9614014F4
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Fri, 24 Nov 2023 13:52:43 +0100 (CET)
+Received: from mx1.univ-nantes.fr (MX1.univ-nantes.fr [193.52.101.135])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id 5701BA80
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Fri, 24 Nov 2023 13:52:43 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.univ-nantes.fr (Postfix) with ESMTP id 4BE701200CD
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 24 Nov 2023 13:52:43 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -0.236
+X-Spam-Level:
+X-Spam-Status: No, score=-0.236 tagged_above=-1000 required=5
+	tests=[CRM114_GOOD=-5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	FORGED_SPF_HELO=1, FUZZY_WALLET=1.799, HTML_MESSAGE=0.001,
+	IMPRONONCABLE_2=1.5, MR_NOT_ATTRIBUTED_IP=0.2,
+	RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+	RCVD_IN_WSFF=0.01, SPF_HELO_PASS=-0.001, SPF_NONE=0.001, TW_GP=0.077,
+	TW_TG=0.077, T_SCC_BODY_TEXT_LINE=-0.01, UN_PHISHING_PW=0.1,
+	UN_PNG_ATTACH=0.01, URIBL_BLOCKED=0.001] autolearn=disabled
+X-CRM114-Status: GOOD ( 7.7465 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=ina1.onmicrosoft.com
+Received: from mx1.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id x_3d4sMnChv8 for <liste-egc@polytech.univ-nantes.fr>;
+	Fri, 24 Nov 2023 13:52:40 +0100 (CET)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=40.107.15.123; helo=eur01-db5-obe.outbound.protection.outlook.com; envelope-from=alezer@ina.fr; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=none (p=none dis=none) header.from=ina.fr
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=ina.fr
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (1024-bit key; unprotected) header.d=INA1.onmicrosoft.com header.i=@INA1.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-INA1-onmicrosoft-com header.b=SrbGAkAj;
+	dkim-atps=neutral
+X-Greylist: whitelisted by SQLgrey-1.6.7
+Received: from EUR01-DB5-obe.outbound.protection.outlook.com (mail-db5eur01on2123.outbound.protection.outlook.com [40.107.15.123])
+	by mx1.univ-nantes.fr (Postfix) with ESMTPS id 48D3C1200CB
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 24 Nov 2023 13:52:39 +0100 (CET)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=D1LduB60lPPdkTRRR0yf8OBT1ypiyvr+yPpDuqNkOvQOrR+qQsvJgUX0dZHYWjdzrvVTTdWrLYNE1KHdpGDIm2iBjW9oCJJkuhxpMP42iHgfayg84ABHnWOAnjDrEsgF53jMPmhfcfl/XDQ3i5fHWZS7T7Px+6N9GqulfK0ge8fzY1L24NPmBmNH6BqMZjz9DfSvA7zrJ2Cv1Wd6vLfH7kWYq9oJJFIIFmGWquwn9Tx4RIMSNCo7Y5sXFtnXGZXTnpOv1BuX4f5E793ZJmGZySf1SLCZ0sWq73vp2S0fne8oxBkJchUUt1sUNMtuAQBflkqGzRvq6quDVEr9q6nSkw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=BG/vbe+UNmP08g2qIpNMPk1wZFUugcQjkRpiVeQLeKQ=;
+ b=GAlTuj9jn3pDI+PWJtvy4CLnepplGqs0YdAt2R6nobykjeUjq4Aj/F8Qc4F/bm4+uzl5JXUaupjz3bV7026u5RQX0Uq8B5pVIKyWJKFGO0qfAxz0DEcr+TFBGVbI4oJLsEhDs+yQiYVMChCFBhPqgxDsQLeIhB2iqITxCO0QWC3oxQGCYJDYrRVRTgHHmRYtu19mPKYUhZgW51JcUxZDtosbWiRaOudvNnjboAla0lbL43N1HXzCbk5VoB4IP74mzXS8yQKgfT8eDr4/sjgzU4Zeawrx4C39nOUwjK7TEJcQFYu+U/noJUiPJ2Yq0LkAW5yaOKw1pq/jvdaCAcgG1A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=ina.fr; dmarc=pass action=none header.from=ina.fr; dkim=pass
+ header.d=ina.fr; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=INA1.onmicrosoft.com;
+ s=selector2-INA1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=BG/vbe+UNmP08g2qIpNMPk1wZFUugcQjkRpiVeQLeKQ=;
+ b=SrbGAkAjKcGkkFGBMASwcB1QAQTH2jZIaKselcy6NCKjg2BiEEpYvWytx9/tOJyURqcPDuPAcn/KkRGYsKk/Jeiyi1u/12smPUwAw0EU3c7WfdAYCqidbufQLmRcMTv5t7TZdFKwB5fd55QayU49AEZ2i3XSTBlKBtphhhlP0jY=
+Received: from DB7PR04MB5001.eurprd04.prod.outlook.com (2603:10a6:10:16::28)
+ by DB9PR04MB9553.eurprd04.prod.outlook.com (2603:10a6:10:2ed::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7046.13; Fri, 24 Nov
+ 2023 12:52:36 +0000
+Received: from DB7PR04MB5001.eurprd04.prod.outlook.com
+ ([fe80::2dc1:7d0e:a1f9:3bf]) by DB7PR04MB5001.eurprd04.prod.outlook.com
+ ([fe80::2dc1:7d0e:a1f9:3bf%6]) with mapi id 15.20.7046.012; Fri, 24 Nov 2023
+ 12:52:36 +0000
+From: Arthur Lezer <alezer@ina.fr>
+To: "Liste-egc@polytech.univ-nantes.fr" <liste-egc@polytech.univ-nantes.fr>
+Thread-Topic:
+ =?Windows-1252?Q?[S=E9minaire_INA_le_lab]_s=E9ance_du_1er_d=E9cembre_:_m?=
+ =?Windows-1252?Q?=E9dias,_plateformes_et_analyses_de_discours_:_m=E9thode?=
+ =?Windows-1252?Q?s,_enjeux_IA?=
+Thread-Index: AQHaHtSarY5BtV3cdkq4jp01xPRTYg==
+Date: Fri, 24 Nov 2023 12:52:36 +0000
+Message-ID:
+ <DB7PR04MB50019F3F05FC710E3BB41A9DA3B8A@DB7PR04MB5001.eurprd04.prod.outlook.com>
+Accept-Language: fr-FR, en-US
+Content-Language: fr-FR
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator:
+msip_labels:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=ina.fr;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DB7PR04MB5001:EE_|DB9PR04MB9553:EE_
+x-ms-office365-filtering-correlation-id: 0a26fbca-3b6b-466e-0005-08dbecec3bff
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:
+ xvaVYgSeHzBmq5f0DBude71t8RgaJ2709XrNAWLYqLs/9Qcnt3JyWJEKSnP23Ye/VTeKrU4IMjRNIosVWduREMR5qayIkdROyAdFhAEOchaCVzd+nBkoPFPKZdZApUC8p4DsdNoTxjYG8XoMDY95FoeA1G0zC/LaYqHy12UCjS8BGzagdttNO713iEAHWREPDdrbrcvKmPXjMyb+ARK49Bkcf1Xl3wW0Luy7XbpDPKg393aqnuIKIXwKsxrRj2JAzLbnit26DxMly2VCe31FNNx18Yu5U170C+21nIVlKTZECo6Xh552OqhukraJqeLV0OZP2cDfHDgNIP5WW1Q8wYwD1bgUZULSs1U8bPx/RHGuhyVvbU3ISjetAqLuZREqFbYfKWR/AWlK/IbYYwQFms4lrIcvUEe8jYxJHlFrEfrHDWyGjWqbUJe19z8ctW4Azy11mNkB8jgGOFWNaMVyfY7r1/QxofnKZJTObUsIHcQu9a2PtwVJ2gaSWHYeb+si9OF7HPw0XFLbkE8XQ0ElA+xBy0I3J8Ol0RErrLmE3B+xQv0M3qAJ7p46RkHpjIUzb44tEUozjmPtpeZ5/0ITpvqHZzV/bCf2YbMHl/HO2f8ZQklsPXksknwvzCuMHHu3HC4sh0zmAQeGWT8dzokLRw==
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:fr;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DB7PR04MB5001.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(39850400004)(396003)(376002)(346002)(136003)(366004)(230922051799003)(451199024)(186009)(1800799012)(64100799003)(9686003)(26005)(786003)(7696005)(71200400001)(64756008)(6506007)(2906002)(5660300002)(21615005)(66556008)(52536014)(91956017)(76116006)(6916009)(1015004)(66446008)(66946007)(478600001)(316002)(66476007)(8936002)(41300700001)(86362001)(122000001)(99936003)(166002)(38100700002)(33656002)(38070700009)(224303003)(55016003)(19627405001);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?Windows-1252?Q?yGAqOnAxWtRbm4b3ReGp3IhSsYvfTeb6xZ0x1jyKxhy/p1TYiC5kr48t?=
+ =?Windows-1252?Q?m79YXK7h6LKzZn3tpCJ6l4wVmd9hz+veQPGe2D9TKKKD4UAV34+EaY4z?=
+ =?Windows-1252?Q?yjPWp39qIeLO2IjQzV8M2bp/KHx7V6ukCMD+3gw2mh6/YbDJQpNgij71?=
+ =?Windows-1252?Q?hBOEMgcXkcay/LyHigM1jUlZa5Cv7MmyTWJIpmwzyxl032M0lkatVbBe?=
+ =?Windows-1252?Q?vZi5gIfRyVRqNfDZ00G1GIkOSDLqi2X3bpcTrzz4xbI6g1P8/9DbMArb?=
+ =?Windows-1252?Q?GF6bxPVEqOVW1zoYm/RnsBTI/5AQLj8qmKJYUv0eX1YTtjUkOrFGlpAJ?=
+ =?Windows-1252?Q?85nspXdA9+W8+3JFM33Fj5l9CtCH2MICtkdhMFiRyO8SQ1K/PT9/mAGk?=
+ =?Windows-1252?Q?5zDq63cSGBA+PY9m7/zoa2iE3x6MfOO1jb8n87yEhuYrEg1EKoyKWkVz?=
+ =?Windows-1252?Q?4ytLl7jtjM8H0Q7bLbaPeFS7FSr34o78SMyJT4M4e5nSBmRyfehgIQO2?=
+ =?Windows-1252?Q?QAlTTrrVpmi8unu8b7eE6zGuc/fvmMwTsrG0E9gee6ZcMEJeo/8Yus7p?=
+ =?Windows-1252?Q?K3RxlRCCcZmYTZlSfJd4hkxdTb4YXrTtKDuD839s5y2Luiv2kEled/Gg?=
+ =?Windows-1252?Q?j6WYi0J4vgco9JS+WExugK5nLObqnxO8hojeZ6Jskb1n5pyxeQhQxYOq?=
+ =?Windows-1252?Q?Z6Z3NCO/xWAPrvuqDoIhHstXuDKQYLoodkjGBdOhZM4KDEFW5NlYF0n0?=
+ =?Windows-1252?Q?4b7rvUOt0OlLwfCli9N8j1r5wfvGQkUBcNrCDS5jeQj/o7he8WNB1B5G?=
+ =?Windows-1252?Q?Nw5ZxTfPYTBoswU3PiuprknbsAPZz9D9RzC0+KUybgo8xyBoorF5LSN2?=
+ =?Windows-1252?Q?3TXDA5tAWKhqC56giQjTy65D2sB5LebAkRPXB1j16LYLxhlfXflqsQ51?=
+ =?Windows-1252?Q?wFknMCSP2C16xGtrn0rOEIdPnj0Oc1VF7cBNDGG98lhzC1Ehz0dHX7Rb?=
+ =?Windows-1252?Q?qyQGmyneZYQKh+PQ3C2H2KU1vAhwP3iqnkzluCn4jvvEqO7snYLWgj2O?=
+ =?Windows-1252?Q?JQffcunjhFXgKQgV5sc14YiySnWOGVXg+QJLxrpnWVUj4ZrBMibHge5A?=
+ =?Windows-1252?Q?vUrhyYOPVv/MPhpVq/pEXwRqXwDdRe23QXQGOjCSf1Ho/vBhF+GNb09s?=
+ =?Windows-1252?Q?rLXFo49V0JgM1PfLCf6oC8qBEdLDE5KEilqj+BHt8mqUoGOu8j9hC4rG?=
+ =?Windows-1252?Q?TZQ0Fin0Fn/LT81/OroDsOpYSHnbVO1Nh8B6pkVVL+cQgz3CWU3c+HR2?=
+ =?Windows-1252?Q?dS2ZOYYYqpb/QRNJoDedjie2Q4DjOVQb4gRFM1rHtN+Iy0NWBdvxInVW?=
+ =?Windows-1252?Q?1o6Xs6HDqNdjDO//a/PxdRK60zaKf80QVo/60njV0oeAADiqBODfkUBW?=
+ =?Windows-1252?Q?Kp7V6LmbZJ8zoN5F6fKF+T/H7eF9WJ3BquH/x6YdsRc+fDPP9HD4+xBL?=
+ =?Windows-1252?Q?EUAEZCDHMevMqDyvomgZpb7vR4ZTKYmbqKyBMWg+zFhBGdiZPhj8Lfh5?=
+ =?Windows-1252?Q?2nJXzUsLD+8PuuLyeCJM8BfIhUD/e1ZzSSWvbGRPbpgE55aJXboPBuxS?=
+ =?Windows-1252?Q?iMHZTjHrJYxvZpOOMGXRb1FR33ppoCAu4SSKvPkEy7H0sg=3D=3D?=
+Content-Type: multipart/related;
+	boundary="_005_DB7PR04MB50019F3F05FC710E3BB41A9DA3B8ADB7PR04MB5001eurp_";
+	type="multipart/alternative"
+MIME-Version: 1.0
+X-OriginatorOrg: ina.fr
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DB7PR04MB5001.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0a26fbca-3b6b-466e-0005-08dbecec3bff
+X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Nov 2023 12:52:36.5716
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 884113ac-9e9c-40dd-b29b-edfe77e79656
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: KDs2Rwk/91Aa1d2FhxmfEZJCKTQ/QCc9S544amfhn7xzlJlZNePc0T2uJXE1ABYy
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR04MB9553
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] =?WINDOWS-1252?Q?=5BS=E9minaire?= INA le lab]
+ =?WINDOWS-1252?Q?s=E9ance?= du 1er =?WINDOWS-1252?Q?d=E9cembre?= :
+ =?WINDOWS-1252?Q?m=E9dias=2C?= plateformes et analyses de discours :
+ =?WINDOWS-1252?Q?m=E9thodes=2C?= enjeux IA
+
+--_005_DB7PR04MB50019F3F05FC710E3BB41A9DA3B8ADB7PR04MB5001eurp_
+Content-Type: multipart/alternative;
+	boundary="_000_DB7PR04MB50019F3F05FC710E3BB41A9DA3B8ADB7PR04MB5001eurp_"
+
+--_000_DB7PR04MB50019F3F05FC710E3BB41A9DA3B8ADB7PR04MB5001eurp_
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+Chers co-listiers, ch=E8res co-listi=E8res,
+
+Suivant la re-programmation de la pr=E9sentation d=92un des intervenants, n=
+ous avons red=E9fini la th=E9matique de la s=E9ance du s=E9minaire INA le l=
+ab du 1er d=E9cembre qui s=92intitule d=E9sormais M=E9dias, plateformes et =
+analyses de discours : M=E9thodes, enjeux IA
+
+Alors que les d=E9veloppements r=E9cents des technologies de l=92IA suscite=
+nt autant de d=E9bats qu=92ils annoncent des possibles, que les rebondissem=
+ents s=92enchainent au sein de l=92entreprise OpenAI et que l=92UE pr=E9par=
+e une r=E9glementation de l=92IA, nous avons jug=E9 opportun de recentrer l=
+a focale de cette s=E9ance sur les technologies r=E9centes fond=E9es sur le=
+s grands mod=E8les de langue (les LLMs). Ces technologies renouvellent l'ou=
+tillage de la recherche en SHS, notamment appliqu=E9 =E0 de nombreuses dime=
+nsions d=92analyse du discours, une grande majorit=E9 des travaux accompagn=
+=E9s au sein du lab s=92appuyant en effet sur des repr=E9sentations math=E9=
+matiques et statistiques des langues pour produire des analyses des discour=
+s m=E9diatiques.
+ Vous trouverez ci-apr=E8s le programme de la s=E9ance et le lien d=92inscr=
+iption. Merci de faire circuler dans vos cercles !
+
+S=E9minaire INA - le lab
+M=E9dias, plateformes et analyses de discours : M=E9thodes, enjeux IA
+
+
+
+Recherches et explorations
+
+L=92analyse de l=92actualit=E9 par des producteurs de contenus sur les plat=
+eformes
+Quentin Gilliotte<https://www.linkedin.com/in/quentingilliotte/?originalSub=
+domain=3Dfr> (Chaire de Professeur Junior - M=E9dias et m=E9thodes num=E9ri=
+ques, Panth=E9on-Assas Universit=E9)
+
+
+
+Focus outils et m=E9thodes
+
+Grands mod=E8les de langue, donn=E9es et AI Act
+Gilles Moyse<https://www.linkedin.com/in/gillesmoyse/> (Docteur en IA, aute=
+ur de Donnerons nous notre langue au ChatGPT ?<https://www.lerobert.com/ess=
+ais-et-litterature/francais/essais/donnerons-nous-notre-langue-au-chatgpt-l=
+-impact-de-l-intelligence-artificielle-sur-notre-avenir-9782321019732.html>=
+)
+
+IA et protection des donn=E9es - anticiper et r=E9pondre aux enjeux
+F=E9licien Vallet<https://www.linkedin.com/in/felicienvallet/> (Docteur en =
+informatique, Chef du service Intelligence Artificielle de la CNIL)
+
+
+
+ Discutants : Marta Severo (Professeure, Universit=E9 Paris Nanterre), Nico=
+las Herv=E9 (chef du service Recherche INA)
+
+Vendredi 1er d=E9cembre de 14h30 =E0 16H30
+Loft MK2 Nation
+135 boulevard Diderot
+75012 Paris
+
+
+
+FORMAT HYBRIDE
+
+La s=E9ance est ouverte =E0 tous sur inscription ici<https://website-38780.=
+eventmaker.io/fr/registration/655ca8cb4fad29222310068d?no_cookie=3Dtrue>
+
+=C0 tr=E8s bient=F4t,
+
+
+
+[logo-ina.jpg]
+
+Arthur Lezer
+Ing=E9nieur de recherche
+
+Le lab
+
+Direction data & technologies - INA th=E8que
+
+
+
+
+
+institut.ina.fr<https://institut.ina.fr/>
+
+[cid:ac9793b1-2c44-4df0-b534-5511c6983b86]
+
+@Ina_audiovisuel<https://twitter.com/ina_audiovisuel>
+
+
+
+
+
+
+--_000_DB7PR04MB50019F3F05FC710E3BB41A9DA3B8ADB7PR04MB5001eurp_
+Content-Type: text/html; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DWindows-1=
+252">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div class=3D"elementToProof"><span style=3D"font-family: Aptos, Aptos_Embe=
+ddedFont, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 1=
+2pt; color: rgb(0, 0, 0);">Chers co-listiers, ch=E8res co-listi=E8res,</spa=
+n></div>
+<div><span style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontSer=
+vice, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);=
+"><br>
+</span></div>
+<div><span style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontSer=
+vice, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);=
+">Suivant la re-programmation de la pr=E9sentation d=92un des intervenants,=
+ nous avons red=E9fini la th=E9matique de
+ la s=E9ance du s=E9minaire INA le lab du 1er d=E9cembre qui s=92intitule d=
+=E9sormais <b>M=E9dias, plateformes et analyses de discours : M=E9thodes, e=
+njeux IA</b></span></div>
+<div><span style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontSer=
+vice, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);=
+"><br>
+</span></div>
+<div><span style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontSer=
+vice, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);=
+">Alors que les d=E9veloppements r=E9cents des technologies de l=92IA susci=
+tent autant de d=E9bats qu=92ils annoncent des
+ possibles, que les rebondissements s=92enchainent au sein de l=92entrepris=
+e OpenAI et que l=92UE pr=E9pare une r=E9glementation de l=92IA, nous avons=
+ jug=E9 opportun de recentrer la focale de cette s=E9ance sur les technolog=
+ies r=E9centes fond=E9es sur les grands mod=E8les de langue
+ (les LLMs). Ces technologies renouvellent l'outillage de la recherche en S=
+HS, notamment appliqu=E9 =E0 de nombreuses dimensions d=92analyse du discou=
+rs, une grande majorit=E9 des travaux accompagn=E9s au sein du lab s=92appu=
+yant en effet sur des repr=E9sentations math=E9matiques
+ et statistiques des langues pour produire des analyses des discours m=E9di=
+atiques.</span></div>
+<div class=3D"elementToProof"><span style=3D"font-family: Aptos, Aptos_Embe=
+ddedFont, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 1=
+2pt; color: rgb(0, 0, 0);">&nbsp;Vous trouverez ci-apr=E8s le programme de =
+la s=E9ance et le lien d=92inscription. Merci de
+ faire circuler dans vos cercles !</span></div>
+<div class=3D"elementToProof"><span style=3D"font-family: Aptos, Aptos_Embe=
+ddedFont, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 1=
+2pt; color: rgb(0, 0, 0);"><br>
+</span></div>
+<div style=3D"text-align: center;" class=3D"elementToProof"><span style=3D"=
+font-family: Lato, sans-serif; font-size: 22pt; line-height: 1.5; color: rg=
+b(0, 188, 212);"><b>S=E9minaire INA -<i>&nbsp;le lab</i></b></span></div>
+<div style=3D"text-align: center; margin: 0cm;"><span style=3D"font-family:=
+ Lato, sans-serif; font-size: 16pt; line-height: 1.5; color: rgb(0, 188, 21=
+2);">M=E9dias, plateformes et analyses de discours : M=E9thodes, enjeux IA<=
+/span></div>
+<p style=3D"margin: 0cm;"><span style=3D"font-family: Calibri, sans-serif; =
+font-size: 11pt; color: rgb(0, 54, 73);">&nbsp;</span></p>
+<div style=3D"text-align: center; margin: 0cm;"><span style=3D"font-family:=
+ &quot;Lato Black&quot;, sans-serif; font-size: 13.5pt; line-height: 1.5; c=
+olor: rgb(51, 51, 51);">Recherches et explorations</span></div>
+<div style=3D"text-align: center; margin: 0cm;"><span style=3D"font-family:=
+ &quot;Lato Black&quot;, sans-serif; font-size: 13.5pt; line-height: 1.5; c=
+olor: rgb(51, 51, 51);"><br>
+</span></div>
+<div style=3D"text-align: center; margin: 0cm;"><span style=3D"font-family:=
+ Lato, sans-serif; font-size: 13.5pt; line-height: 1.5; color: rgb(67, 67, =
+67);"><i>L=92analyse de l=92actualit=E9 par des producteurs de contenus sur=
+ les plateformes<br>
+</i></span><span style=3D"font-family: Lato, sans-serif; font-size: 10.5pt;=
+ line-height: 1.5; color: rgb(51, 51, 51);"><a href=3D"https://www.linkedin=
+.com/in/quentingilliotte/?originalSubdomain=3Dfr" target=3D"_blank" id=3D"O=
+WAda7d1931-5347-b4dd-9ba3-c364285f4cc4" class=3D"OWAAutoLink" rel=3D"noopen=
+er noreferrer" data-auth=3D"NotApplicable" data-linkindex=3D"2" data-loopst=
+yle=3D"linkonly">Quentin
+ Gilliotte</a>&nbsp;(Chaire de Professeur Junior - M=E9dias et m=E9thodes n=
+um=E9riques, Panth=E9on-Assas Universit=E9)</span></div>
+<p style=3D"margin: 0cm;"><span style=3D"font-family: Lato, sans-serif; fon=
+t-size: 10.5pt; line-height: 1.5; color: rgb(51, 51, 51);">&nbsp;</span></p=
+>
+<div style=3D"margin: 0cm;"><span style=3D"font-family: Calibri, sans-serif=
+; font-size: 11pt; color: rgb(0, 54, 73);"><br>
+</span></div>
+<div style=3D"text-align: center; margin: 0cm;"><span style=3D"font-family:=
+ &quot;Lato Black&quot;, sans-serif; font-size: 13.5pt; line-height: 1.5; c=
+olor: rgb(51, 51, 51);">Focus outils et m=E9thodes</span></div>
+<div style=3D"text-align: center; margin: 0cm;"><span style=3D"font-family:=
+ &quot;Lato Black&quot;, sans-serif; font-size: 13.5pt; line-height: 1.5; c=
+olor: rgb(51, 51, 51);"><br>
+</span></div>
+<div style=3D"text-align: center; margin: 0cm;"><span style=3D"font-family:=
+ Lato, sans-serif; font-size: 18px; color: rgb(67, 67, 67);"><i>Grands mod=
+=E8les de langue, donn=E9es et AI Act</i></span></div>
+<div style=3D"text-align: center; margin: 0cm;"><span style=3D"font-family:=
+ Trebuchet MS; font-size: 10.5pt; line-height: 1.5; color: rgb(51, 51, 51);=
+"><a href=3D"https://www.linkedin.com/in/gillesmoyse/" target=3D"_blank" id=
+=3D"OWA87337637-dc4b-aff5-c007-062d0be91565" class=3D"OWAAutoLink" rel=3D"n=
+oopener noreferrer" data-auth=3D"NotApplicable" data-linkindex=3D"3">Gilles
+ Moyse</a>&nbsp;(Docteur en IA, auteur de <i><a href=3D"https://www.lerober=
+t.com/essais-et-litterature/francais/essais/donnerons-nous-notre-langue-au-=
+chatgpt-l-impact-de-l-intelligence-artificielle-sur-notre-avenir-9782321019=
+732.html" target=3D"_blank" id=3D"OWAf8526e4b-bd6e-bda7-a8fc-9c36a621744b" =
+class=3D"OWAAutoLink" rel=3D"noopener noreferrer" data-auth=3D"NotApplicabl=
+e" data-linkindex=3D"4">Donnerons
+ nous notre langue au ChatGPT ?</a></i>)</span></div>
+<div style=3D"text-align: center; margin: 0cm;"><span style=3D"font-family:=
+ Trebuchet MS; font-size: 10.5pt; line-height: 1.5; color: rgb(51, 51, 51);=
+"><br>
+</span></div>
+<div style=3D"text-align: center; margin: 0cm 0px;"><span style=3D"font-fam=
+ily: Lato, sans-serif; font-size: 18px; line-height: 1.5; color: rgb(67, 67=
+, 67);"><i>IA et protection des donn=E9es - anticiper et r=E9pondre aux enj=
+eux</i></span></div>
+<div style=3D"text-align: center; margin: 0cm 0px;"><span style=3D"font-fam=
+ily: Trebuchet MS; font-size: 10.5pt; line-height: 1.5; color: rgb(51, 51, =
+51);"><a href=3D"https://www.linkedin.com/in/felicienvallet/" target=3D"_bl=
+ank" id=3D"OWAe2d896f6-9265-1b39-6a9e-2dab9a665575" class=3D"OWAAutoLink" r=
+el=3D"noopener noreferrer" data-auth=3D"NotApplicable" data-linkindex=3D"5"=
+>F=E9licien
+ Vallet</a>&nbsp;(Docteur en informatique, Chef du service Intelligence Art=
+ificielle de la CNIL)</span></div>
+<p style=3D"margin: 0cm;"><span style=3D"font-family: Lato, sans-serif; fon=
+t-size: 10.5pt; line-height: 1.5; color: rgb(51, 51, 51);">&nbsp;</span></p=
+>
+<div style=3D"text-align: center; margin: 0cm;"><span style=3D"font-family:=
+ Lato, sans-serif; font-size: 10.5pt; line-height: 1.5; color: rgb(51, 51, =
+51);"><b>&nbsp;</b></span><span style=3D"font-family: Lato, sans-serif; fon=
+t-size: 14px; color: rgb(51, 51, 51);">Discutants
+ : Marta Severo (Professeure, Universit=E9 Paris Nanterre), Nicolas Herv=E9=
+ (chef du service&nbsp;Recherche INA)</span></div>
+<div style=3D"text-align: center; margin: 0cm;"><span style=3D"font-family:=
+ Lato, sans-serif; font-size: 13.5pt; line-height: 1.5; color: rgb(0, 188, =
+212);"><b><br>
+</b></span></div>
+<div style=3D"text-align: center; margin: 0cm;"><span style=3D"font-family:=
+ Lato, sans-serif; font-size: 13.5pt; line-height: 1.5; color: rgb(0, 188, =
+212);"><b>Vendredi 1er d=E9cembre de 14h30 =E0 16H30</b></span></div>
+<div style=3D"text-align: center; margin: 0cm;"><span style=3D"font-family:=
+ Lato, sans-serif; font-size: 13.5pt; line-height: 1.5; color: rgb(255, 235=
+, 59);"><b>Loft MK2 Nation</b></span></div>
+<div style=3D"text-align: center; margin: 0cm;"><span style=3D"font-family:=
+ Lato, sans-serif; font-size: 13.5pt; line-height: 1.5; color: rgb(255, 235=
+, 59);"><b>135 boulevard Diderot</b></span></div>
+<div style=3D"text-align: center; margin: 0cm;"><span style=3D"font-family:=
+ Lato, sans-serif; font-size: 13.5pt; line-height: 1.5; color: rgb(255, 235=
+, 59);"><b>75012 Paris</b></span></div>
+<p style=3D"margin: 0cm;"><span style=3D"font-family: Lato, sans-serif; fon=
+t-size: 10.5pt; line-height: 1.5; color: rgb(51, 51, 51);">&nbsp;</span></p=
+>
+<div style=3D"text-align: center; margin: 0cm;"><span style=3D"font-family:=
+ Lato, sans-serif; font-size: 13.5pt; line-height: 1.5; color: rgb(0, 188, =
+212);"><b>FORMAT HYBRIDE</b></span></div>
+<p class=3D"elementToProof" align=3D"center"><span style=3D"font-family: La=
+to-Regular; font-size: 19px; color: rgb(0, 54, 73);"><b>La s=E9ance est ouv=
+erte =E0 tous</b></span><span style=3D"font-family: Lato-Regular; font-size=
+: 19px; color: rgb(0, 54, 73); background-color: rgb(255, 255, 255);"><b>&n=
+bsp;</b></span><span style=3D"font-family: Lato-Regular; font-size: 19px; c=
+olor: rgb(0, 54, 73);"><b><a href=3D"https://website-38780.eventmaker.io/fr=
+/registration/655ca8cb4fad29222310068d?no_cookie=3Dtrue" target=3D"_blank" =
+id=3D"OWA62e7c4fb-90d0-d0d3-5c03-b7e167fada66" class=3D"OWAAutoLink" rel=3D=
+"noopener noreferrer" style=3D"margin-top: 0px; margin-bottom: 0px;" data-a=
+uth=3D"NotApplicable" data-linkindex=3D"6">sur
+ inscription ici</a></b></span></p>
+<div class=3D"elementToProof"><span style=3D"font-family: Aptos, Aptos_Embe=
+ddedFont, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 1=
+2pt; color: rgb(0, 0, 0);">=C0 tr=E8s bient=F4t,</span></div>
+<div class=3D"elementToProof"><span style=3D"font-family: Aptos, Aptos_Embe=
+ddedFont, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 1=
+2pt; color: rgb(0, 0, 0);"><br>
+</span></div>
+<div style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, =
+Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+<br>
+</div>
+<div id=3D"Signature">
+<table style=3D"border-collapse: collapse; border-spacing: 0px; box-sizing:=
+ border-box; background-color: white;">
+<tbody>
+<tr>
+<td colspan=3D"2" style=3D"border-width: 1pt; border-style: solid; border-c=
+olor: white; padding: 0cm; vertical-align: top; width: 49pt;">
+<p><span style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontServi=
+ce, Calibri, Helvetica, sans-serif; font-size: 12pt; color: black;"><img al=
+t=3D"logo-ina.jpg" style=3D"width: 64px; height: 64px; margin-top: 0px; mar=
+gin-bottom: 0px;" width=3D"64" height=3D"64" data-outlook-trace=3D"F:1|T:1"=
+ src=3D"cid:0fad99f5-4447-416b-a9b0-4813becf8601"></span></p>
+</td>
+<td colspan=3D"3" style=3D"border-width: 1pt 1pt 1pt medium; border-style: =
+solid solid solid none; border-color: white white white currentcolor; paddi=
+ng: 0cm; vertical-align: top; width: 384.45pt;">
+<p><span style=3D"font-family: &quot;Trebuchet MS&quot;, sans-serif; font-s=
+ize: 10pt; color: rgb(0, 153, 204);"><b>Arthur Lezer<br>
+</b></span><span style=3D"font-family: &quot;Trebuchet MS&quot;, sans-serif=
+; font-size: 8pt; color: black;"><b>Ing=E9nieur de recherche<br>
+</b></span></p>
+<p><span style=3D"font-family: &quot;Trebuchet MS&quot;, sans-serif; font-s=
+ize: 8pt; color: black;"><b></b></span><span style=3D"font-family: &quot;Tr=
+ebuchet MS&quot;, sans-serif; font-size: 8pt; color: rgb(102, 102, 102);">L=
+e lab</span></p>
+<p><span style=3D"font-family: &quot;Trebuchet MS&quot;, sans-serif; font-s=
+ize: 8pt; color: rgb(102, 102, 102);">Direction data &amp; technologies - I=
+NA th=E8que</span></p>
+</td>
+<td style=3D"padding: 0cm; width: 37.5pt;">
+<p><span style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontServi=
+ce, Calibri, Helvetica, sans-serif; font-size: 12pt; color: black;">&nbsp;<=
+/span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"padding: 0cm; width: 0.75pt; height: 22.4pt;">
+<p><span style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontServi=
+ce, Calibri, Helvetica, sans-serif; font-size: 12pt; color: black;">&nbsp;<=
+/span></p>
+</td>
+<td colspan=3D"2" style=3D"border-width: medium 1pt 1pt; border-style: none=
+ solid solid; border-color: currentcolor rgb(238, 238, 238) white; padding:=
+ 0cm 0cm 0cm 5.65pt; width: 312.9pt; height: 22.4pt; background-color: rgb(=
+238, 238, 238);">
+<p><span style=3D"font-family: &quot;Trebuchet MS&quot;, sans-serif; font-s=
+ize: 7.5pt; color: rgb(102, 102, 102);"><b><a href=3D"https://institut.ina.=
+fr/" target=3D"_blank" style=3D"margin-top: 0px; margin-bottom: 0px; color:=
+ rgb(102, 102, 102);" data-auth=3D"NotApplicable" data-safelink=3D"true" da=
+ta-linkindex=3D"0">institut.ina.fr</a></b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor rgb(238, 238, 238) white currentcolo=
+r; padding: 0.75pt; width: 20.3pt; height: 22.4pt; background-color: rgb(23=
+8, 238, 238);">
+<p align=3D"center"><span style=3D"font-family: Aptos, Aptos_EmbeddedFont, =
+Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color=
+: black;"><img style=3D"width: 12px; height: 10px; margin-top: 0px; margin-=
+bottom: 0px;" width=3D"12" height=3D"10" data-outlook-trace=3D"F:1|T:1" src=
+=3D"cid:ac9793b1-2c44-4df0-b534-5511c6983b86"></span></p>
+</td>
+<td colspan=3D"2" style=3D"border-width: medium 1pt 1pt medium; border-styl=
+e: none solid solid none; border-color: currentcolor rgb(238, 238, 238) whi=
+te currentcolor; padding: 0.75pt; width: 136.6pt; height: 22.4pt; backgroun=
+d-color: rgb(238, 238, 238);">
+<p><span style=3D"font-family: &quot;Trebuchet MS&quot;, sans-serif; font-s=
+ize: 7.5pt; color: rgb(102, 102, 102);"><a href=3D"https://twitter.com/ina_=
+audiovisuel" target=3D"_blank" style=3D"margin-top: 0px; margin-bottom: 0px=
+; color: rgb(102, 102, 102);" data-auth=3D"NotApplicable" data-safelink=3D"=
+true" data-linkindex=3D"1">@Ina_audiovisuel</a></span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium; border-style: none; border-color: curren=
+tcolor; width: 4px;">
+</td>
+<td style=3D"border-width: medium; border-style: none; border-color: curren=
+tcolor; width: 64px;">
+</td>
+<td style=3D"border-width: medium; border-style: none; border-color: curren=
+tcolor; width: 353px;">
+</td>
+<td style=3D"border-width: medium; border-style: none; border-color: curren=
+tcolor; width: 27px;">
+</td>
+<td style=3D"border-width: medium; border-style: none; border-color: curren=
+tcolor; width: 133px;">
+</td>
+<td style=3D"border-width: medium; border-style: none; border-color: curren=
+tcolor; width: 50px;">
+</td>
+</tr>
+</tbody>
+</table>
+<p><span style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontServi=
+ce, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">=
+&nbsp;</span></p>
+<p><span style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontServi=
+ce, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">=
+<br>
+</span></p>
+<p><span style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontServi=
+ce, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">=
+&nbsp;</span></p>
+</div>
+</body>
+</html>
+
+--_000_DB7PR04MB50019F3F05FC710E3BB41A9DA3B8ADB7PR04MB5001eurp_--
+
+--_005_DB7PR04MB50019F3F05FC710E3BB41A9DA3B8ADB7PR04MB5001eurp_
+Content-Type: image/png; name="Outlook-logo-ina.j.png"
+Content-Description: Outlook-logo-ina.j.png
+Content-Disposition: inline; filename="Outlook-logo-ina.j.png"; size=6139;
+	creation-date="Fri, 24 Nov 2023 12:52:36 GMT";
+	modification-date="Fri, 24 Nov 2023 12:52:36 GMT"
+Content-ID: <0fad99f5-4447-416b-a9b0-4813becf8601>
+Content-Transfer-Encoding: base64
+
+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
+
+--_005_DB7PR04MB50019F3F05FC710E3BB41A9DA3B8ADB7PR04MB5001eurp_
+Content-Type: image/png; name="Outlook-gnncvvwl.png"
+Content-Description: Outlook-gnncvvwl.png
+Content-Disposition: inline; filename="Outlook-gnncvvwl.png"; size=519;
+	creation-date="Fri, 24 Nov 2023 12:52:36 GMT";
+	modification-date="Fri, 24 Nov 2023 12:52:36 GMT"
+Content-ID: <ac9793b1-2c44-4df0-b534-5511c6983b86>
+Content-Transfer-Encoding: base64
+
+iVBORw0KGgoAAAANSUhEUgAAAAwAAAAKCAYAAACALL/6AAABzklEQVQYV2N8+OG/YMnp9/9Wuwp9
+ZEACG1/+F597+UXp7fe/dQNkuGYKc7Ndk2L7w8aYc+hl2dm3vx00hPnj59vxvgbp+f//P3PCwZcb
+Ft387CPHzcLAwsTIwMrEwBCvxtfJ2Hbuk1/3+dcbdUU4HuuIsNd9+/V5BRcrl9e+Jz8Xffr1h1sa
+qOHZ978MgpzMj2fYSkYzLnv8U2/2hbc7T738JiHIzsygJsj28Pfvv2/f/f6vC7SMlYWRgeHF9z8M
+5mIcq0IMpJIYp9364DLx3IfdjP8ZGFiYGRne/PgLdoIgO9ANQMDCyMjw6PNvhgAF3s4YBtEaxvv/
+/3O0H301YeXNz+kKfKxwb/8BGsAG1PP+53+GX3//M6SpCVk2WPCfAFrIwPD41y9z743PTzz/+odB
+moeF4fc/BgagZWCbzj3/zpBvILDMy1oszZ2R8StYAwh4b3nu+PbX75mvf/5V5WNlBmr6z3DlzU8G
+JzmuK9VG0j7OUowPQeoY0/a9Md/67JOvHC+r8d8/DPavfvzh/AFU/Adoi7kI+54oHe70aHmBezCD
+Gbc8/KC05dGPyFsf/5p9+PGPlY2R8ZsMD/N9QwneHSK/uQ+lmzD+Ro5QAPNGu2ub3D2vAAAAAElF
+TkSuQmCC
+
+--_005_DB7PR04MB50019F3F05FC710E3BB41A9DA3B8ADB7PR04MB5001eurp_--

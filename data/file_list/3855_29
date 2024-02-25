@@ -1,0 +1,651 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (bouncesmtp2.u12.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id D5F6714014F0
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Fri,  7 Apr 2023 19:01:00 +0200 (CEST)
+Received: from mx1.localdomain (MX1.univ-nantes.fr [193.52.101.135])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id D26BA665D
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Fri,  7 Apr 2023 19:01:00 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.localdomain (Postfix) with ESMTP id CC1501213C2
+	for <liste-egc@polytech.univ-nantes.fr>; Fri,  7 Apr 2023 19:01:00 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -3.672
+X-Spam-Level:
+X-Spam-Status: No, score=-3.672 tagged_above=-1000 required=5
+	tests=[CRM114_GOOD=-5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	HTML_MESSAGE=0.001, J_BACKHAIR_13=1, MR_NOT_ATTRIBUTED_IP=0.2,
+	RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+	RCVD_IN_WSFF=0.01, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+	UN_JPG_ATTACH=0.01, UN_PHISHING_PW=0.1, UN_PNG_ATTACH=0.01]
+	autolearn=disabled
+X-CRM114-Status: GOOD ( 15.2672 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=ina1.onmicrosoft.com
+Received: from mx1.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Y5W4GicwQird for <liste-egc@polytech.univ-nantes.fr>;
+	Fri,  7 Apr 2023 19:00:58 +0200 (CEST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=40.107.21.131; helo=eur05-vi1-obe.outbound.protection.outlook.com; envelope-from=alezer@ina.fr; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=none (p=none dis=none) header.from=ina.fr
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=alezer@ina.fr
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (1024-bit key; unprotected) header.d=INA1.onmicrosoft.com header.i=@INA1.onmicrosoft.com header.b="DKPIorEo";
+	dkim-atps=neutral
+X-Greylist: whitelisted by SQLgrey-1.6.7
+Received: from EUR05-VI1-obe.outbound.protection.outlook.com (mail-vi1eur05on2131.outbound.protection.outlook.com [40.107.21.131])
+	by mx1.localdomain (Postfix) with ESMTPS id 25B281213C1
+	for <liste-egc@polytech.univ-nantes.fr>; Fri,  7 Apr 2023 19:00:58 +0200 (CEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=bfq8NE/MI6tT29xYPQj4uGM40msSmbodMueQh7lzxpsFM77MPVjMgGUIfzRt+T7CCKC5lJITAzPVrKVuaOngDSIR3GT0OrDYnacoFWQTJuYh6NpGDdK9/2NA9TcS5UCYvaXqsDRR3Q3fYS8d7gjC6O9EIrVOHcP3m53i0QgYyyRMUR0s797EDNxfdz0fwQHsgriK3xfBCQQXVVgSFOBfkUYbXKCZhKaYYedft1lEr50G1b9+DaexaH/7hWkSyu30vya260n/dLIBf76ffTxmE8aw9qvc6t79WT4ktGfDUBDqcv245Nv8nzBXFm5MGz/FUZJuTKq57NCyxtiT9StO/w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=m1nuQYuQgT/GeRmmCPp6KRT44NZ0sstozY+FCmBy0wU=;
+ b=E80ZrfKcE2kDUzNRzDLY3VSQtv1VeDuoBQ0F6pn0JvyG8SNuheeM6Ktnu0hwtRZEOkiDWwHOkLaadVH690LN1n7GYAqRQ+DnEmiTtuHhxqRSDCjyTPtqFCV22NGMwoVTa9R5MggWud/gyVkgoXGJgMqGxAlAAn7Z/EgPevnVUTxT2rV9x5KPkm3TlFbN0l0IjFXQPHnUI8yXq25zq+Bj0xknzNUqcjM02DgEZfnIZQ9Xmb32+neqElF24sl0fmvWb62ViVEI21PwTdhLFF0rrW2Tz9QtHk48g4Ab++3LG1S9tOO8s9aVDmvrCQDQ1niN3bypGjXGE/LG3+up9m8rzQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=ina.fr; dmarc=pass action=none header.from=ina.fr; dkim=pass
+ header.d=ina.fr; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=INA1.onmicrosoft.com;
+ s=selector2-INA1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=m1nuQYuQgT/GeRmmCPp6KRT44NZ0sstozY+FCmBy0wU=;
+ b=DKPIorEod4zjNfX7zOLIa4pSjYy4gWbO3fTBLQiqIDS3o4A9VucvDly0o3nfmNo3K070o3n5Q3pR3hlLGi0Cfum8mCyqRP5NglBleT4SKurZniQMkwrAOaho3OvGodlr79IF5jZw4nTm0yAmrwIVqXhdmCjGfLuwxVPUO6/tBXc=
+Received: from DB7PR04MB5001.eurprd04.prod.outlook.com (2603:10a6:10:16::28)
+ by AM0PR04MB6772.eurprd04.prod.outlook.com (2603:10a6:208:188::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6277.34; Fri, 7 Apr
+ 2023 17:00:54 +0000
+Received: from DB7PR04MB5001.eurprd04.prod.outlook.com
+ ([fe80::51bb:af05:667a:4f6b]) by DB7PR04MB5001.eurprd04.prod.outlook.com
+ ([fe80::51bb:af05:667a:4f6b%6]) with mapi id 15.20.6277.031; Fri, 7 Apr 2023
+ 17:00:54 +0000
+From: Arthur Lezer <alezer@ina.fr>
+To: "quanti@groupes.renater.fr" <quanti@groupes.renater.fr>,
+	"dh@groupes.renater.fr" <dh@groupes.renater.fr>,
+	"Liste-egc@polytech.univ-nantes.fr" <liste-egc@polytech.univ-nantes.fr>,
+	"legram@groupes.renater.fr" <legram@groupes.renater.fr>
+Thread-Topic:
+ =?windows-1256?Q?S=E9minaire_INA_le_lab,_vendredi_21_avril_|_Les_violence?=
+ =?windows-1256?Q?s_sexuelles_entre_m=E9diatisation_et_mobilisation_:_disc?=
+ =?windows-1256?Q?ours_et_repr=E9sentations?=
+Thread-Index: AdlpYe7hhN6P1V+CTuqh4aKxmb6XBg==
+Date: Fri, 7 Apr 2023 17:00:54 +0000
+Message-ID:
+ <DB7PR04MB50015DFCDE01F245B2CF75D9A3969@DB7PR04MB5001.eurprd04.prod.outlook.com>
+Accept-Language: fr-FR, en-US
+Content-Language: fr-FR
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=ina.fr;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DB7PR04MB5001:EE_|AM0PR04MB6772:EE_
+x-ms-office365-filtering-correlation-id: df2511dc-6a90-4329-c70b-08db3789a670
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:
+ rwNfzALCgEVkuyXypIlN1urJSiIn96R4N/s6gKPp7ErnqZX+scCw+oPVTTvpGTkx+VWtq5xQfZbKHGdgdwjfikoecfEGttzr12GupmtnvM32hZyWGd1rHswX6nBmH0S8uT+ucS5KAbBn2DV9/gtfSnxvzUqcB57LuqAKBO1njsVXC/sgYnJp++Bd/fFALhsT6/r4LNALoH92oxHhLa/zpS5dIvPCQCfna4sVVwZDhCdeudXuBEfphL2xel9AaVHoWOTZQpJCPjay4uacVRBTLomzwST/L2eKK1mjLZ0yXwD9yZwwa1A8i2JVpMOJMZDaOGbPp2Nlc9UQDb/cCxLbh43MQoOj1lfnsIQ+CcOsG8PbG5/LRasVdbZG6lbcRpAIhSd9Pc6AkY72khvL9wk42vx0cbHKlzgcNJ5XKmwm5zUUxshC1NdjfyOYXYliDntpA5zqhfVhAZG1aYf7j+7aiP8J3RzEi+tQWb2779I+EE+dgcOEW9LsabDLAHySDGl4CBYsDGJPELGlSGF3oZts147/sY7Jafc8MoA9ramfhXNHbZqJtSCOy/SIfOJRz8HBWZBR1AqfPzcD3Uy+DjKxFVhyPESx8C/OkjIr2OhoyC1OYl3zJ8hEqy/ZGiuSJqiHiQB64ED6NdWtXm2DOmnYuQ==
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:fr;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DB7PR04MB5001.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(376002)(346002)(39850400004)(366004)(396003)(136003)(451199021)(316002)(110136005)(786003)(478600001)(33656002)(26005)(9686003)(6506007)(186003)(122000001)(38100700002)(86362001)(38070700005)(166002)(55016003)(99936003)(71200400001)(7696005)(224303003)(52536014)(8936002)(76116006)(41300700001)(66476007)(66446008)(66556008)(66946007)(64756008)(2906002)(5660300002);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?windows-1256?Q?r30mR1QvxbwntfnvTitw/L4cyPr+ROIjSFBbQb4OflChbw+wm+Yevq68?=
+ =?windows-1256?Q?Ko/8SgEA0grej5vtvafYZDYWKmWJO6ZjUlAvQUb2lm0iLwIQdjrfEIWF?=
+ =?windows-1256?Q?u1mwPZyBqIaHMRX2pDEg0WSY6aw6ON1TUxs0wIlE5iJfk00YV63nXs1B?=
+ =?windows-1256?Q?wS9PFkZ3+8oECRkStHecOkX7jXEuvEa4Db1tIp5nM4/DoxkESEBHguPG?=
+ =?windows-1256?Q?gKJbTpHD0+cgPOoiCBOMSfd2bJbJD3bk6tjU3R5bBGE7OlQj2aS/Yl26?=
+ =?windows-1256?Q?5Ybp32+rJjzE99xOrCOAl0E3sJ++SINYRf9MRoQGaJU5mliFFp0ubW9Z?=
+ =?windows-1256?Q?ERFgC9N1O2lYgGjQgz1s871lqv0mvveH0Z+v7xwaTkPLRam/dULjffLp?=
+ =?windows-1256?Q?FHqYoOzC2K1S/ajRl3Z3d4P+wooaqtxQYUtbVqs7ySCSblbnJ9gMm20O?=
+ =?windows-1256?Q?9YkaGI2HDOqHfQTolcm6b/W//16AeA0i+BzUhq2jVZ9fBdRjdUQecPZA?=
+ =?windows-1256?Q?Fm8GT7KuxcJvnLGZmi415BsT1CVX43jVnBGymVEZhtSpy/x7TE9lMzSC?=
+ =?windows-1256?Q?dWChChO+xnZMTfJbMcK/u6G4+orfQ7NaPgD7cVcGoWkrc+baxFzZA9D7?=
+ =?windows-1256?Q?GEtYFAXNoYekx90zLgMs3fxwTZtlzqv7G8mdq8WUxIWMeBCAEFPS19lK?=
+ =?windows-1256?Q?Ex7S4k5DfcFya9vZD6WdDO7KxuTXcIvowaVtMhZv6Tgs9HAhnlTWZchA?=
+ =?windows-1256?Q?gTosEqi1yjNoCRv12ouIlI6KT89C/rpfPH2vyVbhN3eStRCLWjoWKNFe?=
+ =?windows-1256?Q?VSwUnzjVONpfzXc02vj3OULXS6JTA6yPZ/a+IzPdujpJGB4k8I1ng5cv?=
+ =?windows-1256?Q?3wle8PHkod0gff91h8NjTXoSuv8vEBXYwTwsQEIbftaPof6oKT08zc7L?=
+ =?windows-1256?Q?D41Cqj7ssVHhFV6EUsqMX3P3CkBBJJ9AX0X1/aVGueh+ZRBgh8jlVYkP?=
+ =?windows-1256?Q?fJH/yrcgYs3zCJn8FDQq2J2WzHx0Wav4r3i2TPojEb2H+vNkIH2ywaWD?=
+ =?windows-1256?Q?dtyCBqzO47GZ18ExA2mV/pFI+LuixJElJUt0Mt3sG+DV5Dal83+aertK?=
+ =?windows-1256?Q?ACJuz48JogCWQOh639RX3rRYW3eyRV0ekm81dBSkQAggHeXy+6PO7ibR?=
+ =?windows-1256?Q?CG6bnvJumUvGX96qXj4MaZu3KOKJdTIVzgA877bWKNMDOz6WUGgg1ruU?=
+ =?windows-1256?Q?P0b3GpyYJTIOjt15GHfr2LJ8gtZ7Jm3o4LfZ63G5wYAiHaOM7B8TRHZa?=
+ =?windows-1256?Q?3xfwtlwJMtdpJMwHZu/7yku2TK3YMuHHpq/WHxOeGwtjUe8bS48wPZAh?=
+ =?windows-1256?Q?EJ3spkV9/7vjrjAi/IsgrqPNOzjqYkG/+q7lc7d5PpXo7oOjt1dV6gWi?=
+ =?windows-1256?Q?Em3QJcfrrAz0tHt5q38k02GtWo3Ifb5jjK8nR6c3FtHmaU3CoHPQNEoM?=
+ =?windows-1256?Q?celEzBK9cnm7cNcwztyq9rL7z0hL/9DwgUlNXqEghcc7Jv4J2cfMBDbt?=
+ =?windows-1256?Q?sLqPwrkhjwZJAFUfUPRFcBwrDu1xAqGJeEcNYPEkOYZzQc4tDwjPxN7C?=
+ =?windows-1256?Q?+l5mA0h0ol7WCDQXjFkvdPwn4Vc3N4S4mDu7yolboYBGhb2EqeYoQEEM?=
+ =?windows-1256?Q?t4/tHTJQs5k=3D?=
+Content-Type: multipart/related;
+	boundary="_005_DB7PR04MB50015DFCDE01F245B2CF75D9A3969DB7PR04MB5001eurp_";
+	type="multipart/alternative"
+MIME-Version: 1.0
+X-OriginatorOrg: ina.fr
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DB7PR04MB5001.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: df2511dc-6a90-4329-c70b-08db3789a670
+X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Apr 2023 17:00:54.4887
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 884113ac-9e9c-40dd-b29b-edfe77e79656
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: EYTznxh21wzjMBEc0RA5BIboWxiBjrI02Rahwbb1BXp1yOZAk/BWT8FRyVQsbB5A
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM0PR04MB6772
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] =?WINDOWS-1256?Q?S=E9minaire?= INA le lab, vendredi 21
+ avril | Les violences sexuelles entre =?WINDOWS-1256?Q?m=E9diatisation?= et
+ mobilisation : discours et =?WINDOWS-1256?Q?repr=E9sentations?=
+
+--_005_DB7PR04MB50015DFCDE01F245B2CF75D9A3969DB7PR04MB5001eurp_
+Content-Type: multipart/alternative;
+	boundary="_000_DB7PR04MB50015DFCDE01F245B2CF75D9A3969DB7PR04MB5001eurp_"
+
+--_000_DB7PR04MB50015DFCDE01F245B2CF75D9A3969DB7PR04MB5001eurp_
+Content-Type: text/plain; charset="windows-1256"
+Content-Transfer-Encoding: quoted-printable
+
+[En nous excusant pour les doublons]
+
+Ch=E8res colisti=E8res, chers colistiers,
+
+La troisi=E8me s=E9ance du s=E9minaire du lab INA<https://inalelab.hypothes=
+es.org/6470> sera consacr=E9e aux discours et repr=E9sentations m=E9diatiqu=
+es li=E9s aux violences sexistes et sexuelles. Nous recevrons Ma=EBlle Stri=
+cot<https://www.parisschoolofeconomics.eu/fr/stricot-maelle/> (Chercheuse e=
+n =E9conomie, PSE), Alice Debauche<https://sage.unistra.fr/membres/enseigna=
+nts-chercheurs/debauche-alice/> (Ma=EEtresse de conf=E9rence en sociologie,=
+ Ined) et David Doukhan (Chercheur en informatique, INA). La s=E9ance se d=
+=E9roulera en format hybride, le vendredi 21 avril de 14h30 =E0 16h30 dans =
+le loft du cin=E9ma MK2, 135, boulevard Diderot, 75012 Paris.  Elle est ouv=
+erte =E0 tous sur inscription pr=E9alable<https://website-75515.eventmaker.=
+io/fr/registration/642adce652b9b62382de8cea>. En voici le d=E9roul=E9 :
+
+S=E9minaire INA - le lab
+Les violences sexuelles entre m=E9diatisation et mobilisation : discours et=
+ repr=E9sentations
+
+Recherches et explorations
+La m=E9diatisation des violences sexistes et sexuelles : quels effets sur l=
+eur traitement judiciaire ?
+Ma=EBlle Stricot<https://www.parisschoolofeconomics.eu/fr/stricot-maelle/> =
+(Chercheuse en =E9conomie, PSE)
+
+D=E9crire les mobilisations contre les violences sexuelles =E0 partir de Tw=
+itter : une exploration du #MeToo
+Pauline Mullner (Universit=E9 de Paris - Ined) et Alice Debauche<https://sa=
+ge.unistra.fr/membres/enseignants-chercheurs/debauche-alice/> (Ma=EEtresse =
+de conf=E9rence en sociologie, Ined)
+
+Discutants : Jean Carrive (INA), Marta Severo (Professeure, Universit=E9 Pa=
+ris Nanterre)
+
+Focus outils et m=E9thodes
+Projet Gender Equality Monitor : d=E9crire les diff=E9rences de repr=E9sent=
+ation existant entre les femmes et les hommes dans les m=E9dias
+David Doukhan (Chercheur en informatique, INA)
+
+
+Vendredi 21 avril de 14h30 =E0 16H30
+Loft MK2 Nation
+135 boulevard Diderot
+75012 Paris
+
+FORMAT HYBRIDE
+
+Le lien de visioconf=E9rence sera communiqu=E9 sur inscription (obligatoire=
+) ci-dessous
+
+S=92inscrire =E0 l=92=E9v=E8nement<https://website-75515.eventmaker.io/fr/r=
+egistration/642adce652b9b62382de8cea>
+
+L=92ambition du s=E9minaire est multiple : exposer, voire confronter de nou=
+velles approches d=92exploitation scientifique des collections de l=92INA, =
+favoriser les =E9changes entre communaut=E9s de chercheurs, d=E9velopper un=
+e r=E9flexion =E9pist=E9mologique et m=E9thodologique sur ces convergences =
+et articulations disciplinaires en m=EAme temps qu=92=E9clairer des sujets =
+qui sont au c=9Cur du d=E9bat public.
+Au plaisir de vous y retrouver,
+
+[logo-ina.jpg]
+Arthur Lezer
+Ing=E9nieur de recherche
+Le Lab
+Direction data & technologies - INA th=E8que
+
+
+institut.ina.fr<https://institut.ina.fr/>
+[cid:image002.png@01D96953.152B46A0]
+@Ina_audiovisuel<https://twitter.com/ina_audiovisuel>
+
+
+
+--_000_DB7PR04MB50015DFCDE01F245B2CF75D9A3969DB7PR04MB5001eurp_
+Content-Type: text/html; charset="windows-1256"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dwindows-1=
+256">
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<!--[if !mso]><style>v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style><![endif]--><style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;}
+@font-face
+	{font-family:Lato;
+	panose-1:2 15 5 2 2 2 4 3 2 3;}
+@font-face
+	{font-family:"Lato Black";
+	panose-1:2 15 5 2 2 2 4 3 2 3;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-ligatures:standardcontextual;
+	mso-fareast-language:EN-US;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+span.EmailStyle18
+	{mso-style-type:personal;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	mso-ligatures:standardcontextual;
+	mso-fareast-language:EN-US;}
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:70.85pt 70.85pt 70.85pt 70.85pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"FR" link=3D"#0563C1" vlink=3D"#954F72" style=3D"word-wrap:bre=
+ak-word">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif">[En nous excusant pour les doublons]<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif">Ch=E8res colisti=E8res, chers colistiers,<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif">La troisi=E8me s=E9ance du
+<a href=3D"https://inalelab.hypotheses.org/6470">s=E9minaire du lab INA</a>=
+ sera consacr=E9e aux discours et repr=E9sentations m=E9diatiques li=E9s au=
+x violences sexistes et sexuelles. Nous recevrons
+<span style=3D"color:#333333"><a href=3D"https://www.parisschoolofeconomics=
+.eu/fr/stricot-maelle/">Ma=EBlle Stricot</a></span> (Chercheuse en =E9conom=
+ie, PSE),
+<span style=3D"color:#333333"><a href=3D"https://sage.unistra.fr/membres/en=
+seignants-chercheurs/debauche-alice/">Alice Debauche</a> (Ma=EEtresse de co=
+nf=E9rence en sociologie, Ined) et David Doukhan (Chercheur en informatique=
+, INA).
+</span>La s=E9ance&nbsp;<span style=3D"color:black;border:none windowtext 1=
+.0pt;padding:0cm;background:white">se d=E9roulera&nbsp;</span><span style=
+=3D"color:black;background:white">en format hybride,&nbsp;</span><b>le vend=
+redi 21 avril&nbsp;de 14h30 =E0 16h30&nbsp;</b>d<span style=3D"color:black;=
+background:white">ans
+ le loft du&nbsp;cin=E9ma MK2,&nbsp;135, boulevard Diderot, 75012 Paris</sp=
+an><b>.&nbsp;&nbsp;</b><span style=3D"color:black;background:white">Elle es=
+t ouverte =E0 tous&nbsp;</span><span style=3D"color:#0070C0"><a href=3D"htt=
+ps://website-75515.eventmaker.io/fr/registration/642adce652b9b62382de8cea" =
+target=3D"_blank"><span style=3D"color:#0070C0">sur
+ inscription pr=E9alable</span></a></span><span style=3D"color:black;backgr=
+ound:white">. En voici le d=E9roul=E9&nbsp;:</span><o:p></o:p></span></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;backgrou=
+nd:white"><b><span style=3D"font-size:22.0pt;font-family:&quot;Lato&quot;,s=
+ans-serif;color:#00BCD4"><o:p>&nbsp;</o:p></span></b></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;backgrou=
+nd:white"><b><span style=3D"font-size:22.0pt;font-family:&quot;Lato&quot;,s=
+ans-serif;color:#00BCD4">S=E9minaire INA -<em><span style=3D"font-family:&q=
+uot;Lato&quot;,sans-serif">&nbsp;le lab</span></em></span></b><span style=
+=3D"font-size:10.0pt;font-family:&quot;Lato&quot;,sans-serif;color:#333333"=
+><o:p></o:p></span></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center"><span s=
+tyle=3D"font-size:16.0pt;font-family:&quot;Lato&quot;,sans-serif;color:#00B=
+CD4">Les violences sexuelles entre m=E9diatisation et mobilisation&nbsp;:&n=
+bsp;discours et repr=E9sentations</span><span style=3D"font-family:&quot;Ar=
+ial&quot;,sans-serif"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center"><span s=
+tyle=3D"font-size:13.5pt;font-family:&quot;Lato Black&quot;,sans-serif;colo=
+r:#333333">Recherches et explorations</span><span style=3D"font-family:&quo=
+t;Lato Black&quot;,sans-serif"><o:p></o:p></span></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center"><i><spa=
+n style=3D"font-size:13.5pt;font-family:&quot;Lato&quot;,sans-serif;color:#=
+434343">La m=E9diatisation des violences sexistes et sexuelles&nbsp;:&nbsp;=
+quels effets sur leur traitement judiciaire ?<br>
+</span></i><span style=3D"font-size:10.5pt;font-family:&quot;Lato&quot;,san=
+s-serif;color:#333333"><a href=3D"https://www.parisschoolofeconomics.eu/fr/=
+stricot-maelle/">Ma=EBlle Stricot</a> (Chercheuse en =E9conomie, PSE)</span=
+><span style=3D"font-family:&quot;Lato&quot;,sans-serif"><o:p></o:p></span>=
+</p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:&quot;La=
+to&quot;,sans-serif;color:#333333">&nbsp;</span><span style=3D"font-family:=
+&quot;Lato&quot;,sans-serif"><o:p></o:p></span></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center"><i><spa=
+n style=3D"font-size:13.5pt;font-family:&quot;Lato&quot;,sans-serif;color:#=
+434343">D=E9crire les mobilisations contre les violences sexuelles =E0 part=
+ir de Twitter&nbsp;:&nbsp;une exploration du #MeToo<br>
+</span></i><span style=3D"font-size:10.5pt;font-family:&quot;Lato&quot;,san=
+s-serif;color:#333333">Pauline Mullner (Universit=E9 de Paris - Ined) et
+<a href=3D"https://sage.unistra.fr/membres/enseignants-chercheurs/debauche-=
+alice/">
+Alice Debauche</a> (Ma=EEtresse de conf=E9rence en sociologie, Ined)</span>=
+<span style=3D"font-family:&quot;Lato&quot;,sans-serif"><o:p></o:p></span><=
+/p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:&quot;La=
+to&quot;,sans-serif;color:#333333">&nbsp;</span><span style=3D"font-family:=
+&quot;Lato&quot;,sans-serif"><o:p></o:p></span></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center"><span s=
+tyle=3D"font-size:10.5pt;font-family:&quot;Lato&quot;,sans-serif;color:#333=
+333">Discutants : Jean Carrive (INA), Marta Severo (Professeure, Universit=
+=E9 Paris Nanterre)</span><span style=3D"font-family:&quot;Lato&quot;,sans-=
+serif"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:&quot;La=
+to&quot;,sans-serif;color:#333333">&nbsp;</span><span style=3D"font-family:=
+&quot;Lato&quot;,sans-serif"><o:p></o:p></span></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center"><span s=
+tyle=3D"font-size:13.5pt;font-family:&quot;Lato Black&quot;,sans-serif;colo=
+r:#333333">Focus outils et m=E9thodes</span><span style=3D"font-family:&quo=
+t;Lato Black&quot;,sans-serif"><o:p></o:p></span></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center"><i><spa=
+n style=3D"font-size:13.5pt;font-family:&quot;Lato&quot;,sans-serif;color:b=
+lack;background:white">Projet Gender Equality Monitor : d=E9crire les diff=
+=E9rences de repr=E9sentation existant entre les femmes et
+ les hommes dans les m=E9dias</span></i><i><span style=3D"font-size:13.5pt;=
+font-family:&quot;Lato&quot;,sans-serif"><o:p></o:p></span></i></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center"><span s=
+tyle=3D"font-size:10.5pt;font-family:&quot;Lato&quot;,sans-serif;color:#333=
+333">David Doukhan (Chercheur en informatique, INA)</span><span style=3D"fo=
+nt-family:&quot;Lato&quot;,sans-serif"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:&quot;La=
+to&quot;,sans-serif;color:#333333">&nbsp;</span><span style=3D"font-family:=
+&quot;Lato&quot;,sans-serif"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><b><span style=3D"font-size:10.5pt;font-family:&quot=
+;Lato&quot;,sans-serif;color:#333333">&nbsp;</span></b><span style=3D"font-=
+family:&quot;Lato&quot;,sans-serif"><o:p></o:p></span></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center"><b><spa=
+n style=3D"font-size:13.5pt;font-family:&quot;Lato&quot;,sans-serif;color:#=
+00BCD4">Vendredi 21 avril de 14h30 =E0 16H30</span></b><span style=3D"font-=
+family:&quot;Lato&quot;,sans-serif"><o:p></o:p></span></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center"><b><spa=
+n style=3D"font-size:13.5pt;font-family:&quot;Lato&quot;,sans-serif;color:#=
+FFEB3B">Loft MK2 Nation</span></b><span style=3D"font-family:&quot;Lato&quo=
+t;,sans-serif"><o:p></o:p></span></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center"><b><spa=
+n style=3D"font-size:13.5pt;font-family:&quot;Lato&quot;,sans-serif;color:#=
+FFEB3B">135 boulevard Diderot</span></b><span style=3D"font-family:&quot;La=
+to&quot;,sans-serif"><o:p></o:p></span></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center"><b><spa=
+n style=3D"font-size:13.5pt;font-family:&quot;Lato&quot;,sans-serif;color:#=
+FFEB3B">75012 Paris</span></b><span style=3D"font-family:&quot;Lato&quot;,s=
+ans-serif"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:&quot;La=
+to&quot;,sans-serif;color:#333333">&nbsp;</span><span style=3D"font-family:=
+&quot;Lato&quot;,sans-serif"><o:p></o:p></span></p>
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center"><b><spa=
+n style=3D"font-size:13.5pt;font-family:&quot;Lato&quot;,sans-serif;color:#=
+00BCD4">FORMAT HYBRIDE<o:p></o:p></span></b></p>
+<p align=3D"center" style=3D"text-align:center"><strong><span style=3D"font=
+-size:10.5pt;font-family:&quot;Lato&quot;,sans-serif">Le lien de visioconf=
+=E9rence sera communiqu=E9 sur inscription (obligatoire) ci-dessous</span><=
+/strong><span style=3D"font-size:10.5pt;font-family:&quot;Lato&quot;,sans-s=
+erif"><o:p></o:p></span></p>
+<p align=3D"center" style=3D"text-align:center"><strong><span style=3D"font=
+-size:13.5pt;font-family:&quot;Lato&quot;,sans-serif"><a href=3D"https://we=
+bsite-75515.eventmaker.io/fr/registration/642adce652b9b62382de8cea" target=
+=3D"_blank">S=92inscrire =E0 l=92=E9v=E8nement</a></span></strong><span sty=
+le=3D"font-size:13.5pt;font-family:&quot;Lato&quot;,sans-serif"><o:p></o:p>=
+</span></p>
+<p><em><span style=3D"font-family:&quot;Arial&quot;,sans-serif;font-style:n=
+ormal">L=92ambition&nbsp;du s=E9minaire est&nbsp;multiple : exposer, voire =
+confronter de nouvelles approches&nbsp;d=92exploitation scientifique des&nb=
+sp;collections de l=92INA, favoriser les&nbsp;=E9changes entre communaut=E9=
+s de chercheurs,
+ d=E9velopper une&nbsp;r=E9flexion&nbsp;=E9pist=E9mologique et m=E9thodolog=
+ique sur ces convergences et&nbsp;articulations&nbsp;disciplinaires en m=EA=
+me temps qu=92=E9clairer des sujets qui sont au c=9Cur du d=E9bat public.&n=
+bsp;</span></em><i><span style=3D"font-family:&quot;Arial&quot;,sans-serif"=
+><o:p></o:p></span></i></p>
+<p class=3D"MsoNormal">Au plaisir de vous y retrouver,<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<table class=3D"MsoNormalTable" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0" style=3D"background:white;border-collapse:collapse">
+<tbody>
+<tr>
+<td width=3D"65" colspan=3D"2" valign=3D"top" style=3D"width:49.0pt;border:=
+solid white 1.0pt;padding:0cm 0cm 0cm 0cm">
+<p class=3D"MsoNormal"><span style=3D"font-size:7.0pt;font-family:&quot;Tre=
+buchet MS&quot;,sans-serif;color:black;mso-fareast-language:FR"><img border=
+=3D"0" width=3D"64" height=3D"64" style=3D"width:.6666in;height:.6666in" id=
+=3D"yiv2447406020gmail-m_-6675440649914323777Image_x0020_2" src=3D"cid:imag=
+e001.jpg@01D96953.152B46A0" alt=3D"logo-ina.jpg"></span><span style=3D"mso-=
+ligatures:none;mso-fareast-language:FR"><o:p></o:p></span></p>
+</td>
+<td width=3D"513" colspan=3D"3" valign=3D"top" style=3D"width:384.45pt;bord=
+er:solid white 1.0pt;border-left:none;padding:0cm 0cm 0cm 0cm">
+<p class=3D"MsoNormal"><b><span style=3D"font-size:10.0pt;font-family:&quot=
+;Trebuchet MS&quot;,sans-serif;color:#0099CC;mso-ligatures:none;mso-fareast=
+-language:FR">Arthur Lezer</span></b><span style=3D"mso-ligatures:none;mso-=
+fareast-language:FR"><o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"line-height:9.0pt"><b><span style=3D"font-s=
+ize:8.0pt;font-family:&quot;Trebuchet MS&quot;,sans-serif;color:black;mso-l=
+igatures:none;mso-fareast-language:FR">Ing=E9nieur de recherche</span></b><=
+b><span style=3D"font-size:8.0pt;font-family:&quot;Trebuchet MS&quot;,sans-=
+serif;mso-ligatures:none;mso-fareast-language:FR"><o:p></o:p></span></b></p=
+>
+<p class=3D"MsoNormal" style=3D"line-height:9.0pt"><span style=3D"font-size=
+:8.0pt;font-family:&quot;Trebuchet MS&quot;,sans-serif;color:#666666;mso-li=
+gatures:none;mso-fareast-language:FR">Le Lab</span><b><span style=3D"font-s=
+ize:8.0pt;font-family:&quot;Trebuchet MS&quot;,sans-serif;mso-ligatures:non=
+e;mso-fareast-language:FR"><o:p></o:p></span></b></p>
+<p class=3D"MsoNormal" style=3D"line-height:9.0pt"><span style=3D"font-size=
+:8.0pt;font-family:&quot;Trebuchet MS&quot;,sans-serif;color:#666666;mso-li=
+gatures:none;mso-fareast-language:FR">Direction data &amp; technologies - I=
+NA th=E8que<o:p></o:p></span></p>
+</td>
+<td style=3D"border:none;padding:0cm 0cm 0cm 0cm" width=3D"50">
+<p class=3D"MsoNormal">&nbsp;</p>
+</td>
+</tr>
+<tr style=3D"height:22.4pt">
+<td style=3D"border:none;padding:0cm 0cm 0cm 0cm" width=3D"1">
+<p class=3D"MsoNormal">&nbsp;</p>
+</td>
+<td width=3D"417" colspan=3D"2" style=3D"width:312.9pt;border-top:none;bord=
+er-left:solid #EEEEEE 1.0pt;border-bottom:solid white 1.0pt;border-right:so=
+lid #EEEEEE 1.0pt;background:#EEEEEE;padding:0cm 0cm 0cm 5.65pt;height:22.4=
+pt">
+<p class=3D"MsoNormal"><span style=3D"font-size:7.0pt;font-family:&quot;Tre=
+buchet MS&quot;,sans-serif;color:black;mso-ligatures:none;mso-fareast-langu=
+age:FR"><a href=3D"https://institut.ina.fr/" target=3D"_blank"><b><span sty=
+le=3D"font-size:7.5pt;color:#666666">institut.ina.fr</span></b></a></span><=
+span style=3D"color:#201F1E;mso-ligatures:none;mso-fareast-language:FR"><o:=
+p></o:p></span></p>
+</td>
+<td width=3D"27" style=3D"width:20.3pt;border-top:none;border-left:none;bor=
+der-bottom:solid white 1.0pt;border-right:solid #EEEEEE 1.0pt;background:#E=
+EEEEE;padding:.75pt .75pt .75pt .75pt;height:22.4pt">
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center"><span s=
+tyle=3D"font-size:5.0pt;font-family:&quot;Trebuchet MS&quot;,sans-serif;col=
+or:black;mso-fareast-language:FR"><img border=3D"0" width=3D"12" height=3D"=
+10" style=3D"width:.125in;height:.1041in" id=3D"Image_x0020_2" src=3D"cid:i=
+mage002.png@01D96953.152B46A0"></span><span style=3D"color:#201F1E;mso-liga=
+tures:none;mso-fareast-language:FR"><o:p></o:p></span></p>
+</td>
+<td width=3D"182" colspan=3D"2" style=3D"width:136.6pt;border-top:none;bord=
+er-left:none;border-bottom:solid white 1.0pt;border-right:solid #EEEEEE 1.0=
+pt;background:#EEEEEE;padding:.75pt .75pt .75pt .75pt;height:22.4pt">
+<p class=3D"MsoNormal"><span style=3D"font-size:7.0pt;font-family:&quot;Tre=
+buchet MS&quot;,sans-serif;color:black;mso-ligatures:none;mso-fareast-langu=
+age:FR"><a href=3D"https://twitter.com/ina_audiovisuel" target=3D"_blank"><=
+span style=3D"font-size:7.5pt;color:#666666">@Ina_audiovisuel</span></a></s=
+pan><span style=3D"color:#201F1E;mso-ligatures:none;mso-fareast-language:FR=
+"><o:p></o:p></span></p>
+</td>
+</tr>
+<tr height=3D"0">
+<td width=3D"1" style=3D"border:none"></td>
+<td width=3D"64" style=3D"border:none"></td>
+<td width=3D"353" style=3D"border:none"></td>
+<td width=3D"27" style=3D"border:none"></td>
+<td width=3D"132" style=3D"border:none"></td>
+<td width=3D"50" style=3D"border:none"></td>
+</tr>
+</tbody>
+</table>
+<p class=3D"MsoNormal"><span style=3D"mso-ligatures:none;mso-fareast-langua=
+ge:FR"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+</body>
+</html>
+
+--_000_DB7PR04MB50015DFCDE01F245B2CF75D9A3969DB7PR04MB5001eurp_--
+
+--_005_DB7PR04MB50015DFCDE01F245B2CF75D9A3969DB7PR04MB5001eurp_
+Content-Type: image/jpeg; name="image001.jpg"
+Content-Description: image001.jpg
+Content-Disposition: inline; filename="image001.jpg"; size=4351;
+	creation-date="Fri, 07 Apr 2023 17:00:54 GMT";
+	modification-date="Fri, 07 Apr 2023 17:00:54 GMT"
+Content-ID: <image001.jpg@01D96953.152B46A0>
+Content-Transfer-Encoding: base64
+
+/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABaAAD/4QOqaHR0cDov
+L25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENl
+aGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4
+OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjMtYzAxMSA2Ni4xNDU2NjEsIDIwMTIvMDIvMDYtMTQ6
+NTY6MjcgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5
+OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHht
+bG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0i
+aHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1sbnM6eG1w
+PSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3Jn
+L2RjL2VsZW1lbnRzLzEuMS8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QzM1MkEyMENDNDgx
+MTFFM0ExOUU4QkU1MzIxRTJCNkUiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QzM1MkEyMEJD
+NDgxMTFFM0ExOUU4QkU1MzIxRTJCNkUiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgSWxsdXN0cmF0
+b3IgQ1MzIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NDQz
+OEJEMjFCQzAwMTFFM0JFNjBCOUQzRkIxNTMyRDIiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6
+NDQzOEJEMjJCQzAwMTFFM0JFNjBCOUQzRkIxNTMyRDIiLz4gPGRjOnRpdGxlPiA8cmRmOkFsdD4g
+PHJkZjpsaSB4bWw6bGFuZz0ieC1kZWZhdWx0Ij5JbXByaW1lcjwvcmRmOmxpPiA8L3JkZjpBbHQ+
+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
+K9pyvacr2nK9oIYfaf/ZAAAAAA==
+
+--_005_DB7PR04MB50015DFCDE01F245B2CF75D9A3969DB7PR04MB5001eurp_
+Content-Type: image/png; name="image002.png"
+Content-Description: image002.png
+Content-Disposition: inline; filename="image002.png"; size=522;
+	creation-date="Fri, 07 Apr 2023 17:00:54 GMT";
+	modification-date="Fri, 07 Apr 2023 17:00:54 GMT"
+Content-ID: <image002.png@01D96953.152B46A0>
+Content-Transfer-Encoding: base64
+
+iVBORw0KGgoAAAANSUhEUgAAAAwAAAAKCAYAAACALL/6AAAB0UlEQVQoU01RO2gTcRz+fnf/uyS9
+GHMmxNQQKUKiCFGw0qiDbynYKh26iEO1Q7OIk7ooLiLSRXQRi4jQofhAsGDBokgpDsWiQwlFWkmN
+kaaPtLk0TXK5118SUPrN35OPshpXb0wXnTfndpSwBaOZzZ3Pf27cnNfMRE9UGdqmYDYiCzJdm1y+
+9W3NOLkvwPpeHG9dbWg45+KVieV3w3Pl7t0KAxMIkgD0xX2DdG+6ePHhzPpoIujK7Vfluz/sysu9
+Qsv5ibw+XDZsJaIwLNZsqG4h9/RY6DKNZDYPPEuXxr+u1MKqS0TML2VNy1lbN3mCAIkRsFSzkAy5
+X/e2iv30ZFY7+3hG+0gcYCKhoNvNCqpLaC5iRPhdNtHT5h2MInSHFjh3P/iy8ujVXDnV5pP+z7Y4
+IAtAsc5h2BxX476j948EpqjByFWNZNdYfipfsRDxMpgOIBKaSd/zNVw/6B/pioUGOsNUaQoa6Hz/
+55Rm2EOFuhPzSSJMhyNdqON0tCV9uz3QfWaXJ9vg0cDnpeTYYvVC1MvabZtOrOqWR3c4LAfoCLo+
+9caUVH/cn/lnTG+z2p7xX/ql+Q2ro1R3JJmEasQrLhwKez4Eze2TqcNkbj30L651ufHTGIcoAAAA
+AElFTkSuQmCC
+
+--_005_DB7PR04MB50015DFCDE01F245B2CF75D9A3969DB7PR04MB5001eurp_--

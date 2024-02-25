@@ -1,0 +1,381 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (bouncesmtp1.u12.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id D728214017CD
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu, 13 Apr 2023 18:52:22 +0200 (CEST)
+Received: from mx2.localdomain (MX2.univ-nantes.fr [193.52.101.136])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id D38817036
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu, 13 Apr 2023 18:52:22 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.localdomain (Postfix) with ESMTP id C70011015E2
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 13 Apr 2023 18:52:22 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 2.508
+X-Spam-Level: **
+X-Spam-Status: No, score=2.508 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	FUZZY_OCR_WRONG_EXTENSION=1.500, HTML_MESSAGE=0.001,
+	J_CHICKENPOX_27=0.6, MR_NOT_ATTRIBUTED_IP=0.2,
+	RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+	RCVD_IN_WSFF=0.01, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+	UN_PHISHING_PW=0.1] autolearn=disabled
+X-CRM114-Status: UNSURE ( 0.6245 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=ina1.onmicrosoft.com
+Received: from mx2.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id IIk2upgz-TIS for <liste-egc@polytech.univ-nantes.fr>;
+	Thu, 13 Apr 2023 18:52:17 +0200 (CEST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=40.107.15.132; helo=eur01-db5-obe.outbound.protection.outlook.com; envelope-from=nherve@ina.fr; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=none (p=none dis=none) header.from=ina.fr
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=nherve@ina.fr
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (1024-bit key; unprotected) header.d=INA1.onmicrosoft.com header.i=@INA1.onmicrosoft.com header.b="VIGkYdZ6";
+	dkim-atps=neutral
+X-Greylist: whitelisted by SQLgrey-1.6.7
+Received: from EUR01-DB5-obe.outbound.protection.outlook.com (mail-db5eur01on2132.outbound.protection.outlook.com [40.107.15.132])
+	by mx2.localdomain (Postfix) with ESMTPS id DDEF81015D5
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 13 Apr 2023 18:52:16 +0200 (CEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Qbovw/bpjs/sBW3JReKFRFgWDfOUt3X+jbF3/PTCXGCaArea3RLsYZi4J1P5mNAgd9rmayHtVNaSn71QxGD4LdbeWTuGff1sYjP1OAJWXHDwh3q6+Su835mPrdKQ0wZbIL+dLU+tsXUF5Rcg/xNpdUy3T91pA77VIqF8+tUGbLWOpBNAh7qKKSmqwmShTC0vFO3ns09lWn9VoeW4Na+bXScvBCmF8cba3V5ILNOAexWSlSioouf5/u7xa3uCCRC73BaCo0jCYvm2J+ZZN/Xn+kbK36D6mI8p56rbPBUbd3ltBsQkcl/jRGCPefhP3Uoba+nFpwgMwfp3UaufrKNETQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=paTF5iz41TXnRWYgvsU4iYnkQejzKFvwB5vuIR5VCBo=;
+ b=CR6HLF87d2bKaSgVDNf9UZH3EbzhPccDo+3vRsOCDA/60WHqrhg2k9X3m3VrkLtQXq9txpXDVlOzH2/iyrQXhzgP0DpH59VIs6A/6MQ1AXSaLciQrvS53qAfdlU9KlfzsCENoMrkWHutoi/b89FypSErfwM5bQim6w+cW0geWf/69EVwmU93zB15OtEocxchm1SRT3GQJQk0EqzV95SfDHxwQbQ9f0wt+pqRJd0kjbGnoApcdq2H+5Bl5NxP2EjSaAF0YnQHKttUoxmAS3pBeurlaa/JqOaZUhyONiM4iiMzS1vd5Wl3+LivctoFJc17hvW696jBVTxX3UB+iv3dOA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=ina.fr; dmarc=pass action=none header.from=ina.fr; dkim=pass
+ header.d=ina.fr; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=INA1.onmicrosoft.com;
+ s=selector2-INA1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=paTF5iz41TXnRWYgvsU4iYnkQejzKFvwB5vuIR5VCBo=;
+ b=VIGkYdZ6Tl2zboy5Fc3cRAodnrRRHX/9CfPVcdYgJDmjAoxI7BIhiORgLGxRPevYTxb3BOw9OtjLyRiyIgE+Hrg53YOEm0k34fIlMcdeiVtgXhJ2RgGMAn0FyXYbdabFfsL/Mifu+ERVK5I5xVd9pkbsGVCEfjwAwXasieecous=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=ina.fr;
+Received: from DB6PR04MB3096.eurprd04.prod.outlook.com (2603:10a6:6:c::12) by
+ PAXPR04MB8749.eurprd04.prod.outlook.com (2603:10a6:102:21f::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6298.30; Thu, 13 Apr
+ 2023 16:52:15 +0000
+Received: from DB6PR04MB3096.eurprd04.prod.outlook.com
+ ([fe80::dcb7:24ff:c895:3c01]) by DB6PR04MB3096.eurprd04.prod.outlook.com
+ ([fe80::dcb7:24ff:c895:3c01%7]) with mapi id 15.20.6277.038; Thu, 13 Apr 2023
+ 16:52:15 +0000
+Content-Type: multipart/alternative;
+ boundary="------------cY0qzbs8ptanxpxtx6eRCyli"
+Message-ID: <e87e839b-1f14-e1b4-741b-1a84d78ff728@ina.fr>
+Date: Thu, 13 Apr 2023 18:52:14 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Content-Language: fr
+To: "liste-egc@polytech.univ-nantes.fr" <liste-egc@polytech.univ-nantes.fr>
+Cc: lelab <lelab@ina.fr>
+From: Nicolas HERVE <nherve@ina.fr>
+X-ClientProxiedBy: PA7P264CA0442.FRAP264.PROD.OUTLOOK.COM
+ (2603:10a6:102:37d::23) To DB6PR04MB3096.eurprd04.prod.outlook.com
+ (2603:10a6:6:c::12)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DB6PR04MB3096:EE_|PAXPR04MB8749:EE_
+X-MS-Office365-Filtering-Correlation-Id: e5f05c58-1ef8-4bf5-bd92-08db3c3f6f3a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	IvCPiX9YXLNSdGA5zZW3MGWChOxPIvaze89moI4/loXN69bckZwFTZh5hE5NSGM8FWvOijyTl0SHD332GU/gf0fRVeU3yZqcpKeZqWtB23IsNgpMZTnpvmw9LIGDA2t/xML+Oy2sIdezquZzBFldnPT2hGqGLpwpwYTLTJztJJhXv3w8Eh8MqmV4rkJYG1plDNdVenJ6MAlBYaOZAKQjHrgkB/FNR0QOHdfTsVAXb68wbH3nuGo+r8mnNvzWz7aUa54JsNTa5AO8s1Jukr8FinPBoO9/FrWLS4OA/xWxp64OCHnsmYtBCwUppX4hJyeTvbLZMwZJ7Qo3yx5B9qPhA4tSgI5iY8WS+paAB6F8EbeAhxD5zqoTt8Oxbiqj8SyQUnCeVJQPt0K0yW0xECrf6mEw98/lrnxSi6C2xtLnlmNFpRiptyBQvBI2RJhxdRUTJAQBo+L0EAggccCHRRUpqLPvpY3fWY6zZcvrecn1M/jyuODrH/DZWXOF5hXU9vna8fo1lEFpmr+2k80Kf0hv0rOibXtjLMVjH0Ywl6tf3NCM4p9Ss0/l656AxKnwkUJ0Y2JFHo9jdQ6sMUA7LxrqpQhVyWqTviWezO3av+XNQCeo8BP2qInbuqpasLsJMXRSB2F+4G45vjs3qEBeLWvkQGJcKyIxpNewdCDvIjNfx2hbkrlxTQZdikqiJmltRryhdvI102koqzd/ckuYYaZ3xQ==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:fr;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DB6PR04MB3096.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(366004)(376002)(136003)(39850400004)(346002)(396003)(451199021)(86362001)(21615005)(478600001)(38350700002)(316002)(786003)(41300700001)(38100700002)(8936002)(5660300002)(6916009)(66476007)(66556008)(31696002)(6512007)(6506007)(36756003)(26005)(31686004)(186003)(4326008)(66946007)(33964004)(2906002)(166002)(52116002)(2616005)(6486002)(224303003)(45980500001)(43740500002);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?Nm1ydFI0UG5mYVhHazVBaGx5dTN5WkdsVlg3RHRDYmFMdysyTFVrM3JsMklz?=
+ =?utf-8?B?aVhMNlFUSUFqT1N0SW5zTnA4dituUUJOWlY5OXpwM1JaRVNvaVBJOGFkR0sr?=
+ =?utf-8?B?U1hBd2p5a0lmaStjS3hLWnNKNWc3Z2w5K1FBdDhnbXd3N2ZzbHUzZUxOdU5q?=
+ =?utf-8?B?cGxHMFNKbXRYV3ozZFEvVEFKSmkvaUlSMjFVRUpjMm5mcEFSOXhYYXRORHNz?=
+ =?utf-8?B?d0pzL1Nmd0NxTTdTSzhGTGhPU0NhS1VXT0piaEI5WFBHWExxZTBnanJ6WjRS?=
+ =?utf-8?B?ay93S3lrV0NCemM1eVlPa1YwVHc0NlRIaCtRZFVyQ21XaGJCREhQOCtIeXRP?=
+ =?utf-8?B?UmtPMVdLY0huaUFPSlNzM256ZHNsWUZCUEh4RWEvMnpFSW5xT212T1BDUmt5?=
+ =?utf-8?B?UmR5cE5NZ2ZFL2JIaGJpS1RtRWFoVEtJaEl3UE0yNkdST21pQm02WXhGNmRi?=
+ =?utf-8?B?aTBuRGw0aEZiNCtQa3VlRlpZbGZMZGhaYjVWYlZ1WnY2UEhsQ1MwZ3pQcUJ1?=
+ =?utf-8?B?ME9VcXduNUNDUnJhT0FNVDNYeTltUHNmQ2xBN2tuU1l5cExwcEtyWGFEWXlR?=
+ =?utf-8?B?bXlMQ2UyY1FuTGl6cUZ3RzZwWjc3UFc5Z2t2bUZWa2swMHFnUXdlTzlOd0JX?=
+ =?utf-8?B?U2plZ1dUTC9FTzNJUXpuTXB1VVFPZ1EwYktIbEFURFd4Wmw4Q0xtNFlPeElU?=
+ =?utf-8?B?azUwencxd2FLcFNkMVRvdlFWREMvTjRUVGxHU2RLV0U2RDE3YXpuUndqZXkr?=
+ =?utf-8?B?VkhqN25WeFRVQ2N0QzE5UFFTTDVreVVMeVg5WXRseEwrVW9TVHBYUzBOYThm?=
+ =?utf-8?B?d0VzYnU4R094d0RrMnJaeURaWHVhK1dOU2lxcW5QSXBPWHJoU1Y1RzFwVWtr?=
+ =?utf-8?B?cjkwMG1zQzJMWmVsbndMN2p5OVVCS2NMNzE2SXZlMSsxVzVYYTlTQVZVdVNL?=
+ =?utf-8?B?eW4zcEdYQUczU3ZwL2dMTVNEaVUzUFlZR2g5SVlxRnc1VkJrdjV1UklRMTd4?=
+ =?utf-8?B?SWxydXV0VExnd0xOenVmaENKZUkxMWdKT1NlYkRwbmtURGplb09DcW93UDIv?=
+ =?utf-8?B?eG1PWGx5VEl3Zkl0RTJWaXd5Q2lwbW9paFgrRWRJM3lXWnA0V3ArYk41Um9H?=
+ =?utf-8?B?WCtXMmhvVzc3OHF4d2pQdFF2d3Q3Uzk1R281Q0I4Z2lONjVEbTNMZTJyZktW?=
+ =?utf-8?B?eHh4NlpOUTVjZjVSMGdCU2gvbG01bURjOGpoL0dXZFVTMGtkWmI1Wk5Dckx6?=
+ =?utf-8?B?aWVsWnFyc0dzZ2xQYnowcGI1dysrUTFLdnp5eUVMQXM2elBVRlBXUXI4ejVo?=
+ =?utf-8?B?Tng0VjVFd2JUZ0pTRVpnU1RaRXpHVzZEZ1BhTCtjMkVndUJFMGVrWkd0RUdX?=
+ =?utf-8?B?RHBMcVExNGhBdmlobElkSGNFeXFENk5aUjZSKzhRMXdLbEs1UHp2VWVldVJw?=
+ =?utf-8?B?bDk4SFVPOXNpRFgraTFvQWdGbFFqRXRyaXF6VlRYVGh0TU85RzJsQmVRdyt6?=
+ =?utf-8?B?STFUbWI5YWswelhBVWZ3TUJMcDBpQS85MC9Xc3dDVmZNVDhQSVpWMEpjS0lL?=
+ =?utf-8?B?Vk1wZGdLV2tvYjJUTVZRd21jbXJYbWdtQTNjMjJmVjJSdU1rYXRDTExvZEVv?=
+ =?utf-8?B?MFNGQjQrWnM0bFd4TGtVcWZRcnpZanNoZVhuVmpVbTd1SFQ1ZVpPWE96MlAw?=
+ =?utf-8?B?d3BkL1JBaFlaSHU2U0RGWWx3eEpOT3RLT1hZYnY1MkxQenFCWm9MNkdwbjRJ?=
+ =?utf-8?B?UGlTLzFtdE13S29jMGFmQ0VaUldibmY2eTBlbHY4UENGbHI4Z3pwYTFsdUNa?=
+ =?utf-8?B?NTczZnF3R1o3MGZvSjVUSFF2L1ZsN3Y0Tm9VTWFqSWxTclNYNmdEYXA4UE9B?=
+ =?utf-8?B?MTV5aGxMblZoN2tMRWdxL1lXQ1NBTkZCNzhNaWtBQm16NzkwNnlHVGZ3RlBp?=
+ =?utf-8?B?dFIzNVhZMmFIajBFcklOSU1RQUxEREtpdmY4a1pHY3lhNWdjK1FReHNWaitE?=
+ =?utf-8?B?SjhsVFRudmJacnk0Y2JZOHd2TWoydzZUbDBSbk5xNjdZV1U5R1RzVDM5KzJv?=
+ =?utf-8?B?cmszcjZLM1U3bS84SmZVd3hRM3pMRklFUkxkdDQ4ays1dUdPUkFjekxDekw1?=
+ =?utf-8?Q?lzag=3D?=
+X-OriginatorOrg: ina.fr
+X-MS-Exchange-CrossTenant-Network-Message-Id: e5f05c58-1ef8-4bf5-bd92-08db3c3f6f3a
+X-MS-Exchange-CrossTenant-AuthSource: DB6PR04MB3096.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Apr 2023 16:52:15.2165
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 884113ac-9e9c-40dd-b29b-edfe77e79656
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: w0thL9rYPVJkmJco+850Ad0gFGtusADcXqv9GZuISNsYWIvWwxgA7q2X80dMReDO
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR04MB8749
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] [INA le lab] Appel =?UTF-8?Q?=C3=A0?= projets 2023-2024
+
+--------------cY0qzbs8ptanxpxtx6eRCyli
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+
+Bonjour,
+
+
+Nous avons le plaisir de vous annoncer le lancement de l*’appel à 
+projets <https://inalelab.hypotheses.org/6621> du lab de l’INA qui 
+propose de soutenir jusqu’à quatre projets de recherche axés sur les 
+données issues des collections conservées par l’INA et appuyés par les 
+outils d’analyse développés par l’institut*. Le lab, lancé en 2022, a 
+pour mission d’encourager et faciliter l’exploitation scientifique des 
+collections de l’INA à grande échelle, à l’aide d’outils d’intelligence 
+artificielle et d’analyse automatisée. Les projets sélectionnés 
+bénéficieront d’un accompagnement personnalisé de la part de l’INA, 
+assorti d’un soutien technique et méthodologique.
+
+Ce nouveau cadre de soutien à la recherche est complémentaire des autres 
+dispositifs annuels de l’INA :
+Les prix de l’INAthèque 
+<http://www.inatheque.fr/publications-evenements/prix-inatheque.html#:~:text=Les%20Prix%20de%20l'INAth%C3%A8que,les%20m%C3%A9tiers%20de%20l'Ina.>, récompensant 
+*des travaux de recherches récemment soutenus* et portant sur l’étude 
+des médias audiovisuels, de niveau master (prix d’Encouragement) et 
+doctorat ou au-delà (prix de la Recherche).
+L’appel à chercheurs 
+<http://www.inatheque.fr/actualites/appels-a-chercheurs/appels-chercheurs-ina.html> INA, 
+soutien de*projets de recherche, à initier ou en cours, qui s’appuient 
+au moins en partie sur ses collections*. Dans le cadre de cet appel, une 
+à deux bourses sont attribuées pour soutenir les recherches sur des 
+collections ayant récemment rejoint les fonds de l’INA, moins connues du 
+public ou sous-exploitées, telles que les collections radio, web, les 
+chaînes d’information en continu, ou encore certains fonds d’archives 
+écrites. Une liste indicative est proposée dans le règlement.
+
+Merci de relayer l’information aux personnes susceptibles de trouver 
+intérêt à cette information !
+
+
+Bien à vous,
+-- 
+
+logo_ina
+
+	
+
+*Nicolas Hervé *
+
+*Chef du service de la Recherche *
+
+Direction Data et Technologies
+
+Ligne directe : +33 1 49 83 *21 66* - nherve@ina.fr <mailto:nherve@ina.fr>
+
+--------------cY0qzbs8ptanxpxtx6eRCyli
+Content-Type: multipart/related;
+ boundary="------------2P6uP98SV6xVmWlSeUFXlZqk"
+
+--------------2P6uP98SV6xVmWlSeUFXlZqk
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  </head>
+  <body>
+    <p><font style="font-size: 15px;" class="" face="Trebuchet MS" color="#003649">Bonjour,&nbsp;</font>
+    </p>
+    <div class=""><font style="font-size: 15px;" class="" face="Trebuchet MS" color="#003649"><br class="">
+      </font></div>
+    <div style="text-align: justify;" class=""><font style="font-size:
+        15px;" class="" face="Trebuchet MS" color="#003649">Nous avons
+        le plaisir de vous&nbsp;annoncer le lancement de l<b style="text-align: justify;" class=""><a href="https://inalelab.hypotheses.org/6621" title="https://inalelab.hypotheses.org/6621" data-loopstyle="link" id="LPlnk467306" class="">’appel à
+            projets</a>&nbsp;du lab de l’INA qui propose de soutenir jusqu’à
+          quatre projets de recherche axés sur les données issues
+          des&nbsp;collections conservées par l’INA et appuyés par les outils
+          d’analyse développés par l’institut</b><span style="text-align: justify;" class="">. Le lab, lancé en 2022,
+          a pour mission d’encourager et faciliter l’exploitation
+          scientifique des collections de l’INA à grande échelle, à
+          l’aide d’outils d’intelligence artificielle et d’analyse
+          automatisée. Les projets sélectionnés bénéficieront d’un
+          accompagnement personnalisé de la part de l’INA, assorti d’un
+          soutien technique et méthodologique.</span></font></div>
+    <div style="text-align: justify;" class=""><font class="" face="Trebuchet MS" color="#003649"><span style="text-align:
+          justify; font-size: 14px;" class=""><br class="">
+        </span></font></div>
+    <div style="text-align: justify;" class=""><font class="" face="Trebuchet MS" color="#003649"><span style="text-align:
+          justify; font-size: 15px;" class="">Ce&nbsp;nouveau cadre
+          de&nbsp;soutien à la recherche est&nbsp;complémentaire des autres
+          dispositifs annuels de l’INA :&nbsp;</span></font></div>
+    <div style="text-align: justify;" class=""><font style="font-size:
+        15px;" class="" face="Trebuchet MS" color="#003649">Les&nbsp;<a href="http://www.inatheque.fr/publications-evenements/prix-inatheque.html#:~:text=Les%20Prix%20de%20l'INAth%C3%A8que,les%20m%C3%A9tiers%20de%20l'Ina." data-auth="NotApplicable" data-loopstyle="link" class="">prix
+          de l’INAthèque</a>,&nbsp;récompensant&nbsp;<b class="">des travaux de
+          recherches récemment soutenus</b>&nbsp;et portant sur l’étude des
+        médias audiovisuels, de niveau master (prix d’Encouragement) et
+        doctorat ou au-delà (prix de la Recherche).</font></div>
+    <div style="text-align: justify;" class=""><font style="font-size:
+        15px;" class="" face="Trebuchet MS" color="#003649"><a href="http://www.inatheque.fr/actualites/appels-a-chercheurs/appels-chercheurs-ina.html" data-auth="NotApplicable" data-loopstyle="link" class="">L’appel
+          à chercheurs</a>&nbsp;INA, soutien de<b class=""> projets de
+          recherche, à initier ou en cours, qui s’appuient au moins en
+          partie sur ses collections</b>. Dans le cadre de cet appel,
+        une à deux bourses sont attribuées pour soutenir les recherches
+        sur des collections ayant récemment rejoint les fonds de l’INA,
+        moins connues du public ou sous-exploitées, telles que les
+        collections radio, web, les chaînes d’information en continu, ou
+        encore certains fonds d’archives écrites. Une liste indicative
+        est proposée dans le règlement.</font></div>
+    <div style="text-align: justify;" class=""><font class="" face="Trebuchet MS" color="#003649"><span style="text-align:
+          justify; font-size: 15px;" class=""><br class="">
+        </span></font></div>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; text-align:
+      justify;"><font class="" face="Trebuchet MS" color="#003649"><span style="font-size: 15px;" class="">Merci de relayer
+          l’information aux personnes susceptibles de trouver intérêt à
+          cette&nbsp;information&nbsp;!</span></font></p>
+    <div class=""><span style="font-size: 15px;" class=""><br class="">
+      </span></div>
+    <div class=""><font style="font-size: 15px;" class="" face="Trebuchet MS">Bien à vous</font><font style="font-size:
+        14px;" class="" face="Trebuchet MS">,</font></div>
+    <div class="moz-signature">-- <br>
+      <style><!--
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm; margin-bottom:.0001pt; font-size:12.0pt; font-family:'Lato','sans-serif'; color:black;}
+a:link
+	{color:blue;text-decoration:underline;}
+a:visited
+	{color:purple;text-decoration:underline;}
+--></style>
+      <table cellspacing="0" cellpadding="0" border="0">
+        <tbody>
+          <tr style="height:49.35pt">
+            <td style="width:48.75pt;height:49.35pt" width="65" valign="top">
+              <p class="MsoNormal" style="margin-left:-2.25pt"> <span style="font-size:7.0pt"> <img src="cid:part1.ndBxxCpz.Si33eITn@ina.fr" alt="logo_ina" width="64" height="64"> </span> </p>
+            </td>
+            <td colspan="3" style="width:384.45pt;border-left:none;height:49.35pt" width="513" valign="top">
+              <p class="MsoNormal" style="margin-left:11.35pt"> <b><span style="font-size:10.0pt;color:#0099CC"> Nicolas
+                    Hervé </span></b> </p>
+              <p class="MsoNormal" style="margin-left:11.35pt;line-height:9.0pt"> <b><span style="font-size:8.0pt"> Chef du service de la
+                    Recherche </span></b> </p>
+              <p class="MsoNormal" style="margin-left:11.35pt;line-height:9.0pt"> <span style="font-size:8.0pt;color:#666666"> Direction Data
+                  et Technologies </span> </p>
+              <p class="MsoNormal" style="margin-left:11.35pt;line-height:9.0pt"> <span style="font-size:7.5pt;color:#333333"> Ligne directe :
+                  +33 1 49 83 <b>21 66</b> - </span> <span style="font-size:7.0pt"> <a href="mailto:nherve@ina.fr"> <span style="font-size:7.5pt;color:#333333;text-decoration:none">nherve@ina.fr</span>
+                  </a> </span> </p>
+            </td>
+          </tr>
+          <tr style="height:10pt">
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
+--------------2P6uP98SV6xVmWlSeUFXlZqk
+Content-Type: image/jpg
+Content-Id: <part1.ndBxxCpz.Si33eITn@ina.fr>
+Content-Transfer-Encoding: base64
+
+/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABaAAD/4QOqaHR0cDov
+L25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENl
+aGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4
+OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjMtYzAxMSA2Ni4xNDU2NjEsIDIwMTIvMDIvMDYtMTQ6
+NTY6MjcgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5
+OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHht
+bG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0i
+aHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1sbnM6eG1w
+PSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3Jn
+L2RjL2VsZW1lbnRzLzEuMS8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QzM1MkEyMENDNDgx
+MTFFM0ExOUU4QkU1MzIxRTJCNkUiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QzM1MkEyMEJD
+NDgxMTFFM0ExOUU4QkU1MzIxRTJCNkUiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgSWxsdXN0cmF0
+b3IgQ1MzIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NDQz
+OEJEMjFCQzAwMTFFM0JFNjBCOUQzRkIxNTMyRDIiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6
+NDQzOEJEMjJCQzAwMTFFM0JFNjBCOUQzRkIxNTMyRDIiLz4gPGRjOnRpdGxlPiA8cmRmOkFsdD4g
+PHJkZjpsaSB4bWw6bGFuZz0ieC1kZWZhdWx0Ij5JbXByaW1lcjwvcmRmOmxpPiA8L3JkZjpBbHQ+
+IDwvZGM6dGl0bGU+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8
+P3hwYWNrZXQgZW5kPSJyIj8+/+0ASFBob3Rvc2hvcCAzLjAAOEJJTQQEAAAAAAAPHAFaAAMbJUcc
+AgAAAgACADhCSU0EJQAAAAAAEPzhH4nIt8l4LzRiNAdYd+v/7gAmQWRvYmUAZMAAAAABAwAVBAMG
+Cg0AAAgWAAAKzQAADVUAABD5/9sAhAABAQEBAQEBAQEBAgEBAQICAgEBAgICAgICAgICAwIDAwMD
+AgMDBAQEBAQDBQUFBQUFBwcHBwcICAgICAgICAgIAQEBAQICAgUDAwUHBQQFBwgICAgICAgICAgI
+CAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAj/wgARCABAAEADAREAAhEBAxEB
+/8QA4gAAAgIDAQEAAAAAAAAAAAAAAAIHCAQGCQUBAQABBAMBAQAAAAAAAAAAAAAAAgUGBwEDBAgJ
+EAAABQMCBQQCAwAAAAAAAAAAAQIDBBEFBhITECAxMgcwQRQVFhghJTURAAECBQEGAwYGAwAAAAAA
+AAECAwAREgQFMSGRIjITBoGhFCBRYXFCB0HBYnI0FTNzJBIAAQIDBQcCBwAAAAAAAAAAAQARAhID
+ECExIjIwQEFRgcETIPBhcZHRQiMEEwEAAgEDAwUBAQEBAAAAAAABABEhMUFh8FFxgZGhscEgENEw
+/9oADAMBAAIRAxEAAAGJvVHzZXKQAAAAGxlQyE7MbZzGQAAB8KVOy3kIuOEZDBM3V0Rq7xeT2aW6
+e4MOo97IqV3vrm//AGtHVTCcU/eOAXZBcghcxMcs57Wl5wVKr7Vt6DYxz9smgeudK+uKZTmnZ4j0
+452Wp5rVKpZZZi2M6I5R7e22Rerq3x85MGp97Epn4rWAAAAA+FOjaK1gAAAANhX/2gAIAQEAAQUC
+MzrVQqoVUKqFVCqgRqqfdsvbXKXU+6TIzq1eNI+GZPLtNqwLMr3DmQ5dtkwcCyufHvWP3vHJJdT7
+mDP9f/EDzDGGu5Zkblz8nyrXGyXNGz8iZTk1tns+Fk9T7mGnf1+8VtuOePzMtrIsfg3zIvJtyvkr
+Lb3aHbN4OT1V3FnmZkhGe5m2SLrcW7krPc0WHfJWdPs27IL5Z0J6n3cxdTQvVtuDbcG24Ntwbbg2
+3ASF1//aAAgBAgABBQL0dZV50ojrlqntEt25MINtwlE5cmUnHlNulwP/AEb0kzfKE1otKFm1AP4z
+URxPzuBqL7G7KL5IjSTQ3am2yZjv65/D61gHbGAbCdP1jAK0xyN2K2v0qioqKioqKio//9oACAED
+AAEFAjMVFRUVFRUEfDaPTylwW7NatqLLJU1Gx+Y6mRHW2uPjspxM62vRlFwI/wChxJwkwTvEg3sl
+daTIvSVT5NyjuFZ/cJQf0ONIP64i/m4QEPP5K++qVMiG1ZvcfkMwFkUwJmOE5+RzAvJpplGub7Q9
+z5yBpMaTGkxpMaTGkxpMEkx//9oACAECAgY/Ati2wmBzclKTemJThM6eEvb0UDKVrlUghUtQhZMC
+PRTsqGHF1Px5p+FuCwUvBaVpV43L/9oACAEDAgY/Ati/DYeMwfr5ryCHKpoYCyliDFO1x5kBNUDW
+9e6qmK8D7Kea9Ua0Yd8VP/PCSPf0Q8uqE29e6r/LsbKENTBj2RpfiMApcS9/wt1layvI+ZaymnWW
+Jn3L/9oACAEBAQY/AjtjXzjXzjXzjXzjXzjXzgbfOD4wbjoq9OFUG4pNFWsqtJ+0IPjDmDu+3mUd
+ruFK/wC9C2XFUOvhwf41mfEeaF521xRuMQ0hbrt6h1ghKG01KmK5iQ/CUJyGM7feuLNza1cGhoLH
+vT1VJmPlD9lkLZdld2xlcW7gpUk/GcW92jGi1t7v+Iu6fYter+1L60qO6E2ecxzmOfWJtBcilY/S
+pMwfCBB8YvBPYm94R7v+1Bj7ivXduLy0t09R2yVyOBNsslJ/dKRgZ05h9OSQoONLStSUIltCUoHC
+EfhTKUo+2/dGUsfUtPspdytukA9RtsocGw6yK9DFzmOzcPe5GzcaaReXa21BrqpFOwucKEy+OsYx
+vPAOZTEXiUsL6rb6m0dZbYTW2VfSZawmD84vVdM0m7rql9AvU8Xyj7nFtBWHGVpbI21KFmuYG+Cf
+h+UfanG5tNNj6K46lurh6rrLDKw0fzEZDt0pdYx2OcDOFwDCVIa6UhSUtN8xVDeOcUld5ZXbasqy
+2oL9M65cVltdOik1gH4wmD4wGh3JdBkCQYrHTlpKmUoCWu5LphA0bbUltO5AAj+4RdFOTrLvrJJq
+6ivq0lAr7mu3KTNBU5Ok+8TGwwbdzuN2kpp6oQwl6X+1KK/OLhrGZV6zavP5bKV8Dh0mpKpgmEwf
+H2xB4DuMch3GOQ7jHIdxjkO4xyHcY5DuMDgO4x//2gAIAQEDAT8h1/1d2c33Tm+6c33Tm+6c33Tm
++6a7am7vPm/aWEUGA2ZaaG13/Xzz7nzvtMM2YhmV0kFLDG0v3pE8R2itVuIcr7XmzG74cy+ga9de
+GxMjowYc27hqkoN4cGORMQFaV4ze2J88+5877RDk1LsDEPVWHwe+0lBWKeCWQxHvssAFOwQttITj
+9O9RMmIvc0QVZYAhSCiyy8l0qL7Vw7AdJ8o+5859xgXQbKq3wI5giUxbHoapTHMQBw4sOzVGJYFj
+LV6iCS90jgquhZu6e20MdgCuOaUVdFU+Ufcy8v2gMxaRTg/FT5O5CPrk0k5mqBpqN9oWKwIMdHby
+GZdTyub2BDyWjG+VZcWsAN0ueFk+5837f388+4tN96q/swwwwww77570/9oACAECAwE/IQJUqVKl
+SokJuGf6f8tF/YOSYdO3M1n+u0t/YxxkTWra9v8AAIwhx6aQjVLv6wmF0++Y6VN469INaN461i18
+oesdISoztXxCeT9P82PT2tzDmCsq15gbVGOcazabTNdbidTEY44UuAPn6jok17zaH9sBKSkpKSkp
+ET//2gAIAQMDAT8h/sAyRJtry2vt/WubysK2dLq3s9/+TKoS7s0Nd5e0W+D7iJg7QAa6GQ8Wly6V
+vXiaoxlddELapdd6WPWZpZ9Y7caShWF8qp/X6lqkC10vzoK7veEXYcji0qy9vyEMvsdTH4HK/wAD
+w/LuhhCoIlDgrgO8vtp0s2vR5MXzCFgRWDtt7QegeMSltW75dYxrOXwPuF/MtRhq7Pkg/wDga/8A
+BxTinFOKcU4pYn//2gAMAwEAAhEDEQAAEBJJJdfJJrBo/PU6mM43jPjS45JJJt//AP7/2gAIAQED
+AT8QKRhM7YvM60/Z1p+zrT9nWn7OtP2dafsSDW3eFzOtd0ADmT10SpZe0/rr/ZFS7lW++bzFbW4W
+5SBghH+fpPXpaHEi1W3DzA7FCXthGHzC2BpGQAsERRuGhdgViiITyLFlr9+krnxCy2Lqdf7Iq7uL
+3SwYOpSwHQwhurvDL7cO+mFmM4OJXp2KAOlhdwIlM0Mkqj1YCu0x+K0A0gc7yjLyr+jUylEALQyA
+B2nXSG6S3CeuHZ618HNZJOnDAi9xKDRpujOHeEUbt2G8M8/eJflN2OEQqI0dujBAbhq6+zezWgAw
+f+HUHURNYxTPE2vRBQS+9pd4epb0jjtMrRd85jNlwlVtys7rZ3jNCMcSCvN3SpdgRBHcV/ZMhQcA
+ucxOPAOFd9+49WcsYV7afYnFLF3gAAoY/ROtd399f7IcnFxrxfMdXfk6u/J1d+Tq78nV35OrvyLA
+QzcDif/aAAgBAgMBPxCgYle0r2le0r2le0r2g1pFQTXgUurzW+NfEGz+dLCqL0hCq3uMgdBMbf8A
+YCuCAjUtFY3dNosGHUy15o141hYGmRwxUdlPUITzFIga1eO1jSepNDNEG05ec/mWstQNRoX5LxFo
+xapLXGVXNtcruUpSjustjnawU7ZhQbSBLp2xk3bgcYjSKsJVjQ4IZvjd7z6JoIYkD816+My4kKC8
+Gs+YldtNbx6RusqHWlZCfQbS7bFdKedM6sp+0xolDAXs0pxFgLhSx7XdZzzrFcp5P1bl3HEKt0ND
+vAGwb4r05IExHKPlT7RYZpaoeHY43iV6JpP70soGScxOYnMTmJzE5iUtSf/aAAgBAwMBPxBLcs82
+ebPNnmzzZ5ssGWXL5g+6aw2Ly0us12zpEp/nRgKvMTAoDYGMqLerqwdFEeuYZUAtNWKMpVnaC9IW
+AncsWclxYQ0opHx8nczpCWkz4BRltkKdmHBhZej4S16LNOanzLgboSyyVPQJVxSniAaoCU0FaBoA
+YAYYqsQRAIgYIsOGtJwlJCKw0gQES1aAGAsW8yiVskUCUVbAOKtpU+yPWLEWh02ov3x5lRYGYyuY
+N1yY5O8TDe/2BpRRVljL91MmtCa1KJ3t4bhKM3V5rQAZkCSixdqWgQHIqml5lCvMCmgVlo+HxrAa
+M7YPYoi2sloblqqs28ZiTK75bp4vT0qOqdKsPQEPpu8wPSoC+oYeFLqWB5m/z/ejLzh9pyvacr2n
+K9pyvacr2nK9oIYfaf/Z
+
+--------------2P6uP98SV6xVmWlSeUFXlZqk--
+
+--------------cY0qzbs8ptanxpxtx6eRCyli--

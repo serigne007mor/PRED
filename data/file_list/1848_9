@@ -1,0 +1,953 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (bouncesmtp2.u12.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 2F8F814017CD
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon,  6 Nov 2023 10:06:21 +0100 (CET)
+Received: from mx1.univ-nantes.fr (MX1.univ-nantes.fr [193.52.101.135])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id 2BF5F8A1
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon,  6 Nov 2023 10:06:21 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.univ-nantes.fr (Postfix) with ESMTP id 24308120089
+	for <liste-egc@polytech.univ-nantes.fr>; Mon,  6 Nov 2023 10:06:21 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: YES
+X-Spam-Score: 5.831
+X-Spam-Level: *****
+X-Spam-Status: Yes, score=5.831 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	MANGLED_SHOP=2.3, MANGLED_WORKS=2.3, MANY_SPAN_IN_TEXT=1,
+	MR_NOT_ATTRIBUTED_IP=0.2, NO_RDNS2=0.01, RCVD_IN_WSFF=0.01,
+	SPF_HELO_NONE=0.001, SPF_PASS=-0.001, UN_PHISHING_PW=0.1,
+	UN_PNG_ATTACH=0.01] autolearn=disabled
+X-CRM114-Status: UNSURE ( 1.7751 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=univ-tours.fr
+Received: from mx1.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id gxLxzeGPpG52 for <liste-egc@polytech.univ-nantes.fr>;
+	Mon,  6 Nov 2023 10:06:18 +0100 (CET)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=193.52.209.24; helo=hermes.univ-tours.fr; envelope-from=prvs=6678adcac=venturini@univ-tours.fr; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=none dis=none) header.from=univ-tours.fr
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=univ-tours.fr
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (1024-bit key; unprotected) header.d=univ-tours.fr header.i=@univ-tours.fr header.a=rsa-sha256 header.s=main header.b=YsQQni32;
+	dkim-atps=neutral
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from hermes.univ-tours.fr (hermes.univ-tours.fr [193.52.209.24])
+	by mx1.univ-nantes.fr (Postfix) with ESMTPS id 4E45E12006D
+	for <liste-egc@polytech.univ-nantes.fr>; Mon,  6 Nov 2023 10:06:18 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=univ-tours.fr; i=@univ-tours.fr; q=dns/txt; s=main;
+  t=1699261578; x=1730797578;
+  h=date:from:to:message-id:in-reply-to:references:subject:
+   mime-version;
+  bh=fIw3TqYwnOLDV1DwdhRkvg+QV3IuJoBs9o3Z1cHQSYE=;
+  b=YsQQni32Hqy7sugsLOWTySxCB5rNC+9DXrO7+RKWTUee3nU1YxvHegHp
+   tw2m0RyYCSX9FdTNbS7WF4oleSmslcTOh5TyDnMyw0xJ3KgHo9PfBxDUC
+   pHo/iAJOTOOphaQMpGBNnlMQJiu7VnUJPyOaOCmR5iNjh6RmEEGN5ditC
+   w=;
+X-IPAS-Result: =?us-ascii?q?A2HeBgD0q0hl/wIFwQo+HIJYgTaBfYFdGwGEN4NPjCqBZ?=
+ =?us-ascii?q?YIpnV4HAQEBCgEEOwkEAQEDAQOEf4cmKDcGDgECBAEBAQEDAgMBAQEBAQEDA?=
+ =?us-ascii?q?QEGAQEBAQEBBgUBAoEZhS85DYI3JDtqgR0BAQEBAQEBAQEBAQEBHQIIDFUBH?=
+ =?us-ascii?q?wIBAwUBFwYCCToFHAIBGgsBAgkPAQIHAgICFQ8jDgEBBBIBgn+CXhRHq16BM?=
+ =?us-ascii?q?oEBgxg+BRAPfK4xgVgKBoFIhDGDWQGBTgFTgWiBCoRyNoEDUkSBFDOBSoJxg?=
+ =?us-ascii?q?VwDARiBRYNcgmgEgnyDIIMOBzKCIoNUg3+IfoEAR1oWGwMHA1YqECsHBDAiB?=
+ =?us-ascii?q?gkULSMGUQICFxYkCRMSPgSBY4FRCoECPw8OEYI/IgIHNjYZSIJYCRUGO0p2E?=
+ =?us-ascii?q?EIXah8Ibh0VHjcREhcNAwh2HQIRIzwDBQMEMwoSDQshBVcDQgZJCwMCGgUDA?=
+ =?us-ascii?q?wSBNgUNHgIQLScDAxNNAhAUAywPAwMGAwsxAzBVRAxQA2wfGhwJPA8MHwIbH?=
+ =?us-ascii?q?g0nKAI1QwMRBRICHgMJAwcFLB1AAwsYDUgRLDUUGwY/cweBBTIcAhEKAgcGE?=
+ =?us-ascii?q?AoPMwEIBQQBmByCJQ9Fg3VTEBMPLkEMlA6BRaJPhBkCiUk0B4IXgXiBWQYMi?=
+ =?us-ascii?q?A6CCJVVlyySVIdnkFeMPIEplSgpQIRbNYFEggBNJ4J/ATMJSRcCD443IYhUT?=
+ =?us-ascii?q?YIZiAB1AjkCBwEKAQEDCQGBVYdMgRMBgRUBAQ?=
+IronPort-PHdr: A9a23:4/mMghYgiNxXmU3LQO6DEAL/LTEv14qcDmcuAnoPtbtCf+yZ8oj4O
+ wSHvLMx1g+PBNyAoKse16KW6/mmBTZep87Z8TgrS99lb1c9k8IYnggtUoauKHbQC7rUVRE8B
+ 9lIT1R//nu2YgB/Ecf6YEDO8DXptWZBUhrwOhBoKevrB4Xck9q41/yo+53Ufg5EmCexbal9I
+ RmorgjdrNQajZZsJ6o+1xfFvHRFcPlSyW90OF6fhRnx6tmx8ZJ57yhcp/ct/NNcXKvneKg1U
+ aZWByk8PWAv483ruxjDTQ+R6XYZT24bjBlGDRXb4R/jRpv+vTf0ueR72CmBIM35Vqs0Vii47
+ 6dqUxDnliEKPCMk/W7Ni8xwiKVboA+9pxF63oXZbp2ZOOZ4c6jAe94RWGhPUdtLVyFZDI2yb
+ 5UBAekDMuZWsofyqEcBrRq5CwmwH+7g0CNEiWPs0KAgz+gsEwfL1xEgEdIUt3TUqc34OqYTU
+ eCxyKnH0y7DZO5Z1jjj7ojIbg0hoeuNXbJ2cMra1E4iFwzEjlWUrYzqISiV2v4Ts2eF6epgS
+ f+vi3QmqwF3ozii3dosio/IhoIL01zE6SJ5wJsvJd2jUkJ7b8SkHYJWuiqHOIR4XtksTHt0u
+ CYm1LIGo5i7cTAFxpg5xBPTduCLfoqL7x//SOudPDl2iW94dL+jiRi//0mtx+/4W8Wp31hGs
+ yVIn8fNu30O2RHd5dSKRuV580ql3zuEyg7d6uZBIU8ulKrbLYYswrEqlpUJqUTDHi72l1ntj
+ K+Sd0Uk/Ouo5/77bbXhvJOcKox0hhnjMqQonsyzG/w4MhQWU2eH/uS80rPj/VH+QLVNiv06i
+ K7ZsIrVJckdu6W3ABdV354+5xqjFTuqzdAVkHcdIF9FYh6LkZDlNlPMLfziEPuyjUmgnC1oy
+ vzbJLHtHInBI3nFnbz8Z7hy8VRcxxA2zd1H4pJUDawOL+zrV0/qsdzYEgc5Mwupw+b7ENl91
+ p0RWWaIAqKBKKPSq1iI5+0vIuWSeIMZojf8K/kg5/H1l382g0URfbSv3ZsWdnC0B+hmI0KEY
+ Xr2mdcNC2MKvg0iQ+PwjF2OST9TZ3CsUKIg/jw3FZ6qAZ3eSo2pjrGNxie2EodIamxeD1CDC
+ 3bod4GKW/cWbyKSJ9dskiIaWrinV48hyAuutA78y7pmNefU5ysYtZP91NRs++3Tkgwy9SZvD
+ 8iH3WGNVXl4nmUTSDAuxqBwvVR9ykuf0ah/m/FUCMRf5+lVXQciKZ7c0+t6Bsj2WgLAZdeJV
+ EipTsy4DjE+Ut082McOY0F5G9SikhDMwTalA78Pm7yWApw087zc02H3J8lnzXbGyLcuj0I8T
+ stBL231zpJ4ogzSHJLE1kiWnO7+caUHwCOI+WiI5XKJuFBEXQVwF7jDXG5aYELQsdnioE3YG
+ eyAE7MiZyRAzcqPMeN0Z9v1kE9HQvarbNvfZ2a8gCGuCBCU26mNaovCZmMcwmDBD1UeiEYd5
+ yDVZkAFGi69rjeGX3RVHlX1bha0mdQ=
+IronPort-Data: A9a23:EAmPsamQ8JoML0beJmctaZ3o5gyeJkRdPkR7XQ2eYbSJt16W5oE+e
+ lBvADTXbaqKYmDrO4chWDmFhRgC65Pcm4AwSgZt+3o0Q34XopLOXIvIfx2tbnrKd8CSFR465
+ stHMYPJJZtkR3OB/0qkOeK/9XJ1jfrQHbDwV7+s1kydJONBYH5JZUVLwrFi6mIRveWEP+/kV
+ bIeyeXePVaq1mYsaSQM7a3rRHhH7P6u4msT5QM0bK1HsQGDyCFIXcMWeP+7ciKgToVdEOK2H
+ LvJkL3ooG/T9EcnV96um+uiLRIGT7KNYgKH0XQLUsBO7vQjSgkai87XY9JANRo/Z0y1ou1NJ
+ Lyh1HDaYQYsN6LBwLxBFQFeHEmSVoUfpLbLfSC0v8DLwh2aeCG8mf40V0hrNoBF9rooCGoUq
+ aNDJGpSMkuIib67ke/qR7M82MgoIMTgZo1O4X09w2iIZRpKrfEvZo2TjTMP9G5u3aiiZMrjW
+ vf1SQaDTTycakUTYg9GAcpkwu6m13WueWJU+FyY/Ppn7zaPwVN83pHgYYHfEjCoqWS5vW7D/
+ z6boD6pav0+HIXHodZQ2iv03ocjpQuiBMRIUufQGsdC2DW73nYUBAAdSWy1qPy4jl/Wc99EI
+ iT4wAJ3xUQJ3BLtFoKVsyGQ+ibe5UdFA4QISoXW1SnUokbqy1fBboQ7ZmYphOwO7KceWTEs3
+ 1mVqNLlbRQHXGq9EC/1Gh+89FteCABNRYMwTXZsoTgtv7EPlLoOYifnFb6PJkIXYurdQlkcy
+ xjSxMQ3ai56YcQjj81X9nif696gSwSgoqfYKWw7U0r8hj6VarJJaKSzs2X7/8tyA7qTDVLGr
+ FE+o+G95dEBWMTleCylGI3hHZmx/fGVIWeEx0xuGpM7/nKw/X+9OJxX/StlYkNuOc8AEdPrS
+ BaL/1oAv9kOeiHCgaxfOupdD+w0wK78CM7kUPH8c9xPfN1tcxKd52dgfyZ82ki0zxBxyf9vZ
+ f93d+69EF0EI5wkwgOPTsUekoc32SU12HLcEMWTIxOPlOD2iGSuYbMEK0eDK+0254ucpwHE7
+ 9tUN42XzRRBFev3ZDXa6sgdNzg3wWMTHYrxu90NLqiRIw9sAmhnFvnQ3/Y9fJF/hOJRkezB+
+ hlRR3Nl9bY2vlWfQS3iV5ypQOmHsUpXxZ7jARERAA==
+IronPort-HdrOrdr: A9a23:hsu3M6t6D+OI03b5dzl4jZ3J7skDSdV00zEX/kB9WHVpm62j5q
+ aTdZsguyMc5AxxZJhko6HjBEDiewK6yXcW2/hzAV7KZmCP0wHFQ72Kr7GSpgEIcBeOktK1oJ
+ 0QCZSWf+eAdmSS4/yb3ODBKadZ/DDRytHQuQ4A9RpQcT0=
+X-Talos-CUID: =?us-ascii?q?9a23=3AtRclxmnW+WwA68GBcyrra1lWv9vXOWaH8VfCHn2?=
+ =?us-ascii?q?XNWwqQ/qFYGWo0YBtosU7zg=3D=3D?=
+X-Talos-MUID: 9a23:0EH2OAteUFWZ8xFo782nlSxJKu1QoKqXMUkvktY+p9aBPjFhNGLI
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-AV: E=Sophos;i="6.03,280,1694728800"; 
+   d="png'150?scan'150,208,217,150";a="17050684"
+Received: from proxy20.zimbra.univ-tours.local ([10.193.5.2])
+  by hermes2.univ-tours.fr with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Nov 2023 10:06:17 +0100
+Received: from proxy20.zimbra.univ-tours.local (localhost [127.0.0.1])
+	by proxy20.zimbra.univ-tours.local (Postfix) with ESMTPS id E910520382
+	for <liste-egc@polytech.univ-nantes.fr>; Mon,  6 Nov 2023 10:06:16 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by proxy20.zimbra.univ-tours.local (Postfix) with ESMTP id CB5F02037F
+	for <liste-egc@polytech.univ-nantes.fr>; Mon,  6 Nov 2023 10:06:16 +0100 (CET)
+X-Virus-Scanned: amavis at proxy20.zimbra.univ-tours.local
+Received: from proxy20.zimbra.univ-tours.local ([127.0.0.1])
+ by localhost (proxy20.zimbra.univ-tours.local [127.0.0.1]) (amavis, port 10026)
+ with ESMTP id WGp9zkdI3CxN for <liste-egc@polytech.univ-nantes.fr>;
+ Mon,  6 Nov 2023 10:06:16 +0100 (CET)
+Received: from mail21.zimbra.univ-tours.local (mail21.zimbra.univ-tours.local [10.193.5.57])
+	by proxy20.zimbra.univ-tours.local (Postfix) with ESMTP id 7787D2028A
+	for <liste-egc@polytech.univ-nantes.fr>; Mon,  6 Nov 2023 10:06:16 +0100 (CET)
+Date: Mon, 6 Nov 2023 10:06:16 +0100 (CET)
+From: Gilles Venturini <gilles.venturini@univ-tours.fr>
+To: liste-egc <liste-egc@polytech.univ-nantes.fr>
+Message-ID: <887878734.2326180.1699261576443.JavaMail.zimbra@univ-tours.fr>
+In-Reply-To: <994741317.2322838.1699261468010.JavaMail.zimbra@univ-tours.fr>
+References: <LO4P123MB6323B72B5EB84D6DEFE855B8A6A1A@LO4P123MB6323.GBRP123.PROD.OUTLOOK.COM> <1964248763.2282033.1699259651779.JavaMail.zimbra@univ-tours.fr> <994741317.2322838.1699261468010.JavaMail.zimbra@univ-tours.fr>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="=_be01b38f-75e9-4174-aafb-cea5a02b5e7e"
+X-Originating-IP: [77.131.81.206]
+X-Mailer: Zimbra 8.8.15_GA_4562 (ZimbraWebClient - GC118 (Win)/8.8.15_GA_4570)
+Thread-Topic: IV2024 =?utf-8?B?4oCTIDI4?= th International Conference Information Visualisation 23 - 26 July 2024 Coimbra University Portugal
+Thread-Index: AdoLHlR66zGFS+KvT1uyYXE7gm6HLSdRTxCx/p/TeC1CjhHBAw==
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] [SPAM] IV2024 =?UTF-8?Q?=E2=80=93?=  28 th
+ International Conference Information Visualisation  23 - 26 July 2024
+  Coimbra University  Portugal
+
+--=_be01b38f-75e9-4174-aafb-cea5a02b5e7e
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+
+
+
++++++++++++ Call for Paper +++++++++++=20
+
+IV2024 - 28 th International Conference Information Visualisation=20
+
+23 - 26 July 2024=20
+
+Coimbra University =E2=97=8F Coimbra =E2=97=8F Portugal=20
+
+[ https://www.graphicslink.co.uk/IV2024/index.htm | https://www.graphicslin=
+k.co.uk/IV2024/index.htm ]=20
+
+
+=09
+
+
+
+
+Call for Papers, Poster, Videos, and Participation=20
+
+
+
+Theme and scope - as a series of symposia - details and further information=
+ are available at: [ https://iv.csites.fct.unl.pt/pt/symposia/ | https://iv=
+.csites.fct.unl.pt/pt/symposia/ ]=20
+
+Submission Porta: [ https://www.conftool.org/IV-cgiv-2024/ | https://www.co=
+nftool.org/IV-cgiv-2024/ ]=20
+
+
+
+IV2024 - Information visualization:=20
+
+o Information Visualisation Theory & Practice=20
+
+o Applications of Information Visualization=20
+
+o Information Visualization Evaluation=20
+
+o Human-Computer Interaction for Information Visualization=20
+
+o Graph Theory & Network Visualization=20
+
+IV2024 - Knowledge Visualization=20
+
+o Knowledge Visualization and Visual Thinking=20
+
+o Learning Analytics=20
+
+o Music Visualization=20
+
+o Digital Humanities Knowledge Visualisation=20
+
+
+
+[ https://www.conftool.org/IV-cgiv-2022/index.php?page=3DnewPaper&form_cont=
+ributiontypeID=3D75&newpaper=3Dtrue | IV2024
+- AI/ML,
+Visual Analytics,
+and Visual
+Knowledge Discovery ]=20
+
+o 14 International Symposium Visual Analytics and Data Science=20
+
+o AI and Visual Knowledge Discovery=20
+
+o Visualization in Data Science and Machine Learning=20
+
+o Advances in Interactive and Visual Data Clustering=20
+
+IV2024 - Visual Methods in Big Data, social, and business analytics=20
+
+o Big data Visualization and Visual Analytics=20
+
+o Visualisation in Business Intelligence and Open Data=20
+
+o Social Issues Analysis and Visualisation=20
+
+
+
+vis2024 - Visualization=20
+
+o 3 rd Symposium on AI-Empowered Visual Computing=20
+
+o Augmented Reality Visualization and Art=20
+
+o D-ART =E2=80=93 Symposium of Digital Art and Gallery=20
+
+o Scientific Visualization=20
+
+o Visualization, Art, & Design=20
+
+o CAivDE =E2=80=93 Computer Animation, Information Visualisation, and Digit=
+al Effects=20
+
+o Digital Entertainment=20
+
+o Computer Games and their applications=20
+
+MediVis2024=20
+
+o Visualization and Artificial Intelligence for Medicine, Healthcare, and S=
+ocial Good=20
+
+
+
+BuiltViz2024=20
+
+o Visualisation in Built and Rural Environment=20
+
+o ResearcherLink in Sustaining Built Heritage=20
+
+
+
+o Visualisation for the Heritage of Asia-Pacific Architecture and Urbanism=
+=20
+
+GMAI2024=20
+
+o Geometric Modelling and Imaging=20
+
+
+
+Preconference course: D o c t o r a l R e s e a r c h W o r k s h o p=20
+
+Researcher Link Forum: R e s e a r c h P r o j e c t C o l l a b o r a t i =
+o n=20
+
+Focus Group Publication: P o s t - c o n f e r e n c e p u b l i c a t i o =
+n=20
+
+
+
+
+=09
+Important Dates - https://iv.csites.fct.unl.pt/pt/call-for-papers/important=
+- dates/=20
+
+
+
+Submission Portal: [ https://www.conftool.org/IV-cgiv-2024/ | https://www.c=
+onftool.org/IV-cgiv-2024/ ]=20
+
+
+
+
+
+--=_be01b38f-75e9-4174-aafb-cea5a02b5e7e
+Content-Type: multipart/related; 
+	boundary="=_318bf6e4-3251-4b60-96aa-0c1ef055f3c4"
+
+--=_318bf6e4-3251-4b60-96aa-0c1ef055f3c4
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><body><div style=3D"font-family: arial, helvetica, sans-serif; font-s=
+ize: 12pt; color: #000000"><div><br data-mce-bogus=3D"1"></div><div data-ma=
+rker=3D"__QUOTED_TEXT__"><div style=3D"font-family:'arial' , 'helvetica' , =
+sans-serif;font-size:12pt;color:#000000"><div style=3D"font-family:'arial' =
+, 'helvetica' , sans-serif;font-size:12pt;color:#000000"><div><div style=3D=
+"font-family:'arial' , 'helvetica' , sans-serif;font-size:12pt;color:#00000=
+0"><div><div class=3D"WordSection1">
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center"><span s=
+tyle=3D"font-family:'verdana' , sans-serif">+++++++++++ Call for Paper ++++=
++++++++</span></p>
+<p class=3D"MsoNormal" style=3D"margin-right:0cm;margin-bottom:0cm;margin-l=
+eft:7pt;margin-bottom:0.0001pt">
+<a name=3D"_Hlk498966529"></a><a name=3D"_Hlk478374214"><span lang=3D"EN-US=
+" style=3D"font-size:11pt;font-family:'verdana' , sans-serif">IV2024<span s=
+tyle=3D"letter-spacing:-0.35pt">
+</span>-<span style=3D"letter-spacing:-0.25pt"> </span></span></a><b><span =
+lang=3D"EN-US" style=3D"font-size:11pt;font-family:'arial' , sans-serif;let=
+ter-spacing:0.5pt">28</span></b><b><span lang=3D"EN-US" style=3D"font-size:=
+11pt;font-family:'arial' , sans-serif;letter-spacing:-2.05pt">
+</span></b><b><span lang=3D"EN-US" style=3D"font-size:11pt;font-family:'ari=
+al' , sans-serif;letter-spacing:0.5pt">th</span></b><b><span lang=3D"EN-US"=
+ style=3D"font-size:11pt;font-family:'arial' , sans-serif;letter-spacing:1.=
+65pt">
+</span></b><b><span lang=3D"EN-US" style=3D"font-size:11pt;font-family:'ari=
+al' , sans-serif;letter-spacing:0.9pt">International</span></b><b><span lan=
+g=3D"EN-US" style=3D"font-size:11pt;font-family:'arial' , sans-serif;letter=
+-spacing:1.65pt">
+</span></b><b><span lang=3D"EN-US" style=3D"font-size:11pt;font-family:'ari=
+al' , sans-serif;letter-spacing:0.85pt">Conference</span></b><b><span lang=
+=3D"EN-US" style=3D"font-size:11pt;font-family:'arial' , sans-serif;letter-=
+spacing:2.05pt">
+</span></b><b><span lang=3D"EN-US" style=3D"font-size:11pt;font-family:'ari=
+al' , sans-serif;letter-spacing:0.85pt">Information</span></b><b><span lang=
+=3D"EN-US" style=3D"font-size:11pt;font-family:'arial' , sans-serif;letter-=
+spacing:1.65pt">
+</span></b><b><span lang=3D"EN-US" style=3D"font-size:11pt;font-family:'ari=
+al' , sans-serif;letter-spacing:0.8pt">Visualisation</span></b><b><span lan=
+g=3D"EN-US" style=3D"font-size:11pt;font-family:'arial' , sans-serif"></spa=
+n></b></p>
+<p class=3D"MsoNormal" style=3D"margin-left:7pt"><span lang=3D"EN-US" style=
+=3D"font-family:'verdana' , sans-serif;color:#434342">23 - 26 July 2024
+</span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:7pt"><span lang=3D"EN-US" style=
+=3D"font-family:'verdana' , sans-serif;color:#434342">Coimbra University</s=
+pan><span lang=3D"EN-US" style=3D"font-family:'verdana' , sans-serif;color:=
+#434342;letter-spacing:-0.1pt">
+</span><span lang=3D"EN-US" style=3D"font-family:'verdana' , sans-serif;col=
+or:#434342">=E2=97=8F<span style=3D"letter-spacing:-0.1pt">
+</span></span><span lang=3D"EN-US" style=3D"font-family:'verdana' , sans-se=
+rif;color:#434342">Coimbra</span><span lang=3D"EN-US" style=3D"font-family:=
+'verdana' , sans-serif;color:#434342;letter-spacing:-0.1pt">
+</span><span lang=3D"EN-US" style=3D"font-family:'verdana' , sans-serif;col=
+or:#434342">=E2=97=8F<span style=3D"letter-spacing:-0.15pt">
+</span></span><span lang=3D"EN-US" style=3D"font-family:'verdana' , sans-se=
+rif;color:#434342">Portugal</span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:7pt"><a href=3D"https://www.gra=
+phicslink.co.uk/IV2024/index.htm" rel=3D"nofollow noopener noreferrer nofol=
+low noopener noreferrer nofollow noopener noreferrer" target=3D"_blank"><sp=
+an lang=3D"EN-US" style=3D"font-family:'verdana' , sans-serif;letter-spacin=
+g:-0.1pt">https://www.graphicslink.co.uk/IV2024/index.htm</span></a><u><spa=
+n lang=3D"EN-US" style=3D"font-family:'verdana' , sans-serif;color:blue;let=
+ter-spacing:-0.1pt">
+</span></u><span lang=3D"EN-US" style=3D"font-family:'verdana' , sans-serif=
+"></span></p>
+<p class=3D"MsoNormal" style=3D"margin-top:0.35pt">
+</p><table cellpadding=3D"0" cellspacing=3D"0" align=3D"left"><tbody><tr><t=
+d width=3D"266" height=3D"0"></td></tr><tr><td></td><td><img width=3D"580" =
+height=3D"1" src=3D"cid:image002.png@01DA0B1E.54902C30"></td></tr></tbody><=
+/table>
+<br clear=3D"ALL">
+<span lang=3D"EN-US" style=3D"font-size:11.5pt;font-family:'verdana' , sans=
+-serif"></span><p></p>
+<p class=3D"MsoNormal" style=3D"margin-right:0cm;margin-bottom:0cm;margin-l=
+eft:7pt;margin-bottom:0.0001pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'verdana' , sans-s=
+erif">Call<span style=3D"letter-spacing:-0.15pt">
+</span>for<span style=3D"letter-spacing:-0.2pt"> </span>Papers,<span style=
+=3D"letter-spacing:-0.1pt">
+</span>Poster,<span style=3D"letter-spacing:-0.15pt"> </span>Videos,<span s=
+tyle=3D"letter-spacing:-0.1pt">
+</span>and<span style=3D"letter-spacing:-0.15pt"> </span><span style=3D"let=
+ter-spacing:-0.1pt">Participation</span></span></p>
+<p class=3D"MsoNormal" style=3D"margin-top:0.6pt"><span lang=3D"EN-US" styl=
+e=3D"font-size:9.5pt;font-family:'verdana' , sans-serif">&nbsp;</span></p>
+<p class=3D"MsoNormal" style=3D"margin-right:18.9pt;margin-bottom:0cm;margi=
+n-left:7pt;margin-bottom:0.0001pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'verdana' , sans-s=
+erif">Theme<span style=3D"letter-spacing:-0.2pt">
+</span>and<span style=3D"letter-spacing:-0.25pt"> </span>scope<span style=
+=3D"letter-spacing:-0.15pt">
+</span>-<span style=3D"letter-spacing:-0.15pt"> </span>as<span style=3D"let=
+ter-spacing:-0.2pt">
+</span>a<span style=3D"letter-spacing:-0.25pt"> </span>series<span style=3D=
+"letter-spacing:-0.15pt">
+</span>of<span style=3D"letter-spacing:-0.15pt"> </span>symposia<span style=
+=3D"letter-spacing:-0.15pt">
+</span>- details<span style=3D"letter-spacing:-0.15pt"> </span>and<span sty=
+le=3D"letter-spacing:-0.15pt">
+</span>further information are available at: </span><a href=3D"https://iv.c=
+sites.fct.unl.pt/pt/symposia/" rel=3D"nofollow noopener noreferrer nofollow=
+ noopener noreferrer nofollow noopener noreferrer" target=3D"_blank"><span =
+lang=3D"EN-US" style=3D"font-size:10pt;font-family:'verdana' , sans-serif">=
+https://iv.csites.fct.unl.pt/pt/symposia/</span></a><u><span lang=3D"EN-US"=
+ style=3D"font-size:10pt;font-family:'verdana' , sans-serif;color:blue">
+</span></u></p>
+<p class=3D"MsoNormal" style=3D"margin-right:18.9pt;margin-bottom:0cm;margi=
+n-left:7pt;margin-bottom:0.0001pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'verdana' , sans-s=
+erif">Submission Porta:</span><span lang=3D"EN-US" style=3D"font-size:10pt;=
+font-family:'courier new'">
+</span><a href=3D"https://www.conftool.org/IV-cgiv-2024/" rel=3D"nofollow n=
+oopener noreferrer nofollow noopener noreferrer nofollow noopener noreferre=
+r" target=3D"_blank"><span lang=3D"EN-US" style=3D"font-size:10pt;font-fami=
+ly:'verdana' , sans-serif">https://www.conftool.org/IV-cgiv-2024/</span></a=
+><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'verdana' , sans-=
+serif"></span></p>
+<p class=3D"MsoNormal" style=3D"margin-top:0.35pt"><span lang=3D"EN-US" sty=
+le=3D"font-size:9pt;font-family:'calibri' , sans-serif">&nbsp;</span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:7pt;line-height:12.15pt">
+<b><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'verdana' , san=
+s-serif">IV2024<span style=3D"letter-spacing:-0.2pt">
+</span>-<span style=3D"letter-spacing:-0.2pt"> </span>Information<span styl=
+e=3D"letter-spacing:-0.15pt">
+</span><span style=3D"letter-spacing:-0.1pt">visualization:</span></span></=
+b></p>
+<p class=3D"MsoNormal" style=3D"margin-left:42.95pt;text-indent:-17.95pt;li=
+ne-height:12.6pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'courier new'">o<s=
+pan style=3D"font:7pt 'times new roman'">&nbsp;&nbsp;
+</span></span><span dir=3D"LTR"></span><span lang=3D"EN-US" style=3D"font-s=
+ize:10pt;font-family:'verdana' , sans-serif">Information<span style=3D"lett=
+er-spacing:-0.25pt">
+</span>Visualisation<span style=3D"letter-spacing:-0.15pt"> </span>Theory<s=
+pan style=3D"letter-spacing:-0.15pt">
+</span>&amp;<span style=3D"letter-spacing:-0.2pt"> </span><span style=3D"le=
+tter-spacing:-0.1pt">Practice</span></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:42.95pt;text-indent:-17.95pt;li=
+ne-height:12.15pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'courier new'">o<s=
+pan style=3D"font:7pt 'times new roman'">&nbsp;&nbsp;
+</span></span><span dir=3D"LTR"></span><span lang=3D"EN-US" style=3D"font-s=
+ize:10pt;font-family:'verdana' , sans-serif">Applications<span style=3D"let=
+ter-spacing:-0.35pt">
+</span>of<span style=3D"letter-spacing:-0.2pt"> </span>Information<span sty=
+le=3D"letter-spacing:-0.2pt">
+</span><span style=3D"letter-spacing:-0.1pt">Visualization</span></span></p=
+>
+<p class=3D"MsoNormal" style=3D"margin-left:42.95pt;text-indent:-17.95pt;li=
+ne-height:12.15pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'courier new'">o<s=
+pan style=3D"font:7pt 'times new roman'">&nbsp;&nbsp;
+</span></span><span dir=3D"LTR"></span><span lang=3D"EN-US" style=3D"font-s=
+ize:10pt;font-family:'verdana' , sans-serif">Information<span style=3D"lett=
+er-spacing:-0.4pt">
+</span>Visualization<span style=3D"letter-spacing:-0.3pt"> </span><span sty=
+le=3D"letter-spacing:-0.1pt">Evaluation</span></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:42.95pt;text-indent:-17.95pt;li=
+ne-height:12.15pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'courier new'">o<s=
+pan style=3D"font:7pt 'times new roman'">&nbsp;&nbsp;
+</span></span><span dir=3D"LTR"></span><span lang=3D"EN-US" style=3D"font-s=
+ize:10pt;font-family:'verdana' , sans-serif">Human-Computer<span style=3D"l=
+etter-spacing:-0.3pt">
+</span>Interaction<span style=3D"letter-spacing:-0.15pt"> </span>for<span s=
+tyle=3D"letter-spacing:-0.15pt">
+</span>Information<span style=3D"letter-spacing:-0.25pt"> </span><span styl=
+e=3D"letter-spacing:-0.1pt">Visualization</span></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:42.95pt;text-indent:-17.95pt;li=
+ne-height:12.6pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'courier new'">o<s=
+pan style=3D"font:7pt 'times new roman'">&nbsp;&nbsp;
+</span></span><span dir=3D"LTR"></span><span lang=3D"EN-US" style=3D"font-s=
+ize:10pt;font-family:'verdana' , sans-serif">Graph<span style=3D"letter-spa=
+cing:-0.15pt">
+</span>Theory<span style=3D"letter-spacing:-0.1pt"> </span>&amp;<span style=
+=3D"letter-spacing:-0.1pt">
+</span>Network<span style=3D"letter-spacing:-0.1pt"> Visualization</span></=
+span></p>
+<p class=3D"MsoNormal" style=3D"margin-right:0cm;margin-bottom:0cm;margin-l=
+eft:7pt;margin-bottom:0.0001pt;line-height:12.15pt">
+<b><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'verdana' , san=
+s-serif">IV2024<span style=3D"letter-spacing:-0.25pt">
+</span>-<span style=3D"letter-spacing:-0.2pt"> </span>Knowledge<span style=
+=3D"letter-spacing:-0.2pt">
+</span><span style=3D"letter-spacing:-0.1pt">Visualization</span></span></b=
+></p>
+<p class=3D"MsoNormal" style=3D"margin-left:42.95pt;text-indent:-17.95pt;li=
+ne-height:12.6pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'courier new'">o<s=
+pan style=3D"font:7pt 'times new roman'">&nbsp;&nbsp;
+</span></span><span dir=3D"LTR"></span><span lang=3D"EN-US" style=3D"font-s=
+ize:10pt;font-family:'verdana' , sans-serif">Knowledge<span style=3D"letter=
+-spacing:-0.3pt">
+</span>Visualization<span style=3D"letter-spacing:-0.3pt"> </span>and<span =
+style=3D"letter-spacing:-0.3pt">
+</span>Visual<span style=3D"letter-spacing:-0.25pt"> </span><span style=3D"=
+letter-spacing:-0.1pt">Thinking</span></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:42.95pt;text-indent:-17.95pt;li=
+ne-height:12.15pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'courier new'">o<s=
+pan style=3D"font:7pt 'times new roman'">&nbsp;&nbsp;
+</span></span><span dir=3D"LTR"></span><span lang=3D"EN-US" style=3D"font-s=
+ize:10pt;font-family:'verdana' , sans-serif">Learning<span style=3D"letter-=
+spacing:-0.2pt">
+</span><span style=3D"letter-spacing:-0.1pt">Analytics</span></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:42.95pt;text-indent:-17.95pt;li=
+ne-height:12.15pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'courier new'">o<s=
+pan style=3D"font:7pt 'times new roman'">&nbsp;&nbsp;
+</span></span><span dir=3D"LTR"></span><span lang=3D"EN-US" style=3D"font-s=
+ize:10pt;font-family:'verdana' , sans-serif">Music<span style=3D"letter-spa=
+cing:-0.15pt">
+</span><span style=3D"letter-spacing:-0.1pt">Visualization</span></span></p=
+>
+<p class=3D"MsoNormal" style=3D"margin-left:42.95pt;text-indent:-17.95pt;li=
+ne-height:12.6pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'courier new'">o<s=
+pan style=3D"font:7pt 'times new roman'">&nbsp;&nbsp;
+</span></span><span dir=3D"LTR"></span><span lang=3D"EN-US" style=3D"font-s=
+ize:10pt;font-family:'verdana' , sans-serif">Digital<span style=3D"letter-s=
+pacing:-0.2pt">
+</span>Humanities<span style=3D"letter-spacing:-0.2pt"> </span>Knowledge<sp=
+an style=3D"letter-spacing:-0.1pt"> Visualisation</span></span></p>
+<p class=3D"MsoNormal" style=3D"margin-bottom:0cm;margin-left:5.5pt;margin-=
+bottom:0.0001pt;line-height:12.15pt">
+<img border=3D"0" width=3D"580" height=3D"17" id=3D"Group_x0020_2" src=3D"c=
+id:image003.png@01DA0B1E.54902C30"><span lang=3D"EN-US" style=3D"font-size:=
+10pt;font-family:'verdana' , sans-serif"></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:25pt;text-indent:-18.05pt">
+<a href=3D"https://www.conftool.org/IV-cgiv-2022/index.php?page=3DnewPaper&=
+amp;form_contributiontypeID=3D75&amp;newpaper=3Dtrue" rel=3D"nofollow noope=
+ner noreferrer nofollow noopener noreferrer nofollow noopener noreferrer" t=
+arget=3D"_blank"><b><span lang=3D"EN-US" style=3D"font-size:10pt;font-famil=
+y:'verdana' , sans-serif;text-decoration:none">IV2024<span style=3D"letter-=
+spacing:-0.35pt">
+</span>-<span style=3D"letter-spacing:-0.2pt"> </span>AI/ML,<span style=3D"=
+letter-spacing:-0.25pt">
+</span>Visual<span style=3D"letter-spacing:-0.2pt"> </span>Analytics,<span =
+style=3D"letter-spacing:-0.2pt">
+</span>and<span style=3D"letter-spacing:-0.25pt"> </span>Visual<span style=
+=3D"letter-spacing:-0.15pt">
+</span>Knowledge<span style=3D"letter-spacing:-0.25pt"> </span><span style=
+=3D"letter-spacing:-0.1pt">Discovery</span></span></b></a><b><span lang=3D"=
+EN-US" style=3D"font-size:10pt;font-family:'verdana' , sans-serif"></span><=
+/b></p>
+<p class=3D"MsoNormal" style=3D"margin-left:42.95pt;text-indent:-17.95pt;li=
+ne-height:12.6pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'courier new'">o<s=
+pan style=3D"font:7pt 'times new roman'">&nbsp;&nbsp;
+</span></span><span dir=3D"LTR"></span><span lang=3D"EN-US" style=3D"font-s=
+ize:10pt;font-family:'verdana' , sans-serif">14<span style=3D"letter-spacin=
+g:-0.2pt">
+</span>International<span style=3D"letter-spacing:-0.15pt"> </span>Symposiu=
+m<span style=3D"letter-spacing:-0.15pt">
+</span>Visual<span style=3D"letter-spacing:-0.25pt"> </span>Analytics<span =
+style=3D"letter-spacing:-0.15pt">
+</span>and<span style=3D"letter-spacing:-0.15pt"> </span>Data<span style=3D=
+"letter-spacing:-0.25pt">
+</span><span style=3D"letter-spacing:-0.1pt">Science</span></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:42.95pt;text-indent:-17.95pt;li=
+ne-height:12.15pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'courier new'">o<s=
+pan style=3D"font:7pt 'times new roman'">&nbsp;&nbsp;
+</span></span><span dir=3D"LTR"></span><span lang=3D"EN-US" style=3D"font-s=
+ize:10pt;font-family:'verdana' , sans-serif">AI<span style=3D"letter-spacin=
+g:-0.1pt">
+</span>and<span style=3D"letter-spacing:-0.15pt"> </span>Visual<span style=
+=3D"letter-spacing:-0.1pt">
+</span>Knowledge<span style=3D"letter-spacing:-0.1pt"> Discovery</span></sp=
+an></p>
+<p class=3D"MsoNormal" style=3D"margin-left:42.95pt;text-indent:-17.95pt;li=
+ne-height:12.15pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'courier new'">o<s=
+pan style=3D"font:7pt 'times new roman'">&nbsp;&nbsp;
+</span></span><span dir=3D"LTR"></span><span lang=3D"EN-US" style=3D"font-s=
+ize:10pt;font-family:'verdana' , sans-serif">Visualization<span style=3D"le=
+tter-spacing:-0.2pt">
+</span>in<span style=3D"letter-spacing:-0.2pt"> </span>Data<span style=3D"l=
+etter-spacing:-0.15pt">
+</span>Science<span style=3D"letter-spacing:-0.15pt"> </span>and<span style=
+=3D"letter-spacing:-0.2pt">
+</span>Machine<span style=3D"letter-spacing:-0.15pt"> </span><span style=3D=
+"letter-spacing:-0.1pt">Learning</span></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:42.95pt;text-indent:-17.95pt;li=
+ne-height:12.6pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'courier new'">o<s=
+pan style=3D"font:7pt 'times new roman'">&nbsp;&nbsp;
+</span></span><span dir=3D"LTR"></span><span lang=3D"EN-US" style=3D"font-s=
+ize:10pt;font-family:'verdana' , sans-serif">Advances<span style=3D"letter-=
+spacing:-0.25pt">
+</span>in<span style=3D"letter-spacing:-0.1pt"> </span>Interactive<span sty=
+le=3D"letter-spacing:-0.1pt">
+</span>and<span style=3D"letter-spacing:-0.1pt"> </span>Visual<span style=
+=3D"letter-spacing:-0.1pt">
+</span>Data<span style=3D"letter-spacing:-0.1pt"> Clustering</span></span><=
+/p>
+<p class=3D"MsoNormal" style=3D"margin-right:0cm;margin-bottom:0cm;margin-l=
+eft:7pt;margin-bottom:0.0001pt">
+<b><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'verdana' , san=
+s-serif">IV2024<span style=3D"letter-spacing:-0.35pt">
+</span>-<span style=3D"letter-spacing:-0.25pt"> </span>Visual<span style=3D=
+"letter-spacing:-0.15pt">
+</span>Methods<span style=3D"letter-spacing:-0.15pt"> </span>in<span style=
+=3D"letter-spacing:-0.15pt">
+</span>Big<span style=3D"letter-spacing:-0.25pt"> </span>Data,<span style=
+=3D"letter-spacing:-0.15pt">
+</span>social,<span style=3D"letter-spacing:-0.2pt"> </span>and<span style=
+=3D"letter-spacing:-0.15pt">
+</span>business<span style=3D"letter-spacing:-0.25pt"> </span><span style=
+=3D"letter-spacing:-0.1pt">analytics</span></span></b></p>
+<p class=3D"MsoNormal" style=3D"margin-left:42.95pt;text-indent:-17.95pt;li=
+ne-height:12.6pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'courier new'">o<s=
+pan style=3D"font:7pt 'times new roman'">&nbsp;&nbsp;
+</span></span><span dir=3D"LTR"></span><span lang=3D"EN-US" style=3D"font-s=
+ize:10pt;font-family:'verdana' , sans-serif">Big<span style=3D"letter-spaci=
+ng:-0.25pt">
+</span>data<span style=3D"letter-spacing:-0.2pt"> </span>Visualization<span=
+ style=3D"letter-spacing:-0.25pt">
+</span>and<span style=3D"letter-spacing:-0.2pt"> </span>Visual<span style=
+=3D"letter-spacing:-0.25pt">
+</span><span style=3D"letter-spacing:-0.1pt">Analytics</span></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:42.95pt;text-indent:-17.95pt;li=
+ne-height:12.15pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'courier new'">o<s=
+pan style=3D"font:7pt 'times new roman'">&nbsp;&nbsp;
+</span></span><span dir=3D"LTR"></span><span lang=3D"EN-US" style=3D"font-s=
+ize:10pt;font-family:'verdana' , sans-serif">Visualisation<span style=3D"le=
+tter-spacing:-0.2pt">
+</span>in<span style=3D"letter-spacing:-0.2pt"> </span>Business<span style=
+=3D"letter-spacing:-0.15pt">
+</span>Intelligence<span style=3D"letter-spacing:-0.2pt"> </span>and<span s=
+tyle=3D"letter-spacing:-0.15pt">
+</span>Open<span style=3D"letter-spacing:-0.15pt"> </span><span style=3D"le=
+tter-spacing:-0.2pt">Data</span></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:42.95pt;text-indent:-17.95pt;li=
+ne-height:12.6pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'courier new'">o<s=
+pan style=3D"font:7pt 'times new roman'">&nbsp;&nbsp;
+</span></span><span dir=3D"LTR"></span><span lang=3D"EN-US" style=3D"font-s=
+ize:10pt;font-family:'verdana' , sans-serif">Social<span style=3D"letter-sp=
+acing:-0.25pt">
+</span>Issues<span style=3D"letter-spacing:-0.15pt"> </span>Analysis<span s=
+tyle=3D"letter-spacing:-0.25pt">
+</span>and<span style=3D"letter-spacing:-0.15pt"> </span><span style=3D"let=
+ter-spacing:-0.1pt">Visualisation</span></span></p>
+<p class=3D"MsoNormal" style=3D"margin-bottom:0cm;margin-left:5.5pt;margin-=
+bottom:0.0001pt;line-height:12.15pt">
+<img border=3D"0" width=3D"580" height=3D"17" id=3D"Group_x0020_4" src=3D"c=
+id:image003.png@01DA0B1E.54902C30"><span lang=3D"EN-US" style=3D"font-size:=
+10pt;font-family:'verdana' , sans-serif"></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:7pt"><b><span lang=3D"EN-US" st=
+yle=3D"font-size:10pt;font-family:'verdana' , sans-serif">vis2024</span></b=
+><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'times new roman'=
+ , serif">-<span style=3D"letter-spacing:-0.25pt">
+</span></span><b><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'=
+verdana' , sans-serif;letter-spacing:-0.1pt">Visualization</span></b><b><sp=
+an lang=3D"EN-US" style=3D"font-size:10pt;font-family:'verdana' , sans-seri=
+f"></span></b></p>
+<p class=3D"MsoNormal" style=3D"margin-left:42.95pt;text-indent:-17.95pt;li=
+ne-height:12.6pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'courier new'">o<s=
+pan style=3D"font:7pt 'times new roman'">&nbsp;&nbsp;
+</span></span><span dir=3D"LTR"></span><span lang=3D"EN-US" style=3D"font-s=
+ize:10pt;font-family:'verdana' , sans-serif">3<sup>rd</sup> Symposium<span =
+style=3D"letter-spacing:-0.15pt">
+</span>on<span style=3D"letter-spacing:-0.15pt"> </span>AI-Empowered<span s=
+tyle=3D"letter-spacing:-0.25pt">
+</span>Visual<span style=3D"letter-spacing:-0.2pt"> </span><span style=3D"l=
+etter-spacing:-0.1pt">Computing</span></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:42.95pt;text-indent:-17.95pt;li=
+ne-height:12.15pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'courier new'">o<s=
+pan style=3D"font:7pt 'times new roman'">&nbsp;&nbsp;
+</span></span><span dir=3D"LTR"></span><span lang=3D"EN-US" style=3D"font-s=
+ize:10pt;font-family:'verdana' , sans-serif">Augmented<span style=3D"letter=
+-spacing:-0.35pt">
+</span>Reality<span style=3D"letter-spacing:-0.25pt"> </span>Visualization<=
+span style=3D"letter-spacing:-0.25pt">
+</span>and<span style=3D"letter-spacing:-0.25pt"> Art</span></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:42.95pt;text-indent:-17.95pt;li=
+ne-height:12.15pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'courier new'">o<s=
+pan style=3D"font:7pt 'times new roman'">&nbsp;&nbsp;
+</span></span><span dir=3D"LTR"></span><span lang=3D"EN-US" style=3D"font-s=
+ize:10pt;font-family:'verdana' , sans-serif">D-ART<span style=3D"letter-spa=
+cing:-0.25pt">
+</span>=E2=80=93<span style=3D"letter-spacing:-0.1pt"> </span>Symposium<spa=
+n style=3D"letter-spacing:-0.1pt">
+</span>of<span style=3D"letter-spacing:-0.1pt"> </span>Digital<span style=
+=3D"letter-spacing:-0.2pt">
+</span>Art<span style=3D"letter-spacing:-0.15pt"> </span>and<span style=3D"=
+letter-spacing:-0.1pt"> Gallery</span></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:42.95pt;text-indent:-17.95pt;li=
+ne-height:12.15pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'courier new'">o<s=
+pan style=3D"font:7pt 'times new roman'">&nbsp;&nbsp;
+</span></span><span dir=3D"LTR"></span><span lang=3D"EN-US" style=3D"font-s=
+ize:10pt;font-family:'verdana' , sans-serif">Scientific<span style=3D"lette=
+r-spacing:-0.3pt">
+</span><span style=3D"letter-spacing:-0.1pt">Visualization</span></span></p=
+>
+<p class=3D"MsoNormal" style=3D"margin-left:42.95pt;text-indent:-17.95pt;li=
+ne-height:12.2pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'courier new'">o<s=
+pan style=3D"font:7pt 'times new roman'">&nbsp;&nbsp;
+</span></span><span dir=3D"LTR"></span><span lang=3D"EN-US" style=3D"font-s=
+ize:10pt;font-family:'verdana' , sans-serif">Visualization,<span style=3D"l=
+etter-spacing:-0.2pt">
+</span>Art,<span style=3D"letter-spacing:-0.2pt"> </span>&amp;<span style=
+=3D"letter-spacing:-0.25pt">
+</span><span style=3D"letter-spacing:-0.1pt">Design</span></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:42.95pt;text-indent:-17.95pt;li=
+ne-height:12.15pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'courier new'">o<s=
+pan style=3D"font:7pt 'times new roman'">&nbsp;&nbsp;
+</span></span><span dir=3D"LTR"></span><span lang=3D"EN-US" style=3D"font-s=
+ize:10pt;font-family:'verdana' , sans-serif">CAivDE<span style=3D"letter-sp=
+acing:-0.2pt">
+</span>=E2=80=93<span style=3D"letter-spacing:-0.25pt"> </span>Computer<spa=
+n style=3D"letter-spacing:-0.25pt">
+</span>Animation,<span style=3D"letter-spacing:-0.25pt"> </span>Information=
+<span style=3D"letter-spacing:-0.2pt">
+</span>Visualisation,<span style=3D"letter-spacing:-0.2pt"> </span>and<span=
+ style=3D"letter-spacing:-0.25pt">
+</span>Digital<span style=3D"letter-spacing:0.05pt"> </span><span style=3D"=
+letter-spacing:-0.1pt">Effects</span></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:42.95pt;text-indent:-17.95pt;li=
+ne-height:12.15pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'courier new'">o<s=
+pan style=3D"font:7pt 'times new roman'">&nbsp;&nbsp;
+</span></span><span dir=3D"LTR"></span><span lang=3D"EN-US" style=3D"font-s=
+ize:10pt;font-family:'verdana' , sans-serif">Digital<span style=3D"letter-s=
+pacing:-0.15pt">
+</span><span style=3D"letter-spacing:-0.1pt">Entertainment</span></span></p=
+>
+<p class=3D"MsoNormal" style=3D"margin-left:42.95pt;text-indent:-17.95pt;li=
+ne-height:12.6pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'courier new'">o<s=
+pan style=3D"font:7pt 'times new roman'">&nbsp;&nbsp;
+</span></span><span dir=3D"LTR"></span><span lang=3D"EN-US" style=3D"font-s=
+ize:10pt;font-family:'verdana' , sans-serif">Computer<span style=3D"letter-=
+spacing:-0.15pt">
+</span>Games<span style=3D"letter-spacing:-0.1pt"> </span>and<span style=3D=
+"letter-spacing:-0.1pt">
+</span>their<span style=3D"letter-spacing:-0.1pt"> applications</span></spa=
+n></p>
+<p class=3D"MsoNormal" style=3D"margin-right:0cm;margin-bottom:0cm;margin-l=
+eft:7pt;margin-bottom:0.0001pt;line-height:12.15pt">
+<b><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'verdana' , san=
+s-serif;letter-spacing:-0.1pt">MediVis2024</span></b><b><span lang=3D"EN-US=
+" style=3D"font-size:10pt;font-family:'verdana' , sans-serif"></span></b></=
+p>
+<p class=3D"MsoNormal" style=3D"margin-right:24.3pt;margin-bottom:0cm;margi=
+n-left:43pt;margin-bottom:0.0001pt;text-indent:-18pt;line-height:92%">
+<span lang=3D"EN-US" style=3D"font-size:10pt;line-height:92%;font-family:'c=
+ourier new'">o<span style=3D"font:7pt 'times new roman'">&nbsp;&nbsp;
+</span></span><span dir=3D"LTR"></span><span lang=3D"EN-US" style=3D"font-s=
+ize:10pt;line-height:92%;font-family:'verdana' , sans-serif">Visualization<=
+span style=3D"letter-spacing:-0.25pt">
+</span>and<span style=3D"letter-spacing:-0.25pt"> </span>Artificial<span st=
+yle=3D"letter-spacing:-0.3pt">
+</span>Intelligence<span style=3D"letter-spacing:-0.25pt"> </span>for<span =
+style=3D"letter-spacing:-0.05pt">
+</span>Medicine,<span style=3D"letter-spacing:-0.35pt"> </span>Healthcare,<=
+span style=3D"letter-spacing:-0.25pt">
+</span>and<span style=3D"letter-spacing:-0.3pt"> </span>Social <span style=
+=3D"letter-spacing:-0.2pt">
+Good</span></span></p>
+<p class=3D"MsoNormal" style=3D"margin-top:0.15pt"><span lang=3D"EN-US" sty=
+le=3D"font-size:10pt;font-family:'verdana' , sans-serif">&nbsp;</span></p>
+<p class=3D"MsoNormal" style=3D"margin-right:0cm;margin-bottom:0cm;margin-l=
+eft:7pt;margin-bottom:0.0001pt">
+<b><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'verdana' , san=
+s-serif;letter-spacing:-0.1pt">BuiltViz2024</span></b><b><span lang=3D"EN-U=
+S" style=3D"font-size:10pt;font-family:'verdana' , sans-serif"></span></b><=
+/p>
+<p class=3D"MsoNormal" style=3D"margin-right:0cm;margin-bottom:0cm;margin-l=
+eft:42.95pt;margin-bottom:0.0001pt;text-indent:-17.95pt;line-height:12.6pt"=
+>
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'courier new'">o<s=
+pan style=3D"font:7pt 'times new roman'">&nbsp;&nbsp;
+</span></span><span dir=3D"LTR"></span><span lang=3D"EN-US" style=3D"font-s=
+ize:10pt;font-family:'verdana' , sans-serif">Visualisation<span style=3D"le=
+tter-spacing:-0.15pt">
+</span>in<span style=3D"letter-spacing:-0.15pt"> </span>Built<span style=3D=
+"letter-spacing:-0.2pt">
+</span>and<span style=3D"letter-spacing:-0.1pt"> </span>Rural<span style=3D=
+"letter-spacing:-0.2pt">
+</span><span style=3D"letter-spacing:-0.1pt">Environment</span></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:42.95pt;text-indent:-17.95pt;li=
+ne-height:12.6pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'courier new'">o<s=
+pan style=3D"font:7pt 'times new roman'">&nbsp;&nbsp;
+</span></span><span dir=3D"LTR"></span><span lang=3D"EN-US" style=3D"font-s=
+ize:10pt;font-family:'verdana' , sans-serif">ResearcherLink<span style=3D"l=
+etter-spacing:-0.25pt">
+</span>in<span style=3D"letter-spacing:-0.15pt"> </span>Sustaining<span sty=
+le=3D"letter-spacing:-0.15pt">
+</span>Built<span style=3D"letter-spacing:-0.25pt"> </span><span style=3D"l=
+etter-spacing:-0.1pt">Heritage</span></span></p>
+</div>
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'verdana' , sans-s=
+erif"><br clear=3D"all">
+</span>
+<div class=3D"WordSection2">
+<p class=3D"MsoNormal" style=3D"margin-right:0cm;margin-bottom:0cm;margin-l=
+eft:42.95pt;margin-bottom:0.0001pt;text-indent:-17.95pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'courier new'">o<s=
+pan style=3D"font:7pt 'times new roman'">&nbsp;&nbsp;
+</span></span><span dir=3D"LTR"></span><span lang=3D"EN-US" style=3D"font-s=
+ize:10pt;font-family:'verdana' , sans-serif">Visualisation<span style=3D"le=
+tter-spacing:-0.3pt">
+</span>for<span style=3D"letter-spacing:-0.25pt"> </span>the<span style=3D"=
+letter-spacing:-0.15pt">
+</span>Heritage<span style=3D"letter-spacing:-0.15pt"> </span>of<span style=
+=3D"letter-spacing:-0.2pt">
+</span>Asia-Pacific<span style=3D"letter-spacing:-0.15pt"> </span>Architect=
+ure<span style=3D"letter-spacing:-0.15pt">
+</span>and<span style=3D"letter-spacing:-0.15pt"> </span><span style=3D"let=
+ter-spacing:-0.1pt">Urbanism</span></span></p>
+<p class=3D"MsoNormal" style=3D"margin-right:0cm;margin-bottom:0cm;margin-l=
+eft:7pt;margin-bottom:0.0001pt">
+<b><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'verdana' , san=
+s-serif;letter-spacing:-0.1pt">GMAI2024</span></b><b><span lang=3D"EN-US" s=
+tyle=3D"font-size:10pt;font-family:'verdana' , sans-serif"></span></b></p>
+<p class=3D"MsoNormal" style=3D"margin-right:0cm;margin-bottom:0cm;margin-l=
+eft:42.95pt;margin-bottom:0.0001pt;text-indent:-17.95pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'courier new'">o<s=
+pan style=3D"font:7pt 'times new roman'">&nbsp;&nbsp;
+</span></span><span dir=3D"LTR"></span><span lang=3D"EN-US" style=3D"font-s=
+ize:10pt;font-family:'verdana' , sans-serif">Geometric<span style=3D"letter=
+-spacing:-0.25pt">
+</span>Modelling<span style=3D"letter-spacing:-0.15pt"> </span>and<span sty=
+le=3D"letter-spacing:-0.15pt">
+</span><span style=3D"letter-spacing:-0.1pt">Imaging</span></span></p>
+<p class=3D"MsoNormal" style=3D"margin-right:0cm;margin-bottom:0cm;margin-l=
+eft:42.95pt;margin-bottom:0.0001pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'verdana' , sans-s=
+erif">&nbsp;</span></p>
+<p class=3D"MsoNormal" style=3D"margin-right:63.5pt;margin-bottom:0cm;margi=
+n-left:7.1pt;margin-bottom:0.0001pt">
+<b><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'verdana' , san=
+s-serif">Preconference course:&nbsp;&nbsp;&nbsp;&nbsp;
+</span></b><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'arial'=
+ , sans-serif;color:maroon;background:#c5d9f0">D o c t o r a l<span style=
+=3D"letter-spacing:4pt">
+</span>R e s e a r c h<span style=3D"letter-spacing:4pt"> </span>W o r k s =
+h o p=20
+</span></p>
+<p class=3D"MsoNormal" style=3D"margin-right:63.5pt;margin-bottom:0cm;margi=
+n-left:7.1pt;margin-bottom:0.0001pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'arial' , sans-ser=
+if;color:maroon">&nbsp;</span><b><span lang=3D"EN-US" style=3D"font-size:10=
+pt;font-family:'verdana' , sans-serif;color:black">Researcher
+ Link Forum:&nbsp; </span></b><span lang=3D"EN-US" style=3D"font-size:10pt;=
+font-family:'arial' , sans-serif;color:maroon;background:#c5d9f0">R e s e a=
+ r c h<span style=3D"letter-spacing:4pt">
+</span>P r o j e c t<span style=3D"letter-spacing:4pt"> </span>C o l l a b =
+o r a t i o n
+</span><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'arial' , s=
+ans-serif;color:maroon">&nbsp;</span></p>
+<p class=3D"MsoNormal" style=3D"margin-right:63.5pt;margin-bottom:0cm;margi=
+n-left:7.1pt;margin-bottom:0.0001pt">
+<b><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'verdana' , san=
+s-serif;color:black">Focus Group Publication:
+</span></b><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'arial'=
+ , sans-serif;color:maroon;background:#c5d9f0">P o s t - c o n f e r e n c =
+e<span style=3D"letter-spacing:4pt">
+</span>p u b l i c a t i o n<span style=3D"letter-spacing:2pt"> </span></sp=
+an></p>
+<p class=3D"MsoNormal" style=3D"margin-right:63.5pt;margin-bottom:0cm;margi=
+n-left:7.1pt;margin-bottom:0.0001pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'arial' , sans-ser=
+if;color:maroon;letter-spacing:2pt;background:#c5d9f0">&nbsp;</span></p>
+<p class=3D"MsoNormal" style=3D"margin-top:0.5pt">
+</p><table cellpadding=3D"0" cellspacing=3D"0"><tbody><tr><td width=3D"270"=
+ height=3D"0"></td></tr><tr><td></td><td><img width=3D"479" height=3D"1" sr=
+c=3D"cid:image004.png@01DA0B1E.54902C30"></td></tr></tbody></table>
+<br clear=3D"ALL">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'verdana' , sans-s=
+erif">Important<span style=3D"letter-spacing:-0.5pt">
+</span>Dates<span style=3D"letter-spacing:-0.35pt"> </span>-<span style=3D"=
+letter-spacing:-0.4pt">
+</span></span><u><span lang=3D"EN-US" style=3D"font-size:9pt;font-family:'v=
+erdana' , sans-serif;color:blue">https://iv.csites.fct.unl.pt/pt/call-for-p=
+apers/important-<span style=3D"letter-spacing:-0.1pt">dates/</span></span><=
+/u><span lang=3D"EN-US" style=3D"font-size:14.5pt;font-family:'arial' , san=
+s-serif"></span><p></p>
+<p class=3D"MsoNormal" style=3D"line-height:12.7pt">
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'verdana' , sans-s=
+erif;letter-spacing:-0.1pt">Submission</span><span lang=3D"EN-US" style=3D"=
+font-size:10pt;font-family:'verdana' , sans-serif;letter-spacing:2.1pt">
+</span><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'verdana' ,=
+ sans-serif;letter-spacing:-0.1pt">Portal:</span><span lang=3D"EN-US" style=
+=3D"font-size:10pt;font-family:'verdana' , sans-serif;letter-spacing:0.15pt=
+">
+</span><a href=3D"https://www.conftool.org/IV-cgiv-2024/" rel=3D"nofollow n=
+oopener noreferrer nofollow noopener noreferrer nofollow noopener noreferre=
+r" target=3D"_blank"><span lang=3D"EN-US" style=3D"font-size:10pt;font-fami=
+ly:'verdana' , sans-serif">https://www.conftool.org/IV-cgiv-2024/</span></a=
+><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:'verdana' , sans-=
+serif"></span></p>
+</div></div></div></div></div><div><div style=3D"font-family:'arial' , 'hel=
+vetica' , sans-serif;font-size:12pt;color:#000000"><div><div class=3D"WordS=
+ection2"><p class=3D"MsoNormal" style=3D"line-height:12.7pt"><br></p>
+</div></div></div></div></div><br></div></div></body></html>
+--=_318bf6e4-3251-4b60-96aa-0c1ef055f3c4
+Content-Type: image/png; name=image002.png
+Content-Disposition: inline; filename=image002.png
+Content-Transfer-Encoding: base64
+Content-Description: image002.png
+Content-ID: <image002.png@01DA0B1E.54902C30>
+
+iVBORw0KGgoAAAANSUhEUgAABIgAAAACCAYAAAAzSOduAAAAAXNSR0ICQMB9xQAAAAlwSFlzAAAd
+hwAAHYcBj+XxZQAAABl0RVh0U29mdHdhcmUATWljcm9zb2Z0IE9mZmljZX/tNXEAAAAtSURBVGje
+7cMBDQAgDAOwqQcD4Img6vfxNmmS3P5VVVVVHXn3nP5UVVVVHXkVMcIdDHRqrIgAAAAASUVORK5C
+YII=
+--=_318bf6e4-3251-4b60-96aa-0c1ef055f3c4
+Content-Type: image/png; name=image003.png
+Content-Disposition: inline; filename=image003.png
+Content-Transfer-Encoding: base64
+Content-Description: image003.png
+Content-ID: <image003.png@01DA0B1E.54902C30>
+
+iVBORw0KGgoAAAANSUhEUgAABIgAAAAhCAYAAACycJD2AAAAAXNSR0ICQMB9xQAAAAlwSFlzAAAd
+hwAAHYcBj+XxZQAAABl0RVh0U29mdHdhcmUATWljcm9zb2Z0IE9mZmljZX/tNXEAAAE9SURBVHja
+7dixCQJRFAVRazS1FMEKLMEOFBEEQRBNxMDAPqxi3W8bcw7MK+CFdzFN03buJkmSJEmSpGSbxXxe
+EwAAAABV5zEQvf0BAAAAIOsyBqKHPwAAAABkHcZAdPcHAAAAgKy9gQgAAACgzUAEAAAAEGcgAgAA
+AIgzEAEAAADEGYgAAAAA4gxEAAAAAHEGIgAAAIA4AxEAAABAnIEIAAAAIM5ABAAAABBnIAIAAACI
+MxABAAAAxBmIAAAAAOIMRAAAAABxBiIAAACAOAMRAAAAQJyBCAAAACDOQAQAAAAQZyACAAAAiDMQ
+AQAAAMQZiAAAAADiDEQAAAAAcQYiAAAAgDgDEQAAAEDcfyB6+gMAAABA1mkMRB9/AAAAAMi6joHo
+OPeVJEmSJElSst0YiFZza0mSJEmSJCVb/gDTa/C3Fk6R8AAAAABJRU5ErkJggg==
+--=_318bf6e4-3251-4b60-96aa-0c1ef055f3c4
+Content-Type: image/png; name=image004.png
+Content-Disposition: inline; filename=image004.png
+Content-Transfer-Encoding: base64
+Content-Description: image004.png
+Content-ID: <image004.png@01DA0B1E.54902C30>
+
+iVBORw0KGgoAAAANSUhEUgAAAd8AAAABCAMAAAConVSBAAAAAXNSR0IArs4c6QAAAARnQU1BAACx
+jwv8YQUAAAAJUExURQAAAAAAAAAAAINj6cAAAAACdFJOUwCAmytOGAAAAAlwSFlzAAAOwwAADsMB
+x2+oZAAAABVJREFUKFNjYGRiYmJkGKWGJcXECAAFVgIlTDHFPwAAAABJRU5ErkJggg==
+--=_318bf6e4-3251-4b60-96aa-0c1ef055f3c4--
+
+--=_be01b38f-75e9-4174-aafb-cea5a02b5e7e--

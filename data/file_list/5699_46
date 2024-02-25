@@ -1,0 +1,633 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (BounceSMTP2.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 82F2314014F2
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Sun, 21 Nov 2021 10:14:45 +0100 (CET)
+Received: from mx1.d101.univ-nantes.fr (MX1.univ-nantes.fr [193.52.101.135])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id 7ACF45FBA
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Sun, 21 Nov 2021 10:14:45 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.d101.univ-nantes.fr (Postfix) with ESMTP id 6E6CA4821ABE
+	for <liste-egc@polytech.univ-nantes.fr>; Sun, 21 Nov 2021 10:14:45 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 0.621
+X-Spam-Level:
+X-Spam-Status: No, score=0.621 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	J_CHICKENPOX_55=0.6, NO_RDNS2=0.01, RCVD_IN_WSFF=0.01,
+	SPF_HELO_NONE=0.001, SPF_PASS=-0.001, UN_PHISHING_PW=0.1]
+	autolearn=disabled
+X-CRM114-Status: UNSURE ( -1.2422 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=imt-nord-europe.fr
+Received: from mx1.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id lU-_9QikO1Vq for <liste-egc@polytech.univ-nantes.fr>;
+	Sun, 21 Nov 2021 10:14:39 +0100 (CET)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from ecrins.ensm-douai.fr (ecrins.imt-lille-douai.fr [193.48.235.2])
+	by mx1.d101.univ-nantes.fr (Postfix) with ESMTPS id 9A5F947EC05B
+	for <liste-egc@polytech.univ-nantes.fr>; Sun, 21 Nov 2021 10:14:39 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by melmta2.interne.melodie (Postfix) with ESMTP id 41EEE4708229
+	for <liste-egc@polytech.univ-nantes.fr>; Sun, 21 Nov 2021 10:14:39 +0100 (CET)
+Authentication-Results: melmta2.interne.melodie (amavisd-new);
+	dkim=pass (1024-bit key) header.d=imt-nord-europe.fr
+Received: from ecrins.ensm-douai.fr ([127.0.0.1])
+	by localhost (melmta2.interne.melodie [127.0.0.1]) (amavisd-new, port 10032)
+	with ESMTP id SKl1CwTjayQV for <liste-egc@polytech.univ-nantes.fr>;
+	Sun, 21 Nov 2021 10:14:38 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by melmta2.interne.melodie (Postfix) with ESMTP id 3DC3C441A1A8
+	for <liste-egc@polytech.univ-nantes.fr>; Sun, 21 Nov 2021 10:14:38 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.9.2 melmta2.interne.melodie 3DC3C441A1A8
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=imt-nord-europe.fr;
+	s=dkimimtnordeurope; t=1637486078;
+	bh=H+eiv9Ridg4Rx4D7OgWlM1H0OBwcutzRnXg++U9/1w0=;
+	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To;
+	b=V4wk73H9x5vkrJs8zNwd+Q8t6sd9RsZzrWoK9JmPZ8kN1V4utSrvJKY4LcoQZvNkE
+	 mGgbogX6wpIdZiEQD5d8QqF9QaFYWsxdFWj5YPXxNUUmGKObeU8+FFek/PSstZO9oP
+	 gXoyxuvXPZ92prU3CxVPot+PucysxR8mGp8+QZdU=
+X-Virus-Scanned: amavisd-new at 
+Received: from ecrins.ensm-douai.fr ([127.0.0.1])
+	by localhost (melmta2.interne.melodie [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id 1STPXXDw5pPE for <liste-egc@polytech.univ-nantes.fr>;
+	Sun, 21 Nov 2021 10:14:38 +0100 (CET)
+Received: from smtpclient.apple (bigip-float.interne.emd [10.12.0.249])
+	by melmta2.interne.melodie (Postfix) with ESMTPSA id EE7B84708229
+	for <liste-egc@polytech.univ-nantes.fr>; Sun, 21 Nov 2021 10:14:37 +0100 (CET)
+From: Anthony Fleury <anthony.fleury@imt-nord-europe.fr>
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_03F78F6F-3193-46F4-A386-C0BA1DA5AF42"
+Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.20.0.1.32\))
+Message-Id: <DD970167-B559-4196-A52F-CBC68B00149C@imt-nord-europe.fr>
+Date: Sun, 21 Nov 2021 10:14:37 +0100
+To: liste-egc@polytech.univ-nantes.fr
+X-Mailer: Apple Mail (2.3693.20.0.1.32)
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Intelligent Environments (IE2022): Call for Papers ||
+ Short Papers || Demos & Videos || Doctoral colloquium || Deadline:
+ December 1st, 2021
+
+
+--Apple-Mail=_03F78F6F-3193-46F4-A386-C0BA1DA5AF42
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
+
+Bonjour,
+
+D=C3=A9sol=C3=A9 pour les r=C3=A9ception multiples.
+
+Ci-dessous un call for paper qui pourra vous int=C3=A9resser.
+
+
+=
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=
+=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=
+=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=
+=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=
+=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=
+=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94
+
+Call for Papers || Short Papers || Demos & Videos || Doctoral colloquium
+
+18th International Conference on Intelligent Environments (IE2022), =
+20-23 June 2022, Biarritz, France
+
+http://ie2022.iutbayonne.univ-pau.fr/ =
+<http://ie2022.iutbayonne.univ-pau.fr/>
+
+** Important Dates **
+------------------------------------------------------------
+   Conference paper submission:         1 December 2021
+   Communication of results:           15 February 2022
+   Camera ready:                       28 March 2022
+
+
+The 18th International Conference on Intelligent Environments (IE2022) =
+will be held in 2022 in Biarritz, France, from June 20th to June 23rd. =
+The IE Conference is recognized as a major annual venue in the area. It =
+has been hosted all around the world and offers a truly international =
+forum that encourages rich exchanges. Intelligent environments refer to =
+physical spaces in which information and communication technologies are =
+woven with sensing/acting technologies in order to create interacting =
+spaces enhancing occupants' experience. The ultimate objective of such =
+environments is to provide services to occupants, enrich their =
+activities but also to develop their awareness.
+
+** Conference Program **
+------------------------------------------------------------
+IE is a multidisciplinary event welcoming contribution from a diversity =
+of relevant areas including sensing, networking, human-computer =
+interaction, artificial intelligence, software engineering, =
+context-awareness, the internet of things, pervasive and ubiquitous =
+computing, etc. The event will include regular full/short papers, a =
+Doctoral Colloquium, a Posters Session and Demos Session as well as an =
+Industrial Forum. Special Sessions will focus on specific topics =
+(details further down).
+
+** COVID-19 information **
+---------------------------------------------------------------
+The IE 2022 committee is closely monitoring the situation with respect =
+to health safety and travel. We will adapt the conference according to =
+the latest pandemic evolution and recommendations. IE will take the form =
+of a hybrid event, or totally virtual depending on the health situation =
+in June 2022.
+
+** Paper categories **
+---------------------------------------------------------------
+    FULL papers should be up to 8 pages in total (see =
+https://ie2022.iutbayonne.univ-pau.fr/call-for-papers/ =
+<https://ie2022.iutbayonne.univ-pau.fr/call-for-papers/>)
+    SPECIAL SESSIONS papers should be up to 8 pages in total  (see =
+https://ie2022.iutbayonne.univ-pau.fr/special-sessions/ =
+<https://ie2022.iutbayonne.univ-pau.fr/special-sessions/>)
+    SHORT papers should be up to 4 pages in total (see =
+https://ie2022.iutbayonne.univ-pau.fr/call-for-papers/ =
+<https://ie2022.iutbayonne.univ-pau.fr/call-for-papers/>)
+    DEMOS & VIDEOS papers should be up to 4 pages in total (see =
+https://ie2022.iutbayonne.univ-pau.fr/call-for-demos-and-posters/ =
+<https://ie2022.iutbayonne.univ-pau.fr/call-for-demos-and-posters/>)
+    DOCTORAL COLLOQUIUM papers should be up to 4 pages in total (see =
+https://ie2022.iutbayonne.univ-pau.fr/doctoral-colloquium/ =
+<https://ie2022.iutbayonne.univ-pau.fr/doctoral-colloquium/>)
+
+    All accepted papers of all categories will be publishedin the IEEE =
+proceedings of the conference and submitted for inclusion into IEEE =
+Xplore subject to meeting IEEE Xplore=E2=80=99s scope and quality =
+requirements.
+
+** Submission **
+---------------------------------------------------------------
+For this edition, to increase high quality papers and independent merit, =
+the evaluation process is *double blind*. Hence, all papers should be =
+anonymous for any of the categories below. This constraint does *not* =
+apply to DEMOS & VIDEOS papers.
+All papers should be submitted as PDF on EasyChair : =
+https://easychair.org/conferences/?conf=3Die2022 =
+<https://easychair.org/conferences/?conf=3Die2022> by selecting the =
+appropriate category.
+
+They should be formatted according to the IEEE Template for Conference =
+Proceedings, https://www.ieee.org/conferences/publishing/templates.html =
+<https://www.ieee.org/conferences/publishing/templates.html>
+
+** Special Sessions **
+---------------------------------------------------------------
+The following special sessions proposed by members from our scientific =
+community have been accepted:
+- "Smart Cities" by Juan Carlos Augusto, Middlesex University, London, =
+UK
+- "Human Mobility Analysis in Heterogeneous Urban Environments" by =
+Fernando Terroso S=C3=A1enz and Manuel Curado Navarro, Universidad =
+Cat=C3=B3lica de Murcia (UCAM), Spain
+- "Ethics & Privacy Preservation in Data Analytics and Smart =
+Environments" by Antonio Balderas-Alberico, Juan Manuel Dodero, Manuel =
+Palomo Duarte, and Mercedes Rodriguez-Garcia, University of Cadiz, Spain
+- "Post-covid Intelligent Environments" by Sherif Aly (The American =
+University in Cairo, Egypt), Takuya Yoshihiro (Wakayama University, =
+Japan), Ahmed Elmogy (Prince Sattam Bin Abdelaziz University, Saudi =
+Arabia), and Hamada Rizk (Osaka University, Japan & Tanta University, =
+Egypt)
+
+** Short Papers **
+---------------------------------------------------------------
+Short Papers provide an opportunity to report on early results, position =
+statements, and complementary resources created. Accepted submissions =
+will be included in the conference proceedings and will be presented =
+during an exclusively dedicated Posters Session of the conference.
+
+
+** Demos & Videos **
+---------------------------------------------------------------
+The demo and video track provides a unique opportunity to showcase =
+research prototypes, novel ideas or future visions of Intelligent =
+Environment that are difficult to convey in a paper-only format. Demos =
+allow conference participants to view and try out novel and noteworthy =
+systems and components of Intelligent Environments in action, and =
+discuss the systems with those who created them. Appropriate demos =
+include applications, technologies, and research prototypes. Accepted =
+demos will be showcased during the conference.
+
+** Doctoral Colloquium Papers **
+---------------------------------------------------------------
+Doctoral colloquium papers should focus on research projects (PhD or =
+similar) which are either (a) in a relatively early stage, but where the =
+investigating student has already identified the nature and key aspects =
+of the problem(s), and has ideas regarding how to solve them, or (b) is =
+at a stage where interesting results are being produced, but the work is =
+not yet sufficient  to produce a long paper.
+
+** Keynote Speakers **
+------------------------------------------------------------
+The conference will include keynote lectures of the following =
+distinguished speakers:
+
+=C2=B7       Prof. Jiannong Cao, Chair Professor of Distributed and =
+Mobile Computing, Hong Kong Polytechnic University, Hong Kong
+
+=C2=B7       Prof. Christine Julien, Annis & Jack Bowen Professor in =
+Engineering, Electrical and Computer Engineering, The University of =
+Texas at Austin, U.S.A
+
+=C2=B7       Dr. Maria-Antonietta Grasso, Principal Scientist UX and =
+Ethnography, Naverlabs, France
+
+** Awards **
+------------------------------------------------------------
+
+As previous editions, several awards will be programmed to recognize =
+authors outstanding scientific contributions to the area of intelligent =
+environments. The awards are the following.
+- Beatrice WORSLEY award for the best full paper
+- Best Poster award
+- Best Doctoral Colloquium award
+- Best Demos&Video award
+- Best Presentation awards  for a full paper presentation
+** by a female presenter
+** by a male presenter
+
+This twin presentation award has been set up to encourage equal =
+visibility of female and male researchers. The awards will be allocated =
+to the whole co-authors of the presented paper. The attribution will be =
+decided by a jury of people of equally balanced gender.
+
+** Workshops & Tutorial & Industry Forum **
+------------------------------------------------------------
+
+The conference will feature 10 workshops and 7 tutorials on all aspects =
+of intelligent environments. Check the workshop and tutorial web pages =
+(https://ie2022.iutbayonne.univ-pau.fr =
+<https://ie2022.iutbayonne.univ-pau.fr/>)
+Furthermore, as each year, the conference will offer an Industrial Forum =
+which will be a networking event and an opportunity for the business =
+sector to showcase their innovation. Companies interested by the =
+industrial forum can contact the industrial forum chairs directly.
+
+--Apple-Mail=_03F78F6F-3193-46F4-A386-C0BA1DA5AF42
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
+charset=3Dutf-8"></head><body style=3D"word-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;" class=3D""><meta=
+ http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8" =
+class=3D""><div style=3D"word-wrap: break-word; -webkit-nbsp-mode: =
+space; line-break: after-white-space;" class=3D""><meta =
+http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8" =
+class=3D""><div style=3D"word-wrap: break-word; -webkit-nbsp-mode: =
+space; line-break: after-white-space;" class=3D""><div class=3D""><span =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D"">Bonjour,</span></div><div class=3D""><span =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><br =
+class=3D""></span></div><div class=3D""><span style=3D"caret-color: =
+rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D"">D=C3=A9sol=C3=A9 pour les =
+r=C3=A9ception multiples.</span></div><div class=3D""><span =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><br =
+class=3D""></span></div><div class=3D""><span style=3D"caret-color: =
+rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D"">Ci-dessous un call for =
+paper qui pourra vous int=C3=A9resser.</span></div><div class=3D""><span =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><br =
+class=3D""></span></div><div class=3D""><br class=3D""></div><div =
+class=3D""><font color=3D"#000000" class=3D""><span style=3D"caret-color: =
+rgb(0, 0, 0);" =
+class=3D"">=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=
+=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=
+=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=
+=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=
+=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94</span></fo=
+nt></div><span style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D""><div class=3D""><span style=3D"caret-color: rgb(0, 0, 0); =
+color: rgb(0, 0, 0);" class=3D""><br class=3D""></span></div>Call for =
+Papers || Short Papers || Demos &amp; Videos || Doctoral =
+colloquium</span><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, =
+0, 0);" class=3D""><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, =
+0, 0);" class=3D""><span style=3D"caret-color: rgb(0, 0, 0); color: =
+rgb(0, 0, 0);" class=3D"">18th International Conference on Intelligent =
+Environments (IE2022), 20-23 June 2022, Biarritz, France</span><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><a =
+href=3D"http://ie2022.iutbayonne.univ-pau.fr/" =
+class=3D"">http://ie2022.iutbayonne.univ-pau.fr/</a><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><span=
+ style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D"">** =
+Important Dates **</span><br style=3D"caret-color: rgb(0, 0, 0); color: =
+rgb(0, 0, 0);" class=3D""><span style=3D"caret-color: rgb(0, 0, 0); =
+color: rgb(0, 0, 0);" =
+class=3D"">------------------------------------------------------------</s=
+pan><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D""><span style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, =
+0);" class=3D"">&nbsp;&nbsp; Conference paper =
+submission:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1 December =
+2021</span><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D""><span style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, =
+0);" class=3D"">&nbsp;&nbsp; Communication of =
+results:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 15 =
+February 2022</span><br style=3D"caret-color: rgb(0, 0, 0); color: =
+rgb(0, 0, 0);" class=3D""><span style=3D"caret-color: rgb(0, 0, 0); =
+color: rgb(0, 0, 0);" class=3D"">&nbsp;&nbsp; Camera =
+ready:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 28 =
+March 2022</span><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, =
+0, 0);" class=3D""><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, =
+0, 0);" class=3D""><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, =
+0, 0);" class=3D""><span style=3D"caret-color: rgb(0, 0, 0); color: =
+rgb(0, 0, 0);" class=3D"">The 18th International Conference on =
+Intelligent Environments (IE2022) will be held in 2022 in Biarritz, =
+France, from June 20th to June 23rd. The IE Conference is recognized as =
+a major annual venue in the area. It has been hosted all around the =
+world and offers a truly international forum that encourages rich =
+exchanges. Intelligent environments refer to physical spaces in which =
+information and communication technologies are woven with sensing/acting =
+technologies in order to create interacting spaces enhancing occupants' =
+experience. The ultimate objective of such environments is to provide =
+services to occupants, enrich their activities but also to develop their =
+awareness.</span><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, =
+0, 0);" class=3D""><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, =
+0, 0);" class=3D""><span style=3D"caret-color: rgb(0, 0, 0); color: =
+rgb(0, 0, 0);" class=3D"">** Conference Program **</span><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><span=
+ style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D"">------------------------------------------------------------</s=
+pan><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D""><span style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, =
+0);" class=3D"">IE is a multidisciplinary event welcoming contribution =
+from a diversity of relevant areas including sensing, networking, =
+human-computer interaction, artificial intelligence, software =
+engineering, context-awareness, the internet of things, pervasive and =
+ubiquitous computing, etc. The event will include regular full/short =
+papers, a Doctoral Colloquium, a Posters Session and Demos Session as =
+well as an Industrial Forum. Special Sessions will focus on specific =
+topics (details further down).</span><br style=3D"caret-color: rgb(0, 0, =
+0); color: rgb(0, 0, 0);" class=3D""><br style=3D"caret-color: rgb(0, 0, =
+0); color: rgb(0, 0, 0);" class=3D""><span style=3D"caret-color: rgb(0, =
+0, 0); color: rgb(0, 0, 0);" class=3D"">** COVID-19 information =
+**</span><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D""><span style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, =
+0);" =
+class=3D"">---------------------------------------------------------------=
+</span><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D""><span style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, =
+0);" class=3D"">The IE 2022 committee is closely monitoring the =
+situation with respect to health safety and travel. We will adapt the =
+conference according to the latest pandemic evolution and =
+recommendations. IE will take the form of a hybrid event, or totally =
+virtual depending on the health situation in June 2022.</span><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><span=
+ style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D"">** =
+Paper categories **</span><br style=3D"caret-color: rgb(0, 0, 0); color: =
+rgb(0, 0, 0);" class=3D""><span style=3D"caret-color: rgb(0, 0, 0); =
+color: rgb(0, 0, 0);" =
+class=3D"">---------------------------------------------------------------=
+</span><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D""><span style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, =
+0);" class=3D"">&nbsp;&nbsp;&nbsp; FULL papers should be up to 8 pages =
+in total (see&nbsp;</span><a =
+href=3D"https://ie2022.iutbayonne.univ-pau.fr/call-for-papers/" =
+class=3D"">https://ie2022.iutbayonne.univ-pau.fr/call-for-papers/</a><span=
+ style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D"">)</span><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, =
+0, 0);" class=3D""><span style=3D"caret-color: rgb(0, 0, 0); color: =
+rgb(0, 0, 0);" class=3D"">&nbsp;&nbsp;&nbsp; SPECIAL SESSIONS papers =
+should be up to 8 pages in total&nbsp; (see&nbsp;</span><a =
+href=3D"https://ie2022.iutbayonne.univ-pau.fr/special-sessions/" =
+class=3D"">https://ie2022.iutbayonne.univ-pau.fr/special-sessions/</a><spa=
+n style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D"">)</span><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, =
+0, 0);" class=3D""><span style=3D"caret-color: rgb(0, 0, 0); color: =
+rgb(0, 0, 0);" class=3D"">&nbsp;&nbsp;&nbsp; SHORT papers should be up =
+to 4 pages in total (see&nbsp;</span><a =
+href=3D"https://ie2022.iutbayonne.univ-pau.fr/call-for-papers/" =
+class=3D"">https://ie2022.iutbayonne.univ-pau.fr/call-for-papers/</a><span=
+ style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D"">)</span><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, =
+0, 0);" class=3D""><span style=3D"caret-color: rgb(0, 0, 0); color: =
+rgb(0, 0, 0);" class=3D"">&nbsp;&nbsp;&nbsp; DEMOS &amp; VIDEOS papers =
+should be up to 4 pages in total (see&nbsp;</span><a =
+href=3D"https://ie2022.iutbayonne.univ-pau.fr/call-for-demos-and-posters/"=
+ =
+class=3D"">https://ie2022.iutbayonne.univ-pau.fr/call-for-demos-and-poster=
+s/</a><span style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D"">)</span><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, =
+0, 0);" class=3D""><span style=3D"caret-color: rgb(0, 0, 0); color: =
+rgb(0, 0, 0);" class=3D"">&nbsp;&nbsp;&nbsp; DOCTORAL COLLOQUIUM papers =
+should be up to 4 pages in total (see&nbsp;</span><a =
+href=3D"https://ie2022.iutbayonne.univ-pau.fr/doctoral-colloquium/" =
+class=3D"">https://ie2022.iutbayonne.univ-pau.fr/doctoral-colloquium/</a><=
+span style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D"">)</span><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, =
+0, 0);" class=3D""><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, =
+0, 0);" class=3D""><span style=3D"caret-color: rgb(0, 0, 0); color: =
+rgb(0, 0, 0);" class=3D"">&nbsp;&nbsp;&nbsp; All accepted papers of all =
+categories will be publishedin the IEEE proceedings of the conference =
+and submitted for inclusion into IEEE Xplore subject to meeting IEEE =
+Xplore=E2=80=99s scope and quality requirements.</span><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><span=
+ style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D"">** =
+Submission **</span><br style=3D"caret-color: rgb(0, 0, 0); color: =
+rgb(0, 0, 0);" class=3D""><span style=3D"caret-color: rgb(0, 0, 0); =
+color: rgb(0, 0, 0);" =
+class=3D"">---------------------------------------------------------------=
+</span><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D""><span style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, =
+0);" class=3D"">For this edition, to increase high quality papers and =
+independent merit, the evaluation process is *double blind*. Hence, all =
+papers should be anonymous for any of the categories below. This =
+constraint does *not* apply to DEMOS &amp; VIDEOS papers.</span><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><span=
+ style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D"">All =
+papers should be submitted as PDF on EasyChair :&nbsp;</span><a =
+href=3D"https://easychair.org/conferences/?conf=3Die2022" =
+class=3D"">https://easychair.org/conferences/?conf=3Die2022</a><span =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D"">&nbsp;by selecting the appropriate category.</span><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><span=
+ style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D"">They=
+ should be formatted according to the IEEE Template for Conference =
+Proceedings,&nbsp;</span><a =
+href=3D"https://www.ieee.org/conferences/publishing/templates.html" =
+class=3D"">https://www.ieee.org/conferences/publishing/templates.html</a><=
+br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D""><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D""><span style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, =
+0);" class=3D"">** Special Sessions **</span><br style=3D"caret-color: =
+rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><span style=3D"caret-color:=
+ rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D"">---------------------------------------------------------------=
+</span><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D""><span style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, =
+0);" class=3D"">The following special sessions proposed by members from =
+our scientific community have been accepted:</span><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><span=
+ style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D"">- =
+"Smart Cities" by Juan Carlos Augusto, Middlesex University, London, =
+UK</span><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D""><span style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, =
+0);" class=3D"">- "Human Mobility Analysis in Heterogeneous Urban =
+Environments" by Fernando Terroso S=C3=A1enz and Manuel Curado Navarro, =
+Universidad Cat=C3=B3lica de Murcia (UCAM), Spain</span><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><span=
+ style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D"">- =
+"Ethics &amp; Privacy Preservation in Data Analytics and Smart =
+Environments" by Antonio Balderas-Alberico, Juan Manuel Dodero, Manuel =
+Palomo Duarte, and Mercedes Rodriguez-Garcia, University of Cadiz, =
+Spain</span><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, =
+0);" class=3D""><span style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, =
+0, 0);" class=3D"">- "Post-covid Intelligent Environments" by Sherif Aly =
+(The American University in Cairo, Egypt), Takuya Yoshihiro (Wakayama =
+University, Japan), Ahmed Elmogy (Prince Sattam Bin Abdelaziz =
+University, Saudi Arabia), and Hamada Rizk (Osaka University, Japan =
+&amp; Tanta University, Egypt)</span><br style=3D"caret-color: rgb(0, 0, =
+0); color: rgb(0, 0, 0);" class=3D""><br style=3D"caret-color: rgb(0, 0, =
+0); color: rgb(0, 0, 0);" class=3D""><span style=3D"caret-color: rgb(0, =
+0, 0); color: rgb(0, 0, 0);" class=3D"">** Short Papers **</span><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><span=
+ style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D"">---------------------------------------------------------------=
+</span><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D""><span style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, =
+0);" class=3D"">Short Papers provide an opportunity to report on early =
+results, position statements, and complementary resources created. =
+Accepted submissions will be included in the conference proceedings and =
+will be presented during an exclusively dedicated Posters Session of the =
+conference.</span><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, =
+0, 0);" class=3D""><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, =
+0, 0);" class=3D""><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, =
+0, 0);" class=3D""><span style=3D"caret-color: rgb(0, 0, 0); color: =
+rgb(0, 0, 0);" class=3D"">** Demos &amp; Videos **</span><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><span=
+ style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D"">---------------------------------------------------------------=
+</span><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D""><span style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, =
+0);" class=3D"">The demo and video track provides a unique opportunity =
+to showcase research prototypes, novel ideas or future visions of =
+Intelligent Environment that are difficult to convey in a paper-only =
+format. Demos allow conference participants to view and try out novel =
+and noteworthy systems and components of Intelligent Environments in =
+action, and discuss the systems with those who created them. Appropriate =
+demos include applications, technologies, and research prototypes. =
+Accepted demos will be showcased during the conference.</span><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><span=
+ style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D"">** =
+Doctoral Colloquium Papers **</span><br style=3D"caret-color: rgb(0, 0, =
+0); color: rgb(0, 0, 0);" class=3D""><span style=3D"caret-color: rgb(0, =
+0, 0); color: rgb(0, 0, 0);" =
+class=3D"">---------------------------------------------------------------=
+</span><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D""><span style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, =
+0);" class=3D"">Doctoral colloquium papers should focus on research =
+projects (PhD or similar) which are either (a) in a relatively early =
+stage, but where the investigating student has already identified the =
+nature and key aspects of the problem(s), and has ideas regarding how to =
+solve them, or (b) is at a stage where interesting results are being =
+produced, but the work is not yet sufficient&nbsp; to produce a long =
+paper.</span><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, =
+0);" class=3D""><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, =
+0);" class=3D""><span style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, =
+0, 0);" class=3D"">** Keynote Speakers **</span><br style=3D"caret-color: =
+rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><span style=3D"caret-color:=
+ rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D"">------------------------------------------------------------</s=
+pan><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D""><span style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, =
+0);" class=3D"">The conference will include keynote lectures of the =
+following distinguished speakers:</span><br style=3D"caret-color: rgb(0, =
+0, 0); color: rgb(0, 0, 0);" class=3D""><br style=3D"caret-color: rgb(0, =
+0, 0); color: rgb(0, 0, 0);" class=3D""><span style=3D"caret-color: =
+rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D"">=C2=B7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Prof. Jiannong =
+Cao, Chair Professor of Distributed and Mobile Computing, Hong Kong =
+Polytechnic University, Hong Kong</span><br style=3D"caret-color: rgb(0, =
+0, 0); color: rgb(0, 0, 0);" class=3D""><br style=3D"caret-color: rgb(0, =
+0, 0); color: rgb(0, 0, 0);" class=3D""><span style=3D"caret-color: =
+rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D"">=C2=B7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Prof. Christine =
+Julien, Annis &amp; Jack Bowen Professor in Engineering, Electrical and =
+Computer Engineering, The University of Texas at Austin, U.S.A</span><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><span=
+ style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D"">=C2=B7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dr. =
+Maria-Antonietta Grasso, Principal Scientist UX and Ethnography, =
+Naverlabs, France</span><br style=3D"caret-color: rgb(0, 0, 0); color: =
+rgb(0, 0, 0);" class=3D""><br style=3D"caret-color: rgb(0, 0, 0); color: =
+rgb(0, 0, 0);" class=3D""><span style=3D"caret-color: rgb(0, 0, 0); =
+color: rgb(0, 0, 0);" class=3D"">** Awards **</span><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><span=
+ style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D"">------------------------------------------------------------</s=
+pan><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D""><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D""><span style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, =
+0);" class=3D"">As previous editions, several awards will be programmed =
+to recognize authors outstanding scientific contributions to the area of =
+intelligent environments. The awards are the following.</span><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><span=
+ style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D"">- =
+Beatrice WORSLEY award for the best full paper</span><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><span=
+ style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D"">- =
+Best Poster award</span><br style=3D"caret-color: rgb(0, 0, 0); color: =
+rgb(0, 0, 0);" class=3D""><span style=3D"caret-color: rgb(0, 0, 0); =
+color: rgb(0, 0, 0);" class=3D"">- Best Doctoral Colloquium =
+award</span><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, =
+0);" class=3D""><span style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, =
+0, 0);" class=3D"">- Best Demos&amp;Video award</span><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><span=
+ style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D"">- =
+Best Presentation awards&nbsp; for a full paper presentation</span><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><span=
+ style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D"">** =
+by a female presenter</span><br style=3D"caret-color: rgb(0, 0, 0); =
+color: rgb(0, 0, 0);" class=3D""><span style=3D"caret-color: rgb(0, 0, =
+0); color: rgb(0, 0, 0);" class=3D"">** by a male presenter</span><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><span=
+ style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D"">This=
+ twin presentation award has been set up to encourage equal visibility =
+of female and male researchers. The awards will be allocated to the =
+whole co-authors of the presented paper. The attribution will be decided =
+by a jury of people of equally balanced gender.</span><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><span=
+ style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D"">** =
+Workshops &amp; Tutorial &amp; Industry Forum **</span><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><span=
+ style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D"">------------------------------------------------------------</s=
+pan><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D""><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D""><span style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, =
+0);" class=3D"">The conference will feature 10 workshops and 7 tutorials =
+on all aspects of intelligent environments. Check the workshop and =
+tutorial web pages (</span><a =
+href=3D"https://ie2022.iutbayonne.univ-pau.fr/" =
+class=3D"">https://ie2022.iutbayonne.univ-pau.fr</a><span =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" =
+class=3D"">)</span><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, =
+0, 0);" class=3D""><span style=3D"caret-color: rgb(0, 0, 0); color: =
+rgb(0, 0, 0);" class=3D"">Furthermore, as each year, the conference will =
+offer an Industrial Forum which will be a networking event and an =
+opportunity for the business sector to showcase their innovation. =
+Companies interested by the industrial forum can contact the industrial =
+forum chairs directly.</span><br style=3D"caret-color: rgb(0, 0, 0); =
+color: rgb(0, 0, 0);" class=3D""></div></div></body></html>=
+
+--Apple-Mail=_03F78F6F-3193-46F4-A386-C0BA1DA5AF42--

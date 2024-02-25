@@ -1,0 +1,786 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (bouncesmtp1.u12.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 1ADFA14014E3
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed,  8 Jun 2022 09:25:55 +0200 (CEST)
+Received: from mx2.d101.univ-nantes.fr (MX2.univ-nantes.fr [193.52.101.136])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id 188886D19BE
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed,  8 Jun 2022 09:25:55 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTP id 0CCCD100A76
+	for <liste-egc@polytech.univ-nantes.fr>; Wed,  8 Jun 2022 09:25:55 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 3.233
+X-Spam-Level: ***
+X-Spam-Status: No, score=3.233 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+	HTML_MESSAGE=0.001, MR_NOT_ATTRIBUTED_IP=0.2,
+	RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SORBS=1, RCVD_IN_WSFF=0.01,
+	SPF_HELO_NONE=0.001, SPF_PASS=-0.001, T_KAM_HTML_FONT_INVALID=0.01,
+	UN_COMMAS_IN_SUBJ=2, UN_JPG_ATTACH=0.01, UN_PHISHING_PW=0.1,
+	URIBL_BLOCKED=0.001] autolearn=disabled
+X-CRM114-Status: UNSURE ( 2.8976 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=gmail.com
+Received: from mx2.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id wv9VpZxkoMdE for <liste-egc@polytech.univ-nantes.fr>;
+	Wed,  8 Jun 2022 09:25:48 +0200 (CEST)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTPS id 67B8C100A74
+	for <liste-egc@polytech.univ-nantes.fr>; Wed,  8 Jun 2022 09:25:48 +0200 (CEST)
+Received: by mail-qk1-x72a.google.com with SMTP id d23so74233qke.0
+        for <liste-egc@polytech.univ-nantes.fr>; Wed, 08 Jun 2022 00:25:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:mime-version:date:subject:message-id:to;
+        bh=1E0bRRN9+tj3vHO2NjPVQDntELur4q92+IAdlQEsOow=;
+        b=qw+zI5javvD4mPiFG/cdmzOYMddfpR5pj9/PzFv2EyocQgd5LQWSCGRmHUjmO8y4vr
+         8FPGxXi6Z0t/6oBcvOXIICAcaLsbhr4a67ZwJMfbmKlbA78gHGRlaAO0Ti0zwoZ3HZ7b
+         L2/YnvUxQQwnqH9OJjB5KaG05Oy0TdwkNCScu4wAzwI3On1TAmMd8nYY+BfgoXAMqEEk
+         dCcRzWMYyO9gX+UEYeAICbODaggt3NTBijOJ8UXNR1158e0doQ2//1IgLx2/zBIXvzu8
+         GRN0rbIeuQM8vfUKxpcIxV61/tDeKmeEJk3R8Ft4eNQssGARdHE05FSlTf2T1KxBpA2j
+         Siww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:mime-version:date:subject:message-id:to;
+        bh=1E0bRRN9+tj3vHO2NjPVQDntELur4q92+IAdlQEsOow=;
+        b=uZ9ccUym9dB6nOBWxVkJdHmMYV9AU+aUxPwzCJC6K+YKuylZdA6PqCzx5FmO0DfT3m
+         Ihba5+Oj0RatLr5e0wOfggVPcISNY5eZ62pwhOx0790ecPpRE4/FlnlVkn1USTne0Egk
+         MkZP8JqRx3Q3fWE/pp/zjjaq7ZpMi88PrtlNLtMPwSbVICA+Rcwmt51MmEG1mL1xsFcY
+         /Ozvg9qvCdwHlsxuobKcSUnHKi9E2CWanny9W2wStLMUV37Bbx9uFJuCBOmuWEfsQ0TK
+         2/HwLX7Y8TPkYLL8tY57ObIYYlNa5ZrqSu/Y4o8DrFXnxOb90pZJ3RldEKouI5Fqpo/F
+         33qw==
+X-Gm-Message-State: AOAM5323LDO0KOgNrfQAKGMA0N3d7CnB+bAWcNn3VZDqYyCBodKw4Awy
+	f7w2Mn1S7VPu+14n8PW2yGaVMOYl6I4=
+X-Google-Smtp-Source: ABdhPJxiHwPdPbsb1ks7Qa7C+FPmvWqYOyGQXx62BJx2PH+Pdn5Y/ZRo+pd+HAvZglvukX00uqhR8g==
+X-Received: by 2002:a05:620a:46a8:b0:6a6:d89f:3b05 with SMTP id bq40-20020a05620a46a800b006a6d89f3b05mr4724352qkb.297.1654673147142;
+        Wed, 08 Jun 2022 00:25:47 -0700 (PDT)
+Received: from [192.168.0.175] (pool-173-66-25-239.washdc.fios.verizon.net. [173.66.25.239])
+        by smtp.gmail.com with ESMTPSA id u3-20020a372e03000000b006a323e60e29sm15331010qkh.135.2022.06.08.00.25.46
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 08 Jun 2022 00:25:46 -0700 (PDT)
+From: Juan Antonio Lossio-Ventura <juan.antonio.lossio@gmail.com>
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_A60559E7-9601-4220-B8D9-EAB48BDBF102"
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.7\))
+Date: Wed, 8 Jun 2022 03:25:46 -0400
+Message-Id: <9D17FC50-61A4-4996-82A5-9D5150E2D487@gmail.com>
+To: liste-egc@polytech.univ-nantes.fr
+X-Mailer: Apple Mail (2.3608.120.23.2.7)
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] 1st CFP - SIMBig 2022, Peru (AI, Data Science, NLP, ML)
+
+
+--Apple-Mail=_A60559E7-9601-4220-B8D9-EAB48BDBF102
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
+
+> [Apologies for cross-posting]
+>=20
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> 1ST CALL FOR PAPERS - SIMBig 2022
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>=20
+> SIMBig 2022 - 9th International Conference on Information Management =
+and Big Data
+> Where: Universidad Nacional Mayor de San Marcos, Lima, Peru=20
+> When: November 16-18, 2022=20
+> Website: http://simbig.org/SIMBig2022/ <http://simbig.org/SIMBig2022/>
+>=20
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>=20
+>=20
+> OVERVIEW
+> -------------
+>=20
+> SIMBig 2021 seeks to present new methods of Artificial Intelligence =
+(AI), Data Science, and related fields, for analyzing, managing, and =
+extracting insights and patterns from large volumes of data.
+>=20
+>=20
+> KETYNOTE SPEAKERS
+> -------------
+>=20
+>  Leman Akoglu, Carnegie Mellon University, USA
+>  Rich Caruana, Microsoft, USA
+>  Wang-Chiew Tan, Facebook AI, USA
+>  Andrew Tomkins, Google, USA
+>=20
+> IMPORTANT DATES
+> -------------
+>=20
+> August 05, 2022 --> Papers submission deadline
+> September 09, 2022 --> Notification of acceptance
+> October 07, 2022 --> Camera-ready versions
+> November 16-18, 2022 --> Conference held in Lima, Peru
+>=20
+> PUBLICATION AND TRAVEL AWARDS
+> -------------
+>=20
+> All accepted papers of SIMBig 2022 (tracks including) will be =
+published with Springer CCIS Series =
+<https://www.springer.com/series/7899>.
+>=20
+>=20
+>=20
+> The best 8-10 papers of SIMBig 2022 (tracks including) will be =
+selected to submit an extension to be published in the Springer SN =
+Computer Science Journal <https://www.springer.com/journal/42979>.
+>=20
+>=20
+> Thanks to the support of the North American Chapter of the Association =
+for Computational Linguistics (NAACL) <http://naacl.org/>, SIMBig 2022 =
+will offer 4 student travel awards for the best papers.
+>=20
+>=20
+>=20
+> TOPICS OF INTEREST
+> -------------
+>=20
+> SIMBig 2022 has a broad scope. We invite contributions on theory and =
+practice, including but not limited to the following technical areas:
+>=20
+> Artificial Intelligence
+> Data Science
+> Machine Learning
+> Natural Language Processing
+> Semantic Web
+> Healthcare Informatics
+> Biomedical Informatics
+> Data Privacy and Security
+> Information Retrieval
+> Ontologies and Knowledge Representation
+> Social Networks and Social Web
+> Information Visualization
+> OLAP and Business intelligence
+> Data-driven Software Engineering
+>=20
+> SPECIAL TRACKS
+> -------------
+>=20
+> SIMBig 2022 will propose several special tracks in addition to the =
+main conference, such as:
+>=20
+> SNMAM: Social Network and Media Analysis and Mining=20
+> DISE: Data-drIven Software Engineering=20
+>=20
+> CONTACT
+> -------------
+>=20
+> SIMBig 2022 General Chairs
+>=20
+> Juan Antonio Lossio-Ventura, National Institutes of Health, USA =
+(juan.lossio@nih.gov <mailto:juan.lossio@nih.gov>)
+> Hugo Alatrista-Salas, Pontificia Universidad Cat=C3=B3lica del Per=C3=BA=
+, Peru (halatrista@pucp.pe <mailto:halatrista@pucp.pe>)
+>=20
+
+--Apple-Mail=_A60559E7-9601-4220-B8D9-EAB48BDBF102
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="Apple-Mail=_AEA93BE9-9C32-456F-8E0E-3EFD95417501"
+
+
+--Apple-Mail=_AEA93BE9-9C32-456F-8E0E-3EFD95417501
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
+charset=3Dutf-8"><base></head><body style=3D"word-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;" class=3D""><base=
+ class=3D""><div class=3D"Apple-Mail-URLShareWrapperClass"><blockquote =
+type=3D"cite" style=3D"border-left-style: none; color: inherit; padding: =
+inherit; margin: inherit;" class=3D""><div style=3D"box-sizing: =
+border-box; background-color: rgb(248, 249, 249); border: 5px solid =
+rgb(235, 237, 239); width: 620px; padding: 25px 25px 5px; margin: 25px; =
+caret-color: rgb(51, 51, 51); color: rgb(51, 51, 51); font-family: =
+&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: =
+14px;" class=3D""><p style=3D"box-sizing: border-box; margin: 0px 0px =
+10px;" class=3D"">[Apologies for cross-posting]</p><p style=3D"box-sizing:=
+ border-box; margin: 0px 0px 10px;" =
+class=3D"">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<br =
+style=3D"box-sizing: border-box;" class=3D""><span style=3D"box-sizing: =
+border-box; font-weight: 700;" class=3D"">1ST CALL FOR PAPERS - SIMBig =
+2022</span><br style=3D"box-sizing: border-box;" =
+class=3D"">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<br =
+style=3D"box-sizing: border-box;" class=3D""><br style=3D"box-sizing: =
+border-box;" class=3D""><font color=3D"black" style=3D"box-sizing: =
+border-box;" class=3D""><span style=3D"box-sizing: border-box; =
+font-weight: 700;" class=3D"">SIMBig 2022</span></font>&nbsp;- 9th =
+International Conference on Information Management and Big Data<br =
+style=3D"box-sizing: border-box;" class=3D""><font color=3D"black" =
+style=3D"box-sizing: border-box;" class=3D""><span style=3D"box-sizing: =
+border-box; font-weight: 700;" class=3D"">Where</span></font>: =
+Universidad Nacional Mayor de San Marcos, Lima, Peru&nbsp;<br =
+style=3D"box-sizing: border-box;" class=3D""><font color=3D"black" =
+style=3D"box-sizing: border-box;" class=3D""><span style=3D"box-sizing: =
+border-box; font-weight: 700;" =
+class=3D"">When:</span></font>&nbsp;November 16-18, 2022&nbsp;<br =
+style=3D"box-sizing: border-box;" class=3D""><font color=3D"black" =
+style=3D"box-sizing: border-box;" class=3D""><span style=3D"box-sizing: =
+border-box; font-weight: 700;" class=3D"">Website:</span></font>&nbsp;<a =
+href=3D"http://simbig.org/SIMBig2022/" target=3D"_blank" =
+style=3D"box-sizing: border-box; background-color: transparent; color: =
+rgb(51, 122, 183); text-decoration: none;" =
+class=3D"">http://simbig.org/SIMBig2022/</a><br style=3D"box-sizing: =
+border-box;" class=3D""><br style=3D"box-sizing: border-box;" =
+class=3D"">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<br =
+style=3D"box-sizing: border-box;" class=3D""></p><br style=3D"box-sizing: =
+border-box;" class=3D""><p style=3D"box-sizing: border-box; margin: 0px =
+0px 10px;" class=3D""><span style=3D"box-sizing: border-box; =
+font-weight: 700;" class=3D"">OVERVIEW</span><br style=3D"box-sizing: =
+border-box;" class=3D"">-------------</p><p style=3D"box-sizing: =
+border-box; margin: 0px 0px 10px;" class=3D"">SIMBig 2021 seeks to =
+present new methods of Artificial Intelligence (AI), Data Science, and =
+related fields, for analyzing, managing, and extracting insights and =
+patterns from large volumes of data.</p><br style=3D"box-sizing: =
+border-box;" class=3D""><p style=3D"box-sizing: border-box; margin: 0px =
+0px 10px;" class=3D""><span style=3D"box-sizing: border-box; =
+font-weight: 700;" class=3D"">KETYNOTE SPEAKERS</span><br =
+style=3D"box-sizing: border-box;" class=3D"">-------------</p><ul =
+style=3D"box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;" =
+class=3D""><li style=3D"box-sizing: border-box;" class=3D""><img =
+class=3D"img-circle" alt=3D"Leman Akoglu" style=3D"box-sizing: =
+border-box; border: 0px; vertical-align: middle; border-top-left-radius: =
+50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; =
+border-bottom-left-radius: 50%;" apple-inline=3D"yes" =
+id=3D"0E6ED6ED-41B6-47DF-A1A8-7B5928DA767F" =
+src=3D"cid:2760D6C0-9A57-482B-AFB0-9EDC094644E5">&nbsp;<span =
+style=3D"box-sizing: border-box; font-weight: 700;" class=3D"">Leman =
+Akoglu</span>, Carnegie Mellon University, USA</li><li =
+style=3D"box-sizing: border-box;" class=3D""><img class=3D"img-circle" =
+alt=3D"Rich Caruana" style=3D"box-sizing: border-box; border: 0px; =
+vertical-align: middle; border-top-left-radius: 50%; =
+border-top-right-radius: 50%; border-bottom-right-radius: 50%; =
+border-bottom-left-radius: 50%;" apple-inline=3D"yes" =
+id=3D"14EC3746-D9A4-4772-85DE-B42421A8D9A5" =
+src=3D"cid:168A7D6B-CA1E-4307-BF9B-127B419C7E60">&nbsp;<span =
+style=3D"box-sizing: border-box; font-weight: 700;" class=3D"">Rich =
+Caruana</span>, Microsoft, USA</li><li style=3D"box-sizing: border-box;" =
+class=3D""><img class=3D"img-circle" alt=3D"Wang-Chiew Tan" =
+style=3D"box-sizing: border-box; border: 0px; vertical-align: middle; =
+border-top-left-radius: 50%; border-top-right-radius: 50%; =
+border-bottom-right-radius: 50%; border-bottom-left-radius: 50%;" =
+apple-inline=3D"yes" id=3D"EC0420B7-8CD4-4877-BC8D-3C385674002D" =
+src=3D"cid:1B085FBD-B79B-4320-B519-D2BF60BD2E98">&nbsp;<span =
+style=3D"box-sizing: border-box; font-weight: 700;" class=3D"">Wang-Chiew =
+Tan</span>, Facebook AI, USA</li><li style=3D"box-sizing: border-box;" =
+class=3D""><img class=3D"img-circle" alt=3D"Andrew Tomkins" =
+style=3D"box-sizing: border-box; border: 0px; vertical-align: middle; =
+border-top-left-radius: 50%; border-top-right-radius: 50%; =
+border-bottom-right-radius: 50%; border-bottom-left-radius: 50%;" =
+apple-inline=3D"yes" id=3D"F492601D-C197-45D3-A8D8-0079571BB4B5" =
+src=3D"cid:82F6C6F0-08C0-4CD3-A8E0-279EC77378B0">&nbsp;<span =
+style=3D"box-sizing: border-box; font-weight: 700;" class=3D"">Andrew =
+Tomkins</span>, Google, USA</li></ul><br style=3D"box-sizing: =
+border-box;" class=3D""><p style=3D"box-sizing: border-box; margin: 0px =
+0px 10px;" class=3D""><span style=3D"box-sizing: border-box; =
+font-weight: 700;" class=3D"">IMPORTANT DATES</span><br =
+style=3D"box-sizing: border-box;" class=3D"">-------------</p><ul =
+style=3D"box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;" =
+class=3D""><li style=3D"box-sizing: border-box;" class=3D""><font =
+color=3D"black" style=3D"box-sizing: border-box;" class=3D""><span =
+style=3D"box-sizing: border-box; font-weight: 700;" class=3D"">August =
+05, 2022</span></font>&nbsp;--&gt; Papers submission deadline</li><li =
+style=3D"box-sizing: border-box;" class=3D""><font color=3D"black" =
+style=3D"box-sizing: border-box;" class=3D"">September 09, =
+2022</font>&nbsp;--&gt; Notification of acceptance</li><li =
+style=3D"box-sizing: border-box;" class=3D""><font color=3D"black" =
+style=3D"box-sizing: border-box;" class=3D"">October 07, =
+2022</font>&nbsp;--&gt; Camera-ready versions</li><li style=3D"box-sizing:=
+ border-box;" class=3D""><font color=3D"black" style=3D"box-sizing: =
+border-box;" class=3D""><span style=3D"box-sizing: border-box; =
+font-weight: 700;" class=3D"">November 16-18, =
+2022</span></font>&nbsp;--&gt; Conference held in Lima, =
+Peru</li></ul><br style=3D"box-sizing: border-box;" class=3D""><p =
+style=3D"box-sizing: border-box; margin: 0px 0px 10px;" class=3D""><span =
+style=3D"box-sizing: border-box; font-weight: 700;" class=3D"">PUBLICATION=
+ AND TRAVEL AWARDS</span><br style=3D"box-sizing: border-box;" =
+class=3D"">-------------</p><p style=3D"box-sizing: border-box; margin: =
+0px 0px 10px;" class=3D"">All accepted papers of SIMBig 2022 (tracks =
+including) will be published with&nbsp;<a =
+href=3D"https://www.springer.com/series/7899" target=3D"_blank" =
+style=3D"box-sizing: border-box; background-color: transparent; color: =
+rgb(51, 122, 183); text-decoration: none;" class=3D"">Springer CCIS =
+Series</a>.</p><br style=3D"box-sizing: border-box;" class=3D""><center =
+style=3D"box-sizing: border-box;" class=3D""><img alt=3D"Springer" =
+style=3D"box-sizing: border-box; border: 0px; vertical-align: middle;" =
+apple-inline=3D"yes" id=3D"2749C99E-20DD-4CBF-8D88-B0BD3326500A" =
+src=3D"cid:5F9189A7-8A8C-461A-A710-380EF5ADF6C4" class=3D""></center><br =
+style=3D"box-sizing: border-box;" class=3D""><p style=3D"box-sizing: =
+border-box; margin: 0px 0px 10px;" class=3D"">The best 8-10 papers of =
+SIMBig 2022 (tracks including) will be selected to submit an extension =
+to be published in the&nbsp;<a =
+href=3D"https://www.springer.com/journal/42979" target=3D"_blank" =
+style=3D"box-sizing: border-box; background-color: transparent; color: =
+rgb(51, 122, 183); text-decoration: none;" class=3D"">Springer SN =
+Computer Science Journal</a>.</p><br style=3D"box-sizing: border-box;" =
+class=3D""><p style=3D"box-sizing: border-box; margin: 0px 0px 10px;" =
+class=3D"">Thanks to the support of the&nbsp;<a href=3D"http://naacl.org/"=
+ target=3D"_blank" style=3D"box-sizing: border-box; background-color: =
+transparent; color: rgb(51, 122, 183); text-decoration: none;" =
+class=3D"">North American Chapter of the Association for Computational =
+Linguistics (NAACL)</a>, SIMBig 2022 will offer&nbsp;<font color=3D"blue" =
+style=3D"box-sizing: border-box;" class=3D""><span style=3D"box-sizing: =
+border-box; font-weight: 700;" class=3D"">4 student travel =
+awards</span></font>&nbsp;for the best papers.</p><br style=3D"box-sizing:=
+ border-box;" class=3D""><center style=3D"box-sizing: border-box;" =
+class=3D""><img alt=3D"NAACL" style=3D"box-sizing: border-box; border: =
+0px; vertical-align: middle;" apple-inline=3D"yes" =
+id=3D"288B6BB5-FCF5-4D5D-8A28-74DA0F040E90" =
+src=3D"cid:28F7C166-A49C-457C-BADE-9529A42C5261" class=3D""></center><br =
+style=3D"box-sizing: border-box;" class=3D""><p style=3D"box-sizing: =
+border-box; margin: 0px 0px 10px;" class=3D""><span style=3D"box-sizing: =
+border-box; font-weight: 700;" class=3D"">TOPICS OF INTEREST</span><br =
+style=3D"box-sizing: border-box;" class=3D"">-------------</p><p =
+style=3D"box-sizing: border-box; margin: 0px 0px 10px;" class=3D"">SIMBig =
+2022 has a broad scope. We invite contributions on theory and practice, =
+including but not limited to the following technical areas:</p><ul =
+style=3D"box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;" =
+class=3D""><li style=3D"box-sizing: border-box;" class=3D"">Artificial =
+Intelligence</li><li style=3D"box-sizing: border-box;" class=3D"">Data =
+Science</li><li style=3D"box-sizing: border-box;" class=3D"">Machine =
+Learning</li><li style=3D"box-sizing: border-box;" class=3D"">Natural =
+Language Processing</li><li style=3D"box-sizing: border-box;" =
+class=3D"">Semantic Web</li><li style=3D"box-sizing: border-box;" =
+class=3D"">Healthcare Informatics</li><li style=3D"box-sizing: =
+border-box;" class=3D"">Biomedical Informatics</li><li =
+style=3D"box-sizing: border-box;" class=3D"">Data Privacy and =
+Security</li><li style=3D"box-sizing: border-box;" class=3D"">Information =
+Retrieval</li><li style=3D"box-sizing: border-box;" class=3D"">Ontologies =
+and Knowledge Representation</li><li style=3D"box-sizing: border-box;" =
+class=3D"">Social Networks and Social Web</li><li style=3D"box-sizing: =
+border-box;" class=3D"">Information Visualization</li><li =
+style=3D"box-sizing: border-box;" class=3D"">OLAP and Business =
+intelligence</li><li style=3D"box-sizing: border-box;" =
+class=3D"">Data-driven Software Engineering</li></ul><br =
+style=3D"box-sizing: border-box;" class=3D""><p style=3D"box-sizing: =
+border-box; margin: 0px 0px 10px;" class=3D""><span style=3D"box-sizing: =
+border-box; font-weight: 700;" class=3D"">SPECIAL TRACKS</span><br =
+style=3D"box-sizing: border-box;" class=3D"">-------------</p><p =
+style=3D"box-sizing: border-box; margin: 0px 0px 10px;" class=3D"">SIMBig =
+2022 will propose several special tracks in addition to the main =
+conference, such as:</p><ul style=3D"box-sizing: border-box; margin-top: =
+0px; margin-bottom: 10px;" class=3D""><li style=3D"box-sizing: =
+border-box;" class=3D""><span style=3D"box-sizing: border-box; =
+font-weight: 700;" class=3D"">SNMAM</span>: Social Network and Media =
+Analysis and Mining&nbsp;</li><li style=3D"box-sizing: border-box;" =
+class=3D""><span style=3D"box-sizing: border-box; font-weight: 700;" =
+class=3D"">DISE</span>: Data-drIven Software =
+Engineering&nbsp;</li></ul><br style=3D"box-sizing: border-box;" =
+class=3D""><p style=3D"box-sizing: border-box; margin: 0px 0px 10px;" =
+class=3D""><span style=3D"box-sizing: border-box; font-weight: 700;" =
+class=3D"">CONTACT</span><br style=3D"box-sizing: border-box;" =
+class=3D"">-------------</p><p style=3D"box-sizing: border-box; margin: =
+0px 0px 10px;" class=3D"">SIMBig 2022 General Chairs</p><ul =
+style=3D"box-sizing: border-box; margin-top: 0px; margin-bottom: 10px;" =
+class=3D""><li style=3D"box-sizing: border-box;" class=3D"">Juan Antonio =
+Lossio-Ventura, National Institutes of Health, USA (<a =
+href=3D"mailto:juan.lossio@nih.gov" style=3D"box-sizing: border-box; =
+background-color: transparent; color: rgb(51, 122, 183); =
+text-decoration: none;" class=3D"">juan.lossio@nih.gov</a>)</li><li =
+style=3D"box-sizing: border-box;" class=3D"">Hugo Alatrista-Salas, =
+Pontificia Universidad Cat=C3=B3lica del Per=C3=BA, Peru (<a =
+href=3D"mailto:halatrista@pucp.pe" style=3D"box-sizing: border-box; =
+background-color: transparent; color: rgb(51, 122, 183); =
+text-decoration: none;" =
+class=3D"">halatrista@pucp.pe</a>)</li></ul></div><div class=3D""><br =
+class=3D""></div></blockquote></div></body></html>=
+
+--Apple-Mail=_AEA93BE9-9C32-456F-8E0E-3EFD95417501
+Content-Transfer-Encoding: base64
+Content-Disposition: inline;
+	filename=leman.jpg
+Content-Type: image/jpeg;
+	x-unix-mode=0666;
+	name="leman.jpg"
+Content-Id: <2760D6C0-9A57-482B-AFB0-9EDC094644E5>
+
+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
+Y2HUZpfdycAZOcDpX//Z
+--Apple-Mail=_AEA93BE9-9C32-456F-8E0E-3EFD95417501
+Content-Transfer-Encoding: base64
+Content-Disposition: inline;
+	filename=rich.jpg
+Content-Type: image/jpeg;
+	x-unix-mode=0666;
+	name="rich.jpg"
+Content-Id: <168A7D6B-CA1E-4307-BF9B-127B419C7E60>
+
+/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQECAQEB
+AQEBAgICAQEBAgIDAgICAgMDAwIDAwQDAwQFBQUGBggBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB
+AQEBAQIBAQEBAQECAgIBAQECAgMCAgICAwMDAgMDBAMDBAUFBQYGCP/AABEIADwAPAMBIgACEQED
+EQH/xACKAAACAwEBAQAAAAAAAAAAAAAFBgcICQMEARAAAgIBAgYBAgUDBAMAAAAAAQIDBAUGEQAH
+EhMhMSIUQQgyUWGBFXHBCSORsRdD0QEAAgMBAQAAAAAAAAAAAAAABQcDBAYIAhEAAgIBBAICAgEF
+AQAAAAAAAQIDBBEABRIhBjETQSJRFAcjMkJhcf/aAAwDAQACEQMRAD8A1NUAHbcb+ff8+v347oBs
+Rt/3txwC+dxuT7H+d/1347s6xRvJI6RRRxvJJI7BEjjRTJI8jt4VIx5LegASeJ2OPWs+NfHi38AE
+k+AAN2333GwHk78IOc5gaB09Maed1xo7C2vkfpctqnBY+yNn7bdcNywjIVYhT1AbHxxSLnNzb15z
+5OpOXPI3JW9PaSx5q43U+uK8UkWdz02S2lq4jTKSL1VK1qJXleU9LiICRx8ghi3Cf6VnL7LaYE2f
+x2utda/y1ue1m8/q/UGXevVtW+ow0cJp7HRpWr4ymgJee2zO0hBA87AdLuMUT8BLWQgZ5zziIEg4
+IRQCWI0cobDf3FecFa1KuQD8EDShcjou+QFz7A961CWaG5BHbqyQ2ak6Fq9utLFYqWV3PygtQFkm
+Xce0J88A7kA2ckHc+NvY8edv5PGY2M/BXzw/CJSs645G6tzWNowLYFvl3lbtzO6Pv1TZGQlisaau
+OyM6fKLvVTFMnV1I/Fu/w+fiJ0z+IXTOWs0arae1tpC5Ww/MDQ9ubuXtOZWzV+orWazsFa/p7LDq
+ana28lWik2dCOPdW/FYJTlGJATxMciSo2Bn8HX2wHse9Q7ls1/amH8qCaNT6MsLQuO8fkrZ9nrUo
+3IvzBRt598BmjXc7r5/fhsuReT4H7nb/AOn3wBeEdR9n/jb+OL4yNCjqd43G/sf2/wCyeFvX880e
+itRJWIS3exr4uoWdYx9Rl3GNQIx/9m0h6f39cEI5zvtudvP38/38cIPOCCzkNB5GpSlFaw9jHzwW
+hE07VbNKb62pZ7II7ixSou4+44hnkSIF5ThU/wAj+hkZJ1Zo1JrtiGtWTnPM3GJPQZgOWAT9nHQO
+gHJXQWmdOZafGYGvUdTNXNlyUV7uYb/Zu3d5TuxfpEaHcfFBtxqPoOo9PGKhwFfvtF2mRJt4l692
+LkqG7nSfR+54xw5UctNV6qwsdwxad1HlXxaTQVdaZzOYPHTZdEjr9utc0yyz1bznvO04UfT7IiK3
+USLF8v8AWHNnSGU1PpenzFtadwuj8bDkINO21sat6pp7xialSy2o2kt4aWKGN5YVbvL5Xddjxgm2
+qKbcLNx9yrKZ7Eilm5vFGBKqRjjEryIrEjiSoyO9dAbJu9ilt9bbk2O/OIqdd1SqqCzMwgaWST++
+0cUnFYyX4uceh3q5nNjS0mTxmQhtYqPGxmpIlfpQLG3dHlkl+3WPDcYM6T0G/J38XWDs4yglXDcy
+sTqfR+auN21lvXYq0up8J3x8TLLHYqCOJwGJ63J2341Ur4XmjqbN5mxqPCajy8bTwnGazs81O80D
+XLD15np6HuxVTYx0VYiZpId451boiQsCOK8W+Vus9T80oBZtY+ni+V2ap5RbNqvHJkMjclrXUs4r
+GTxAKkD7EyvMymLfYbni1s21pttma696MwTLEREysJvnM4EcaRIpAfHLkvTYGg3mNi35BVr7fX2q
+y91J5lg4mPh8CwFpmZnZcqCFwwyuT7053Iwft4+/+OF6WPocjdh+2/rhssJuPXnwR/A8evQ4CyQg
+sTuRxvlQH2D9aRJc/rGjEeSUkfLc7bbbj+x4WeZWQmbl7q+aqsk1qlgruSghhXuSSPjYvrDEqH85
+kVGU/sTwGr3T6J3I8fv7/wAcHYJ0lR45ESWORGjkikUMkscg7csTq35o5QSrD7g8UbUYnimgZuIm
+ikjLj2okXjn/ANX3orRnalZq3IsGSpYgsRj6LwSrKBn6UkaPcqMhy309y+v6319dGNxmPqirFZgs
+XYrdyZq6Sw16kWPcPJNswLHzsvCJy5588uK1PmjPc0vdaR4sf/RclZvTRWspMGZDJVoJAz1DWPS8
+Zk69h5kO/EY427e0rkLvKLWOMgznLrKWYc7pDMWK31M8ENWjYpy6aavAB3pAhipOfar25fKnxYfl
+fy+wi1aNajV0bNghGY7eXyNzWSZfHpaXalXp0K9lFu2Kr7b/AO6o9HzwrYEv1JpYLUhhCPIiiSKW
+YF0AwqcXXigyCpHRHeundi3mvucNd6ckSGOvC5eGENPhj8Z+R+Sn88FWHeDqyvKvmLyu5r6Xiw+H
+vTVs5Ux8durRmu36ViKWuG+rrdhHjineAKZA8ChXA8DweIGm1BZXmBrnBCH6OOXC6XyKp0RBvNzI
+Y6xBHIh3ij3TqYD84Ybnjz4vJ6I0TnJjyy0vTyeoMPHeoYaSti2j/r2c1Vfq0JZY5bJL2ZnjV4l6
+nYRLIxJG44hNeaeUh/Er/wCKs9gMZLmdR8nb3MzO6rxWQls08VfxGvIdL1tEQHoMV2tRivRyd9HB
+aUyMAV4s7dNYn3ehLuEzJUSdQrSM/wAbzOoMKqpJCs5Azg4x2ToR5TdszbTusO0wQy3I6VxT/EjS
+KUVXh+G2xwSecSZKAEksML3qbrEO3URv9zvt6388ApE+ZH6ePfDRYG6n2CAf24AOvyPxH/JHDc4n
+r69DXMGf31qHoZ2V/wA3x/Tx/Hr9eD9W+kas0rqkaAs7syqiKBuzOzflQfqeED6qWOGaQdJMUZdQ
+QekkH03SQdjxC2stR5i/bOIe20FFspjKbxVlVO5BPKe+shcN1mVR0En0CduMvvO9w7SE5QSTzSZ+
+NQypHkHGXk7IA/4Dpl+HeD2/LnmaO7Xp1K7qs7usstj8gCPhhACvnPssMaYNQ8z8wn4g9JYOMPPp
+BNOzWaUPbEcNzN17a3pMxBOyt841URV5D8d1Zdve+gFjC57Vecwuoql6OjgbSwzZdoKH0z3JvoBD
+ZkMddGSCe2CRLICwILdG3FL8tgMVb1DpC89WOK3BVy0CWIFSKQwR4NbkULkD5rFKOsE+ST8ieLn8
+vcxk8ZTweGq3JhjslHJYmgch+08TgqKzHzDH5/KPHC8h3yzO9w2Asqz2TOqNlhCyceKRknKIo6xp
+72fB9uoPQrbe8lRqNCvWaaFvjewrLykln4ACWaRssTgdnUgasiwWmaDaiYR1pEx1GnTn7bVI6sMc
+PTPFUhcd1xbdiZJXUSTBmGw4pxBhcZWyOpdY36FoZvKtQxdFoQfqMVhsfea3BiLVYJuLFyxNLbsu
+h2hkdYz4TiU9ZZ7J5rW+Yr5CfvVdK4jG5XFVCCa4vWsk1Z5rMbk98oi9KeunqJ98J2HU6hld78kg
++huUiFgIRLLXDJJM1tXDCYguSvrbgFum5T3LUTueLAoYgn4RxKhAARB+8aYXi3je37TUl4RiUcpA
+TJl5JpWXM0kzntshsAaP1dUwmY0ckGrzRjpWwwbtuqj4GynuB5R8t/Kngk8oJBHkMOoMNmVgT4ZW
++6niPc/POLODTvOXu5ynUln3CziKeaUS9DoB8mCAeQR5J98eXNZW/iMlYpU7DLAhSREICBDKgkZU
+SDoVEBPgAcb7ZvM7UcJj3CEWxGeCTIQkxAwAJM9P199HSf8AMf6I7XYtLZ2C2NpaXEk9OZHsUgXP
+ZrYIeDv/AF7X6AGv/9k=
+--Apple-Mail=_AEA93BE9-9C32-456F-8E0E-3EFD95417501
+Content-Transfer-Encoding: base64
+Content-Disposition: inline;
+	filename=wang.jpg
+Content-Type: image/jpeg;
+	x-unix-mode=0666;
+	name="wang.jpg"
+Content-Id: <1B085FBD-B79B-4320-B519-D2BF60BD2E98>
+
+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
+--Apple-Mail=_AEA93BE9-9C32-456F-8E0E-3EFD95417501
+Content-Transfer-Encoding: base64
+Content-Disposition: inline;
+	filename=andrew.jpg
+Content-Type: image/jpeg;
+	x-unix-mode=0666;
+	name="andrew.jpg"
+Content-Id: <82F6C6F0-08C0-4CD3-A8E0-279EC77378B0>
+
+/9j/4AAQSkZJRgABAQEASABIAAD/4QkhaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hw
+YWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBt
+ZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJYTVAgQ29yZSA1LjQuMCI+IDxy
+ZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4
+LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiLz4gPC9yZGY6UkRGPiA8L3g6eG1w
+bWV0YT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICA8P3hwYWNrZXQgZW5kPSJ3Ij8+AP/hAHBFeGlmAABNTQAqAAAACAAEAQYAAwAAAAEAAgAAARIA
+AwAAAAEAAQAAASgAAwAAAAEAAgAAh2kABAAAAAEAAAA+AAAAAAADoAEAAwAAAAEAAQAAoAIABAAA
+AAEAAAB+oAMABAAAAAEAAAB+AAAAAP/bAEMACAYGBwYFCAcHBwkJCAoMFA0MCwsMGRITDxQdGh8e
+HRocHCAkLicgIiwjHBwoNyksMDE0NDQfJzk9ODI8LjM0Mv/bAEMBCQkJDAsMGA0NGDIhHCEyMjIy
+MjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMv/AABEIADwAPAMB
+IgACEQEDEQH/xAAfAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgv/xAC1EAACAQMDAgQDBQUE
+BAAAAX0BAgMABBEFEiExQQYTUWEHInEUMoGRoQgjQrHBFVLR8CQzYnKCCQoWFxgZGiUmJygpKjQ1
+Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoOEhYaHiImKkpOUlZaXmJmaoqOk
+paanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4eLj5OXm5+jp6vHy8/T19vf4+fr/xAAf
+AQADAQEBAQEBAQEBAAAAAAAAAQIDBAUGBwgJCgv/xAC1EQACAQIEBAMEBwUEBAABAncAAQIDEQQF
+ITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdI
+SUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1
+tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/APOU
+gJ681OsGO1WEix0FSTbLaB55eEQFjiuc+WdVyaSKknlQKWmYIvqTUUN1bSsQhPHcjFYkKXniHUgs
+Q4JwB/Cor0jRfh5IhRpLwDIBPy5/nUTklue/hcoUoqVS5zjRqCAdvzfd560ht8DpXqMngbTJLBrZ
+0aRjyJT1B9RXAz6Xc2E8ttcN5hjcqHxjIqIzTdjmzHLZYePtKXwrfyMd4PaoTDz0rXe346VAYFya
+o8eNbQtpF9aoeIgE0WXJwC6g/TNbMMWcZBqr4lszceHroIPmXDj8CK0MMNUSxME+6IPCkMUUSsAq
+gEGvYNOMZs0YMDx1rxXw9p9xOsRRIX3L0lBKg+4Fei+FFddZvbGWRTbCLdGi8BTXLVWtz9IotqNj
+ullt9i/vYyTxjcM15d4zlW28SiDgM7IxwfvBhgfqK7aw0q6W8kJFmIONo8o78/WsrXvDVnqettqN
+07D7LCNozxkEkUoNJmGLpupRnHyf5HGSw9fr2qAwjPStSSPOeOKrmE5NdR+ZRqksMfA4qxJai4t5
+IHGBIpU/jSQLnFXVT2qkrnNKrKMuaO6OY8O3A0u6u7eZh/o5IJ6Vt+EtRuE165uJII2hmBUSb+Ae
+cfh0rC8S2T6feS6kE32dwvlzAdVbsf0rR8IafPuPk5kgYhh++xXPVhy6n6hlmNji8PCond219ep6
+nbXw+UMyElc4B+6e4965/WNQdjcWyKMSMCz98Y6VLfvDZeSEz5zEjbuJP0rIndhqEtrKp85Y0lPp
+hs/yIxU0VedmcnENStDAydH527FKSPAJx3qsU5PFaEqcdO9VynPSuvlPzWM3bUgtzjFaCdfxrNt+
+1M1y/n0/RZriAgSAgAkZxmiJoqUqtRQju9CXxLcWEWhXUF3PHG8iHy1P3iw5GB9RXMeEpZ3kktoL
+oxKAGx1xXKmWW+uJHupHldzhmY5NW/D91Lb3CPG2GDlPqB606sbo+9yfB/UYOm5Xbd/L5HslpJDa
+qLi5n86YDmRj936VpKIp0ZygDSqMkjkDsP1rhrO4kvtctbedt0SI0u0cAkYwD7V2ZchSeMijDUre
++z1MXU5l7Po9zNuItnCnePUVSPBPb61LJK4shz/Ef5mp1gjlXcw5rolTvsfMYnIqFV81N8v5H//Z
+--Apple-Mail=_AEA93BE9-9C32-456F-8E0E-3EFD95417501
+Content-Transfer-Encoding: base64
+Content-Disposition: inline;
+	filename=ccis2.jpg
+Content-Type: image/jpeg;
+	x-unix-mode=0666;
+	name="ccis2.jpg"
+Content-Id: <5F9189A7-8A8C-461A-A710-380EF5ADF6C4>
+
+/9j/4AAQSkZJRgABAQAAYABgAAD/4QCMRXhpZgAATU0AKgAAAAgABQESAAMAAAABAAEAAAEaAAUA
+AAABAAAASgEbAAUAAAABAAAAUgEoAAMAAAABAAIAAIdpAAQAAAABAAAAWgAAAAAAAABgAAAAAQAA
+AGAAAAABAAOgAQADAAAAAQABAACgAgAEAAAAAQAAAOygAwAEAAAAAQAAADgAAAAA/+0AOFBob3Rv
+c2hvcCAzLjAAOEJJTQQEAAAAAAAAOEJJTQQlAAAAAAAQ1B2M2Y8AsgTpgAmY7PhCfv/AABEIADgA
+7AMBIgACEQEDEQH/xAAfAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgv/xAC1EAACAQMDAgQD
+BQUEBAAAAX0BAgMABBEFEiExQQYTUWEHInEUMoGRoQgjQrHBFVLR8CQzYnKCCQoWFxgZGiUmJygp
+KjQ1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoOEhYaHiImKkpOUlZaXmJma
+oqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4eLj5OXm5+jp6vHy8/T19vf4+fr/
+xAAfAQADAQEBAQEBAQEBAAAAAAAAAQIDBAUGBwgJCgv/xAC1EQACAQIEBAMEBwUEBAABAncAAQID
+EQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RF
+RkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqy
+s7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2wBDAAkJCQkJCRAJ
+CRAXEBAQFx8XFxcXHycfHx8fHycuJycnJycnLi4uLi4uLi44ODg4ODhBQUFBQUlJSUlJSUlJSUn/
+2wBDAQsMDBMREyARESBMNCo0TExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExM
+TExMTExMTExMTEz/3QAEAA//2gAMAwEAAhEDEQA/APYdQu5LSNXjAJJxzWT/AGzc/wB1f1/xq5rX
++oT/AHv6GvDPEXjHVtK1iawthEY49uNy5PKg9c+9cFR1JVHGDO2mqahzTR7P/bNz/dX9f8aP7Zuf
+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
+--Apple-Mail=_AEA93BE9-9C32-456F-8E0E-3EFD95417501
+Content-Transfer-Encoding: base64
+Content-Disposition: inline;
+	filename=naacl_logo_small.jpg
+Content-Type: image/jpeg;
+	x-unix-mode=0666;
+	name="naacl_logo_small.jpg"
+Content-Id: <28F7C166-A49C-457C-BADE-9529A42C5261>
+
+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
+--Apple-Mail=_AEA93BE9-9C32-456F-8E0E-3EFD95417501--
+
+--Apple-Mail=_A60559E7-9601-4220-B8D9-EAB48BDBF102--
+

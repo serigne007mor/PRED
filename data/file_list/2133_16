@@ -1,0 +1,529 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (bouncesmtp1.u12.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 921FC14017C1
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Tue, 10 Oct 2023 09:40:54 +0200 (CEST)
+Received: from mx1.univ-nantes.fr (MX1.univ-nantes.fr [193.52.101.135])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id 8D9221AC
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Tue, 10 Oct 2023 09:40:54 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.univ-nantes.fr (Postfix) with ESMTP id 810E7120030
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 10 Oct 2023 09:40:54 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: YES
+X-Spam-Score: 5.422
+X-Spam-Level: *****
+X-Spam-Status: Yes, score=5.422 tagged_above=-1000 required=5
+	tests=[CRM114_SPAM=5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	NO_RDNS=0.5, NO_RDNS2=0.01, RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001,
+	SPF_PASS=-0.001, UN_PHISHING_PW=0.1, URIBL_BLOCKED=0.001]
+	autolearn=disabled
+X-CRM114-Status: SPAM ( -12.8176 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=unicaen.fr
+Received: from mx1.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 0M3FHHsoEhlj for <liste-egc@polytech.univ-nantes.fr>;
+	Tue, 10 Oct 2023 09:40:51 +0200 (CEST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=194.199.107.75; helo=mailout.unicaen.fr; envelope-from=bertrand.cuissart@unicaen.fr; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=none dis=none) header.from=unicaen.fr
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=unicaen.fr
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (1024-bit key; unprotected) header.d=unicaen.fr header.i=@unicaen.fr header.a=rsa-sha256 header.s=mail header.b=GqaXNU8U;
+	dkim-atps=neutral
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mailout.unicaen.fr (mailout.unicaen.fr [194.199.107.75])
+	by mx1.univ-nantes.fr (Postfix) with ESMTPS id 3157A120032
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 10 Oct 2023 09:40:48 +0200 (CEST)
+Received: from wzproxy1.unicaen.fr (wzproxy1.unicaen.fr [193.55.120.52])
+	by mailout.unicaen.fr (Postfix) with ESMTP id D9B2444403;
+	Tue, 10 Oct 2023 09:40:47 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=unicaen.fr; s=mail;
+	t=1696923647; bh=5g6k9noXxue+iFyaT0MHVfsuJJKWlY9o3qvS7U248aI=;
+	h=Date:From:To:Subject:From;
+	b=GqaXNU8UaL6jCxydHDwz7kAVuSXE/04aS/KtSOgvusn7CcrYR75lWvibMjpKgbkRF
+	 XlN3KCYH0JT8XGp6WcUX6TSMCHNmIGqyf81EESR0gMH1NkFTYjXawes8WQWQDZU+vX
+	 EuIPAPbk5+YGlMy2xNIhISjsosFDlHM/fUffAcDk=
+Received: from localhost (localhost [127.0.0.1])
+	by wzproxy1.unicaen.fr (Postfix) with ESMTP id D332E6706E;
+	Tue, 10 Oct 2023 09:40:47 +0200 (CEST)
+X-Amavis-Modified: Mail body modified (using disclaimer) - wzproxy1.unicaen.fr
+X-Virus-Scanned: amavis at wzproxy1.unicaen.fr
+Received: from wzproxy1.unicaen.fr ([127.0.0.1])
+ by localhost (wzproxy1.unicaen.fr [127.0.0.1]) (amavis, port 10026)
+ with ESMTP id tyxFZ4LwznLc; Tue, 10 Oct 2023 09:40:47 +0200 (CEST)
+Received: from lsmtp2.unicaen.fr (unknown [193.55.120.33])
+	by wzproxy1.unicaen.fr (Postfix) with ESMTP id A94386705F;
+	Tue, 10 Oct 2023 09:40:47 +0200 (CEST)
+Received: from wzstore6.unicaen.fr (wzstore6.unicaen.fr [10.14.129.120])
+	by lsmtp2.unicaen.fr (Postfix) with ESMTP id 95425C0A38;
+	Tue, 10 Oct 2023 09:40:34 +0200 (CEST)
+Date: Tue, 10 Oct 2023 09:40:34 +0200 (CEST)
+From: Bertrand Cuissart <bertrand.cuissart@unicaen.fr>
+To: info-ic@inria.fr, liste-egc@polytech.univ-nantes.fr, 
+	gazettebd3@univ-grenoble-alpes.fr
+Message-ID: <1461777992.117844678.1696923634146.JavaMail.zimbra@unicaen.fr>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="=_bf43b2a4-a5f4-4591-88e6-92d2b9bb70bb"
+X-Originating-IP: [10.38.9.128]
+X-Mailer: Zimbra 8.8.15_GA_4562 (ZimbraWebClient - GC117 (Linux)/8.8.15_GA_4562)
+Thread-Index: 00C0hjdXYJbQbB5DsVFC97DLrwSISg==
+Thread-Topic: printemps 2024 : MCF dans =?utf-8?Q?l=27=C3=A9quipe_CODAG=2C_informatique_pour_la_science_des_donn=C3=A9es?= (GREYC, Caen)
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] [SPAM] printemps 2024 : MCF dans =?UTF-8?Q?l=27=C3=A9?=
+ =?UTF-8?Q?quipe?= CODAG, informatique pour la science des =?UTF-8?Q?donn?=
+ =?UTF-8?Q?=C3=A9es?= (GREYC, Caen)
+
+--=_bf43b2a4-a5f4-4591-88e6-92d2b9bb70bb
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+Bonjour,=20
+
+L'=C3=A9quipe CODAG (Contraintes, Ontologies, Donn=C3=A9es, Annotations, Gr=
+aphes) est fortement susceptible de recruter un ma=C3=AEtre de conf=C3=A9re=
+nces au printemps 2024.=20
+CODAG est l'une des six =C3=A9quipes de recherche du [ https://www.greyc.fr=
+/ | GREYC (UMR CNRS 6072) ;=C2=A0 ] e lle est compos=C3=A9e d'une petite tr=
+entaine de membres dont douze enseignants-chercheurs de l'universit=C3=A9 d=
+e Caen Normandie.=20
+Le p=C3=A9rim=C3=A8tre de recherche de l'=C3=A9quipe correspond =C3=A0 l'in=
+formatique pour la science des donn=C3=A9es, il est d=C3=A9velopp=C3=A9 =C3=
+=A0 la fin de l'annonce.=20
+
+Si vous =C3=AAtes int=C3=A9ress=C3=A9 par ce poste, vous pouvez initier un =
+premier contact avec nous, via [ https://www.greyc.fr/equipes/codag/#membre=
+s | un membre de l'=C3=A9quipe ] ou via son responsable ( [ mailto:bertrand=
+.cuissart@unicaen.fr | bertrand.cuissart@unicaen.fr ] )=20
+Nous pourrons ensuite =C3=A9changer afin d'identifier des domaines d'int=C3=
+=A9r=C3=AAt communs.=20
+
+N'h=C3=A9sitez pas =C3=A0 prendre contact avec nous,=20
+Cordialement,=20
+
+--=20
+Bertrand Cuissart, pour CODAG=20
+
+
+
+
+Contour de l'=C3=A9quipe :=20
+
+L'=C3=A9quipe CODAG (Contraintes, Ontologies, Donn=C3=A9es, Annotations, Gr=
+aphes) participe activement aux =C3=A9volutions de la science des donn=C3=
+=A9es en associant des chercheurs issus de cultures scientifiques compl=C3=
+=A9mentaires. Le p=C3=A9rim=C3=A8tre des recherches englobe l'ensemble de l=
+a cha=C3=AEne de traitement des donn=C3=A9es, depuis leur pr=C3=A9paration =
+jusqu'=C3=A0 la conception de mod=C3=A8les pour exprimer les r=C3=A9sultats=
+. Les travaux de recherche de l'=C3=A9quipe portent principalement sur les =
+th=C3=A8mes suivants : les approches d=C3=A9claratives en optimisation sous=
+ contraintes, l'exploration de donn=C3=A9es, le traitement automatique des =
+langues, l'ing=C3=A9nierie des connaissances, l'apprentissage et l'aide =C3=
+=A0 la d=C3=A9cision.=20
+
+L'=C3=A9quipe s'investit fortement dans des projets interdisciplinaires en =
+collaborant avec des experts d'autres domaines: des sp=C3=A9cialistes du tr=
+aitement des donn=C3=A9es sportives, de l'information chimique ou les donn=
+=C3=A9es textuelles, parmi d'autres.=20
+
+Particuli=C3=A8rement reconnue pour des r=C3=A9sultats s'appuyant sur la di=
+versit=C3=A9 de ses comp=C3=A9tences scientifiques, CODAG a pour objectif d=
+e poursuivre dans cette direction.=20
+
+
+
+
+A travers ses ses recrutements, l'=C3=A9quipe souhaite d=C3=A9velopper sa c=
+apacit=C3=A9 =C3=A0 int=C3=A9grer les techniques actuelles de l'informatiqu=
+e pour la science des donn=C3=A9es comme par exemple celles rencontr=C3=A9e=
+s en apprentissage machine, que ce soit comme objets d'=C3=A9tude, comme pa=
+radigme ou simplement par la pratique. Dans cette optique, nous sommes auss=
+i int=C3=A9ress=C3=A9s par l'exploitation des petits jeux de donn=C3=A9es, =
+la fouille interactive, l'analyse formelle de concepts, la programmation pa=
+r contraintes ou la gestion ontologique des connaissances.=20
+
+
+=0A
+--=_bf43b2a4-a5f4-4591-88e6-92d2b9bb70bb
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><body><div style=3D"font-family: arial, helvetica, sans-serif; font-s=
+ize: 12pt; color: #000000"><div><div style=3D"color: #000000; font-family: =
+arial, helvetica, sans-serif; font-size: 16px; font-style: normal; font-var=
+iant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter=
+-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-tra=
+nsform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px;=
+ white-space: normal; background-color: #fdfdfd; text-decoration-thickness:=
+ initial; text-decoration-style: initial; text-decoration-color: initial;" =
+data-mce-style=3D"color: #000000; font-family: arial, helvetica, sans-serif=
+; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font=
+-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2=
+; text-align: start; text-indent: 0px; text-transform: none; widows: 2; wor=
+d-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; backgr=
+ound-color: #fdfdfd; text-decoration-thickness: initial; text-decoration-st=
+yle: initial; text-decoration-color: initial;">Bonjour,</div><div style=3D"=
+color: #000000; font-family: arial, helvetica, sans-serif; font-size: 16px;=
+ font-style: normal; font-variant-ligatures: normal; font-variant-caps: nor=
+mal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: star=
+t; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -w=
+ebkit-text-stroke-width: 0px; white-space: normal; background-color: #fdfdf=
+d; text-decoration-thickness: initial; text-decoration-style: initial; text=
+-decoration-color: initial;" data-mce-style=3D"color: #000000; font-family:=
+ arial, helvetica, sans-serif; font-size: 16px; font-style: normal; font-va=
+riant-ligatures: normal; font-variant-caps: normal; font-weight: 400; lette=
+r-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-tr=
+ansform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px=
+; white-space: normal; background-color: #fdfdfd; text-decoration-thickness=
+: initial; text-decoration-style: initial; text-decoration-color: initial;"=
+><br></div><div style=3D"color: #000000; font-family: arial, helvetica, san=
+s-serif; font-size: 16px; font-style: normal; font-variant-ligatures: norma=
+l; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orp=
+hans: 2; text-align: start; text-indent: 0px; text-transform: none; widows:=
+ 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal;=
+ background-color: #fdfdfd; text-decoration-thickness: initial; text-decora=
+tion-style: initial; text-decoration-color: initial;" data-mce-style=3D"col=
+or: #000000; font-family: arial, helvetica, sans-serif; font-size: 16px; fo=
+nt-style: normal; font-variant-ligatures: normal; font-variant-caps: normal=
+; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; =
+text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webk=
+it-text-stroke-width: 0px; white-space: normal; background-color: #fdfdfd; =
+text-decoration-thickness: initial; text-decoration-style: initial; text-de=
+coration-color: initial;">L'=C3=A9quipe<span>&nbsp;</span><span id=3D"DWT57=
+3" class=3D"ZmSearchResult" style=3D"background-color: #fffec4;" data-mce-s=
+tyle=3D"background-color: #fffec4;"><span id=3D"DWT588" class=3D"ZmSearchRe=
+sult" style=3D"background-color: #fffec4;" data-mce-style=3D"background-col=
+or: #fffec4;">CODAG</span></span><span>&nbsp;</span>(Contraintes, Ontologie=
+s, Donn=C3=A9es, Annotations, Graphes)&nbsp; est fortement&nbsp;&nbsp;susce=
+ptible de recruter un ma=C3=AEtre de conf=C3=A9rences au printemps 2024.</d=
+iv><div style=3D"color: #000000; font-family: arial, helvetica, sans-serif;=
+ font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-=
+variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2;=
+ text-align: start; text-indent: 0px; text-transform: none; widows: 2; word=
+-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; backgro=
+und-color: #fdfdfd; text-decoration-thickness: initial; text-decoration-sty=
+le: initial; text-decoration-color: initial;" data-mce-style=3D"color: #000=
+000; font-family: arial, helvetica, sans-serif; font-size: 16px; font-style=
+: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-w=
+eight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-ind=
+ent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-=
+stroke-width: 0px; white-space: normal; background-color: #fdfdfd; text-dec=
+oration-thickness: initial; text-decoration-style: initial; text-decoration=
+-color: initial;"><span id=3D"DWT575" class=3D"ZmSearchResult" style=3D"bac=
+kground-color: #fffec4;" data-mce-style=3D"background-color: #fffec4;"><spa=
+n id=3D"DWT590" class=3D"ZmSearchResult" style=3D"background-color: #fffec4=
+;" data-mce-style=3D"background-color: #fffec4;">CODAG</span></span><span>&=
+nbsp;</span>est l'une des six =C3=A9quipes de recherche du<span>&nbsp;</spa=
+n><span class=3D"Object" role=3D"link" id=3D"OBJ_PREFIX_DWT576_com_zimbra_u=
+rl" style=3D"color: #336699; text-decoration: none; cursor: pointer;" data-=
+mce-style=3D"color: #336699; text-decoration: none; cursor: pointer;"><span=
+ class=3D"Object" role=3D"link" id=3D"OBJ_PREFIX_DWT591_com_zimbra_url" sty=
+le=3D"color: #336699; text-decoration: none; cursor: pointer;" data-mce-sty=
+le=3D"color: #336699; text-decoration: none; cursor: pointer;"><a href=3D"h=
+ttps://www.greyc.fr/" target=3D"_blank" style=3D"color: #336699; text-decor=
+ation: none; cursor: pointer;" rel=3D"noopener" data-mce-href=3D"https://ww=
+w.greyc.fr/" data-mce-style=3D"color: #336699; text-decoration: none; curso=
+r: pointer;">GREYC (UMR CNRS 6072) ;<span>&nbsp;</span></a></span></span>e<=
+span style=3D"color: #000000; font-family: arial, helvetica, sans-serif; fo=
+nt-size: 16px; font-style: normal; font-variant-ligatures: normal; font-var=
+iant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; te=
+xt-align: start; text-indent: 0px; text-transform: none; widows: 2; word-sp=
+acing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background=
+-color: #ffffff; text-decoration-thickness: initial; text-decoration-style:=
+ initial; text-decoration-color: initial; float: none; display: inline !imp=
+ortant;" data-mce-style=3D"color: #000000; font-family: arial, helvetica, s=
+ans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: nor=
+mal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; o=
+rphans: 2; text-align: start; text-indent: 0px; text-transform: none; widow=
+s: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: norma=
+l; background-color: #ffffff; text-decoration-thickness: initial; text-deco=
+ration-style: initial; text-decoration-color: initial; float: none; display=
+: inline !important;">lle est compos=C3=A9e d'une petite trentaine de membr=
+es dont douze enseignants-chercheurs de l'universit=C3=A9 de Caen Normandie=
+.</span></div><div style=3D"color: #000000; font-family: arial, helvetica, =
+sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: no=
+rmal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; wido=
+ws: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: norm=
+al; background-color: #fdfdfd; text-decoration-thickness: initial; text-dec=
+oration-style: initial; text-decoration-color: initial;" data-mce-style=3D"=
+color: #000000; font-family: arial, helvetica, sans-serif; font-size: 16px;=
+ font-style: normal; font-variant-ligatures: normal; font-variant-caps: nor=
+mal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: star=
+t; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -w=
+ebkit-text-stroke-width: 0px; white-space: normal; background-color: #fdfdf=
+d; text-decoration-thickness: initial; text-decoration-style: initial; text=
+-decoration-color: initial;"><span style=3D"color: #000000; font-family: ar=
+ial, helvetica, sans-serif; font-size: 16px; font-style: normal; font-varia=
+nt-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-s=
+pacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-trans=
+form: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; w=
+hite-space: normal; background-color: #ffffff; text-decoration-thickness: i=
+nitial; text-decoration-style: initial; text-decoration-color: initial; flo=
+at: none; display: inline !important;" data-mce-style=3D"color: #000000; fo=
+nt-family: arial, helvetica, sans-serif; font-size: 16px; font-style: norma=
+l; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: =
+400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0p=
+x; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-=
+width: 0px; white-space: normal; background-color: #ffffff; text-decoration=
+-thickness: initial; text-decoration-style: initial; text-decoration-color:=
+ initial; float: none; display: inline !important;">Le p=C3=A9rim=C3=A8tre =
+de recherche de l'=C3=A9quipe correspond =C3=A0 l'informatique pour la scie=
+nce des donn=C3=A9es, il est d=C3=A9velopp=C3=A9 =C3=A0 la fin de l'annonce=
+.</span></div><div style=3D"color: #000000; font-family: arial, helvetica, =
+sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: no=
+rmal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; wido=
+ws: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: norm=
+al; background-color: #fdfdfd; text-decoration-thickness: initial; text-dec=
+oration-style: initial; text-decoration-color: initial;" data-mce-style=3D"=
+color: #000000; font-family: arial, helvetica, sans-serif; font-size: 16px;=
+ font-style: normal; font-variant-ligatures: normal; font-variant-caps: nor=
+mal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: star=
+t; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -w=
+ebkit-text-stroke-width: 0px; white-space: normal; background-color: #fdfdf=
+d; text-decoration-thickness: initial; text-decoration-style: initial; text=
+-decoration-color: initial;"><span style=3D"color: #000000; font-family: ar=
+ial, helvetica, sans-serif; font-size: 16px; font-style: normal; font-varia=
+nt-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-s=
+pacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-trans=
+form: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; w=
+hite-space: normal; background-color: #ffffff; text-decoration-thickness: i=
+nitial; text-decoration-style: initial; text-decoration-color: initial; flo=
+at: none; display: inline !important;" data-mce-style=3D"color: #000000; fo=
+nt-family: arial, helvetica, sans-serif; font-size: 16px; font-style: norma=
+l; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: =
+400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0p=
+x; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-=
+width: 0px; white-space: normal; background-color: #ffffff; text-decoration=
+-thickness: initial; text-decoration-style: initial; text-decoration-color:=
+ initial; float: none; display: inline !important;"><br></span></div><div s=
+tyle=3D"color: #000000; font-family: arial, helvetica, sans-serif; font-siz=
+e: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-c=
+aps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-ali=
+gn: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing:=
+ 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color=
+: #fdfdfd; text-decoration-thickness: initial; text-decoration-style: initi=
+al; text-decoration-color: initial;" data-mce-style=3D"color: #000000; font=
+-family: arial, helvetica, sans-serif; font-size: 16px; font-style: normal;=
+ font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 40=
+0; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px;=
+ text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-wi=
+dth: 0px; white-space: normal; background-color: #fdfdfd; text-decoration-t=
+hickness: initial; text-decoration-style: initial; text-decoration-color: i=
+nitial;"><span style=3D"color: #000000; font-family: arial, helvetica, sans=
+-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal=
+; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orph=
+ans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: =
+2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; =
+background-color: #ffffff; text-decoration-thickness: initial; text-decorat=
+ion-style: initial; text-decoration-color: initial; float: none; display: i=
+nline !important;" data-mce-style=3D"color: #000000; font-family: arial, he=
+lvetica, sans-serif; font-size: 16px; font-style: normal; font-variant-liga=
+tures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing:=
+ normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: n=
+one; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-sp=
+ace: normal; background-color: #ffffff; text-decoration-thickness: initial;=
+ text-decoration-style: initial; text-decoration-color: initial; float: non=
+e; display: inline !important;">Si vous =C3=AAtes int=C3=A9ress=C3=A9 par c=
+e poste, vous pouvez initier un premier contact avec nous, via<span>&nbsp;<=
+/span><span class=3D"Object" role=3D"link" id=3D"OBJ_PREFIX_DWT577_com_zimb=
+ra_url" style=3D"color: #336699; text-decoration: none; cursor: pointer;" d=
+ata-mce-style=3D"color: #336699; text-decoration: none; cursor: pointer;"><=
+span class=3D"Object" role=3D"link" id=3D"OBJ_PREFIX_DWT592_com_zimbra_url"=
+ style=3D"color: #336699; text-decoration: none; cursor: pointer;" data-mce=
+-style=3D"color: #336699; text-decoration: none; cursor: pointer;"><a href=
+=3D"https://www.greyc.fr/equipes/codag/#membres" target=3D"_blank" style=3D=
+"color: #336699; text-decoration: none; cursor: pointer;" rel=3D"noopener" =
+data-mce-href=3D"https://www.greyc.fr/equipes/codag/#membres" data-mce-styl=
+e=3D"color: #336699; text-decoration: none; cursor: pointer;">un membre de =
+l'=C3=A9quipe</a></span></span><span>&nbsp;</span>ou&nbsp; via son responsa=
+ble (<a href=3D"mailto:bertrand.cuissart@unicaen.fr">bertrand.cuissart@unic=
+aen.fr</a>)</span></div><div style=3D"color: #000000; font-family: arial, h=
+elvetica, sans-serif; font-size: 16px; font-style: normal; font-variant-lig=
+atures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing=
+: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: =
+none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-s=
+pace: normal; background-color: #fdfdfd; text-decoration-thickness: initial=
+; text-decoration-style: initial; text-decoration-color: initial;" data-mce=
+-style=3D"color: #000000; font-family: arial, helvetica, sans-serif; font-s=
+ize: 16px; font-style: normal; font-variant-ligatures: normal; font-variant=
+-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-a=
+lign: start; text-indent: 0px; text-transform: none; widows: 2; word-spacin=
+g: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-col=
+or: #fdfdfd; text-decoration-thickness: initial; text-decoration-style: ini=
+tial; text-decoration-color: initial;">Nous pourrons ensuite =C3=A9changer =
+afin d'identifier des domaines d'int=C3=A9r=C3=AAt communs.</div><div style=
+=3D"color: #000000; font-family: arial, helvetica, sans-serif; font-size: 1=
+6px; font-style: normal; font-variant-ligatures: normal; font-variant-caps:=
+ normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: =
+start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px=
+; -webkit-text-stroke-width: 0px; white-space: normal; background-color: #f=
+dfdfd; text-decoration-thickness: initial; text-decoration-style: initial; =
+text-decoration-color: initial;" data-mce-style=3D"color: #000000; font-fam=
+ily: arial, helvetica, sans-serif; font-size: 16px; font-style: normal; fon=
+t-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; l=
+etter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; tex=
+t-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width:=
+ 0px; white-space: normal; background-color: #fdfdfd; text-decoration-thick=
+ness: initial; text-decoration-style: initial; text-decoration-color: initi=
+al;"><br></div><div style=3D"color: #000000; font-family: arial, helvetica,=
+ sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: n=
+ormal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal;=
+ orphans: 2; text-align: start; text-indent: 0px; text-transform: none; wid=
+ows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: nor=
+mal; background-color: #fdfdfd; text-decoration-thickness: initial; text-de=
+coration-style: initial; text-decoration-color: initial;" data-mce-style=3D=
+"color: #000000; font-family: arial, helvetica, sans-serif; font-size: 16px=
+; font-style: normal; font-variant-ligatures: normal; font-variant-caps: no=
+rmal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: sta=
+rt; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -=
+webkit-text-stroke-width: 0px; white-space: normal; background-color: #fdfd=
+fd; text-decoration-thickness: initial; text-decoration-style: initial; tex=
+t-decoration-color: initial;">N'h=C3=A9sitez pas =C3=A0 prendre contact ave=
+c nous,</div><div style=3D"color: #000000; font-family: arial, helvetica, s=
+ans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: nor=
+mal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; o=
+rphans: 2; text-align: start; text-indent: 0px; text-transform: none; widow=
+s: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: norma=
+l; background-color: #fdfdfd; text-decoration-thickness: initial; text-deco=
+ration-style: initial; text-decoration-color: initial;" data-mce-style=3D"c=
+olor: #000000; font-family: arial, helvetica, sans-serif; font-size: 16px; =
+font-style: normal; font-variant-ligatures: normal; font-variant-caps: norm=
+al; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start=
+; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -we=
+bkit-text-stroke-width: 0px; white-space: normal; background-color: #fdfdfd=
+; text-decoration-thickness: initial; text-decoration-style: initial; text-=
+decoration-color: initial;">Cordialement,</div><div style=3D"color: #000000=
+; font-family: arial, helvetica, sans-serif; font-size: 16px; font-style: n=
+ormal; font-variant-ligatures: normal; font-variant-caps: normal; font-weig=
+ht: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent=
+: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-str=
+oke-width: 0px; white-space: normal; background-color: #fdfdfd; text-decora=
+tion-thickness: initial; text-decoration-style: initial; text-decoration-co=
+lor: initial;" data-mce-style=3D"color: #000000; font-family: arial, helvet=
+ica, sans-serif; font-size: 16px; font-style: normal; font-variant-ligature=
+s: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: nor=
+mal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none;=
+ widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space:=
+ normal; background-color: #fdfdfd; text-decoration-thickness: initial; tex=
+t-decoration-style: initial; text-decoration-color: initial;"><br></div><di=
+v style=3D"color: #000000; font-family: arial, helvetica, sans-serif; font-=
+size: 16px; font-style: normal; font-variant-ligatures: normal; font-varian=
+t-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-=
+align: start; text-indent: 0px; text-transform: none; widows: 2; word-spaci=
+ng: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-co=
+lor: #fdfdfd; text-decoration-thickness: initial; text-decoration-style: in=
+itial; text-decoration-color: initial;" data-mce-style=3D"color: #000000; f=
+ont-family: arial, helvetica, sans-serif; font-size: 16px; font-style: norm=
+al; font-variant-ligatures: normal; font-variant-caps: normal; font-weight:=
+ 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0=
+px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke=
+-width: 0px; white-space: normal; background-color: #fdfdfd; text-decoratio=
+n-thickness: initial; text-decoration-style: initial; text-decoration-color=
+: initial;">--</div><div style=3D"color: #000000; font-family: arial, helve=
+tica, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatur=
+es: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: no=
+rmal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none=
+; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space=
+: normal; background-color: #fdfdfd; text-decoration-thickness: initial; te=
+xt-decoration-style: initial; text-decoration-color: initial;" data-mce-sty=
+le=3D"color: #000000; font-family: arial, helvetica, sans-serif; font-size:=
+ 16px; font-style: normal; font-variant-ligatures: normal; font-variant-cap=
+s: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align=
+: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0=
+px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: =
+#fdfdfd; text-decoration-thickness: initial; text-decoration-style: initial=
+; text-decoration-color: initial;">Bertrand Cuissart, pour<span>&nbsp;</spa=
+n><span id=3D"DWT579" class=3D"ZmSearchResult" style=3D"background-color: #=
+fffec4;" data-mce-style=3D"background-color: #fffec4;"><span id=3D"DWT594" =
+class=3D"ZmSearchResult" style=3D"background-color: #fffec4;" data-mce-styl=
+e=3D"background-color: #fffec4;">CODAG</span></span></div><div style=3D"col=
+or: #000000; font-family: arial, helvetica, sans-serif; font-size: 16px; fo=
+nt-style: normal; font-variant-ligatures: normal; font-variant-caps: normal=
+; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; =
+text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webk=
+it-text-stroke-width: 0px; white-space: normal; background-color: #fdfdfd; =
+text-decoration-thickness: initial; text-decoration-style: initial; text-de=
+coration-color: initial;" data-mce-style=3D"color: #000000; font-family: ar=
+ial, helvetica, sans-serif; font-size: 16px; font-style: normal; font-varia=
+nt-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-s=
+pacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-trans=
+form: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; w=
+hite-space: normal; background-color: #fdfdfd; text-decoration-thickness: i=
+nitial; text-decoration-style: initial; text-decoration-color: initial;"><b=
+r></div><div style=3D"color: #000000; font-family: arial, helvetica, sans-s=
+erif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphan=
+s: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2;=
+ word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; ba=
+ckground-color: #fdfdfd; text-decoration-thickness: initial; text-decoratio=
+n-style: initial; text-decoration-color: initial;" data-mce-style=3D"color:=
+ #000000; font-family: arial, helvetica, sans-serif; font-size: 16px; font-=
+style: normal; font-variant-ligatures: normal; font-variant-caps: normal; f=
+ont-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; tex=
+t-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-=
+text-stroke-width: 0px; white-space: normal; background-color: #fdfdfd; tex=
+t-decoration-thickness: initial; text-decoration-style: initial; text-decor=
+ation-color: initial;"><br></div><div style=3D"color: #000000; font-family:=
+ arial, helvetica, sans-serif; font-size: 16px; font-style: normal; font-va=
+riant-ligatures: normal; font-variant-caps: normal; font-weight: 400; lette=
+r-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-tr=
+ansform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px=
+; white-space: normal; background-color: #fdfdfd; text-decoration-thickness=
+: initial; text-decoration-style: initial; text-decoration-color: initial;"=
+ data-mce-style=3D"color: #000000; font-family: arial, helvetica, sans-seri=
+f; font-size: 16px; font-style: normal; font-variant-ligatures: normal; fon=
+t-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: =
+2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; wo=
+rd-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; backg=
+round-color: #fdfdfd; text-decoration-thickness: initial; text-decoration-s=
+tyle: initial; text-decoration-color: initial;"><p style=3D"margin: 0px;" d=
+ata-mce-style=3D"margin: 0px;"><strong>Contour de l'=C3=A9quipe :</strong><=
+/p><p style=3D"margin: 0px;" data-mce-style=3D"margin: 0px;">L'=C3=A9quipe<=
+span>&nbsp;</span><span id=3D"DWT581" class=3D"ZmSearchResult" style=3D"bac=
+kground-color: #fffec4;" data-mce-style=3D"background-color: #fffec4;"><spa=
+n id=3D"DWT596" class=3D"ZmSearchResult" style=3D"background-color: #fffec4=
+;" data-mce-style=3D"background-color: #fffec4;">CODAG</span></span><span>&=
+nbsp;</span>(Contraintes, Ontologies, Donn=C3=A9es, Annotations, Graphes) p=
+articipe activement aux =C3=A9volutions de la science des donn=C3=A9es en a=
+ssociant des chercheurs issus de cultures scientifiques compl=C3=A9mentaire=
+s. Le p=C3=A9rim=C3=A8tre des recherches englobe l'ensemble de la cha=C3=AE=
+ne de traitement des donn=C3=A9es, depuis leur pr=C3=A9paration jusqu'=C3=
+=A0 la conception de mod=C3=A8les pour exprimer les r=C3=A9sultats. Les tra=
+vaux de recherche de l'=C3=A9quipe portent principalement sur les th=C3=A8m=
+es suivants : les approches d=C3=A9claratives en optimisation sous contrain=
+tes, l'exploration de donn=C3=A9es, le traitement automatique des langues, =
+l'ing=C3=A9nierie des connaissances, l'apprentissage et l'aide =C3=A0 la d=
+=C3=A9cision.</p><p style=3D"margin: 0px;" data-mce-style=3D"margin: 0px;">=
+L'=C3=A9quipe s'investit fortement dans des projets interdisciplinaires en =
+collaborant avec des experts d'autres domaines: des sp=C3=A9cialistes du tr=
+aitement des donn=C3=A9es sportives, de l'information chimique ou les donn=
+=C3=A9es textuelles, parmi d'autres.</p><p style=3D"margin: 0px;" data-mce-=
+style=3D"margin: 0px;">Particuli=C3=A8rement reconnue pour des r=C3=A9sulta=
+ts s'appuyant sur la diversit=C3=A9 de ses comp=C3=A9tences scientifiques,<=
+span>&nbsp;</span><span id=3D"DWT583" class=3D"ZmSearchResult" style=3D"bac=
+kground-color: #fffec4;" data-mce-style=3D"background-color: #fffec4;"><spa=
+n id=3D"DWT598" class=3D"ZmSearchResult" style=3D"background-color: #fffec4=
+;" data-mce-style=3D"background-color: #fffec4;">CODAG</span></span><span>&=
+nbsp;</span>a pour objectif de poursuivre dans cette direction.</p><p style=
+=3D"margin: 0px;" data-mce-style=3D"margin: 0px;"><br></p><p style=3D"margi=
+n: 0px;" data-mce-style=3D"margin: 0px;">A travers ses ses recrutements, l'=
+=C3=A9quipe souhaite d=C3=A9velopper sa capacit=C3=A9 =C3=A0 int=C3=A9grer =
+les techniques actuelles de l'informatique pour la science des donn=C3=A9es=
+ comme par exemple celles rencontr=C3=A9es en apprentissage machine, que ce=
+ soit comme objets d'=C3=A9tude, comme paradigme ou simplement par la prati=
+que.<span>&nbsp;</span><span style=3D"font-size: 12pt;" data-mce-style=3D"f=
+ont-size: 12pt;">Dans cette optique, nous sommes aussi int=C3=A9ress=C3=A9s=
+ par l'exploitation des petits jeux de donn=C3=A9es, la fouille interactive=
+, l'analyse formelle de concepts, la programmation par contraintes ou la ge=
+stion ontologique des connaissances.</span></p></div></div><div data-marker=
+=3D"__SIG_PRE__"><br data-mce-bogus=3D"1"></div></div>
+<br>=
+=0A<br>=
+</body></html>
+--=_bf43b2a4-a5f4-4591-88e6-92d2b9bb70bb--

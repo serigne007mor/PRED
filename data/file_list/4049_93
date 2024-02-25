@@ -1,0 +1,821 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (bouncesmtp1.u12.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 8433A14014E0
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu, 25 May 2023 13:32:08 +0200 (CEST)
+Received: from mx3.localdomain (MX3.univ-nantes.fr [193.52.101.137])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id 8131E6780
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu, 25 May 2023 13:32:08 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.localdomain (Postfix) with ESMTP id 792B120A39
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 25 May 2023 13:32:08 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 4.414
+X-Spam-Level: ****
+X-Spam-Status: No, score=4.414 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_FONT_LOW_CONTRAST=0.001,
+	HTML_MESSAGE=0.001, IMPRONONCABLE_2=1.5, J_CHICKENPOX_25=0.6,
+	LONGWORD=0.3, MEGALONGWORD=0.6, RCVD_IN_DNSWL_NONE=-0.0001,
+	RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001, SPF_PASS=-0.001, TW_BX=0.077,
+	TW_HJ=0.077, TW_MV=0.077, TW_YK=0.077, T_REMOTE_IMAGE=0.01,
+	UN_PHISHING_PW=0.1, URIBL_GREY=1.084] autolearn=disabled
+X-CRM114-Status: UNSURE ( 0.1046 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=outscale.com
+Received: from mx3.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id u6W8njyC5U6x for <liste-egc@polytech.univ-nantes.fr>;
+	Thu, 25 May 2023 13:32:06 +0200 (CEST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=2a00:1450:4864:20::22f; helo=mail-lj1-x22f.google.com; envelope-from=raja.chiky@outscale.com; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=none dis=none) header.from=outscale.com
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=raja.chiky@outscale.com
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (1024-bit key; unprotected) header.d=outscale.com header.i=@outscale.com header.b="SlEuswRD";
+	dkim-atps=neutral
+X-Greylist: delayed 00:05:21 by SQLgrey-1.6.7
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+	by mx3.localdomain (Postfix) with ESMTPS id D7CEF20075
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 25 May 2023 13:32:05 +0200 (CEST)
+Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2af30a12e84so5062821fa.0
+        for <liste-egc@polytech.univ-nantes.fr>; Thu, 25 May 2023 04:32:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=outscale.com; s=google; t=1685014325; x=1687606325;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=qY7Ry3oeAuegehlK7XFZdRoqrYbTJI1o/dzsmPomIws=;
+        b=SlEuswRDLvdZ/9ZPsiYhcXqv8NyIJGzhz3iTBBAdHJxC/4NW11EHdyyRPf2ISdH078
+         NuHWpSQNn0nWLdS6MMlPlq6UidMmyjFeHjxbn3IrOuuKAkbR4+HFkJhzaCBb2XqJf7FN
+         Auq00STmG9fzQ3hQMZ8q5rN76ktzuE4tiM4+s=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685014325; x=1687606325;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qY7Ry3oeAuegehlK7XFZdRoqrYbTJI1o/dzsmPomIws=;
+        b=XQrn/sPdJWpnShCUJ+maQO3o+puTqMFsz5OKjGtdn7ojeBUcUanLWWA8QLoQG3Dx3y
+         Kg/Q0O/oIKwSGQ4CkPkO+76OKzeNzuASahhZf5oaxrj0vis4iKBuVwzzh9m5f47lqOW1
+         dWYtqmutsx8TwAzc0KZoNT17OQwMCrkg9mWpqI2a9Y0DlilfUgZnN8hAL42dlB+Ub6la
+         JWNPFq1cD4o+emoUwr6vg6Rfju6Ba9iDeTDIYJN6AUHHYuvza2RHKXZes1hcf9XffPvn
+         tRypFtJEJ7TitdAa2OyD+pUx5PXY+Hk+n1xjrUsfFh1X90IHP/PKzOaXU6+G4Vj7fiu9
+         ZEig==
+X-Gm-Message-State: AC+VfDy2Gi3G2m80Kr75ZL8oo5TTD6Bpmr4QNPaZ+FMJI3OLRqiAbKfZ
+	Z56eC58iDwwTVaQE9mMZjIoHvwSpj1ILLWVD+UG//tj9GzxB+sh+RdA=
+X-Google-Smtp-Source: ACHHUZ4s70FRK7xb+zk9J/Rw1iokG2EleVzUITxIoJO5Ro7Lx85k6wcv1jIyoM9L+EfQJQ2mujLvnRJ2ToldNNhVvlI=
+X-Received: by 2002:a2e:94c3:0:b0:2ae:d269:5a1e with SMTP id
+ r3-20020a2e94c3000000b002aed2695a1emr882613ljh.21.1685014003121; Thu, 25 May
+ 2023 04:26:43 -0700 (PDT)
+MIME-Version: 1.0
+From: Raja Chiky <raja.chiky@outscale.com>
+Date: Thu, 25 May 2023 13:26:32 +0200
+Message-ID: <CAOfaeOicRqfEZgDWts6dHR0d=F584hbQRMOE9UyeHLqa9oN2Bg@mail.gmail.com>
+To: liste-egc@polytech.univ-nantes.fr
+Content-Type: multipart/alternative; boundary="00000000000019161c05fc82e598"
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Save the date - Concours entrepreneurial IT4Green - 9
+ au 10 juin
+
+--00000000000019161c05fc82e598
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Immergez vous dans le domaine du num=C3=A9rique =C3=A9co-responsable, d=C3=
+=A9couvrez ses
+outils et r=C3=A9f=C3=A9rentiels, et confrontez vos id=C3=A9es aux experts =
+en Green IT et
+IT4Green.
+
+*Concours entrepreneurial*
+
+* IT4Green*
+*du 9 au 10 juin*
+
+
+R=C3=A9pondre aux enjeux environnementaux avec le num=C3=A9rique
+
+
+
+Anim=C3=A9s par leur volont=C3=A9 de contribuer =C3=A0 la d=C3=A9marche Gre=
+enIT et IT4Green, l=E2=80=99
+*Isep*, =C3=A9cole d'ing=C3=A9nieur du num=C3=A9rique, *OUTSCALE* (Marque d=
+e Dassault
+Syst=C3=A8mes et op=C3=A9rateur de cloud d=E2=80=99hyperconfiance), *Veolia=
+* et l'*UNEP *vous
+invitent =C3=A0 approfondir vos comp=C3=A9tences techniques pour relever le=
+s d=C3=A9fis
+environnementaux gr=C3=A2ce au num=C3=A9rique. La Green IT, ou informatique=
+ verte,
+vise =C3=A0 r=C3=A9duire l=E2=80=99impact environnemental du num=C3=A9rique=
+, tandis que l=E2=80=99IT4Green
+met l=E2=80=99accent sur l=E2=80=99utilisation du num=C3=A9rique pour promo=
+uvoir le
+d=C3=A9veloppement durable et les initiatives =C3=A9cologiques. En s=E2=80=
+=99associant, ces
+organisations cherchent =C3=A0 encourager l=E2=80=99innovation et la collab=
+oration pour
+cr=C3=A9er des solutions num=C3=A9riques =C3=A9co-responsables et ainsi con=
+tribuer =C3=A0 un
+avenir plus respectueux de l=E2=80=99environnement.
+
+
+
+Cet =C3=A9v=C3=A9nement est une opportunit=C3=A9 pour  vous immerger dans l=
+e domaine du
+num=C3=A9rique =C3=A9co-responsable, d=C3=A9couvrir ses outils et r=C3=A9f=
+=C3=A9rentiels, et
+confronter vos id=C3=A9es aux experts en Green IT et IT4Green.
+
+
+
+Tout au long du concours, des mentors et experts seront pr=C3=A9sents pour
+accompagner les =C3=A9quipes et fournir des conseils techniques, manag=C3=
+=A9riaux et
+strat=C3=A9giques aux participants, les aidant ainsi =C3=A0 transformer leu=
+rs id=C3=A9es
+en solutions concr=C3=A8tes et efficaces.
+
+
+
+*Les repas seront offerts et des prix sont =C3=A0 gagner !*
+
+
+
+*Inscription*
+<https://u10067798.ct.sendgrid.net/ls/click?upn=3Dn0TRfKDIl9WliVoivymB14GhE=
+a5VM20sw1HuV4UURMht-2FsFWHV28c3osV-2BGdwMdFmF1o7SE8dwoe1w7ZgW2mRtnuarkoSy9m=
+wRS8NS-2BFylc-3DDt9Z_nenbBkpW0gHgi3p4rgiqYPs9XMdC5Nv6fdJuoG7JefytCCCTAyxvAS=
+ZJSWjNAhYDwaxlUTAtwpc5PJSnePLFlMbRLDdhqF6aNtP7yOSyP8RT-2FdJQI5UdFrwi3j3AFW3=
+wD0yzVCKNO5M770QvhC02tZ6tS4Wog-2BwFmvj06mcfV-2FfAB4I1b35F0Ay5qAIr4dOzw054cZ=
+WxQHZE943dKxrh-2FGjA8AJ3KIKzzy3YYyNywZnIH-2BdzHRQ9pjAbgV-2Bp-2BzRRMQc3Mo5wM=
+SRepzz-2BneMw-2BQ2giVnieILR4Y4XcUQOymdyobO1Gpc4X-2Bpd7t2PG7Rk>
+
+
+
+*Rendez-vous le 9 juin =C3=A0 17h30*
+
+=C3=80 l'Isep
+
+10 rue de Vanves, 92130 Issy-les-Moulineaux
+
+
+
+*L=E2=80=99=C3=A9v=C3=A9nement est ouvert =C3=A0 tous*, que vous soyez novi=
+ce en la mati=C3=A8re ou
+exp=C3=A9riment=C3=A9. Venez proposer vos id=C3=A9es et les pr=C3=A9senter =
+lors de ce concours.
+Que vous dirigiez d=C3=A9j=C3=A0 une entreprise =C5=93uvrant =C3=A0 r=C3=A9=
+duire l=E2=80=99empreinte carbone
+du num=C3=A9rique, que vous souhaitez faire =C3=A9voluer une id=C3=A9e exis=
+tante ou
+simplement que vous souhaitez vous challenger, cet =C3=A9v=C3=A9nement est =
+con=C3=A7u pour
+vous.
+
+
+
+=C3=89v=C3=A9nement organis=C3=A9 en partenariat avec :
+
+
+
+<https://u10067798.ct.sendgrid.net/ls/click?upn=3Dn0TRfKDIl9WliVoivymB14GhE=
+a5VM20sw1HuV4UURMht-2FsFWHV28c3osV-2BGdwMdFmF1o7SE8dwoe1w7ZgW2mRlnEeEppiPoz=
+T-2FcZ5CMhEq4-3Dpo2m_nenbBkpW0gHgi3p4rgiqYPs9XMdC5Nv6fdJuoG7JefytCCCTAyxvAS=
+ZJSWjNAhYDwaxlUTAtwpc5PJSnePLFlMbRLDdhqF6aNtP7yOSyP8RT-2FdJQI5UdFrwi3j3AFW3=
+wD0yzVCKNO5M770QvhC02tZ6tS4Wog-2BwFmvj06mcfV-2FfSJMRH-2BMDDfk0nFZFY6ynh-2BS=
+dbi-2B3tqyYhUbxdMMk4DLxOTb-2FwYRhVmsoyoqvNthlCYS4lHZLDwFr6Yyq7bIPZcAKHVTJiM=
+In-2BQ-2FPTTcLShr5LKo8TLaYwCv0m0R0uBX5bK51bTG5yRFm-2Fh-2FREfNk3>
+
+<https://u10067798.ct.sendgrid.net/ls/click?upn=3Dn0TRfKDIl9WliVoivymB14GhE=
+a5VM20sw1HuV4UURMht-2FsFWHV28c3osV-2BGdwMdFmF1o7SE8dwoe1w7ZgW2mRmBP2cQ4OGXp=
+OepGo1xzXd8-3DAAy5_nenbBkpW0gHgi3p4rgiqYPs9XMdC5Nv6fdJuoG7JefytCCCTAyxvASZJ=
+SWjNAhYDwaxlUTAtwpc5PJSnePLFlMbRLDdhqF6aNtP7yOSyP8RT-2FdJQI5UdFrwi3j3AFW3wD=
+0yzVCKNO5M770QvhC02tZ6tS4Wog-2BwFmvj06mcfV-2FeYIJ-2Bg-2FNqb1hhjvoeM0-2FIGGt=
+p02RdVpB5xDxTb9oY7lYkBz8nfXcPEEelqdLTLcA4d09vMyuFE9y2TJpbyvFVX3MOYYAoxl5LV6=
+-2BS-2BEqvnjkzzBuRDjQgoMv1jGyj-2BvB3VrqrtcYy26Vf7uwz1hJGZ>
+
+<https://u10067798.ct.sendgrid.net/ls/click?upn=3Dn0TRfKDIl9WliVoivymB14GhE=
+a5VM20sw1HuV4UURMht-2FsFWHV28c3osV-2BGdwMdFmF1o7SE8dwoe1w7ZgW2mRsTcMF29ZMvj=
+d9m8G3s8q84-3D8h3B_nenbBkpW0gHgi3p4rgiqYPs9XMdC5Nv6fdJuoG7JefytCCCTAyxvASZJ=
+SWjNAhYDwaxlUTAtwpc5PJSnePLFlMbRLDdhqF6aNtP7yOSyP8RT-2FdJQI5UdFrwi3j3AFW3wD=
+0yzVCKNO5M770QvhC02tZ6tS4Wog-2BwFmvj06mcfV-2FdO1yk94MwPLTgTWSGf5q-2FmvlHoS-=
+2FA9C838bvykwBJvTR92c-2BWtVkLC7fpcFP-2F23cG-2FU-2F7gGw7sfMvo9wuqJHPm5GRm3d5=
+43WysdVTxa6krnHEhnde5KluLjDW0t2kKflyUqJU6vXTyFVPGz1F8Tinz>
+
+
+
+Isep
+
+28 rue Notre-Dame-des-Champs
+
+75006 Paris
+
+_______
+
+10 rue de Vanves
+
+92130 Issy-les-Moulineaux
+--=20
+
+
+[image: Logo] <https://fr.outscale.com/>
+
+Raja Chiky
+Alliances & CSR Director
+[image: Phone] +33 1 53 27 52 70 (ext : 2035)
+[image: Mobile] 06 66 19 27 90
+[image: Website] fr.outscale.com
+[image: Envelope] raja.chiky@outscale.com
+[image: Map-marker] 1 rue royale - 319 Bureaux de la Colline
+92210, Saint-Cloud - France
+<https://data.sigilium.com/signatures/rcf-mnqqugcvrzoro3nwzbzbsxuu0rc/link?=
+element=3Dmap_marker>
+[image: Facebook] <https://www.facebook.com/outscalefrance/>
+[image: Twitter] <https://twitter.com/outscale_fr>
+[image: Linkedin] <https://www.linkedin.com/company/outscale-france>
+
+<https://data.sigilium.com/signatures/rcf-mnqqugcvrzoro3nwzbzbsxuu0rc/redir=
+ect_link>
+IMPORTANT : The information contained in this message may be privileged and
+confidential and protected from disclosure. If the reader of this message
+is not the intended recipient, or an employee or agent responsible for
+delivering this message to the intended recipient, you are hereby notified
+that any dissemination, distribution or copying of this communication is
+strictly prohibited. If you have received this communication in error,
+please notify us immediately by replying to the message and deleting it
+from your computer.
+Outscale informs you that your personal data are processed in accordance
+with our data protection policy, available on our website. If you have any
+inquiries please contact us at personal-data@outscale.com.
+
+--00000000000019161c05fc82e598
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><br clear=3D"all"><div><div><p class=3D"MsoNormal"><span s=
+tyle=3D"font-size:1pt;color:white"><br class=3D"gmail-Apple-interchange-new=
+line">Immergez vous dans le domaine du num=C3=A9rique =C3=A9co-responsable,=
+ d=C3=A9couvrez ses outils et r=C3=A9f=C3=A9rentiels, et confrontez vos id=
+=C3=A9es aux experts en Green IT et IT4Green.<u></u><u></u></span></p></div=
+><div><div align=3D"center"><table border=3D"0" cellspacing=3D"0" cellpaddi=
+ng=3D"0" width=3D"100%" style=3D"width:825.206px;border-collapse:collapse">=
+<tbody><tr><td style=3D"padding:0cm;border-width:initial;border-style:solid=
+;border-color:transparent"><div align=3D"center"><table border=3D"0" cellsp=
+acing=3D"0" cellpadding=3D"0" width=3D"600" style=3D"width:450pt;border-col=
+lapse:collapse"><tbody><tr><td style=3D"padding:0cm"><div><div align=3D"cen=
+ter"><table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%"=
+ style=3D"width:602.727px;border-collapse:collapse;border-width:initial;bor=
+der-style:solid;border-color:transparent"><tbody><tr><td style=3D"padding:6=
+.75pt 0cm;border-spacing:0px"><div align=3D"center"><table border=3D"0" cel=
+lspacing=3D"0" cellpadding=3D"0" style=3D"border-collapse:collapse"><tbody>=
+<tr><td width=3D"600" valign=3D"top" style=3D"width:450pt;padding:0cm"><tab=
+le border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" style=3D=
+"width:600px;border-collapse:collapse;word-break:break-word"><tbody><tr><td=
+ style=3D"padding:0cm"><div align=3D"center"><table border=3D"0" cellspacin=
+g=3D"0" cellpadding=3D"0" style=3D"border-collapse:collapse"><tbody><tr><td=
+ width=3D"600" style=3D"width:450pt;padding:0cm"><p class=3D"MsoNormal"><im=
+g width=3D"600" height=3D"300" id=3D"m_-8470519465017681013m_68274970629306=
+32712_x0000_i1035" src=3D"https://v3.oscar-campus.com/storage/560e72a319565=
+69e36e1f3036c582ca0/uploads/visuel-eventbrite-maj.png" class=3D"gmail-CToWU=
+d gmail-a6T" tabindex=3D"0" style=3D"cursor: pointer; outline: 0px; width: =
+6.25in; height: 3.125in;"><u></u><u></u></p></td></tr></tbody></table></div=
+></td></tr><tr><td style=3D"padding:10.5pt 11.25pt 0cm 22.5pt;word-break:br=
+eak-word"><p align=3D"center" style=3D"text-align:center"><strong><span sty=
+le=3D"font-size:18pt;font-family:Ubuntu,sans-serif;color:rgb(0,97,161)">Con=
+cours entrepreneurial</span></strong><span style=3D"font-size:8.5pt;font-fa=
+mily:Ubuntu,sans-serif;color:black"><u></u><u></u></span></p><p align=3D"ce=
+nter" style=3D"text-align:center"><strong><span style=3D"font-size:22.5pt;f=
+ont-family:Ubuntu,sans-serif;color:rgb(0,97,161)">=C2=A0IT4Green</span></st=
+rong><span style=3D"font-size:8.5pt;font-family:Ubuntu,sans-serif;color:bla=
+ck"><u></u><u></u></span></p><h2 align=3D"center" style=3D"text-align:cente=
+r"><strong><span style=3D"font-family:Ubuntu,sans-serif;color:rgb(0,97,161)=
+">du 9 au 10 juin</span></strong><span style=3D"font-size:13pt;font-family:=
+Ubuntu,sans-serif;color:black"><u></u><u></u></span></h2></td></tr></tbody>=
+</table></td></tr></tbody></table></div></td></tr></tbody></table></div></d=
+iv></td></tr></tbody></table></div></td></tr></tbody></table></div><p class=
+=3D"MsoNormal" style=3D"background-image:initial;background-position:initia=
+l;background-size:initial;background-repeat:initial;background-origin:initi=
+al;background-clip:initial"><u></u>=C2=A0<u></u></p><div align=3D"center"><=
+table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"600" style=
+=3D"width:450pt;border-collapse:collapse"><tbody><tr><td style=3D"padding:0=
+cm;word-break:break-word"><div><div align=3D"center"><table border=3D"0" ce=
+llspacing=3D"0" cellpadding=3D"0" width=3D"100%" style=3D"width:600px;backg=
+round-image:initial;background-position:initial;background-size:initial;bac=
+kground-repeat:initial;background-origin:initial;background-clip:initial;bo=
+rder-collapse:collapse"><tbody><tr><td style=3D"padding:6.75pt 0cm"><div al=
+ign=3D"center"><table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" styl=
+e=3D"border-collapse:collapse"><tbody><tr><td width=3D"600" valign=3D"top" =
+style=3D"width:450pt;padding:0cm"><table border=3D"0" cellspacing=3D"0" cel=
+lpadding=3D"0" width=3D"100%" style=3D"width:600px;border-collapse:collapse=
+;word-break:break-word"><tbody><tr><td style=3D"padding:3pt 11.25pt"><h2 al=
+ign=3D"center" style=3D"text-align:center"><span style=3D"font-size:13pt;fo=
+nt-family:Ubuntu,sans-serif;color:rgb(52,73,94)">R=C3=A9pondre aux enjeux e=
+nvironnementaux avec le num=C3=A9rique</span><span style=3D"font-size:13pt;=
+font-family:Ubuntu,sans-serif;color:black"><u></u><u></u></span></h2></td><=
+/tr></tbody></table></td></tr></tbody></table></div></td></tr></tbody></tab=
+le></div></div></td></tr></tbody></table></div><p class=3D"MsoNormal" style=
+=3D"background-image:initial;background-position:initial;background-size:in=
+itial;background-repeat:initial;background-origin:initial;background-clip:i=
+nitial"><u></u>=C2=A0<u></u></p><div align=3D"center"><table border=3D"0" c=
+ellspacing=3D"0" cellpadding=3D"0" width=3D"600" style=3D"width:450pt;borde=
+r-collapse:collapse"><tbody><tr><td style=3D"padding:0cm;word-break:break-w=
+ord"><div><div align=3D"center"><table border=3D"0" cellspacing=3D"0" cellp=
+adding=3D"0" width=3D"100%" style=3D"width:600px;background-image:initial;b=
+ackground-position:initial;background-size:initial;background-repeat:initia=
+l;background-origin:initial;background-clip:initial;border-collapse:collaps=
+e"><tbody><tr><td style=3D"padding:6.75pt 0cm"><div align=3D"center"><table=
+ border=3D"0" cellspacing=3D"0" cellpadding=3D"0" style=3D"border-collapse:=
+collapse"><tbody><tr><td width=3D"600" valign=3D"top" style=3D"width:450pt;=
+padding:0cm"><table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=
+=3D"100%" style=3D"width:600px;border-collapse:collapse;word-break:break-wo=
+rd"><tbody><tr><td style=3D"padding:3.75pt 11.25pt"><p><span style=3D"font-=
+size:10pt;font-family:Ubuntu,sans-serif;color:black">Anim=C3=A9s par leur v=
+olont=C3=A9 de contribuer =C3=A0 la d=C3=A9marche GreenIT et IT4Green, l=E2=
+=80=99<strong>Isep</strong>, =C3=A9cole d&#39;ing=C3=A9nieur du num=C3=A9ri=
+que,=C2=A0<strong>OUTSCALE</strong>=C2=A0(Marque de Dassault Syst=C3=A8mes =
+et op=C3=A9rateur de cloud d=E2=80=99hyperconfiance),=C2=A0<strong>Veolia</=
+strong>=C2=A0et l&#39;<strong>UNEP=C2=A0</strong>vous invitent =C3=A0 appro=
+fondir vos comp=C3=A9tences techniques pour relever les d=C3=A9fis environn=
+ementaux gr=C3=A2ce au num=C3=A9rique. La Green IT, ou informatique verte, =
+vise =C3=A0 r=C3=A9duire l=E2=80=99impact environnemental du num=C3=A9rique=
+, tandis que l=E2=80=99IT4Green met l=E2=80=99accent sur l=E2=80=99utilisat=
+ion du num=C3=A9rique pour promouvoir le d=C3=A9veloppement durable et les =
+initiatives =C3=A9cologiques. En s=E2=80=99associant, ces organisations che=
+rchent =C3=A0 encourager l=E2=80=99innovation et la collaboration pour cr=
+=C3=A9er des solutions num=C3=A9riques =C3=A9co-responsables et ainsi contr=
+ibuer =C3=A0 un avenir plus respectueux de l=E2=80=99environnement.</span><=
+span style=3D"font-size:8.5pt;font-family:Ubuntu,sans-serif;color:black"><u=
+></u><u></u></span></p><p><span style=3D"font-size:8.5pt;font-family:Ubuntu=
+,sans-serif;color:black">=C2=A0<u></u><u></u></span></p><p><span style=3D"f=
+ont-size:10pt;font-family:Ubuntu,sans-serif;color:black">Cet =C3=A9v=C3=A9n=
+ement est une opportunit=C3=A9 pour =C2=A0vous immerger dans le domaine du =
+num=C3=A9rique =C3=A9co-responsable, d=C3=A9couvrir ses outils et r=C3=A9f=
+=C3=A9rentiels, et confronter vos id=C3=A9es aux experts en Green IT et IT4=
+Green.</span><span style=3D"font-size:8.5pt;font-family:Ubuntu,sans-serif;c=
+olor:black"><u></u><u></u></span></p><p><span style=3D"font-size:8.5pt;font=
+-family:Ubuntu,sans-serif;color:black">=C2=A0<u></u><u></u></span></p><p><s=
+pan style=3D"font-size:10pt;font-family:Ubuntu,sans-serif;color:black">Tout=
+ au long du concours, des mentors et experts seront pr=C3=A9sents pour acco=
+mpagner les =C3=A9quipes et fournir des conseils techniques, manag=C3=A9ria=
+ux et strat=C3=A9giques aux participants, les aidant ainsi =C3=A0 transform=
+er leurs id=C3=A9es en solutions concr=C3=A8tes et efficaces.</span><span s=
+tyle=3D"font-size:8.5pt;font-family:Ubuntu,sans-serif;color:black"><u></u><=
+u></u></span></p><p><span style=3D"font-size:8.5pt;font-family:Ubuntu,sans-=
+serif;color:black">=C2=A0<u></u><u></u></span></p><p><strong><span style=3D=
+"font-size:10pt;font-family:Ubuntu,sans-serif;color:black">Les repas seront=
+ offerts et des prix sont =C3=A0 gagner !</span></strong><span style=3D"fon=
+t-size:8.5pt;font-family:Ubuntu,sans-serif;color:black"><u></u><u></u></spa=
+n></p></td></tr></tbody></table></td></tr></tbody></table></div></td></tr><=
+/tbody></table></div></div></td></tr></tbody></table></div><p class=3D"MsoN=
+ormal" style=3D"background-image:initial;background-position:initial;backgr=
+ound-size:initial;background-repeat:initial;background-origin:initial;backg=
+round-clip:initial"><u></u>=C2=A0<u></u></p><div align=3D"center"><table bo=
+rder=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"600" style=3D"width=
+:450pt;border-collapse:collapse"><tbody><tr><td style=3D"padding:0cm;word-b=
+reak:break-word"><div><div align=3D"center"><table border=3D"0" cellspacing=
+=3D"0" cellpadding=3D"0" width=3D"100%" style=3D"width:600px;background-ima=
+ge:initial;background-position:initial;background-size:initial;background-r=
+epeat:initial;background-origin:initial;background-clip:initial;border-coll=
+apse:collapse"><tbody><tr><td style=3D"padding:0.75pt 0cm"><div align=3D"ce=
+nter"><table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" style=3D"bord=
+er-collapse:collapse"><tbody><tr><td width=3D"600" valign=3D"top" style=3D"=
+width:450pt;padding:0cm;display:inline-block;border-radius:26px"><table bor=
+der=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" style=3D"width=
+:600px;border-collapse:collapse;word-break:break-word"><tbody><tr><td style=
+=3D"padding:3pt 15pt"><div align=3D"center"><table border=3D"0" cellspacing=
+=3D"0" cellpadding=3D"0" width=3D"0" style=3D"border-collapse:collapse;bord=
+er-radius:26px"><tbody><tr><td style=3D"background:rgb(0,97,161);padding:6.=
+75pt 19.5pt"><p class=3D"MsoNormal" align=3D"center" style=3D"text-align:ce=
+nter"><span style=3D"color:black"><a href=3D"https://u10067798.ct.sendgrid.=
+net/ls/click?upn=3Dn0TRfKDIl9WliVoivymB14GhEa5VM20sw1HuV4UURMht-2FsFWHV28c3=
+osV-2BGdwMdFmF1o7SE8dwoe1w7ZgW2mRtnuarkoSy9mwRS8NS-2BFylc-3DDt9Z_nenbBkpW0g=
+Hgi3p4rgiqYPs9XMdC5Nv6fdJuoG7JefytCCCTAyxvASZJSWjNAhYDwaxlUTAtwpc5PJSnePLFl=
+MbRLDdhqF6aNtP7yOSyP8RT-2FdJQI5UdFrwi3j3AFW3wD0yzVCKNO5M770QvhC02tZ6tS4Wog-=
+2BwFmvj06mcfV-2FfAB4I1b35F0Ay5qAIr4dOzw054cZWxQHZE943dKxrh-2FGjA8AJ3KIKzzy3=
+YYyNywZnIH-2BdzHRQ9pjAbgV-2Bp-2BzRRMQc3Mo5wMSRepzz-2BneMw-2BQ2giVnieILR4Y4X=
+cUQOymdyobO1Gpc4X-2Bpd7t2PG7Rk" target=3D"_blank"><strong><span style=3D"fo=
+nt-size:11.5pt;font-family:Ubuntu,sans-serif;color:white;background-image:i=
+nitial;background-position:initial;background-size:initial;background-repea=
+t:initial;background-origin:initial;background-clip:initial">Inscription</s=
+pan></strong><span style=3D"font-size:11.5pt;font-family:Ubuntu,sans-serif;=
+color:white;background-image:initial;background-position:initial;background=
+-size:initial;background-repeat:initial;background-origin:initial;backgroun=
+d-clip:initial"></span></a></span><u></u><u></u></p></td></tr></tbody></tab=
+le></div></td></tr></tbody></table></td></tr></tbody></table></div></td></t=
+r></tbody></table></div></div></td></tr></tbody></table></div><p class=3D"M=
+soNormal" style=3D"background-image:initial;background-position:initial;bac=
+kground-size:initial;background-repeat:initial;background-origin:initial;ba=
+ckground-clip:initial"><u></u>=C2=A0<u></u></p><div align=3D"center"><table=
+ border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"600" style=3D"wi=
+dth:450pt;border-collapse:collapse"><tbody><tr><td style=3D"padding:0cm;wor=
+d-break:break-word"><div><div align=3D"center"><table border=3D"0" cellspac=
+ing=3D"0" cellpadding=3D"0" width=3D"100%" style=3D"width:600px;background-=
+image:initial;background-position:initial;background-size:initial;backgroun=
+d-repeat:initial;background-origin:initial;background-clip:initial;border-c=
+ollapse:collapse"><tbody><tr><td style=3D"padding:6.75pt 0cm"><div align=3D=
+"center"><table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" style=3D"b=
+order-collapse:collapse"><tbody><tr><td width=3D"600" valign=3D"top" style=
+=3D"width:450pt;padding:0cm"><table border=3D"0" cellspacing=3D"0" cellpadd=
+ing=3D"0" width=3D"100%" style=3D"width:600px;border-collapse:collapse;word=
+-break:break-word"><tbody><tr><td style=3D"padding:7.5pt 11.25pt"><p align=
+=3D"center" style=3D"text-align:center"><strong><span style=3D"font-size:12=
+pt;font-family:Ubuntu,sans-serif;color:black">Rendez-vous le 9 juin =C3=A0 =
+17h30</span></strong><span style=3D"font-size:8.5pt;font-family:Ubuntu,sans=
+-serif;color:black"><u></u><u></u></span></p><p align=3D"center" style=3D"t=
+ext-align:center"><span style=3D"font-size:10pt;font-family:Ubuntu,sans-ser=
+if;color:black">=C3=80 l&#39;Isep</span><span style=3D"font-size:8.5pt;font=
+-family:Ubuntu,sans-serif;color:black"><u></u><u></u></span></p><p align=3D=
+"center" style=3D"text-align:center"><span style=3D"font-size:10pt;font-fam=
+ily:Ubuntu,sans-serif;color:black">10 rue de Vanves, 92130 Issy-les-Mouline=
+aux=C2=A0</span><span style=3D"font-size:8.5pt;font-family:Ubuntu,sans-seri=
+f;color:black"><u></u><u></u></span></p></td></tr></tbody></table></td></tr=
+></tbody></table></div></td></tr></tbody></table></div></div></td></tr></tb=
+ody></table></div><p class=3D"MsoNormal" style=3D"background-image:initial;=
+background-position:initial;background-size:initial;background-repeat:initi=
+al;background-origin:initial;background-clip:initial"><u></u>=C2=A0<u></u><=
+/p><div align=3D"center"><table border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0" width=3D"600" style=3D"width:450pt;border-collapse:collapse"><tbody>=
+<tr><td style=3D"padding:0cm;border:solid transparent"><div><div align=3D"c=
+enter"><table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100=
+%" style=3D"width:597.273px;background:rgb(244,161,0);border-collapse:colla=
+pse;border:solid transparent"><tbody><tr><td style=3D"padding:6.75pt 0cm"><=
+div align=3D"center"><table border=3D"0" cellspacing=3D"0" cellpadding=3D"0=
+" style=3D"border-collapse:collapse;border:solid transparent"><tbody><tr><t=
+d width=3D"600" valign=3D"top" style=3D"width:450pt;padding:0cm"><table bor=
+der=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" style=3D"width=
+:591.818px;border-collapse:collapse;word-break:break-word"><tbody><tr><td s=
+tyle=3D"padding:0.75pt 11.25pt"><p><strong><span style=3D"font-size:10pt;fo=
+nt-family:Ubuntu,sans-serif;color:white">L=E2=80=99=C3=A9v=C3=A9nement est =
+ouvert =C3=A0 tous</span></strong><span style=3D"font-size:10pt;font-family=
+:Ubuntu,sans-serif;color:white">, que vous soyez novice en la mati=C3=A8re =
+ou exp=C3=A9riment=C3=A9. Venez proposer vos id=C3=A9es et les pr=C3=A9sent=
+er lors de ce concours. Que vous dirigiez d=C3=A9j=C3=A0 une entreprise =C5=
+=93uvrant =C3=A0 r=C3=A9duire l=E2=80=99empreinte carbone du num=C3=A9rique=
+, que vous souhaitez faire =C3=A9voluer une id=C3=A9e existante ou simpleme=
+nt que vous souhaitez vous challenger, cet =C3=A9v=C3=A9nement est con=C3=
+=A7u pour vous.</span><span style=3D"font-size:8.5pt;font-family:Ubuntu,san=
+s-serif;color:black"><u></u><u></u></span></p></td></tr></tbody></table></t=
+d></tr></tbody></table></div></td></tr></tbody></table></div></div></td></t=
+r></tbody></table></div><p class=3D"MsoNormal" style=3D"background-image:in=
+itial;background-position:initial;background-size:initial;background-repeat=
+:initial;background-origin:initial;background-clip:initial"><u></u>=C2=A0<u=
+></u></p><div align=3D"center"><table border=3D"0" cellspacing=3D"0" cellpa=
+dding=3D"0" width=3D"600" style=3D"width:450pt;border-collapse:collapse"><t=
+body><tr><td style=3D"padding:0cm;word-break:break-word"><div><div align=3D=
+"center"><table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"1=
+00%" style=3D"width:600px;background-image:initial;background-position:init=
+ial;background-size:initial;background-repeat:initial;background-origin:ini=
+tial;background-clip:initial;border-collapse:collapse"><tbody><tr><td style=
+=3D"padding:6.75pt 0cm"><div align=3D"center"><table border=3D"0" cellspaci=
+ng=3D"0" cellpadding=3D"0" style=3D"border-collapse:collapse"><tbody><tr><t=
+d width=3D"600" valign=3D"top" style=3D"width:450pt;padding:0cm"><table bor=
+der=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" style=3D"width=
+:600px;border-collapse:collapse;word-break:break-word"><tbody><tr><td style=
+=3D"padding:11.25pt 11.25pt 0cm"><p><span style=3D"font-size:10pt;font-fami=
+ly:Ubuntu,sans-serif;color:rgb(126,140,141)">=C3=89v=C3=A9nement organis=C3=
+=A9 en partenariat avec :</span><span style=3D"font-size:8.5pt;font-family:=
+Ubuntu,sans-serif;color:black"><u></u><u></u></span></p></td></tr></tbody><=
+/table></td></tr></tbody></table></div></td></tr></tbody></table></div></di=
+v></td></tr></tbody></table></div><p class=3D"MsoNormal" style=3D"backgroun=
+d-image:initial;background-position:initial;background-size:initial;backgro=
+und-repeat:initial;background-origin:initial;background-clip:initial"><u></=
+u>=C2=A0<u></u></p><div align=3D"center"><table border=3D"0" cellspacing=3D=
+"0" cellpadding=3D"0" width=3D"600" style=3D"width:450pt;border-collapse:co=
+llapse"><tbody><tr><td style=3D"padding:0cm;word-break:break-word"><div><di=
+v align=3D"center"><table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" =
+width=3D"100%" style=3D"width:600px;background-image:initial;background-pos=
+ition:initial;background-size:initial;background-repeat:initial;background-=
+origin:initial;background-clip:initial;border-collapse:collapse"><tbody><tr=
+><td style=3D"padding:6.75pt 0cm;border-spacing:0px"><div align=3D"center">=
+<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" style=3D"border-col=
+lapse:collapse"><tbody><tr><td width=3D"200" valign=3D"top" style=3D"width:=
+150pt;padding:0cm"><table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" =
+width=3D"100%" style=3D"width:200px;border-collapse:collapse;word-break:bre=
+ak-word"><tbody><tr><td style=3D"padding:22.5pt 0cm 0cm"><div align=3D"cent=
+er"><table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" style=3D"border=
+-collapse:collapse"><tbody><tr><td width=3D"119" style=3D"width:89.25pt;pad=
+ding:0cm"><p class=3D"MsoNormal"><a href=3D"https://u10067798.ct.sendgrid.n=
+et/ls/click?upn=3Dn0TRfKDIl9WliVoivymB14GhEa5VM20sw1HuV4UURMht-2FsFWHV28c3o=
+sV-2BGdwMdFmF1o7SE8dwoe1w7ZgW2mRlnEeEppiPozT-2FcZ5CMhEq4-3Dpo2m_nenbBkpW0gH=
+gi3p4rgiqYPs9XMdC5Nv6fdJuoG7JefytCCCTAyxvASZJSWjNAhYDwaxlUTAtwpc5PJSnePLFlM=
+bRLDdhqF6aNtP7yOSyP8RT-2FdJQI5UdFrwi3j3AFW3wD0yzVCKNO5M770QvhC02tZ6tS4Wog-2=
+BwFmvj06mcfV-2FfSJMRH-2BMDDfk0nFZFY6ynh-2BSdbi-2B3tqyYhUbxdMMk4DLxOTb-2FwYR=
+hVmsoyoqvNthlCYS4lHZLDwFr6Yyq7bIPZcAKHVTJiMIn-2BQ-2FPTTcLShr5LKo8TLaYwCv0m0=
+R0uBX5bK51bTG5yRFm-2Fh-2FREfNk3" target=3D"_blank"><span style=3D"color:rgb=
+(0,0,238)"><img border=3D"0" width=3D"119" height=3D"25" id=3D"m_-847051946=
+5017681013m_6827497062930632712_x0000_i1034" src=3D"https://v3.oscar-campus=
+.com/storage/560e72a31956569e36e1f3036c582ca0/uploads/logo-outscale-bleu-rg=
+b.png" class=3D"gmail-CToWUd" style=3D"width: 1.2395in; height: 0.2604in;">=
+</span></a><u></u><u></u></p></td></tr></tbody></table></div></td></tr></tb=
+ody></table></td><td width=3D"200" valign=3D"top" style=3D"width:150pt;padd=
+ing:0cm;word-break:break-word"><table border=3D"0" cellspacing=3D"0" cellpa=
+dding=3D"0" width=3D"100%" style=3D"width:200px;border-collapse:collapse"><=
+tbody><tr><td style=3D"padding:10.5pt 0cm 0cm;border-spacing:0px"><div alig=
+n=3D"center"><table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" style=
+=3D"border-collapse:collapse;word-break:break-word"><tbody><tr><td width=3D=
+"69" style=3D"width:51.75pt;padding:0cm"><p class=3D"MsoNormal"><a href=3D"=
+https://u10067798.ct.sendgrid.net/ls/click?upn=3Dn0TRfKDIl9WliVoivymB14GhEa=
+5VM20sw1HuV4UURMht-2FsFWHV28c3osV-2BGdwMdFmF1o7SE8dwoe1w7ZgW2mRmBP2cQ4OGXpO=
+epGo1xzXd8-3DAAy5_nenbBkpW0gHgi3p4rgiqYPs9XMdC5Nv6fdJuoG7JefytCCCTAyxvASZJS=
+WjNAhYDwaxlUTAtwpc5PJSnePLFlMbRLDdhqF6aNtP7yOSyP8RT-2FdJQI5UdFrwi3j3AFW3wD0=
+yzVCKNO5M770QvhC02tZ6tS4Wog-2BwFmvj06mcfV-2FeYIJ-2Bg-2FNqb1hhjvoeM0-2FIGGtp=
+02RdVpB5xDxTb9oY7lYkBz8nfXcPEEelqdLTLcA4d09vMyuFE9y2TJpbyvFVX3MOYYAoxl5LV6-=
+2BS-2BEqvnjkzzBuRDjQgoMv1jGyj-2BvB3VrqrtcYy26Vf7uwz1hJGZ" target=3D"_blank"=
+><span style=3D"color:rgb(0,0,238)"><img border=3D"0" width=3D"69" height=
+=3D"50" id=3D"m_-8470519465017681013m_6827497062930632712_x0000_i1033" src=
+=3D"https://v3.oscar-campus.com/storage/560e72a31956569e36e1f3036c582ca0/up=
+loads/unep-2019-english-cropped-blue-1500x1090px.jpg" class=3D"gmail-CToWUd=
+" style=3D"width: 0.7187in; height: 0.5208in;"></span></a><u></u><u></u></p=
+></td></tr></tbody></table></div></td></tr></tbody></table></td><td width=
+=3D"200" valign=3D"top" style=3D"width:150pt;padding:0cm;word-break:break-w=
+ord"><table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%"=
+ style=3D"width:200px;border-collapse:collapse"><tbody><tr><td style=3D"pad=
+ding:8.25pt 0cm 0cm;border-spacing:0px"><div align=3D"center"><table border=
+=3D"0" cellspacing=3D"0" cellpadding=3D"0" style=3D"border-collapse:collaps=
+e;word-break:break-word"><tbody><tr><td width=3D"83" style=3D"width:62.25pt=
+;padding:0cm"><p class=3D"MsoNormal"><a href=3D"https://u10067798.ct.sendgr=
+id.net/ls/click?upn=3Dn0TRfKDIl9WliVoivymB14GhEa5VM20sw1HuV4UURMht-2FsFWHV2=
+8c3osV-2BGdwMdFmF1o7SE8dwoe1w7ZgW2mRsTcMF29ZMvjd9m8G3s8q84-3D8h3B_nenbBkpW0=
+gHgi3p4rgiqYPs9XMdC5Nv6fdJuoG7JefytCCCTAyxvASZJSWjNAhYDwaxlUTAtwpc5PJSnePLF=
+lMbRLDdhqF6aNtP7yOSyP8RT-2FdJQI5UdFrwi3j3AFW3wD0yzVCKNO5M770QvhC02tZ6tS4Wog=
+-2BwFmvj06mcfV-2FdO1yk94MwPLTgTWSGf5q-2FmvlHoS-2FA9C838bvykwBJvTR92c-2BWtVk=
+LC7fpcFP-2F23cG-2FU-2F7gGw7sfMvo9wuqJHPm5GRm3d543WysdVTxa6krnHEhnde5KluLjDW=
+0t2kKflyUqJU6vXTyFVPGz1F8Tinz" target=3D"_blank"><span style=3D"color:rgb(0=
+,0,238)"><img border=3D"0" width=3D"83" height=3D"44" id=3D"m_-847051946501=
+7681013m_6827497062930632712_x0000_i1032" src=3D"https://v3.oscar-campus.co=
+m/storage/560e72a31956569e36e1f3036c582ca0/uploads/kisspng-veolia-water-inf=
+-systems-abrev-vw-is-logo-veolia-c-5bed34b01d17280284113915422721761192.png=
+" class=3D"gmail-CToWUd" style=3D"width: 0.8645in; height: 0.4583in;"></spa=
+n></a><u></u><u></u></p></td></tr></tbody></table></div></td></tr></tbody><=
+/table></td></tr></tbody></table></div></td></tr></tbody></table></div></di=
+v></td></tr></tbody></table></div><p class=3D"MsoNormal" style=3D"backgroun=
+d-image:initial;background-position:initial;background-size:initial;backgro=
+und-repeat:initial;background-origin:initial;background-clip:initial"><u></=
+u>=C2=A0<u></u></p><div align=3D"center"><table border=3D"0" cellspacing=3D=
+"0" cellpadding=3D"0" width=3D"600" style=3D"width:450pt;border-collapse:co=
+llapse"><tbody><tr><td style=3D"padding:0cm;word-break:break-word"><div><di=
+v align=3D"center"><table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" =
+width=3D"100%" style=3D"width:600px;background-image:initial;background-pos=
+ition:initial;background-size:initial;background-repeat:initial;background-=
+origin:initial;background-clip:initial;border-collapse:collapse"><tbody><tr=
+><td style=3D"padding:15.75pt 0cm"><div align=3D"center"><table border=3D"0=
+" cellspacing=3D"0" cellpadding=3D"0" style=3D"border-collapse:collapse"><t=
+body><tr><td width=3D"300" valign=3D"top" style=3D"width:225pt;padding:0cm"=
+><table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" sty=
+le=3D"width:300px;border-collapse:collapse;word-break:break-word"><tbody><t=
+r><td style=3D"padding:7.5pt 11.25pt 11.25pt"><p><span style=3D"font-size:8=
+.5pt;font-family:Ubuntu,sans-serif;color:rgb(126,140,141)">Isep</span><span=
+ style=3D"font-size:8.5pt;font-family:Ubuntu,sans-serif;color:black"><u></u=
+><u></u></span></p><p><span style=3D"font-size:8.5pt;font-family:Ubuntu,san=
+s-serif;color:rgb(126,140,141)">28 rue Notre-Dame-des-Champs</span><span st=
+yle=3D"font-size:8.5pt;font-family:Ubuntu,sans-serif;color:black"><u></u><u=
+></u></span></p><p><span style=3D"font-size:8.5pt;font-family:Ubuntu,sans-s=
+erif;color:rgb(126,140,141)">75006 Paris</span><span style=3D"font-size:8.5=
+pt;font-family:Ubuntu,sans-serif;color:black"><u></u><u></u></span></p><p><=
+span style=3D"font-size:8.5pt;font-family:Ubuntu,sans-serif;color:rgb(126,1=
+40,141)">_______</span><span style=3D"font-size:8.5pt;font-family:Ubuntu,sa=
+ns-serif;color:black"><u></u><u></u></span></p><p><span style=3D"font-size:=
+8.5pt;font-family:Ubuntu,sans-serif;color:rgb(126,140,141)">10 rue de Vanve=
+s</span><span style=3D"font-size:8.5pt;font-family:Ubuntu,sans-serif;color:=
+black"><u></u><u></u></span></p><p><span style=3D"font-size:8.5pt;font-fami=
+ly:Ubuntu,sans-serif;color:rgb(126,140,141)">92130 Issy-les-Moulineaux</spa=
+n></p></td></tr></tbody></table></td></tr></tbody></table></div></td></tr><=
+/tbody></table></div></div></td></tr></tbody></table></div></div></div><spa=
+n class=3D"gmail_signature_prefix">-- </span><br><div dir=3D"ltr" class=3D"=
+gmail_signature" data-smartmail=3D"gmail_signature"><br>
+<br>
+
+
+
+
+
+
+
+
+
+<table width=3D"450">
+ <tbody>
+=20
+
+ <tr>
+ <td style=3D"margin:0;padding:0;vertical-align:top;padding-right:10px;bord=
+er-right:1px solid #ff5859;width:120px">
+=20
+ <a href=3D"https://fr.outscale.com/" target=3D"_blank"><img src=3D"https:/=
+/data.sigilium.com/images/logos/rcohh7cred7q4-lvh0mdkvqfbp02krc/auto/logo.p=
+ng" style=3D"border-style:none;display:block;width:120px;height:33px" width=
+=3D"120" height=3D"33" alt=3D"Logo"></a>
+=20
+ </td>
+ <td style=3D"margin:0;padding:0;vertical-align:top">
+ <table>
+ <tbody>
+ <tr>
+ <td style=3D"margin:0;padding:0;vertical-align:top;min-width:250px;padding=
+-left:10px" colspan=3D"1">
+ <p style=3D"margin:0;padding:0;font-family:Arial,sans-serif;font-size:12px=
+;color:#0f1945;font-weight:bold">
+ <span style=3D"font-family:Arial,sans-serif;font-size:12px;color:#0f1945">
+ Raja Chiky
+ </span>
+=20
+
+ </p>
+ </td>
+ </tr>
+=20
+ <tr>
+ <td style=3D"margin:0;padding:0;vertical-align:top;padding-left:10px" cols=
+pan=3D"1">
+
+ <span style=3D"font-family:Arial,sans-serif;font-size:12px;color:#ff5859">
+ Alliances &amp; CSR Director
+=20
+=20
+ </span>
+
+ </td>
+ </tr>
+=20
+ <tr>
+ <td style=3D"margin:0;padding:0 0 0 10px;vertical-align:top">
+ <table>
+ <tbody>
+=20
+ <tr>
+ <td style=3D"margin:0;padding:0;vertical-align:top;font-family:Arial,sans-=
+serif;font-size:12px;color:#0f1945;padding-right:4px">
+ <img src=3D"https://data.sigilium.com/img/0F1945/30/phone.png" style=3D"bo=
+rder-style:none;width:15px;height:15px" border=3D"0" width=3D"15" height=3D=
+"15" alt=3D"Phone">
+
+ </td>
+ <td>
+ <span style=3D"font-family:Arial,sans-serif;font-size:12px;color:#0f1945">
+ +33 1 53 27 52 70 (ext : 2035)
+=20
+ </span>
+ </td>
+ </tr>
+=20
+=20
+=20
+ <tr>
+ <td style=3D"margin:0;padding:0;vertical-align:top;font-family:Arial,sans-=
+serif;font-size:12px;color:#0f1945;padding-right:4px">
+ <img src=3D"https://data.sigilium.com/img/0F1945/30/mobile.png" style=3D"b=
+order-style:none;width:15px;height:15px" border=3D"0" width=3D"15" height=
+=3D"15" alt=3D"Mobile">
+
+ </td>
+ <td>
+ <span style=3D"font-family:Arial,sans-serif;font-size:12px;color:#0f1945">
+ 06 66 19 27 90</span>
+ </td>
+ </tr>
+=20
+=20
+ <tr>
+ <td style=3D"margin:0;padding:0;vertical-align:top;font-family:Arial,sans-=
+serif;font-size:12px;color:#0f1945;padding-right:4px">
+ <img src=3D"https://data.sigilium.com/img/0F1945/30/website.png" style=3D"=
+border-style:none;width:15px;height:15px" border=3D"0" width=3D"15" height=
+=3D"15" alt=3D"Website">
+
+ </td>
+ <td style=3D"margin:0;padding:0;vertical-align:top;font-family:Arial,sans-=
+serif;font-size:12px;color:#0f1945">
+ <a style=3D"text-decoration:none!important;text-decoration:none;color:#0f1=
+945;font-family:Arial,sans-serif;font-size:12px" href=3D"https://fr.outscal=
+e.com/" target=3D"_blank">
+ fr.outscale.com
+ </a>
+ </td>
+ </tr>
+
+=20
+ <tr>
+ <td style=3D"margin:0;padding:0;vertical-align:top;font-family:Arial,sans-=
+serif;font-size:12px;color:#0f1945;padding-right:4px">
+ <img src=3D"https://data.sigilium.com/img/0F1945/30/envelope.png" style=3D=
+"border-style:none;width:15px;height:15px" border=3D"0" width=3D"15" height=
+=3D"15" alt=3D"Envelope">
+
+ </td>
+ <td>
+ <span style=3D"font-family:Arial,sans-serif;font-size:12px;color:#0f1945">
+ <a href=3D"mailto:raja.chiky@outscale.com" target=3D"_blank">raja.chiky@ou=
+tscale.com</a></span>
+ </td>
+ </tr>
+
+
+=20
+ <tr>
+ <td style=3D"margin:0;padding:0;vertical-align:top;font-family:Arial,sans-=
+serif;font-size:12px;color:#0f1945;padding-right:4px">
+ <img src=3D"https://data.sigilium.com/img/0F1945/30/map-marker.png" style=
+=3D"border-style:none;width:15px;height:15px" border=3D"0" width=3D"15" hei=
+ght=3D"15" alt=3D"Map-marker">
+
+ </td>
+ <td style=3D"margin:0;padding:0;vertical-align:top;font-family:Arial,sans-=
+serif;font-size:12px;color:#0f1945">
+ <a style=3D"text-decoration:none!important;text-decoration:none;color:#0f1=
+945;font-family:Arial,sans-serif;font-size:12px" href=3D"https://data.sigil=
+ium.com/signatures/rcf-mnqqugcvrzoro3nwzbzbsxuu0rc/link?element=3Dmap_marke=
+r" target=3D"_blank">
+ 1 rue royale - 319 Bureaux de la Colline <br>92210, Saint-Cloud - France
+ </a>
+ </td>
+ </tr>
+
+=20
+
+ </tbody>
+ </table>
+ </td>
+ </tr>
+=20
+ </tbody>
+ </table>
+ </td>
+ <td style=3D"margin:0;padding:0;vertical-align:top;padding-left:10px">
+ <table>
+ <tbody>
+=20
+=20
+=20
+=20
+=20
+ <tr>
+ <td>
+ <a style=3D"text-decoration:none" href=3D"https://www.facebook.com/outscal=
+efrance/" target=3D"_blank"><img src=3D"https://data.sigilium.com/img/FF585=
+9/50/facebook.png" style=3D"border-style:none;width:25px;height:25px;displa=
+y:block" border=3D"0" width=3D"25" height=3D"25" alt=3D"Facebook"></a>
+ </td>
+ </tr>
+=20
+=20
+=20
+=20
+=20
+ <tr>
+ <td>
+ <a style=3D"text-decoration:none" href=3D"https://twitter.com/outscale_fr"=
+ target=3D"_blank"><img src=3D"https://data.sigilium.com/img/FF5859/50/twit=
+ter.png" style=3D"border-style:none;width:25px;height:25px;display:block" b=
+order=3D"0" width=3D"25" height=3D"25" alt=3D"Twitter"></a>
+ </td>
+ </tr>
+=20
+=20
+=20
+=20
+=20
+ <tr>
+ <td>
+ <a style=3D"text-decoration:none" href=3D"https://www.linkedin.com/company=
+/outscale-france" target=3D"_blank"><img src=3D"https://data.sigilium.com/i=
+mg/FF5859/50/linkedin.png" style=3D"border-style:none;width:25px;height:25p=
+x;display:block" border=3D"0" width=3D"25" height=3D"25" alt=3D"Linkedin"><=
+/a>
+ </td>
+ </tr>
+=20
+=20
+ </tbody>
+ </table>
+ </td>
+ </tr>
+ <tr><td style=3D"margin:0;padding:0;vertical-align:top" colspan=3D"3"><p s=
+tyle=3D"margin:10px 0px;padding:0;font-family:Arial,sans-serif;font-size:12=
+px;margin-left:0px"><a href=3D"https://data.sigilium.com/signatures/rcf-mnq=
+qugcvrzoro3nwzbzbsxuu0rc/redirect_link" target=3D"_blank"><img src=3D"https=
+://data.sigilium.com/system/announcements/full_images/000/037/385/normal/CL=
+OUD_DAYS_2023_Signature_mail.png" style=3D"border-style:none;display:block;=
+width:450px;height:146px" width=3D"450" height=3D"146"></a></p></td></tr>
+=20
+ <tr>
+ <td colspan=3D"3" style=3D"font-family:Arial,sans-serif;font-size:10px">IM=
+PORTANT : The information contained in this message may be privileged and c=
+onfidential and protected from disclosure. If the reader of this message is=
+ not the intended recipient, or an employee or agent responsible for delive=
+ring this message to the intended recipient, you are hereby notified that a=
+ny dissemination, distribution or copying of this communication is strictly=
+ prohibited. If you have received this communication in error, please notif=
+y us immediately by replying to the message and deleting it from your compu=
+ter.
+<br>Outscale informs you that your personal data are processed in accordanc=
+e with our data protection policy, available on our website. If you have an=
+y inquiries please contact us at <a href=3D"mailto:personal-data@outscale.c=
+om" target=3D"_blank">personal-data@outscale.com</a>.</td>
+ </tr>
+=20
+</tbody>
+</table></div></div>
+
+--00000000000019161c05fc82e598--
+

@@ -1,0 +1,330 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (bouncesmtp1.u12.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id AD96714017D8
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon,  6 Mar 2023 14:44:05 +0100 (CET)
+Received: from mx1.localdomain (MX1.univ-nantes.fr [193.52.101.135])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id A928C6F87
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon,  6 Mar 2023 14:44:05 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.localdomain (Postfix) with ESMTP id 9AF8E12000A
+	for <liste-egc@polytech.univ-nantes.fr>; Mon,  6 Mar 2023 14:44:05 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -3.802
+X-Spam-Level:
+X-Spam-Status: No, score=-3.802 tagged_above=-1000 required=5
+	tests=[CRM114_GOOD=-5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	HTML_MESSAGE=0.001, MR_NOT_ATTRIBUTED_IP=0.2,
+	RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+	RCVD_IN_WSFF=0.01, SARE_HEAD_8BIT_SPAM=0.888, SPF_HELO_NONE=0.001,
+	SPF_PASS=-0.001, UN_PHISHING_PW=0.1] autolearn=disabled
+X-CRM114-Status: GOOD ( 8.5334 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=unamurbe.onmicrosoft.com
+Received: from mx1.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id vY7eITb_m2ew for <liste-egc@polytech.univ-nantes.fr>;
+	Mon,  6 Mar 2023 14:44:03 +0100 (CET)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=40.107.104.57; helo=eur03-dba-obe.outbound.protection.outlook.com; envelope-from=benoit.frenay@unamur.be; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=none (p=none dis=none) header.from=unamur.be
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=benoit.frenay@unamur.be
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (1024-bit key; unprotected) header.d=unamurbe.onmicrosoft.com header.i=@unamurbe.onmicrosoft.com header.b="aD8oai3N";
+	dkim-atps=neutral
+X-Greylist: whitelisted by SQLgrey-1.6.7
+Received: from EUR03-DBA-obe.outbound.protection.outlook.com (mail-dbaeur03on2057.outbound.protection.outlook.com [40.107.104.57])
+	by mx1.localdomain (Postfix) with ESMTPS id 1987A120047
+	for <liste-egc@polytech.univ-nantes.fr>; Mon,  6 Mar 2023 14:44:02 +0100 (CET)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=fyc8yjXAR6xlpdOTYss5wbS+m4e7mxqnPp+JgA3Y0y7klaGdgW4U2DB5Q3aTpSeNECENXPJul/uSQ4f7MCOg/9eCUK9Q7e6AYI5o8NUNl9kJWHvfXiMpJk8oobSUrf+ZNrMaqSOsiSL5fnf9IHiAFPayDC/5zhJ2k4nGktu0b2io0jC28pE/7tSG+0va+E2zA3FYrw3NWkmdZlF44wjAgbu6tSkvm2YFjLQGwa8M4QXQYF9g2zniHlCOUczp6Dr92Zq8jhU9zutgMKk0wl+onhgoWxT7oDKoSIcLMgM47B3cp7vhv18F3uMkdbfecYKH04NidRXjpOBZTXYM9AfGcg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1X1S08SRGORjN09Hfk6ycSsc32k1Tcy0uYEcOo1Owec=;
+ b=DIXz1aqw+cOA4NuhumU/uZhP+PJvpA9gWigA2L0v8EFbdsmYYpSEEtyZz6zns/4OaLBjXTFkYBjH1cH6rYlGb6YXjipu74XSWBHCoN8OqEsA0mRnBNxBeTStj2xejQMoZMKPCBMOTj9Y+6pkULNaaogqYLJlCsfBg5/YZiIN2gsLhneAhOsF5lXqSM0ZnCD+aHqFFW0sZcuMOqbOMJkNDhsjwvBt8rwE6KNwjPQQ5hfFYqAHzA8Gn+1exPRtVhQZ2WBLBKFqui5r3Vs3RzzIk2chwLpLutHOoTP8d1WtZonQ4r9KpjJzPiI46zeznqT4nDK5rWb6ComC5Xi00/nZBA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=unamur.be; dmarc=pass action=none header.from=unamur.be;
+ dkim=pass header.d=unamur.be; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=unamurbe.onmicrosoft.com; s=selector1-unamurbe-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1X1S08SRGORjN09Hfk6ycSsc32k1Tcy0uYEcOo1Owec=;
+ b=aD8oai3N9l0DDcdcpUYnQsCnfeP/ASB3Vf40AgFi6tlNd8X0QlpLEwKQuNJm/089CBeQOmhAiK0WKdoYO6FIm7iO1hsccnDsM37Rl/mWVcXAJsvb+bttzOmatPvglgSC0yIOhT3mLOzdzwLl8T+FqbtxQ+wnpl0EvZB0VV4tlng=
+Received: from AM0PR07MB4676.eurprd07.prod.outlook.com (2603:10a6:208:6b::10)
+ by AM7PR07MB6231.eurprd07.prod.outlook.com (2603:10a6:20b:133::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6156.26; Mon, 6 Mar
+ 2023 13:44:01 +0000
+Received: from AM0PR07MB4676.eurprd07.prod.outlook.com
+ ([fe80::df3c:9aa:ec5a:367a]) by AM0PR07MB4676.eurprd07.prod.outlook.com
+ ([fe80::df3c:9aa:ec5a:367a%6]) with mapi id 15.20.6156.021; Mon, 6 Mar 2023
+ 13:44:01 +0000
+From: =?Windows-1252?Q?Beno=EEt_Frenay?= <benoit.frenay@unamur.be>
+To: "liste-egc@polytech.univ-nantes.fr" <liste-egc@polytech.univ-nantes.fr>
+Thread-Topic:
+ =?Windows-1252?Q?2nd_CFP_-_ML_applied_to_Sign_Language:_Special_Session_a?=
+ =?Windows-1252?Q?t_ESANN=9223?=
+Thread-Index: AdlQMMuQMaBBLRG2Rd6w9h4PsnUOiw==
+Date: Mon, 6 Mar 2023 13:44:01 +0000
+Message-ID:
+ <AM0PR07MB46767FA0E7FE0D404F04D139F1B69@AM0PR07MB4676.eurprd07.prod.outlook.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=unamur.be;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AM0PR07MB4676:EE_|AM7PR07MB6231:EE_
+x-ms-office365-filtering-correlation-id: 66580f08-9e36-4a54-b7bd-08db1e48d7ff
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:
+ hsh0x1FzhdPJAnrlhRXadbQ0jNP3wRQGeJYX5CZnGIC0gl2JBVD/hOD0KLDiwOl5qa153xfD4UP34/VIEtnT8obWkvp+IVUp1TxDWwmkMrLydXIiRKILtIA7Ip5elQ/Dygd5qY6z6s6GKLbxybW5//EprqQDhDKXla6fbPaS9JjJNcuyQPkxJ9hTy8pPNDpBLF2VpIsbiBp8CXVcQATj/ipUgKfITprk9LyTp3C3AhCRppL6Hyeru8Hj1JX6Giy4N1HlAVSbep3rz4qm57qjuAnMlk7QtfrahvWDruE4DFcKfXa8T5cLH/L6WFV8kaAXCO8DOEtI+gH1EOTTCErS8IwgYDgSIG50jVZZjc9MXrajej+1qifNvsKd0xk9j2iDv6F99p+q737w1HLyvauME8KQr1TZyccrl+Qb8AOUoWn0jciqapYGSJgjoe19jmv8nNJa7uE4q9pvLt6gqbmeUSLTs6GlZyhxNnLpRIne6J0wc+kFGoxdQ4w0XLFwfZCRHaWn00OUhHqaF9EpURI2UiidQg31PPMKeYOH80eaJJ1qr69Kh6BMMcuHqYND6S7IzPwZ+XmhaYJZxXUZHAuivI0KzwgeaYLfZmXlmCXceyU+o6SD76Ci0rCH335Lu7LqoehZlrre+4smTlnUegrStGwOkKMBsyWDmNpLgtG2/XUIqEn2lBYO/7WTJrizoI5X
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM0PR07MB4676.eurprd07.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(4636009)(376002)(136003)(396003)(346002)(366004)(39850400004)(451199018)(26005)(6506007)(966005)(66574015)(38070700005)(41320700001)(122000001)(86362001)(33656002)(83380400001)(38100700002)(9686003)(55016003)(166002)(186003)(66946007)(66476007)(66446008)(41300700001)(6916009)(64756008)(2906002)(66556008)(52536014)(8936002)(76116006)(5660300002)(478600001)(7696005)(71200400001)(316002)(786003)(66899018);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?Windows-1252?Q?gSegNchPjeSjIK/EDdF/AqXddhRZ7cce4hlwR4fq+5IvIFaHgL3GkV9U?=
+ =?Windows-1252?Q?tpaObladPHnomlgnWvSVHPjaTyJQT/br7jd3tz80NAX6IglDZnzRKtAC?=
+ =?Windows-1252?Q?WMXElL9XJxJBvplusdpISU03muLCt6eoVftPl8qVd69w5IgfnxMz+shI?=
+ =?Windows-1252?Q?eoOB9Myxvr4xmK1EUAy7GF3deO9H3UsboazARUdjdT1qQix3oVsK2OKX?=
+ =?Windows-1252?Q?3r0y8pzfeuMc//bK2KPWhGErhF6hrw3edyliIndGVUpU+KyrqRjFbhBN?=
+ =?Windows-1252?Q?bOEUlw58XO/kgXAWEGjGXXJG2NbQVOKelu165T1HA1XQoqs8tJUdweU8?=
+ =?Windows-1252?Q?+yHu0Vv7xtwHpVDO3lRWtAUOAlsmDEFadenC9PcoLXCmfjOiVk/i1mXb?=
+ =?Windows-1252?Q?EK6t6eFjbunV5/UoRH3NdlXNWEGTAkkUENKK4zXefwzKtMmQm7U1F+Rr?=
+ =?Windows-1252?Q?iWaiVnDkw+jQa1a6tbyMmiKqOcIEY3HfYQx9nfWpIwv3wL5Duxi3kevX?=
+ =?Windows-1252?Q?bQ0jXkNMkHXZPxA7uJPUGzcfuJDOGg8JSoB8/CSUDEFXO4IW7I4bf8+M?=
+ =?Windows-1252?Q?Rvl9VfzZ9Jkt5cfsCihdaUp+U1yOgXJi2Q17/uscznGyt2AfPTeS24CF?=
+ =?Windows-1252?Q?hLNycSG7fg9sfR/Tm2KyT87LY70lTTezF4A4xlYxFey6e44L7NknscDr?=
+ =?Windows-1252?Q?IKi86WRugr++7dg5wGQ1glvnQBKPlaBrnTK1UCNvQ+6F/Xn2upp2UbqY?=
+ =?Windows-1252?Q?PahE+ZENGgx127AiWdETzRWHMZYx70Bz8sCJbfeVI/tTOp1WuA2SRSQJ?=
+ =?Windows-1252?Q?pZf0dJkVndVIpcRpyecBaRnpYh9N1L5LOKI/sJFo3Ha/sC9iIqw3Yc4i?=
+ =?Windows-1252?Q?bbwtsrSlSMA/+pQr087zLDb3nlW7iATkg+xYdGSohFbQReRGb/WbV7Ny?=
+ =?Windows-1252?Q?8Q24L33qyp8h4OZLDo11bf4Y/HBko7i1IqCkJdTu4d3wYw2ADhdZ8byh?=
+ =?Windows-1252?Q?DWmtlR7YzRHSDde67R0xoz6gF7cWI5APZeu9e84PJqZhuSpJjsmuiAv4?=
+ =?Windows-1252?Q?MqIrjXh1uEqIsC2SE+GKCk5Plw3NcXMKSCj1tilsQEjgcLDcfPh2CiNg?=
+ =?Windows-1252?Q?l4Upe0+7RYwKJwRegb3GURMc4IxtHYCswiWq+QxfOdsPuaegXndbMtAt?=
+ =?Windows-1252?Q?8GOfjiehNE3s4nY23h4VWaggwNVCO4B1o9A1mTfP9lcRR3AuieVQRf+s?=
+ =?Windows-1252?Q?uDwgvqdJgVlPp3MO9ifH5Lq3r5LM46ayQRaUa4YSF/gpYltBjDjbq7oA?=
+ =?Windows-1252?Q?5atzXJcyUnIT48nrg+FeVPgRVDGcZ2LbQQoRUpPbzkdPc4bycJsKHsd5?=
+ =?Windows-1252?Q?W3xOloZdZ9eYGQbbT9cCTWNHthEw7Rv4oQ+w4rKxG6KwZKwKiDbbiGVO?=
+ =?Windows-1252?Q?MitXKLD9o7nlxMSAnZpzkYYyGEC4albT8queZIeIX1s0tMSmTwlWsr6L?=
+ =?Windows-1252?Q?VGnghKfnbB2RfJ5QLWNgF9O86M3CVukdQ9n1+wZwHTrfO6AXEUd1rOvC?=
+ =?Windows-1252?Q?qhr8JJZWK9G+vYQoM/TSZ9xxNi6NcdZKr1zAnPPF22B2YBi9K2j/0LG9?=
+ =?Windows-1252?Q?trrqnvEk8FNB5XFyvx4oCaZyWYiNlaEC+W3eK8tMkCPUZN5jDXDA/cs6?=
+ =?Windows-1252?Q?jYH9mhCGDATB5JZR0cfOKEx0OHBkWtqP?=
+Content-Type: multipart/alternative;
+	boundary="_000_AM0PR07MB46767FA0E7FE0D404F04D139F1B69AM0PR07MB4676eurp_"
+MIME-Version: 1.0
+X-OriginatorOrg: unamur.be
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AM0PR07MB4676.eurprd07.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 66580f08-9e36-4a54-b7bd-08db1e48d7ff
+X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Mar 2023 13:44:01.3239
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 5f31c5b4-f2e8-4772-8dd6-f268037b1eca
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 8foSK+AnH4ILj+z+aIJvVpFsjoK7S6uCrg0qCwrpzyZO06qWX6HBDRIRHfFspeP6NbaICv/Sn9sofwyQs6uQyg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM7PR07MB6231
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] 2nd CFP - ML applied to Sign Language: Special Session
+ at =?WINDOWS-1252?Q?ESANN=9223?=
+
+--_000_AM0PR07MB46767FA0E7FE0D404F04D139F1B69AM0PR07MB4676eurp_
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+2Nd Call for papers:  special session on "Machine Learning Applied to Sign =
+Language" at ESANN 2023
+
+European Symposium on Artificial Neural Networks, Computational Intelligenc=
+e and
+
+Machine Learning (ESANN 2023). 4-5 October 2023, Bruges, Belgium. http://ww=
+w.esann.org
+
+DESCRIPTION:
+
+Deep learning has led to spectacular advances in many fields dealing with u=
+nstructured data such as computer vision, natural language processing, and =
+data generation. Recently, sign languages have drawn the attention of machi=
+ne learning practitioners as sign language recognition, translation, and sy=
+nthesis raise interesting technical challenges and have a clear societal im=
+pact. The overarching domain of sign language processing is related to comp=
+uter vision, natural language processing, computer graphics, and human-comp=
+uter interaction. It brings together computer scientists and linguists to t=
+ackle interdisciplinary problems. This special session aims to highlight re=
+cent advances made in sign language recognition, translation, and synthesis=
+, as well as new datasets.
+
+Topics of interest include, but are not limited to:
+
+=B7         Sign language recognition models
+
+=B7         Sign language translation models (from signed to spoken languag=
+es and vice versa)
+
+=B7         Sign language synthesis and virtual signing avatars
+
+=B7         Data collection efforts related to sign language processing
+
+All papers will be submitted to a peer review process. Accepted papers will=
+ be presented as either talks or posters, in order to favour interaction wi=
+th the ESANN attendees. There is no difference in quality between talks and=
+ posters and all papers will be published in the conference proceedings. At=
+ least one author is expected to register for the conference and pay the re=
+gistration fee.
+
+SUBMISSION:
+
+Prospective authors must submit their paper through the ESANN portal follow=
+ing the instructions provided on https://www.esann.org/node/6. Author guide=
+lines are available on https://www.esann.org/author_guidelines. Each paper =
+will undergo a peer reviewing process for its acceptance. Authors should se=
+nd an e-mail with the tentative title of their contribution to the special =
+session organizers as soon as possible.
+
+IMPORTANT DATES:
+
+Paper submission deadline: 2 May 2023
+Notification of acceptance: 16 June 2023
+The ESANN 2023 conference: 4-5 October 2023
+
+SPECIAL SESSION ORGANISERS:
+
+Joni Dambre, Ghent University (Belgium)
+joni.dambre@ugent.be<mailto:joni.dambre@ugent.be>
+Mathieu De Coster, Ghent University (Belgium)
+mathieu.decoster@ugent.be<mailto:mathieu.decoster@ugent.be>
+J=E9r=F4me Fink, Universit=E9 de Namur (Belgium)
+jerome.fink@unamur.be<mailto:jerome.fink@unamur.be>
+Beno=EEt Fr=E9nay, Universit=E9 de Namur (Belgium)
+benoit.frenay@unamur.be<mailto:benoit.frenay@unamur.be>
+
+--_000_AM0PR07MB46767FA0E7FE0D404F04D139F1B69AM0PR07MB4676eurp_
+Content-Type: text/html; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DWindows-1=
+252">
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+/* Style Definitions */
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;
+	mso-ligatures:standardcontextual;
+	mso-fareast-language:EN-US;}
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 72.0pt 72.0pt 72.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"en-BE" link=3D"#0563C1" vlink=3D"#954F72" style=3D"word-wrap:=
+break-word">
+<div class=3D"WordSection1">
+<p><b><span lang=3D"EN-GB">2<sup>Nd</sup> </span>Call for papers:&nbsp; spe=
+cial session on &quot;Machine Learning Applied to Sign Language&quot; at ES=
+ANN 2023</b>&nbsp;<o:p></o:p></p>
+<p>European Symposium on Artificial Neural Networks, Computational Intellig=
+ence and&nbsp;<o:p></o:p></p>
+<p>Machine Learning (ESANN 2023). 4-5 October 2023, Bruges, Belgium. <a hre=
+f=3D"http://www.esann.org" target=3D"_blank">
+http://www.esann.org</a>&nbsp;<o:p></o:p></p>
+<p><b>DESCRIPTION</b>:&nbsp;<o:p></o:p></p>
+<p>Deep learning has led to spectacular advances in many fields dealing wit=
+h unstructured data such as computer vision, natural language processing, a=
+nd data generation. Recently, sign languages have drawn the attention of ma=
+chine learning practitioners as
+ sign language recognition, translation, and synthesis raise interesting te=
+chnical challenges and have a clear societal impact. The overarching domain=
+ of sign language processing is related to computer vision, natural languag=
+e processing, computer graphics,
+ and human-computer interaction. It brings together computer scientists and=
+ linguists to tackle interdisciplinary problems.&nbsp;This special session =
+aims to highlight recent advances made in sign language recognition, transl=
+ation, and synthesis, as well as new
+ datasets.&nbsp;<o:p></o:p></p>
+<p>Topics of interest include, but are not limited to:&nbsp;<o:p></o:p></p>
+<p>=B7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sign language recogn=
+ition models&nbsp;<o:p></o:p></p>
+<p>=B7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sign language transl=
+ation models (from signed to spoken languages and vice versa)&nbsp;<o:p></o=
+:p></p>
+<p>=B7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sign language synthe=
+sis and virtual signing avatars&nbsp;<o:p></o:p></p>
+<p>=B7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Data collection effo=
+rts related to sign language processing&nbsp;<o:p></o:p></p>
+<p>All papers will be submitted to a peer review process. Accepted papers w=
+ill be presented as either talks or posters, in order to favour interaction=
+ with the ESANN attendees. There is no difference in quality between talks =
+and posters and all papers will
+ be published in the conference proceedings. At least one author is expecte=
+d to register for the conference and pay the registration fee.&nbsp;<o:p></=
+o:p></p>
+<p><b>SUBMISSION:</b>&nbsp;<o:p></o:p></p>
+<p>Prospective authors must submit their paper through the ESANN portal fol=
+lowing the instructions provided on
+<a href=3D"https://www.esann.org/node/6" target=3D"_blank">https://www.esan=
+n.org/node/6</a>. Author guidelines are available on
+<a href=3D"https://www.esann.org/author_guidelines" target=3D"_blank">https=
+://www.esann.org/author_guidelines</a>.&nbsp;Each paper will undergo a peer=
+ reviewing process for its acceptance. Authors should send&nbsp;an e-mail w=
+ith the tentative title of their contribution
+ to the special session organizers as soon as possible.&nbsp;<o:p></o:p></p=
+>
+<p><b>IMPORTANT DATES:</b>&nbsp;<o:p></o:p></p>
+<p>Paper submission deadline: 2 May 2023<br>
+Notification of acceptance: 16 June 2023<br>
+The ESANN 2023 conference: 4-5 October 2023&nbsp;<o:p></o:p></p>
+<p><b>SPECIAL SESSION ORGANISERS:</b>&nbsp;<o:p></o:p></p>
+<p>Joni Dambre, Ghent University (Belgium)&nbsp;<br>
+<span style=3D"color:black"><a href=3D"mailto:joni.dambre@ugent.be">joni.da=
+mbre@ugent.be</a></span><br>
+Mathieu De Coster, Ghent University (Belgium)&nbsp;<br>
+<span style=3D"color:black"><a href=3D"mailto:mathieu.decoster@ugent.be">ma=
+thieu.decoster@ugent.be</a></span><br>
+J=E9r=F4me Fink, Universit=E9 de Namur (Belgium)&nbsp;<br>
+<span style=3D"color:black"><a href=3D"mailto:jerome.fink@unamur.be">jerome=
+.fink@unamur.be</a></span><br>
+Beno=EEt Fr=E9nay,&nbsp;Universit=E9 de Namur (Belgium)&nbsp;<br>
+<span style=3D"color:black"><a href=3D"mailto:benoit.frenay@unamur.be">beno=
+it.frenay@unamur.be</a></span><o:p></o:p></p>
+</div>
+</body>
+</html>
+
+--_000_AM0PR07MB46767FA0E7FE0D404F04D139F1B69AM0PR07MB4676eurp_--

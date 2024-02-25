@@ -1,0 +1,858 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (bouncesmtp2.u12.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id D3B5A14017D8
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Tue, 28 Nov 2023 22:37:30 +0100 (CET)
+Received: from mx1.univ-nantes.fr (MX1.univ-nantes.fr [193.52.101.135])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id CEB368C7
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Tue, 28 Nov 2023 22:37:30 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.univ-nantes.fr (Postfix) with ESMTP id C0F3012009A
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 28 Nov 2023 22:37:30 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=univ-nantes.fr header.b=W8//jflB; dkim=pass (2048-bit key)
+	header.d=univ-nantes.fr header.b=W8//jflB
+Received: from mx1.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id gtP_gTU0Vl14 for <liste-egc@polytech.univ-nantes.fr>;
+	Tue, 28 Nov 2023 22:37:30 +0100 (CET)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=193.52.103.113; helo=smtp-tls.univ-nantes.fr; envelope-from=christine.sinoquet@univ-nantes.fr; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=none dis=none) header.from=univ-nantes.fr
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=univ-nantes.fr
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (2048-bit key; unprotected) header.d=univ-nantes.fr header.i=@univ-nantes.fr header.a=rsa-sha256 header.s=mailv2 header.b=W8//jflB;
+	dkim=pass (2048-bit key) header.d=univ-nantes.fr header.i=@univ-nantes.fr header.a=rsa-sha256 header.s=mailv2 header.b=W8//jflB;
+	dkim-atps=neutral
+X-Greylist: whitelisted by SQLgrey-1.6.7
+Received: from smtp-tls.univ-nantes.fr (smtptls1-cha.cpub.univ-nantes.fr [193.52.103.113])
+	by mx1.univ-nantes.fr (Postfix) with ESMTPS id 98DFD12008F
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 28 Nov 2023 22:37:30 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by smtp-tls.univ-nantes.fr (Postfix) with ESMTP id 2D2CF20109;
+	Tue, 28 Nov 2023 22:37:30 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-nantes.fr;
+	s=mailv2; t=1701207450;
+	bh=hGPCOy9JRnqOT0rMyUSGxvlr39L/6L6evvwQaMfVNbE=;
+	h=Date:From:Subject:To:From;
+	b=W8//jflBcNOS2AqHSsnwFDv4Gfq88z5Fxnw1H+2n4KVqBpvotKJLJkvTZEyb2mhGV
+	 lR9u9hiWefoCv5VP10EtCT0/v1Y5NgujYunEro6zqa2biMzzk6AEzFspQryrfOxaOP
+	 HqN1DCtMlNuA37LwpbifCNC2lgoyQlCA1nHf+gHJFnA7HMi8YqqcwsiN5g3z4U6Bm9
+	 aQRpTeo3JtxYWtpp0gD/Jdag/5jKyapO4OnGsZ+OeZJEa0Sdie77EALJGsD5gPr00L
+	 ECuUzRxkftBTXSvBVC9NNKUKSXbqJoBM1cO4OeZUMjZcIImUaD8pskBbcH3Z5+RDv9
+	 19vtVg9Z8JjUQ==
+X-Virus-Scanned: Debian amavisd-new at smtptls1-lmb.cpub.univ-nantes.fr
+Received: from smtp-tls.univ-nantes.fr ([127.0.0.1])
+	by localhost (smtptls1-cha.cpub.univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id nxcfJvX_0ez1; Tue, 28 Nov 2023 22:37:30 +0100 (CET)
+Received: from [IPV6:2a01:cb05:8d8b:e300:d469:7722:fd9e:5124] (2a01cb058d8be300d4697722fd9e5124.ipv6.abo.wanadoo.fr [IPv6:2a01:cb05:8d8b:e300:d469:7722:fd9e:5124])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-tls.univ-nantes.fr (Postfix) with ESMTPSA id 8417920102;
+	Tue, 28 Nov 2023 22:37:29 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-nantes.fr;
+	s=mailv2; t=1701207450;
+	bh=hGPCOy9JRnqOT0rMyUSGxvlr39L/6L6evvwQaMfVNbE=;
+	h=Date:From:Subject:To:From;
+	b=W8//jflBcNOS2AqHSsnwFDv4Gfq88z5Fxnw1H+2n4KVqBpvotKJLJkvTZEyb2mhGV
+	 lR9u9hiWefoCv5VP10EtCT0/v1Y5NgujYunEro6zqa2biMzzk6AEzFspQryrfOxaOP
+	 HqN1DCtMlNuA37LwpbifCNC2lgoyQlCA1nHf+gHJFnA7HMi8YqqcwsiN5g3z4U6Bm9
+	 aQRpTeo3JtxYWtpp0gD/Jdag/5jKyapO4OnGsZ+OeZJEa0Sdie77EALJGsD5gPr00L
+	 ECuUzRxkftBTXSvBVC9NNKUKSXbqJoBM1cO4OeZUMjZcIImUaD8pskBbcH3Z5+RDv9
+	 19vtVg9Z8JjUQ==
+Content-Type: multipart/alternative;
+ boundary="------------NwVWn0KrPRnAhMt0iecwDHxF"
+Message-ID: <7456ea42-ccdc-1459-50fa-4f4e98fdd1ef@univ-nantes.fr>
+Date: Tue, 28 Nov 2023 22:37:28 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+From: Christine Sinoquet <christine.sinoquet@univ-nantes.fr>
+To: fca-list@cs.uni-kassel.de, bull-ia@gdria.fr,
+ liste-egc@polytech.univ-nantes.fr, info-ic@inria.fr, AI-SGES@JISCMAIL.AC.UK,
+ web@irit.fr, info-aria@liste.lis-lab.fr, ln@groupes.renater.fr
+Content-Language: en-US
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Stage M2 Intelligence Artificielle =?UTF-8?Q?=C3=A0?=
+ Nantes - =?UTF-8?Q?D=C3=A9veloppement?= de jumeau
+ =?UTF-8?Q?num=C3=A9rique?= de patient sous =?UTF-8?Q?anesth=C3=A9sie=2C?=
+ par approches de Deep Learning.
+
+This is a multi-part message in MIME format.
+--------------NwVWn0KrPRnAhMt0iecwDHxF
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+
+Bonjour à tous,
+
+Merci de diffuser l'annonce ci-dessous.
+
+Bien cordialement,
+
+Christine Sinoquet
+
+Christine Sinoquet
+http://christinesinoquet.wixsite.com/christinesinoquet
+Associate Professor with French Habilitation to Supervise Research 
+(2014), Qualified for Full Professor Activities (2015, 2020)
+Head of the  Master Mention of Bioinformatics of the University of Nantes
+Head of DUKe Research Group (Data / User / Knowledge) - LS2N 
+(Laboratoire des Sciences du Numérique de Nantes - Laboratory of Digital 
+Science of Nantes)  / UMR CNRS 6004, https://www.ls2n.fr/
+
+*1. Titre du stage*
+
+*Jumeau numérique de patient sous anesthésie. Exploration et évaluation 
+d’approches par Deep Learning.*
+
+*2. Mots-clés*
+
+Patient numérique, bloc opératoire, anaesthésie, simulation, prédiction, 
+apprentissage profond, trace d’actions, série temporelle multivariée
+
+*3. Profil
+*
+
+Profil Master 2 Informatique, avec des compétences en intelligence 
+artificielle et en Deep Learning, ou bien des compétences en 
+intelligence artificielle et en Machine Learning et la volonté de 
+s'investir dans le domaine du Deep Learning ; intérêt marqué pour les 
+travaux à l'interdisciplinaire (santé). Un stage de Master 1 dans un 
+domaine proche du sujet représente un plus.
+
+*4. Gratification/rémunération*
+
+Selon la législation en vigueur pour un stage se déroulant en 
+laboratoire de recherche à l’Université.
+
+*5. Description du sujet*
+
+*5.1. Contexte et objectifs*
+
+Ce stage s’inscrit dans le cadre d’une collaboration à l’interface entre 
+numérique et santé, avec Le Laboratoire Expérimental de SImulation en 
+Médecine Intensive (LE SiMU) de l'Université de Nantes. Le SiMU permet 
+notamment de se perfectionner dans la gestion de situations critiques en 
+anesthésie. Il intervient sur simulateurs de patients haute-fidélité 
+(mannequins), avec immersion des acteurs en formation dans une équipe 
+médicale humaine pleine-échelle interprofessionnelle.
+
+Dans le but d’améliorer la sécurité et la qualité des soins 
+peropératoires, les formateurs du SiMU souhaitent varier la diversité 
+des scénarios à proposer aux internes en anesthésie et infirmiers 
+anesthésistes, en formation initiale, ainsi qu’aux praticiens plus 
+expérimentés, en formation continue. Pour varier les scénarios, il est 
+proposé à terme d’automatiser la génération de scénarios réalistes de 
+simulation, en s’appuyant sur tout ou partie de la base de profils 
+anesthésiques enregistrés par le CHU de Nantes depuis 2004 (500 000 
+profils anesthésiques). Dans cette modalité assistée par le numérique, 
+la personne qui suit la formation (interne ou infirmier), fait partie de 
+l’équipe médicale. Les autres membres de l’équipe médicale sont simulés 
+très simplement (icônes réalisant des actions et émettant des 
+informations, sur l’écran de l’ordinateur assigné à l’apprenant). De 
+cette innovation est attendu un accès potentiel à une grande variété de 
+scénarios réalistes de simulation de cas d’anesthésie. Servir cet 
+objectif de formation répond également à terme au besoin d’anticipation 
+par prédiction, inhérent au paradigme de la médecine personnalisée, en 
+pleine émergence.
+
+Pour atteindre cet objectif, deux axes de recherche ont été explorés au 
+sein de l’équipe DUKe du LS2N. Ils portent respectivement sur une 
+approche de data mining / raisonnement à base de cas [BVL22], et des 
+approche machine learning (modèles de Markov autorégressif à changements 
+de régimes [DSL23a, DSL23b]). Les travaux du stage exploreront une 
+troisième catégorie d’approche, centrée sur les modèles neuronaux profonds.
+
+Les CHU ont obligation légale d’enregistrer toutes les données relatives 
+aux interventions chirurgicales. Parmi ces dernières, figurent les 
+profils anesthésiques des patients. Un profil anesthésique est constitué 
+d’une trace d’événements et d’une série temporelle multivariée. La trace 
+d’événements est la séquence horodatée des actions de l’équipe médicale 
+(e.g., administration d’un anesthésique). Les actions orchestrent 
+l’évolution des paramètres physiologiques du patient. La série 
+temporelle multivariée correspond à un ensemble de séries temporelles 
+univariées qui décrivent chacune l’évolution d’un paramètre 
+physiologique du patient (e.g., fréquence cardiaque).
+
+*5.2. Enoncé du problème*
+
+Dans le cadre de ce stage, nous ramenons le problème à un problème de 
+prédiction de série temporelle. L’apprentissage d’un réseau de neurones 
+profond à partir des séries temporelles des profils anesthésiques 
+permettra cette prédiction.
+
+Il existe un nombre assez limité de revues de l'état de l'art récentes 
+qui soient consacrées au Deep Learning, lorsqu'il est utilisé pour la 
+prédiction de séries temporelles ([LZ2020] 
+https://arxiv.org/pdf/2004.13408.pdf ; [SGM2020] 
+https://arxiv.org/abs/1911.13288 ; [THS2020] 
+http://doi.org/10.1089/big.2020.0159). 
+<http://doi.org/10.1089/big.2020.0159>
+
+Dans le domaine de la prédiction pour les séries temporelles comme dans 
+d'autres domaines, l'émergence demodèles de réseaux de neurones 
+compétitifs a rapidement relégué les Perceptrons MultiCouches 
+(Multilayer Perceptrons, MLPs) au second plan.
+
+Les Réseaux de Neurones Récurrents (Recurrent neural networks, RNNs) ont 
+été conçus pour pouvoir traiter des données séquentielles. Un RNN 
+réalise la même tâche à chaque pas de temps : la séquence (x1 , x2 , · · 
+· , xt , xt+1 · · · ) correspondant à la série temporelle est fournie au 
+RNN, élément par élément (pas de temps par pas de temps). La prédiction 
+de séries temporelles via l'utilisation d'un RNN est un problème qui 
+donne lieu à des recherches actives (voir par exemple [CC2016] dans le 
+domaine des finances).
+
+Les Réseaux de Neurones Récurrents à Mémoire Court et Long Terme (Long 
+Short-Term Memory networks, LSTMs) représentent la sous-catégorie la 
+plus utilisée des RNN. En effet, leur capacité à capturer les 
+dépendances à long terme leur assure de meilleures performances en 
+prédiction que celles des RNN. Les LSTM ont été utilisés pour la 
+prédiction de séries temporelles dans de nombreux domaines, comme par 
+exemple la prédiction du coût de l'électricité [PLL2018] ou la 
+prédiction d'énergie renouvelable [GHS2016].
+
+Les Réseaux de Neurones Convolutifs (Convolutional Neural Networks, 
+CNNs) sont une classe particulière de réseaux de neurones artificiels, 
+capable de préserver les dépendances spatiales existant au sein des 
+données, en n'autorisant que très peu de connexions entre les couches 
+successives du réseau. Le terme Réseaux de Neurones Convolutifs 
+Temporels (Temporal Convolutional Networks, TCNs) a été introduit 
+récemment [BKK2018]. De très nombreux travaux sur l'utilisation de CNN 
+pour la prédiction de séries temporelles ont été publiés, comme dans le 
+domaine de la prédiction de demande en énergie [AE2017]. Des modèles 
+hybrides ont été proposés, qui combinent des couches CNN et LSTM, ou 
+bien connectent les sorties d'un CNN aux entrées d'un CNN, ou encore 
+proposent une intégration de modèles par combinaison des sorties 
+obtenues d'un CNN et d'un LSTM exploités en parallèle. Par exemple, 
+cette dernière approche a été appliquée pour la prédiction dans les 
+domaines de l'énergie, de la météorologie et des finances [SZL2019].
+
+Les modèles Seq2Seq (Encoder-Decoders, Transformers) sont conçus pour 
+transformer une séquence fournie en entrée en une deuxième séquence 
+obtenue en sortie. Une utilisation emblématique des Transformers est la 
+traduction, en traitement du langage naturel. Les Transformers ont été 
+récemment utilisés pour la prédiction de séries temporelles (voir par 
+exemple [N2019]).
+
+Les auto-encodeurs (AutoEncoders, AEs) constituent une sous-catégorie 
+particulière des encodeurs-décodeurs. Ce type de modèle a notamment été 
+combiné avec d'autres modèles, comme les LSTM, pour la prédiction de 
+séries temporelles (voir par exemple [BYR2017]).
+
+*5.3. Travaux à réaliser*
+
+N.B. : les données sur lesquelles travaillera le stagiaire sont des 
+données réalistes obtenues à l’aide d’un simulateur développé au sein de 
+l’équipe DUKe, grâce à l’expertise des partenaires du SiMU / CHU de Nantes.
+
+L’accent sera porté sur la prédiction de série temporelle contextualisée 
+par une trace d’événements.
+
+Les différentes étapes du stage sont les suivantes :
+▪ *mi-mars – fin mars :* complément de bibliographie sur la prédiction 
+de séries temporelles via l’utilisation de
+réseaux de neurones profonds ;
+▪ *début avril - mi-avril :* identification sur Internet de modèles 
+codés de réseaux de neurones, parmi ceux qui sont réputés convenir pour 
+la prédiction de séries temporelles, sous environnement de programmation 
+PyTorch
+▪ *mi-avril – fin-juin :*
+- codage du prétraitement des données selon les entrées attendues par 
+chacun des modèles sélectionnés (1),
+- adaptation du code / des codes identifiés au cas de la prédiction 
+contextualisée
+- définition de l’architecture/des architectures (nombre de couches, 
+nombre de nœuds etc) à tester pour chaque modèle sélectionné
+- (éventuellement, examen de la nécessité et des possibilités d’utiliser 
+des modèles pré-entraînés, examen de la nécessité de recourir à 
+l’augmentation de données)
+▪ *fin juin – fin juillet :* étude d’ablation ; évaluation et 
+comparaison des performances prédictives réalisées pour chaque 
+architecture de chaque modèle ; (si possible) comparaison avec des 
+modèles de l’état de l’art pour la version non contextualisée
+
+▪*août :* - zone de débordement (15 jours) + rédaction du mémoire et 
+préparation de la soutenance (15 jours)
+
+(1) En entrée, a priori, les données sont des sous-séries temporelles 
+(une par paramètre physiologique), annotées par des
+actions horodatées. En sortie, les données sont des sous-séries temporelles.
+
+*6. Compétences requises*
+
+- Capacité à réaliser des recherches sur Internet pour identifier des 
+codes éprouvés permettant de servir de base aux solutions proposées
+
+- Goût prononcé pour la programmation, rigueur dans la programmation
+- Capacité à documenter du code
+- Capacité à rendre compte de l’avancement de ses travaux, capacité au 
+reporting (hebdomadaire)
+
+*
+*
+
+*7. Lieu du stage*
+
+Stage en présentiel,
+
+LS2N, Laboratoire des Sciences du Numérique de Nantes (UMR CNRS 6004)
+Faculté des Sciences et des Techniques,
+2 rue de la Houssinière,
+44322 Nantes Cedex
+
+Accessoirement, des sessions de travail dans les locaux du CHU de Nantes 
+pourront avoir lieu, le cas échéant.
+
+
+*8. Contact*
+
+Christine Sinoquet, Maître de Conférences HdR
+
+*
+9. Pour candidater*
+
+Les dossiers de candidature sont à transmettre au moyen d’une archive .zip à
+christine.sinoquet@univ-nantes.fr.
+Le dossier de candidature comportera :
+- un curriculum vitae,
+- les relevés de notes des années 2021-22 et 2022-23,
+- une lettre de motivation
+
+- les contacts (nom, qualité, adresse mail, téléphone) de deux référents.
+
+Un entretien et/ou un test technique pourront vous être proposés. La 
+transmission de liens vers une sélection de dépôts git des candidat.e.s 
+est encouragée.
+
+
+*Références bibliographiques
+*
+*[AE2017]* Almalaq, A. and Edwards, G. (2017) A review of deep learning 
+methods applied on load forecasting, 16th International Conference on 
+Machine Learning and Applications (ICMLA), 511-516.
+
+*[BKK2018]* Bai, S. and Kolter, J. Z. and Koltun, V. (2018) An empirical 
+evaluation of generic convolutional and recurrent networks for sequence 
+modeling, arXiv:1803.01271.
+
+*[BVL22]* Boisaubert, H., Vincent, L., Lejus-Bourdeau, C. and Sinoquet, 
+C. (2022) Simulation of the evolution of a virtual patient’s 
+physiological status in the operating room: application to 
+computer-assisted anaesthesia training. Proceedings of the 15th 
+International Joint Conference on Biomedical Engineering Systems and 
+Technologies, BIOSTEC2022, vol. 5: HEALTHINF, 228-239.
+
+*[BYR2017]* Bao, W. and Yue, J. and Rao, Y (2017) A deep learning 
+framework for financial time series using stacked autoencoders and 
+long-short term memory, PLOS ONE, 12(7):e0180944.
+
+*[CC2016]* Chandra, R. and Chand, S. (2016) Evaluation of 
+co-evolutionary neural network architectures for time series prediction 
+with mobile application in finance, Applied Soft Computing, 49:462-473.
+
+*[DSL23a]* Dama, F., Sinoquet, C. and Lejus-Bourdeau C. (2023) A 
+framework for context-sensitive prediction in time series - Feasibility 
+study for data-driven simulation in medicine. To appear in the 
+Proceedings of the 10th IEEE International Conference on Data Science 
+and Advanced Analytics, DSAA2023.
+
+*[DSL23b]* Dama, F., Sinoquet, C. and Lejus-Bourdeau C. (2023) A hidden 
+Markov model with Hawkes process-derived contextual variables to improve 
+time series prediction. Case study in medical simulation. To appear in 
+the Proceedings of the 32th European Symposium on Artificial Neural 
+Networks, Computational Intelligence and Machine Learning, ESANN2023.
+
+*[GHS2016]* Gensler, A. and Henze, J. and Sick, B. and Raabe, N. (2016) 
+Deep learning for solar power forecasting – an approach using 
+AutoEncoder and LSTM neural networks, International Conference on 
+Systems, Man, and Cybernetics (SMC), 2858-2865.
+
+*[LZ2020]* Lim, B. and Zohren, S. (2020) Time series forecasting with 
+deep learning: a survey, https://arxiv.org/abs/2004.13408-review.
+
+*[N2019]* Nino, S. (2019) Transformers and time series forecasting, 
+Princeton University, USA, thèse.
+
+*[PLL2018]* Peng, L. and Liu, S. and Liu, R. and Wang, L. (2018) 
+Effective long short-term memory with differential evolution algorithm 
+for electricity price prediction, Energy, 162:1301-1314.
+
+*[SZL2019]* Shen, Z. and Zhang, Y. and Lu, J. and Xu, J. and Xiao, G. 
+(2019) A novel time series forecasting model with deep learning, 
+Neurocomputing, 396(5):302-313.
+
+*[THS2020]* Torres, J. F. and Hadjout, D. and Sebaa, A. and 
+Martínez-Álvarez, F. and Troncoso, Al. (2020) Deep learning for time 
+series forecasting: a survey. Big Data, ahead of print, 
+http://doi.org/10.1089/big.2020.0159
+--------------NwVWn0KrPRnAhMt0iecwDHxF
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+  <head>
+    <meta http-equiv=3D"content-type" content=3D"text/html; charset=3DUTF=
+-8">
+  </head>
+  <body>
+    <p>Bonjour =C3=A0 tous,</p>
+    <p>Merci de diffuser l'annonce ci-dessous.</p>
+    <p>Bien cordialement,</p>
+    <p>Christine Sinoquet<br>
+      <br>
+      Christine Sinoquet <br>
+      <a class=3D"moz-txt-link-freetext"
+        href=3D"http://christinesinoquet.wixsite.com/christinesinoquet">h=
+ttp://christinesinoquet.wixsite.com/christinesinoquet</a>
+      <br>
+      Associate Professor with French Habilitation to Supervise Research
+      (2014), Qualified for Full Professor Activities (2015, 2020) <br>
+      Head of the=C2=A0 Master Mention of Bioinformatics of the Universit=
+y of
+      Nantes <br>
+      Head of DUKe Research Group (Data / User / Knowledge) - LS2N
+      (Laboratoire des Sciences du Num=C3=A9rique de Nantes - Laboratory =
+of
+      Digital Science of Nantes)=C2=A0 / UMR CNRS 6004, <a
+        class=3D"moz-txt-link-freetext" href=3D"https://www.ls2n.fr/">htt=
+ps://www.ls2n.fr/</a>
+      <br>
+      <br>
+    </p>
+    <p><b><font color=3D"#1e00ff">1. Titre du stage</font></b></p>
+    <p><b>Jumeau num=C3=A9rique de patient sous anesth=C3=A9sie. Explorat=
+ion et
+        =C3=A9valuation d=E2=80=99approches par Deep Learning.</b></p>
+    <p><b><font color=3D"#0000ff">2. Mots-cl=C3=A9s</font></b></p>
+    <p>Patient num=C3=A9rique, bloc op=C3=A9ratoire, anaesth=C3=A9sie, si=
+mulation,
+      pr=C3=A9diction, apprentissage profond, trace d=E2=80=99actions, s=C3=
+=A9rie
+      temporelle multivari=C3=A9e</p>
+    <p><b><font color=3D"#0000ff">3. Profil<br>
+        </font></b></p>
+    <p>Profil Master 2 Informatique, avec des comp=C3=A9tences en
+      intelligence artificielle et en Deep Learning, ou bien des
+      comp=C3=A9tences en intelligence artificielle et en Machine Learnin=
+g et
+      la volont=C3=A9 de s'investir dans le domaine du Deep Learning ;
+      int=C3=A9r=C3=AAt marqu=C3=A9 pour les travaux =C3=A0 l'interdiscip=
+linaire (sant=C3=A9). Un
+      stage de Master 1 dans un domaine proche du sujet repr=C3=A9sente u=
+n
+      plus.</p>
+    <font color=3D"#0000ff"><b>4. Gratification/r=C3=A9mun=C3=A9ration</b=
+></font><br>
+    <p>Selon la l=C3=A9gislation en vigueur pour un stage se d=C3=A9roula=
+nt en
+      laboratoire de recherche =C3=A0 l=E2=80=99Universit=C3=A9.</p>
+    <p><font color=3D"#0000ff"><b>5. Description du sujet</b></font></p>
+    <p><font color=3D"#0000ff"><b>5.1. Contexte et objectifs</b></font></=
+p>
+    <p>Ce stage s=E2=80=99inscrit dans le cadre d=E2=80=99une collaborati=
+on =C3=A0
+      l=E2=80=99interface entre num=C3=A9rique et sant=C3=A9, avec Le Lab=
+oratoire
+      Exp=C3=A9rimental de SImulation en M=C3=A9decine Intensive (LE SiMU=
+) de
+      l'Universit=C3=A9 de Nantes. Le SiMU permet notamment de se
+      perfectionner dans la gestion de situations critiques en
+      anesth=C3=A9sie. Il intervient sur simulateurs de patients
+      haute-fid=C3=A9lit=C3=A9 (mannequins), avec immersion des acteurs e=
+n
+      formation dans une =C3=A9quipe m=C3=A9dicale humaine pleine-=C3=A9c=
+helle
+      interprofessionnelle. </p>
+    <p>Dans le but d=E2=80=99am=C3=A9liorer la s=C3=A9curit=C3=A9 et la q=
+ualit=C3=A9 des soins
+      perop=C3=A9ratoires, les formateurs du SiMU souhaitent varier la
+      diversit=C3=A9 des sc=C3=A9narios =C3=A0 proposer aux internes en a=
+nesth=C3=A9sie et
+      infirmiers anesth=C3=A9sistes, en formation initiale, ainsi qu=E2=80=
+=99aux
+      praticiens plus exp=C3=A9riment=C3=A9s, en formation continue. Pour=
+ varier
+      les sc=C3=A9narios, il est propos=C3=A9 =C3=A0 terme d=E2=80=99auto=
+matiser la g=C3=A9n=C3=A9ration
+      de sc=C3=A9narios r=C3=A9alistes de simulation, en s=E2=80=99appuya=
+nt sur tout ou
+      partie de la base de profils anesth=C3=A9siques enregistr=C3=A9s pa=
+r le CHU
+      de Nantes depuis 2004 (500 000 profils anesth=C3=A9siques). Dans ce=
+tte
+      modalit=C3=A9 assist=C3=A9e par le num=C3=A9rique, la personne qui =
+suit la
+      formation (interne ou infirmier), fait partie de l=E2=80=99=C3=A9qu=
+ipe
+      m=C3=A9dicale. Les autres membres de l=E2=80=99=C3=A9quipe m=C3=A9d=
+icale sont simul=C3=A9s
+      tr=C3=A8s simplement (ic=C3=B4nes r=C3=A9alisant des actions et =C3=
+=A9mettant des
+      informations, sur l=E2=80=99=C3=A9cran de l=E2=80=99ordinateur assi=
+gn=C3=A9 =C3=A0 l=E2=80=99apprenant).
+      De cette innovation est attendu un acc=C3=A8s potentiel =C3=A0 une =
+grande
+      vari=C3=A9t=C3=A9 de sc=C3=A9narios r=C3=A9alistes de simulation de=
+ cas d=E2=80=99anesth=C3=A9sie.
+      Servir cet objectif de formation r=C3=A9pond =C3=A9galement =C3=A0 =
+terme au
+      besoin d=E2=80=99anticipation par pr=C3=A9diction, inh=C3=A9rent au=
+ paradigme de la
+      m=C3=A9decine personnalis=C3=A9e, en pleine =C3=A9mergence.<br>
+    </p>
+    <p>Pour atteindre cet objectif, deux axes de recherche ont =C3=A9t=C3=
+=A9
+      explor=C3=A9s au sein de l=E2=80=99=C3=A9quipe DUKe du LS2N. Ils po=
+rtent
+      respectivement sur une approche de data mining / raisonnement =C3=A0=
+
+      base de cas [BVL22], et des approche machine learning (mod=C3=A8les=
+ de
+      Markov autor=C3=A9gressif =C3=A0 changements de r=C3=A9gimes [DSL23=
+a, DSL23b]).
+      Les travaux du stage exploreront une troisi=C3=A8me cat=C3=A9gorie
+      d=E2=80=99approche, centr=C3=A9e sur les mod=C3=A8les neuronaux pro=
+fonds.<br>
+    </p>
+    <p> Les CHU ont obligation l=C3=A9gale d=E2=80=99enregistrer toutes l=
+es donn=C3=A9es
+      relatives aux interventions chirurgicales. Parmi ces derni=C3=A8res=
+,
+      figurent les profils anesth=C3=A9siques des patients. Un profil
+      anesth=C3=A9sique est constitu=C3=A9 d=E2=80=99une trace d=E2=80=99=
+=C3=A9v=C3=A9nements et d=E2=80=99une s=C3=A9rie
+      temporelle multivari=C3=A9e. La trace d=E2=80=99=C3=A9v=C3=A9nement=
+s est la s=C3=A9quence
+      horodat=C3=A9e des actions de l=E2=80=99=C3=A9quipe m=C3=A9dicale (=
+e.g., administration
+      d=E2=80=99un anesth=C3=A9sique). Les actions orchestrent l=E2=80=99=
+=C3=A9volution des
+      param=C3=A8tres physiologiques du patient. La s=C3=A9rie temporelle=
+
+      multivari=C3=A9e correspond =C3=A0 un ensemble de s=C3=A9ries tempo=
+relles
+      univari=C3=A9es qui d=C3=A9crivent chacune l=E2=80=99=C3=A9volution=
+ d=E2=80=99un param=C3=A8tre
+      physiologique du patient (e.g., fr=C3=A9quence cardiaque). <br>
+    </p>
+    <p><font color=3D"#0000ff"><b>5.2. Enonc=C3=A9 du probl=C3=A8me</b></=
+font></p>
+    <p>Dans le cadre de ce stage, nous ramenons le probl=C3=A8me =C3=A0 u=
+n
+      probl=C3=A8me de pr=C3=A9diction de s=C3=A9rie temporelle. L=E2=80=99=
+apprentissage d=E2=80=99un
+      r=C3=A9seau de neurones profond =C3=A0 partir des s=C3=A9ries tempo=
+relles des
+      profils anesth=C3=A9siques permettra cette pr=C3=A9diction.<br>
+    </p>
+    Il existe un nombre assez limit=C3=A9 de revues de l'=C3=A9tat de l'a=
+rt
+    r=C3=A9centes qui soient consacr=C3=A9es au Deep Learning, lorsqu'il =
+est
+    utilis=C3=A9 pour la pr=C3=A9diction de s=C3=A9ries temporelles ([LZ2=
+020] <a
+      class=3D"moz-txt-link-freetext"
+      href=3D"https://arxiv.org/pdf/2004.13408.pdf" moz-do-not-send=3D"tr=
+ue">https://arxiv.org/</a><a
+      class=3D"moz-txt-link-freetext"
+      href=3D"https://arxiv.org/pdf/2004.13408.pdf" moz-do-not-send=3D"tr=
+ue">pdf/2004.13408.pdf</a>
+    ; [SGM2020] <a class=3D"moz-txt-link-freetext"
+      href=3D"https://arxiv.org/abs/1911.13288">https://arxiv.org/abs/191=
+1.13288</a>
+    ; [THS2020] <a class=3D"moz-txt-link-freetext" moz-do-not-send=3D"tru=
+e"
+      href=3D"http://doi.org/10.1089/big.2020.0159">http://doi.org/</a><a=
+
+      moz-do-not-send=3D"true" href=3D"http://doi.org/10.1089/big.2020.01=
+59">10.1089/big.2020.0159).</a>
+    <p>Dans le domaine de la pr=C3=A9diction pour les s=C3=A9ries tempore=
+lles
+      comme dans d'autres domaines, l'=C3=A9mergence demod=C3=A8les de r=C3=
+=A9seaux de
+      neurones comp=C3=A9titifs a rapidement rel=C3=A9gu=C3=A9 les Percep=
+trons MultiCouches
+      (Multilayer Perceptrons, MLPs) au second plan.<br>
+    </p>
+    <p> Les R=C3=A9seaux de Neurones R=C3=A9currents (Recurrent neural ne=
+tworks,
+      RNNs) ont =C3=A9t=C3=A9 con=C3=A7us pour pouvoir traiter des donn=C3=
+=A9es
+      s=C3=A9quentielles. Un RNN r=C3=A9alise la m=C3=AAme t=C3=A2che =C3=
+=A0 chaque pas de temps
+      : la s=C3=A9quence (x1 , x2 , =C2=B7 =C2=B7 =C2=B7 , xt , xt+1 =C2=B7=
+ =C2=B7 =C2=B7 ) correspondant =C3=A0
+      la s=C3=A9rie temporelle est fournie au RNN, =C3=A9l=C3=A9ment par =
+=C3=A9l=C3=A9ment (pas
+      de temps par pas de temps). La pr=C3=A9diction de s=C3=A9ries tempo=
+relles
+      via l'utilisation d'un RNN est un probl=C3=A8me qui donne lieu =C3=A0=
+ des
+      recherches actives (voir par exemple [CC2016] dans le domaine des
+      finances).</p>
+    <p>Les R=C3=A9seaux de Neurones R=C3=A9currents =C3=A0 M=C3=A9moire C=
+ourt et Long Terme
+      (Long Short-Term Memory networks, LSTMs) repr=C3=A9sentent la
+      sous-cat=C3=A9gorie la plus utilis=C3=A9e des RNN. En effet, leur c=
+apacit=C3=A9 =C3=A0
+      capturer les d=C3=A9pendances =C3=A0 long terme leur assure de meil=
+leures
+      performances en pr=C3=A9diction que celles des RNN. Les LSTM ont =C3=
+=A9t=C3=A9
+      utilis=C3=A9s pour la pr=C3=A9diction de s=C3=A9ries temporelles da=
+ns de nombreux
+      domaines, comme par exemple la pr=C3=A9diction du co=C3=BBt de l'=C3=
+=A9lectricit=C3=A9
+      [PLL2018] ou la pr=C3=A9diction d'=C3=A9nergie renouvelable [GHS201=
+6].<br>
+    </p>
+    <p> Les R=C3=A9seaux de Neurones Convolutifs (Convolutional Neural
+      Networks, CNNs) sont une classe particuli=C3=A8re de r=C3=A9seaux d=
+e
+      neurones artificiels, capable de pr=C3=A9server les d=C3=A9pendance=
+s
+      spatiales existant au sein des donn=C3=A9es, en n'autorisant que tr=
+=C3=A8s
+      peu de connexions entre les couches successives du r=C3=A9seau. Le
+      terme R=C3=A9seaux de Neurones Convolutifs Temporels (Temporal
+      Convolutional Networks, TCNs) a =C3=A9t=C3=A9 introduit r=C3=A9cemm=
+ent [BKK2018].
+      De tr=C3=A8s nombreux travaux sur l'utilisation de CNN pour la
+      pr=C3=A9diction de s=C3=A9ries temporelles ont =C3=A9t=C3=A9 publi=C3=
+=A9s, comme dans le
+      domaine de la pr=C3=A9diction de demande en =C3=A9nergie [AE2017]. =
+Des
+      mod=C3=A8les hybrides ont =C3=A9t=C3=A9 propos=C3=A9s, qui combinen=
+t des couches CNN
+      et LSTM, ou bien connectent les sorties d'un CNN aux entr=C3=A9es d=
+'un
+      CNN, ou encore proposent une int=C3=A9gration de mod=C3=A8les par
+      combinaison des sorties obtenues d'un CNN et d'un LSTM exploit=C3=A9=
+s
+      en parall=C3=A8le. Par exemple, cette derni=C3=A8re approche a =C3=A9=
+t=C3=A9 appliqu=C3=A9e
+      pour la pr=C3=A9diction dans les domaines de l'=C3=A9nergie, de la
+      m=C3=A9t=C3=A9orologie et des finances [SZL2019].</p>
+    <p>Les mod=C3=A8les Seq2Seq (Encoder-Decoders, Transformers) sont con=
+=C3=A7us
+      pour transformer une s=C3=A9quence fournie en entr=C3=A9e en une de=
+uxi=C3=A8me
+      s=C3=A9quence obtenue en sortie. Une utilisation embl=C3=A9matique =
+des
+      Transformers est la traduction, en traitement du langage naturel.
+      Les Transformers ont =C3=A9t=C3=A9 r=C3=A9cemment utilis=C3=A9s pou=
+r la pr=C3=A9diction de
+      s=C3=A9ries temporelles (voir par exemple [N2019]).<br>
+    </p>
+    <p> Les auto-encodeurs (AutoEncoders, AEs) constituent une
+      sous-cat=C3=A9gorie particuli=C3=A8re des encodeurs-d=C3=A9codeurs.=
+ Ce type de
+      mod=C3=A8le a notamment =C3=A9t=C3=A9 combin=C3=A9 avec d'autres mo=
+d=C3=A8les, comme les
+      LSTM, pour la pr=C3=A9diction de s=C3=A9ries temporelles (voir par =
+exemple
+      [BYR2017]).</p>
+    <p><font color=3D"#0000ff"><b>5.3. Travaux =C3=A0 r=C3=A9aliser</b></=
+font><br>
+    </p>
+    <p> N.B. : les donn=C3=A9es sur lesquelles travaillera le stagiaire s=
+ont
+      des donn=C3=A9es r=C3=A9alistes obtenues =C3=A0 l=E2=80=99aide d=E2=
+=80=99un simulateur d=C3=A9velopp=C3=A9
+      au sein de l=E2=80=99=C3=A9quipe DUKe, gr=C3=A2ce =C3=A0 l=E2=80=99=
+expertise des partenaires du
+      SiMU / CHU de Nantes.</p>
+    <p>L=E2=80=99accent sera port=C3=A9 sur la pr=C3=A9diction de s=C3=A9=
+rie temporelle
+      contextualis=C3=A9e par une trace d=E2=80=99=C3=A9v=C3=A9nements.<b=
+r>
+    </p>
+    Les diff=C3=A9rentes =C3=A9tapes du stage sont les suivantes :<br>
+    =E2=96=AA <b>mi-mars =E2=80=93 fin mars :</b> compl=C3=A9ment de bibl=
+iographie sur la
+    pr=C3=A9diction de s=C3=A9ries temporelles via l=E2=80=99utilisation =
+de<br>
+    r=C3=A9seaux de neurones profonds ;<br>
+    =E2=96=AA <b>d=C3=A9but avril - mi-avril :</b> identification sur Int=
+ernet de
+    mod=C3=A8les cod=C3=A9s de r=C3=A9seaux de neurones, parmi ceux qui s=
+ont r=C3=A9put=C3=A9s
+    convenir pour la pr=C3=A9diction de s=C3=A9ries temporelles, sous
+    environnement de programmation PyTorch<br>
+    =E2=96=AA <b>mi-avril =E2=80=93 fin-juin :</b><br>
+    - codage du pr=C3=A9traitement des donn=C3=A9es selon les entr=C3=A9e=
+s attendues
+    par chacun des mod=C3=A8les s=C3=A9lectionn=C3=A9s (1),<br>
+    - adaptation du code / des codes identifi=C3=A9s au cas de la pr=C3=A9=
+diction
+    contextualis=C3=A9e<br>
+    - d=C3=A9finition de l=E2=80=99architecture/des architectures (nombre=
+ de couches,
+    nombre de n=C5=93uds etc) =C3=A0 tester pour chaque mod=C3=A8le s=C3=A9=
+lectionn=C3=A9<br>
+    - (=C3=A9ventuellement, examen de la n=C3=A9cessit=C3=A9 et des possi=
+bilit=C3=A9s
+    d=E2=80=99utiliser des mod=C3=A8les pr=C3=A9-entra=C3=AEn=C3=A9s, exa=
+men de la n=C3=A9cessit=C3=A9 de
+    recourir =C3=A0 l=E2=80=99augmentation de donn=C3=A9es)<br>
+    =E2=96=AA <b>fin juin =E2=80=93 fin juillet :</b> =C3=A9tude d=E2=80=99=
+ablation ; =C3=A9valuation et
+    comparaison des performances pr=C3=A9dictives r=C3=A9alis=C3=A9es pou=
+r chaque
+    architecture de chaque mod=C3=A8le ; (si possible) comparaison avec d=
+es
+    mod=C3=A8les de l=E2=80=99=C3=A9tat de l=E2=80=99art pour la version =
+non contextualis=C3=A9e<br>
+    <p> =E2=96=AA<b> ao=C3=BBt :</b> - zone de d=C3=A9bordement (15 jours=
+) + r=C3=A9daction du
+      m=C3=A9moire et pr=C3=A9paration de la soutenance (15 jours)</p>
+    <p>(1) En entr=C3=A9e, a priori, les donn=C3=A9es sont des sous-s=C3=A9=
+ries
+      temporelles (une par param=C3=A8tre physiologique), annot=C3=A9es p=
+ar des<br>
+      actions horodat=C3=A9es. En sortie, les donn=C3=A9es sont des sous-=
+s=C3=A9ries
+      temporelles.</p>
+    <p><font color=3D"#0000ff"><b>6. Comp=C3=A9tences requises</b></font>=
+</p>
+    <p>- Capacit=C3=A9 =C3=A0 r=C3=A9aliser des recherches sur Internet p=
+our identifier
+      des codes =C3=A9prouv=C3=A9s permettant de servir de base aux solut=
+ions
+      propos=C3=A9es<br>
+    </p>
+    - Go=C3=BBt prononc=C3=A9 pour la programmation, rigueur dans la prog=
+rammation<br>
+    - Capacit=C3=A9 =C3=A0 documenter du code<br>
+    - Capacit=C3=A9 =C3=A0 rendre compte de l=E2=80=99avancement de ses t=
+ravaux, capacit=C3=A9
+    au reporting (hebdomadaire)<br>
+    <p><font color=3D"#0000ff"><b><br>
+        </b></font></p>
+    <p><font color=3D"#0000ff"><b>7. Lieu du stage</b></font></p>
+    <p>Stage en pr=C3=A9sentiel,</p>
+    <p>LS2N, Laboratoire des Sciences du Num=C3=A9rique de Nantes (UMR CN=
+RS
+      6004)<br>
+      Facult=C3=A9 des Sciences et des Techniques,<br>
+      2 rue de la Houssini=C3=A8re,<br>
+      44322 Nantes Cedex</p>
+    <p>Accessoirement, des sessions de travail dans les locaux du CHU de
+      Nantes pourront avoir lieu, le cas =C3=A9ch=C3=A9ant.</p>
+    <p><br>
+    </p>
+    <p><font color=3D"#0000ff"><b>8. Contact</b></font></p>
+    <p>Christine Sinoquet, Ma=C3=AEtre de Conf=C3=A9rences HdR<br>
+    </p>
+    <p><font color=3D"#0000ff"><b><br>
+          9. Pour candidater</b></font></p>
+    Les dossiers de candidature sont =C3=A0 transmettre au moyen d=E2=80=99=
+une
+    archive .zip =C3=A0<br>
+    <a class=3D"moz-txt-link-abbreviated moz-txt-link-freetext"
+      href=3D"mailto:christine.sinoquet@univ-nantes.fr">christine.sinoque=
+t@univ-nantes.fr</a>.<br>
+    Le dossier de candidature comportera :<br>
+    - un curriculum vitae,<br>
+    - les relev=C3=A9s de notes des ann=C3=A9es 2021-22 et 2022-23,<br>
+    - une lettre de motivation<br>
+    <p> - les contacts (nom, qualit=C3=A9, adresse mail, t=C3=A9l=C3=A9ph=
+one) de deux
+      r=C3=A9f=C3=A9rents.</p>
+    <p>Un entretien et/ou un test technique pourront vous =C3=AAtre propo=
+s=C3=A9s.
+      La transmission de liens vers une s=C3=A9lection de d=C3=A9p=C3=B4t=
+s git des
+      candidat.e.s est encourag=C3=A9e.</p>
+    <p><br>
+    </p>
+    <font color=3D"#0000ff"><b>R=C3=A9f=C3=A9rences bibliographiques<br>
+      </b></font><br>
+    <b>[AE2017]</b> Almalaq, A. and Edwards, G. (2017) A review of deep
+    learning methods applied on load forecasting, 16th International
+    Conference on Machine Learning and Applications (ICMLA), 511-516.
+    <p><b>[BKK2018]</b> Bai, S. and Kolter, J. Z. and Koltun, V. (2018)
+      An empirical evaluation of generic convolutional and recurrent
+      networks for sequence modeling, arXiv:1803.01271.</p>
+    <p><b>[BVL22]</b> Boisaubert, H., Vincent, L., Lejus-Bourdeau, C.
+      and <span class=3D"wixui-rich-text__text">Sinoquet, C.</span>
+      (2022) Simulation of the evolution of a virtual patient=E2=80=99s
+      physiological status in the operating room: application to
+      computer-assisted anaesthesia training. Proceedings of the 15th
+      International Joint Conference on Biomedical Engineering Systems
+      and Technologies, BIOSTEC2022, vol. 5: HEALTHINF, 228-239.</p>
+    <b>[BYR2017]</b> Bao, W. and Yue, J. and Rao, Y (2017) A deep
+    learning framework for financial time series using stacked
+    autoencoders and long-short term memory, PLOS ONE, 12(7):e0180944.
+    <p><b>[CC2016]</b> Chandra, R. and Chand, S. (2016) Evaluation of
+      co-evolutionary neural network architectures for time series
+      prediction with mobile application in finance, Applied Soft
+      Computing, 49:462-473.</p>
+    <p> <b>[DSL23a]</b> Dama, F., Sinoquet, C. and Lejus-Bourdeau C.
+      (2023) A framework for context-sensitive prediction in time series
+      - Feasibility study for data-driven simulation in medicine. To
+      appear in the Proceedings of the 10th IEEE International
+      Conference on Data Science and Advanced Analytics, DSAA2023.<br>
+    </p>
+    <p><b>[DSL23b]</b> Dama, F., Sinoquet, C. and Lejus-Bourdeau C.
+      (2023) A hidden Markov model with Hawkes process-derived
+      contextual variables to improve time series prediction. Case study
+      in medical simulation. To appear in the Proceedings of the 32th
+      European Symposium on Artificial Neural Networks, Computational
+      Intelligence and Machine Learning, ESANN2023. </p>
+    <p><b>[GHS2016]</b> Gensler, A. and Henze, J. and Sick, B. and
+      Raabe, N. (2016) Deep learning for solar power forecasting =E2=80=93=
+ an
+      approach using AutoEncoder and LSTM neural networks, International
+      Conference on Systems, Man, and Cybernetics (SMC), 2858-2865.<br>
+    </p>
+    <b>[LZ2020]</b> Lim, B. and Zohren, S. (2020) Time series
+    forecasting with deep learning: a survey, <a moz-do-not-send=3D"true"=
+
+      href=3D"https://arxiv.org/abs/2004.13408-review"
+      class=3D"moz-txt-link-freetext">https://arxiv.org/abs/2004.13408-re=
+view</a>.<br>
+    <p><b>[N2019]</b> Nino, S. (2019) Transformers and time series
+      forecasting, Princeton University, USA, th=C3=A8se.</p>
+    <p><b>[PLL2018]</b> Peng, L. and Liu, S. and Liu, R. and Wang, L.
+      (2018) Effective long short-term memory with differential
+      evolution algorithm for electricity price prediction, Energy,
+      162:1301-1314.</p>
+    <p><b>[SZL2019]</b> Shen, Z. and Zhang, Y. and Lu, J. and Xu, J. and
+      Xiao, G. (2019) A novel time series forecasting model with deep
+      learning, Neurocomputing, 396(5):302-313.<br>
+    </p>
+    <b>[THS2020]</b> Torres, J. F. and Hadjout, D. and Sebaa, A. and
+    Mart=C3=ADnez-=C3=81lvarez, F. and Troncoso, Al. (2020) Deep learning=
+ for time
+    series forecasting: a survey. Big Data, ahead of print, <a
+      class=3D"moz-txt-link-freetext"
+      href=3D"http://doi.org/10.1089/big.2020" moz-do-not-send=3D"true">h=
+ttp://doi.org/10.1089/big.2020</a><a
+      class=3D"moz-txt-link-freetext"
+      href=3D"http://doi.org/10.1089/big.2020" moz-do-not-send=3D"true">.=
+0159</a>
+    <style type=3D"text/css">h3 { direction: ltr; color: #000000; text-al=
+ign: left; orphans: 2; widows: 2 }h3.western { font-family: "Liberation S=
+ans", serif; so-language: fr-FR }h3.cjk { font-family: "AR PL SungtiL GB"=
+; so-language: zh-CN }h3.ctl { font-family: "Lohit Devanagari"; so-langua=
+ge: hi-IN }h1 { margin-bottom: 0.21cm; direction: ltr; color: #000000; te=
+xt-align: left; orphans: 2; widows: 2; page-break-after: auto }h1.western=
+ { font-family: "Liberation Serif", serif; font-size: 18pt; so-language: =
+fr-FR }h1.cjk { font-family: "Noto Serif CJK SC"; font-size: 18pt; so-lan=
+guage: zh-CN }h1.ctl { font-family: "Lohit Devanagari"; font-size: 18pt; =
+so-language: hi-IN }p { margin-bottom: 0.25cm; direction: ltr; color: #00=
+0000; line-height: 115%; text-align: left; orphans: 2; widows: 2 }p.weste=
+rn { font-family: "Liberation Serif", serif; font-size: 12pt; so-language=
+: fr-FR }p.cjk { font-family: "Noto Serif CJK SC"; font-size: 12pt; so-la=
+nguage: zh-CN }p.ctl { font-family: "Lohit Devanagari"; font-size: 12pt; =
+so-language: hi-IN }a:link { color: #0563c1 }a.sdfootnoteanc { font-size:=
+ 57% }</style>
+  </body>
+</html>
+
+--------------NwVWn0KrPRnAhMt0iecwDHxF--
+

@@ -1,0 +1,212 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (bouncesmtp1.u12.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 78F7714017CD
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu, 16 Mar 2023 09:49:54 +0100 (CET)
+Received: from mx2.localdomain (MX2.univ-nantes.fr [193.52.101.136])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id 7513B6FF9
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu, 16 Mar 2023 09:49:54 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.localdomain (Postfix) with ESMTP id 6D3751015E4
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 16 Mar 2023 09:49:54 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -4.579
+X-Spam-Level:
+X-Spam-Status: No, score=-4.579 tagged_above=-1000 required=5
+	tests=[CRM114_GOOD=-5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	NO_RDNS=0.5, NO_RDNS2=0.01, RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001,
+	SPF_PASS=-0.001, UN_PHISHING_PW=0.1] autolearn=disabled
+X-CRM114-Status: GOOD ( 8.6048 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=unicaen.fr
+Received: from mx2.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id o0FQ3C1vmE4a for <liste-egc@polytech.univ-nantes.fr>;
+	Thu, 16 Mar 2023 09:49:48 +0100 (CET)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=194.199.107.75; helo=mailout.unicaen.fr; envelope-from=gregory.bonnet@unicaen.fr; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=none dis=none) header.from=unicaen.fr
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=gregory.bonnet@unicaen.fr
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (1024-bit key; unprotected) header.d=unicaen.fr header.i=@unicaen.fr header.b="DoPOB44L";
+	dkim-atps=neutral
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mailout.unicaen.fr (mailout.unicaen.fr [194.199.107.75])
+	by mx2.localdomain (Postfix) with ESMTP id D95631014C2
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 16 Mar 2023 09:49:48 +0100 (CET)
+Received: from wzproxy1.unicaen.fr (wzproxy1.unicaen.fr [193.55.120.52])
+	by mailout.unicaen.fr (Postfix) with ESMTP id BF9AF8334F;
+	Thu, 16 Mar 2023 09:49:48 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=unicaen.fr; s=mail;
+	t=1678956588; bh=/vCiMD/5CqiHhYG85gp92TbQKIKRV5QS+kvi73acUU4=;
+	h=Date:Subject:From:To:References:In-Reply-To:From;
+	b=DoPOB44LB/0xJnNH0IAORM0x9yGMExirHkioNdUcQibD/53+++XX7m0o+YbQaBT0j
+	 /MSjNzqRzni6rYo/eil+SH4V0V+B7n5y1dvQl9QguHZo+QKYzWW8tH4h4PTkTI2SHq
+	 M02G9N+YorXAIRDW43Rx7afVVCrLsbBXHXuWoF1U=
+Received: from localhost (localhost [127.0.0.1])
+	by wzproxy1.unicaen.fr (Postfix) with ESMTP id B4B03668D2;
+	Thu, 16 Mar 2023 09:49:48 +0100 (CET)
+X-Amavis-Modified: Mail body modified (using disclaimer) - wzproxy1.unicaen.fr
+X-Virus-Scanned: amavisd-new at wzproxy1.unicaen.fr
+Received: from wzproxy1.unicaen.fr ([127.0.0.1])
+	by localhost (wzproxy1.unicaen.fr [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id xAEOd9oskp9e; Thu, 16 Mar 2023 09:49:48 +0100 (CET)
+Received: from lsmtp2.unicaen.fr (lsmtp2.unicaen.fr [193.55.120.33])
+	by wzproxy1.unicaen.fr (Postfix) with ESMTP id 83EB066F19;
+	Thu, 16 Mar 2023 09:49:48 +0100 (CET)
+Received: from [10.38.9.90] (unknown [10.38.9.90])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by lsmtp2.unicaen.fr (Postfix) with ESMTPSA id 5481FC064E;
+	Thu, 16 Mar 2023 09:49:40 +0100 (CET)
+Content-Type: multipart/alternative;
+ boundary="------------RhucyBlnkcktlyLEbkmab32I"
+Message-ID: <a4c3cac7-2027-be40-5691-5c7e110d6689@unicaen.fr>
+Date: Thu, 16 Mar 2023 09:49:40 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Content-Language: en-US
+From: =?UTF-8?Q?Gr=c3=a9gory_Bonnet?= <gregory.bonnet@unicaen.fr>
+To: bull-i3@irit.fr, bull-ia@gdria.fr, sma@loria.fr, info-ic@listes.irisa.fr,
+ liste-proml@lri.fr, PourInfos@risc.cnrs.fr, liste-egc@polytech.univ-nantes.fr
+References: <30db5c5b-7729-2adb-9232-988cf74a461e@unicaen.fr>
+ <dab153f9-303c-1461-e55e-64003d46926f@unicaen.fr>
+In-Reply-To: <dab153f9-303c-1461-e55e-64003d46926f@unicaen.fr>
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Poste de MCF ESIX =?UTF-8?Q?=28Universit=C3=A9?= de
+ Caen) et GREYC =?UTF-8?Q?=28=C3=A9quipe?= MAD) : IA, raisonnement,
+ =?UTF-8?Q?syst=C3=A8mes?= multi-agents
+
+This is a multi-part message in MIME format.
+--------------RhucyBlnkcktlyLEbkmab32I
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+
+//* Veuillez nous excuser pour les réceptions multiples *///
+///* English version below *//
+
+Chèr(e) collègues,
+
+Un poste de maître(sse) de conférences en informatique (section 27) sera 
+ouvert au concours (session synchronisée) à l'École supérieure 
+d'ingénieurs (ESIX) de l'Université de Caen Normandie, sur un profil 
+intelligence artificielle et raisonnement multi-agents. La personne 
+recrutée sera rattachée à l'équipe MAD 
+<https://www.greyc.fr/equipes/mad/> (Modèles, Agents, Décision) du 
+laboratoire GREYC pour son activité de recherche. Le profil est 
+disponible en suivant le lien ci-après : 
+https://www.greyc.fr/wp-content/uploads/2023/01/MC_ESIX_MAD_web.pdf
+
+Merci de faire circuler cette information à vos connaissances 
+susceptibles d'être intéressées.
+
+N'hésitez pas à me contacter pour tout complément d'information.
+
+Bien cordialement,
+
+Grégory Bonnet
+
+-------------------------------------------------------------------------------------------------------------------------------- 
+
+Dear colleagues,
+
+A position of Assistant Professor in Computer Sciences will be open to 
+competition (synchronized session) at the University of Caen Normandie 
+Engineering School (ESIX), on a profile of artificial intelligence and 
+multi-agent reasoning. The person recruited will be attached to the MAD 
+<https://www.greyc.fr/en/equipes/mad-2/> (Models, Agents, Decision) team 
+of the GREYC laboratory for its research activity. The detailed profile 
+can be accessed at the following URL : 
+https://www.greyc.fr/wp-content/uploads/2023/01/MC_ESIX_MAD_web.pdf
+
+Thank you for circulating this information to your acquaintances who 
+might be interested.
+
+Do not hesitate to contact me for any further information.
+
+Best regards,
+
+Grégory Bonnet
+
+-- 
+Grégory Bonnet
+Associate Professor (MAD Team - GREYC - Normandie University)
+www.gregory.bonnet.free.fr
+
+
+--------------RhucyBlnkcktlyLEbkmab32I
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <i>/* Veuillez nous excuser pour les réceptions multiples */</i><i><br>
+    </i><i>/* English version below */</i><br>
+    <br>
+    Chèr(e) collègues,<br>
+    <br>
+    Un poste de maître(sse) de conférences en informatique (section 27)
+    sera ouvert au concours (session synchronisée) à l'École supérieure
+    d'ingénieurs (ESIX) de l'Université de Caen Normandie, sur un profil
+    intelligence artificielle et raisonnement multi-agents. La personne
+    recrutée sera rattachée à l'équipe <a moz-do-not-send="true"
+      href="https://www.greyc.fr/equipes/mad/">MAD</a> (Modèles, Agents,
+    Décision) du laboratoire GREYC pour son activité de recherche. Le
+    profil est disponible en suivant le lien ci-après : <a
+      moz-do-not-send="true"
+href="https://www.greyc.fr/wp-content/uploads/2023/01/MC_ESIX_MAD_web.pdf"
+      class="moz-txt-link-freetext">https://www.greyc.fr/wp-content/uploads/2023/01/MC_ESIX_MAD_web.pdf</a><br>
+    <br>
+    Merci de faire circuler cette information à vos connaissances
+    susceptibles d'être intéressées.<br>
+    <br>
+    N'hésitez pas à me contacter pour tout complément d'information.<br>
+    <br>
+    Bien cordialement,<br>
+    <br>
+    Grégory Bonnet<br>
+    <br>
+--------------------------------------------------------------------------------------------------------------------------------
+    <br>
+    Dear colleagues,<br>
+    <br>
+    A position of Assistant Professor in Computer Sciences will be open
+    to competition (synchronized session) at the University of Caen
+    Normandie Engineering School (ESIX), on a profile of artificial
+    intelligence and multi-agent reasoning. The person recruited will be
+    attached to the <a moz-do-not-send="true"
+      href="https://www.greyc.fr/en/equipes/mad-2/">MAD</a> (Models,
+    Agents, Decision) team of the GREYC laboratory for its research
+    activity. The detailed profile can be accessed at the following URL
+    : <a moz-do-not-send="true"
+href="https://www.greyc.fr/wp-content/uploads/2023/01/MC_ESIX_MAD_web.pdf"
+      class="moz-txt-link-freetext">https://www.greyc.fr/wp-content/uploads/2023/01/MC_ESIX_MAD_web.pdf</a><br>
+    <br>
+    Thank you for circulating this information to your acquaintances who
+    might be interested.<br>
+    <br>
+    Do not hesitate to contact me for any further information.<br>
+    <br>
+    Best regards,<br>
+    <br>
+    Grégory Bonnet
+    <pre class="moz-signature" cols="72">-- 
+Grégory Bonnet
+Associate Professor (MAD Team - GREYC - Normandie University)
+<a class="moz-txt-link-abbreviated" href="http://www.gregory.bonnet.free.fr">www.gregory.bonnet.free.fr</a></pre>
+  
+<br>
+
+<br>
+</body>
+</html>
+
+--------------RhucyBlnkcktlyLEbkmab32I--

@@ -1,0 +1,508 @@
+Return-Path: <r.interdonato@dimes.unical.it>
+X-Original-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (BounceSMTP1.univ-nantes.prive [172.20.12.66])
+	by sympa6.univ-nantes.prive (Postfix) with ESMTP id D011D2292950
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Tue,  5 Feb 2019 11:04:07 +0100 (CET)
+Received: from mx3.d101.univ-nantes.fr (MX3.univ-nantes.fr [193.52.101.137])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id CECB06D7049
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Tue,  5 Feb 2019 11:04:07 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTP id CA876481D64F
+	for <liste-egc@polytech.univ-nantes.fr>; Tue,  5 Feb 2019 11:04:07 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 1.053
+X-Spam-Level: *
+X-Spam-Status: No, score=1.053 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIMWL_WL_MED=-0.001, DKIM_SIGNED=0.1,
+	DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+	RCVD_IN_WSFF=0.01, SARE_LWSHORT=0.833, SPF_PASS=-0.001,
+	T_KAM_HTML_FONT_INVALID=0.01, UN_PHISHING_PW=0.1, URIBL_BLOCKED=0.001]
+	autolearn=disabled
+X-CRM114-Status: UNSURE ( 2.6454 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=dimes-unical-it.20150623.gappssmtp.com
+Received: from mx3.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id KBencsvuqjKz for <liste-egc@polytech.univ-nantes.fr>;
+	Tue,  5 Feb 2019 11:04:04 +0100 (CET)
+X-Greylist: delayed 00:05:54 by SQLgrey-1.6.7
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTPS id A50E3481D66D
+	for <liste-egc@polytech.univ-nantes.fr>; Tue,  5 Feb 2019 11:04:04 +0100 (CET)
+Received: by mail-lf1-x131.google.com with SMTP id v5so2155783lfe.7
+        for <liste-egc@polytech.univ-nantes.fr>; Tue, 05 Feb 2019 02:04:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dimes-unical-it.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=ZZPNucfxzHT7AZplWN0gqhntS4cfWmAlQ8CO1lp5uyg=;
+        b=kx8RylwjEhIm4I0rTCqDOTl87WMGiJsecCPiCEJW8TbCtW8jicCbqq5aaDUF3G05qu
+         7XHA2z7tVCSfRPJuzS3FvIcwD/nmN1CQvWoA+mtW6THU/Sv/7Mty77D3liVUjv0s/TRK
+         pRSoorxaN9Gb0YvW1qFtfH9c6969C1wpyp2ms0gsb2JsmBqx18N3w0y2GouHouRR2BLl
+         hoq6Lf632ZzVPQ1cjH2twFm1gZfeIKv7ybRDM6yCW5NvcGlqPl6gjD7iARal+TiWDnKn
+         nRoa8/+1hbZE6rDxsjhxwwr6/t+ktJNvizypCaX+yx0S4MpVLB2rnHezFor/b7SXFijC
+         VT4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=ZZPNucfxzHT7AZplWN0gqhntS4cfWmAlQ8CO1lp5uyg=;
+        b=PxbpS1k/n7Aq+kUkYwwDePX97Hh2i4IISLmz/1Y9cag8LRgsReeYlgf/6b8ESO+bCz
+         bv2ycGN/9pA7GterKOh8arIpXDJgZ6qNO6n9OuAMFeEzkiAcvEQzO+Yw9xqvC1s93pUr
+         93sF66R76R3y9rHa5TmfnZMXIiwrNy0IYy2HvzpmeeOXm5po9rAFVx4BoxfOfPUkDRYk
+         tATXxQHPq/PQSF9WwMpZrKwtCZGxWoS0UVVi6tJmgoWSCDVuOKHb/UsJYYFWBcXpwzvL
+         I7Gyo691TS3SQg0gW7xXerSezGHnWkD28qxBdq0XxUfvxVJjU1c3rwEMJTSNBvgo/jEn
+         YKYQ==
+X-Gm-Message-State: AHQUAuZthNB9QFE07sWAKqoIOh4e++ojCb1e9zibmjeaXWkD5CZrZyhr
+	mI+ZklEQrkPY4t5eQavxWgj3eUNTod7v5QEI8bhOvWr6jhO8hw==
+X-Google-Smtp-Source: AHgI3IaZm5oeg8c4nYBmDUCs8KhQnUYki1s47JH71RRUZ1e87BHVTAwF1C/gc697osMv3ybdYbQPPoU6MMSnoT7HNMc=
+X-Received: by 2002:a19:a7c5:: with SMTP id q188mr2692267lfe.102.1549360689518;
+ Tue, 05 Feb 2019 01:58:09 -0800 (PST)
+MIME-Version: 1.0
+From: Roberto Interdonato <rinterdonato@dimes.unical.it>
+Date: Tue, 5 Feb 2019 10:57:56 +0100
+Message-ID: <CAG4i7i=phtFj7-myVD1EOgLQYqaV5nDMQMa-6W-ocQ7S5fdPOA@mail.gmail.com>
+To: liste-egc@polytech.univ-nantes.fr
+Content-Type: multipart/alternative; boundary="000000000000873145058122a5ba"
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] CfP - Soc2Net: International workshop on Modeling and
+ mining Social-Media-driven Complex Networks @ ICWSM-19
+
+--000000000000873145058122a5ba
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Soc2Net: International workshop on Modeling and mining Social-Media-driven
+Complex Networks  @ ICWSM-19
+
+June 11, 2019, Munich, Germany
+
+
+
+http://events.dimes.unical.it/soc2net
+
+
+
+KEY DATES
+
+----------------
+
+Paper submission deadline: March 25, 2019
+
+Acceptance notification: April 12, 2019
+
+_________________________________________________________________________
+
+
+
+CONTEXT
+
+The growing availability of multi-faceted social media data gives rise to
+unprecedented opportunities for unveiling complex real-world online
+behaviors. This also supports  the proliferation of complex network models
+where the expressive power of the graph-based relational structure  is
+enhanced through exposing several types of  features that are   peculiar of
+the social media platforms. This workshop aims to explore  innovative
+methods that are designed to improve our understanding of behaviors and
+relations underlying feature-rich networks built upon social media, here
+called social-media-driven complex networks. Exemplary network models of
+such kind include heterogeneous,   multilayer/multiplex/multirelational
+networks, temporal, location-aware, and probabilistic networks, and any
+other type of data-driven network that can be inferred from social media
+data contexts.
+
+The aim of the Soc2Net workshop, that will be held in conjunction with The
+13th International AAAI Conference on Web and Social Media (ICWSM-2019) in
+Munich (Germany), is to bring together researchers and practitioners from
+around the world interested in 1) exploring different perspectives and
+approaches to mine social-media-driven complex networks, 2) analyzing user
+behavior and evolution in social-media-driven complex networks, and 3)
+building models and frameworks for evaluating the respective approaches.
+
+Authors are encouraged to evaluate their models, methods, metrics and
+algorithms on real-world social networks built upon publicly available
+datasets, e.g., relying on the datasets from the previous editions of ICWSM
+which are released as openly available community resources. We solicit
+interdisciplinary submissions focusing on topics of interest to different
+research communities, including social science, economics and digital
+humanities.
+
+
+
+TOPICS
+
+
+
+- Foundations of Learning and Mining in social-media-driven complex network=
+s
+
+- Centrality and Ranking in social-media-driven complex networks
+
+- Community Detection in social-media-driven complex networks
+
+- Link Prediction in social-media-driven complex networks
+
+- Simplification/pruning/sampling of social-media-driven complex networks
+
+- User Behavior Modeling in social-media-driven complex networks
+
+- Influence propagation in social-media-driven complex networks
+
+- Reputation and Trust computing in social-media-driven complex networks
+
+- Embedding and Deep Learning in social-media-driven complex networks
+
+- Probabilistic and Uncertain social-media-driven complex networks
+
+- Time-evolving social-media-driven complex networks
+
+- Hypergraph-based modeling, analysis and learning problems
+
+- Cross-Domain problems in social-media-driven complex networks
+
+- Visualization of social-media-driven complex networks
+
+- Personalization and Recommendation in social-media-driven complex network=
+s
+
+- Mobility in social-media-driven complex networks
+
+- Vertex similarity in multiplex and social-media-driven complex networks
+
+- Multiplex and social-media-driven complex networks evolution models
+
+- Multiplex network and dynamic network mining
+
+- Ensemble learning for  social-media-driven complex networks mining
+
+- Pattern mining in social-media-driven complex networks
+
+
+
+
+
+SUBMISSION
+
+We welcome original contributions, either theoretical or empirical,
+describing ongoing projects or completed work.
+
+Contributions can be of two types: either short position papers (2 to 3
+pages) or full research papers (6 to 8 pages). Accepted contributions will
+be published (free of charge) in a special issue of the Frontiers in Big
+Data journal.
+Papers must be submitted through this link, using the =E2=80=9CSubmit your
+manuscript=E2=80=9D button:
+
+https://www.frontiersin.org/research-topics/9706
+
+and must follow Frontiers templates described here:
+
+https://www.frontiersin.org/about/author-guidelines#ManuscriptRequirements
+
+Please note that there is a single special issue for all ICWSM-19
+workshops, so in order to submit to the Soc2Net workshop please indicate as
+preferred handling editor one of the workshop organizers (see below).
+
+
+
+KEY DATES
+
+Paper submission deadline:         March 25, 2019
+
+Acceptance notification:                April 12, 2019
+
+Final manuscripts due:                   April 17, 2019
+
+
+
+
+
+PC-CHAIRS
+
+*Roberto Interdonato*, CIRAD, UMR Tetis, Montpellier, France,
+roberto.interdonato@cirad.fr
+
+*Sabrina Gaito*, Universit=C3=A0 degli Studi di Milano, Italy,  gaito@di.un=
+imi.it
+
+*Alessandra Sala*, Nokia Bell Labs, Dublin, Ireland,
+alessandra.sala@nokia-bell-labs.com
+
+*Andrea Tagarelli*, University of Calabria, Italy,
+andrea.tagarelli@unical.it
+
+
+
+--=20
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Roberto Interdonato, PhD
+Research Scientist
+CIRAD
+UMR TETIS
+Montpellier
+France
+email: roberto.interdonato@cirad.fr
+tel: +33 (0) 467558615
+ =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+--000000000000873145058122a5ba
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><p class=3D"MsoNormal">Soc2Net: Internati=
+onal workshop on Modeling and mining
+Social-Media-driven Complex Networks=C2=A0 @
+ICWSM-19 <span></span></p>
+
+<p class=3D"MsoNormal">June 11, 2019, Munich, Germany<span></span></p>
+
+<p class=3D"MsoNormal"><span>=C2=A0</span></p>
+
+<p class=3D"MsoNormal"><a href=3D"http://events.dimes.unical.it/soc2net">ht=
+tp://events.dimes.unical.it/soc2net</a> <span></span></p>
+
+<p class=3D"MsoNormal"><span>=C2=A0</span></p>
+
+<p class=3D"MsoNormal">KEY DATES<span></span></p>
+
+<p class=3D"MsoNormal">----------------<span></span></p>
+
+<p class=3D"MsoNormal">Paper submission deadline: March 25, 2019<span></spa=
+n></p>
+
+<p class=3D"MsoNormal">Acceptance notification: April 12, 2019<span></span>=
+</p>
+
+<p class=3D"MsoNormal">____________________________________________________=
+_____________________<span></span></p>
+
+<p class=3D"MsoNormal"><span>=C2=A0</span></p>
+
+<p class=3D"MsoNormal">CONTEXT<span></span></p>
+
+<p class=3D"MsoNormal">The growing availability of multi-faceted social med=
+ia data
+gives rise to=C2=A0 unprecedented
+opportunities for unveiling complex real-world online behaviors. This also
+supports=C2=A0 the proliferation of complex
+network models where the expressive power of the graph-based relational
+structure=C2=A0 is enhanced through exposing
+several types of=C2=A0 features that are=C2=A0=C2=A0 peculiar of the social=
+ media platforms. This
+workshop aims to explore=C2=A0 innovative
+methods that are designed to improve our understanding of behaviors and
+relations underlying feature-rich networks built upon social media, here ca=
+lled
+social-media-driven complex networks. Exemplary network models of such kind
+include heterogeneous,=C2=A0=C2=A0
+multilayer/multiplex/multirelational networks, temporal, location-aware,
+and probabilistic networks, and any other type of data-driven network that =
+can
+be inferred from social media data contexts. <span></span></p>
+
+<p class=3D"MsoNormal">The aim of the Soc2Net workshop, that will be held i=
+n
+conjunction with The 13th International AAAI Conference on Web and Social M=
+edia
+(ICWSM-2019) in Munich (Germany), is to bring together researchers and
+practitioners from around the world interested in 1) exploring different
+perspectives and approaches to mine social-media-driven complex networks, 2=
+)
+analyzing user behavior and evolution in social-media-driven complex networ=
+ks,
+and 3) building models and frameworks for evaluating the respective approac=
+hes.<span></span></p>
+
+<p class=3D"MsoNormal">Authors are encouraged to evaluate their models, met=
+hods,
+metrics and algorithms on real-world social networks built upon publicly
+available datasets, e.g., relying on the datasets from the previous edition=
+s of
+ICWSM which are released as openly available community resources. We solici=
+t
+interdisciplinary submissions focusing on topics of interest to different
+research communities, including social science, economics and digital
+humanities.<span></span></p>
+
+<p class=3D"MsoNormal"><a name=3D"_gjdgxs"></a><b><span style=3D"color:red"=
+>=C2=A0</span></b></p>
+
+<p class=3D"MsoNormal">TOPICS <span></span></p>
+
+<p class=3D"MsoNormal"><span>=C2=A0</span></p>
+
+<p class=3D"MsoNormal">- Foundations of Learning and Mining in social-media=
+-driven
+complex networks<span></span></p>
+
+<p class=3D"MsoNormal">- Centrality and Ranking in social-media-driven comp=
+lex
+networks<span></span></p>
+
+<p class=3D"MsoNormal">- Community Detection in social-media-driven complex
+networks<span></span></p>
+
+<p class=3D"MsoNormal">- Link Prediction in social-media-driven complex net=
+works<span></span></p>
+
+<p class=3D"MsoNormal">- Simplification/pruning/sampling of social-media-dr=
+iven
+complex networks<span></span></p>
+
+<p class=3D"MsoNormal">- User Behavior Modeling in social-media-driven comp=
+lex
+networks<span></span></p>
+
+<p class=3D"MsoNormal">- Influence propagation in social-media-driven compl=
+ex
+networks<span></span></p>
+
+<p class=3D"MsoNormal">- Reputation and Trust computing in social-media-dri=
+ven
+complex networks<span></span></p>
+
+<p class=3D"MsoNormal">- Embedding and Deep Learning in social-media-driven=
+ complex
+networks<span></span></p>
+
+<p class=3D"MsoNormal">- Probabilistic and Uncertain social-media-driven co=
+mplex
+networks<span></span></p>
+
+<p class=3D"MsoNormal">- Time-evolving social-media-driven complex networks=
+<span></span></p>
+
+<p class=3D"MsoNormal">- Hypergraph-based modeling, analysis and learning p=
+roblems<span></span></p>
+
+<p class=3D"MsoNormal">- Cross-Domain problems in social-media-driven compl=
+ex
+networks<span></span></p>
+
+<p class=3D"MsoNormal">- Visualization of social-media-driven complex netwo=
+rks<span></span></p>
+
+<p class=3D"MsoNormal">- Personalization and Recommendation in social-media=
+-driven
+complex networks<span></span></p>
+
+<p class=3D"MsoNormal">- Mobility in social-media-driven complex networks<s=
+pan></span></p>
+
+<p class=3D"MsoNormal">- Vertex similarity in multiplex and social-media-dr=
+iven
+complex networks<span></span></p>
+
+<p class=3D"MsoNormal">- Multiplex and social-media-driven complex networks
+evolution models<span></span></p>
+
+<p class=3D"MsoNormal">- Multiplex network and dynamic network mining<span>=
+</span></p>
+
+<p class=3D"MsoNormal">- Ensemble learning for=C2=A0
+social-media-driven complex networks mining<span></span></p>
+
+<p class=3D"MsoNormal">- Pattern mining in social-media-driven complex netw=
+orks<span></span></p>
+
+<p class=3D"MsoNormal"><span>=C2=A0</span></p>
+
+<p class=3D"MsoNormal"><span>=C2=A0</span></p>
+
+<p class=3D"MsoNormal">SUBMISSION<span></span></p>
+
+<p class=3D"MsoNormal">We welcome original contributions, either theoretica=
+l or
+empirical, describing ongoing projects or completed work.=C2=A0 <span></spa=
+n></p>
+
+<p class=3D"MsoNormal">Contributions can be of two types: either short posi=
+tion
+papers (2 to 3 pages) or full research papers (6 to 8 pages). Accepted
+contributions will be published (free of charge) in a special issue of the
+Frontiers in Big Data journal.<br>
+Papers must be submitted through this link, using the =E2=80=9CSubmit your =
+manuscript=E2=80=9D
+button:<span></span></p>
+
+<p class=3D"MsoNormal"><a href=3D"https://www.frontiersin.org/research-topi=
+cs/9706"><span style=3D"color:windowtext;text-decoration-line:none">https:/=
+/www.frontiersin.org/research-topics/9706</span></a>
+<br>
+<br>
+and must follow Frontiers templates described here:<br>
+<br>
+<a href=3D"https://www.frontiersin.org/about/author-guidelines#ManuscriptRe=
+quirements">https://www.frontiersin.org/about/author-guidelines#ManuscriptR=
+equirements</a><br>
+<br>
+Please note that there is a single special issue for all ICWSM-19 workshops=
+, so
+in order to submit to the Soc2Net workshop please indicate as preferred
+handling editor one of the workshop organizers (see below).=C2=A0 <br>
+<br>
+<span></span></p>
+
+<p class=3D"MsoNormal"><span>=C2=A0</span></p>
+
+<p class=3D"MsoNormal">KEY DATES<span></span></p>
+
+<p class=3D"MsoNormal">Paper submission deadline: =C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 March
+25, 2019<span></span></p>
+
+<p class=3D"MsoNormal">Acceptance notification: =C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 April
+12, 2019<span></span></p>
+
+<p class=3D"MsoNormal">Final manuscripts due: =C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+ April
+17, 2019<span></span></p>
+
+<p class=3D"MsoNormal"><span>=C2=A0</span></p>
+
+<p class=3D"MsoNormal"><span>=C2=A0</span></p>
+
+<p class=3D"MsoNormal">PC-CHAIRS<br>
+<br>
+<b>Roberto Interdonato</b>, CIRAD, UMR
+Tetis, Montpellier, France, <a href=3D"mailto:roberto.interdonato@cirad.fr"=
+>roberto.interdonato@cirad.fr</a><span></span></p>
+
+<p class=3D"MsoNormal"><b>Sabrina Gaito</b>,
+Universit=C3=A0 degli Studi di Milano, Italy,=C2=A0
+<a href=3D"mailto:gaito@di.unimi.it">gaito@di.unimi.it</a><span></span></p>
+
+<p class=3D"MsoNormal"><b>Alessandra Sala</b>,
+Nokia Bell Labs, Dublin, Ireland, <a href=3D"mailto:alessandra.sala@nokia-b=
+ell-labs.com">alessandra.sala@nokia-bell-labs.com</a><span></span></p>
+
+<p class=3D"MsoNormal"><b>Andrea Tagarelli</b>,
+University of Calabria, Italy, <a href=3D"mailto:andrea.tagarelli@unical.it=
+">andrea.tagarelli@unical.it</a><span></span></p>
+
+<p class=3D"MsoNormal"><span>=C2=A0</span></p><div><br></div>-- <br><div di=
+r=3D"ltr" class=3D"gmail_signature"><div dir=3D"ltr"><div><div dir=3D"ltr">=
+<div><div dir=3D"ltr"><div><div dir=3D"ltr"><div><div dir=3D"ltr"><div dir=
+=3D"ltr"><br><span><font color=3D"#999999">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<br>
+Roberto Interdonato, PhD<br><div dir=3D"ltr">Research Scientist=C2=A0</div>=
+<div dir=3D"ltr">CIRAD=C2=A0</div><div dir=3D"ltr">UMR TETIS</div>Montpelli=
+er</font></span></div><div dir=3D"ltr"><span><font color=3D"#999999">France=
+<br></font><font color=3D"#999999">
+email:=C2=A0</font></span><span style=3D"color:rgb(85,85,85);white-space:no=
+wrap"><a href=3D"mailto:roberto.interdonato@cirad.fr" target=3D"_blank">rob=
+erto.interdonato@cirad.fr</a><br></span><span style=3D"color:rgb(153,153,15=
+3)">tel: +33 (0) 467558615</span></div><div><span><font color=3D"#999999">=
+=C2=A0=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</font><b=
+r></span></div></div></div></div></div></div></div></div></div></div></div>=
+</div></div>
+
+--000000000000873145058122a5ba--

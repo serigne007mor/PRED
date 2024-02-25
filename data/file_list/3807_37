@@ -1,0 +1,701 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (bouncesmtp1.u12.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 083A814014E0
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon, 13 Mar 2023 10:05:05 +0100 (CET)
+Received: from mx1.localdomain (MX1.univ-nantes.fr [193.52.101.135])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id 041E2703B
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon, 13 Mar 2023 10:05:05 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.localdomain (Postfix) with ESMTP id EF416120017
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 13 Mar 2023 10:05:04 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: YES
+X-Spam-Score: 18.512
+X-Spam-Level: ******************
+X-Spam-Status: Yes, score=18.512 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+	HTML_MESSAGE=0.001, MR_STRANGE_QUESTION=1.5,
+	RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001,
+	SPF_PASS=-0.001, UN_FREEFORMS=7, UN_PHISHING_PW=0.1, UN_WIX=10]
+	autolearn=disabled
+X-CRM114-Status: UNSURE ( -1.1652 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=gmail.com
+Received: from mx1.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Z7Ucvm4XMx_r for <liste-egc@polytech.univ-nantes.fr>;
+	Mon, 13 Mar 2023 10:05:02 +0100 (CET)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=2607:f8b0:4864:20::1034; helo=mail-pj1-x1034.google.com; envelope-from=hocine.cherifi@gmail.com; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=hocine.cherifi@gmail.com
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.b="M8AtyZh4";
+	dkim-atps=neutral
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+	by mx1.localdomain (Postfix) with ESMTPS id 0076C1206C3
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 13 Mar 2023 10:05:01 +0100 (CET)
+Received: by mail-pj1-x1034.google.com with SMTP id qa18-20020a17090b4fd200b0023750b675f5so16192281pjb.3
+        for <liste-egc@polytech.univ-nantes.fr>; Mon, 13 Mar 2023 02:05:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1678698300;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Fb09d7dXVk+UWTRTynoKr5L4e4y+tMum1iXYVDFue9g=;
+        b=M8AtyZh4gmGbGQqy5FdpyU3dPjExCBhyVFpqfN/di5UFXXoRL36tkqsGHXIklGq1K9
+         f3tS0O5l25sFgehxNp1slwKkNAV1tDBGoowgnmkxCYz+1J+8DC06/0hUygjJRNMMhIPs
+         EQohxVNO7QWmzjU7XKFlSL8WGdbM+LLPD8Izk32a6CIknMADpV1ceR5fhBIG4RUwQei3
+         1U0RkD2SWDneVYZpI8o7UurWTvB3M84LtnSfoK+MJOHnkLugIhXdl767G5ASbxowZrFP
+         ng332HsTg3ifc8nGm3sQojtMDsGQmvU+mzuOMqqa+TwbEMmVvaA+a201i1LUC46E4ZkK
+         PZWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678698300;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Fb09d7dXVk+UWTRTynoKr5L4e4y+tMum1iXYVDFue9g=;
+        b=AQjY1Q4QMWPBvg4aIO0ncKP7S/El9kNvs6YSAYH7KSbVnr/lZ97n0WWeiImAnb3bnp
+         tm+vKOujlbH4EXlGhdNaljlYBIC24jE/6ZfZR+wtU43fqLgTFkfe/0vgQWpye3tYK+Hw
+         7F4BiBFjqpmanqE+CYk64ESjIr039O8EIpX3XFNRpTn6HbDsZzTDwr80vBapvp+ZdwH8
+         AwRD+SNo8u+gN6c3VE51xZ2ullbCCOkscVP43s+pwzdDZCUqWmGFalZaNinBmAI15Nxn
+         AjCwAw4MXqsa1FME0gAYiGLkqbxYE5JefVpthb3Ru62VP33yWkAh+t1TEGsFd4kT4dSI
+         4cSg==
+X-Gm-Message-State: AO0yUKWY69Es2FW8+JluBTiJ5jxeg401mfzNoCWZ42u29lobW/fbb2Mh
+	FxMWxCKseX5sQ2RYuKTwlP1a0r278QxYRF4BE7+wVVqP188X9w==
+X-Google-Smtp-Source: AK7set+JhyCTgwkjitrc2kVAc9NFp0X/sXC58sEViWJ87R/ff/bX8wxn8pz5buxwo9u4S7OyEfuEs6jQ0IHjjep0Gao=
+X-Received: by 2002:a17:90a:528d:b0:236:a1f9:9a9d with SMTP id
+ w13-20020a17090a528d00b00236a1f99a9dmr3769824pjh.2.1678698299784; Mon, 13 Mar
+ 2023 02:04:59 -0700 (PDT)
+MIME-Version: 1.0
+From: Hocine Cherifi <hocine.cherifi@gmail.com>
+Date: Mon, 13 Mar 2023 10:04:47 +0100
+Message-ID: <CAFX-JVtH6EqQdq7s-uPseu4Evdnk26H+a5ABuXyV+SOZsfq-Ug@mail.gmail.com>
+To: "liste-egc@polytech.univ-nantes.fr" <liste-egc@polytech.univ-nantes.fr>
+Content-Type: multipart/alternative; boundary="000000000000d803c705f6c46745"
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] [SPAM] CFP Communities in Networks @NetSci 2023 July
+ 10, 2023
+
+--000000000000d803c705f6c46745
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Communities in Networks <https://hocinecherifi.wixsite.com/comnets2023>
+
+July 10, 2023
+
+A Workshop Satellite of NetSci 2023
+<https://netsci2023.wixsite.com/netsci2023>
+
+
+
+
+* Keynote Speakers (TBU)*
+
+*Kevin E. Bassler*
+<https://www.uh.edu/nsm/physics/people/profiles/kevin-bassler/> *University
+of Houston, USA*
+
+*Michael Schaub*  <https://michaelschaub.github.io/>*RWTH Aachen
+University, Germany*
+
+
+
+Submission deadline: May 30, 2023
+
+Acceptance notification: June 10, 2023
+
+
+
+
+
+Community structure is one of the most relevant features encountered in
+numerous real-world applications of networked systems. Despite the
+tremendous effort of a large interdisciplinary community of scientists
+working on this subject over the past few years to characterize, model, and
+analyze communities, more investigations are needed to better understand
+the impact of their structure and dynamics on networked systems. Therefore,
+the primary goal of this satellite workshop is to demonstrate the
+cutting-edge research advances on community structures in networks to
+provide a landscape of research progress and application potentials in
+related areas.
+
+Papers ranging from a broad nature to various aspects of community
+structure with substantial algorithmic innovations and application-oriented
+works are solicited.
+
+Topics relevant to this satellite session include, but are not limited to,
+the following:
+
+
+
+Models of Communities
+
+Embedding Models of Communities
+
+Evolution/Temporal Communities
+
+Dynamic and/of Communities
+
+Community Detection
+
+Communities in Uncertain Data
+
+Entropy Metrics for Communities
+
+Visual Representation of Communities
+
+Parallel Algorithms for Communities
+
+Hierarchy and Ego-Networks
+
+Communities and Sampling
+
+Communities and Controllability
+
+Communities and Synchronization
+
+Communities and Machine Learning
+
+Communities and Resilience
+
+Communities and Link Prediction
+
+Communities in Social Networks
+
+Communities in Multilayer Networks
+
+Communities in Economics & Finance
+
+Communities in Epidemics
+
+Communities in Rumor Spreading
+
+Communities in Mobile Networks
+
+Communities in Biological Networks
+
+Communities in Brain Networks
+
+Communities in Technological Networks
+
+
+
+*CONTRIBUTION: *
+
+*Extended Abstracts* about published or unpublished research (2 to 4 pages
+including references). They must follow the BioMed Central article template
+available at:
+
+
+
+https://appliednetsci.springeropen.com/submission-guidelines/preparing-your=
+-manuscript/research-articles
+
+
+
+
+
+*SUBMISSION WEBSITE*
+
+
+
+https://cmt3.research.microsoft.com/ComNetsNETSCI2023/
+
+
+
+
+
+*ORGANIZERS*
+
+
+
+*Hocine Cherifi University of Burgundy, France*
+
+*Janusz Holyst Warsaw University of Technology, Poland*
+
+*Gergely Palla E=C3=B6tv=C3=B6s Lor=C3=A1nd University, Hungary*
+
+*Boleslaw Szymanski, Rensselaer Polytechnic Institute, Troy, NY, USA*
+Join us at COMPLEX NETWORKS 2023 <https://www.complexnetworks.org/>
+*-------------------------*
+Hocine CHERIFI
+University of Burgundy Franche-Comt=C3=A9
+Laboratoire* I*nterdisciplinaire *C*arnot de *B*ourgogne - ICB UMR 6303 CNR=
+S
+Editor in Chief Applied Network Science
+<https://appliednetsci.springeropen.com/>
+
+Editorial Board member PLOS One <https://journals.plos.org/plosone/>, IEEE
+ACCESS <https://ieeeaccess.ieee.org/?http%3A%2F%2Fieeeaccess_ieee_org%2F>,
+Scientific
+Reports <https://www.nature.com/srep/>,
+
+Journal of Imaging <https://www.mdpi.com/journal/jimaging>, Quality and
+Quantity <https://www.springer.com/journal/11135/>, Computational Social
+Networks <https://computationalsocialnetworks.springeropen.com/>,
+Complex Systems <https://www.complex-systems.com/> Complexity
+<https://www.hindawi.com/journals/complexity/>
+
+--000000000000d803c705f6c46745
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div class=3D"gmail-WordSection1" style=3D"page: WordSecti=
+on1;">
+
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;margin:0=
+cm;font-size:12pt;font-family:&quot;Times New Roman&quot;,serif"><a href=3D=
+"https://hocinecherifi.wixsite.com/comnets2023" style=3D"color:blue"><span =
+lang=3D"EN-US" style=3D"font-size:14pt;font-family:&quot;CMU Serif Roman&qu=
+ot;">Communities
+in Networks</span></a><span lang=3D"EN-US" style=3D"font-size:14pt;font-fam=
+ily:&quot;CMU Serif Roman&quot;"></span></p>
+
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;margin:0=
+cm;font-size:12pt;font-family:&quot;Times New Roman&quot;,serif"><span lang=
+=3D"EN-US" style=3D"font-size:14pt;font-family:&quot;CMU Serif Roman&quot;"=
+>July
+10, 2023</span></p>
+
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;margin:0=
+cm;font-size:12pt;font-family:&quot;Times New Roman&quot;,serif"><span lang=
+=3D"EN-US" style=3D"font-size:14pt;font-family:&quot;CMU Serif Roman&quot;"=
+>A
+Workshop Satellite of </span><a href=3D"https://netsci2023.wixsite.com/nets=
+ci2023" style=3D"color:blue"><span lang=3D"EN-US" style=3D"font-size:14pt;f=
+ont-family:&quot;CMU Serif Roman&quot;">NetSci 2023</span></a><span lang=3D=
+"EN-US" style=3D"font-size:14pt;font-family:&quot;CMU Serif Roman&quot;"></=
+span></p>
+
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;margin:0=
+cm;font-size:12pt;font-family:&quot;Times New Roman&quot;,serif"><span lang=
+=3D"EN-US" style=3D"font-family:&quot;CMU Serif Roman&quot;">=C2=A0</span><=
+/p>
+
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;backgrou=
+nd-image:initial;background-position:initial;background-size:initial;backgr=
+ound-repeat:initial;background-origin:initial;background-clip:initial;margi=
+n:0cm;font-size:12pt;font-family:&quot;Times New Roman&quot;,serif"><b><i><=
+span lang=3D"EN-US" style=3D"font-size:11pt;font-family:&quot;CMU Serif Rom=
+an&quot;"><br>
+Keynote Speakers (TBU)</span></i></b><span lang=3D"EN-US"></span></p>
+
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;backgrou=
+nd-image:initial;background-position:initial;background-size:initial;backgr=
+ound-repeat:initial;background-origin:initial;background-clip:initial;margi=
+n:0cm;font-size:12pt;font-family:&quot;Times New Roman&quot;,serif"><span s=
+tyle=3D"color:black"><a href=3D"https://www.uh.edu/nsm/physics/people/profi=
+les/kevin-bassler/" style=3D"color:blue"><i><span lang=3D"EN-US">Kevin E. B=
+assler</span></i></a></span><span lang=3D"EN-US" style=3D"color:black">
+</span><i><span lang=3D"EN-US" style=3D"font-size:11pt;font-family:&quot;CM=
+U Serif Roman&quot;">University of Houston, USA</span></i><span lang=3D"EN-=
+US"></span></p>
+
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;backgrou=
+nd-image:initial;background-position:initial;background-size:initial;backgr=
+ound-repeat:initial;background-origin:initial;background-clip:initial;margi=
+n:0cm;font-size:12pt;font-family:&quot;Times New Roman&quot;,serif"><span s=
+tyle=3D"color:black"><a href=3D"https://michaelschaub.github.io/" style=3D"=
+color:blue"><i><span lang=3D"EN-US">Michael Schaub</span></i><span lang=3D"=
+EN-US">=C2=A0</span></a></span><i><span lang=3D"EN-US" style=3D"font-size:1=
+1pt;font-family:&quot;CMU Serif Roman&quot;">RWTH Aachen University, German=
+y</span></i><span lang=3D"EN-US"></span></p>
+
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;backgrou=
+nd-image:initial;background-position:initial;background-size:initial;backgr=
+ound-repeat:initial;background-origin:initial;background-clip:initial;margi=
+n:0cm;font-size:12pt;font-family:&quot;Times New Roman&quot;,serif"><i><spa=
+n lang=3D"EN-US" style=3D"font-size:11pt;font-family:&quot;CMU Serif Roman&=
+quot;">=C2=A0</span></i><span lang=3D"EN-US"></span></p>
+
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;backgrou=
+nd-image:initial;background-position:initial;background-size:initial;backgr=
+ound-repeat:initial;background-origin:initial;background-clip:initial;margi=
+n:0cm;font-size:12pt;font-family:&quot;Times New Roman&quot;,serif"><span l=
+ang=3D"EN-US" style=3D"font-size:11pt;font-family:&quot;CMU Serif Roman&quo=
+t;">Submission deadline: May 30, 2023</span><span lang=3D"EN-US"></span></p=
+>
+
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;backgrou=
+nd-image:initial;background-position:initial;background-size:initial;backgr=
+ound-repeat:initial;background-origin:initial;background-clip:initial;margi=
+n:0cm;font-size:12pt;font-family:&quot;Times New Roman&quot;,serif"><span l=
+ang=3D"EN-US" style=3D"font-size:11pt;font-family:&quot;CMU Serif Roman&quo=
+t;">Acceptance notification: June 10, 2023</span><span lang=3D"EN-US"></spa=
+n></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-family:&qu=
+ot;CMU Serif Roman&quot;">=C2=A0</span></p>
+
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;margin:0=
+cm;font-size:12pt;font-family:&quot;Times New Roman&quot;,serif"><i><span l=
+ang=3D"EN-US" style=3D"font-size:11pt;font-family:&quot;CMU Serif Roman&quo=
+t;">=C2=A0</span></i></p>
+
+<p class=3D"MsoNormal" style=3D"text-align:justify;background-image:initial=
+;background-position:initial;background-size:initial;background-repeat:init=
+ial;background-origin:initial;background-clip:initial;margin:0cm;font-size:=
+12pt;font-family:&quot;Times New Roman&quot;,serif"><span lang=3D"EN-US" st=
+yle=3D"font-size:11pt;font-family:&quot;CMU Serif Roman&quot;;color:black">=
+Community structure is one of the most
+relevant features encountered in numerous real-world applications of networ=
+ked
+systems. Despite the tremendous effort of a large interdisciplinary communi=
+ty
+of scientists working on this subject over the past few years to characteri=
+ze,
+model, and analyze communities, more investigations are needed to better
+understand the impact of their structure and dynamics on networked systems.
+Therefore, the primary goal of this satellite workshop is to demonstrate th=
+e cutting-edge
+research advances on community structures in networks to provide a landscap=
+e of
+research progress and application potentials in related areas.=C2=A0</span>=
+<span lang=3D"EN-US" style=3D"font-size:11pt;font-family:&quot;CMU Serif Ro=
+man&quot;"></span></p>
+
+<p class=3D"MsoNormal" style=3D"text-align:justify;background-image:initial=
+;background-position:initial;background-size:initial;background-repeat:init=
+ial;background-origin:initial;background-clip:initial;margin:0cm;font-size:=
+12pt;font-family:&quot;Times New Roman&quot;,serif"><span lang=3D"EN-US" st=
+yle=3D"font-size:11pt;font-family:&quot;CMU Serif Roman&quot;;color:black">=
+Papers ranging from a broad nature to
+various aspects of community structure with substantial algorithmic innovat=
+ions
+and application-oriented works are solicited.=C2=A0</span></p>
+
+<p class=3D"MsoNormal" style=3D"background-image:initial;background-positio=
+n:initial;background-size:initial;background-repeat:initial;background-orig=
+in:initial;background-clip:initial;margin:0cm;font-size:12pt;font-family:&q=
+uot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;;color:black">Topics
+relevant to this satellite session include, but are not limited to, the
+following:</span><span lang=3D"EN-US" style=3D"font-size:11pt;font-family:&=
+quot;CMU Serif Roman&quot;"></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11pt;=
+font-family:&quot;CMU Serif Roman&quot;">=C2=A0</span></p>
+
+</div>
+
+<span lang=3D"EN-US" style=3D"font-size:11pt;font-family:&quot;CMU Serif Ro=
+man&quot;"><br clear=3D"all" style=3D"break-before:auto">
+</span>
+
+<div class=3D"gmail-WordSection2" style=3D"page: WordSection2;">
+
+<p class=3D"MsoNormal" style=3D"background-image:initial;background-positio=
+n:initial;background-size:initial;background-repeat:initial;background-orig=
+in:initial;background-clip:initial;margin:0cm;font-size:12pt;font-family:&q=
+uot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;;color:black">Models
+of Communities</span></p>
+
+<p class=3D"MsoNormal" style=3D"background-image:initial;background-positio=
+n:initial;background-size:initial;background-repeat:initial;background-orig=
+in:initial;background-clip:initial;margin:0cm;font-size:12pt;font-family:&q=
+uot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;;color:black">Embedding
+Models of Communities</span></p>
+
+<p class=3D"MsoNormal" style=3D"background-image:initial;background-positio=
+n:initial;background-size:initial;background-repeat:initial;background-orig=
+in:initial;background-clip:initial;font-size:12pt;font-family:&quot;Times N=
+ew Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11pt;font-fam=
+ily:&quot;CMU Serif Roman&quot;;color:black">Evolution/Temporal Communities=
+=C2=A0</span></p>
+
+<p class=3D"MsoNormal" style=3D"background-image:initial;background-positio=
+n:initial;background-size:initial;background-repeat:initial;background-orig=
+in:initial;background-clip:initial;margin:0cm;font-size:12pt;font-family:&q=
+uot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;;color:black">Dynamic
+and/of Communities</span></p>
+
+<p class=3D"MsoNormal" style=3D"background-image:initial;background-positio=
+n:initial;background-size:initial;background-repeat:initial;background-orig=
+in:initial;background-clip:initial;margin:0cm;font-size:12pt;font-family:&q=
+uot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;;color:black">Community
+Detection</span></p>
+
+<p class=3D"MsoNormal" style=3D"background-image:initial;background-positio=
+n:initial;background-size:initial;background-repeat:initial;background-orig=
+in:initial;background-clip:initial;margin:0cm;font-size:12pt;font-family:&q=
+uot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;;color:black">Communities
+in Uncertain Data</span></p>
+
+<p class=3D"MsoNormal" style=3D"background-image:initial;background-positio=
+n:initial;background-size:initial;background-repeat:initial;background-orig=
+in:initial;background-clip:initial;margin:0cm;font-size:12pt;font-family:&q=
+uot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;;color:black">Entropy
+Metrics for Communities</span></p>
+
+<p class=3D"MsoNormal" style=3D"background-image:initial;background-positio=
+n:initial;background-size:initial;background-repeat:initial;background-orig=
+in:initial;background-clip:initial;margin:0cm;font-size:12pt;font-family:&q=
+uot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;;color:black">Visual
+Representation of Communities</span></p>
+
+<p class=3D"MsoNormal" style=3D"background-image:initial;background-positio=
+n:initial;background-size:initial;background-repeat:initial;background-orig=
+in:initial;background-clip:initial;margin:0cm;font-size:12pt;font-family:&q=
+uot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;;color:black">Parallel
+Algorithms for Communities </span></p>
+
+<p class=3D"MsoNormal" style=3D"background-image:initial;background-positio=
+n:initial;background-size:initial;background-repeat:initial;background-orig=
+in:initial;background-clip:initial;margin:0cm;font-size:12pt;font-family:&q=
+uot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;;color:black">Hierarchy
+and Ego-Networks=C2=A0</span></p>
+
+<p class=3D"MsoNormal" style=3D"background-image:initial;background-positio=
+n:initial;background-size:initial;background-repeat:initial;background-orig=
+in:initial;background-clip:initial;margin:0cm;font-size:12pt;font-family:&q=
+uot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;;color:black">Communities
+and Sampling=C2=A0</span></p>
+
+<p class=3D"MsoNormal" style=3D"background-image:initial;background-positio=
+n:initial;background-size:initial;background-repeat:initial;background-orig=
+in:initial;background-clip:initial;margin:0cm;font-size:12pt;font-family:&q=
+uot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;;color:black">Communities
+and Controllability</span></p>
+
+<p class=3D"MsoNormal" style=3D"background-image:initial;background-positio=
+n:initial;background-size:initial;background-repeat:initial;background-orig=
+in:initial;background-clip:initial;margin:0cm;font-size:12pt;font-family:&q=
+uot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;;color:black">Communities
+and Synchronization</span></p>
+
+<p class=3D"MsoNormal" style=3D"background-image:initial;background-positio=
+n:initial;background-size:initial;background-repeat:initial;background-orig=
+in:initial;background-clip:initial;margin:0cm;font-size:12pt;font-family:&q=
+uot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;;color:black">Communities
+and Machine Learning</span></p>
+
+<p class=3D"MsoNormal" style=3D"background-image:initial;background-positio=
+n:initial;background-size:initial;background-repeat:initial;background-orig=
+in:initial;background-clip:initial;margin:0cm;font-size:12pt;font-family:&q=
+uot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;;color:black">Communities
+and Resilience</span></p>
+
+<p class=3D"MsoNormal" style=3D"background-image:initial;background-positio=
+n:initial;background-size:initial;background-repeat:initial;background-orig=
+in:initial;background-clip:initial;margin:0cm;font-size:12pt;font-family:&q=
+uot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;;color:black">Communities
+and Link Prediction</span></p>
+
+<p class=3D"MsoNormal" style=3D"background-image:initial;background-positio=
+n:initial;background-size:initial;background-repeat:initial;background-orig=
+in:initial;background-clip:initial;margin:0cm;font-size:12pt;font-family:&q=
+uot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;;color:black">Communities
+in Social Networks</span></p>
+
+<p class=3D"MsoNormal" style=3D"background-image:initial;background-positio=
+n:initial;background-size:initial;background-repeat:initial;background-orig=
+in:initial;background-clip:initial;margin:0cm;font-size:12pt;font-family:&q=
+uot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;;color:black">Communities
+in Multilayer Networks</span></p>
+
+<p class=3D"MsoNormal" style=3D"background-image:initial;background-positio=
+n:initial;background-size:initial;background-repeat:initial;background-orig=
+in:initial;background-clip:initial;margin:0cm;font-size:12pt;font-family:&q=
+uot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;;color:black">Communities
+in Economics &amp; Finance</span></p>
+
+<p class=3D"MsoNormal" style=3D"background-image:initial;background-positio=
+n:initial;background-size:initial;background-repeat:initial;background-orig=
+in:initial;background-clip:initial;margin:0cm;font-size:12pt;font-family:&q=
+uot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;;color:black">Communities
+in Epidemics</span></p>
+
+<p class=3D"MsoNormal" style=3D"background-image:initial;background-positio=
+n:initial;background-size:initial;background-repeat:initial;background-orig=
+in:initial;background-clip:initial;margin:0cm;font-size:12pt;font-family:&q=
+uot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;;color:black">Communities
+in Rumor Spreading=C2=A0</span></p>
+
+<p class=3D"MsoNormal" style=3D"background-image:initial;background-positio=
+n:initial;background-size:initial;background-repeat:initial;background-orig=
+in:initial;background-clip:initial;margin:0cm;font-size:12pt;font-family:&q=
+uot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;;color:black">Communities
+in Mobile Networks=C2=A0</span></p>
+
+<p class=3D"MsoNormal" style=3D"background-image:initial;background-positio=
+n:initial;background-size:initial;background-repeat:initial;background-orig=
+in:initial;background-clip:initial;margin:0cm;font-size:12pt;font-family:&q=
+uot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;;color:black">Communities
+in Biological Networks</span></p>
+
+<p class=3D"MsoNormal" style=3D"background-image:initial;background-positio=
+n:initial;background-size:initial;background-repeat:initial;background-orig=
+in:initial;background-clip:initial;margin:0cm;font-size:12pt;font-family:&q=
+uot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;;color:black">Communities
+in Brain Networks</span></p>
+
+<p class=3D"MsoNormal" style=3D"background-image:initial;background-positio=
+n:initial;background-size:initial;background-repeat:initial;background-orig=
+in:initial;background-clip:initial;margin:0cm;font-size:12pt;font-family:&q=
+uot;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;;color:black">Communities
+in Technological Networks</span></p>
+
+</div>
+
+<b><span lang=3D"EN-US" style=3D"font-size:11pt;font-family:&quot;CMU Serif=
+ Roman&quot;"><br clear=3D"all" style=3D"break-before:auto">
+</span></b>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><b><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;">=C2=A0</span></b></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><b><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;">CONTRIBUTION: </span></b></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><b><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;">Extended Abstracts</span></b><s=
+pan lang=3D"EN-US" style=3D"font-size:11pt;font-family:&quot;CMU Serif Roma=
+n&quot;"> about published or unpublished research (2 to 4 pages including
+references). They must follow the BioMed Central article template available=
+ at:</span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:5pt;f=
+ont-family:&quot;CMU Serif Roman&quot;">=C2=A0</span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><a href=3D"https://appliednetsci.springeropen=
+.com/submission-guidelines/preparing-your-manuscript/research-articles" sty=
+le=3D"color:blue"><span lang=3D"EN-US" style=3D"font-size:11pt;font-family:=
+&quot;CMU Serif Roman&quot;">https://appliednetsci.springeropen.com/submiss=
+ion-guidelines/preparing-your-manuscript/research-articles</span></a><span =
+lang=3D"EN-US" style=3D"font-size:11pt;font-family:&quot;CMU Serif Roman&qu=
+ot;"></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:5pt;f=
+ont-family:&quot;CMU Serif Roman&quot;">=C2=A0</span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11pt;=
+font-family:Calibri,sans-serif">=C2=A0</span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><b><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;">SUBMISSION WEBSITE</span></b></=
+p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11pt;=
+font-family:&quot;CMU Serif Roman&quot;">=C2=A0</span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><a href=3D"https://cmt3.research.microsoft.co=
+m/ComNetsNETSCI2023/" style=3D"color:blue"><span lang=3D"EN-US" style=3D"fo=
+nt-size:11pt;font-family:&quot;CMU Serif Roman&quot;">https://cmt3.research=
+.microsoft.com/ComNetsNETSCI2023/</span></a><span lang=3D"EN-US" style=3D"f=
+ont-size:11pt;font-family:&quot;CMU Serif Roman&quot;"></span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11pt;=
+font-family:&quot;CMU Serif Roman&quot;">=C2=A0</span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><span lang=3D"EN-US" style=3D"font-size:11pt;=
+font-family:&quot;CMU Serif Roman&quot;">=C2=A0</span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><b><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;">ORGANIZERS</span></b></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><b><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;">=C2=A0</span></b></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><i><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;">Hocine Cherifi University of
+Burgundy, France</span></i></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><i><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;">Janusz Holyst Warsaw University=
+ of
+Technology, Poland</span></i></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><i><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;">Gergely Palla E=C3=B6tv=C3=B6s =
+Lor=C3=A1nd
+University, Hungary</span></i></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&quot=
+;Times New Roman&quot;,serif"><i><span lang=3D"EN-US" style=3D"font-size:11=
+pt;font-family:&quot;CMU Serif Roman&quot;">Boleslaw Szymanski, Rensselaer
+Polytechnic Institute, Troy, NY, USA</span></i></p><div><div dir=3D"ltr" cl=
+ass=3D"gmail_signature" data-smartmail=3D"gmail_signature"><div dir=3D"ltr"=
+><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div d=
+ir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"l=
+tr"><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div>Join us=C2=A0at=
+<b>=C2=A0</b><a href=3D"https://www.complexnetworks.org/" target=3D"_blank"=
+>COMPLEX NETWORKS 2023</a><b><br></b></div><div><b>------------------------=
+-</b></div><div><font color=3D"#666666">Hocine CHERIFI=C2=A0</font></div><d=
+iv><font color=3D"#666666">University of Burgundy Franche-Comt=C3=A9</font>=
+</div><div><font color=3D"#666666">Laboratoire</font><b>=C2=A0<font color=
+=3D"#0000ff">I</font></b><font color=3D"#666666">nterdisciplinaire=C2=A0</f=
+ont><b><font color=3D"#0000ff">C</font></b><font color=3D"#666666">arnot de=
+=C2=A0</font><b><font color=3D"#0000ff">B</font></b><font color=3D"#666666"=
+>ourgogne - ICB=C2=A0</font><span style=3D"color:rgb(102,102,102)">UMR 6303=
+ CNRS</span></div><div><font color=3D"#666666">Editor in Chief=C2=A0</font>=
+<a href=3D"https://appliednetsci.springeropen.com/" target=3D"_blank">Appli=
+ed Network Science</a></div><div><p class=3D"MsoNormal" style=3D"margin:0cm=
+ 0cm 0.0001pt;font-family:Cambria"><span style=3D"font-family:Arial"><font =
+color=3D"#666666">Editorial Board member</font>=C2=A0<a href=3D"https://jou=
+rnals.plos.org/plosone/" style=3D"color:purple" target=3D"_blank">PLOS One<=
+/a><font color=3D"#000000">,=C2=A0</font><a href=3D"https://ieeeaccess.ieee=
+.org/?http%3A%2F%2Fieeeaccess_ieee_org%2F" style=3D"color:purple" target=3D=
+"_blank">IEEE ACCESS</a><font color=3D"#000000">,=C2=A0</font><a href=3D"ht=
+tps://www.nature.com/srep/" style=3D"color:purple" target=3D"_blank">Scient=
+ific Reports</a><font color=3D"#000000">,</font></span></p><p class=3D"MsoN=
+ormal" style=3D"margin:0cm 0cm 0.0001pt;font-family:Cambria;color:rgb(0,0,0=
+)"><span style=3D"font-family:Arial"><a href=3D"https://www.mdpi.com/journa=
+l/jimaging" style=3D"color:purple" target=3D"_blank">Journal of Imaging</a>=
+,=C2=A0<a href=3D"https://www.springer.com/journal/11135/" style=3D"color:p=
+urple" target=3D"_blank">Quality and Quantity</a>,=C2=A0<a href=3D"https://=
+computationalsocialnetworks.springeropen.com/" style=3D"color:purple" targe=
+t=3D"_blank">Computational Social Networks</a>,</span></p><span style=3D"co=
+lor:rgb(0,0,0);font-family:Arial"><a href=3D"https://www.complex-systems.co=
+m/" style=3D"color:purple" target=3D"_blank">Complex Systems</a>=C2=A0<a hr=
+ef=3D"https://www.hindawi.com/journals/complexity/" target=3D"_blank">Compl=
+exity</a></span></div></div></div></div></div></div></div></div></div></div=
+></div></div></div></div></div></div></div>
+
+--000000000000d803c705f6c46745--

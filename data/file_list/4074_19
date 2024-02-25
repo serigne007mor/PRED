@@ -1,0 +1,476 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (bouncesmtp1.u12.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 70D0914017C1
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu,  4 May 2023 08:58:10 +0200 (CEST)
+Received: from mx1.localdomain (MX1.univ-nantes.fr [193.52.101.135])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id 6D31A6750
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu,  4 May 2023 08:58:10 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.localdomain (Postfix) with ESMTP id 657D2120043
+	for <liste-egc@polytech.univ-nantes.fr>; Thu,  4 May 2023 08:58:10 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 2.196
+X-Spam-Level: **
+X-Spam-Status: No, score=2.196 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_HOTMAIL_RCVD2=1.187,
+	FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001, J_BACKHAIR_22=1,
+	RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+	RCVD_IN_WSFF=0.01, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+	UN_PHISHING_PW=0.1] autolearn=disabled
+X-CRM114-Status: UNSURE ( -1.6175 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=hotmail.com
+Received: from mx1.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 8shXjbkG0yLN for <liste-egc@polytech.univ-nantes.fr>;
+	Thu,  4 May 2023 08:58:07 +0200 (CEST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=40.92.59.107; helo=eur03-am7-obe.outbound.protection.outlook.com; envelope-from=p_bruneau@hotmail.com; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=none dis=none) header.from=hotmail.com
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=p_bruneau@hotmail.com
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (2048-bit key; unprotected) header.d=hotmail.com header.i=@hotmail.com header.b="GSdXCAfW";
+	dkim-atps=neutral
+X-Greylist: whitelisted by SQLgrey-1.6.7
+Received: from EUR03-AM7-obe.outbound.protection.outlook.com (mail-am7eur03olkn2107.outbound.protection.outlook.com [40.92.59.107])
+	by mx1.localdomain (Postfix) with ESMTPS id C8B4E12000A
+	for <liste-egc@polytech.univ-nantes.fr>; Thu,  4 May 2023 08:58:07 +0200 (CEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=f7DE63lErHmMNw7KUKFHGjpwYp5G+d48Mk8i/hMJL1Ig76V5tTiZPNqzJgobYURN9G4dNLiAwlYgJ6VXGIVoFMIjWVtS+ZpoCe2sKO0rsbQ6/s9ge8TmbqGSzqX3UB3cy3TGILeSiaoWz2q87oWR0DoUpEUlaXiE+/qRILSE1FgZJVLkVSN3/Ty2KqxpvGTbW2fOPQC+nhjNbZdz+W2e7MkLKDWbeiCG+f4EAB/gv9REZZp3xWW3UiDvCOCRY0pkDf+Lyeloy3f4hoFuvANwVAAc3bwzHb0Vm+GniC991Z5NW0DlwfwwHmHqzUNXGFEaYzFdcqXoRJe4BsRsJ/bNQA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=yx1HW2JfdXKW+v6GLZvl5+aBzMhEK8YCNDdWuIRvzLM=;
+ b=f9X+vduAnlJEtD3alD2R+HrqE8HXYrJfny4938oqTMoXgx3fGCb3Acuo3NKI4YgOGis2q4Re5ShUNKVSnj3JTLmbrgG+fN7jfC68y+C5tjMFnMRwIcEGzHHNvO6y6yYlQUgRTpGFMhVA6mjk+24peqz3WboBDrQof5p/4e4vX3hFxauK+fy6uCXqyIaC2NxmraReUUKls92ZB9i1K3ivlO8nCgCXW6SqWV+hs4kl9lHJyvOSyFJmKbM2OdpeGVoZuwuCvEnRjv2H+X+Y81dXrJoionMn5VuMBEXw5cRhD4pfTfQlU14XaAJXZTlu7fbV0BLLUC8bMSLyW2gdEh8Q8A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=yx1HW2JfdXKW+v6GLZvl5+aBzMhEK8YCNDdWuIRvzLM=;
+ b=GSdXCAfWKSqhihDnMdkJuqumoDJEEGpauQ1pPqZWoT3BMKjs11D3npfjqm4MxfEZUt+c7fPiXX/zNfzOxfzO/bWZcuhJvGsXjlQwV2jcR01ZDhZ+KMsGmwxnzrkzT2etJnf9TKlkARnEO9KDAlYJITtv87p/k5zp4EO3KIMCqGyYLvqKLNh/0/Q9kOPy0mHgOVfs49YbxSPh/coXQuWWy967N3aCmdrU6eEjJI9DCZ2tMKpf41gRKUJZ0lkpO9gDEA05F/68HqbN5tThYXgu8QJ7132390dEPU/SifeQL1NqQQt9pXxTvJnDKSkwW1RhufO7DrtEITvhfXZH1jChww==
+Received: from DB8PR09MB4376.eurprd09.prod.outlook.com (2603:10a6:10:155::11)
+ by GVXPR09MB6827.eurprd09.prod.outlook.com (2603:10a6:150:120::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6340.31; Thu, 4 May
+ 2023 06:58:06 +0000
+Received: from DB8PR09MB4376.eurprd09.prod.outlook.com
+ ([fe80::5e3f:a4c2:1d4f:ca51]) by DB8PR09MB4376.eurprd09.prod.outlook.com
+ ([fe80::5e3f:a4c2:1d4f:ca51%3]) with mapi id 15.20.6340.031; Thu, 4 May 2023
+ 06:58:06 +0000
+From: Pierrick Bruneau <p_bruneau@hotmail.com>
+To: "liste-egc@polytech.univ-nantes.fr" <liste-egc@polytech.univ-nantes.fr>,
+	"info-ic@inria.fr " <info-ic@inria.fr>, "bull-i3@irit.fr" <bull-i3@irit.fr>
+Thread-Topic: [Sustainability] SI on Artificial Intelligence and Smart
+ Technologies for Achieving Sustainable Goals
+Thread-Index: AQHZflV5IOy93v3eckq+Yywa/WL5aA==
+Date: Thu, 4 May 2023 06:58:05 +0000
+Message-ID:
+ <DB8PR09MB4376A33DD2B6F888440B59899A6D9@DB8PR09MB4376.eurprd09.prod.outlook.com>
+Accept-Language: fr-FR, en-US
+Content-Language: fr-FR
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+x-tmn: [/8uw4ZGkKehndrmB4CLsgX+4gSZzC2tR]
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DB8PR09MB4376:EE_|GVXPR09MB6827:EE_
+x-ms-office365-filtering-correlation-id: 51670f2d-cd0c-48c8-4baa-08db4c6ce976
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:
+ Sk0WQQiu9repULz14LYYjnmXG54NQR31Ok/7xNl3J8zFp4wce6+bhEP1s/40MHQsHjhbvpd6+P8sHf26Z4kLbwAhZuIeMskpx2WhtoAQL6Kx4kBM3Py/2Wk6YLT+jcWGMYK9TQQvhHBeCgKbQrKI5ME+WwC+Dis8qj+0oKQ3QrBdPGlYlNclirEYCYdHJ9mXiA8+r38TPrLBSR1jl47RRUYemjzf8DDRTOHjM7Z67qhMmYXeQBqtW0dU1zxPxxv9a4oaFy7uG1mtB3ESFsVgFLRF0sPXx5rB+md1fTjR4kLfwtl5QxsuvdQniYM0Wdi0g60v7oSqlRF7SXdQe3QMz77LFm5KlTkNoDiU1//dfqjmJj08gKaA2rEyo3GEYcbP0SA/8QNILT4qTzcE1z8AAd6HJuqielrWajna/p096jZeG0yEum0VZ31bdhld5NA6sjTuGp0V5VYXqH2x2cJiNecManoVdZDyUXvuvgszNJBP5vrc5IKkYtNTCfr5krt1XNNqVd1YqYPD/9FLKR9fnGNc00/T6DS99P9CcWo9QLLWElvau1EXd4ZK5Meay2vjXPvxCQTu5tn4SDgJrb7K62//Ll10cIS15X9kymlBelEadTrYAoGQEjCvRaFKWaG7Zbi3sc29xIb59qbVPEW18A==
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?Windows-1252?Q?UVPhFD0w+FkqQRKbg/eovLCLAMKaV8RYbV0NIv+m28CikK7PZTRsPGJb?=
+ =?Windows-1252?Q?oYRcBDUdO6+j0YGSHfdjmBRnMo2Dt0OoODlBqgIZc8+cMOYQrkQP66Kc?=
+ =?Windows-1252?Q?TjXaI58ZYWBczl9J+undlE+J7kBqJY0N+aLpl/dblDKbeiACfn66Z025?=
+ =?Windows-1252?Q?WOiTyKIP7PYEzIc25doFIVP+gAZqduwu8twiK9nPSOkeMP4Ht31CjRIV?=
+ =?Windows-1252?Q?Pzvb7d0jNcqaZElBBhnqO7ZYvTxBmDX+NPyZCONk9UytVOaH8bcCfacP?=
+ =?Windows-1252?Q?0rc5KOS9X24ZDdo6DaF3wybnLEz5J1G154v/O2+dv0tZqbVsKpkREs60?=
+ =?Windows-1252?Q?K5wPn7K09lJc/RRnks70TC0mlqHJjM/xc1QpdtSfkk3zrg5+BbEWityR?=
+ =?Windows-1252?Q?rh2zzJL1aq4nPupxyWSt2I7UroZ26+NCaRKmEohamqf2KRyeYWvOn2SN?=
+ =?Windows-1252?Q?iYis7vEGETEhClA/cc+iw3BXzAxV4kwy680yv3dygu9CTwJgich2/vTg?=
+ =?Windows-1252?Q?ieGbf/GjoYj+pVqDLUa2BqtZGY48o1UryDmOfLhTz+Rk15zfLl3kgbsi?=
+ =?Windows-1252?Q?XpNhz74OXU1/RWOGhYJprkQcGtNYv43oss3raofO4Ku9PIWSyPtjGAMz?=
+ =?Windows-1252?Q?DlPV94RRY7HkL62eD7TIAS8x+csfMXUkVeOSUMCDBNlBi3nlIqXy5l76?=
+ =?Windows-1252?Q?hip43zgw8gCSJNIsgCNknKizmZqJeip/N7z6bP2evPjCuwKa/BlOcMCd?=
+ =?Windows-1252?Q?Ip5Z9bbm6kQJiKs+fKlfCsyBRoc2aajPnYv7tsTvu04lBmInlUIz1/o4?=
+ =?Windows-1252?Q?GGjD+Saupx2ZTlmGqCHvq5csUS4g/2w+5G7jVVLT2ttMOJ2PLSB6R5tK?=
+ =?Windows-1252?Q?uPWdR4KcyKbog7+/8dGoSKljPJFzp9gONKOPxPlbbJbc/L/Kh83fXRS5?=
+ =?Windows-1252?Q?qDxUcOF32z1wrKTcR1ReZVfJyubg6QSqbb1texvCE6LuzK9NkHER0CYR?=
+ =?Windows-1252?Q?/NbqKXvybRxvV34/dFrY1q3i3UAc9h0vJCSBccz4lF/2pGXsdrB4Iw4t?=
+ =?Windows-1252?Q?ywB78oVqGd65/KO8Y07TREhM22p5PINa11tULp52j+NQnaxf32ZG71Zu?=
+ =?Windows-1252?Q?Et6+5Qz2E3dlLIqLHi77wSK9WIXe0FwBkG+hsTJK1v5vxZlip7qICSfa?=
+ =?Windows-1252?Q?senjS22zv7HZAGfA+qezqBGaPn4v2opBsLwtrfgTDvudBxUExzpL/AwQ?=
+ =?Windows-1252?Q?W+jgZ/CQqOoUEn3vxEqxMIgT7WsQy8rnZ+rxfM8LSbDrYUDilV1hMx9i?=
+ =?Windows-1252?Q?PxZIgA=3D=3D?=
+Content-Type: multipart/alternative;
+	boundary="_000_DB8PR09MB4376A33DD2B6F888440B59899A6D9DB8PR09MB4376eurp_"
+MIME-Version: 1.0
+X-OriginatorOrg: sct-15-20-4755-11-msonline-outlook-64da6.templateTenant
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DB8PR09MB4376.eurprd09.prod.outlook.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 51670f2d-cd0c-48c8-4baa-08db4c6ce976
+X-MS-Exchange-CrossTenant-originalarrivaltime: 04 May 2023 06:58:06.0003
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GVXPR09MB6827
+Subject: [liste-egc] [Sustainability] SI on Artificial Intelligence and
+ Smart Technologies for Achieving Sustainable Goals
+
+--_000_DB8PR09MB4376A33DD2B6F888440B59899A6D9DB8PR09MB4376eurp_
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+Sustainability (ISSN 2071-1050, IF 3.889) https://www.mdpi.com/journal/sust=
+ainability
+Special Issue: Artificial Intelligence and Smart Technologies for Achieving=
+ Sustainable Goals https://www.mdpi.com/journal/sustainability/special_issu=
+es/4TK47YQ59J
+
+Guest Editors
+Pierrick Bruneau, Luxembourg Institute of Science and Technology, Luxembour=
+g
+Laura Cirrincione, University of Palermo, Italy
+Gianluca Scaccianoce, University of Palermo, Italy
+
+Summary
+
+The United Nations=92 Sustainable Development Goals (SDGs) provide a bluepr=
+int for a fairer and more sustainable world for everyone. Each SDG features=
+ economic, social, and environmental facets. The SDGs will be tough to reac=
+h by 2030, but the COVID-19 pandemic showed that AI and smart technologies =
+can play a key accelerator role in the release of vaccines as fast as possi=
+ble.
+AI can be defined as any computer technology that has the capability of per=
+forming cognitive tasks commonly attributed to humans. In recent years, thi=
+s has translated into the development of deep learning models, which mimic =
+human cognitive functions by using large neural networks, and reinforcement=
+ learning, which allows interactive systems to learn from their errors. Sma=
+rt technologies and the Internet of Things embed such AI models in ensemble=
+s of devices, such as smart energy grids.
+Numerous examples of AI misuse have been identified, and overall, these tec=
+hnologies may also be counterproductive for SDG achievement. First, using A=
+I to pursue the SDGs may lead to conflicting situations. For example, the n=
+eed for protecting the privacy and security of individuals will limit the d=
+evelopment of data-driven health diagnostic tools. Additionally, the uncont=
+rolled use of AI may reinforce existing inequalities concerning the accessi=
+bility to such resources and/or job replacements/opportunities. Furthermore=
+, recent literature surveys have noticed that more emphasis may be given to=
+ the positive impacts of AI on SDGs, without providing a fair view to the e=
+qual efforts on the study of negative impacts, regarding, for example, the =
+high energy consumption of AI models or people=92s biases regarding safe in=
+formation sharing. Open-source software initiatives and those that facilita=
+te access to computing infrastructures, as well as policy making and legisl=
+ation regarding the dual use of AI, can also be key enablers towards SDGs.
+
+Starting from these assumptions, this Special Issue aims to collect high-qu=
+ality research activities/products (original research articles, reviews and=
+ case studies are welcome) on artificial intelligence and smart technology =
+advancements for achieving the Sustainable Development Goals. Topics of int=
+erest include, but are not limited to:
+
+  *   The potential and applications of AI and smart technologies to help a=
+chieve the SDGs;
+  *   Addressing and evaluating negative impacts of AI and smart technologi=
+es on sustainable development;
+  *   Developments in AI regarding climate, renewable energies, efficient e=
+nergy use, health, agriculture, smart buildings, and urban settlements;
+  *   Ethical considerations in the use of AI and smart technologies for su=
+stainable development, and in addressing conflicting goals;
+  *   Policy making and guidelines favouring sustainable, accountable, and =
+trustworthy usage of AI.
+
+Submitted papers should not have been previously published nor be currently=
+ under consideration for publication elsewhere. All papers will be thorough=
+ly refereed through a single-blind peer-review process. A guide for authors=
+ and other relevant information for the submission of manuscripts is availa=
+ble on the Instructions for Authors page of the Sustainability journal=92s =
+website
+
+Instructions for Manuscript Preparation
+
+Manuscripts should be submitted online at https://www.mdpi.com. After regis=
+tration, the submission form is at https://susy.mdpi.com/user/manuscripts/u=
+pload/?journal=3Dsustainability. Manuscripts can be submitted until the dea=
+dline. All submissions that pass pre-check are peer-reviewed. Accepted pape=
+rs will be published continuously in the journal (as soon as accepted) and =
+will be listed together on the special issue website.
+
+Submitted manuscripts should not have been published previously, nor be und=
+er consideration for publication elsewhere (except conference proceedings p=
+apers). All manuscripts are thoroughly refereed through a single-blind peer=
+-review process. A guide for authors and other relevant information for sub=
+mission of manuscripts is available at https://www.mdpi.com/journal/sustain=
+ability/instructions. Sustainability is an international peer-reviewed open=
+ access semi-monthly journal published by MDPI.
+
+The Article Processing Charge (APC) for publication in this open access jou=
+rnal is 2200 CHF (Swiss Francs). Submitted papers should be well formatted =
+and use good English. Authors may use MDPI's English editing service prior =
+to publication or during author revisions.
+
+Submission Deadline
+October 25th, 2023
+
+
+--_000_DB8PR09MB4376A33DD2B6F888440B59899A6D9DB8PR09MB4376eurp_
+Content-Type: text/html; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DWindows-1=
+252">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);" class=3D"elementToProof">
+<p class=3D"MsoNormal" style=3D"margin: 0cm 0cm 8pt; font-size: 12pt; font-=
+family: &quot;Times New Roman&quot;, serif; background: white;">
+<b><span style=3D"font-size: 12pt; font-family: Arial, sans-serif; color: b=
+lack;" class=3D"ContentPasted0">Sustainability (ISSN 2071-1050, IF 3.889)</=
+span></b><span style=3D"font-size: 12pt; font-family: Arial, sans-serif; co=
+lor: black;" class=3D"ContentPasted0">
+</span><span style=3D"color: black;"><a href=3D"https://www.mdpi.com/journa=
+l/sustainability" class=3D"ContentPasted0"><span style=3D"font-size:12.0pt;=
+font-family:&quot;Arial&quot;,sans-serif;mso-themecolor:text1">https://www.=
+mdpi.com/journal/sustainability</span></a></span><span style=3D"font-size: =
+12pt; font-family: Arial, sans-serif; color: black;"><o:p class=3D"ContentP=
+asted0">&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal" style=3D"margin:0cm 0cm 8pt;font-size:12pt;font-fami=
+ly:&quot;Times New Roman&quot;, serif;margin-right:0cm;margin-left:0cm">
+<b><span style=3D"font-size: 12pt; font-family: Arial, sans-serif; border: =
+1pt none windowtext; padding: 0cm; color: black;" class=3D"ContentPasted0">=
+Special</span></b><b><span style=3D"font-size: 12pt; font-family: Arial, sa=
+ns-serif; color: black;" class=3D"ContentPasted0">&nbsp;<span style=3D"bord=
+er:none windowtext 1.0pt;mso-border-alt:none windowtext 0cm;padding:0cm" cl=
+ass=3D"ContentPasted0">Issue</span>:
+</span></b><b><span style=3D"font-size: 12pt; font-family: Arial, sans-seri=
+f; color: black;" class=3D"ContentPasted0">Artificial Intelligence and Smar=
+t Technologies for Achieving Sustainable Goals
+</span></b><a href=3D"https://www.mdpi.com/journal/sustainability/special_i=
+ssues/4TK47YQ59J" class=3D"ContentPasted0"><span style=3D"font-size: 12pt; =
+font-family: Arial, sans-serif; color: black;">https://www.mdpi.com/journal=
+/sustainability/special_issues/4TK47YQ59J</span></a><span style=3D"font-siz=
+e: 12pt; font-family: Arial, sans-serif; color: black;"><o:p class=3D"Conte=
+ntPasted0">&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal" style=3D"margin: 0cm 0cm 8pt; font-size: 12pt; font-=
+family: &quot;Times New Roman&quot;, serif; background: white;">
+<br>
+</p>
+<p class=3D"MsoNormal" style=3D"margin: 0cm 0cm 8pt; font-size: 12pt; font-=
+family: &quot;Times New Roman&quot;, serif; background: white;">
+<b><span style=3D"font-size: 12pt; font-family: Arial, sans-serif; color: b=
+lack;" class=3D"ContentPasted0">Guest Editors</span></b><span style=3D"font=
+-size: 12pt; font-family: Arial, sans-serif; color: black;"><o:p class=3D"C=
+ontentPasted0">&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal" style=3D"margin: 0cm 0cm 8pt; font-size: 12pt; font-=
+family: &quot;Times New Roman&quot;, serif; background: white;">
+<span style=3D"font-family: Arial, sans-serif; color: black;" class=3D"Cont=
+entPasted0">Pierrick Bruneau, Luxembourg Institute of Science and Technolog=
+y, Luxembourg<o:p class=3D"ContentPasted0">&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal" style=3D"margin: 0cm 0cm 8pt; font-size: 12pt; font-=
+family: &quot;Times New Roman&quot;, serif; background: white;">
+<span style=3D"font-family: Arial, sans-serif; color: black;" class=3D"Cont=
+entPasted0">Laura Cirrincione,
+<span style=3D"background: white;" class=3D"ContentPasted0">University of P=
+alermo, Italy</span></span><span style=3D"font-family: Arial, sans-serif; c=
+olor: black;"><o:p class=3D"ContentPasted0">&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal" style=3D"margin: 0cm 0cm 8pt; font-size: 12pt; font-=
+family: &quot;Times New Roman&quot;, serif; background: white;">
+<span style=3D"font-family: Arial, sans-serif; color: black;" class=3D"Cont=
+entPasted0">Gianluca Scaccianoce, University of Palermo, Italy</span><span =
+style=3D"font-size: 12pt; font-family: Arial, sans-serif; color: black;"><o=
+:p class=3D"ContentPasted0">&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal" style=3D"margin: 0cm 0cm 8pt; font-size: 12pt; font-=
+family: &quot;Times New Roman&quot;, serif; background: white;">
+<span style=3D"font-size: 12pt; font-family: Arial, sans-serif; color: blac=
+k;"><o:p class=3D"ContentPasted0">&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal" style=3D"margin: 0cm 0cm 8pt; font-size: 12pt; font-=
+family: &quot;Times New Roman&quot;, serif; background: white;">
+<b><span style=3D"font-size: 12pt; font-family: Arial, sans-serif; color: b=
+lack;" class=3D"ContentPasted0">Summary</span></b><span style=3D"font-size:=
+ 12pt; font-family: Arial, sans-serif; color: black;"><o:p class=3D"Content=
+Pasted0">&nbsp;</o:p></span></p>
+<p style=3D"margin: 0cm 0cm 7.5pt; font-size: 12pt; font-family: &quot;Time=
+s New Roman&quot;, serif; background: white;">
+<span style=3D"font-size: 11pt; font-family: Arial, sans-serif; color: blac=
+k;" class=3D"ContentPasted0">The United Nations=92 Sustainable Development =
+Goals (SDGs) provide a blueprint for a fairer and more sustainable world fo=
+r everyone. Each SDG features economic,
+ social, and environmental facets. The SDGs will be tough to reach by 2030,=
+ but the COVID-19 pandemic showed that AI and smart technologies can play a=
+ key accelerator role in the release of vaccines as fast as possible.<o:p c=
+lass=3D"ContentPasted0">&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal" style=3D"margin: 0cm 0cm 8pt; font-size: 12pt; font-=
+family: &quot;Times New Roman&quot;, serif; background: white;">
+<span style=3D"font-family: Arial, sans-serif; color: black;" class=3D"Cont=
+entPasted0">AI can be defined as any computer technology that has the capab=
+ility of performing cognitive tasks commonly attributed to humans. In recen=
+t years, this has translated into the
+ development of deep learning models, which mimic human cognitive functions=
+ by using large neural networks, and reinforcement learning, which allows i=
+nteractive systems to learn from their errors. Smart technologies and the I=
+nternet of Things embed such AI
+ models in ensembles of devices, such as smart energy grids.<o:p class=3D"C=
+ontentPasted0">&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal" style=3D"margin: 0cm 0cm 8pt; font-size: 12pt; font-=
+family: &quot;Times New Roman&quot;, serif; background: white;">
+<span style=3D"font-family: Arial, sans-serif; background: white; color: bl=
+ack;" class=3D"ContentPasted0">Numerous examples of AI misuse have been ide=
+ntified, and overall, these technologies may also be counterproductive for =
+SDG achievement. First, using AI to
+ pursue the SDGs may lead to conflicting situations. For example, the need =
+for protecting the privacy and security of individuals will limit the devel=
+opment of data-driven health diagnostic tools. Additionally, the uncontroll=
+ed use of AI may reinforce existing
+ inequalities concerning the accessibility to such resources and/or job rep=
+lacements/opportunities. Furthermore, recent literature surveys have notice=
+d that more emphasis may be given to the positive impacts of AI on SDGs, wi=
+thout providing a fair view to the
+ equal efforts on the study of negative impacts, regarding, for example, th=
+e high energy consumption of AI models or people=92s biases regarding safe =
+information sharing. Open-source software initiatives and those that facili=
+tate access to computing infrastructures,
+ as well as policy making and legislation regarding the dual use of AI, can=
+ also be key enablers towards SDGs.<o:p class=3D"ContentPasted0">&nbsp;</o:=
+p></span></p>
+<p style=3D"margin: 0cm 0cm 7.5pt; font-size: 12pt; font-family: &quot;Time=
+s New Roman&quot;, serif; background: white;">
+<span style=3D"font-size: 11pt; font-family: Arial, sans-serif; color: blac=
+k;" class=3D"ContentPasted0">Starting from these assumptions, this Special =
+Issue aims to collect high-quality research activities/products (original r=
+esearch articles, reviews and case studies
+ are welcome) on artificial intelligence and smart technology advancements =
+for achieving the Sustainable Development Goals. Topics of interest include=
+, but are not limited to:<o:p class=3D"ContentPasted0">&nbsp;</o:p></span><=
+/p>
+<ul style=3D"margin-bottom:0cm">
+<li style=3D"font-size: 11pt; font-family: Arial, sans-serif; color: black;=
+"><span style=3D"font-size: 11pt; font-family: Arial, sans-serif; color: bl=
+ack;" class=3D"ContentPasted0">The potential and applications of AI and sma=
+rt technologies to help achieve the SDGs;<o:p class=3D"ContentPasted0">&nbs=
+p;</o:p></span></li><li style=3D"font-size: 11pt; font-family: Arial, sans-=
+serif; color: black;"><span style=3D"font-size: 11pt; font-family: Arial, s=
+ans-serif; color: black;" class=3D"ContentPasted0">Addressing and evaluatin=
+g negative impacts of AI and smart technologies on sustainable
+ development;<o:p class=3D"ContentPasted0">&nbsp;</o:p></span></li><li styl=
+e=3D"font-size: 11pt; font-family: Arial, sans-serif; color: black;"><span =
+style=3D"font-size: 11pt; font-family: Arial, sans-serif; color: black;" cl=
+ass=3D"ContentPasted0">Developments in AI regarding climate, renewable ener=
+gies, efficient energy use, health,
+ agriculture, smart buildings, and urban settlements;<o:p class=3D"ContentP=
+asted0">&nbsp;</o:p></span></li><li style=3D"font-size: 11pt; font-family: =
+Arial, sans-serif; color: black;"><span style=3D"font-size: 11pt; font-fami=
+ly: Arial, sans-serif; color: black;" class=3D"ContentPasted0">Ethical cons=
+iderations in the use of AI and smart technologies for sustainable developm=
+ent,
+ and in addressing conflicting goals;<o:p class=3D"ContentPasted0">&nbsp;</=
+o:p></span></li><li style=3D"font-size: 11pt; font-family: Arial, sans-seri=
+f; color: black;"><span style=3D"font-size: 11pt; font-family: Arial, sans-=
+serif; color: black;" class=3D"ContentPasted0">Policy making and guidelines=
+ favouring sustainable, accountable, and trustworthy usage
+ of AI.<o:p class=3D"ContentPasted0">&nbsp;</o:p></span></li></ul>
+<div><span style=3D"font-family:Arial, sans-serif;font-size:11pt"><br>
+</span></div>
+<div><span style=3D"font-family:Arial, sans-serif;font-size:11pt">Submitted=
+ papers should not have been previously published nor be currently under co=
+nsideration for publication elsewhere. All papers will be thoroughly refere=
+ed through a single-blind peer-review
+ process. A guide for authors and other relevant information for the submis=
+sion of manuscripts is available on the Instructions for Authors page of th=
+e</span><em style=3D"font-family: Arial, sans-serif; font-size: 11pt; font-=
+variant-ligatures: inherit; font-variant-caps: inherit; font-weight: inheri=
+t;"><span class=3D"ContentPasted0">&nbsp;Sustainability</span></em><span st=
+yle=3D"font-family: Arial, sans-serif; font-size: 11pt; color: black;">&nbs=
+p;journal=92s
+ website</span><br style=3D"font-family:Arial, sans-serif;font-size:11pt">
+</div>
+<p class=3D"MsoNormal" style=3D"margin: 0cm 0cm 8pt; font-size: 12pt; font-=
+family: &quot;Times New Roman&quot;, serif; background: white;">
+<span style=3D"font-size: 12pt; font-family: Arial, sans-serif; color: blac=
+k;"><o:p class=3D"ContentPasted0">&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal" style=3D"margin: 0cm 0cm 8pt; font-size: 12pt; font-=
+family: &quot;Times New Roman&quot;, serif; background: white;">
+<b><span style=3D"font-size: 12pt; font-family: Arial, sans-serif; color: b=
+lack;" class=3D"ContentPasted0">Instructions for Manuscript Preparation</sp=
+an></b><span style=3D"font-size: 12pt; font-family: Arial, sans-serif; colo=
+r: black;"><o:p class=3D"ContentPasted0">&nbsp;</o:p></span></p>
+<p style=3D"margin: 0cm 0cm 7.5pt; font-size: 12pt; font-family: &quot;Time=
+s New Roman&quot;, serif; background: white;">
+<span style=3D"font-family: Arial, sans-serif; color: black;" class=3D"Cont=
+entPasted0">Manuscripts should be submitted online at&nbsp;</span><span sty=
+le=3D"color: black;"><a href=3D"https://www.mdpi.com" class=3D"ContentPaste=
+d0"><span style=3D"font-family:&quot;Arial&quot;,sans-serif;mso-themecolor:=
+text1">https://www.mdpi.com</span></a></span><span style=3D"font-family: Ar=
+ial, sans-serif; color: black;" class=3D"ContentPasted0">.
+ After registration,&nbsp;the submission form is at </span><span style=3D"c=
+olor: black;"><a href=3D"https://susy.mdpi.com/user/manuscripts/upload/?jou=
+rnal=3Dsustainability" class=3D"ContentPasted0"><span style=3D"font-family:=
+&quot;Arial&quot;,sans-serif;mso-themecolor:text1">https://susy.mdpi.com/us=
+er/manuscripts/upload/?journal=3Dsustainability</span></a></span><span styl=
+e=3D"font-family: Arial, sans-serif; color: black;" class=3D"ContentPasted0=
+">.
+ Manuscripts can be submitted until the deadline. All submissions that pass=
+ pre-check are peer-reviewed. Accepted papers will be published continuousl=
+y in the journal (as soon as accepted) and will be listed together on the s=
+pecial issue website.
+<o:p class=3D"ContentPasted0">&nbsp;</o:p></span></p>
+<p style=3D"margin: 0cm 0cm 7.5pt; font-size: 12pt; font-family: &quot;Time=
+s New Roman&quot;, serif; background: white;">
+<span style=3D"font-family: Arial, sans-serif; color: black;" class=3D"Cont=
+entPasted0">Submitted manuscripts should not have been published previously=
+, nor be under consideration for publication elsewhere (except conference p=
+roceedings papers). All manuscripts
+ are thoroughly refereed through a single-blind peer-review process. A guid=
+e for authors and other relevant information for submission of manuscripts =
+is available at
+</span><span style=3D"color: black;"><a href=3D"https://www.mdpi.com/journa=
+l/sustainability/instructions" class=3D"ContentPasted0"><span style=3D"font=
+-family:&quot;Arial&quot;,sans-serif;mso-themecolor:text1">https://www.mdpi=
+.com/journal/sustainability/instructions</span></a></span><span style=3D"fo=
+nt-family: Arial, sans-serif; color: black;" class=3D"ContentPasted0">.&nbs=
+p;<em><span class=3D"ContentPasted0">Sustainability</span></em>&nbsp;is
+ an international peer-reviewed open access semi-monthly journal published =
+by MDPI.<o:p class=3D"ContentPasted0">&nbsp;</o:p></span></p>
+<p style=3D"margin: 0cm 0cm 7.5pt; font-size: 12pt; font-family: &quot;Time=
+s New Roman&quot;, serif; background: white;">
+<span style=3D"font-family: Arial, sans-serif; color: black;" class=3D"Cont=
+entPasted0">The&nbsp;Article Processing Charge (APC)&nbsp;for publication i=
+n this&nbsp;open access&nbsp;journal is 2200 CHF (Swiss Francs). Submitted =
+papers should be well formatted and use good English. Authors
+ may use MDPI's&nbsp;English editing service&nbsp;prior to publication or d=
+uring author revisions.<o:p class=3D"ContentPasted0">&nbsp;</o:p></span></p=
+>
+<p class=3D"MsoNormal" style=3D"margin: 0cm 0cm 8pt; font-size: 12pt; font-=
+family: &quot;Times New Roman&quot;, serif; background: white;">
+<span style=3D"font-size: 12pt; font-family: Arial, sans-serif; color: blac=
+k;"><o:p class=3D"ContentPasted0">&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal" style=3D"margin: 0cm 0cm 8pt; font-size: 12pt; font-=
+family: &quot;Times New Roman&quot;, serif; background: white;">
+<b><span style=3D"font-size: 12pt; font-family: Arial, sans-serif; color: b=
+lack;" class=3D"ContentPasted0">Submission Deadline</span></b><span style=
+=3D"font-size: 12pt; font-family: Arial, sans-serif; color: black;"><o:p cl=
+ass=3D"ContentPasted0">&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal" style=3D"margin:0cm 0cm 8pt;font-size:12pt;font-fami=
+ly:&quot;Times New Roman&quot;, serif;margin-right:0cm;margin-left:0cm">
+<span style=3D"font-size: 12pt; font-family: Arial, sans-serif; color: blac=
+k;" class=3D"ContentPasted0">October 25<sup class=3D"ContentPasted0">th</su=
+p>, 2023</span><span style=3D"font-size: 12pt; font-family: Arial, sans-ser=
+if; color: black;"><o:p class=3D"ContentPasted0">&nbsp;</o:p></span></p>
+<br>
+</div>
+</body>
+</html>
+
+--_000_DB8PR09MB4376A33DD2B6F888440B59899A6D9DB8PR09MB4376eurp_--

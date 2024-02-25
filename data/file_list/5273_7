@@ -1,0 +1,551 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (bouncesmtp2.u12.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id B2DE714006F3
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Sat,  3 Dec 2022 21:16:48 +0100 (CET)
+Received: from mx2.localdomain (MX2.univ-nantes.fr [193.52.101.136])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id AAB575FB0
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Sat,  3 Dec 2022 21:16:48 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.localdomain (Postfix) with ESMTP id 9E8631015D6
+	for <liste-egc@polytech.univ-nantes.fr>; Sat,  3 Dec 2022 21:16:48 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 3.235
+X-Spam-Level: ***
+X-Spam-Status: No, score=3.235 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+	FR_CLIC_ICI=1, HTML_MESSAGE=0.001, HTML_OBFUSCATE_05_10=0.001,
+	MR_STRANGE_QUESTION=1.5, RCVD_IN_DNSWL_NONE=-0.0001,
+	RCVD_IN_WSFF=0.01, SARE_HTML_COLOR_B=0.621, SPF_HELO_NONE=0.001,
+	SPF_PASS=-0.001, UN_PHISHING_COMPTE=0.1, UN_PHISHING_PW=0.1,
+	URIBL_BLOCKED=0.001] autolearn=disabled
+X-CRM114-Status: UNSURE ( 3.3812 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=gmail.com
+Received: from mx2.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id EqiKB2doi6y9 for <liste-egc@polytech.univ-nantes.fr>;
+	Sat,  3 Dec 2022 21:16:42 +0100 (CET)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+	by mx2.localdomain (Postfix) with ESMTPS id 848A91015D5
+	for <liste-egc@polytech.univ-nantes.fr>; Sat,  3 Dec 2022 21:16:42 +0100 (CET)
+Received: by mail-lj1-x22d.google.com with SMTP id n1so9113254ljg.3
+        for <liste-egc@polytech.univ-nantes.fr>; Sat, 03 Dec 2022 12:16:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=8aYVuH8j8U0u4CQRIDxljuaXBppmh50hdN/hce4LmYQ=;
+        b=cvpZtdfIwYd1SwvciJ6EQh9s+ENccMQhmxrnDEw4SRNZ09DUAwihHySOSKrzysm9lE
+         zqSz6ddVak/rI8/iEn969rNvNgUBU/l+/xA3z7F3DJ6WFDr7yi9cutPZRZlaPrHfs1pT
+         KyAKQ7TCBcoYl4pQ4DSRLvTokmG0B5EzR/On2om6pLQHzKFQ7NVMIr150l0Oc2Q9AhW6
+         /+QImZDY+FFT9NOmxECVQrY0hFgUQeSoO4x7AlefIlzl+he9dVIHw1VyGtKmN7G2vQiK
+         WB6smrcUOkvZV0mdxwm267ZuyoYM10m7WBqe6jOxSHzH++QjM5naqNwpB36UbPJ5Q5P3
+         rG2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=8aYVuH8j8U0u4CQRIDxljuaXBppmh50hdN/hce4LmYQ=;
+        b=088EIaAG8dFT5KTmHyYh0zg0x1SPyP/gavaEBVrfCukKhdUiNRoS6NuzsVfCtWTLWS
+         a0PWUSpRcKmJ4SHWqHVyXgj8QlLEiEw165M9Usid2OeEKduCyUKXWRjvakA0hSjQbm0z
+         aDeMHjdYEx+3fObuYC9HmJ82jymRE+BpGjvY4ZUK+AbuOv61UExt1T3jEdJisQ/yY6JZ
+         xsvjzzlcs0BjxDyx3BcITtEM7S4RhR/7VBNKr5x2abpB3wGsiV6zaTuV8xtAUaZBEIEL
+         TkihDOaXNBI8sP9b+JyuN4hoZ1GzcBkuqjcvMwZg/7hDLO9Y+AVOYl/5U7YMfG2SskzM
+         KLIQ==
+X-Gm-Message-State: ANoB5pljPv7MYCp/WslBOgEkxJAEk0ZRhWcZoq1zp76jVtrRjnnrdWrQ
+	oVe5IHlobWA3c9yQxzwk79ZGvh4hTNH+xSs7igq6uk3WGK4=
+X-Google-Smtp-Source: AA0mqf4Ijj6qWbDOsdM4th3Wa9A3IWmiXP7iuuuCDgeocHjiIsb1e9z5vIwy3duHFlCG7LFShm+x/DIlCoR3ii+lyC0=
+X-Received: by 2002:a05:651c:545:b0:277:a3d:6fb6 with SMTP id
+ q5-20020a05651c054500b002770a3d6fb6mr24591365ljp.514.1670098600619; Sat, 03
+ Dec 2022 12:16:40 -0800 (PST)
+MIME-Version: 1.0
+From: Mustapha Lebbah <lebbah@gmail.com>
+Date: Sat, 3 Dec 2022 21:16:14 +0100
+Message-ID: <CAFVunfdVgD8PGsBYHL-h6uf_TBO_7Q0tDuj=HL_UX--huiCzEQ@mail.gmail.com>
+To: liste-egc <liste-egc@polytech.univ-nantes.fr>, liste-sfc@sfc-classification.net
+Content-Type: multipart/alternative; boundary="000000000000d4732605eef22182"
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] [Workshop 10/01/2023] =?UTF-8?Q?=C2=AB?= FL-Day -
+ Decentralized Federated Learning: Approaches and Challenges
+ =?UTF-8?Q?=C2=BB?=
+
+--000000000000d4732605eef22182
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Bonjour,
+
+L'=C3=A9quipe ADAM <https://www.david.uvsq.fr/?team=3Dadam> du Laboratoire =
+DAVID
+<https://www.david.uvsq.fr/accueil/> et l=E2=80=99Institut DATAIA
+<https://www.dataia.eu/> co-organisent un workshop sur la th=C3=A9matique
+du *Federated
+Learning*, qui aura lieu =C3=A0 l=E2=80=99*Amphith=C3=A9=C3=A2tre du b=C3=
+=A2timent Digiteo (LISN) le
+mardi 10 janvier 2023 *(*Maps* <https://goo.gl/maps/rcumbhuvsJbt4nfP6>).
+
+Inscription obligatoire & gratuite
+<https://www.dataia.eu/evenements/workshop-fl-day-decentralized-federated-l=
+earning-approaches-and-challenges>
+ (dans la limite des places disponibles)
+
+=E2=80=94
+*Decentralized Federated Learning: Approaches and Challenges*
+
+La journ=C3=A9e abordera =C3=A0 travers plusieurs pr=C3=A9sentations, les p=
+robl=C3=A9matiques
+li=C3=A9es =C3=A0 la th=C3=A9matique =C2=AB *Decentralized Federated Learni=
+ng* =C2=BB, de
+l'apprentissage automatique, au traitement de donn=C3=A9es d=C3=A9centralis=
+=C3=A9es (Edge
+Computing) ou encore de la protection des donn=C3=A9es =C2=AB privacy =C2=
+=BB dans un
+contexte d=C3=A9centralis=C3=A9 avec des illustrations dans diff=C3=A9rents=
+ domaines. Les
+pr=C3=A9sentations seront suivies d=E2=80=99une table ronde.
+
+*Les participants qui le souhaitent sont invit=C3=A9s =C3=A0 proposer des P=
+osters* pour
+exposer leurs travaux pendant les pauses, en l=E2=80=99envoyant aux organis=
+ateurs
+ci-dessous :
+*Karine ZEITOUNI* - karine.zeitouni@uvsq.fr
+*Zaineb CHELLY* - zaineb.chelly-dagdia@uvsq.fr
+*Mustapha LEBBAH* - mustapha.lebbah@uvsq.fr
+
+*Un buffet d=C3=A9jeunatoire ainsi que des pauses gourmandes seront pr=C3=
+=A9vus lors
+de cette journ=C3=A9e.*
+
+Conf=C3=A9renciers invit=C3=A9s confirm=C3=A9s
+AUR=C3=89LIEN BELLET - DR INRIA LILLE, =C3=89QUIPE CRISTAL
+Texte dans l'accord=C3=A9on
+
+   - *Titre *: *Better Privacy Guarantees for Decentralized Federated
+   Learning*
+   - *R=C3=A9sum=C3=A9* : Les algorithmes enti=C3=A8rement d=C3=A9centralis=
+=C3=A9s, dans lesquels
+   les participants =C3=A9changent des messages de pair =C3=A0 pair le long=
+ des bords
+   d'un graphe de r=C3=A9seau, sont de plus en plus populaires dans l'appre=
+ntissage
+   f=C3=A9d=C3=A9r=C3=A9 en raison de leur =C3=A9volutivit=C3=A9 et de leur=
+ efficacit=C3=A9. Intuitivement,
+   les algorithmes d=C3=A9centralis=C3=A9s devraient =C3=A9galement offrir =
+de meilleures
+   garanties de confidentialit=C3=A9, puisque les n=C5=93uds n'observent qu=
+e les
+   messages envoy=C3=A9s par leurs voisins dans le graphe. Mais formaliser =
+et
+   quantifier ce gain est un d=C3=A9fi : les r=C3=A9sultats existants se li=
+mitent =C3=A0 des
+   garanties de confidentialit=C3=A9 diff=C3=A9rentielle locale (LDP) qui n=
+=C3=A9gligent les
+   avantages de la d=C3=A9centralisation. Dans cet expos=C3=A9, je pr=C3=A9=
+senterai des
+   relaxations appropri=C3=A9es de la confidentialit=C3=A9 diff=C3=A9rentie=
+lle et montrerai
+   comment elles peuvent =C3=AAtre utilis=C3=A9es pour montrer des garantie=
+s de
+   confidentialit=C3=A9 plus fortes pour le SGD d=C3=A9centralis=C3=A9, cor=
+respondant au
+   compromis confidentialit=C3=A9-utilit=C3=A9 du SGD centralis=C3=A9 dans =
+certains
+   contextes. Il est int=C3=A9ressant de noter que certains de ces algorith=
+mes
+   amplifient les garanties de confidentialit=C3=A9 en fonction de la dista=
+nce
+   entre les n=C5=93uds du graphe, ce qui correspond bien aux attentes des
+   utilisateurs en mati=C3=A8re de confidentialit=C3=A9 dans certains cas d=
+=E2=80=99utilisation.
+
+SONIA BENMOKHTAR - DR CNRS, LIRIS, LYON
+Texte dans l'accord=C3=A9on
+
+   - *Titre* : *Decentralized Learning (as an enabler) for Decentralized
+   Online Services*
+   - *R=C3=A9sum=C3=A9* : Il y a un fort =C3=A9lan vers les services bas=C3=
+=A9s sur les donn=C3=A9es
+   =C3=A0 tous les niveaux de la soci=C3=A9t=C3=A9 et de l'industrie. Cela =
+a commenc=C3=A9 par des
+   applications Web =C3=A0 grande =C3=A9chelle telles que les moteurs de re=
+cherche Web
+   (par exemple, Google, Bing), les r=C3=A9seaux sociaux (par exemple, Face=
+book,
+   Twitter) et les syst=C3=A8mes de recommandation (par exemple, Amazon, Ne=
+tflix)
+   et devient de plus en plus omnipr=C3=A9sent gr=C3=A2ce =C3=A0 l'adoption=
+ de dispositifs
+   portables et =C3=A0 l'av=C3=A8nement de l'Internet des objets. Tous ces =
+services sont
+   rendus possibles par la disponibilit=C3=A9 de grandes infrastructures de=
+ calcul,
+   de forts progr=C3=A8s en mati=C3=A8re d'intelligence artificielle (IA) e=
+t en
+   particulier d'apprentissage automatique, et la possibilit=C3=A9 de colle=
+cter et
+   d'agr=C3=A9ger de grandes quantit=C3=A9s de donn=C3=A9es sur les utilisa=
+teurs, leurs
+   environnements et leurs organisations dans des infrastructures de cloud.
+   Mais si les progr=C3=A8s de l'IA/ML et des infrastructures distribu=C3=
+=A9es ont =C3=A9t=C3=A9
+   consid=C3=A9rables, les applications ax=C3=A9es sur les donn=C3=A9es ren=
+dues possibles par
+   ces avanc=C3=A9es posent des probl=C3=A8mes importants en ce qui concern=
+e le respect
+   de la vie priv=C3=A9e de leurs utilisateurs et peuvent engendrer des men=
+aces
+   telles que la censure, la perte de contr=C3=B4le des donn=C3=A9es person=
+nelles et les
+   fuites de donn=C3=A9es. Plus r=C3=A9cemment, des initiatives telles que =
+le Web 3.0
+   promettent de d=C3=A9centraliser les services en ligne, au c=C5=93ur des=
+quels l'IA/ML
+   joue un r=C3=B4le crucial pour donner aux utilisateurs la possibilit=C3=
+=A9 de
+   reprendre le contr=C3=B4le de leurs donn=C3=A9es personnelles et emp=C3=
+=AAcher une poign=C3=A9e
+   d'acteurs =C3=A9conomiques de trop concentrer le pouvoir de d=C3=A9cisio=
+n.
+
+HAKIM HACID - PRINCIPAL RESEARCHER, TII, ABU DHABI, UAE (GROUPE AIDRC)
+Texte dans l'accord=C3=A9on
+
+   - *Titre* : *Towards Edge AI: Principles, current state, and
+   perspectives*
+
+
+   - *R=C3=A9sum=C3=A9* : La communaut=C3=A9 de l'intelligence artificielle=
+ (IA) a
+   beaucoup investi pour d=C3=A9velopper des techniques capables de dig=C3=
+=A9rer de tr=C3=A8s
+   grandes quantit=C3=A9s de donn=C3=A9es pour en extraire des informations=
+ et des
+   connaissances =C3=A0 valeur ajout=C3=A9e. La plupart des techniques, en =
+particulier
+   les mod=C3=A8les d'apprentissage profond, n=C3=A9cessitent une grande pu=
+issance de
+   calcul et de stockage, ce qui les rend appropri=C3=A9es aux environnemen=
+ts bas=C3=A9s
+   sur le cloud. L'intelligence est donc =C3=A9loign=C3=A9e de l'utilisateu=
+r final, ce
+   qui soul=C3=A8ve des inqui=C3=A9tudes concernant, par exemple, la confid=
+entialit=C3=A9 des
+   donn=C3=A9es et la latence. L'IA de p=C3=A9riph=C3=A9rie vient apporter =
+des solutions =C3=A0
+   certains probl=C3=A8mes inh=C3=A9rents au nuage et se concentre sur les =
+meilleures
+   pratiques, architectures et processus pour =C3=A9tendre l'IA des donn=C3=
+=A9es en
+   dehors du nuage. L'IA de p=C3=A9riph=C3=A9rie rapproche l'IA de l'utilis=
+ateur final
+   et utilise, par exemple, moins de ressources de communication, car le
+   traitement est effectu=C3=A9 directement sur le p=C3=A9riph=C3=A9rique d=
+e p=C3=A9riph=C3=A9rie. Cet
+   expos=C3=A9 pr=C3=A9sentera l'IA de p=C3=A9riph=C3=A9rie et donnera un a=
+per=C3=A7u des travaux
+   existants et des futures pistes de contribution potentielles.
+
+
+Au plaisir de vous y retrouver nombreux !
+
+Bien cordialement,
+=E2=80=94
+*Service Communication de l=E2=80=99Institut DataIA*
+
+=E2=96=B8 Pour rester inform=C3=A9(e) de nos actualit=C3=A9s, *abonnez-vous=
+ =C3=A0 notre
+newsletter*
+<https://sympa.inria.fr/sympa/subscribe/newsletter-institut-dataia> !
+
+=E2=96=B8 Pour partager vos actualit=C3=A9s et vos =C3=A9v=C3=A8nements, cl=
+iquez *ici*
+<com-dataia@inria.fr> !
+
+*Site web* <https://www.dataia.eu/> | *Twitter*
+<https://twitter.com/InstitutDATAIA> | *LinkedIn
+<https://www.linkedin.com/company/institut-dataia/>*
+
+--000000000000d4732605eef22182
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div style=3D"color:rgb(0,0,0);font-family:Helvetica;font-=
+size:14px;font-style:normal;font-variant-caps:normal;font-weight:400;letter=
+-spacing:normal;text-align:start;text-indent:0px;text-transform:none;white-=
+space:normal;word-spacing:0px;text-decoration:none"><span style=3D"font-siz=
+e:14px">Bonjour,</span></div><div style=3D"color:rgb(0,0,0);font-family:Hel=
+vetica;font-size:14px;font-style:normal;font-variant-caps:normal;font-weigh=
+t:400;letter-spacing:normal;text-align:start;text-indent:0px;text-transform=
+:none;white-space:normal;word-spacing:0px;text-decoration:none"><span style=
+=3D"font-size:14px"><br></span></div><div style=3D"color:rgb(0,0,0);font-fa=
+mily:Helvetica;font-size:14px;font-style:normal;font-variant-caps:normal;fo=
+nt-weight:400;letter-spacing:normal;text-align:start;text-indent:0px;text-t=
+ransform:none;white-space:normal;word-spacing:0px;text-decoration:none"><sp=
+an style=3D"font-size:14px">L&#39;<span style=3D"font-family:AvenirNext-Reg=
+ular;box-sizing:border-box;font-variant-ligatures:normal;background-color:r=
+gb(255,255,255)"><a href=3D"https://www.david.uvsq.fr/?team=3Dadam" target=
+=3D"_blank" rel=3D"noopener noreferrer" style=3D"box-sizing:border-box;text=
+-decoration:none;outline:none">=C3=A9quipe ADAM</a></span><span style=3D"fo=
+nt-family:AvenirNext-Regular;font-variant-ligatures:normal;background-color=
+:rgb(255,255,255)">=C2=A0du=C2=A0</span><span style=3D"font-family:AvenirNe=
+xt-Regular;box-sizing:border-box;font-variant-ligatures:normal;background-c=
+olor:rgb(255,255,255)"><a href=3D"https://www.david.uvsq.fr/accueil/" targe=
+t=3D"_blank" rel=3D"noopener noreferrer" style=3D"box-sizing:border-box;tex=
+t-decoration:none;outline:none">Laboratoire DAVID</a></span><span style=3D"=
+font-family:AvenirNext-Regular;font-variant-ligatures:normal;background-col=
+or:rgb(255,255,255)">=C2=A0et l=E2=80=99<a href=3D"https://www.dataia.eu/">=
+<span>Institut DATAIA</span></a>=C2=A0co-organisent un workshop sur la th=
+=C3=A9matique du=C2=A0<i>Federated Learning</i>, qui aura lieu =C3=A0 l=E2=
+=80=99<b>Amphith=C3=A9=C3=A2tre du b=C3=A2timent Digiteo (LISN) le mardi 10=
+ janvier 2023=C2=A0</b>(</span></span><a href=3D"https://goo.gl/maps/rcumbh=
+uvsJbt4nfP6"><b style=3D"font-size:14px">Maps</b></a><span style=3D"font-si=
+ze:14px"><span style=3D"font-family:AvenirNext-Regular;font-variant-ligatur=
+es:normal;background-color:rgb(255,255,255)">).</span></span></div><div sty=
+le=3D"color:rgb(0,0,0);font-family:Helvetica;font-size:14px;font-style:norm=
+al;font-variant-caps:normal;font-weight:400;letter-spacing:normal;text-alig=
+n:start;text-indent:0px;text-transform:none;white-space:normal;word-spacing=
+:0px;text-decoration:none"><span style=3D"font-family:AvenirNext-Regular;fo=
+nt-variant-ligatures:normal;background-color:rgb(255,255,255)"><br></span><=
+/div><div style=3D"color:rgb(0,0,0);font-family:Helvetica;font-size:14px;fo=
+nt-style:normal;font-variant-caps:normal;font-weight:400;letter-spacing:nor=
+mal;text-align:start;text-indent:0px;text-transform:none;white-space:normal=
+;word-spacing:0px;text-decoration:none"><span style=3D"font-size:15px"><fon=
+t color=3D"#e63b7a"><a href=3D"https://www.dataia.eu/evenements/workshop-fl=
+-day-decentralized-federated-learning-approaches-and-challenges" style=3D"f=
+ont-weight:bold"><font color=3D"#e63b7a">Inscription obligatoire &amp; grat=
+uite</font></a><b>=C2=A0</b>(dans la limite des places disponibles)</font><=
+/span></div><div style=3D"color:rgb(0,0,0);font-family:Helvetica;font-size:=
+14px;font-style:normal;font-variant-caps:normal;font-weight:400;letter-spac=
+ing:normal;text-align:start;text-indent:0px;text-transform:none;white-space=
+:normal;word-spacing:0px;text-decoration:none"><br></div><div style=3D"colo=
+r:rgb(0,0,0);font-family:Helvetica;font-size:14px;font-style:normal;font-va=
+riant-caps:normal;font-weight:400;letter-spacing:normal;text-align:start;te=
+xt-indent:0px;text-transform:none;white-space:normal;word-spacing:0px;text-=
+decoration:none">=E2=80=94=C2=A0</div><div style=3D"color:rgb(0,0,0);font-f=
+amily:Helvetica;font-size:14px;font-style:normal;font-variant-caps:normal;f=
+ont-weight:400;letter-spacing:normal;text-align:start;text-indent:0px;text-=
+transform:none;white-space:normal;word-spacing:0px;text-decoration:none"><b=
+ style=3D"font-size:15px">Decentralized Federated Learning: Approaches and =
+Challenges</b></div><span style=3D"font-style:normal;font-variant-caps:norm=
+al;font-weight:400;letter-spacing:normal;text-align:start;text-indent:0px;t=
+ext-transform:none;white-space:normal;word-spacing:0px;text-decoration:none=
+;color:rgb(74,73,73);font-family:&quot;Open Sans&quot;;font-size:15px;backg=
+round-color:rgb(255,255,255)"><br></span><div style=3D"color:rgb(0,0,0);fon=
+t-family:Helvetica;font-size:14px;font-style:normal;font-variant-caps:norma=
+l;font-weight:400;letter-spacing:normal;text-align:start;text-indent:0px;te=
+xt-transform:none;white-space:normal;word-spacing:0px;text-decoration:none"=
+><div><font face=3D"AvenirNext-Regular"><span style=3D"background-color:rgb=
+(255,255,255)">La journ=C3=A9e abordera =C3=A0 travers plusieurs pr=C3=A9se=
+ntations, les probl=C3=A9matiques li=C3=A9es =C3=A0 la th=C3=A9matique =C2=
+=AB=C2=A0</span><span style=3D"box-sizing:border-box"><i>Decentralized Fede=
+rated Learning</i></span><span style=3D"background-color:rgb(255,255,255)">=
+=C2=A0</span><span style=3D"background-color:rgb(255,255,255)">=C2=BB, de l=
+&#39;apprentissage automatique, au traitement de donn=C3=A9es d=C3=A9centra=
+lis=C3=A9es (Edge Computing) ou encore de la protection des donn=C3=A9es =
+=C2=AB privacy =C2=BB dans un contexte d=C3=A9centralis=C3=A9 avec des illu=
+strations dans diff=C3=A9rents domaines. Les pr=C3=A9sentations seront suiv=
+ies d=E2=80=99une table ronde.</span></font></div><div><span style=3D"font-=
+family:AvenirNext-Regular;background-color:rgb(255,255,255)"><br></span></d=
+iv><div><span style=3D"background-color:rgb(255,255,255)"><font face=3D"Ave=
+nirNext-Regular"><span style=3D"font-size:14px"><u>Les participants qui le =
+souhaitent sont invit=C3=A9s =C3=A0 proposer des Posters</u>=C2=A0pour expo=
+ser leurs travaux pendant les pauses, en l=E2=80=99envoyant aux organisateu=
+rs ci-dessous :</span></font></span></div><div><span style=3D"background-co=
+lor:rgb(255,255,255);font-size:14px"><font face=3D"AvenirNext-Regular"><b>K=
+arine ZEITOUNI</b>=C2=A0-=C2=A0<a href=3D"mailto:karine.zeitouni@uvsq.fr">k=
+arine.zeitouni@uvsq.fr</a></font></span></div><div><span style=3D"backgroun=
+d-color:rgb(255,255,255);font-size:14px"><font face=3D"AvenirNext-Regular">=
+<b>Zaineb CHELLY</b>=C2=A0-=C2=A0<a href=3D"mailto:zaineb.chelly-dagdia@uvs=
+q.fr">zaineb.chelly-dagdia@uvsq.fr</a></font></span></div><div><span style=
+=3D"background-color:rgb(255,255,255);font-size:14px"><font face=3D"AvenirN=
+ext-Regular"><b>Mustapha LEBBAH</b>=C2=A0-=C2=A0<a href=3D"mailto:mustapha.=
+lebbah@uvsq.fr">mustapha.lebbah@uvsq.fr</a></font></span></div><div><span s=
+tyle=3D"background-color:rgb(255,255,255);font-size:14px"><font face=3D"Ave=
+nirNext-Regular"><u><br></u></font></span></div><div><span style=3D"font-va=
+riant-ligatures:normal;background-color:rgb(255,255,255)"><font face=3D"Ave=
+nirNext-Regular"><p style=3D"box-sizing:border-box;margin:0px 0px 10px;font=
+-variant-ligatures:normal"><strong style=3D"box-sizing:border-box;font-size=
+:14px">Un buffet d=C3=A9jeunatoire ainsi que des pauses gourmandes seront p=
+r=C3=A9vus lors de cette journ=C3=A9e.</strong></p><div><br></div><p style=
+=3D"box-sizing:border-box;margin:0px 0px 10px;font-variant-ligatures:normal=
+"><span style=3D"color:rgb(218,57,141);font-family:Phenomena-Bold;font-size=
+:32px">Conf=C3=A9renciers invit=C3=A9s confirm=C3=A9s</span></p><div><div c=
+lass=3D"expanded gmail-field--label-visually_hidden gmail-field--type-strin=
+g gmail-field gmail-field--name-field-nom-accordeon" style=3D"box-sizing:bo=
+rder-box;margin:0px;background-color:rgb(218,57,141);padding:0px 20px;color=
+:rgb(74,73,73);font-family:&quot;Open Sans&quot;;font-size:14px;font-varian=
+t-ligatures:normal"><div class=3D"gmail-field--item" style=3D"box-sizing:bo=
+rder-box;line-height:40px;font-family:Phenomena-Bold;font-size:16px;color:r=
+gb(255,255,255);background-image:url(&quot;/themes/dataia/css/images/slideu=
+p.svg&quot;);background-size:16px 16px;text-transform:uppercase;background-=
+position:right center;background-repeat:no-repeat">AUR=C3=89LIEN BELLET - D=
+R INRIA LILLE, =C3=89QUIPE CRISTAL</div></div><div class=3D"gmail-field--la=
+bel-visually_hidden gmail-field--name-field-texte-accordeon gmail-field gma=
+il-field--type-text-long" style=3D"box-sizing:border-box;padding:20px;backg=
+round-color:rgb(245,245,245);color:rgb(74,73,73);font-family:&quot;Open San=
+s&quot;;font-variant-ligatures:normal"><div class=3D"gmail-sr-only gmail-fi=
+eld--label" style=3D"font-size:15px;box-sizing:border-box;font-weight:700;w=
+idth:1px;height:1px;padding:0px;overflow:hidden;border:0px none">Texte dans=
+ l&#39;accord=C3=A9on</div><div class=3D"gmail-field--item" style=3D"box-si=
+zing:border-box"><ul style=3D"box-sizing:border-box;margin-top:0px;margin-b=
+ottom:10px;padding-left:1em"><li style=3D"box-sizing:border-box;margin-bott=
+om:10px"><span><strong style=3D"box-sizing:border-box">Titre=C2=A0</strong>=
+:=C2=A0<em style=3D"box-sizing:border-box">Better Privacy Guarantees for De=
+centralized Federated Learning</em></span></li><li style=3D"box-sizing:bord=
+er-box;margin-bottom:10px"><span><strong style=3D"box-sizing:border-box">R=
+=C3=A9sum=C3=A9</strong>=C2=A0: Les algorithmes enti=C3=A8rement d=C3=A9cen=
+tralis=C3=A9s, dans lesquels les participants =C3=A9changent des messages d=
+e pair =C3=A0 pair le long des bords d&#39;un graphe de r=C3=A9seau, sont d=
+e plus en plus populaires dans l&#39;apprentissage f=C3=A9d=C3=A9r=C3=A9 en=
+ raison de leur =C3=A9volutivit=C3=A9 et de leur efficacit=C3=A9. Intuitive=
+ment, les algorithmes d=C3=A9centralis=C3=A9s devraient =C3=A9galement offr=
+ir de meilleures garanties de confidentialit=C3=A9, puisque les n=C5=93uds =
+n&#39;observent que les messages envoy=C3=A9s par leurs voisins dans le gra=
+phe. Mais formaliser et quantifier ce gain est un d=C3=A9fi : les r=C3=A9su=
+ltats existants se limitent =C3=A0 des garanties de confidentialit=C3=A9 di=
+ff=C3=A9rentielle locale (LDP) qui n=C3=A9gligent les avantages de la d=C3=
+=A9centralisation. Dans cet expos=C3=A9, je pr=C3=A9senterai des relaxation=
+s appropri=C3=A9es de la confidentialit=C3=A9 diff=C3=A9rentielle et montre=
+rai comment elles peuvent =C3=AAtre utilis=C3=A9es pour montrer des garanti=
+es de confidentialit=C3=A9 plus fortes pour le SGD d=C3=A9centralis=C3=A9, =
+correspondant au compromis confidentialit=C3=A9-utilit=C3=A9 du SGD central=
+is=C3=A9 dans certains contextes. Il est int=C3=A9ressant de noter que cert=
+ains de ces algorithmes amplifient les garanties de confidentialit=C3=A9 en=
+ fonction de la distance entre les n=C5=93uds du graphe, ce qui correspond =
+bien aux attentes des utilisateurs en mati=C3=A8re de confidentialit=C3=A9 =
+dans certains cas d=E2=80=99utilisation.</span></li></ul></div></div></div>=
+</font></span></div><div><div><div><div><div style=3D"overflow-wrap: break-=
+word;"><div><div><div class=3D"expanded gmail-field--label-visually_hidden =
+gmail-field--type-string gmail-field gmail-field--name-field-nom-accordeon"=
+ style=3D"box-sizing:border-box;margin:0px;background-color:rgb(218,57,141)=
+;padding:0px 20px;color:rgb(74,73,73);font-family:&quot;Open Sans&quot;;fon=
+t-size:14px;font-variant-ligatures:normal"><div class=3D"gmail-field--item"=
+ style=3D"box-sizing:border-box;line-height:40px;font-family:Phenomena-Bold=
+;font-size:16px;color:rgb(255,255,255);background-image:url(&quot;/themes/d=
+ataia/css/images/slideup.svg&quot;);background-size:16px 16px;text-transfor=
+m:uppercase;background-position:right center;background-repeat:no-repeat">S=
+ONIA BENMOKHTAR - DR CNRS, LIRIS, LYON</div></div><div class=3D"gmail-field=
+--label-visually_hidden gmail-field--name-field-texte-accordeon gmail-field=
+ gmail-field--type-text-long" style=3D"box-sizing:border-box;padding:20px;b=
+ackground-color:rgb(245,245,245);color:rgb(74,73,73);font-family:&quot;Open=
+ Sans&quot;;font-variant-ligatures:normal"><div class=3D"gmail-sr-only gmai=
+l-field--label" style=3D"font-size:15px;box-sizing:border-box;font-weight:7=
+00;width:1px;height:1px;padding:0px;overflow:hidden;border:0px none">Texte =
+dans l&#39;accord=C3=A9on</div><div class=3D"gmail-field--item" style=3D"bo=
+x-sizing:border-box"><ul style=3D"box-sizing:border-box;margin-top:0px;marg=
+in-bottom:10px;padding-left:1em"><li style=3D"box-sizing:border-box;margin-=
+bottom:10px"><span><strong style=3D"box-sizing:border-box">Titre</strong>=
+=C2=A0:=C2=A0<em style=3D"box-sizing:border-box">Decentralized Learning (as=
+ an enabler) for Decentralized Online Services</em></span></li><li style=3D=
+"box-sizing:border-box;margin-bottom:10px"><span><strong style=3D"box-sizin=
+g:border-box">R=C3=A9sum=C3=A9</strong>=C2=A0: Il y a un fort =C3=A9lan ver=
+s les services bas=C3=A9s sur les donn=C3=A9es =C3=A0 tous les niveaux de l=
+a soci=C3=A9t=C3=A9 et de l&#39;industrie. Cela a commenc=C3=A9 par des app=
+lications Web =C3=A0 grande =C3=A9chelle telles que les moteurs de recherch=
+e Web (par exemple, Google, Bing), les r=C3=A9seaux sociaux (par exemple, F=
+acebook, Twitter) et les syst=C3=A8mes de recommandation (par exemple, Amaz=
+on, Netflix) et devient de plus en plus omnipr=C3=A9sent gr=C3=A2ce =C3=A0 =
+l&#39;adoption de dispositifs portables et =C3=A0 l&#39;av=C3=A8nement de l=
+&#39;Internet des objets. Tous ces services sont rendus possibles par la di=
+sponibilit=C3=A9 de grandes infrastructures de calcul, de forts progr=C3=A8=
+s en mati=C3=A8re d&#39;intelligence artificielle (IA) et en particulier d&=
+#39;apprentissage automatique, et la possibilit=C3=A9 de collecter et d&#39=
+;agr=C3=A9ger de grandes quantit=C3=A9s de donn=C3=A9es sur les utilisateur=
+s, leurs environnements et leurs organisations dans des infrastructures de =
+cloud. Mais si les progr=C3=A8s de l&#39;IA/ML et des infrastructures distr=
+ibu=C3=A9es ont =C3=A9t=C3=A9 consid=C3=A9rables, les applications ax=C3=A9=
+es sur les donn=C3=A9es rendues possibles par ces avanc=C3=A9es posent des =
+probl=C3=A8mes importants en ce qui concerne le respect de la vie priv=C3=
+=A9e de leurs utilisateurs et peuvent engendrer des menaces telles que la c=
+ensure, la perte de contr=C3=B4le des donn=C3=A9es personnelles et les fuit=
+es de donn=C3=A9es. Plus r=C3=A9cemment, des initiatives telles que le Web =
+3.0 promettent de d=C3=A9centraliser les services en ligne, au c=C5=93ur de=
+squels l&#39;IA/ML joue un r=C3=B4le crucial pour donner aux utilisateurs l=
+a possibilit=C3=A9 de reprendre le contr=C3=B4le de leurs donn=C3=A9es pers=
+onnelles et emp=C3=AAcher une poign=C3=A9e d&#39;acteurs =C3=A9conomiques d=
+e trop concentrer le pouvoir de d=C3=A9cision.</span></li></ul></div></div>=
+<div><div class=3D"expanded gmail-field--label-visually_hidden gmail-field-=
+-type-string gmail-field gmail-field--name-field-nom-accordeon" style=3D"bo=
+x-sizing:border-box;margin:0px;background-color:rgb(218,57,141);padding:0px=
+ 20px;color:rgb(74,73,73);font-family:&quot;Open Sans&quot;;font-size:14px;=
+font-variant-ligatures:normal"><div class=3D"gmail-field--item" style=3D"bo=
+x-sizing:border-box;line-height:40px;font-family:Phenomena-Bold;font-size:1=
+6px;color:rgb(255,255,255);background-image:url(&quot;/themes/dataia/css/im=
+ages/slideup.svg&quot;);background-size:16px 16px;text-transform:uppercase;=
+background-position:right center;background-repeat:no-repeat">HAKIM HACID -=
+ PRINCIPAL RESEARCHER, TII, ABU DHABI, UAE (GROUPE AIDRC)</div></div><div c=
+lass=3D"gmail-field--label-visually_hidden gmail-field--name-field-texte-ac=
+cordeon gmail-field gmail-field--type-text-long" style=3D"box-sizing:border=
+-box;padding:20px;background-color:rgb(245,245,245);color:rgb(74,73,73);fon=
+t-family:&quot;Open Sans&quot;;font-variant-ligatures:normal"><div class=3D=
+"gmail-sr-only gmail-field--label" style=3D"font-size:15px;box-sizing:borde=
+r-box;font-weight:700;width:1px;height:1px;padding:0px;overflow:hidden;bord=
+er:0px none">Texte dans l&#39;accord=C3=A9on</div><div class=3D"gmail-field=
+--item" style=3D"box-sizing:border-box"><ul style=3D"box-sizing:border-box;=
+margin-top:0px;margin-bottom:10px;padding-left:1em"><li style=3D"box-sizing=
+:border-box;margin-bottom:10px"><span><strong style=3D"box-sizing:border-bo=
+x">Titre</strong>=C2=A0:=C2=A0<em style=3D"box-sizing:border-box">Towards E=
+dge AI: Principles, current state, and perspectives</em></span></li></ul><u=
+l style=3D"box-sizing:border-box;margin-top:0px;margin-bottom:10px;padding-=
+left:1em"><li style=3D"box-sizing:border-box;margin-bottom:10px"><span><str=
+ong style=3D"box-sizing:border-box">R=C3=A9sum=C3=A9</strong>=C2=A0: La com=
+munaut=C3=A9 de l&#39;intelligence artificielle (IA) a beaucoup investi pou=
+r d=C3=A9velopper des techniques capables de dig=C3=A9rer de tr=C3=A8s gran=
+des quantit=C3=A9s de donn=C3=A9es pour en extraire des informations et des=
+ connaissances =C3=A0 valeur ajout=C3=A9e. La plupart des techniques, en pa=
+rticulier les mod=C3=A8les d&#39;apprentissage profond, n=C3=A9cessitent un=
+e grande puissance de calcul et de stockage, ce qui les rend appropri=C3=A9=
+es aux environnements bas=C3=A9s sur le cloud. L&#39;intelligence est donc =
+=C3=A9loign=C3=A9e de l&#39;utilisateur final, ce qui soul=C3=A8ve des inqu=
+i=C3=A9tudes concernant, par exemple, la confidentialit=C3=A9 des donn=C3=
+=A9es et la latence. L&#39;IA de p=C3=A9riph=C3=A9rie vient apporter des so=
+lutions =C3=A0 certains probl=C3=A8mes inh=C3=A9rents au nuage et se concen=
+tre sur les meilleures pratiques, architectures et processus pour =C3=A9ten=
+dre l&#39;IA des donn=C3=A9es en dehors du nuage. L&#39;IA de p=C3=A9riph=
+=C3=A9rie rapproche l&#39;IA de l&#39;utilisateur final et utilise, par exe=
+mple, moins de ressources de communication, car le traitement est effectu=
+=C3=A9 directement sur le p=C3=A9riph=C3=A9rique de p=C3=A9riph=C3=A9rie. C=
+et expos=C3=A9 pr=C3=A9sentera l&#39;IA de p=C3=A9riph=C3=A9rie et donnera =
+un aper=C3=A7u des travaux existants et des futures pistes de contribution =
+potentielles.</span></li></ul></div></div><div><br></div></div><div>Au plai=
+sir de vous y retrouver nombreux !</div><div><br></div><div>Bien cordialeme=
+nt,</div></div></div></div></div></div><div><div dir=3D"auto" style=3D"over=
+flow-wrap: break-word;"><div dir=3D"auto" style=3D"overflow-wrap: break-wor=
+d;"><div dir=3D"auto" style=3D"overflow-wrap: break-word;"><div dir=3D"auto=
+" style=3D"overflow-wrap: break-word;"><div dir=3D"auto" style=3D"overflow-=
+wrap: break-word;"><div dir=3D"auto" style=3D"overflow-wrap: break-word;"><=
+font color=3D"#223576"><span style=3D"font-family:Phenomena-Regular;font-si=
+ze:large;float:none;display:inline">=E2=80=94<br></span><span style=3D"font=
+-size:20px"><font face=3D"Phenomena-Bold"><b>Service Communication de l=E2=
+=80=99Institut DataIA</b></font></span></font><div><div><span style=3D"floa=
+t:none;display:inline"><font size=3D"4" face=3D"Phenomena-Regular"><br></fo=
+nt></span></div><div><span style=3D"float:none;display:inline"><font size=
+=3D"4" face=3D"Phenomena-Regular"><font color=3D"#223576">=E2=96=B8</font>=
+=C2=A0<font color=3D"#ed1e8f">Pour rester inform=C3=A9(e) de nos actualit=
+=C3=A9s,=C2=A0</font></font><a href=3D"https://sympa.inria.fr/sympa/subscri=
+be/newsletter-institut-dataia"><font size=3D"4" face=3D"Phenomena-Bold"><b>=
+abonnez-vous =C3=A0 notre newsletter</b></font></a><font size=3D"4" face=3D=
+"Phenomena-Regular"><font style=3D"color:rgb(215,60,148)">=C2=A0</font><fon=
+t color=3D"#d73c94">!</font></font></span><div><font size=3D"4" face=3D"Phe=
+nomena-Regular"><br></font><div><span><font size=3D"4" face=3D"Phenomena-Re=
+gular"><font color=3D"#223576">=E2=96=B8</font>=C2=A0<font color=3D"#ed1e8f=
+">Pour partager vos actualit=C3=A9s et vos =C3=A9v=C3=A8nements, cliquez</f=
+ont><font>=C2=A0<a href=3D"mailto:com-dataia@inria.fr"><b>ici</b></a>=C2=A0=
+</font><font color=3D"#ed1e8f">!</font></font></span><div><div style=3D"fon=
+t-family:&quot;Avenir Next&quot;"><span style=3D"float:none;display:inline"=
+><br></span></div><div><font size=3D"4" face=3D"Phenomena-Regular"><span><s=
+pan style=3D"float:none;display:inline"><a href=3D"https://www.dataia.eu/">=
+<b>Site web</b></a>=C2=A0|=C2=A0<a href=3D"https://twitter.com/InstitutDATA=
+IA"><b>Twitter</b></a>=C2=A0|=C2=A0</span><b><a href=3D"https://www.linkedi=
+n.com/company/institut-dataia/">LinkedIn</a></b></span></font></div></div><=
+/div></div></div></div></div></div></div></div></div></div></div></div></di=
+v></div></div>
+
+--000000000000d4732605eef22182--

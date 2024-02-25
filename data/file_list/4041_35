@@ -1,0 +1,542 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (bouncesmtp2.u12.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id B570514017E7
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Tue,  9 May 2023 10:47:51 +0200 (CEST)
+Received: from mx1.localdomain (MX1.univ-nantes.fr [193.52.101.135])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id B20DC5FA7
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Tue,  9 May 2023 10:47:51 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.localdomain (Postfix) with ESMTP id AA6CD12000B
+	for <liste-egc@polytech.univ-nantes.fr>; Tue,  9 May 2023 10:47:51 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -4.469
+X-Spam-Level:
+X-Spam-Status: No, score=-4.469 tagged_above=-1000 required=5
+	tests=[CRM114_GOOD=-5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	J_CHICKENPOX_75=0.6, NO_RDNS2=0.01, RCVD_IN_WSFF=0.01,
+	SPF_HELO_NONE=0.001, SPF_PASS=-0.001, T_KAM_HTML_FONT_INVALID=0.01,
+	UN_PHISHING_PW=0.1] autolearn=disabled
+X-CRM114-Status: GOOD ( 9.9259 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=unicaen.fr
+Received: from mx1.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Vn7FbQ1FKgjI for <liste-egc@polytech.univ-nantes.fr>;
+	Tue,  9 May 2023 10:47:49 +0200 (CEST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=194.199.107.75; helo=mailout.unicaen.fr; envelope-from=bruno.cremilleux@unicaen.fr; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=none dis=none) header.from=unicaen.fr
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=bruno.cremilleux@unicaen.fr
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (1024-bit key; unprotected) header.d=unicaen.fr header.i=@unicaen.fr header.b="VOvFabnW";
+	dkim-atps=neutral
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mailout.unicaen.fr (mailout.unicaen.fr [194.199.107.75])
+	by mx1.localdomain (Postfix) with ESMTP id 4884412000C
+	for <liste-egc@polytech.univ-nantes.fr>; Tue,  9 May 2023 10:47:49 +0200 (CEST)
+Received: from wzproxy1.unicaen.fr (wzproxy1.unicaen.fr [193.55.120.52])
+	by mailout.unicaen.fr (Postfix) with ESMTP id 2B941856C3;
+	Tue,  9 May 2023 10:47:49 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=unicaen.fr; s=mail;
+	t=1683622069; bh=JET5SebuwO40YwvPglBY/3DBmRtGZiA//E4WEkXyvLU=;
+	h=Date:From:To:Subject:From;
+	b=VOvFabnW3I3oLV+2Ijdhzs7exiCYw+ykcmzp8At7CPCiGDZo8mXedktkPBWRPG1YF
+	 0G325wkGxaos2jEE2/S6k6RNHDXANDxAfoFe8NbZdlf2U5fjRl9II9NSG4cXuRTJat
+	 MLuiSXNZ5N9uz+Rer9SBrpDaufNz1zjAtoFJ6/k4=
+Received: from localhost (localhost [127.0.0.1])
+	by wzproxy1.unicaen.fr (Postfix) with ESMTP id 2086366C38;
+	Tue,  9 May 2023 10:47:49 +0200 (CEST)
+X-Amavis-Modified: Mail body modified (using disclaimer) - wzproxy1.unicaen.fr
+X-Virus-Scanned: amavisd-new at wzproxy1.unicaen.fr
+Received: from wzproxy1.unicaen.fr ([127.0.0.1])
+	by localhost (wzproxy1.unicaen.fr [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id U3w6nLAIuPHA; Tue,  9 May 2023 10:47:49 +0200 (CEST)
+Received: from lsmtp2.unicaen.fr (lsmtp2.unicaen.fr [193.55.120.33])
+	by wzproxy1.unicaen.fr (Postfix) with ESMTP id E67A566CD9;
+	Tue,  9 May 2023 10:47:48 +0200 (CEST)
+Received: from wzstore5.unicaen.fr (wzstore5.unicaen.fr [10.14.129.119])
+	by lsmtp2.unicaen.fr (Postfix) with ESMTP id C3C5BC003A;
+	Tue,  9 May 2023 10:47:41 +0200 (CEST)
+Date: Tue, 9 May 2023 10:47:41 +0200 (CEST)
+From: Bruno Cremilleux <bruno.cremilleux@unicaen.fr>
+To: bull-i3 <bull-i3@irit.fr>, liste-proml@lisn.upsaclay.fr, 
+	liste-egc <liste-egc@polytech.univ-nantes.fr>, 
+	bull-ia <bull-ia@gdria.fr>, info-ic <info-ic@listes.irisa.fr>, 
+	gazettebd3@univ-grenoble-alpes.fr, 
+	annonces@listes.societe-informatique-de-france.fr
+Message-ID: <896423454.25630515.1683622061648.JavaMail.zimbra@unicaen.fr>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="=_f408eae4-90b8-4100-be8a-c582c3835f3c"
+X-Originating-IP: [194.199.112.31]
+X-Mailer: Zimbra 8.8.15_GA_4508 (ZimbraWebClient - FF112 (Linux)/8.8.15_GA_4508)
+Thread-Index: VQokTtD/qRfIlMIhBuzWmIr7zunbpQ==
+Thread-Topic: GDR MaDICS : appel =?utf-8?Q?=C3=A0_participation?= au symposium 2023 (24-25 mai, Troyes)
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] GDR MaDICS : appel =?UTF-8?Q?=C3=A0?= participation au
+ symposium 2023 (24-25 mai, Troyes)
+
+--=_f408eae4-90b8-4100-be8a-c582c3835f3c
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+
+5=C3=A8me symposium MaDICS - 24- 25 mai 2023 - Troyes=20
+Appel =C3=A0 participation=20
+
+
+
+
+La cinqui=C3=A8me =C3=A9dition du symposium du GDR MaDICS aura lieu sur le =
+campus de l=E2=80=99Universit=C3=A9 de Technologie Troyes (UTT) les 24 et 2=
+5 mai 2023 .=20
+
+
+Ce symposium a pour objectif de r=C3=A9unir la communaut=C3=A9 MaDICS des s=
+ciences des donn=C3=A9es et de l=E2=80=99interdisciplinarit=C3=A9 =C3=A0 l'=
+occasion de divers =C3=A9v=C3=A9nements scientifiques et de moments de conv=
+ivialit=C3=A9.=20
+
+
+Venez profiter :=20
+
+    *=20
+
+de conf=C3=A9rences invit=C3=A9es :=20
+
+
+        *=20
+
+sur l=E2=80=99analyse de donn=C3=A9es du climat avec leurs d=C3=A9fis et so=
+lutions pour le prochain rapport du GIEC=20
+        *=20
+
+sur la cr=C3=A9ation de communaut=C3=A9s musicales en ligne favoris=C3=A9es=
+ par des plateformes comme TikTok et les r=C3=A9seaux d=E2=80=99interaction=
+s qu=E2=80=99elles suscitent.=20
+    *=20
+
+
+de sessions d=C3=A9di=C3=A9es aux Actions et Ateliers du GDR oeuvrant au co=
+eur de la science des donn=C3=A9es et de l'interdisciplinarit=C3=A9 ;=20
+    *=20
+
+d=E2=80=99une mise en lumi=C3=A8re de travaux de doctorant=C2=B7es et jeune=
+s chercheurs=C2=B7es=20
+    *=20
+
+d=E2=80=99un gong show de pr=C3=A9sentations des posters suivi d=E2=80=99un=
+e session posters=20
+
+
+
+Et bien s=C3=BBr de nombreux moments de convivialit=C3=A9 !=20
+
+
+Le programme est disponible =C3=A0 :=20
+
+[ https://www.madics.fr/event/symposium-madics-5/ | https://www.madics.fr/e=
+vent/symposium-madics-5/ ]=20
+
+
+
+Les inscriptions sont ouvertes :=20
+
+[ https://www.madics.fr/intranet/assemblees/inscription-symposium-2023/ | h=
+ttps://www.madics.fr/intranet/assemblees/inscription-symposium-2023/ ]=20
+
+
+
+La participation au symposium est gratuite pour tous les adh=C3=A9rents du =
+GDR MaDICS mais l'inscription est obligatoire. Attention, seules les inscri=
+ptions effectu=C3=A9es avant le 12 mai garantiront un acc=C3=A8s aux pauses=
+ caf=C3=A9, repas et cocktail, les inscrits tardifs seront admis en fonctio=
+n des places disponibles.=20
+
+
+Un GDR est une maison ouverte =C3=A0 tous : n=E2=80=99h=C3=A9sitez pas =C3=
+=A0 adh=C3=A9rer =C3=A0 MaDICS en remplissant [ https://www.madics.fr/intra=
+net/adhesion/adhesion-academique/ |   ] et participez au symposium : [ http=
+s://www.madics.fr/intranet/rejoindre-madics/ | https://www.madics.fr/intran=
+et/rejoindre-madics/ ]=20
+
+
+
+A tr=C3=A8s bient=C3=B4t =C3=A0 Troyes.=20
+
+
+Le comit=C3=A9 de direction du GDR MaDICS :=20
+
+Bernd Amann, Khalid Belhajjame, Fr=C3=A9d=C3=A9ric Bimbot, Christophe Bobin=
+eau, Emmanuel Coquery,Sarah Cohen-Boulakia, Bruno Cr=C3=A9milleux, Pierre G=
+an=C3=A7arski, Myriam Maumy-Bertrand, Marie-Christine Rousset, Farouk Touma=
+ni=20
+
+
+
+=0A
+--=_f408eae4-90b8-4100-be8a-c582c3835f3c
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><body><div style=3D"font-family: arial, helvetica, sans-serif; font-s=
+ize: 12pt; color: #000000"><div><div style=3D"font-family: arial, helvetica=
+, sans-serif; font-size: 12pt; color: #000000;" data-mce-style=3D"font-fami=
+ly: arial, helvetica, sans-serif; font-size: 12pt; color: #000000;"><div st=
+yle=3D"text-align: center;" data-mce-style=3D"text-align: center;"><br></di=
+v><div><div style=3D"font-family: arial, helvetica, sans-serif; font-size: =
+12pt; color: #000000;" data-mce-style=3D"font-family: arial, helvetica, san=
+s-serif; font-size: 12pt; color: #000000;"><div style=3D"text-align: center=
+;" data-mce-style=3D"text-align: center;"><span style=3D"font-size: 12pt; f=
+ont-family: arial; color: #000000; background-color: transparent; font-weig=
+ht: bold; font-style: normal; font-variant: normal; text-decoration: none; =
+vertical-align: baseline; white-space: pre-wrap;" data-mce-style=3D"font-si=
+ze: 12pt; font-family: arial; color: #000000; background-color: transparent=
+; font-weight: bold; font-style: normal; font-variant: normal; text-decorat=
+ion: none; vertical-align: baseline; white-space: pre-wrap;"> 5=C3=A8me sym=
+posium MaDICS - 24-<span class=3D"Object" role=3D"link" id=3D"OBJ_PREFIX_DW=
+T78_com_zimbra_date"><span class=3D"Object" role=3D"link" id=3D"OBJ_PREFIX_=
+DWT84_com_zimbra_date">25 mai 2023</span></span> - Troyes</span></div><div =
+style=3D"text-align: center;" data-mce-style=3D"text-align: center;"><span =
+style=3D"font-size: 12pt; font-family: arial; color: #000000; background-co=
+lor: transparent; font-weight: bold; font-style: normal; font-variant: norm=
+al; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;=
+" data-mce-style=3D"font-size: 12pt; font-family: arial; color: #000000; ba=
+ckground-color: transparent; font-weight: bold; font-style: normal; font-va=
+riant: normal; text-decoration: none; vertical-align: baseline; white-space=
+: pre-wrap;"> Appel =C3=A0 participation</span></div><div style=3D"text-ali=
+gn: center;" data-mce-style=3D"text-align: center;"><br></div><div style=3D=
+"text-align: center;" data-mce-style=3D"text-align: center;"><br><p dir=3D"=
+ltr" style=3D"line-height: 1.2; text-align: justify; margin: 0px;" data-mce=
+-style=3D"line-height: 1.2; text-align: justify; margin: 0px;"><span style=
+=3D"font-size: 12pt; font-family: arial; color: #00000a; background-color: =
+transparent; font-weight: 400; font-style: normal; font-variant: normal; te=
+xt-decoration: none; vertical-align: baseline; white-space: pre-wrap;" data=
+-mce-style=3D"font-size: 12pt; font-family: arial; color: #00000a; backgrou=
+nd-color: transparent; font-weight: 400; font-style: normal; font-variant: =
+normal; text-decoration: none; vertical-align: baseline; white-space: pre-w=
+rap;">La cinqui=C3=A8me =C3=A9dition du symposium du GDR MaDICS aura lieu <=
+/span><span style=3D"font-size: 12pt; font-family: arial; color: #000000; b=
+ackground-color: transparent; font-weight: 400; font-style: normal; font-va=
+riant: normal; text-decoration: none; vertical-align: baseline; white-space=
+: pre-wrap;" data-mce-style=3D"font-size: 12pt; font-family: arial; color: =
+#000000; background-color: transparent; font-weight: 400; font-style: norma=
+l; font-variant: normal; text-decoration: none; vertical-align: baseline; w=
+hite-space: pre-wrap;">sur le campus de l=E2=80=99Universit=C3=A9 de Techno=
+logie </span><span style=3D"font-size: 12pt; font-family: arial; color: #00=
+0000; background-color: transparent; font-weight: bold; font-style: normal;=
+ font-variant: normal; text-decoration: none; vertical-align: baseline; whi=
+te-space: pre-wrap;" data-mce-style=3D"font-size: 12pt; font-family: arial;=
+ color: #000000; background-color: transparent; font-weight: bold; font-sty=
+le: normal; font-variant: normal; text-decoration: none; vertical-align: ba=
+seline; white-space: pre-wrap;">Troyes</span><span style=3D"font-size: 12pt=
+; font-family: arial; color: #000000; background-color: transparent; font-w=
+eight: 400; font-style: normal; font-variant: normal; text-decoration: none=
+; vertical-align: baseline; white-space: pre-wrap;" data-mce-style=3D"font-=
+size: 12pt; font-family: arial; color: #000000; background-color: transpare=
+nt; font-weight: 400; font-style: normal; font-variant: normal; text-decora=
+tion: none; vertical-align: baseline; white-space: pre-wrap;"> (UTT) les </=
+span><span style=3D"font-size: 12pt; font-family: arial; color: #000000; ba=
+ckground-color: transparent; font-weight: bold; font-style: normal; font-va=
+riant: normal; text-decoration: none; vertical-align: baseline; white-space=
+: pre-wrap;" data-mce-style=3D"font-size: 12pt; font-family: arial; color: =
+#000000; background-color: transparent; font-weight: bold; font-style: norm=
+al; font-variant: normal; text-decoration: none; vertical-align: baseline; =
+white-space: pre-wrap;">24 et <span class=3D"Object" role=3D"link" id=3D"OB=
+J_PREFIX_DWT79_com_zimbra_date"><span class=3D"Object" role=3D"link" id=3D"=
+OBJ_PREFIX_DWT85_com_zimbra_date">25 mai 2023</span></span></span><span sty=
+le=3D"font-size: 12pt; font-family: arial; color: #000000; background-color=
+: transparent; font-weight: 400; font-style: normal; font-variant: normal; =
+text-decoration: none; vertical-align: baseline; white-space: pre-wrap;" da=
+ta-mce-style=3D"font-size: 12pt; font-family: arial; color: #000000; backgr=
+ound-color: transparent; font-weight: 400; font-style: normal; font-variant=
+: normal; text-decoration: none; vertical-align: baseline; white-space: pre=
+-wrap;">.</span></p><br><p dir=3D"ltr" style=3D"line-height: 1.2; text-alig=
+n: justify; margin: 0px;" data-mce-style=3D"line-height: 1.2; text-align: j=
+ustify; margin: 0px;"><span style=3D"font-size: 12pt; font-family: arial; c=
+olor: #000000; background-color: transparent; font-weight: 400; font-style:=
+ normal; font-variant: normal; text-decoration: none; vertical-align: basel=
+ine; white-space: pre-wrap;" data-mce-style=3D"font-size: 12pt; font-family=
+: arial; color: #000000; background-color: transparent; font-weight: 400; f=
+ont-style: normal; font-variant: normal; text-decoration: none; vertical-al=
+ign: baseline; white-space: pre-wrap;">Ce symposium a pour objectif de r=C3=
+=A9unir la communaut=C3=A9 MaDICS des sciences des donn=C3=A9es et de l=E2=
+=80=99interdisciplinarit=C3=A9 =C3=A0 l'occasion de divers =C3=A9v=C3=A9nem=
+ents scientifiques et de moments de convivialit=C3=A9.</span></p><br><p dir=
+=3D"ltr" style=3D"line-height: 1.2; text-align: justify; margin: 0px;" data=
+-mce-style=3D"line-height: 1.2; text-align: justify; margin: 0px;"><span st=
+yle=3D"font-size: 12pt; font-family: arial; color: #000000; background-colo=
+r: transparent; font-weight: 400; font-style: normal; font-variant: normal;=
+ text-decoration: none; vertical-align: baseline; white-space: pre-wrap;" d=
+ata-mce-style=3D"font-size: 12pt; font-family: arial; color: #000000; backg=
+round-color: transparent; font-weight: 400; font-style: normal; font-varian=
+t: normal; text-decoration: none; vertical-align: baseline; white-space: pr=
+e-wrap;">Venez profiter :&nbsp;</span></p><ul style=3D"margin-top: 0px; mar=
+gin-bottom: 0px; padding-inline-start: 48px;" data-mce-style=3D"margin-top:=
+ 0px; margin-bottom: 0px; padding-inline-start: 48px;"><li dir=3D"ltr" styl=
+e=3D"list-style-type: disc; font-size: 12pt; font-family: arial; color: #00=
+0000; background-color: transparent; font-weight: 400; font-style: normal; =
+font-variant: normal; text-decoration: none; vertical-align: baseline; whit=
+e-space: pre;" data-mce-style=3D"list-style-type: disc; font-size: 12pt; fo=
+nt-family: arial; color: #000000; background-color: transparent; font-weigh=
+t: 400; font-style: normal; font-variant: normal; text-decoration: none; ve=
+rtical-align: baseline; white-space: pre;"><p dir=3D"ltr" style=3D"line-hei=
+ght: 1.2; text-align: justify; margin: 0px;" data-mce-style=3D"line-height:=
+ 1.2; text-align: justify; margin: 0px;"><span style=3D"font-size: 12pt; fo=
+nt-family: arial; color: #000000; background-color: transparent; font-weigh=
+t: 400; font-style: normal; font-variant: normal; text-decoration: none; ve=
+rtical-align: baseline; white-space: pre-wrap;" data-mce-style=3D"font-size=
+: 12pt; font-family: arial; color: #000000; background-color: transparent; =
+font-weight: 400; font-style: normal; font-variant: normal; text-decoration=
+: none; vertical-align: baseline; white-space: pre-wrap;">de conf=C3=A9renc=
+es invit=C3=A9es :</span></p></li><ul style=3D"margin-top: 0px; margin-bott=
+om: 0px; padding-inline-start: 48px;" data-mce-style=3D"margin-top: 0px; ma=
+rgin-bottom: 0px; padding-inline-start: 48px;"><li dir=3D"ltr" style=3D"lis=
+t-style-type: circle; font-size: 12pt; font-family: arial; color: #000000; =
+background-color: transparent; font-weight: 400; font-style: normal; font-v=
+ariant: normal; text-decoration: none; vertical-align: baseline; white-spac=
+e: pre;" data-mce-style=3D"list-style-type: circle; font-size: 12pt; font-f=
+amily: arial; color: #000000; background-color: transparent; font-weight: 4=
+00; font-style: normal; font-variant: normal; text-decoration: none; vertic=
+al-align: baseline; white-space: pre;"><p dir=3D"ltr" style=3D"line-height:=
+ 1.2; text-align: justify; margin: 0px;" data-mce-style=3D"line-height: 1.2=
+; text-align: justify; margin: 0px;"><span style=3D"font-size: 12pt; font-f=
+amily: arial; color: #000000; background-color: transparent; font-weight: 4=
+00; font-style: normal; font-variant: normal; text-decoration: none; vertic=
+al-align: baseline; white-space: pre-wrap;" data-mce-style=3D"font-size: 12=
+pt; font-family: arial; color: #000000; background-color: transparent; font=
+-weight: 400; font-style: normal; font-variant: normal; text-decoration: no=
+ne; vertical-align: baseline; white-space: pre-wrap;">sur l=E2=80=99analyse=
+ de donn=C3=A9es du climat avec leurs d=C3=A9fis et solutions pour le proch=
+ain rapport du GIEC&nbsp;</span></p></li><li dir=3D"ltr" style=3D"list-styl=
+e-type: circle; font-size: 12pt; font-family: arial; color: #000000; backgr=
+ound-color: transparent; font-weight: 400; font-style: normal; font-variant=
+: normal; text-decoration: none; vertical-align: baseline; white-space: pre=
+;" data-mce-style=3D"list-style-type: circle; font-size: 12pt; font-family:=
+ arial; color: #000000; background-color: transparent; font-weight: 400; fo=
+nt-style: normal; font-variant: normal; text-decoration: none; vertical-ali=
+gn: baseline; white-space: pre;"><p dir=3D"ltr" style=3D"line-height: 1.2; =
+text-align: justify; margin: 0px;" data-mce-style=3D"line-height: 1.2; text=
+-align: justify; margin: 0px;"><span style=3D"font-size: 12pt; font-family:=
+ arial; color: #000000; background-color: transparent; font-weight: 400; fo=
+nt-style: normal; font-variant: normal; text-decoration: none; vertical-ali=
+gn: baseline; white-space: pre-wrap;" data-mce-style=3D"font-size: 12pt; fo=
+nt-family: arial; color: #000000; background-color: transparent; font-weigh=
+t: 400; font-style: normal; font-variant: normal; text-decoration: none; ve=
+rtical-align: baseline; white-space: pre-wrap;">sur la cr=C3=A9ation de com=
+munaut=C3=A9s musicales en ligne favoris=C3=A9es par des plateformes comme =
+TikTok et les r=C3=A9seaux d=E2=80=99interactions qu=E2=80=99elles susciten=
+t.&nbsp;</span></p></li></ul><li dir=3D"ltr" style=3D"list-style-type: disc=
+; font-size: 12pt; font-family: arial; color: #000000; background-color: tr=
+ansparent; font-weight: 400; font-style: normal; font-variant: normal; text=
+-decoration: none; vertical-align: baseline; white-space: pre;" data-mce-st=
+yle=3D"list-style-type: disc; font-size: 12pt; font-family: arial; color: #=
+000000; background-color: transparent; font-weight: 400; font-style: normal=
+; font-variant: normal; text-decoration: none; vertical-align: baseline; wh=
+ite-space: pre;"><p dir=3D"ltr" style=3D"line-height: 1.2; text-align: just=
+ify; margin: 0px;" data-mce-style=3D"line-height: 1.2; text-align: justify;=
+ margin: 0px;"><span style=3D"font-size: 12pt; font-family: arial; color: #=
+000000; background-color: transparent; font-weight: 400; font-style: normal=
+; font-variant: normal; text-decoration: none; vertical-align: baseline; wh=
+ite-space: pre-wrap;" data-mce-style=3D"font-size: 12pt; font-family: arial=
+; color: #000000; background-color: transparent; font-weight: 400; font-sty=
+le: normal; font-variant: normal; text-decoration: none; vertical-align: ba=
+seline; white-space: pre-wrap;">de sessions d=C3=A9di=C3=A9es aux Actions e=
+t Ateliers du GDR oeuvrant au coeur de la science des donn=C3=A9es et de l'=
+interdisciplinarit=C3=A9 ;</span></p></li><li dir=3D"ltr" style=3D"list-sty=
+le-type: disc; font-size: 12pt; font-family: arial; color: #000000; backgro=
+und-color: transparent; font-weight: 400; font-style: normal; font-variant:=
+ normal; text-decoration: none; vertical-align: baseline; white-space: pre;=
+" data-mce-style=3D"list-style-type: disc; font-size: 12pt; font-family: ar=
+ial; color: #000000; background-color: transparent; font-weight: 400; font-=
+style: normal; font-variant: normal; text-decoration: none; vertical-align:=
+ baseline; white-space: pre;"><p dir=3D"ltr" style=3D"line-height: 1.2; tex=
+t-align: justify; margin: 0px;" data-mce-style=3D"line-height: 1.2; text-al=
+ign: justify; margin: 0px;"><span style=3D"font-size: 12pt; font-family: ar=
+ial; color: #000000; background-color: transparent; font-weight: 400; font-=
+style: normal; font-variant: normal; text-decoration: none; vertical-align:=
+ baseline; white-space: pre-wrap;" data-mce-style=3D"font-size: 12pt; font-=
+family: arial; color: #000000; background-color: transparent; font-weight: =
+400; font-style: normal; font-variant: normal; text-decoration: none; verti=
+cal-align: baseline; white-space: pre-wrap;">d=E2=80=99une mise en lumi=C3=
+=A8re de travaux de doctorant=C2=B7es et jeunes chercheurs=C2=B7es</span></=
+p></li><li dir=3D"ltr" style=3D"list-style-type: disc; font-size: 12pt; fon=
+t-family: arial; color: #000000; background-color: transparent; font-weight=
+: 400; font-style: normal; font-variant: normal; text-decoration: none; ver=
+tical-align: baseline; white-space: pre;" data-mce-style=3D"list-style-type=
+: disc; font-size: 12pt; font-family: arial; color: #000000; background-col=
+or: transparent; font-weight: 400; font-style: normal; font-variant: normal=
+; text-decoration: none; vertical-align: baseline; white-space: pre;"><p di=
+r=3D"ltr" style=3D"line-height: 1.2; text-align: justify; margin: 0px;" dat=
+a-mce-style=3D"line-height: 1.2; text-align: justify; margin: 0px;"><span s=
+tyle=3D"font-size: 12pt; font-family: arial; color: #000000; background-col=
+or: transparent; font-weight: 400; font-style: normal; font-variant: normal=
+; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;" =
+data-mce-style=3D"font-size: 12pt; font-family: arial; color: #000000; back=
+ground-color: transparent; font-weight: 400; font-style: normal; font-varia=
+nt: normal; text-decoration: none; vertical-align: baseline; white-space: p=
+re-wrap;">d=E2=80=99un gong show de pr=C3=A9sentations des posters suivi d=
+=E2=80=99une session posters</span></p></li></ul><br><p dir=3D"ltr" style=
+=3D"line-height: 1.2; text-align: justify; margin: 0px;" data-mce-style=3D"=
+line-height: 1.2; text-align: justify; margin: 0px;"><span style=3D"font-si=
+ze: 12pt; font-family: arial; color: #000000; background-color: transparent=
+; font-weight: 400; font-style: normal; font-variant: normal; text-decorati=
+on: none; vertical-align: baseline; white-space: pre-wrap;" data-mce-style=
+=3D"font-size: 12pt; font-family: arial; color: #000000; background-color: =
+transparent; font-weight: 400; font-style: normal; font-variant: normal; te=
+xt-decoration: none; vertical-align: baseline; white-space: pre-wrap;">Et b=
+ien s=C3=BBr de nombreux moments de convivialit=C3=A9 !</span></p><br><p di=
+r=3D"ltr" style=3D"line-height: 1.2; text-align: justify; margin: 0px;" dat=
+a-mce-style=3D"line-height: 1.2; text-align: justify; margin: 0px;"><span s=
+tyle=3D"font-size: 12pt; font-family: arial; color: #000000; background-col=
+or: transparent; font-weight: 400; font-style: normal; font-variant: normal=
+; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;" =
+data-mce-style=3D"font-size: 12pt; font-family: arial; color: #000000; back=
+ground-color: transparent; font-weight: 400; font-style: normal; font-varia=
+nt: normal; text-decoration: none; vertical-align: baseline; white-space: p=
+re-wrap;">Le programme est disponible =C3=A0 :</span></p><p dir=3D"ltr" sty=
+le=3D"line-height: 1.2; text-align: justify; margin: 0px;" data-mce-style=
+=3D"line-height: 1.2; text-align: justify; margin: 0px;"><span style=3D"fon=
+t-size: 12pt; font-family: arial; color: #000000; background-color: transpa=
+rent; font-weight: 400; font-style: normal; font-variant: normal; text-deco=
+ration: none; vertical-align: baseline; white-space: pre-wrap;" data-mce-st=
+yle=3D"font-size: 12pt; font-family: arial; color: #000000; background-colo=
+r: transparent; font-weight: 400; font-style: normal; font-variant: normal;=
+ text-decoration: none; vertical-align: baseline; white-space: pre-wrap;"><=
+span class=3D"Object" role=3D"link" id=3D"OBJ_PREFIX_DWT80_com_zimbra_url">=
+<span class=3D"Object" role=3D"link" id=3D"OBJ_PREFIX_DWT86_com_zimbra_url"=
+><a target=3D"_blank" href=3D"https://www.madics.fr/event/symposium-madics-=
+5/" rel=3D"noopener" data-mce-href=3D"https://www.madics.fr/event/symposium=
+-madics-5/">https://www.madics.fr/event/symposium-madics-5/</a></span></spa=
+n></span><br data-mce-bogus=3D"1"></p><br><p dir=3D"ltr" style=3D"line-heig=
+ht: 1.2; text-align: justify; margin: 0px;" data-mce-style=3D"line-height: =
+1.2; text-align: justify; margin: 0px;"><span style=3D"font-size: 12pt; fon=
+t-family: arial; color: #000000; background-color: transparent; font-weight=
+: 400; font-style: normal; font-variant: normal; text-decoration: none; ver=
+tical-align: baseline; white-space: pre-wrap;" data-mce-style=3D"font-size:=
+ 12pt; font-family: arial; color: #000000; background-color: transparent; f=
+ont-weight: 400; font-style: normal; font-variant: normal; text-decoration:=
+ none; vertical-align: baseline; white-space: pre-wrap;">Les inscriptions s=
+ont ouvertes :&nbsp;</span></p><p dir=3D"ltr" style=3D"line-height: 1.2; te=
+xt-align: justify; margin: 0px;" data-mce-style=3D"line-height: 1.2; text-a=
+lign: justify; margin: 0px;"><span style=3D"font-size: 12pt; font-family: a=
+rial; color: #000000; background-color: transparent; font-weight: 400; font=
+-style: normal; font-variant: normal; text-decoration: none; vertical-align=
+: baseline; white-space: pre-wrap;" data-mce-style=3D"font-size: 12pt; font=
+-family: arial; color: #000000; background-color: transparent; font-weight:=
+ 400; font-style: normal; font-variant: normal; text-decoration: none; vert=
+ical-align: baseline; white-space: pre-wrap;"><span class=3D"Object" role=
+=3D"link" id=3D"OBJ_PREFIX_DWT81_com_zimbra_url"><span class=3D"Object" rol=
+e=3D"link" id=3D"OBJ_PREFIX_DWT87_com_zimbra_url"><a target=3D"_blank" href=
+=3D"https://www.madics.fr/intranet/assemblees/inscription-symposium-2023/" =
+rel=3D"noopener" data-mce-href=3D"https://www.madics.fr/intranet/assemblees=
+/inscription-symposium-2023/">https://www.madics.fr/intranet/assemblees/ins=
+cription-symposium-2023/</a></span></span></span><br data-mce-bogus=3D"1"><=
+/p><br><p dir=3D"ltr" style=3D"line-height: 1.2; text-align: justify; margi=
+n: 0px;" data-mce-style=3D"line-height: 1.2; text-align: justify; margin: 0=
+px;"><span style=3D"font-size: 12pt; font-family: arial; color: #000000; ba=
+ckground-color: transparent; font-weight: 400; font-style: normal; font-var=
+iant: normal; text-decoration: none; vertical-align: baseline; white-space:=
+ pre-wrap;" data-mce-style=3D"font-size: 12pt; font-family: arial; color: #=
+000000; background-color: transparent; font-weight: 400; font-style: normal=
+; font-variant: normal; text-decoration: none; vertical-align: baseline; wh=
+ite-space: pre-wrap;">La participation au symposium est gratuite pour tous =
+les adh=C3=A9rents du GDR MaDICS mais&nbsp; l'inscription est obligatoire. =
+Attention, seules les inscriptions effectu=C3=A9es avant le 12 mai garantir=
+ont un acc=C3=A8s aux pauses caf=C3=A9, repas et cocktail, les inscrits tar=
+difs seront admis en fonction des places disponibles.</span></p><br><p dir=
+=3D"ltr" style=3D"line-height: 1.2; text-align: justify; margin: 0px;" data=
+-mce-style=3D"line-height: 1.2; text-align: justify; margin: 0px;"><span st=
+yle=3D"font-size: 12pt; font-family: arial; color: #000000; background-colo=
+r: transparent; font-weight: 400; font-style: normal; font-variant: normal;=
+ text-decoration: none; vertical-align: baseline; white-space: pre-wrap;" d=
+ata-mce-style=3D"font-size: 12pt; font-family: arial; color: #000000; backg=
+round-color: transparent; font-weight: 400; font-style: normal; font-varian=
+t: normal; text-decoration: none; vertical-align: baseline; white-space: pr=
+e-wrap;">Un GDR est une maison ouverte =C3=A0 tous : n=E2=80=99h=C3=A9sitez=
+ pas =C3=A0 adh=C3=A9rer =C3=A0 MaDICS en remplissant</span><span class=3D"=
+Object" role=3D"link" id=3D"OBJ_PREFIX_DWT82_com_zimbra_url"><span class=3D=
+"Object" role=3D"link" id=3D"OBJ_PREFIX_DWT88_com_zimbra_url"><a href=3D"ht=
+tps://www.madics.fr/intranet/adhesion/adhesion-academique/" style=3D"text-d=
+ecoration: none;" target=3D"_blank" rel=3D"noopener" data-mce-href=3D"https=
+://www.madics.fr/intranet/adhesion/adhesion-academique/" data-mce-style=3D"=
+text-decoration: none;"><span style=3D"font-size: 12pt; font-family: arial;=
+ color: #000000; background-color: transparent; font-weight: 400; font-styl=
+e: normal; font-variant: normal; text-decoration: none; vertical-align: bas=
+eline; white-space: pre-wrap;" data-mce-style=3D"font-size: 12pt; font-fami=
+ly: arial; color: #000000; background-color: transparent; font-weight: 400;=
+ font-style: normal; font-variant: normal; text-decoration: none; vertical-=
+align: baseline; white-space: pre-wrap;"> </span></a></span></span><span st=
+yle=3D"font-size: 12pt; font-family: arial; color: #000000; background-colo=
+r: transparent; font-weight: 400; font-style: normal; font-variant: normal;=
+ text-decoration: none; vertical-align: baseline; white-space: pre-wrap;" d=
+ata-mce-style=3D"font-size: 12pt; font-family: arial; color: #000000; backg=
+round-color: transparent; font-weight: 400; font-style: normal; font-varian=
+t: normal; text-decoration: none; vertical-align: baseline; white-space: pr=
+e-wrap;">et participez au symposium : <span class=3D"Object" role=3D"link" =
+id=3D"OBJ_PREFIX_DWT83_com_zimbra_url"><span class=3D"Object" role=3D"link"=
+ id=3D"OBJ_PREFIX_DWT89_com_zimbra_url"><a target=3D"_blank" href=3D"https:=
+//www.madics.fr/intranet/rejoindre-madics/" rel=3D"noopener" data-mce-href=
+=3D"https://www.madics.fr/intranet/rejoindre-madics/">https://www.madics.fr=
+/intranet/rejoindre-madics/</a></span></span></span><br data-mce-bogus=3D"1=
+"></p><span style=3D"font-size: 12pt; font-family: arial; color: #000000; b=
+ackground-color: transparent; font-weight: 400; font-style: normal; font-va=
+riant: normal; text-decoration: none; vertical-align: baseline; white-space=
+: pre-wrap;" data-mce-style=3D"font-size: 12pt; font-family: arial; color: =
+#000000; background-color: transparent; font-weight: 400; font-style: norma=
+l; font-variant: normal; text-decoration: none; vertical-align: baseline; w=
+hite-space: pre-wrap;"></span><br><p dir=3D"ltr" style=3D"line-height: 1.2;=
+ text-align: justify; margin: 0px;" data-mce-style=3D"line-height: 1.2; tex=
+t-align: justify; margin: 0px;"><span style=3D"font-size: 12pt; font-family=
+: arial; color: #000000; background-color: transparent; font-weight: 400; f=
+ont-style: normal; font-variant: normal; text-decoration: none; vertical-al=
+ign: baseline; white-space: pre-wrap;" data-mce-style=3D"font-size: 12pt; f=
+ont-family: arial; color: #000000; background-color: transparent; font-weig=
+ht: 400; font-style: normal; font-variant: normal; text-decoration: none; v=
+ertical-align: baseline; white-space: pre-wrap;">A tr=C3=A8s bient=C3=B4t =
+=C3=A0 Troyes.</span></p><br></div><div><p dir=3D"ltr" style=3D"line-height=
+: 1.44; text-align: justify; margin: 0px;" id=3D"docs-internal-guid-0eb51e0=
+c-7fff-3566-9f83-899a918dd8c0" data-mce-style=3D"line-height: 1.44; text-al=
+ign: justify; margin: 0px;"><span style=3D"font-size: 12pt; font-family: ar=
+ial; color: #000000; background-color: transparent; font-weight: 400; font-=
+style: normal; font-variant: normal; text-decoration: none; vertical-align:=
+ baseline; white-space: pre-wrap;" data-mce-style=3D"font-size: 12pt; font-=
+family: arial; color: #000000; background-color: transparent; font-weight: =
+400; font-style: normal; font-variant: normal; text-decoration: none; verti=
+cal-align: baseline; white-space: pre-wrap;">Le comit=C3=A9 de direction du=
+ GDR MaDICS :&nbsp;</span></p><p dir=3D"ltr" style=3D"line-height: 1.44; te=
+xt-align: justify; margin: 0px;" data-mce-style=3D"line-height: 1.44; text-=
+align: justify; margin: 0px;"><span style=3D"font-size: 12pt; font-family: =
+arial; color: #000000; background-color: transparent; font-weight: 400; fon=
+t-style: normal; font-variant: normal; text-decoration: none; vertical-alig=
+n: baseline; white-space: pre-wrap;" data-mce-style=3D"font-size: 12pt; fon=
+t-family: arial; color: #000000; background-color: transparent; font-weight=
+: 400; font-style: normal; font-variant: normal; text-decoration: none; ver=
+tical-align: baseline; white-space: pre-wrap;">Bernd Amann,</span><span sty=
+le=3D"font-size: 12pt; font-family: arial; color: #000000; background-color=
+: transparent; font-weight: 400; font-style: italic; font-variant: normal; =
+text-decoration: none; vertical-align: baseline; white-space: pre-wrap;" da=
+ta-mce-style=3D"font-size: 12pt; font-family: arial; color: #000000; backgr=
+ound-color: transparent; font-weight: 400; font-style: italic; font-variant=
+: normal; text-decoration: none; vertical-align: baseline; white-space: pre=
+-wrap;"> </span><span style=3D"font-size: 12pt; font-family: arial; color: =
+#000000; background-color: transparent; font-weight: 400; font-style: norma=
+l; font-variant: normal; text-decoration: none; vertical-align: baseline; w=
+hite-space: pre-wrap;" data-mce-style=3D"font-size: 12pt; font-family: aria=
+l; color: #000000; background-color: transparent; font-weight: 400; font-st=
+yle: normal; font-variant: normal; text-decoration: none; vertical-align: b=
+aseline; white-space: pre-wrap;">Khalid Belhajjame, Fr=C3=A9d=C3=A9ric Bimb=
+ot, Christophe Bobineau, Emmanuel Coquery,Sarah Cohen-Boulakia, Bruno Cr=C3=
+=A9milleux, Pierre Gan=C3=A7arski, Myriam Maumy-Bertrand, Marie-Christine R=
+ousset, Farouk Toumani</span></p><p dir=3D"ltr" style=3D"line-height: 1.44;=
+ text-align: justify; margin: 0px;" data-mce-style=3D"line-height: 1.44; te=
+xt-align: justify; margin: 0px;"><br></p></div></div></div></div></div></di=
+v>
+<br>=
+=0A<br>=
+</body></html>
+--=_f408eae4-90b8-4100-be8a-c582c3835f3c--

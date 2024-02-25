@@ -1,0 +1,349 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (bouncesmtp2.u12.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id D97B314017E7
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu,  2 Mar 2023 09:38:44 +0100 (CET)
+Received: from mx3.localdomain (MX3.univ-nantes.fr [193.52.101.137])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id D5C665F9A
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu,  2 Mar 2023 09:38:44 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.localdomain (Postfix) with ESMTP id CF13520061
+	for <liste-egc@polytech.univ-nantes.fr>; Thu,  2 Mar 2023 09:38:44 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 1.211
+X-Spam-Level: *
+X-Spam-Status: No, score=1.211 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+	HTML_MESSAGE=0.001, MR_NOT_ATTRIBUTED_IP=0.2,
+	RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_SORBS=1,
+	RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+	UN_PHISHING_PW=0.1] autolearn=disabled
+X-CRM114-Status: UNSURE ( -1.4920 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=yahoo.fr
+Received: from mx3.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id A3gmpcVO8I1n for <liste-egc@polytech.univ-nantes.fr>;
+	Thu,  2 Mar 2023 09:38:42 +0100 (CET)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=77.238.177.147; helo=sonic314-21.consmr.mail.ir2.yahoo.com; envelope-from=sassisalma@yahoo.fr; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=reject dis=none) header.from=yahoo.fr
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=sassisalma@yahoo.fr
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (2048-bit key; unprotected) header.d=yahoo.fr header.i=@yahoo.fr header.b="eZmLDeTq";
+	dkim-atps=neutral
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from sonic314-21.consmr.mail.ir2.yahoo.com (sonic314-21.consmr.mail.ir2.yahoo.com [77.238.177.147])
+	by mx3.localdomain (Postfix) with ESMTPS id 20A08208C5
+	for <liste-egc@polytech.univ-nantes.fr>; Thu,  2 Mar 2023 09:38:41 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.fr; s=s2048; t=1677746321; bh=RSkMHTn5jyUSub0aFdQaLLRklXwwwsDu/VNwkxz48zs=; h=Date:From:Reply-To:To:In-Reply-To:References:Subject:From:Subject:Reply-To; b=eZmLDeTq2xSAqLnKBlbxY30ckFRIIKLtJUd1LxS7bQfQdR4tOmKoWEDl/f05UsV9nRvZ8WrQW8v62fyqnf9+OHsm6//SDrAtVJLPu8iiY1OUywB/STFFHffQk54NE12/tz6ELmelPp7mjx1uNbRoX6DwWckoqsbpBUJRyW9TXNr1hhoZpMpMxqeNyXpueFCjA+jYdHNT6Brg4OXPbkwFcXzFS6G7CwrJR1DnSIbnsZA1YJu+F8N6ZC6QXFLfjMQ9yWOqlv5cf2sCFXxoQ0YGpbX8XIoYPp4hxZNaRaFdlr8WUJ30MoLt16rwmCJvgPASrWVEAP1xhauv29T92fCvdA==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1677746321; bh=Cb9qhJOP4g+1sp16bxvyK40ixIo2CS9RhMISEW1XblF=; h=X-Sonic-MF:Date:From:To:Subject:From:Subject; b=CP1gGQdR54ZvpRHxiZCvbMBiEpCc21/3Yg8WJeZW9azvl5WfFRZn0m2fHseRBNEyL7CTxsgDgE6NKur+KEqtFcM82QIxC8MlsTMlFi25FUPBz3LKkQMgH6N2SH7zW9kAwpM3twtKWTPY57h5Y2hdDH/0aS/SuDYDPc3/emXrnwX40bMwbWoeMYC70H55mILphNVKdaLJGbtjwqyiIvbJcXOW0dRhaZUYsnO0Oyd/V6rc3hdcVl0DmtPdGKhLruSwfX3DVDZGaPHb1L1QKyCuyBaxHiPFFFxeKBnxlXl6bYUHyVlWIEq3/qomAnCe3wb2DNFx9uBdYeKXZlULuDUVog==
+X-YMail-OSG: sP3K4h8VM1kIHbH9lBvus3pigJfQHXFZHBxH3oxcMchiW5TpylfgkkzU1lwI3BQ
+ edhei79BODtgM_DpFsE0.KLOpszgOe9z8ZiWBPUYQ4h66q1uuK4xz5QtubEuGg4j9vr4MTEd8mBG
+ FjaR3o0R5O.0o2ZHCwSKQeQLmnAQYXhqxa5BVPfR.W_cWI5xSdzYQEGweut59N61zaZfXjvTXebN
+ ulkZT4jBc4z72iJIvFV8R0x2GQNS6j0V7MLreY_eipAsWtgu5F1MaEYLMcOD36rcrX_YY_TmjY9l
+ CrZ0DPxiZicW_LjB4uCXjCVYSJkmmV2fGhgOeHSJ7I9ktOby_DxIYO8PO.LBkk6W0B3gJtPhlTiB
+ gP6KBYbxlJNLuawlPJmwzUBGJ9j_3TAsqPZMc6hvTb_.i1Lt7Mtkh3UrSPH19E5zWz3q_vWtAD8C
+ e.5AHGwzayGtLbdJvrisaI1_1hc8iCKTxAxE4NuMMgNCN8HecxnNBi28hNfpCNt6xoF0Meq7DrLN
+ sUtCteNF7bLIN6ETI2EfpovqPyVr3huCIIek0QGFw204Y0wTiZA3Us.2NqLe9DClvYVInZmBVXyJ
+ n6kz6JI64Sl99jS_wzQRHUAM6K_DcVGNLUu.iideJnFAP_HaL_IbCfbhU.jNOihO7s4LL_E.OILS
+ 8kkiA9XQLQ3iYjy8.moDLMFucy4tiCudWwHDM9GiPoTyhRDiYp9aa8B6IiTne0kkSO444kllSxWx
+ 45akdo7Oj9UmB0soPUE_FAd6_PP7BSHTQ_AZtfNo3E8QznlRv0pHFucTg_KlwjsqisdXf18xVXPI
+ 5EqGsFFtmDfjvDUtsFFQOPG0Tdfl4HYEU7LSZwThD3st0q.CDiPBhWUUV5FKqKxg6GKYDaDAdUl6
+ ZYfYCB9SMU6uXTSAvSpC12YGN74YedCUsjNMzG91NddUVu6Ky5tVKbxCaLmx7EX203Shpx0Iy8BY
+ mQFqdeFGstjvL2Pwh3eATXX5EkISGYWqXCySNSZ_Sd_JFSxkE79.mmHzf3mlhL91xQTYHYJPdbow
+ wc8qcDEJtfUXW5iWqtuWx.rMXQvYPwOyNWdIr7FLARLY4HVH19_ONNGtD94IW3FuHC6KcDKK9VtP
+ R8wrAe3kYwy5C2yK8VLukkzpg2KCtUTchoWDnxP2wxG1KPE3L8ia_OVDEISEvjFtiYb5julABdFf
+ GOq7D_GO9wHKOg1_oj29JyFaZP7dfcFEsVM.UYE_BK4Tz1XwuZTysyKgxSYS.05Gz3_b0DynGqY4
+ mHa.pMUaKy1oYqK5zVG5mzeybBC.UcH5aRYPpA8GHiBrvINAh6Dut6JgFoQIuiCogvfbxDezuGec
+ eJIRvo4tHcywMYjn9aKup3qw5IHIfWdOD2bU35p5JnFXfgxTGU3L0IdrMRlQaVx3m4vR.OIxAEQM
+ 1o3boQ2cBqm52ZaifBanKt.5dGh3dGww4Vbt4sFwhwecCMqASXfcjCerwZo1lCW3Uy5iONUKRjlu
+ 5mstpZbJosM6moyErZoOgdE.uBlfmOrQispqZ5MCesJ5gDo6WoUsXATMiVPUu9R5fCNP2UrNRhea
+ DU6BUVTwtfz.rMKeof_46gASRTSZleOylyziD6UYmYEEqSMCxoIfF4QbVwb4hk.P9M4ES4gzZSiZ
+ iP80zDSwKydEiCzdEwUSPeQgcWUFZcIp.UJ6XuIilWakgqI9lNv7MDGbSI3kr3JWfyMNT4BBK6tY
+ aKF5lggUuywh3DhDZiubxov8ea1Sb7eu_D.r80gb0IMxnJLKSwwCyn2gIva6dwryGUBzAcBBpb7W
+ cpbUH_RBvrqIh1zPTAyVKnkpsYk5ocn.xMXdsoqN67l20WctXE50dWW5SNkUuy_73Mi0V1NvJsa8
+ e.4MD_kTTMzNmv_JXQYV4nz1kWDnc7k3OttSo8o5i9HvUoIQT5bc4n59GnWQehss5AB3J5SdWrXK
+ FONjqyINX0YW9I4EWPxrfkjX3FcxBKZ33yUnV92DhEQhdyv4yuqgI_ppybz3c3JsFnX5cV77bHoX
+ PLCYlItRlDUIdFvzRuzUrojG5SrPn9D3wB0afD0PwarwzgZ5fztsQzjKTa.wf4aukw4mjIK3IDRE
+ 92IKGKYLvD9_NVi8SBDq_afhkbDkJvcm2MS_rG16xxhTqoDj1qU71Mxz8sZzUAriNk3LJfaSzN9e
+ TpjSoKGBAvuLMOiZcOpN10dvpM9hPn_rA1J9dxz8YPC6TLwWo7aHu2_qo7gPNWcVbqHFEUqJvnMX
+ tpQkppeIz3l31d2S3P4it
+X-Sonic-MF: <sassisalma@yahoo.fr>
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic314.consmr.mail.ir2.yahoo.com with HTTP; Thu, 2 Mar 2023 08:38:41 +0000
+Date: Thu, 2 Mar 2023 08:38:38 +0000 (UTC)
+From: Salma Sassi <sassisalma@yahoo.fr>
+Reply-To: sassisalma@yahoo.fr
+To: manolopo@csd.auth.gr
+Message-ID: <1229186501.4483079.1677746318105@mail.yahoo.com>
+In-Reply-To: <1627398140.4318953.1677704703755@mail.yahoo.com>
+References: <8388306.2463211.1676404431439.ref@mail.yahoo.com> <8388306.2463211.1676404431439@mail.yahoo.com> <564819721.2461535.1676404737601@mail.yahoo.com> <1627398140.4318953.1677704703755@mail.yahoo.com>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_4483078_763725781.1677746318104"
+X-Mailer: WebService/1.1.21221 YMailNodin
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] [CFP Special Session-IEEE DSAA 2023] (Extended
+ Submission Deadline: March 7th, 2023)
+
+------=_Part_4483078_763725781.1677746318104
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+ *************************************************************************
+Call for Special Sessions Track
+
+10th IEEE International Conference on Data Science and Advanced Analytics (=
+DSAA 2023)
+October 9-13, 2023
+Thessaloniki, Greece
+https://conferences.sigappfr.org/dsaa2023/
+
+*************************************************************************
+
+** ABOUT DSAA SPECIAL SESSIONS TRACK **
+DSAA Special Sessions are an important part of the main conference program.=
+ They bring together researchers, industry experts, practitioners, and pote=
+ntial users who are interested in cultivating specialized and important asp=
+ects of data science and analytics.
+
+DSAA Special Sessions are intended to promote emerging data science researc=
+h areas that are not well established and covered in the main conference tr=
+acks, while featuring high quality papers, which would normally appear in t=
+he main track. The same evaluation criteria and quality level apply as for =
+the main conference, but the papers must adhere to the area of the special =
+session they are submitted to, and the reviewers are experts in that area.
+
+We welcome proposals that promote a more intensive interaction between diff=
+erent communities and proposals that promote cooperation to solve interdisc=
+iplinary problems. Thus, special sessions might focus on:
+
+1- Topics on the border of data science research area
+2- Advanced topics within the data science research area
+3- Specific application areas for data science
+
+** IMPORTANT DATES **
+-Special Session Proposal Due: March 7, 2023
+-Special Session Proposal Notification: March 16, 2023
+-Special Session Paper Submission Deadline: June 1, 2023 (tentative)
+-Special Session Paper Notification: August 20, 2023 (tentative)
+-Camera ready: submission September 6, 2023 (tentative)
+
+** SPECIAL SESSION PROPOSAL SUBMISSION AND REVIEW **
+Proposals for hosting special sessions at DSAA 2023 are welcome. The propos=
+als must address:
+
+1- Title: Propose a title of the special session.
+2- Abstract: Introduce a brief abstract of no more than approximately 100 w=
+ords that allows conference attendees to understand the topic and the focus=
+ of the special session.
+3- Aims and Scope
+4- Rationale: Please explain why the topic of the special session is novel =
+and timely, why it is relevant to the DSAA community.
+5- Related special sessions previously organized (with number of papers rec=
+eived/accepted)
+6- Organizers: Provide a list of organizers with their affiliations, short =
+bio, and contacts and confirm you agree that this information will appear o=
+n the conference website.
+7- Potential Committee Members
+8- Expected number of submissions
+
+For each organizer in (6), provide name, affiliation, country, email, and a=
+ short biographical sketch, describing relevant qualifications and experien=
+ce; identify at least one organizer as the contact person.
+For (5), list any special session or relevant events (e.g., workshops) the =
+organizers have organized in recent years in DSAA or other major conference=
+s; for each, list the year, the conference, number of submissions, number o=
+f papers accepted, number of participants, etc.
+For (7), give a list of qualified committee members who would be invited.
+Special session proposals will be reviewed based on the above criteria and =
+quality of the proposals as well as their relationship to the main conferen=
+ce topics. Preference may be given to timely topics that are critical for d=
+ata science and analytics, inspire highly interactive discussions, and show=
+case the impact of data science and analytics.
+Proposers are encouraged to give an estimation of the number of submissions=
+ they expect.
+
+** SUBMISSION OF A SPECIAL SESSION **
+All proposals should be submitted electronically via EasyChair: https://eas=
+ychair.org/my/conference?conf=3Ddsaa2023 (under the =C3=A2=E2=82=AC=C5=93Sp=
+ecial Sessions=C3=A2=E2=82=AC=EF=BF=BD Track)
+
+** SPECIAL SESSION ORGANIZATION, PAPER SUBMISSION AND REVIEW **
+Once a special session proposal has been accepted, its organizers should cr=
+eate a website with the Special Session information and should widely publi=
+cize the session=C3=A2=E2=82=AC=E2=84=A2s call for papers on different mail=
+ing lists and social media.
+Special session papers strictly follow the same specifications, requirement=
+s, and policies as the main conference submissions in terms of the paper su=
+bmission deadline, notification deadline, paper formatting and length, and =
+important policies. Special session paper submissions will be done via Easy=
+Chair.
+Reviewing the submissions in each special session is coordinated by the spe=
+cial session organizers and is fully aligned to the main conference evaluat=
+ion process. In particular:
+
+-All papers submitted to special sessions will be double-blind reviewed.
+-Organizers of each special session will select the program committee membe=
+rs (PCMs).
+-PCMs will be invited by the Special Session Chairs into the submission sys=
+tem for each Special Session; a reviewer can serve as PCM in more than one =
+Special Session.
+-Papers will then be assigned to appropriate PCMs by the Special Session or=
+ganizers for review.
+-Special Session organizers will make recommendations of acceptance/rejecti=
+on for papers in their sessions, which must be validated by the Special Ses=
+sion Chairs.
+
+To guarantee uniform quality control for all special sessions and to be con=
+sistent with the main conference, the final decisions of special session pa=
+per acceptance/rejection are made by the DSAA Program Chairs.
+
+** PROCEEDINGS, INDEXING AND SPECIAL ISSUES **
+All accepted full-length special session papers will be published by IEEE i=
+n the DSAA main conference proceedings under its Special Session scheme. Al=
+l papers will be submitted for inclusion in the IEEEXplore Digital Library.
+Organizers of Special Sessions may additionally, arrange for special issues=
+ to further publish the extended journal versions of the papers. Several pa=
+st special sessions have published special issues with the International Jo=
+urnal of Data Science and Analytics (JDSA, Springer).
+
+** GENERAL INQUIRIES **
+Inquiries about special session proposals should be sent directly to the Sp=
+ecial Session Chairs (please see contact information below).
+Specific inquiries about a Special Session should be submitted to the sessi=
+on organizers, who are advised to set up a joint email address, once their =
+proposal is accepted.
+
+** SPECIAL SESSIONS CHAIRS **
+-Vagelis Papalexakis, University of California Riverside (epapalex at cs do=
+t ucr dot edu)
+-Grant Scott, University of Missouri (scottgs at missouri dot edu)
+
+-----------------------------------------------------
+Salma SASSI, Ph.D. in Computer Science
+Associate Professor in Computer Science
+Researcher at OpenCEMS Industrial Chair, France
+LIUPPA Laboratory
+Universit=C3=A9 de Pau et des Pays de l'Adour (UPPA)
+IUT de Bayonne
+2 All=C3=A9e du Parc de Montaury
+Campus Montaury/Anglet
+64600 Anglet
+France
+
+Email: sassisalma@yahoo.fr, salma.sassi@fsjegj.rnu.tn
+Home Page: https://sites.google.com/view/salma-sassi/home
+OpenCEMS: https://opencems.sigappfr.org
+Spider Team: https://spider.sigappfr.org
+
+----------------------------
+ =20
+------=_Part_4483078_763725781.1677746318104
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<div>                ******************************************************=
+*******************<br>Call for Special Sessions Track<br><br>10th IEEE Int=
+ernational Conference on Data Science and Advanced Analytics (DSAA 2023)<br=
+>October 9-13, 2023<br>Thessaloniki, Greece<br>https://conferences.sigappfr=
+.org/dsaa2023/<br><br>*****************************************************=
+********************<br><br>** ABOUT DSAA SPECIAL SESSIONS TRACK **<br>DSAA=
+ Special Sessions are an important part of the main conference program. The=
+y bring together researchers, industry experts, practitioners, and potentia=
+l users who are interested in cultivating specialized and important aspects=
+ of data science and analytics.<br><br>DSAA Special Sessions are intended t=
+o promote emerging data science research areas that are not well establishe=
+d and covered in the main conference tracks, while featuring high quality p=
+apers, which would normally appear in the main track. The same evaluation c=
+riteria and quality level apply as for the main conference, but the papers =
+must adhere to the area of the special session they are submitted to, and t=
+he reviewers are experts in that area.<br><br>We welcome proposals that pro=
+mote a more intensive interaction between different communities and proposa=
+ls that promote cooperation to solve interdisciplinary problems. Thus, spec=
+ial sessions might focus on:<br><br>1- Topics on the border of data science=
+ research area<br>2- Advanced topics within the data science research area<=
+br>3- Specific application areas for data science<br><br>** IMPORTANT DATES=
+ **<br>-Special Session Proposal Due: March 7, 2023<br>-Special Session Pro=
+posal Notification: March 16, 2023<br>-Special Session Paper Submission Dea=
+dline: June 1, 2023 (tentative)<br>-Special Session Paper Notification: Aug=
+ust 20, 2023 (tentative)<br>-Camera ready: submission September 6, 2023 (te=
+ntative)<br><br>** SPECIAL SESSION PROPOSAL SUBMISSION AND REVIEW **<br>Pro=
+posals for hosting special sessions at DSAA 2023 are welcome. The proposals=
+ must address:<br><br>1- Title: Propose a title of the special session.<br>=
+2- Abstract: Introduce a brief abstract of no more than approximately 100 w=
+ords that allows conference attendees to understand the topic and the focus=
+ of the special session.<br>3- Aims and Scope<br>4- Rationale: Please expla=
+in why the topic of the special session is novel and timely, why it is rele=
+vant to the DSAA community.<br>5- Related special sessions previously organ=
+ized (with number of papers received/accepted)<br>6- Organizers: Provide a =
+list of organizers with their affiliations, short bio, and contacts and con=
+firm you agree that this information will appear on the conference website.=
+<br>7- Potential Committee Members<br>8- Expected number of submissions<br>=
+<br>For each organizer in (6), provide name, affiliation, country, email, a=
+nd a short biographical sketch, describing relevant qualifications and expe=
+rience; identify at least one organizer as the contact person.<br>For (5), =
+list any special session or relevant events (e.g., workshops) the organizer=
+s have organized in recent years in DSAA or other major conferences; for ea=
+ch, list the year, the conference, number of submissions, number of papers =
+accepted, number of participants, etc.<br>For (7), give a list of qualified=
+ committee members who would be invited.<br>Special session proposals will =
+be reviewed based on the above criteria and quality of the proposals as wel=
+l as their relationship to the main conference topics. Preference may be gi=
+ven to timely topics that are critical for data science and analytics, insp=
+ire highly interactive discussions, and showcase the impact of data science=
+ and analytics.<br>Proposers are encouraged to give an estimation of the nu=
+mber of submissions they expect.<br><br>** SUBMISSION OF A SPECIAL SESSION =
+**<br>All proposals should be submitted electronically via EasyChair: https=
+://easychair.org/my/conference?conf=3Ddsaa2023 (under the =C3=A2=E2=82=AC=
+=C5=93Special Sessions=C3=A2=E2=82=AC=C2=9D Track)<br><br>** SPECIAL SESSIO=
+N ORGANIZATION, PAPER SUBMISSION AND REVIEW **<br>Once a special session pr=
+oposal has been accepted, its organizers should create a website with the S=
+pecial Session information and should widely publicize the session=C3=A2=E2=
+=82=AC=E2=84=A2s call for papers on different mailing lists and social medi=
+a.<br>Special session papers strictly follow the same specifications, requi=
+rements, and policies as the main conference submissions in terms of the pa=
+per submission deadline, notification deadline, paper formatting and length=
+, and important policies. Special session paper submissions will be done vi=
+a EasyChair.<br>Reviewing the submissions in each special session is coordi=
+nated by the special session organizers and is fully aligned to the main co=
+nference evaluation process. In particular:<br><br>-All papers submitted to=
+ special sessions will be double-blind reviewed.<br>-Organizers of each spe=
+cial session will select the program committee members (PCMs).<br>-PCMs wil=
+l be invited by the Special Session Chairs into the submission system for e=
+ach Special Session; a reviewer can serve as PCM in more than one Special S=
+ession.<br>-Papers will then be assigned to appropriate PCMs by the Special=
+ Session organizers for review.<br>-Special Session organizers will make re=
+commendations of acceptance/rejection for papers in their sessions, which m=
+ust be validated by the Special Session Chairs.<br><br>To guarantee uniform=
+ quality control for all special sessions and to be consistent with the mai=
+n conference, the final decisions of special session paper acceptance/rejec=
+tion are made by the DSAA Program Chairs.<br><br>** PROCEEDINGS, INDEXING A=
+ND SPECIAL ISSUES **<br>All accepted full-length special session papers wil=
+l be published by IEEE in the DSAA main conference proceedings under its Sp=
+ecial Session scheme. All papers will be submitted for inclusion in the IEE=
+EXplore Digital Library.<br>Organizers of Special Sessions may additionally=
+, arrange for special issues to further publish the extended journal versio=
+ns of the papers. Several past special sessions have published special issu=
+es with the International Journal of Data Science and Analytics (JDSA, Spri=
+nger).<br><br>** GENERAL INQUIRIES **<br>Inquiries about special session pr=
+oposals should be sent directly to the Special Session Chairs (please see c=
+ontact information below).<br>Specific inquiries about a Special Session sh=
+ould be submitted to the session organizers, who are advised to set up a jo=
+int email address, once their proposal is accepted.<br><br>** SPECIAL SESSI=
+ONS CHAIRS **<br>-Vagelis Papalexakis, University of California Riverside (=
+epapalex at cs dot ucr dot edu)<br>-Grant Scott, University of Missouri (sc=
+ottgs at missouri dot edu)<br><br>-----------------------------------------=
+------------<br>Salma SASSI, Ph.D. in Computer Science<br>Associate Profess=
+or in Computer Science<br>Researcher at OpenCEMS Industrial Chair, France<b=
+r>LIUPPA Laboratory<br>Universit=C3=A9 de Pau et des Pays de l&#39;Adour (U=
+PPA)<br>IUT de Bayonne<br>2 All=C3=A9e du Parc de Montaury<br>Campus Montau=
+ry/Anglet<br>64600 Anglet<br>France<br><br>Email: sassisalma@yahoo.fr, salm=
+a.sassi@fsjegj.rnu.tn<br>Home Page: https://sites.google.com/view/salma-sas=
+si/home<br>OpenCEMS: https://opencems.sigappfr.org<br>Spider Team: https://=
+spider.sigappfr.org<br><br>----------------------------<br>            </di=
+v>           =20
+------=_Part_4483078_763725781.1677746318104--

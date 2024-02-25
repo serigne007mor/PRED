@@ -1,0 +1,598 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (BounceSMTP2.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 6629714017C9
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu, 24 Feb 2022 22:18:49 +0100 (CET)
+Received: from mx3.d101.univ-nantes.fr (MX3.univ-nantes.fr [193.52.101.137])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id 624615F97
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu, 24 Feb 2022 22:18:49 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTP id 5566A208C3
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 24 Feb 2022 22:18:49 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 0.902
+X-Spam-Level:
+X-Spam-Status: No, score=0.902 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+	HTML_MESSAGE=0.001, HTML_OBFUSCATE_05_10=0.001,
+	RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_WSFF=0.01,
+	SARE_HEAD_8BIT_SPAM=0.888, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+	UN_PHISHING_PW=0.1, URIBL_BLOCKED=0.001] autolearn=disabled
+X-CRM114-Status: UNSURE ( -0.5995 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=gmail.com
+Received: from mx3.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id JsmHmgiXbMMT for <liste-egc@polytech.univ-nantes.fr>;
+	Thu, 24 Feb 2022 22:18:46 +0100 (CET)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTPS id CA382208CF
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 24 Feb 2022 22:18:45 +0100 (CET)
+Received: by mail-qt1-x82a.google.com with SMTP id v3so710362qta.11
+        for <liste-egc@polytech.univ-nantes.fr>; Thu, 24 Feb 2022 13:18:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=rV/hukGWgKDReySuRbPx8Bl8bH+AgkF6tpc6umj8us4=;
+        b=qdtVccOB8iw9LQrWzOChoH1O1KYxntdl/7DvCP1UpfLFhR2cjej+i51/wVRf2RSuho
+         64Ws3wFRC04bl8IOUcIiiLZ96IEkQgqQFtRNqKZuPP7Cerf4ovHVc6Dj8w0z2RDPDfjt
+         sT2Ebo48eO4KVM0AxLyCUQPvCkLFLw/h/EldAMZ+q0k/YPOtN2cTfW8tMxoneV6EvHpZ
+         C2KFa0XTwNVnjGmOnmOcqMJMtFFy8gIkBt+gaDYmuyL9iWk2ynaiWw6XF1Xd837RDBfH
+         Fq7qyPAD6ABfDG6kg7nwwXIYmCS6wG3cvJTc0oP1TLrZoQ5UEnrzBIxNM0+KHsLu7PTt
+         8/fQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=rV/hukGWgKDReySuRbPx8Bl8bH+AgkF6tpc6umj8us4=;
+        b=dZfdsvM8CQdsM9LG4RKV0XHmZW3tp61UeRSAnFH1n2yDKaU0tMCHb9pjdZA5/5uoQf
+         uTemq5M8suLr0u79oVAG8p2XD+hQHeqFCcJ5us3nrT+2zYkwJFJ4my9Ag3TBAWKXBX3q
+         cKnQbO9oZNnt0fgEIURt49NFKMQwneFbzA8wh0ZKLLOLVnX7h7oGjQVoaHkAL6Y8dRHM
+         9GmCWbc29HCVjeocAKOVVExsnKmwBdt9+jviqiiFmD+YUjPJx0oDZDw6Tp50Yq5FRNqR
+         VqzaeyGO/RpyFZ860kcZU/WdvoeByQvQE6dxAH8+FEO35tRO06+P7aYlnhak7HGfo6M6
+         hmXg==
+X-Gm-Message-State: AOAM533wyGfnvY3ShTVKHI3xiexDHYNnRDM9E0cEou7a4Va51oPs1Q3U
+	nSkYmy0H/2rZ5DJsOjxszE1nyNzVlNbjvw64VV2Ay1+5zmc=
+X-Google-Smtp-Source: ABdhPJxZXMgrJ5k0HSvADUDjX7MbpvPOvKgsRlPkFNExSkwVO8BnJGLYGIa7U2LFVoCxwG5JeuUU9vUffwepY39lzgQ=
+X-Received: by 2002:ac8:7f96:0:b0:2de:82c4:df24 with SMTP id
+ z22-20020ac87f96000000b002de82c4df24mr4305875qtj.587.1645737524774; Thu, 24
+ Feb 2022 13:18:44 -0800 (PST)
+MIME-Version: 1.0
+From: Salma Jamoussi <jamoussi@gmail.com>
+Date: Thu, 24 Feb 2022 22:18:33 +0100
+Message-ID: <CA+S+DQ_Zwvveq6y_KYung0QW2KjTuRBdsvobP=ryhWFNCKpr6w@mail.gmail.com>
+To: bull-ia@gdria.fr, bull-i3@irit.fr, liste-egc@polytech.univ-nantes.fr, 
+	ln@groupes.renater.fr
+Content-Type: multipart/alternative; boundary="0000000000008ec96405d8ca2073"
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] CFP =?UTF-8?Q?=E2=80=93?= Special Session on Machine
+ Learning for Social Data Analytics - MLSDA @ ICCCI 2022
+
+--0000000000008ec96405d8ca2073
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Dear colleagues,
+
+
+
+(Apologies for cross-posting.)
+
+
+
+We are pleased to announce the special session on Machine Learning for
+Social Data Analytics (ML-SDA 2022) that will be held under the 14th
+International
+Conference on Computational Collective Intelligence (ICCCI 2022) (*Core
+ranking: B*) on September 28th to 30th, 2022 in Hammamet, a beautiful
+Mediterranean town on the shores of Tunisia.
+
+You can find further information below.
+
+We appreciate it if you kindly forward this call to anyone who may be
+interested in submitting a proposal.
+
+
+
+ML-SDA 2022 chairs,
+
+-----------------------------------------------------------
+
+Submission Deadline: *Mar 15, 2022*
+
+-----------------------------------------------------------
+
+*ML-SDA 2022*
+
+*Special Session on Machine Learning for Social Data Analytics*
+
+http://www.wikicfp.com/cfp/servlet/event.showcfp?eventid=3D155997
+
+
+
+at the 14th International Conference on Computational Collective
+Intelligence (ICCCI 2022) Hammamet, Tunisia, September 28-30, 2022
+
+https://iccci.pwr.edu.pl/2022/
+
+(*Core ranking: B*)
+
+
+
+
+
+*DESCRIPTION:*
+
+Nowadays, social networks play a crucial role in every aspect of our daily
+life. They are seen as huge data mines that attract researchers to tackle
+several challenges. Ranging from predicting users=E2=80=99 simple reactions=
+ to
+representing more complex personality features, mining social data clears
+the way for promising applications that significantly impact our real-life.
+Meanwhile, machine learning methods, characterized by recent breakthroughs
+of Deep Learning and Big Data, yield ultrapractical models dealing with
+data analytics. Following these advancements, text processing for example,
+has never been as intuitive as it is today. Particularly, embedding data,
+as dense vectors, ensures faithful representations of the text content
+making it possible to use the wide spectrum of machine learning methods for
+social data analytics. Analogically, mining other social data types (image,
+video, reactions, etc.) and layouts (graph, time series, sequential, etc.)
+has known remarkable success owing to the recent developments in machine
+learning methods.
+
+
+
+*MAIN GOALS:*
+
+The main objective of the 2022 Special Session on Machine Learning for
+Social Data Analytics (ML-SDA 2022), hosted in the 14th International
+Conference on Computational Collective Intelligence (ICCCI 2022) is to
+bring together scientists, researchers, engineers, and practitioners to
+present and to discuss recent and innovative research papers that address
+the breakthroughs of machine learning in social data analytics. It focuses
+on new methods, models and applications that use machine learning to
+process social data and namely to extract useful knowledge from it. The
+ML-SDA 2022 topics of interest deal with, but are not limited to, the use
+of different types of machine learning methods for:
+
+=C2=B7       Sentiment and opinion mining
+
+=C2=B7       Emotion detection
+
+=C2=B7       Hate speech analysis
+
+=C2=B7       Streaming data processing
+
+=C2=B7       Multilingual content processing
+
+=C2=B7       Hot Topic detection and tracking
+
+=C2=B7       Abnormal and fake content identification
+
+=C2=B7       Irony and sarcasm detection
+
+=C2=B7       User behavior modeling and prediction
+
+=C2=B7       Link prediction
+
+=C2=B7       Community detection
+
+=C2=B7       Opinion evolution modeling
+
+=C2=B7       Social influence modeling
+
+=C2=B7       Influencer detection
+
+=C2=B7       Popularity prediction
+
+=C2=B7       User Profiling from social data
+
+=C2=B7       Recommendation systems using social data
+
+
+
+
+
+*SUBMISSION:*
+
+All contributions should be original and not published elsewhere or
+intended to be published during the review period. Authors are invited to
+submit their papers electronically in pdf format, through EasyChair. All
+the special sessions are centralized as tracks in the same conference
+management system as the regular papers. Therefore, to submit a paper
+please activate the following link and select the track: ML-SDA 2022:
+Special Session on Machine Learning for Social Data Analytics.
+
+https://easychair.org/conferences/?conf=3Diccci20220
+
+Authors are invited to submit original previously unpublished research
+papers written in English, of up to 13 pages, strictly following the
+LNCS/LNAI format guidelines. Authors can download the Latex (recommended)
+or Word templates available at Springer's website. Submissions not
+following the format guidelines will be rejected without review. To ensure
+high quality, all papers will be thoroughly reviewed by the ML-SDA 2022
+Program Committee. All accepted papers must be presented by one of the
+authors who must register for the conference and pay the fee. The
+conference proceedings will be published by Springer in the prestigious
+series *LNCS/LNAI* (indexed by ISI CPCI-S, included in ISI Web of Science,
+EI, ACM Digital Library, dblp, Google Scholar, Scopus, etc.).
+
+
+
+*IMPORTANT DATES:*
+
+Submission Deadline: Mar 15, 2022
+
+Notification Due: Apr 15, 2022
+
+Final Version Due: May 1, 2022
+
+
+
+*SPECIAL SESSION CHAIRS:*
+
+Salma Jamoussi (University of Sfax, Tunisia)
+
+Hanen Ameur (University of Sfax, Tunisia)
+
+Hasna Njah (University of Gabes, Tunisia)
+
+
+--=20
+Dr. Ing. Salma Jamoussi
+Ma=C3=AEtre de conf=C3=A9rences en Informatique
+Institut Sup=C3=A9rieur d'Informatique et Multim=C3=A9dia de Sfax
+
+Membre du laboratoire MIRACL
+http://www.miracl.rnu.tn
+
+Adresse : P=C3=B4le Technologique de Sfax
+BP 242 - 3021, Sakiet Ezzit Sfax. TUNISIE
+--
+
+--0000000000008ec96405d8ca2073
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><p class=3D"MsoNormal" style=3D"margin:0cm;text-align:just=
+ify;line-height:normal;font-size:11pt;font-family:Calibri,sans-serif"><span=
+ style=3D"font-size:12pt;font-family:Arial,sans-serif">Dear colleagues,</sp=
+an></p><p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-h=
+eight:normal;background-image:initial;background-position:initial;backgroun=
+d-size:initial;background-repeat:initial;background-origin:initial;backgrou=
+nd-clip:initial;font-size:11pt;font-family:Calibri,sans-serif"><span style=
+=3D"font-size:12pt;font-family:Arial,sans-serif">=C2=A0</span></p><p class=
+=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:normal;ba=
+ckground-image:initial;background-position:initial;background-size:initial;=
+background-repeat:initial;background-origin:initial;background-clip:initial=
+;font-size:11pt;font-family:Calibri,sans-serif"><span style=3D"font-size:12=
+pt;font-family:Arial,sans-serif;color:black">(Apologies for cross-posting.)=
+</span><span style=3D"font-size:12pt;font-family:Arial,sans-serif"></span><=
+/p><p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-heigh=
+t:normal;background-image:initial;background-position:initial;background-si=
+ze:initial;background-repeat:initial;background-origin:initial;background-c=
+lip:initial;font-size:11pt;font-family:Calibri,sans-serif"><span style=3D"f=
+ont-size:12pt;font-family:Arial,sans-serif">=C2=A0</span></p><p class=3D"Ms=
+oNormal" style=3D"margin:0cm;text-align:justify;line-height:normal;backgrou=
+nd-image:initial;background-position:initial;background-size:initial;backgr=
+ound-repeat:initial;background-origin:initial;background-clip:initial;font-=
+size:11pt;font-family:Calibri,sans-serif"><span style=3D"font-size:12pt;fon=
+t-family:Arial,sans-serif;color:black">We are pleased to=C2=A0announce=C2=
+=A0</span><span style=3D"font-size:12pt;font-family:Arial,sans-serif;color:=
+black">the special session on Machine Learning for Social Data Analytics (M=
+L-SDA 2022) that will be held under the 14<sup>th</sup>=C2=A0International =
+Conference on Computational Collective Intelligence (ICCCI 2022) (<b>Core r=
+anking: B</b>)</span><span style=3D"font-size:12pt;font-family:Arial,sans-s=
+erif;color:black">=C2=A0on September 28<sup>th</sup>=C2=A0to 30<sup>th</sup=
+>, 2022 in=C2=A0</span><span style=3D"font-size:12pt;font-family:Arial,sans=
+-serif;color:black">Hammamet, a beautiful Mediterranean town on the shores =
+of Tunisia</span><span style=3D"font-size:12pt;font-family:Arial,sans-serif=
+;color:black">.</span><span style=3D"font-size:12pt;font-family:Arial,sans-=
+serif"></span></p><p class=3D"MsoNormal" style=3D"margin:0cm;text-align:jus=
+tify;line-height:normal;background-image:initial;background-position:initia=
+l;background-size:initial;background-repeat:initial;background-origin:initi=
+al;background-clip:initial;font-size:11pt;font-family:Calibri,sans-serif"><=
+span style=3D"font-size:12pt;font-family:Arial,sans-serif;color:black">You =
+can find further information below.</span><span style=3D"font-size:12pt;fon=
+t-family:Arial,sans-serif"></span></p><p class=3D"MsoNormal" style=3D"margi=
+n:0cm;text-align:justify;line-height:normal;background-image:initial;backgr=
+ound-position:initial;background-size:initial;background-repeat:initial;bac=
+kground-origin:initial;background-clip:initial;font-size:11pt;font-family:C=
+alibri,sans-serif"><span style=3D"font-size:12pt;font-family:Arial,sans-ser=
+if;color:black">We appreciate it if you kindly forward this call to anyone =
+who may be interested in submitting a proposal.</span><span style=3D"font-s=
+ize:12pt;font-family:Arial,sans-serif"></span></p><p class=3D"MsoNormal" st=
+yle=3D"margin:0cm 0cm 8pt;text-align:justify;line-height:normal;font-size:1=
+1pt;font-family:Calibri,sans-serif"><span style=3D"font-size:12pt;font-fami=
+ly:Arial,sans-serif">=C2=A0</span></p><p class=3D"MsoNormal" style=3D"margi=
+n:0cm 0cm 8pt;text-align:justify;line-height:normal;font-size:11pt;font-fam=
+ily:Calibri,sans-serif"><span style=3D"font-size:12pt;font-family:Arial,san=
+s-serif">ML-SDA 2022 chairs,</span></p><p class=3D"MsoNormal" align=3D"cent=
+er" style=3D"margin:0cm 0cm 8pt;text-align:center;line-height:normal;font-s=
+ize:11pt;font-family:Calibri,sans-serif"><span style=3D"font-size:12pt;font=
+-family:Arial,sans-serif">-------------------------------------------------=
+----------</span></p><p class=3D"MsoNormal" align=3D"center" style=3D"margi=
+n:0cm 0cm 8pt;text-align:center;line-height:normal;font-size:11pt;font-fami=
+ly:Calibri,sans-serif">Submission Deadline:=C2=A0<b>Mar 15, 2022</b><span s=
+tyle=3D"font-size:12pt;font-family:Arial,sans-serif"></span></p><p class=3D=
+"MsoNormal" align=3D"center" style=3D"margin:0cm 0cm 8pt;text-align:center;=
+line-height:normal;font-size:11pt;font-family:Calibri,sans-serif"><span sty=
+le=3D"font-size:12pt;font-family:Arial,sans-serif">------------------------=
+-----------------------------------</span></p><p class=3D"MsoNormal" align=
+=3D"center" style=3D"margin:0cm 0cm 8pt;text-align:center;line-height:norma=
+l;font-size:11pt;font-family:Calibri,sans-serif"><b><span style=3D"font-siz=
+e:14pt;font-family:Arial,sans-serif">ML-SDA 2022</span></b></p><p class=3D"=
+MsoNormal" align=3D"center" style=3D"margin:0cm 0cm 8pt;text-align:center;l=
+ine-height:normal;font-size:11pt;font-family:Calibri,sans-serif"><b><span s=
+tyle=3D"font-size:12pt;font-family:Arial,sans-serif">Special Session on Mac=
+hine Learning for Social Data Analytics</span></b></p><p class=3D"MsoNormal=
+" align=3D"center" style=3D"margin:0cm 0cm 8pt;text-align:center;line-heigh=
+t:normal;font-size:11pt;font-family:Calibri,sans-serif"><span style=3D"font=
+-size:12pt;font-family:Arial,sans-serif"><a href=3D"http://www.wikicfp.com/=
+cfp/servlet/event.showcfp?eventid=3D155997" target=3D"_blank" style=3D"colo=
+r:blue">http://www.wikicfp.com/cfp/servlet/event.showcfp?eventid=3D155997</=
+a></span></p><p class=3D"MsoNormal" align=3D"center" style=3D"margin:0cm 0c=
+m 8pt;text-align:center;line-height:normal;font-size:11pt;font-family:Calib=
+ri,sans-serif"><span style=3D"font-size:12pt;font-family:Arial,sans-serif">=
+=C2=A0</span></p><p class=3D"MsoNormal" align=3D"center" style=3D"margin:0c=
+m 0cm 8pt;text-align:center;line-height:normal;font-size:11pt;font-family:C=
+alibri,sans-serif"><span style=3D"font-size:12pt;font-family:Arial,sans-ser=
+if">at the 14<sup>th</sup>=C2=A0International Conference on Computational C=
+ollective Intelligence (ICCCI 2022) Hammamet, Tunisia, September 28-30, 202=
+2</span></p><p class=3D"MsoNormal" align=3D"center" style=3D"margin:0cm 0cm=
+ 8pt;text-align:center;line-height:normal;font-size:11pt;font-family:Calibr=
+i,sans-serif"><a href=3D"https://iccci.pwr.edu.pl/2022/" target=3D"_blank" =
+style=3D"color:blue"><span style=3D"font-size:12pt;font-family:Arial,sans-s=
+erif">https://iccci.pwr.edu.pl/2022/</span></a><span style=3D"font-size:12p=
+t;font-family:Arial,sans-serif"></span></p><p class=3D"MsoNormal" align=3D"=
+center" style=3D"margin:0cm 0cm 8pt;text-align:center;line-height:normal;fo=
+nt-size:11pt;font-family:Calibri,sans-serif"><span style=3D"font-size:12pt;=
+font-family:Arial,sans-serif">(<b>Core ranking: B</b>)</span></p><p class=
+=3D"MsoNormal" align=3D"center" style=3D"margin:0cm 0cm 8pt;text-align:cent=
+er;line-height:normal;font-size:11pt;font-family:Calibri,sans-serif"><span =
+style=3D"font-size:12pt;font-family:Arial,sans-serif">=C2=A0</span></p><p c=
+lass=3D"MsoNormal" style=3D"margin:0cm 0cm 8pt;text-align:justify;line-heig=
+ht:normal;font-size:11pt;font-family:Calibri,sans-serif"><span style=3D"fon=
+t-size:12pt;font-family:Arial,sans-serif">=C2=A0</span></p><p class=3D"MsoN=
+ormal" style=3D"margin:0cm 0cm 8pt;text-align:justify;line-height:normal;fo=
+nt-size:11pt;font-family:Calibri,sans-serif"><b><span style=3D"font-size:12=
+pt;font-family:Arial,sans-serif;color:rgb(0,176,240)">DESCRIPTION:</span></=
+b></p><p class=3D"MsoNormal" style=3D"margin:0cm 0cm 8pt;text-align:justify=
+;line-height:normal;font-size:11pt;font-family:Calibri,sans-serif"><span st=
+yle=3D"font-size:12pt;font-family:Arial,sans-serif">Nowadays, social networ=
+ks play a crucial role in every aspect of our daily life. They are seen as =
+huge data mines that attract researchers to tackle several challenges. Rang=
+ing from predicting users=E2=80=99 simple reactions to representing more co=
+mplex personality features, mining social data clears the way for promising=
+ applications that significantly impact our real-life. Meanwhile, machine l=
+earning methods, characterized by recent breakthroughs of Deep Learning and=
+ Big Data, yield ultrapractical models dealing with data analytics. Followi=
+ng these advancements, text processing for example, has never been as intui=
+tive as it is today. Particularly, embedding data, as dense vectors, ensure=
+s faithful representations of the text content making it possible to use th=
+e wide spectrum of machine learning methods for social data analytics. Anal=
+ogically, mining other social data types (image, video, reactions, etc.) an=
+d layouts (graph, time series, sequential, etc.) has known remarkable succe=
+ss owing to the recent developments in machine learning methods.</span></p>=
+<p class=3D"MsoNormal" style=3D"margin:0cm 0cm 8pt;text-align:justify;line-=
+height:normal;font-size:11pt;font-family:Calibri,sans-serif"><span style=3D=
+"font-size:12pt;font-family:Arial,sans-serif">=C2=A0</span></p><p class=3D"=
+MsoNormal" style=3D"margin:0cm 0cm 8pt;text-align:justify;line-height:norma=
+l;font-size:11pt;font-family:Calibri,sans-serif"><b><span style=3D"font-siz=
+e:12pt;font-family:Arial,sans-serif;color:rgb(0,176,240)">MAIN GOALS:</span=
+></b></p><p class=3D"MsoNormal" style=3D"margin:0cm 0cm 8pt;text-align:just=
+ify;line-height:normal;font-size:11pt;font-family:Calibri,sans-serif"><span=
+ style=3D"font-size:12pt;font-family:Arial,sans-serif">The main objective o=
+f the 2022 Special Session on Machine Learning for Social Data Analytics (M=
+L-SDA 2022), hosted in the 14<sup>th</sup>=C2=A0International Conference on=
+ Computational Collective Intelligence (ICCCI 2022) is to bring together sc=
+ientists, researchers, engineers, and practitioners to present and to discu=
+ss recent and innovative research papers that address the breakthroughs of =
+machine learning in social data analytics. It focuses on new methods, model=
+s and applications that use machine learning to process social data and nam=
+ely to extract useful knowledge from it. The ML-SDA 2022 topics of interest=
+ deal with, but are not limited to, the use of different types of machine l=
+earning methods for:</span></p><p style=3D"margin:0cm 0cm 0cm 36pt;text-ali=
+gn:justify;line-height:normal;font-size:11pt;font-family:Calibri,sans-serif=
+"><span style=3D"font-size:12pt;font-family:Symbol">=C2=B7<span style=3D"fo=
+nt-variant-numeric:normal;font-variant-east-asian:normal;font-stretch:norma=
+l;font-size:7pt;line-height:normal;font-family:&quot;Times New Roman&quot;"=
+>=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span></span><span dir=3D"LTR">=
+</span><span style=3D"font-size:12pt;font-family:Arial,sans-serif">Sentimen=
+t and opinion mining</span></p><p style=3D"margin:0cm 0cm 0cm 36pt;text-ali=
+gn:justify;line-height:normal;font-size:11pt;font-family:Calibri,sans-serif=
+"><span style=3D"font-size:12pt;font-family:Symbol">=C2=B7<span style=3D"fo=
+nt-variant-numeric:normal;font-variant-east-asian:normal;font-stretch:norma=
+l;font-size:7pt;line-height:normal;font-family:&quot;Times New Roman&quot;"=
+>=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span></span><span dir=3D"LTR">=
+</span><span style=3D"font-size:12pt;font-family:Arial,sans-serif">Emotion =
+detection</span></p><p style=3D"margin:0cm 0cm 0cm 36pt;text-align:justify;=
+line-height:normal;font-size:11pt;font-family:Calibri,sans-serif"><span sty=
+le=3D"font-size:12pt;font-family:Symbol">=C2=B7<span style=3D"font-variant-=
+numeric:normal;font-variant-east-asian:normal;font-stretch:normal;font-size=
+:7pt;line-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span></span><span dir=3D"LTR"></span><sp=
+an style=3D"font-size:12pt;font-family:Arial,sans-serif">Hate speech analys=
+is</span></p><p style=3D"margin:0cm 0cm 0cm 36pt;text-align:justify;line-he=
+ight:normal;font-size:11pt;font-family:Calibri,sans-serif"><span style=3D"f=
+ont-size:12pt;font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric=
+:normal;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;li=
+ne-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0</span></span><span dir=3D"LTR"></span><span sty=
+le=3D"font-size:12pt;font-family:Arial,sans-serif">Streaming data processin=
+g</span></p><p style=3D"margin:0cm 0cm 0cm 36pt;text-align:justify;line-hei=
+ght:normal;font-size:11pt;font-family:Calibri,sans-serif"><span style=3D"fo=
+nt-size:12pt;font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:=
+normal;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;lin=
+e-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0</span></span><span dir=3D"LTR"></span><span style=
+=3D"font-size:12pt;font-family:Arial,sans-serif">Multilingual content proce=
+ssing</span></p><p style=3D"margin:0cm 0cm 0cm 36pt;text-align:justify;line=
+-height:normal;font-size:11pt;font-family:Calibri,sans-serif"><span style=
+=3D"font-size:12pt;font-family:Symbol">=C2=B7<span style=3D"font-variant-nu=
+meric:normal;font-variant-east-asian:normal;font-stretch:normal;font-size:7=
+pt;line-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span></span><span dir=3D"LTR"></span><span =
+style=3D"font-size:12pt;font-family:Arial,sans-serif">Hot Topic detection a=
+nd tracking</span></p><p style=3D"margin:0cm 0cm 0cm 36pt;text-align:justif=
+y;line-height:normal;font-size:11pt;font-family:Calibri,sans-serif"><span s=
+tyle=3D"font-size:12pt;font-family:Symbol">=C2=B7<span style=3D"font-varian=
+t-numeric:normal;font-variant-east-asian:normal;font-stretch:normal;font-si=
+ze:7pt;line-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span></span><span dir=3D"LTR"></span>=
+<span style=3D"font-size:12pt;font-family:Arial,sans-serif">Abnormal and fa=
+ke content identification</span></p><p style=3D"margin:0cm 0cm 0cm 36pt;tex=
+t-align:justify;line-height:normal;font-size:11pt;font-family:Calibri,sans-=
+serif"><span style=3D"font-size:12pt;font-family:Symbol">=C2=B7<span style=
+=3D"font-variant-numeric:normal;font-variant-east-asian:normal;font-stretch=
+:normal;font-size:7pt;line-height:normal;font-family:&quot;Times New Roman&=
+quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span></span><span dir=3D=
+"LTR"></span><span style=3D"font-size:12pt;font-family:Arial,sans-serif">Ir=
+ony and sarcasm detection</span></p><p style=3D"margin:0cm 0cm 0cm 36pt;tex=
+t-align:justify;line-height:normal;font-size:11pt;font-family:Calibri,sans-=
+serif"><span style=3D"font-size:12pt;font-family:Symbol">=C2=B7<span style=
+=3D"font-variant-numeric:normal;font-variant-east-asian:normal;font-stretch=
+:normal;font-size:7pt;line-height:normal;font-family:&quot;Times New Roman&=
+quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span></span><span dir=3D=
+"LTR"></span><span style=3D"font-size:12pt;font-family:Arial,sans-serif">Us=
+er behavior modeling and prediction</span></p><p style=3D"margin:0cm 0cm 0c=
+m 36pt;text-align:justify;line-height:normal;font-size:11pt;font-family:Cal=
+ibri,sans-serif"><span style=3D"font-size:12pt;font-family:Symbol">=C2=B7<s=
+pan style=3D"font-variant-numeric:normal;font-variant-east-asian:normal;fon=
+t-stretch:normal;font-size:7pt;line-height:normal;font-family:&quot;Times N=
+ew Roman&quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span></span><sp=
+an dir=3D"LTR"></span><span style=3D"font-size:12pt;font-family:Arial,sans-=
+serif">Link prediction</span></p><p style=3D"margin:0cm 0cm 0cm 36pt;text-a=
+lign:justify;line-height:normal;font-size:11pt;font-family:Calibri,sans-ser=
+if"><span style=3D"font-size:12pt;font-family:Symbol">=C2=B7<span style=3D"=
+font-variant-numeric:normal;font-variant-east-asian:normal;font-stretch:nor=
+mal;font-size:7pt;line-height:normal;font-family:&quot;Times New Roman&quot=
+;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span></span><span dir=3D"LTR=
+"></span><span style=3D"font-size:12pt;font-family:Arial,sans-serif">Commun=
+ity detection</span></p><p style=3D"margin:0cm 0cm 0cm 36pt;text-align:just=
+ify;line-height:normal;font-size:11pt;font-family:Calibri,sans-serif"><span=
+ style=3D"font-size:12pt;font-family:Symbol">=C2=B7<span style=3D"font-vari=
+ant-numeric:normal;font-variant-east-asian:normal;font-stretch:normal;font-=
+size:7pt;line-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span></span><span dir=3D"LTR"></span>=
+<span style=3D"font-size:12pt;font-family:Arial,sans-serif">Opinion evoluti=
+on modeling</span></p><p style=3D"margin:0cm 0cm 0cm 36pt;text-align:justif=
+y;line-height:normal;font-size:11pt;font-family:Calibri,sans-serif"><span s=
+tyle=3D"font-size:12pt;font-family:Symbol">=C2=B7<span style=3D"font-varian=
+t-numeric:normal;font-variant-east-asian:normal;font-stretch:normal;font-si=
+ze:7pt;line-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span></span><span dir=3D"LTR"></span>=
+<span style=3D"font-size:12pt;font-family:Arial,sans-serif">Social influenc=
+e modeling</span></p><p style=3D"margin:0cm 0cm 0cm 36pt;text-align:justify=
+;line-height:normal;font-size:11pt;font-family:Calibri,sans-serif"><span st=
+yle=3D"font-size:12pt;font-family:Symbol">=C2=B7<span style=3D"font-variant=
+-numeric:normal;font-variant-east-asian:normal;font-stretch:normal;font-siz=
+e:7pt;line-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span></span><span dir=3D"LTR"></span><sp=
+an style=3D"font-size:12pt;font-family:Arial,sans-serif">Influencer detecti=
+on</span></p><p style=3D"margin:0cm 0cm 0cm 36pt;text-align:justify;line-he=
+ight:normal;font-size:11pt;font-family:Calibri,sans-serif"><span style=3D"f=
+ont-size:12pt;font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric=
+:normal;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;li=
+ne-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0</span></span><span dir=3D"LTR"></span><span sty=
+le=3D"font-size:12pt;font-family:Arial,sans-serif">Popularity prediction</s=
+pan></p><p style=3D"margin:0cm 0cm 0cm 36pt;text-align:justify;line-height:=
+normal;font-size:11pt;font-family:Calibri,sans-serif"><span style=3D"font-s=
+ize:12pt;font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:norm=
+al;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;line-he=
+ight:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0</span></span><span dir=3D"LTR"></span><span style=3D"=
+font-size:12pt;font-family:Arial,sans-serif">User Profiling from social dat=
+a</span></p><p style=3D"margin:0cm 0cm 0cm 36pt;text-align:justify;line-hei=
+ght:normal;font-size:11pt;font-family:Calibri,sans-serif"><span style=3D"fo=
+nt-size:12pt;font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:=
+normal;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;lin=
+e-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0</span></span><span dir=3D"LTR"></span><span style=
+=3D"font-size:12pt;font-family:Arial,sans-serif">Recommendation systems usi=
+ng social data</span></p><p class=3D"MsoNormal" style=3D"margin:0cm;text-al=
+ign:justify;line-height:normal;font-size:11pt;font-family:Calibri,sans-seri=
+f"><span style=3D"font-size:12pt;font-family:Arial,sans-serif">=C2=A0</span=
+></p><p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-hei=
+ght:normal;font-size:11pt;font-family:Calibri,sans-serif"><span style=3D"fo=
+nt-size:12pt;font-family:Arial,sans-serif">=C2=A0</span></p><p class=3D"Mso=
+Normal" style=3D"margin:0cm 0cm 8pt;text-align:justify;line-height:normal;f=
+ont-size:11pt;font-family:Calibri,sans-serif"><b><span style=3D"font-size:1=
+2pt;font-family:Arial,sans-serif;color:rgb(0,176,240)">SUBMISSION:</span></=
+b></p><p class=3D"MsoNormal" style=3D"margin:0cm 0cm 8pt;text-align:justify=
+;line-height:normal;font-size:11pt;font-family:Calibri,sans-serif"><span st=
+yle=3D"font-size:12pt;font-family:Arial,sans-serif">All contributions shoul=
+d be original and not published elsewhere or intended to be published durin=
+g the review period. Authors are invited to submit their papers electronica=
+lly in pdf format, through EasyChair. All the special sessions are centrali=
+zed as tracks in the same conference management system as the regular paper=
+s. Therefore, to submit a paper please activate the following link and sele=
+ct the track: ML-SDA 2022: Special Session on Machine Learning for Social D=
+ata Analytics.</span></p><p class=3D"MsoNormal" align=3D"center" style=3D"m=
+argin:0cm 0cm 8pt;text-align:center;line-height:normal;font-size:11pt;font-=
+family:Calibri,sans-serif"><a href=3D"https://easychair.org/conferences/?co=
+nf=3Diccci20220" target=3D"_blank" style=3D"color:blue"><span style=3D"font=
+-size:12pt;font-family:Arial,sans-serif">https://easychair.org/conferences/=
+?conf=3Diccci20220</span></a><span style=3D"font-size:12pt;font-family:Aria=
+l,sans-serif"></span></p><p class=3D"MsoNormal" style=3D"margin:0cm 0cm 8pt=
+;text-align:justify;line-height:normal;font-size:11pt;font-family:Calibri,s=
+ans-serif"><span style=3D"font-size:12pt;font-family:Arial,sans-serif">Auth=
+ors are invited to submit original previously unpublished research papers w=
+ritten in English, of up to 13 pages, strictly following the LNCS/LNAI form=
+at guidelines. Authors can download the Latex (recommended) or Word templat=
+es available at Springer&#39;s website. Submissions not following the forma=
+t guidelines will be rejected without review. To ensure high quality, all p=
+apers will be thoroughly reviewed by the ML-SDA 2022 Program Committee. All=
+ accepted papers must be presented by one of the authors who must register =
+for the conference and pay the fee. The conference proceedings will be publ=
+ished by Springer in the prestigious series=C2=A0<b><span style=3D"color:rg=
+b(237,125,49)">LNCS/LNAI</span></b><span style=3D"color:rgb(237,125,49)">=
+=C2=A0</span>(<span style=3D"color:rgb(131,60,11)">indexed by ISI CPCI-S, i=
+ncluded in ISI Web of Science, EI, ACM Digital Library, dblp, Google Schola=
+r, Scopus, etc</span>.).</span></p><p class=3D"MsoNormal" style=3D"margin:0=
+cm 0cm 8pt;text-align:justify;line-height:normal;font-size:11pt;font-family=
+:Calibri,sans-serif"><span style=3D"font-size:12pt;font-family:Arial,sans-s=
+erif">=C2=A0</span></p><p class=3D"MsoNormal" style=3D"margin:0cm 0cm 8pt;t=
+ext-align:justify;line-height:normal;font-size:11pt;font-family:Calibri,san=
+s-serif"><b><span style=3D"font-size:12pt;font-family:Arial,sans-serif;colo=
+r:rgb(0,176,240)">IMPORTANT DATES:</span></b></p><p class=3D"MsoNormal" sty=
+le=3D"margin:0cm;text-align:justify;line-height:normal;font-size:11pt;font-=
+family:Calibri,sans-serif"><span style=3D"font-size:12pt;font-family:Arial,=
+sans-serif">Submission Deadline: Mar 15, 2022</span></p><p class=3D"MsoNorm=
+al" style=3D"margin:0cm;text-align:justify;line-height:normal;font-size:11p=
+t;font-family:Calibri,sans-serif"><span style=3D"font-size:12pt;font-family=
+:Arial,sans-serif">Notification Due: Apr 15, 2022</span></p><p class=3D"Mso=
+Normal" style=3D"margin:0cm;text-align:justify;line-height:normal;font-size=
+:11pt;font-family:Calibri,sans-serif"><span style=3D"font-size:12pt;font-fa=
+mily:Arial,sans-serif">Final Version Due: May 1, 2022</span></p><p class=3D=
+"MsoNormal" style=3D"margin:0cm 0cm 8pt;text-align:justify;line-height:norm=
+al;font-size:11pt;font-family:Calibri,sans-serif"><b><span style=3D"font-si=
+ze:12pt;font-family:Arial,sans-serif;color:rgb(0,176,240)">=C2=A0</span></b=
+></p><p class=3D"MsoNormal" style=3D"margin:0cm 0cm 8pt;text-align:justify;=
+line-height:normal;font-size:11pt;font-family:Calibri,sans-serif"><b><span =
+style=3D"font-size:12pt;font-family:Arial,sans-serif;color:rgb(0,176,240)">=
+SPECIAL SESSION CHAIRS:</span></b></p><p class=3D"MsoNormal" style=3D"margi=
+n:0cm;text-align:justify;line-height:normal;font-size:11pt;font-family:Cali=
+bri,sans-serif"><span style=3D"font-size:12pt;font-family:Arial,sans-serif"=
+>Salma Jamoussi (University of Sfax, Tunisia)</span></p><p class=3D"MsoNorm=
+al" style=3D"margin:0cm;text-align:justify;line-height:normal;font-size:11p=
+t;font-family:Calibri,sans-serif"><span style=3D"font-size:12pt;font-family=
+:Arial,sans-serif">Hanen Ameur (University of Sfax, Tunisia)</span></p><p c=
+lass=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;line-height:norma=
+l;font-size:11pt;font-family:Calibri,sans-serif"><span style=3D"font-size:1=
+2pt;font-family:Arial,sans-serif">Hasna Njah (University of Gabes, Tunisia)=
+</span></p><font color=3D"#888888"><div><br></div></font><div><br></div>-- =
+<br><div dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_sign=
+ature">Dr. Ing. Salma Jamoussi<br>Ma=C3=AEtre de conf=C3=A9rences en Inform=
+atique<br>Institut Sup=C3=A9rieur d&#39;Informatique et Multim=C3=A9dia de =
+Sfax<br><br>Membre du laboratoire MIRACL<br><a href=3D"http://www.miracl.rn=
+u.tn" target=3D"_blank">http://www.miracl.rnu.tn</a><br><br>Adresse : P=C3=
+=B4le Technologique de Sfax<br>BP 242 - 3021, Sakiet Ezzit Sfax. TUNISIE<br=
+>--</div></div>
+
+--0000000000008ec96405d8ca2073--

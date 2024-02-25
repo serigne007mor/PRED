@@ -1,0 +1,305 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (bouncesmtp2.u12.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 71B0214014F0
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Sat,  6 May 2023 14:48:06 +0200 (CEST)
+Received: from mx3.localdomain (MX3.univ-nantes.fr [193.52.101.137])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id 6C4395F9B
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Sat,  6 May 2023 14:48:06 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.localdomain (Postfix) with ESMTP id 5F90220A2D
+	for <liste-egc@polytech.univ-nantes.fr>; Sat,  6 May 2023 14:48:06 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -2.369
+X-Spam-Level:
+X-Spam-Status: No, score=-2.369 tagged_above=-1000 required=5
+	tests=[CRM114_GOOD=-5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	J_BACKHAIR_41=1, J_BACKHAIR_45=1, MR_NOT_ATTRIBUTED_IP=0.2,
+	NO_RDNS=0.5, NO_RDNS2=0.01, RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001,
+	SPF_PASS=-0.001, T_REMOTE_IMAGE=0.01, UN_PHISHING_PW=0.1]
+	autolearn=disabled
+X-CRM114-Status: GOOD ( 12.1738 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=unicaen.fr
+Received: from mx3.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id QOtCw4GaF1_S for <liste-egc@polytech.univ-nantes.fr>;
+	Sat,  6 May 2023 14:48:04 +0200 (CEST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=194.199.107.75; helo=mailout.unicaen.fr; envelope-from=olivier.lezoray@unicaen.fr; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=none dis=none) header.from=unicaen.fr
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=olivier.lezoray@unicaen.fr
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (1024-bit key; unprotected) header.d=unicaen.fr header.i=@unicaen.fr header.b="ThZVOCN+";
+	dkim-atps=neutral
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mailout.unicaen.fr (mailout.unicaen.fr [194.199.107.75])
+	by mx3.localdomain (Postfix) with ESMTP id 1DC8620615
+	for <liste-egc@polytech.univ-nantes.fr>; Sat,  6 May 2023 14:48:04 +0200 (CEST)
+Received: from wzproxy1.unicaen.fr (wzproxy1.unicaen.fr [193.55.120.52])
+	by mailout.unicaen.fr (Postfix) with ESMTP id DBA8F857A1;
+	Sat,  6 May 2023 14:48:03 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=unicaen.fr; s=mail;
+	t=1683377283; bh=GC4XcjXXoYc18NfHLD5fbSGCrddbww38ojyLeILOfDI=;
+	h=From:Subject:Date:To:From;
+	b=ThZVOCN+syThJ33kDK8I68Tc2POldcSYc2eGzy9u+l/ESwdgjGgarQjqqvg8PXjQw
+	 wvA51uEX8sBftWNjqStjGn4FTaRY6R5tx1XOvZpXLKnyCrUcM6dfHEq2fM7av8WwGL
+	 InzaS1sEbJJie6DTFeWmo4t7dfH9GomBL0rA/ipM=
+Received: from localhost (localhost [127.0.0.1])
+	by wzproxy1.unicaen.fr (Postfix) with ESMTP id C94B366F9C;
+	Sat,  6 May 2023 14:48:03 +0200 (CEST)
+X-Amavis-Modified: Mail body modified (using disclaimer) - wzproxy1.unicaen.fr
+X-Virus-Scanned: amavisd-new at wzproxy1.unicaen.fr
+Received: from wzproxy1.unicaen.fr ([127.0.0.1])
+	by localhost (wzproxy1.unicaen.fr [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id 7HC_0rjbskit; Sat,  6 May 2023 14:48:03 +0200 (CEST)
+Received: from lsmtp1.unicaen.fr (lsmtp1.unicaen.fr [193.55.120.32])
+	by wzproxy1.unicaen.fr (Postfix) with ESMTP id 8C32F66F88;
+	Sat,  6 May 2023 14:48:03 +0200 (CEST)
+Received: from [192.168.0.24] (unknown [88.170.169.39])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by lsmtp1.unicaen.fr (Postfix) with ESMTPSA id D3A871001C9;
+	Sat,  6 May 2023 14:47:50 +0200 (CEST)
+From: lezoray <olivier.lezoray@unicaen.fr>
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_0337BEFF-32BE-4EF7-A7CC-8EA027B70D91"
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.7\))
+Message-Id: <79D7543D-4776-412D-A279-ACA1384C807F@unicaen.fr>
+Date: Sat, 6 May 2023 14:47:50 +0200
+To: cvml@lists.auth.gr,
+ visionlist@visionscience.com,
+ cvnet@mail.ewind.com,
+ multicomm@comsoc.org,
+ info-ic@listes.irisa.fr,
+ liste-egc@polytech.univ-nantes.fr,
+ bull-ia@gdria.fr,
+ bull-i3@irit.fr,
+ liste-proml@lri.fr,
+ annonces@listes.societe-informatique-de-france.fr,
+ ssfam@framalistes.org
+X-Mailer: Apple Mail (2.3608.120.23.2.7)
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Ph.D. Thesis proposal on Latent representation
+ manipulation for face editing in images and videos
+
+
+--Apple-Mail=_0337BEFF-32BE-4EF7-A7CC-8EA027B70D91
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
+
+Ph.D. Thesis proposal - University of Caen Normandu (UNICAEN) and GREYC =
+Research Lab - IMAGE and SAFE Teams - 2023
+
+Subject:=20
+	Latent representation manipulation for face editing in images =
+and videos
+
+Team and Lab:
+	IMAGE tream, GREYC (UMR CNRS 6072) Research lab.
+
+Thesis advisors:=20
+	Christophe Charrier (Associate Professor at UNICAEN),=20
+	Olivier L=C3=A9zoray (Full Professor at UNICAEN),
+	S=C3=A9bastien Bougleux (Associate Professor at UNICAEN)
+
+Emails:=20
+	=
+{christophe.charrier,olivier.lezoray,sebastien.bougleux}@unicaen.fr
+PhD thesis subject:=20
+A generative AI is a machine learning algorithm that can generate =
+content such as images or text. They are used in many fields and some of =
+them have received a lot of attention from the scientific and general =
+public communities. Face image generative AIs can be considered to edit =
+an existing face, i.e., to modify the characteristics of a person=E2=80=99=
+s face. In this thesis we propose to investigate the editing of facial =
+attributes for biometric recognition. The editing of facial attributes =
+of the searched person could then allow to improve the performance of =
+face recognition by adding or removing facial attributes. The thesis =
+work will focus on the de- velopment of new methods for editing facial =
+attributes of faces with guarantees regarding the preservation of =
+biometric properties. These methods will be applied to improve the =
+search for people in databases, by counte- racting possible changes in =
+the appearance of faces.
+
+Qualifications:
+Candidates must have an MSc or engineering degree in a field related to =
+computer science, electrical engineering, or applied mathematics, with =
+strong programming skills (in particular with deep learning frameworks). =
+Experience with image processing and/or biometrics will be a plus. =
+Candidates are expected to have abilities to write scientific reports =
+and communicate research results at conferences in English.
+
+Information and application:=20
+Applications should include the following documents in electronic format =
+: i) A short motivation letter stating why you are interested in this =
+thesis, ii) A detailed CV describing your experience / research =
+background related to the position iii) The transcripts for master =
+degrees. iv) The contact information for three references (do not =
+include the reference letters with your applications as we will only ask =
+for the reference letters for short-listed candidates). Please send your =
+application package by email to the co-advisors.
+
+Location:
+The position will start in October 2023, and will be located in Caen, =
+France. Ideally located in the heart of Normandy, two hours from Paris =
+and just 10 minutes away from the beaches, Caen, William the =
+Conqueror=E2=80=99s hometown, is a lively and dynamic city.
+
+Olivier L=C3=89ZORAY
+Full Professor of Computer Science=20
+
+University of Caen Normandy
+West Normandy Institute of Technology
+Multimedia and Internet Department
+F-50000 SAINT-L=C3=94+33(0)233775514 <tel:+33 2 33 77 55 14>	GREYC =
+UMR CNRS 6072
+Image Team - ENSICAEN
+6 Bd. Marechal Juin
+F-14000 CAEN+33(0)231452927 <tel:+33 2 31 45 29 27>
+ <https://linkedin.com/in/olivier-lezoray-0983114/>	 =
+<skype:olezoray>https://lezoray.users.greyc.fr =
+<https://lezoray.users.greyc.fr/>
+ <https://unicaen.fr/>
+
+=0A
+--Apple-Mail=_0337BEFF-32BE-4EF7-A7CC-8EA027B70D91
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
+charset=3Dutf-8"></head><body style=3D"word-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;" class=3D""><div =
+class=3D"">Ph.D. Thesis proposal - University of Caen Normandu (UNICAEN) =
+and GREYC Research Lab - IMAGE and SAFE Teams - 2023</div><div =
+class=3D""><br class=3D""></div><div class=3D"">Subject:&nbsp;</div><div =
+class=3D""><span class=3D"Apple-tab-span" style=3D"white-space:pre">	=
+</span>Latent representation manipulation for face editing in images and =
+videos</div><div class=3D""><br class=3D""></div><div class=3D"">Team =
+and Lab:</div><div class=3D""><span class=3D"Apple-tab-span" =
+style=3D"white-space:pre">	</span>IMAGE tream, GREYC (UMR CNRS =
+6072) Research lab.</div><div class=3D""><br class=3D""></div><div =
+class=3D"">Thesis advisors:&nbsp;</div><div class=3D""><span =
+class=3D"Apple-tab-span" style=3D"white-space:pre">	=
+</span>Christophe Charrier (Associate Professor at =
+UNICAEN),&nbsp;</div><div class=3D""><span class=3D"Apple-tab-span" =
+style=3D"white-space:pre">	</span>Olivier L=C3=A9zoray (Full =
+Professor at UNICAEN),</div><div class=3D""><span class=3D"Apple-tab-span"=
+ style=3D"white-space:pre">	</span>S=C3=A9bastien Bougleux =
+(Associate Professor at UNICAEN)</div><div class=3D""><br =
+class=3D""></div><div class=3D"">Emails:&nbsp;</div><div class=3D""><span =
+class=3D"Apple-tab-span" style=3D"white-space:pre">	=
+</span>{christophe.charrier,olivier.lezoray,<a =
+href=3D"mailto:sebastien.bougleux}@unicaen.fr" =
+class=3D"">sebastien.bougleux}@unicaen.fr</a></div><div class=3D"">PhD =
+thesis subject:&nbsp;</div><div class=3D"">A generative AI is a machine =
+learning algorithm that can generate content such as images or text. =
+They are used in many fields and some of them have received a lot of =
+attention from the scientific and general public communities. Face image =
+generative AIs can be considered to edit an existing face, i.e., to =
+modify the characteristics of a person=E2=80=99s face. In this thesis we =
+propose to investigate the editing of facial attributes for biometric =
+recognition. The editing of facial attributes of the searched person =
+could then allow to improve the performance of face recognition by =
+adding or removing facial attributes. The thesis work will focus on the =
+de- velopment of new methods for editing facial attributes of faces with =
+guarantees regarding the preservation of biometric properties. These =
+methods will be applied to improve the search for people in databases, =
+by counte- racting possible changes in the appearance of =
+faces.</div><div class=3D""><br class=3D""></div><div =
+class=3D"">Qualifications:</div><div class=3D"">Candidates must have an =
+MSc or engineering degree in a field related to computer science, =
+electrical engineering, or applied mathematics, with strong programming =
+skills (in particular with deep learning frameworks). Experience with =
+image processing and/or biometrics will be a plus. Candidates are =
+expected to have abilities to write scientific reports and communicate =
+research results at conferences in English.</div><div class=3D""><br =
+class=3D""></div><div class=3D"">Information and =
+application:&nbsp;</div><div class=3D"">Applications should include the =
+following documents in electronic format : i) A short motivation letter =
+stating why you are interested in this thesis, ii) A detailed CV =
+describing your experience / research background related to the position =
+iii) The transcripts for master degrees. iv) The contact information for =
+three references (do not include the reference letters with your =
+applications as we will only ask for the reference letters for =
+short-listed candidates). Please send your application package by email =
+to the co-advisors.</div><div class=3D""><br class=3D""></div><div =
+class=3D"">Location:</div><div class=3D"">The position will start in =
+October 2023, and will be located in Caen, France. Ideally located in =
+the heart of Normandy, two hours from Paris and just 10 minutes away =
+from the beaches, Caen, William the Conqueror=E2=80=99s hometown, is a =
+lively and dynamic city.</div><div class=3D""><br class=3D""></div><div =
+class=3D"">
+<hr class=3D"">
+<table width=3D"500" cellspacing=3D"0" cellpadding=3D"0" class=3D"">=20
+	<tbody class=3D""><tr class=3D""> <td style=3D"vertical-align: =
+top; text-align:left;color:#000000;font-size:12px;font-family:helvetica, =
+arial;; text-align:left" class=3D"">=20
+		<span class=3D""><b class=3D""><span =
+style=3D"color:#000000;font-size:15px;font-family:helvetica, arial" =
+class=3D"">Olivier L=C3=89ZORAY</span></b><br class=3D""> Full Professor =
+of Computer Science</span> <br class=3D""><br class=3D"">=20
+
+		<span =
+style=3D"color:#000000;font-size:15px;font-family:helvetica, arial" =
+class=3D""><b class=3D"">University of Caen Normandy</b>
+		<table class=3D"">
+		<tbody class=3D""><tr =
+style=3D"font-size:8pt;font-family:helvetica, arial" class=3D"">
+			<td class=3D"">West Normandy Institute of =
+Technology<br class=3D"">Multimedia and Internet Department<br =
+class=3D"">F-50000 SAINT-L=C3=94
+			<a href=3D"tel:+33 2 33 77 55 14" =
+style=3D"color:#3388cc;text-decoration:none" =
+class=3D"">+33(0)233775514</a>
+			</td>
+			<td class=3D"">
+				GREYC UMR CNRS 6072<br class=3D"">Image =
+Team - ENSICAEN<br class=3D"">6 Bd. Marechal Juin<br class=3D"">F-14000 =
+CAEN
+				<a href=3D"tel:+33 2 31 45 29 27" =
+style=3D"color:#3388cc;text-decoration:none" =
+class=3D"">+33(0)231452927</a>
+			</td>
+		</tr>
+		</tbody></table>
+		</span>
+
+		<table cellpadding=3D"0" border=3D"0" class=3D""><tbody =
+class=3D""><tr class=3D""><td style=3D"padding-right:4px" class=3D""><a =
+href=3D"https://linkedin.com/in/olivier-lezoray-0983114/" =
+style=3D"display: inline-block" class=3D""><img width=3D"30" height=3D"30"=
+ src=3D"https://s1g.s3.amazonaws.com/7583fe34c2ad59e0367b6f4773f07bf3.png"=
+ alt=3D"LinkedIn" style=3D"border:none" class=3D""></a></td><td =
+style=3D"padding-right:4px" class=3D""><a href=3D"skype:olezoray" =
+style=3D"display: inline-block" class=3D""><img width=3D"30" height=3D"30"=
+ src=3D"https://s1g.s3.amazonaws.com/7b0d8c63303d92a487c23d47895fec48.png"=
+ alt=3D"Skype" style=3D"border:none" =
+class=3D""></a></td></tr></tbody></table><a =
+href=3D"https://lezoray.users.greyc.fr" =
+style=3D"text-decoration:none;color:#3388cc" =
+class=3D"">https://lezoray.users.greyc.fr</a><br class=3D""> </td> <td =
+style=3D"border-right:solid #000000 2px" width=3D"12" class=3D""></td>=20=
+
+
+		<td width=3D"138" =
+style=3D"vertical-align:top;padding-left:10px" class=3D""><a =
+style=3D"display:inline-block" href=3D"https://unicaen.fr" class=3D""><img=
+ style=3D"border:none" width=3D"138" =
+src=3D"https://s1g.s3.amazonaws.com/a85db239c732c19b92021c4f24668e70.png" =
+class=3D""></a></td>=20
+
+	</tr>=20
+</tbody></table>=20
+</div>
+<br class=3D"">
+<br>=
+=0A<br>=
+</body></html>=
+
+--Apple-Mail=_0337BEFF-32BE-4EF7-A7CC-8EA027B70D91--

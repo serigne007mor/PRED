@@ -1,0 +1,1261 @@
+Return-Path: <raja.chiky@isep.fr>
+X-Original-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (BounceSMTP1.univ-nantes.prive [172.20.12.66])
+	by sympa6.univ-nantes.prive (Postfix) with ESMTP id A4C612292950
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Mon, 18 Feb 2019 10:03:53 +0100 (CET)
+Received: from mx2.d101.univ-nantes.fr (MX2.univ-nantes.fr [193.52.101.136])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id 21E5C608879
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Mon, 18 Feb 2019 10:03:55 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTP id 9BFB6B4B124;
+	Mon, 18 Feb 2019 10:03:53 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 0.32
+X-Spam-Level:
+X-Spam-Status: No, score=0.32 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, HTML_MESSAGE=0.001, MR_NOT_ATTRIBUTED_IP=0.2,
+	NO_RDNS2=0.01, RCVD_IN_WSFF=0.01, SPF_PASS=-0.001, UN_PHISHING_PW=0.1]
+	autolearn=disabled
+X-CRM114-Status: UNSURE ( 0.6559 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=isep.fr
+Received: from mx2.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Jvey9XzZC5aB; Mon, 18 Feb 2019 10:03:51 +0100 (CET)
+X-Greylist: from auto-whitelisted by SQLgrey-1.6.7
+X-Greylist: from auto-whitelisted by SQLgrey-1.6.7
+Received: from herbie.isep.fr (herbie.isep.fr [89.251.55.122])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTPS id E53126523E0;
+	Mon, 18 Feb 2019 10:03:50 +0100 (CET)
+Received: from herbie.isep.fr (localhost [127.0.0.1])
+	by herbie.isep.fr (Postfix) with ESMTP id 9C97360C9F;
+	Mon, 18 Feb 2019 10:03:48 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=isep.fr; s=herbie;
+	t=1550480628; bh=ClyIdwEKie5PCnhDzkVIqAWMaEz8QXKyLaM3dACOwH8=;
+	h=Date:From:To:In-Reply-To:References:Subject:From;
+	b=tWYV6KDan7FhnlRcNPbNH7UMK41Kj/fVwXdPkIiZ8wnsC4XLF1dsWbXxaxo2nJKt+
+	 iLLiwG/vZrXQDT8qVEs7f5RW3WuOvpxY70cXnlnGrbBIcN06vYdK8ZxouCZNHxF33w
+	 FFUFDZxZACfL1l3ZpMJJyBAXxG0hf81VpgoMy+lbA0Q0rhukOJ5nI2r6Kdvdg4fiPf
+	 esXs0O65dLm56PyP0wkNtnTvs1f3IyVB9/qqSPegUJQsG4NSH7cW/5e3VDJIrTfxGn
+	 jVXeKeTXgdiPVBDg35WvshOqvGdQXbAvbc6P6PfBw5IlOUrxLVZsDThJa8u5ptWROZ
+	 RLUPI7db03DoA==
+Received: from zimbra.isep.fr (zimbra.isep.fr [172.18.122.83])
+	by herbie.isep.fr (Postfix) with ESMTP id 6452E60C70;
+	Mon, 18 Feb 2019 10:03:47 +0100 (CET)
+Received: from zimbra.isep.fr (localhost.localdomain [127.0.0.1])
+	by zimbra.isep.fr (Postfix) with ESMTPS id 0E2A5E04D91;
+	Mon, 18 Feb 2019 10:03:47 +0100 (CET)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by zimbra.isep.fr (Postfix) with ESMTP id 663F9E04D78;
+	Mon, 18 Feb 2019 10:03:46 +0100 (CET)
+Received: from zimbra.isep.fr ([127.0.0.1])
+	by localhost (zimbra.isep.fr [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id GXEeHI7KTEna; Mon, 18 Feb 2019 10:03:46 +0100 (CET)
+Received: from zimbra.isep.fr (zimbra.isep.fr [172.18.122.83])
+	by zimbra.isep.fr (Postfix) with ESMTP id D6DCDE04D7F;
+	Mon, 18 Feb 2019 10:03:44 +0100 (CET)
+Date: Mon, 18 Feb 2019 10:03:44 +0100 (CET)
+From: Raja Chiky <raja.chiky@isep.fr>
+To: matthieu rousseau <matthieu.rousseau@isep.fr>, 
+	antoine de barruel <antoine.de.barruel@outlook.fr>, 
+	raja chiky <raja.chiky@isep.fr>
+Message-ID: <378558679.16056.1550480624723.JavaMail.zimbra@isep.fr>
+In-Reply-To: <370287840.9718.1550476831678.JavaMail.zimbra@isep.fr>
+References: <370287840.9718.1550476831678.JavaMail.zimbra@isep.fr>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="=_1cff436c-2f5a-42dc-906d-2ce666c41a81"
+X-Originating-IP: [88.191.18.4, 192.168.50.59]
+X-Mailer: Zimbra 8.8.11_GA_3772 (ZimbraWebClient - FF64 (Mac)/8.8.11_GA_3737)
+Thread-Topic: Erratum: Hackathon IA - Marketing and Environment challenges
+Thread-Index: ggnKF5P88V53ZxEAcCWDosYkAv7sDSm8nulN
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Erratum: Hackathon IA - Marketing and Environment
+ challenges
+
+--=_1cff436c-2f5a-42dc-906d-2ce666c41a81
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+Avec le bon lien pour l'enregistrement=20
+
+https://www.eventbrite.fr/e/billets-hackathon-intelligence-artificielle-ise=
+p-56410369935=20
+
+Cordialement,=20
+Raja CHIKY=20
+
+
+De: "raja chiky" <raja.chiky@isep.fr>=20
+=C3=80: "matthieu rousseau" <matthieu.rousseau@isep.fr>, "antoine de barrue=
+l" <antoine.de.barruel@outlook.fr>, "raja chiky" <raja.chiky@isep.fr>=20
+Envoy=C3=A9: Lundi 18 F=C3=A9vrier 2019 09:00:31=20
+Objet: Hackathon IA - Marketing and Environment challenges=20
+
+
+Bonjour/Hello=20
+
+(English version below)=20
+
+
+Venez d=C3=A9velopper vos comp=C3=A9tences en intelligence artificielle en =
+participant =C3=A0 un hackathon encadr=C3=A9 par des entreprises =C3=A0 la =
+pointe de l'innovation. Ouvert =C3=A0 tous niveaux.=20
+
+L=E2=80=99Intelligence artificielle IA est aujourd=E2=80=99hui au coeur des=
+ pr=C3=A9occupations. Ses cons=C3=A9quences sur notre soci=C3=A9t=C3=A9 son=
+t immenses et c=E2=80=99est ce qui la rend incontournable. Souvent consid=
+=C3=A9r=C3=A9e comme source d=E2=80=99une quatri=C3=A8me r=C3=A9volution in=
+dustrielle, elle impactera ind=C3=A9niablement chaque secteur : industrie, =
+sant=C3=A9, transport, environnement=E2=80=A6=20
+
+Face =C3=A0 la mont=C3=A9e d'une telle technologie et d'un potentiel boulev=
+ersement de notre soci=C3=A9t=C3=A9, de nombreuses craintes et fantasmes vo=
+ient le jour. Malgr=C3=A9 toutes ces hypoth=C3=A8ses, une chose est s=C3=BB=
+re, l=E2=80=99IA regroupe des concepts math=C3=A9matiques r=C3=A9els. Compr=
+endre ces concepts permet de mieux appr=C3=A9hender quels sont les r=C3=A9e=
+ls atouts du d=C3=A9veloppement de cette technologie.=20
+
+Fort de leur volont=C3=A9 de contribuer =C3=A0 l=E2=80=99innovation et =C3=
+=A0 sa d=C3=A9mocratisation, GarageISEP et l=E2=80=99ISEP vous proposent d=
+=E2=80=99approfondir vos connaissances techniques en intelligence artificie=
+lle en travaillant sur des probl=C3=A9matiques concr=C3=A8tes : L'environne=
+ment et le marketing.=20
+
+Ce hackathon durera le temps d=E2=80=99un weekend :=20
+
+Vendredi=20
+17h30 - 19h30 pr=C3=A9sentation g=C3=A9n=C3=A9rale de l=E2=80=99IA par Mr J=
+ulien Simon, Data Evangelist chez Amazon et pr=C3=A9sentation des sujets du=
+ hackathon=20
+19h30 - 21h30 Networking=20
+
+Samedi=20
+9h - 12h Time to hack=20
+12h - 13h D=C3=A9jeuner=20
+13h - 21h Time to hack=20
+
+Dimanche=20
+9h - 10h Accueil des participants=20
+10h - 12h Pr=C3=A9sentation des projets=20
+12h - 14h D=C3=A9jeuner et remise des prix=20
+
+
+Cet Hackathon sera l=E2=80=99occasion de vous former sur des framework de d=
+eep-learning : Tensorflow, Keras ou Pytorch pour les plus audacieux=E2=80=
+=A6 Amazon Web Service vous ouvre ses services et plateformes pour entra=C3=
+=AEner vos mod=C3=A8les; une occasion pour vous former sur AWS.=20
+
+Enfin, vous d=C3=A9couvrirez aussi les concepts math=C3=A9matiques qui se c=
+achent derri=C3=A8re le machine learning.=20
+
+L=E2=80=99=C3=A9v=C3=A9nement est ouvert =C3=A0 tous, que vous ayez envie d=
+e d=C3=A9couvrir ce domaine ou que vous soyez d=C3=A9j=C3=A0 exp=C3=A9rimen=
+t=C3=A9. Deux challenges seront propos=C3=A9s, un challenge innovation (d=
+=C3=A9butant) et un challenge technique (exp=C3=A9riment=C3=A9).=20
+
+Les repas seront offerts et 2000=E2=82=AC de prix sont =C3=A0 gagner.=20
+
+Ce hackathon se d=C3=A9roulera dans nos locaux d=E2=80=99Issy les Moulineau=
+x au 10 rue de Vanves.=20
+
+Des mentors et experts passeront dans les =C3=A9quipes afin d'apporter des =
+conseils techniques et fonctionnels aux participants.=20
+
+Pour vous inscrire avant le 15 mars 2019=20
+https://www.eventbrite.fr/e/billets-hackathon-intelligence-artificielle-ise=
+p-56410369935=20
+
+---------------------------------------------------------------------------=
+--------------=20
+
+
+Develop your artificial intelligence skills by participating in a hackathon=
+ supervised by companies at the forefront of innovation. Open to all levels=
+.=20
+
+(It is possible to participate only at the conference)=20
+
+Artificial Intelligence is today at the heart of the concerns. Its conseque=
+nces on our society are huge and that makes it an essential subject. Often =
+considered as the source of a fourth industrial revolution, it will undenia=
+bly impact each sector: industry, health, transport, environment ...=20
+
+In response to the rise of such technology and potential disruption of our =
+society, many fears and fantasies are emerging. In spite of all these assum=
+ptions, one thing is certain, the AI =E2=80=8B=E2=80=8Bgathers real mathema=
+tical concepts, understand those concepts will allow us to understand what =
+are the real assets of the development of artificial intelligence.=20
+
+To contribute to innovation and its democratization, GarageISEP and ISEP of=
+fer you to deepen your technical knowledge in Artificial Intelligence by wo=
+rking on concrete issues: Environment and Marketing.=20
+
+This hackathon will last for a weekend:=20
+
+Friday=20
+17h30 - 19h30 general presentation of AI by Mr. Julien Simon, data evangeli=
+st at Amazon and presentation of the challenges=20
+19h30-21h30 Networking=20
+
+Saturday=20
+9h - 12h Time to hack=20
+12h - 13h Lunch=20
+13h - 21h Time to hack=20
+
+Sunday=20
+9h - 10h Welcoming of participants=20
+10h - 12h Presentation of the projects=20
+12h - 14h Lunch and Winners announcement=20
+
+
+You will be able to develop your skills on deep learning frameworks : Tenso=
+rflow, Keras or Pytorch for the most daring=E2=80=A6 Amazon Web Service wil=
+l offer you to train your models on their platform, which will also permit =
+you to learn how to use AWS.=20
+
+Finally, you will discover the mathematical concepts behind machine learnin=
+g.=20
+
+The event is open to everyone, whether you want to discover this field or y=
+ou are experienced in it. Two challenges will be proposed, an innovation ch=
+allenge (beginner) and a technical challenge (experienced).=20
+
+We offer the lunch and coffee break. 2000 =E2=82=AC of prize are up to grab=
+.=20
+
+This hackathon will take place in our premises in Issy les Moulineaux at 10=
+ rue de Vanves.=20
+
+Mentors and experts will be present during the event and bring the teams te=
+chnical and functional advices.=20
+
+To register before 15th march, 2019=20
+https://www.eventbrite.fr/e/billets-hackathon-intelligence-artificielle-ise=
+p-56410369935=20
+
+
+
+AI Hackathon Team=20
+--=20
+---------------=20
+Raja CHIKY=20
+Directrice de la recherche=20
+Responsable du parcours Innovation et Cr=C3=A9ation d'Entreprise=20
+01.49.54.52.34=20
+06.84.67.45.95=20
+
+
+
+--=_1cff436c-2f5a-42dc-906d-2ce666c41a81
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><body><div style=3D"font-family: Arial; font-size: 12pt; color: #0000=
+00"><div>Avec le bon lien pour l'enregistrement<br></div><div><br data-mce-=
+bogus=3D"1"></div><div>https://www.eventbrite.fr/e/billets-hackathon-intell=
+igence-artificielle-isep-56410369935<br data-mce-bogus=3D"1"></div><div><br=
+ data-mce-bogus=3D"1"></div><div>Cordialement,<br data-mce-bogus=3D"1"></di=
+v><div>Raja CHIKY<br data-mce-bogus=3D"1"></div><div><br></div><hr id=3D"zw=
+chr" data-marker=3D"__DIVIDER__"><div data-marker=3D"__HEADERS__"><b>De: </=
+b>"raja chiky" &lt;raja.chiky@isep.fr&gt;<br><b>=C3=80: </b>"matthieu rouss=
+eau" &lt;matthieu.rousseau@isep.fr&gt;, "antoine de barruel" &lt;antoine.de=
+.barruel@outlook.fr&gt;, "raja chiky" &lt;raja.chiky@isep.fr&gt;<br><b>Envo=
+y=C3=A9: </b>Lundi 18 F=C3=A9vrier 2019 09:00:31<br><b>Objet: </b>Hackathon=
+ IA - Marketing and Environment challenges<br></div><div><br></div><div dat=
+a-marker=3D"__QUOTED_TEXT__"><div style=3D"font-family: Arial; font-size: 1=
+2pt; color: #000000"><div><div style=3D"caret-color: #000000; color: #00000=
+0; font-family: Helvetica; font-size: 14px; font-style: normal; font-varian=
+t-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto;=
+ text-align: start; text-indent: 0px; text-transform: none; white-space: no=
+rmal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -web=
+kit-text-stroke-width: 0px; text-decoration: none;"><br class=3D"Apple-inte=
+rchange-newline">Bonjour/Hello</div><div style=3D"caret-color: #000000; col=
+or: #000000; font-family: Helvetica; font-size: 14px; font-style: normal; f=
+ont-variant-caps: normal; font-weight: normal; letter-spacing: normal; orph=
+ans: auto; text-align: start; text-indent: 0px; text-transform: none; white=
+-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: =
+auto; -webkit-text-stroke-width: 0px; text-decoration: none;"><br></div><di=
+v style=3D"caret-color: #000000; color: #000000; font-family: Helvetica; fo=
+nt-size: 14px; font-style: normal; font-variant-caps: normal; font-weight: =
+normal; letter-spacing: normal; orphans: auto; text-align: start; text-inde=
+nt: 0px; text-transform: none; white-space: normal; widows: auto; word-spac=
+ing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; t=
+ext-decoration: none;">(English version below)</div><div style=3D"caret-col=
+or: #000000; color: #000000; font-family: Helvetica; font-size: 14px; font-=
+style: normal; font-variant-caps: normal; font-weight: normal; letter-spaci=
+ng: normal; orphans: auto; text-align: start; text-indent: 0px; text-transf=
+orm: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-te=
+xt-size-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: none=
+;"><br></div><div style=3D"caret-color: #000000; color: #000000; font-famil=
+y: Helvetica; font-size: 14px; font-style: normal; font-variant-caps: norma=
+l; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: =
+start; text-indent: 0px; text-transform: none; white-space: normal; widows:=
+ auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stro=
+ke-width: 0px; text-decoration: none;"><br></div><span style=3D"caret-color=
+: #000000; color: #000000; font-family: Helvetica; font-size: 14px; font-st=
+yle: normal; font-variant-caps: normal; font-weight: normal; letter-spacing=
+: normal; orphans: auto; text-align: start; text-indent: 0px; text-transfor=
+m: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text=
+-size-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: none; =
+display: inline !important; float: none;">Venez d=C3=A9velopper vos comp=C3=
+=A9tences en intelligence artificielle en participant =C3=A0 un&nbsp;hackat=
+hon</span><span style=3D"caret-color: #000000; color: #000000; font-family:=
+ Helvetica; font-size: 14px; font-style: normal; font-variant-caps: normal;=
+ font-weight: normal; letter-spacing: normal; orphans: auto; text-align: st=
+art; text-indent: 0px; text-transform: none; white-space: normal; widows: a=
+uto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke=
+-width: 0px; text-decoration: none; display: inline !important; float: none=
+;">&nbsp;encadr=C3=A9 par des entreprises =C3=A0 la pointe de l'innovation.=
+ Ouvert =C3=A0 tous niveaux.</span><br style=3D"caret-color: #000000; color=
+: #000000; font-family: Helvetica; font-size: 14px; font-style: normal; fon=
+t-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphan=
+s: auto; text-align: start; text-indent: 0px; text-transform: none; white-s=
+pace: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: au=
+to; -webkit-text-stroke-width: 0px; text-decoration: none;"><br style=3D"ca=
+ret-color: #000000; color: #000000; font-family: Helvetica; font-size: 14px=
+; font-style: normal; font-variant-caps: normal; font-weight: normal; lette=
+r-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text=
+-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -we=
+bkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-decoratio=
+n: none;"><span style=3D"caret-color: #000000; color: #000000; font-family:=
+ Helvetica; font-size: 14px; font-style: normal; font-variant-caps: normal;=
+ font-weight: normal; letter-spacing: normal; orphans: auto; text-align: st=
+art; text-indent: 0px; text-transform: none; white-space: normal; widows: a=
+uto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke=
+-width: 0px; text-decoration: none; display: inline !important; float: none=
+;">L=E2=80=99Intelligence artificielle IA est aujourd=E2=80=99hui au coeur =
+des pr=C3=A9occupations. Ses cons=C3=A9quences sur notre soci=C3=A9t=C3=A9 =
+sont immenses et c=E2=80=99est ce qui la rend incontournable. Souvent consi=
+d=C3=A9r=C3=A9e comme source d=E2=80=99une quatri=C3=A8me r=C3=A9volution i=
+ndustrielle, elle impactera ind=C3=A9niablement chaque secteur : industrie,=
+ sant=C3=A9, transport, environnement=E2=80=A6&nbsp;</span><br style=3D"car=
+et-color: #000000; color: #000000; font-family: Helvetica; font-size: 14px;=
+ font-style: normal; font-variant-caps: normal; font-weight: normal; letter=
+-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-=
+transform: none; white-space: normal; widows: auto; word-spacing: 0px; -web=
+kit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration=
+: none;"><br style=3D"caret-color: #000000; color: #000000; font-family: He=
+lvetica; font-size: 14px; font-style: normal; font-variant-caps: normal; fo=
+nt-weight: normal; letter-spacing: normal; orphans: auto; text-align: start=
+; text-indent: 0px; text-transform: none; white-space: normal; widows: auto=
+; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-wi=
+dth: 0px; text-decoration: none;"><span style=3D"caret-color: #000000; colo=
+r: #000000; font-family: Helvetica; font-size: 14px; font-style: normal; fo=
+nt-variant-caps: normal; font-weight: normal; letter-spacing: normal; orpha=
+ns: auto; text-align: start; text-indent: 0px; text-transform: none; white-=
+space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: a=
+uto; -webkit-text-stroke-width: 0px; text-decoration: none; display: inline=
+ !important; float: none;">Face =C3=A0 la mont=C3=A9e d'une telle technolog=
+ie et d'un potentiel bouleversement de notre soci=C3=A9t=C3=A9, de nombreus=
+es craintes et fantasmes voient le jour. Malgr=C3=A9 toutes ces hypoth=C3=
+=A8ses, une chose est s=C3=BBre, l=E2=80=99IA regroupe des concepts math=C3=
+=A9matiques r=C3=A9els. Comprendre ces concepts permet de mieux appr=C3=A9h=
+ender quels sont les r=C3=A9els atouts du d=C3=A9veloppement de cette techn=
+ologie.</span><br style=3D"caret-color: #000000; color: #000000; font-famil=
+y: Helvetica; font-size: 14px; font-style: normal; font-variant-caps: norma=
+l; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: =
+start; text-indent: 0px; text-transform: none; white-space: normal; widows:=
+ auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stro=
+ke-width: 0px; text-decoration: none;"><br style=3D"caret-color: #000000; c=
+olor: #000000; font-family: Helvetica; font-size: 14px; font-style: normal;=
+ font-variant-caps: normal; font-weight: normal; letter-spacing: normal; or=
+phans: auto; text-align: start; text-indent: 0px; text-transform: none; whi=
+te-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust=
+: auto; -webkit-text-stroke-width: 0px; text-decoration: none;"><span style=
+=3D"caret-color: #000000; color: #000000; font-family: Helvetica; font-size=
+: 14px; font-style: normal; font-variant-caps: normal; font-weight: normal;=
+ letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px=
+; text-transform: none; white-space: normal; widows: auto; word-spacing: 0p=
+x; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-dec=
+oration: none; display: inline !important; float: none;">Fort de leur volon=
+t=C3=A9 de contribuer =C3=A0 l=E2=80=99innovation et =C3=A0 sa d=C3=A9mocra=
+tisation, GarageISEP et l=E2=80=99ISEP vous proposent d=E2=80=99approfondir=
+ vos connaissances techniques en intelligence artificielle en travaillant s=
+ur des probl=C3=A9matiques concr=C3=A8tes : L'environnement et le marketing=
+.</span><br style=3D"caret-color: #000000; color: #000000; font-family: Hel=
+vetica; font-size: 14px; font-style: normal; font-variant-caps: normal; fon=
+t-weight: normal; letter-spacing: normal; orphans: auto; text-align: start;=
+ text-indent: 0px; text-transform: none; white-space: normal; widows: auto;=
+ word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-wid=
+th: 0px; text-decoration: none;"><br style=3D"caret-color: #000000; color: =
+#000000; font-family: Helvetica; font-size: 14px; font-style: normal; font-=
+variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans:=
+ auto; text-align: start; text-indent: 0px; text-transform: none; white-spa=
+ce: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto=
+; -webkit-text-stroke-width: 0px; text-decoration: none;"><span style=3D"ca=
+ret-color: #000000; color: #000000; font-family: Helvetica; font-size: 14px=
+; font-style: normal; font-variant-caps: normal; font-weight: normal; lette=
+r-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text=
+-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -we=
+bkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-decoratio=
+n: none; display: inline !important; float: none;">Ce&nbsp;</span><span sty=
+le=3D"caret-color: #000000; color: #000000; font-family: Helvetica; font-si=
+ze: 14px; font-style: normal; font-variant-caps: normal; font-weight: norma=
+l; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0=
+px; text-transform: none; white-space: normal; widows: auto; word-spacing: =
+0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-d=
+ecoration: none; display: inline !important; float: none;">hackathon</span>=
+<span style=3D"caret-color: #000000; color: #000000; font-family: Helvetica=
+; font-size: 14px; font-style: normal; font-variant-caps: normal; font-weig=
+ht: normal; letter-spacing: normal; orphans: auto; text-align: start; text-=
+indent: 0px; text-transform: none; white-space: normal; widows: auto; word-=
+spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0p=
+x; text-decoration: none; display: inline !important; float: none;">&nbsp;d=
+urera le temps d=E2=80=99un weekend :</span><br style=3D"caret-color: #0000=
+00; color: #000000; font-family: Helvetica; font-size: 14px; font-style: no=
+rmal; font-variant-caps: normal; font-weight: normal; letter-spacing: norma=
+l; orphans: auto; text-align: start; text-indent: 0px; text-transform: none=
+; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-a=
+djust: auto; -webkit-text-stroke-width: 0px; text-decoration: none;"><br st=
+yle=3D"caret-color: #000000; color: #000000; font-family: Helvetica; font-s=
+ize: 14px; font-style: normal; font-variant-caps: normal; font-weight: norm=
+al; letter-spacing: normal; orphans: auto; text-align: start; text-indent: =
+0px; text-transform: none; white-space: normal; widows: auto; word-spacing:=
+ 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-=
+decoration: none;"><span style=3D"caret-color: #000000; color: #000000; fon=
+t-family: Helvetica; font-size: 14px; font-style: normal; font-variant-caps=
+: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-=
+align: start; text-indent: 0px; text-transform: none; white-space: normal; =
+widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-te=
+xt-stroke-width: 0px; text-decoration: none; display: inline !important; fl=
+oat: none;">Vendredi&nbsp;</span><br style=3D"caret-color: #000000; color: =
+#000000; font-family: Helvetica; font-size: 14px; font-style: normal; font-=
+variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans:=
+ auto; text-align: start; text-indent: 0px; text-transform: none; white-spa=
+ce: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto=
+; -webkit-text-stroke-width: 0px; text-decoration: none;"><span style=3D"ca=
+ret-color: #000000; color: #000000; font-family: Helvetica; font-size: 14px=
+; font-style: normal; font-variant-caps: normal; font-weight: normal; lette=
+r-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text=
+-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -we=
+bkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-decoratio=
+n: none; display: inline !important; float: none;">17h30 - 19h30 pr=C3=A9se=
+ntation g=C3=A9n=C3=A9rale de l=E2=80=99IA par Mr Julien Simon, Data Evange=
+list chez Amazon et pr=C3=A9sentation des sujets du&nbsp;</span><span style=
+=3D"caret-color: #000000; color: #000000; font-family: Helvetica; font-size=
+: 14px; font-style: normal; font-variant-caps: normal; font-weight: normal;=
+ letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px=
+; text-transform: none; white-space: normal; widows: auto; word-spacing: 0p=
+x; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-dec=
+oration: none; display: inline !important; float: none;">hackathon</span><b=
+r style=3D"caret-color: #000000; color: #000000; font-family: Helvetica; fo=
+nt-size: 14px; font-style: normal; font-variant-caps: normal; font-weight: =
+normal; letter-spacing: normal; orphans: auto; text-align: start; text-inde=
+nt: 0px; text-transform: none; white-space: normal; widows: auto; word-spac=
+ing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; t=
+ext-decoration: none;"><span style=3D"caret-color: #000000; color: #000000;=
+ font-family: Helvetica; font-size: 14px; font-style: normal; font-variant-=
+caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto; t=
+ext-align: start; text-indent: 0px; text-transform: none; white-space: norm=
+al; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webki=
+t-text-stroke-width: 0px; text-decoration: none; display: inline !important=
+; float: none;">19h30 - 21h30 Networking</span><br style=3D"caret-color: #0=
+00000; color: #000000; font-family: Helvetica; font-size: 14px; font-style:=
+ normal; font-variant-caps: normal; font-weight: normal; letter-spacing: no=
+rmal; orphans: auto; text-align: start; text-indent: 0px; text-transform: n=
+one; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-siz=
+e-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: none;"><br=
+ style=3D"caret-color: #000000; color: #000000; font-family: Helvetica; fon=
+t-size: 14px; font-style: normal; font-variant-caps: normal; font-weight: n=
+ormal; letter-spacing: normal; orphans: auto; text-align: start; text-inden=
+t: 0px; text-transform: none; white-space: normal; widows: auto; word-spaci=
+ng: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; te=
+xt-decoration: none;"><span style=3D"caret-color: #000000; color: #000000; =
+font-family: Helvetica; font-size: 14px; font-style: normal; font-variant-c=
+aps: normal; font-weight: normal; letter-spacing: normal; orphans: auto; te=
+xt-align: start; text-indent: 0px; text-transform: none; white-space: norma=
+l; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit=
+-text-stroke-width: 0px; text-decoration: none; display: inline !important;=
+ float: none;">Samedi</span><br style=3D"caret-color: #000000; color: #0000=
+00; font-family: Helvetica; font-size: 14px; font-style: normal; font-varia=
+nt-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto=
+; text-align: start; text-indent: 0px; text-transform: none; white-space: n=
+ormal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -we=
+bkit-text-stroke-width: 0px; text-decoration: none;"><span style=3D"caret-c=
+olor: #000000; color: #000000; font-family: Helvetica; font-size: 14px; fon=
+t-style: normal; font-variant-caps: normal; font-weight: normal; letter-spa=
+cing: normal; orphans: auto; text-align: start; text-indent: 0px; text-tran=
+sform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-=
+text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: no=
+ne; display: inline !important; float: none;">9h - 12h Time to hack</span><=
+br style=3D"caret-color: #000000; color: #000000; font-family: Helvetica; f=
+ont-size: 14px; font-style: normal; font-variant-caps: normal; font-weight:=
+ normal; letter-spacing: normal; orphans: auto; text-align: start; text-ind=
+ent: 0px; text-transform: none; white-space: normal; widows: auto; word-spa=
+cing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; =
+text-decoration: none;"><span style=3D"caret-color: #000000; color: #000000=
+; font-family: Helvetica; font-size: 14px; font-style: normal; font-variant=
+-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: nor=
+mal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webk=
+it-text-stroke-width: 0px; text-decoration: none; display: inline !importan=
+t; float: none;">12h - 13h D=C3=A9jeuner</span><br style=3D"caret-color: #0=
+00000; color: #000000; font-family: Helvetica; font-size: 14px; font-style:=
+ normal; font-variant-caps: normal; font-weight: normal; letter-spacing: no=
+rmal; orphans: auto; text-align: start; text-indent: 0px; text-transform: n=
+one; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-siz=
+e-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: none;"><sp=
+an style=3D"caret-color: #000000; color: #000000; font-family: Helvetica; f=
+ont-size: 14px; font-style: normal; font-variant-caps: normal; font-weight:=
+ normal; letter-spacing: normal; orphans: auto; text-align: start; text-ind=
+ent: 0px; text-transform: none; white-space: normal; widows: auto; word-spa=
+cing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; =
+text-decoration: none; display: inline !important; float: none;">13h - 21h =
+Time to hack</span><br style=3D"caret-color: #000000; color: #000000; font-=
+family: Helvetica; font-size: 14px; font-style: normal; font-variant-caps: =
+normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-al=
+ign: start; text-indent: 0px; text-transform: none; white-space: normal; wi=
+dows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text=
+-stroke-width: 0px; text-decoration: none;"><br style=3D"caret-color: #0000=
+00; color: #000000; font-family: Helvetica; font-size: 14px; font-style: no=
+rmal; font-variant-caps: normal; font-weight: normal; letter-spacing: norma=
+l; orphans: auto; text-align: start; text-indent: 0px; text-transform: none=
+; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-a=
+djust: auto; -webkit-text-stroke-width: 0px; text-decoration: none;"><span =
+style=3D"caret-color: #000000; color: #000000; font-family: Helvetica; font=
+-size: 14px; font-style: normal; font-variant-caps: normal; font-weight: no=
+rmal; letter-spacing: normal; orphans: auto; text-align: start; text-indent=
+: 0px; text-transform: none; white-space: normal; widows: auto; word-spacin=
+g: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; tex=
+t-decoration: none; display: inline !important; float: none;">Dimanche</spa=
+n><br style=3D"caret-color: #000000; color: #000000; font-family: Helvetica=
+; font-size: 14px; font-style: normal; font-variant-caps: normal; font-weig=
+ht: normal; letter-spacing: normal; orphans: auto; text-align: start; text-=
+indent: 0px; text-transform: none; white-space: normal; widows: auto; word-=
+spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0p=
+x; text-decoration: none;"><span style=3D"caret-color: #000000; color: #000=
+000; font-family: Helvetica; font-size: 14px; font-style: normal; font-vari=
+ant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: aut=
+o; text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -w=
+ebkit-text-stroke-width: 0px; text-decoration: none; display: inline !impor=
+tant; float: none;">9h - 10h Accueil des participants</span><br style=3D"ca=
+ret-color: #000000; color: #000000; font-family: Helvetica; font-size: 14px=
+; font-style: normal; font-variant-caps: normal; font-weight: normal; lette=
+r-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text=
+-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -we=
+bkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-decoratio=
+n: none;"><span style=3D"caret-color: #000000; color: #000000; font-family:=
+ Helvetica; font-size: 14px; font-style: normal; font-variant-caps: normal;=
+ font-weight: normal; letter-spacing: normal; orphans: auto; text-align: st=
+art; text-indent: 0px; text-transform: none; white-space: normal; widows: a=
+uto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke=
+-width: 0px; text-decoration: none; display: inline !important; float: none=
+;">10h - 12h Pr=C3=A9sentation des projets</span><br style=3D"caret-color: =
+#000000; color: #000000; font-family: Helvetica; font-size: 14px; font-styl=
+e: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: =
+normal; orphans: auto; text-align: start; text-indent: 0px; text-transform:=
+ none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-s=
+ize-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: none;"><=
+span style=3D"caret-color: #000000; color: #000000; font-family: Helvetica;=
+ font-size: 14px; font-style: normal; font-variant-caps: normal; font-weigh=
+t: normal; letter-spacing: normal; orphans: auto; text-align: start; text-i=
+ndent: 0px; text-transform: none; white-space: normal; widows: auto; word-s=
+pacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px=
+; text-decoration: none; display: inline !important; float: none;">12h - 14=
+h D=C3=A9jeuner et remise des prix</span><br style=3D"caret-color: #000000;=
+ color: #000000; font-family: Helvetica; font-size: 14px; font-style: norma=
+l; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+orphans: auto; text-align: start; text-indent: 0px; text-transform: none; w=
+hite-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adju=
+st: auto; -webkit-text-stroke-width: 0px; text-decoration: none;"><br style=
+=3D"caret-color: #000000; color: #000000; font-family: Helvetica; font-size=
+: 14px; font-style: normal; font-variant-caps: normal; font-weight: normal;=
+ letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px=
+; text-transform: none; white-space: normal; widows: auto; word-spacing: 0p=
+x; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-dec=
+oration: none;"><br style=3D"caret-color: #000000; color: #000000; font-fam=
+ily: Helvetica; font-size: 14px; font-style: normal; font-variant-caps: nor=
+mal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align=
+: start; text-indent: 0px; text-transform: none; white-space: normal; widow=
+s: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-st=
+roke-width: 0px; text-decoration: none;"><span style=3D"caret-color: #00000=
+0; color: #000000; font-family: Helvetica; font-size: 14px; font-style: nor=
+mal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal=
+; orphans: auto; text-align: start; text-indent: 0px; text-transform: none;=
+ white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-ad=
+just: auto; -webkit-text-stroke-width: 0px; text-decoration: none; display:=
+ inline !important; float: none;">Cet&nbsp;</span><span style=3D"caret-colo=
+r: #000000; color: #000000; font-family: Helvetica; font-size: 14px; font-s=
+tyle: normal; font-variant-caps: normal; font-weight: normal; letter-spacin=
+g: normal; orphans: auto; text-align: start; text-indent: 0px; text-transfo=
+rm: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-tex=
+t-size-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: none;=
+ display: inline !important; float: none;">Hackathon</span><span style=3D"c=
+aret-color: #000000; color: #000000; font-family: Helvetica; font-size: 14p=
+x; font-style: normal; font-variant-caps: normal; font-weight: normal; lett=
+er-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; tex=
+t-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -w=
+ebkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-decorati=
+on: none; display: inline !important; float: none;">&nbsp;sera l=E2=80=99oc=
+casion de vous former sur des framework de deep-learning : Tensorflow, Kera=
+s ou Pytorch pour les plus audacieux=E2=80=A6 Amazon Web Service vous ouvre=
+ ses services et plateformes pour entra=C3=AEner vos mod=C3=A8les; une occa=
+sion pour vous former sur AWS.</span><br style=3D"caret-color: #000000; col=
+or: #000000; font-family: Helvetica; font-size: 14px; font-style: normal; f=
+ont-variant-caps: normal; font-weight: normal; letter-spacing: normal; orph=
+ans: auto; text-align: start; text-indent: 0px; text-transform: none; white=
+-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: =
+auto; -webkit-text-stroke-width: 0px; text-decoration: none;"><br style=3D"=
+caret-color: #000000; color: #000000; font-family: Helvetica; font-size: 14=
+px; font-style: normal; font-variant-caps: normal; font-weight: normal; let=
+ter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; te=
+xt-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -=
+webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-decorat=
+ion: none;"><span style=3D"caret-color: #000000; color: #000000; font-famil=
+y: Helvetica; font-size: 14px; font-style: normal; font-variant-caps: norma=
+l; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: =
+start; text-indent: 0px; text-transform: none; white-space: normal; widows:=
+ auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stro=
+ke-width: 0px; text-decoration: none; display: inline !important; float: no=
+ne;">Enfin, vous d=C3=A9couvrirez aussi les concepts math=C3=A9matiques qui=
+ se cachent derri=C3=A8re le machine learning.&nbsp;</span><br style=3D"car=
+et-color: #000000; color: #000000; font-family: Helvetica; font-size: 14px;=
+ font-style: normal; font-variant-caps: normal; font-weight: normal; letter=
+-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-=
+transform: none; white-space: normal; widows: auto; word-spacing: 0px; -web=
+kit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration=
+: none;"><br style=3D"caret-color: #000000; color: #000000; font-family: He=
+lvetica; font-size: 14px; font-style: normal; font-variant-caps: normal; fo=
+nt-weight: normal; letter-spacing: normal; orphans: auto; text-align: start=
+; text-indent: 0px; text-transform: none; white-space: normal; widows: auto=
+; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-wi=
+dth: 0px; text-decoration: none;"><span style=3D"caret-color: #000000; colo=
+r: #000000; font-family: Helvetica; font-size: 14px; font-style: normal; fo=
+nt-variant-caps: normal; font-weight: normal; letter-spacing: normal; orpha=
+ns: auto; text-align: start; text-indent: 0px; text-transform: none; white-=
+space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: a=
+uto; -webkit-text-stroke-width: 0px; text-decoration: none; display: inline=
+ !important; float: none;">L=E2=80=99=C3=A9v=C3=A9nement est ouvert =C3=A0 =
+tous, que vous ayez envie de d=C3=A9couvrir ce domaine ou que vous soyez d=
+=C3=A9j=C3=A0 exp=C3=A9riment=C3=A9. Deux challenges seront propos=C3=A9s, =
+un challenge innovation (d=C3=A9butant) &nbsp;et un challenge technique (ex=
+p=C3=A9riment=C3=A9).</span><br style=3D"caret-color: #000000; color: #0000=
+00; font-family: Helvetica; font-size: 14px; font-style: normal; font-varia=
+nt-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto=
+; text-align: start; text-indent: 0px; text-transform: none; white-space: n=
+ormal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -we=
+bkit-text-stroke-width: 0px; text-decoration: none;"><br style=3D"caret-col=
+or: #000000; color: #000000; font-family: Helvetica; font-size: 14px; font-=
+style: normal; font-variant-caps: normal; font-weight: normal; letter-spaci=
+ng: normal; orphans: auto; text-align: start; text-indent: 0px; text-transf=
+orm: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-te=
+xt-size-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: none=
+;"><span style=3D"caret-color: #000000; color: #000000; font-family: Helvet=
+ica; font-size: 14px; font-style: normal; font-variant-caps: normal; font-w=
+eight: normal; letter-spacing: normal; orphans: auto; text-align: start; te=
+xt-indent: 0px; text-transform: none; white-space: normal; widows: auto; wo=
+rd-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width:=
+ 0px; text-decoration: none; display: inline !important; float: none;">Les =
+repas seront offerts et 2000=E2=82=AC de prix sont =C3=A0 gagner.</span><br=
+ style=3D"caret-color: #000000; color: #000000; font-family: Helvetica; fon=
+t-size: 14px; font-style: normal; font-variant-caps: normal; font-weight: n=
+ormal; letter-spacing: normal; orphans: auto; text-align: start; text-inden=
+t: 0px; text-transform: none; white-space: normal; widows: auto; word-spaci=
+ng: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; te=
+xt-decoration: none;"><br style=3D"caret-color: #000000; color: #000000; fo=
+nt-family: Helvetica; font-size: 14px; font-style: normal; font-variant-cap=
+s: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text=
+-align: start; text-indent: 0px; text-transform: none; white-space: normal;=
+ widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-t=
+ext-stroke-width: 0px; text-decoration: none;"><span style=3D"caret-color: =
+#000000; color: #000000; font-family: Helvetica; font-size: 14px; font-styl=
+e: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: =
+normal; orphans: auto; text-align: start; text-indent: 0px; text-transform:=
+ none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-s=
+ize-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: none; di=
+splay: inline !important; float: none;">Ce&nbsp;</span><span style=3D"caret=
+-color: #000000; color: #000000; font-family: Helvetica; font-size: 14px; f=
+ont-style: normal; font-variant-caps: normal; font-weight: normal; letter-s=
+pacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-tr=
+ansform: none; white-space: normal; widows: auto; word-spacing: 0px; -webki=
+t-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: =
+none; display: inline !important; float: none;">hackathon</span><span style=
+=3D"caret-color: #000000; color: #000000; font-family: Helvetica; font-size=
+: 14px; font-style: normal; font-variant-caps: normal; font-weight: normal;=
+ letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px=
+; text-transform: none; white-space: normal; widows: auto; word-spacing: 0p=
+x; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-dec=
+oration: none; display: inline !important; float: none;">&nbsp;se d=C3=A9ro=
+ulera dans nos locaux d=E2=80=99Issy les Moulineaux au 10 rue de Vanves.</s=
+pan><br style=3D"caret-color: #000000; color: #000000; font-family: Helveti=
+ca; font-size: 14px; font-style: normal; font-variant-caps: normal; font-we=
+ight: normal; letter-spacing: normal; orphans: auto; text-align: start; tex=
+t-indent: 0px; text-transform: none; white-space: normal; widows: auto; wor=
+d-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: =
+0px; text-decoration: none;"><br style=3D"caret-color: #000000; color: #000=
+000; font-family: Helvetica; font-size: 14px; font-style: normal; font-vari=
+ant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: aut=
+o; text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -w=
+ebkit-text-stroke-width: 0px; text-decoration: none;"><span style=3D"caret-=
+color: #000000; color: #000000; font-family: Helvetica; font-size: 14px; fo=
+nt-style: normal; font-variant-caps: normal; font-weight: normal; letter-sp=
+acing: normal; orphans: auto; text-align: start; text-indent: 0px; text-tra=
+nsform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit=
+-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: n=
+one; display: inline !important; float: none;">Des mentors et experts passe=
+ront dans les =C3=A9quipes afin d'apporter des conseils techniques et fonct=
+ionnels aux participants.</span><br style=3D"caret-color: #000000; color: #=
+000000; font-family: Helvetica; font-size: 14px; font-style: normal; font-v=
+ariant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: =
+auto; text-align: start; text-indent: 0px; text-transform: none; white-spac=
+e: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto;=
+ -webkit-text-stroke-width: 0px; text-decoration: none;"><br style=3D"caret=
+-color: #000000; color: #000000; font-family: Helvetica; font-size: 14px; f=
+ont-style: normal; font-variant-caps: normal; font-weight: normal; letter-s=
+pacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-tr=
+ansform: none; white-space: normal; widows: auto; word-spacing: 0px; -webki=
+t-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: =
+none;"><span style=3D"caret-color: #000000; color: #000000; font-family: He=
+lvetica; font-size: 14px; font-style: normal; font-variant-caps: normal; fo=
+nt-weight: normal; letter-spacing: normal; orphans: auto; text-align: start=
+; text-indent: 0px; text-transform: none; white-space: normal; widows: auto=
+; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-wi=
+dth: 0px; text-decoration: none; display: inline !important; float: none;">=
+Pour vous inscrire avant le&nbsp;</span><span style=3D"caret-color: #000000=
+; color: #000000; font-family: Helvetica; font-size: 14px; font-style: norm=
+al; font-variant-caps: normal; font-weight: normal; letter-spacing: normal;=
+ orphans: auto; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adj=
+ust: auto; -webkit-text-stroke-width: 0px; text-decoration: none; display: =
+inline !important; float: none;">15 mars 2019</span><br style=3D"caret-colo=
+r: #000000; color: #000000; font-family: Helvetica; font-size: 14px; font-s=
+tyle: normal; font-variant-caps: normal; font-weight: normal; letter-spacin=
+g: normal; orphans: auto; text-align: start; text-indent: 0px; text-transfo=
+rm: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-tex=
+t-size-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: none;=
+"><span style=3D"caret-color: #000000; color: #000000; font-family: Helveti=
+ca; font-size: 14px; font-style: normal; font-variant-caps: normal; font-we=
+ight: normal; letter-spacing: normal; orphans: auto; text-align: start; tex=
+t-indent: 0px; text-transform: none; white-space: normal; widows: auto; wor=
+d-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: =
+0px; text-decoration: none; display: inline !important; float: none;">https=
+://www.eventbrite.fr/e/billets-hackathon-intelligence-artificielle-isep-564=
+10369935</span><span style=3D"caret-color: #000000; color: #000000; font-fa=
+mily: Helvetica; font-size: 14px; font-style: normal; font-variant-caps: no=
+rmal; font-weight: normal; letter-spacing: normal; orphans: auto; text-alig=
+n: start; text-indent: 0px; text-transform: none; white-space: normal; wido=
+ws: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-s=
+troke-width: 0px; text-decoration: none; display: inline !important; float:=
+ none;"></span><br style=3D"caret-color: #000000; color: #000000; font-fami=
+ly: Helvetica; font-size: 14px; font-style: normal; font-variant-caps: norm=
+al; font-weight: normal; letter-spacing: normal; orphans: auto; text-align:=
+ start; text-indent: 0px; text-transform: none; white-space: normal; widows=
+: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-str=
+oke-width: 0px; text-decoration: none;"><br style=3D"caret-color: #000000; =
+color: #000000; font-family: Helvetica; font-size: 14px; font-style: normal=
+; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; o=
+rphans: auto; text-align: start; text-indent: 0px; text-transform: none; wh=
+ite-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjus=
+t: auto; -webkit-text-stroke-width: 0px; text-decoration: none;"><span styl=
+e=3D"caret-color: #000000; color: #000000; font-family: Helvetica; font-siz=
+e: 14px; font-style: normal; font-variant-caps: normal; font-weight: normal=
+; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0p=
+x; text-transform: none; white-space: normal; widows: auto; word-spacing: 0=
+px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-de=
+coration: none; display: inline !important; float: none;">-----------------=
+------------------------------------------------------------------------</s=
+pan><br style=3D"caret-color: #000000; color: #000000; font-family: Helveti=
+ca; font-size: 14px; font-style: normal; font-variant-caps: normal; font-we=
+ight: normal; letter-spacing: normal; orphans: auto; text-align: start; tex=
+t-indent: 0px; text-transform: none; white-space: normal; widows: auto; wor=
+d-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: =
+0px; text-decoration: none;"><br style=3D"caret-color: #000000; color: #000=
+000; font-family: Helvetica; font-size: 14px; font-style: normal; font-vari=
+ant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: aut=
+o; text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -w=
+ebkit-text-stroke-width: 0px; text-decoration: none;"><br style=3D"caret-co=
+lor: #000000; color: #000000; font-family: Helvetica; font-size: 14px; font=
+-style: normal; font-variant-caps: normal; font-weight: normal; letter-spac=
+ing: normal; orphans: auto; text-align: start; text-indent: 0px; text-trans=
+form: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-t=
+ext-size-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: non=
+e;"><span style=3D"caret-color: #000000; color: #000000; font-family: Helve=
+tica; font-size: 14px; font-style: normal; font-variant-caps: normal; font-=
+weight: normal; letter-spacing: normal; orphans: auto; text-align: start; t=
+ext-indent: 0px; text-transform: none; white-space: normal; widows: auto; w=
+ord-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width=
+: 0px; text-decoration: none; display: inline !important; float: none;">Dev=
+elop your artificial intelligence skills by participating in a&nbsp;</span>=
+<span style=3D"caret-color: #000000; color: #000000; font-family: Helvetica=
+; font-size: 14px; font-style: normal; font-variant-caps: normal; font-weig=
+ht: normal; letter-spacing: normal; orphans: auto; text-align: start; text-=
+indent: 0px; text-transform: none; white-space: normal; widows: auto; word-=
+spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0p=
+x; text-decoration: none; display: inline !important; float: none;">hackath=
+on</span><span style=3D"caret-color: #000000; color: #000000; font-family: =
+Helvetica; font-size: 14px; font-style: normal; font-variant-caps: normal; =
+font-weight: normal; letter-spacing: normal; orphans: auto; text-align: sta=
+rt; text-indent: 0px; text-transform: none; white-space: normal; widows: au=
+to; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-=
+width: 0px; text-decoration: none; display: inline !important; float: none;=
+">&nbsp;supervised by companies at the forefront of innovation. Open to all=
+ levels.</span><br style=3D"caret-color: #000000; color: #000000; font-fami=
+ly: Helvetica; font-size: 14px; font-style: normal; font-variant-caps: norm=
+al; font-weight: normal; letter-spacing: normal; orphans: auto; text-align:=
+ start; text-indent: 0px; text-transform: none; white-space: normal; widows=
+: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-str=
+oke-width: 0px; text-decoration: none;"><br style=3D"caret-color: #000000; =
+color: #000000; font-family: Helvetica; font-size: 14px; font-style: normal=
+; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; o=
+rphans: auto; text-align: start; text-indent: 0px; text-transform: none; wh=
+ite-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjus=
+t: auto; -webkit-text-stroke-width: 0px; text-decoration: none;"><span styl=
+e=3D"caret-color: #000000; color: #000000; font-family: Helvetica; font-siz=
+e: 14px; font-style: normal; font-variant-caps: normal; font-weight: normal=
+; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0p=
+x; text-transform: none; white-space: normal; widows: auto; word-spacing: 0=
+px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-de=
+coration: none; display: inline !important; float: none;">(It is possible t=
+o participate only at the conference)</span><br style=3D"caret-color: #0000=
+00; color: #000000; font-family: Helvetica; font-size: 14px; font-style: no=
+rmal; font-variant-caps: normal; font-weight: normal; letter-spacing: norma=
+l; orphans: auto; text-align: start; text-indent: 0px; text-transform: none=
+; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-a=
+djust: auto; -webkit-text-stroke-width: 0px; text-decoration: none;"><br st=
+yle=3D"caret-color: #000000; color: #000000; font-family: Helvetica; font-s=
+ize: 14px; font-style: normal; font-variant-caps: normal; font-weight: norm=
+al; letter-spacing: normal; orphans: auto; text-align: start; text-indent: =
+0px; text-transform: none; white-space: normal; widows: auto; word-spacing:=
+ 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-=
+decoration: none;"><span style=3D"caret-color: #000000; color: #000000; fon=
+t-family: Helvetica; font-size: 14px; font-style: normal; font-variant-caps=
+: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-=
+align: start; text-indent: 0px; text-transform: none; white-space: normal; =
+widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-te=
+xt-stroke-width: 0px; text-decoration: none; display: inline !important; fl=
+oat: none;">Artificial Intelligence is today at the heart of the concerns. =
+Its consequences on our society are huge and that makes it an essential sub=
+ject. Often considered as the source of a fourth industrial revolution, it =
+will undeniably impact each sector: industry, health, transport, environmen=
+t ...</span><br style=3D"caret-color: #000000; color: #000000; font-family:=
+ Helvetica; font-size: 14px; font-style: normal; font-variant-caps: normal;=
+ font-weight: normal; letter-spacing: normal; orphans: auto; text-align: st=
+art; text-indent: 0px; text-transform: none; white-space: normal; widows: a=
+uto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke=
+-width: 0px; text-decoration: none;"><br style=3D"caret-color: #000000; col=
+or: #000000; font-family: Helvetica; font-size: 14px; font-style: normal; f=
+ont-variant-caps: normal; font-weight: normal; letter-spacing: normal; orph=
+ans: auto; text-align: start; text-indent: 0px; text-transform: none; white=
+-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: =
+auto; -webkit-text-stroke-width: 0px; text-decoration: none;"><span style=
+=3D"caret-color: #000000; color: #000000; font-family: Helvetica; font-size=
+: 14px; font-style: normal; font-variant-caps: normal; font-weight: normal;=
+ letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px=
+; text-transform: none; white-space: normal; widows: auto; word-spacing: 0p=
+x; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-dec=
+oration: none; display: inline !important; float: none;">In response to the=
+ rise of such technology and potential disruption of our society, many fear=
+s and fantasies are emerging. In spite of all these assumptions, one thing =
+is certain, the AI =E2=80=8B=E2=80=8Bgathers real mathematical concepts, un=
+derstand those concepts will allow us to understand what are the real asset=
+s of the development of artificial intelligence.</span><br style=3D"caret-c=
+olor: #000000; color: #000000; font-family: Helvetica; font-size: 14px; fon=
+t-style: normal; font-variant-caps: normal; font-weight: normal; letter-spa=
+cing: normal; orphans: auto; text-align: start; text-indent: 0px; text-tran=
+sform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-=
+text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: no=
+ne;"><br style=3D"caret-color: #000000; color: #000000; font-family: Helvet=
+ica; font-size: 14px; font-style: normal; font-variant-caps: normal; font-w=
+eight: normal; letter-spacing: normal; orphans: auto; text-align: start; te=
+xt-indent: 0px; text-transform: none; white-space: normal; widows: auto; wo=
+rd-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width:=
+ 0px; text-decoration: none;"><span style=3D"caret-color: #000000; color: #=
+000000; font-family: Helvetica; font-size: 14px; font-style: normal; font-v=
+ariant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: =
+auto; text-align: start; text-indent: 0px; text-transform: none; white-spac=
+e: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto;=
+ -webkit-text-stroke-width: 0px; text-decoration: none; display: inline !im=
+portant; float: none;">To contribute to innovation and its democratization,=
+ GarageISEP and ISEP offer you to deepen your technical knowledge in Artifi=
+cial Intelligence by working on concrete issues: Environment and Marketing.=
+</span><br style=3D"caret-color: #000000; color: #000000; font-family: Helv=
+etica; font-size: 14px; font-style: normal; font-variant-caps: normal; font=
+-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; widows: auto; =
+word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-widt=
+h: 0px; text-decoration: none;"><br style=3D"caret-color: #000000; color: #=
+000000; font-family: Helvetica; font-size: 14px; font-style: normal; font-v=
+ariant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: =
+auto; text-align: start; text-indent: 0px; text-transform: none; white-spac=
+e: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto;=
+ -webkit-text-stroke-width: 0px; text-decoration: none;"><span style=3D"car=
+et-color: #000000; color: #000000; font-family: Helvetica; font-size: 14px;=
+ font-style: normal; font-variant-caps: normal; font-weight: normal; letter=
+-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-=
+transform: none; white-space: normal; widows: auto; word-spacing: 0px; -web=
+kit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration=
+: none; display: inline !important; float: none;">This&nbsp;</span><span st=
+yle=3D"caret-color: #000000; color: #000000; font-family: Helvetica; font-s=
+ize: 14px; font-style: normal; font-variant-caps: normal; font-weight: norm=
+al; letter-spacing: normal; orphans: auto; text-align: start; text-indent: =
+0px; text-transform: none; white-space: normal; widows: auto; word-spacing:=
+ 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-=
+decoration: none; display: inline !important; float: none;">hackathon</span=
+><span style=3D"caret-color: #000000; color: #000000; font-family: Helvetic=
+a; font-size: 14px; font-style: normal; font-variant-caps: normal; font-wei=
+ght: normal; letter-spacing: normal; orphans: auto; text-align: start; text=
+-indent: 0px; text-transform: none; white-space: normal; widows: auto; word=
+-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0=
+px; text-decoration: none; display: inline !important; float: none;">&nbsp;=
+will last for a weekend:</span><br style=3D"caret-color: #000000; color: #0=
+00000; font-family: Helvetica; font-size: 14px; font-style: normal; font-va=
+riant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: a=
+uto; text-align: start; text-indent: 0px; text-transform: none; white-space=
+: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; =
+-webkit-text-stroke-width: 0px; text-decoration: none;"><br style=3D"caret-=
+color: #000000; color: #000000; font-family: Helvetica; font-size: 14px; fo=
+nt-style: normal; font-variant-caps: normal; font-weight: normal; letter-sp=
+acing: normal; orphans: auto; text-align: start; text-indent: 0px; text-tra=
+nsform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit=
+-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: n=
+one;"><span style=3D"caret-color: #000000; color: #000000; font-family: Hel=
+vetica; font-size: 14px; font-style: normal; font-variant-caps: normal; fon=
+t-weight: normal; letter-spacing: normal; orphans: auto; text-align: start;=
+ text-indent: 0px; text-transform: none; white-space: normal; widows: auto;=
+ word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-wid=
+th: 0px; text-decoration: none; display: inline !important; float: none;">F=
+riday</span><br style=3D"caret-color: #000000; color: #000000; font-family:=
+ Helvetica; font-size: 14px; font-style: normal; font-variant-caps: normal;=
+ font-weight: normal; letter-spacing: normal; orphans: auto; text-align: st=
+art; text-indent: 0px; text-transform: none; white-space: normal; widows: a=
+uto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke=
+-width: 0px; text-decoration: none;"><span style=3D"caret-color: #000000; c=
+olor: #000000; font-family: Helvetica; font-size: 14px; font-style: normal;=
+ font-variant-caps: normal; font-weight: normal; letter-spacing: normal; or=
+phans: auto; text-align: start; text-indent: 0px; text-transform: none; whi=
+te-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust=
+: auto; -webkit-text-stroke-width: 0px; text-decoration: none; display: inl=
+ine !important; float: none;">17h30 - 19h30 general presentation of AI by M=
+r. Julien Simon, data evangelist at Amazon and presentation of the challeng=
+es</span><br style=3D"caret-color: #000000; color: #000000; font-family: He=
+lvetica; font-size: 14px; font-style: normal; font-variant-caps: normal; fo=
+nt-weight: normal; letter-spacing: normal; orphans: auto; text-align: start=
+; text-indent: 0px; text-transform: none; white-space: normal; widows: auto=
+; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-wi=
+dth: 0px; text-decoration: none;"><span style=3D"caret-color: #000000; colo=
+r: #000000; font-family: Helvetica; font-size: 14px; font-style: normal; fo=
+nt-variant-caps: normal; font-weight: normal; letter-spacing: normal; orpha=
+ns: auto; text-align: start; text-indent: 0px; text-transform: none; white-=
+space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: a=
+uto; -webkit-text-stroke-width: 0px; text-decoration: none; display: inline=
+ !important; float: none;">19h30-21h30 Networking</span><br style=3D"caret-=
+color: #000000; color: #000000; font-family: Helvetica; font-size: 14px; fo=
+nt-style: normal; font-variant-caps: normal; font-weight: normal; letter-sp=
+acing: normal; orphans: auto; text-align: start; text-indent: 0px; text-tra=
+nsform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit=
+-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: n=
+one;"><br style=3D"caret-color: #000000; color: #000000; font-family: Helve=
+tica; font-size: 14px; font-style: normal; font-variant-caps: normal; font-=
+weight: normal; letter-spacing: normal; orphans: auto; text-align: start; t=
+ext-indent: 0px; text-transform: none; white-space: normal; widows: auto; w=
+ord-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width=
+: 0px; text-decoration: none;"><span style=3D"caret-color: #000000; color: =
+#000000; font-family: Helvetica; font-size: 14px; font-style: normal; font-=
+variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans:=
+ auto; text-align: start; text-indent: 0px; text-transform: none; white-spa=
+ce: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto=
+; -webkit-text-stroke-width: 0px; text-decoration: none; display: inline !i=
+mportant; float: none;">Saturday</span><br style=3D"caret-color: #000000; c=
+olor: #000000; font-family: Helvetica; font-size: 14px; font-style: normal;=
+ font-variant-caps: normal; font-weight: normal; letter-spacing: normal; or=
+phans: auto; text-align: start; text-indent: 0px; text-transform: none; whi=
+te-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust=
+: auto; -webkit-text-stroke-width: 0px; text-decoration: none;"><span style=
+=3D"caret-color: #000000; color: #000000; font-family: Helvetica; font-size=
+: 14px; font-style: normal; font-variant-caps: normal; font-weight: normal;=
+ letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px=
+; text-transform: none; white-space: normal; widows: auto; word-spacing: 0p=
+x; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-dec=
+oration: none; display: inline !important; float: none;">9h - 12h Time to h=
+ack</span><br style=3D"caret-color: #000000; color: #000000; font-family: H=
+elvetica; font-size: 14px; font-style: normal; font-variant-caps: normal; f=
+ont-weight: normal; letter-spacing: normal; orphans: auto; text-align: star=
+t; text-indent: 0px; text-transform: none; white-space: normal; widows: aut=
+o; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-w=
+idth: 0px; text-decoration: none;"><span style=3D"caret-color: #000000; col=
+or: #000000; font-family: Helvetica; font-size: 14px; font-style: normal; f=
+ont-variant-caps: normal; font-weight: normal; letter-spacing: normal; orph=
+ans: auto; text-align: start; text-indent: 0px; text-transform: none; white=
+-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: =
+auto; -webkit-text-stroke-width: 0px; text-decoration: none; display: inlin=
+e !important; float: none;">12h - 13h Lunch</span><br style=3D"caret-color:=
+ #000000; color: #000000; font-family: Helvetica; font-size: 14px; font-sty=
+le: normal; font-variant-caps: normal; font-weight: normal; letter-spacing:=
+ normal; orphans: auto; text-align: start; text-indent: 0px; text-transform=
+: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-=
+size-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: none;">=
+<span style=3D"caret-color: #000000; color: #000000; font-family: Helvetica=
+; font-size: 14px; font-style: normal; font-variant-caps: normal; font-weig=
+ht: normal; letter-spacing: normal; orphans: auto; text-align: start; text-=
+indent: 0px; text-transform: none; white-space: normal; widows: auto; word-=
+spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0p=
+x; text-decoration: none; display: inline !important; float: none;">13h - 2=
+1h Time to hack</span><br style=3D"caret-color: #000000; color: #000000; fo=
+nt-family: Helvetica; font-size: 14px; font-style: normal; font-variant-cap=
+s: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text=
+-align: start; text-indent: 0px; text-transform: none; white-space: normal;=
+ widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-t=
+ext-stroke-width: 0px; text-decoration: none;"><br style=3D"caret-color: #0=
+00000; color: #000000; font-family: Helvetica; font-size: 14px; font-style:=
+ normal; font-variant-caps: normal; font-weight: normal; letter-spacing: no=
+rmal; orphans: auto; text-align: start; text-indent: 0px; text-transform: n=
+one; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-siz=
+e-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: none;"><sp=
+an style=3D"caret-color: #000000; color: #000000; font-family: Helvetica; f=
+ont-size: 14px; font-style: normal; font-variant-caps: normal; font-weight:=
+ normal; letter-spacing: normal; orphans: auto; text-align: start; text-ind=
+ent: 0px; text-transform: none; white-space: normal; widows: auto; word-spa=
+cing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; =
+text-decoration: none; display: inline !important; float: none;">Sunday</sp=
+an><br style=3D"caret-color: #000000; color: #000000; font-family: Helvetic=
+a; font-size: 14px; font-style: normal; font-variant-caps: normal; font-wei=
+ght: normal; letter-spacing: normal; orphans: auto; text-align: start; text=
+-indent: 0px; text-transform: none; white-space: normal; widows: auto; word=
+-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0=
+px; text-decoration: none;"><span style=3D"caret-color: #000000; color: #00=
+0000; font-family: Helvetica; font-size: 14px; font-style: normal; font-var=
+iant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: au=
+to; text-align: start; text-indent: 0px; text-transform: none; white-space:=
+ normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -=
+webkit-text-stroke-width: 0px; text-decoration: none; display: inline !impo=
+rtant; float: none;">9h - 10h Welcoming of participants</span><br style=3D"=
+caret-color: #000000; color: #000000; font-family: Helvetica; font-size: 14=
+px; font-style: normal; font-variant-caps: normal; font-weight: normal; let=
+ter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; te=
+xt-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -=
+webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-decorat=
+ion: none;"><span style=3D"caret-color: #000000; color: #000000; font-famil=
+y: Helvetica; font-size: 14px; font-style: normal; font-variant-caps: norma=
+l; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: =
+start; text-indent: 0px; text-transform: none; white-space: normal; widows:=
+ auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stro=
+ke-width: 0px; text-decoration: none; display: inline !important; float: no=
+ne;">10h - 12h Presentation of the projects</span><br style=3D"caret-color:=
+ #000000; color: #000000; font-family: Helvetica; font-size: 14px; font-sty=
+le: normal; font-variant-caps: normal; font-weight: normal; letter-spacing:=
+ normal; orphans: auto; text-align: start; text-indent: 0px; text-transform=
+: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-=
+size-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: none;">=
+<span style=3D"caret-color: #000000; color: #000000; font-family: Helvetica=
+; font-size: 14px; font-style: normal; font-variant-caps: normal; font-weig=
+ht: normal; letter-spacing: normal; orphans: auto; text-align: start; text-=
+indent: 0px; text-transform: none; white-space: normal; widows: auto; word-=
+spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0p=
+x; text-decoration: none; display: inline !important; float: none;">12h - 1=
+4h Lunch and Winners announcement</span><br style=3D"caret-color: #000000; =
+color: #000000; font-family: Helvetica; font-size: 14px; font-style: normal=
+; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; o=
+rphans: auto; text-align: start; text-indent: 0px; text-transform: none; wh=
+ite-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjus=
+t: auto; -webkit-text-stroke-width: 0px; text-decoration: none;"><br style=
+=3D"caret-color: #000000; color: #000000; font-family: Helvetica; font-size=
+: 14px; font-style: normal; font-variant-caps: normal; font-weight: normal;=
+ letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px=
+; text-transform: none; white-space: normal; widows: auto; word-spacing: 0p=
+x; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-dec=
+oration: none;"><br style=3D"caret-color: #000000; color: #000000; font-fam=
+ily: Helvetica; font-size: 14px; font-style: normal; font-variant-caps: nor=
+mal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align=
+: start; text-indent: 0px; text-transform: none; white-space: normal; widow=
+s: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-st=
+roke-width: 0px; text-decoration: none;"><span style=3D"caret-color: #00000=
+0; color: #000000; font-family: Helvetica; font-size: 14px; font-style: nor=
+mal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal=
+; orphans: auto; text-align: start; text-indent: 0px; text-transform: none;=
+ white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-ad=
+just: auto; -webkit-text-stroke-width: 0px; text-decoration: none; display:=
+ inline !important; float: none;">You will be able to develop your skills o=
+n deep learning frameworks : Tensorflow, Keras or Pytorch for the most dari=
+ng=E2=80=A6 Amazon Web Service will offer you to train your models on their=
+ platform, which will also permit you to learn how to use AWS.</span><br st=
+yle=3D"caret-color: #000000; color: #000000; font-family: Helvetica; font-s=
+ize: 14px; font-style: normal; font-variant-caps: normal; font-weight: norm=
+al; letter-spacing: normal; orphans: auto; text-align: start; text-indent: =
+0px; text-transform: none; white-space: normal; widows: auto; word-spacing:=
+ 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-=
+decoration: none;"><br style=3D"caret-color: #000000; color: #000000; font-=
+family: Helvetica; font-size: 14px; font-style: normal; font-variant-caps: =
+normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-al=
+ign: start; text-indent: 0px; text-transform: none; white-space: normal; wi=
+dows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text=
+-stroke-width: 0px; text-decoration: none;"><span style=3D"caret-color: #00=
+0000; color: #000000; font-family: Helvetica; font-size: 14px; font-style: =
+normal; font-variant-caps: normal; font-weight: normal; letter-spacing: nor=
+mal; orphans: auto; text-align: start; text-indent: 0px; text-transform: no=
+ne; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size=
+-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: none; displ=
+ay: inline !important; float: none;">Finally, you will discover the mathema=
+tical concepts behind machine learning.&nbsp;</span><br style=3D"caret-colo=
+r: #000000; color: #000000; font-family: Helvetica; font-size: 14px; font-s=
+tyle: normal; font-variant-caps: normal; font-weight: normal; letter-spacin=
+g: normal; orphans: auto; text-align: start; text-indent: 0px; text-transfo=
+rm: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-tex=
+t-size-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: none;=
+"><br style=3D"caret-color: #000000; color: #000000; font-family: Helvetica=
+; font-size: 14px; font-style: normal; font-variant-caps: normal; font-weig=
+ht: normal; letter-spacing: normal; orphans: auto; text-align: start; text-=
+indent: 0px; text-transform: none; white-space: normal; widows: auto; word-=
+spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0p=
+x; text-decoration: none;"><span style=3D"caret-color: #000000; color: #000=
+000; font-family: Helvetica; font-size: 14px; font-style: normal; font-vari=
+ant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: aut=
+o; text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -w=
+ebkit-text-stroke-width: 0px; text-decoration: none; display: inline !impor=
+tant; float: none;">The event is open to everyone, whether you want to disc=
+over this field or you are experienced in it. Two challenges will be propos=
+ed, an innovation challenge (beginner) and a technical challenge (experienc=
+ed).</span><br style=3D"caret-color: #000000; color: #000000; font-family: =
+Helvetica; font-size: 14px; font-style: normal; font-variant-caps: normal; =
+font-weight: normal; letter-spacing: normal; orphans: auto; text-align: sta=
+rt; text-indent: 0px; text-transform: none; white-space: normal; widows: au=
+to; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-=
+width: 0px; text-decoration: none;"><br style=3D"caret-color: #000000; colo=
+r: #000000; font-family: Helvetica; font-size: 14px; font-style: normal; fo=
+nt-variant-caps: normal; font-weight: normal; letter-spacing: normal; orpha=
+ns: auto; text-align: start; text-indent: 0px; text-transform: none; white-=
+space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: a=
+uto; -webkit-text-stroke-width: 0px; text-decoration: none;"><span style=3D=
+"caret-color: #000000; color: #000000; font-family: Helvetica; font-size: 1=
+4px; font-style: normal; font-variant-caps: normal; font-weight: normal; le=
+tter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; t=
+ext-transform: none; white-space: normal; widows: auto; word-spacing: 0px; =
+-webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-decora=
+tion: none; display: inline !important; float: none;">We offer the lunch an=
+d coffee break. &nbsp;2000 =E2=82=AC of prize are up to grab.</span><br sty=
+le=3D"caret-color: #000000; color: #000000; font-family: Helvetica; font-si=
+ze: 14px; font-style: normal; font-variant-caps: normal; font-weight: norma=
+l; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0=
+px; text-transform: none; white-space: normal; widows: auto; word-spacing: =
+0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-d=
+ecoration: none;"><br style=3D"caret-color: #000000; color: #000000; font-f=
+amily: Helvetica; font-size: 14px; font-style: normal; font-variant-caps: n=
+ormal; font-weight: normal; letter-spacing: normal; orphans: auto; text-ali=
+gn: start; text-indent: 0px; text-transform: none; white-space: normal; wid=
+ows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-=
+stroke-width: 0px; text-decoration: none;"><span style=3D"caret-color: #000=
+000; color: #000000; font-family: Helvetica; font-size: 14px; font-style: n=
+ormal; font-variant-caps: normal; font-weight: normal; letter-spacing: norm=
+al; orphans: auto; text-align: start; text-indent: 0px; text-transform: non=
+e; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-=
+adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: none; displa=
+y: inline !important; float: none;">This&nbsp;</span><span style=3D"caret-c=
+olor: #000000; color: #000000; font-family: Helvetica; font-size: 14px; fon=
+t-style: normal; font-variant-caps: normal; font-weight: normal; letter-spa=
+cing: normal; orphans: auto; text-align: start; text-indent: 0px; text-tran=
+sform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-=
+text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: no=
+ne; display: inline !important; float: none;">hackathon</span><span style=
+=3D"caret-color: #000000; color: #000000; font-family: Helvetica; font-size=
+: 14px; font-style: normal; font-variant-caps: normal; font-weight: normal;=
+ letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px=
+; text-transform: none; white-space: normal; widows: auto; word-spacing: 0p=
+x; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-dec=
+oration: none; display: inline !important; float: none;">&nbsp;will take pl=
+ace in our premises in Issy les Moulineaux at 10 rue de Vanves.</span><br s=
+tyle=3D"caret-color: #000000; color: #000000; font-family: Helvetica; font-=
+size: 14px; font-style: normal; font-variant-caps: normal; font-weight: nor=
+mal; letter-spacing: normal; orphans: auto; text-align: start; text-indent:=
+ 0px; text-transform: none; white-space: normal; widows: auto; word-spacing=
+: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text=
+-decoration: none;"><br style=3D"caret-color: #000000; color: #000000; font=
+-family: Helvetica; font-size: 14px; font-style: normal; font-variant-caps:=
+ normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-a=
+lign: start; text-indent: 0px; text-transform: none; white-space: normal; w=
+idows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-tex=
+t-stroke-width: 0px; text-decoration: none;"><span style=3D"caret-color: #0=
+00000; color: #000000; font-family: Helvetica; font-size: 14px; font-style:=
+ normal; font-variant-caps: normal; font-weight: normal; letter-spacing: no=
+rmal; orphans: auto; text-align: start; text-indent: 0px; text-transform: n=
+one; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-siz=
+e-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: none; disp=
+lay: inline !important; float: none;">Mentors and experts will be present d=
+uring the event and bring the teams technical and functional advices.</span=
+><br style=3D"caret-color: #000000; color: #000000; font-family: Helvetica;=
+ font-size: 14px; font-style: normal; font-variant-caps: normal; font-weigh=
+t: normal; letter-spacing: normal; orphans: auto; text-align: start; text-i=
+ndent: 0px; text-transform: none; white-space: normal; widows: auto; word-s=
+pacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px=
+; text-decoration: none;"><br style=3D"caret-color: #000000; color: #000000=
+; font-family: Helvetica; font-size: 14px; font-style: normal; font-variant=
+-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: nor=
+mal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webk=
+it-text-stroke-width: 0px; text-decoration: none;"><span style=3D"caret-col=
+or: #000000; color: #000000; font-family: Helvetica; font-size: 14px; font-=
+style: normal; font-variant-caps: normal; font-weight: normal; letter-spaci=
+ng: normal; orphans: auto; text-align: start; text-indent: 0px; text-transf=
+orm: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-te=
+xt-size-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: none=
+; display: inline !important; float: none;">To register before</span><span =
+style=3D"caret-color: #000000; color: #000000; font-family: Helvetica; font=
+-size: 14px; font-style: normal; font-variant-caps: normal; font-weight: no=
+rmal; letter-spacing: normal; orphans: auto; text-align: start; text-indent=
+: 0px; text-transform: none; white-space: normal; widows: auto; word-spacin=
+g: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; tex=
+t-decoration: none; display: inline !important; float: none;">&nbsp;</span>=
+<span style=3D"caret-color: #000000; color: #000000; font-family: Helvetica=
+; font-size: 14px; font-style: normal; font-variant-caps: normal; font-weig=
+ht: normal; letter-spacing: normal; orphans: auto; text-align: start; text-=
+indent: 0px; text-transform: none; white-space: normal; widows: auto; word-=
+spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0p=
+x; text-decoration: none; display: inline !important; float: none;">15th ma=
+rch, 2019</span><br style=3D"caret-color: #000000; color: #000000; font-fam=
+ily: Helvetica; font-size: 14px; font-style: normal; font-variant-caps: nor=
+mal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align=
+: start; text-indent: 0px; text-transform: none; white-space: normal; widow=
+s: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-st=
+roke-width: 0px; text-decoration: none;"><span style=3D"caret-color: #00000=
+0; color: #000000; font-family: Helvetica; font-size: 14px; font-style: nor=
+mal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal=
+; orphans: auto; text-align: start; text-indent: 0px; text-transform: none;=
+ white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-ad=
+just: auto; -webkit-text-stroke-width: 0px; text-decoration: none; display:=
+ inline !important; float: none;">https://www.eventbrite.fr/e/billets-hacka=
+thon-intelligence-artificielle-isep-56410369935</span><span style=3D"caret-=
+color: #000000; color: #000000; font-family: Helvetica; font-size: 14px; fo=
+nt-style: normal; font-variant-caps: normal; font-weight: normal; letter-sp=
+acing: normal; orphans: auto; text-align: start; text-indent: 0px; text-tra=
+nsform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit=
+-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: n=
+one; display: inline !important; float: none;"></span><br style=3D"caret-co=
+lor: #000000; color: #000000; font-family: Helvetica; font-size: 14px; font=
+-style: normal; font-variant-caps: normal; font-weight: normal; letter-spac=
+ing: normal; orphans: auto; text-align: start; text-indent: 0px; text-trans=
+form: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-t=
+ext-size-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: non=
+e;"><br style=3D"caret-color: #000000; color: #000000; font-family: Helveti=
+ca; font-size: 14px; font-style: normal; font-variant-caps: normal; font-we=
+ight: normal; letter-spacing: normal; orphans: auto; text-align: start; tex=
+t-indent: 0px; text-transform: none; white-space: normal; widows: auto; wor=
+d-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: =
+0px; text-decoration: none;"><div style=3D"caret-color: #000000; color: #00=
+0000; font-family: Helvetica; font-size: 14px; font-style: normal; font-var=
+iant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: au=
+to; text-align: start; text-indent: 0px; text-transform: none; white-space:=
+ normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -=
+webkit-text-stroke-width: 0px; text-decoration: none;"><br></div><div style=
+=3D"caret-color: #000000; color: #000000; font-family: Helvetica; font-size=
+: 14px; font-style: normal; font-variant-caps: normal; font-weight: normal;=
+ letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px=
+; text-transform: none; white-space: normal; widows: auto; word-spacing: 0p=
+x; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; text-dec=
+oration: none;"><br></div><div style=3D"caret-color: #000000; color: #00000=
+0; font-family: Helvetica; font-size: 14px; font-style: normal; font-varian=
+t-caps: normal; font-weight: normal; letter-spacing: normal; orphans: auto;=
+ text-align: start; text-indent: 0px; text-transform: none; white-space: no=
+rmal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -web=
+kit-text-stroke-width: 0px; text-decoration: none;">AI Hackathon Team</div>=
+</div><div>-- <br></div><div>---------------<br>Raja CHIKY<br>Directrice de=
+ la recherche<br>Responsable du parcours Innovation et Cr=C3=A9ation d'Entr=
+eprise<br>01.49.54.52.34<br>06.84.67.45.95</div></div><br></div><div><br da=
+ta-mce-bogus=3D"1"></div></div></body></html>
+--=_1cff436c-2f5a-42dc-906d-2ce666c41a81--

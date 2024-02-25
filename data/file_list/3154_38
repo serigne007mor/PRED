@@ -1,0 +1,1670 @@
+Return-Path: <raja.chiky@isep.fr>
+X-Original-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (BounceSMTP2.univ-nantes.prive [172.20.12.67])
+	by sympa6.univ-nantes.prive (Postfix) with ESMTP id 7D6532292954
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Thu, 18 Apr 2019 15:01:32 +0200 (CEST)
+Received: from mx3.d101.univ-nantes.fr (MX3.univ-nantes.fr [193.52.101.137])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id 7B4C0628826
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Thu, 18 Apr 2019 15:01:32 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTP id 69E5F468EA52
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 18 Apr 2019 15:01:32 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 0.321
+X-Spam-Level:
+X-Spam-Status: No, score=0.321 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, HTML_MESSAGE=0.001, MR_NOT_ATTRIBUTED_IP=0.2,
+	NO_RDNS2=0.01, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_WSFF=0.01,
+	SPF_PASS=-0.001, UN_PHISHING_PW=0.1, URIBL_BLOCKED=0.001]
+	autolearn=disabled
+X-CRM114-Status: UNSURE ( 2.9372 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=isep.fr
+Received: from mx3.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id LssPu5Jlpm38 for <liste-egc@polytech.univ-nantes.fr>;
+	Thu, 18 Apr 2019 15:01:29 +0200 (CEST)
+X-Greylist: from auto-whitelisted by SQLgrey-1.6.7
+Received: from mann.isep.fr (mann.isep.fr [89.251.55.124])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTPS id F34F746C2861
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 18 Apr 2019 15:01:27 +0200 (CEST)
+Received: from mann.isep.fr (localhost [127.0.0.1])
+	by mann.isep.fr (Postfix) with ESMTP id 781E6A3AA2
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 18 Apr 2019 15:01:27 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=isep.fr; s=mann;
+	t=1555592487; bh=eNUDnzl24dqoIU/WQ7wmUhfoPMO61ZDKwCJH304seWI=;
+	h=Date:From:To:Subject:From;
+	b=vjkz1L/bRZ2HepO6Tf8qUmaWDhpAYCsSwxtDb2uMr5FnIF6CYD8vvfMxRrJU5wj9u
+	 6ahnqRxh4y7XNFHkGT4uwKrY71eTKcKBnEFjAM/ptOIGCEbPg5PCLjYEUJ4stxe75b
+	 N6zHfWhOA6yLlhHdmTloFd3eZ1NZ8pHfi3DO6jEqBwGKJHwp2wrikyyHARiRHmzWZl
+	 gN3TOePrP2NzRtxArWt1DlE8ra6+fEDXtiA0g+l1OZjUlleXjZUXcKgp+JJNaE6AAa
+	 42smq3vW7UDadqWnhwuhmPXrIHVFw5NQ7SuYYeee9DxQ1gWvKAFJXG31sYTbDfj1M8
+	 kerZGkwJP7/ZA==
+Received: from zimbra.isep.fr (zimbra.isep.fr [172.27.16.11])
+	by mann.isep.fr (Postfix) with ESMTP id 6F7B5A3A6E
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 18 Apr 2019 15:01:27 +0200 (CEST)
+Received: from zimbra.isep.fr (localhost.localdomain [127.0.0.1])
+	by zimbra.isep.fr (Postfix) with ESMTPS id 5B25CA020C
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 18 Apr 2019 15:01:27 +0200 (CEST)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by zimbra.isep.fr (Postfix) with ESMTP id 4D0F4A01AF
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 18 Apr 2019 15:01:27 +0200 (CEST)
+Received: from zimbra.isep.fr ([127.0.0.1])
+	by localhost (zimbra.isep.fr [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id kx35t53ov6_6 for <liste-egc@polytech.univ-nantes.fr>;
+	Thu, 18 Apr 2019 15:01:27 +0200 (CEST)
+Received: from zimbra.isep.fr (zimbra.isep.fr [172.27.16.11])
+	by zimbra.isep.fr (Postfix) with ESMTP id 30E7DA020C
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 18 Apr 2019 15:01:27 +0200 (CEST)
+Date: Thu, 18 Apr 2019 15:01:27 +0200 (CEST)
+From: Raja Chiky <raja.chiky@isep.fr>
+To: liste-egc@polytech.univ-nantes.fr
+Message-ID: <1024375276.900957.1555592487147.JavaMail.zimbra@isep.fr>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="=_3e3025fb-a0a3-47b9-8fb1-81e74002267c"
+X-Originating-IP: [172.18.184.66, 192.168.50.59]
+X-Mailer: Zimbra 8.8.12_GA_3803 (ZimbraWebClient - FF66 (Mac)/8.8.12_GA_3794)
+Thread-Index: u6okOs/MUaH25asDmKrJf+CsyrIjUw==
+Thread-Topic: stage LISITE-ISEP Paris
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] stage LISITE-ISEP Paris
+
+--=_3e3025fb-a0a3-47b9-8fb1-81e74002267c
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+
+
+Context and Main Purpose:=20
+
+The LISITE laboratory of ISEP is working with an industrial partner (Cap202=
+0) on an innovative project for smart farming =E2=80=9CIDEAC=E2=80=9D. The =
+IDEAC project aims to help farmers to make precise and predictive decisions=
+ for maximum productivity, greater profits and more sustainability.=20
+
+
+
+An open source architecture have been proposed to address the different cha=
+llenges (heterogeneous data collection (sensors, server apis, social networ=
+ks=E2=80=A6.), big data storage and data analytics=E2=80=A6). In this conte=
+xt, we are looking for a highly motivated intern with strong background in =
+Machine Learning and Data Analysis.=20
+
+The goal of this intern is to propose predictive models for each data sourc=
+e (or use case) and to transform them into aggregate ones. The proposed mod=
+els will be implemented using TensorFlow and integrated in the global archi=
+tecture.=20
+
+Requirements:=20
+
+=C2=B7 The candidate should have experience in machine learning, neuronal n=
+etworks or data sciences=20
+
+=C2=B7 Experience in Big Data technologies (Big Data processing and managem=
+ent) and distributed systems: Hadoop, Spark, HBase is a plus=20
+
+=C2=B7 Knowledge of Machine Learning Tools and Frameworks (e.g TensorFlow)=
+=20
+
+=C2=B7 Good scripting and coding skills (python, java or C++)=20
+
+=C2=B7 Autonomous and team working=20
+
+
+
+
+
+
+Duration : 4 to 6 months=20
+
+Start Date: as soon as possible=20
+
+Grant: yes=20
+
+Hosting team: LISITE, Institut Sup=C3=A9rieur d=E2=80=99=C3=89lectronique d=
+e Paris (ISEP) ( [ https://www.isep.fr/ | https://www.isep.fr/ ] )=20
+
+Application instructions: To apply, please send a mail and CV to raja.chiky=
+@isep.fr=20
+
+--=20
+---------------=20
+Raja CHIKY=20
+Directrice de la recherche=20
+Responsable du parcours Innovation et Cr=C3=A9ation d'Entreprise=20
+01.49.54.52.34=20
+06.84.67.45.95=20
+
+--=_3e3025fb-a0a3-47b9-8fb1-81e74002267c
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><body><div id=3D"zimbraEditorContainer" style=3D"font-family: Arial; =
+font-size: 12pt; color: #000000" class=3D"4"><style type=3D"text/css" scope=
+d=3D"">
+<!--
+ /* Font Definitions */
+@font-face
+=09{font-family:"Courier New";
+=09panose-1:2 7 3 9 2 2 5 2 4 4;
+=09mso-font-charset:0;
+=09mso-generic-font-family:auto;
+=09mso-font-pitch:variable;
+=09mso-font-signature:-536859905 -1073711037 9 0 511 0;}
+@font-face
+=09{font-family:Wingdings;
+=09panose-1:5 0 0 0 0 0 0 0 0 0;
+=09mso-font-charset:2;
+=09mso-generic-font-family:auto;
+=09mso-font-pitch:variable;
+=09mso-font-signature:0 268435456 0 0 -2147483648 0;}
+@font-face
+=09{font-family:"Cambria Math";
+=09panose-1:2 4 5 3 5 4 6 3 2 4;
+=09mso-font-charset:0;
+=09mso-generic-font-family:auto;
+=09mso-font-pitch:variable;
+=09mso-font-signature:-536870145 1107305727 0 0 415 0;}
+@font-face
+=09{font-family:Calibri;
+=09panose-1:2 15 5 2 2 2 4 3 2 4;
+=09mso-font-charset:0;
+=09mso-generic-font-family:auto;
+=09mso-font-pitch:variable;
+=09mso-font-signature:-520092929 1073786111 9 0 415 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+=09{mso-style-unhide:no;
+=09mso-style-qformat:yes;
+=09mso-style-parent:"";
+=09margin-top:0cm;
+=09margin-right:0cm;
+=09margin-bottom:10.0pt;
+=09margin-left:0cm;
+=09line-height:115%;
+=09mso-pagination:widow-orphan;
+=09font-size:11.0pt;
+=09font-family:Calibri;
+=09mso-ascii-font-family:Calibri;
+=09mso-ascii-theme-font:minor-latin;
+=09mso-fareast-font-family:Calibri;
+=09mso-fareast-theme-font:minor-latin;
+=09mso-hansi-font-family:Calibri;
+=09mso-hansi-theme-font:minor-latin;
+=09mso-bidi-font-family:"Times New Roman";
+=09mso-bidi-theme-font:minor-bidi;
+=09mso-fareast-language:EN-US;}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+=09{mso-style-priority:34;
+=09mso-style-unhide:no;
+=09mso-style-qformat:yes;
+=09margin-top:0cm;
+=09margin-right:0cm;
+=09margin-bottom:10.0pt;
+=09margin-left:36.0pt;
+=09mso-add-space:auto;
+=09line-height:115%;
+=09mso-pagination:widow-orphan;
+=09font-size:11.0pt;
+=09font-family:Calibri;
+=09mso-ascii-font-family:Calibri;
+=09mso-ascii-theme-font:minor-latin;
+=09mso-fareast-font-family:Calibri;
+=09mso-fareast-theme-font:minor-latin;
+=09mso-hansi-font-family:Calibri;
+=09mso-hansi-theme-font:minor-latin;
+=09mso-bidi-font-family:"Times New Roman";
+=09mso-bidi-theme-font:minor-bidi;
+=09mso-fareast-language:EN-US;}
+p.MsoListParagraphCxSpFirst, li.MsoListParagraphCxSpFirst, div.MsoListParag=
+raphCxSpFirst
+=09{mso-style-priority:34;
+=09mso-style-unhide:no;
+=09mso-style-qformat:yes;
+=09mso-style-type:export-only;
+=09margin-top:0cm;
+=09margin-right:0cm;
+=09margin-bottom:0cm;
+=09margin-left:36.0pt;
+=09margin-bottom:.0001pt;
+=09mso-add-space:auto;
+=09line-height:115%;
+=09mso-pagination:widow-orphan;
+=09font-size:11.0pt;
+=09font-family:Calibri;
+=09mso-ascii-font-family:Calibri;
+=09mso-ascii-theme-font:minor-latin;
+=09mso-fareast-font-family:Calibri;
+=09mso-fareast-theme-font:minor-latin;
+=09mso-hansi-font-family:Calibri;
+=09mso-hansi-theme-font:minor-latin;
+=09mso-bidi-font-family:"Times New Roman";
+=09mso-bidi-theme-font:minor-bidi;
+=09mso-fareast-language:EN-US;}
+p.MsoListParagraphCxSpMiddle, li.MsoListParagraphCxSpMiddle, div.MsoListPar=
+agraphCxSpMiddle
+=09{mso-style-priority:34;
+=09mso-style-unhide:no;
+=09mso-style-qformat:yes;
+=09mso-style-type:export-only;
+=09margin-top:0cm;
+=09margin-right:0cm;
+=09margin-bottom:0cm;
+=09margin-left:36.0pt;
+=09margin-bottom:.0001pt;
+=09mso-add-space:auto;
+=09line-height:115%;
+=09mso-pagination:widow-orphan;
+=09font-size:11.0pt;
+=09font-family:Calibri;
+=09mso-ascii-font-family:Calibri;
+=09mso-ascii-theme-font:minor-latin;
+=09mso-fareast-font-family:Calibri;
+=09mso-fareast-theme-font:minor-latin;
+=09mso-hansi-font-family:Calibri;
+=09mso-hansi-theme-font:minor-latin;
+=09mso-bidi-font-family:"Times New Roman";
+=09mso-bidi-theme-font:minor-bidi;
+=09mso-fareast-language:EN-US;}
+p.MsoListParagraphCxSpLast, li.MsoListParagraphCxSpLast, div.MsoListParagra=
+phCxSpLast
+=09{mso-style-priority:34;
+=09mso-style-unhide:no;
+=09mso-style-qformat:yes;
+=09mso-style-type:export-only;
+=09margin-top:0cm;
+=09margin-right:0cm;
+=09margin-bottom:10.0pt;
+=09margin-left:36.0pt;
+=09mso-add-space:auto;
+=09line-height:115%;
+=09mso-pagination:widow-orphan;
+=09font-size:11.0pt;
+=09font-family:Calibri;
+=09mso-ascii-font-family:Calibri;
+=09mso-ascii-theme-font:minor-latin;
+=09mso-fareast-font-family:Calibri;
+=09mso-fareast-theme-font:minor-latin;
+=09mso-hansi-font-family:Calibri;
+=09mso-hansi-theme-font:minor-latin;
+=09mso-bidi-font-family:"Times New Roman";
+=09mso-bidi-theme-font:minor-bidi;
+=09mso-fareast-language:EN-US;}
+.zimbra3
+=09{mso-style-type:export-only;
+=09mso-default-props:yes;
+=09font-size:11.0pt;
+=09mso-ansi-font-size:11.0pt;
+=09mso-bidi-font-size:11.0pt;
+=09font-family:Calibri;
+=09mso-ascii-font-family:Calibri;
+=09mso-ascii-theme-font:minor-latin;
+=09mso-fareast-font-family:Calibri;
+=09mso-fareast-theme-font:minor-latin;
+=09mso-hansi-font-family:Calibri;
+=09mso-hansi-theme-font:minor-latin;
+=09mso-bidi-font-family:"Times New Roman";
+=09mso-bidi-theme-font:minor-bidi;
+=09mso-fareast-language:EN-US;}
+.zimbra4
+=09{mso-style-type:export-only;
+=09margin-bottom:10.0pt;
+=09line-height:115%;}
+@page WordSection1
+=09{size:612.0pt 792.0pt;
+=09margin:70.85pt 70.85pt 70.85pt 70.85pt;
+=09mso-header-margin:36.0pt;
+=09mso-footer-margin:36.0pt;
+=09mso-paper-source:0;}
+div.WordSection1
+=09{page:WordSection1;}
+ /* List Definitions */
+@list l0
+=09{mso-list-id:366637045;
+=09mso-list-type:hybrid;
+=09mso-list-template-ids:1341681274 67895297 67895299 67895301 67895297 678=
+95299 67895301 67895297 67895299 67895301;}
+@list l0:level1
+=09{mso-level-number-format:bullet;
+=09mso-level-text:=EF=82=B7;
+=09mso-level-tab-stop:none;
+=09mso-level-number-position:left;
+=09text-indent:-18.0pt;
+=09font-family:Symbol;}
+@list l0:level2
+=09{mso-level-number-format:bullet;
+=09mso-level-text:o;
+=09mso-level-tab-stop:none;
+=09mso-level-number-position:left;
+=09text-indent:-18.0pt;
+=09font-family:"Courier New";}
+@list l0:level3
+=09{mso-level-number-format:bullet;
+=09mso-level-text:=EF=82=A7;
+=09mso-level-tab-stop:none;
+=09mso-level-number-position:left;
+=09text-indent:-18.0pt;
+=09font-family:Wingdings;}
+@list l0:level4
+=09{mso-level-number-format:bullet;
+=09mso-level-text:=EF=82=B7;
+=09mso-level-tab-stop:none;
+=09mso-level-number-position:left;
+=09text-indent:-18.0pt;
+=09font-family:Symbol;}
+@list l0:level5
+=09{mso-level-number-format:bullet;
+=09mso-level-text:o;
+=09mso-level-tab-stop:none;
+=09mso-level-number-position:left;
+=09text-indent:-18.0pt;
+=09font-family:"Courier New";}
+@list l0:level6
+=09{mso-level-number-format:bullet;
+=09mso-level-text:=EF=82=A7;
+=09mso-level-tab-stop:none;
+=09mso-level-number-position:left;
+=09text-indent:-18.0pt;
+=09font-family:Wingdings;}
+@list l0:level7
+=09{mso-level-number-format:bullet;
+=09mso-level-text:=EF=82=B7;
+=09mso-level-tab-stop:none;
+=09mso-level-number-position:left;
+=09text-indent:-18.0pt;
+=09font-family:Symbol;}
+@list l0:level8
+=09{mso-level-number-format:bullet;
+=09mso-level-text:o;
+=09mso-level-tab-stop:none;
+=09mso-level-number-position:left;
+=09text-indent:-18.0pt;
+=09font-family:"Courier New";}
+@list l0:level9
+=09{mso-level-number-format:bullet;
+=09mso-level-text:=EF=82=A7;
+=09mso-level-tab-stop:none;
+=09mso-level-number-position:left;
+=09text-indent:-18.0pt;
+=09font-family:Wingdings;}
+ol
+=09{margin-bottom:0cm;}
+ul
+=09{margin-bottom:0cm;}
+-->
+</style><div><style type=3D"text/css" scoped=3D"">
+<!--
+ /* Font Definitions */
+@font-face
+=09{font-family:"Courier New";
+=09panose-1:2 7 3 9 2 2 5 2 4 4;
+=09mso-font-charset:0;
+=09mso-generic-font-family:auto;
+=09mso-font-pitch:variable;
+=09mso-font-signature:-536859905 -1073711037 9 0 511 0;}
+@font-face
+=09{font-family:Wingdings;
+=09panose-1:5 0 0 0 0 0 0 0 0 0;
+=09mso-font-charset:2;
+=09mso-generic-font-family:auto;
+=09mso-font-pitch:variable;
+=09mso-font-signature:0 268435456 0 0 -2147483648 0;}
+@font-face
+=09{font-family:"Cambria Math";
+=09panose-1:2 4 5 3 5 4 6 3 2 4;
+=09mso-font-charset:0;
+=09mso-generic-font-family:auto;
+=09mso-font-pitch:variable;
+=09mso-font-signature:-536870145 1107305727 0 0 415 0;}
+@font-face
+=09{font-family:Calibri;
+=09panose-1:2 15 5 2 2 2 4 3 2 4;
+=09mso-font-charset:0;
+=09mso-generic-font-family:auto;
+=09mso-font-pitch:variable;
+=09mso-font-signature:-520092929 1073786111 9 0 415 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+=09{mso-style-unhide:no;
+=09mso-style-qformat:yes;
+=09mso-style-parent:"";
+=09margin-top:0cm;
+=09margin-right:0cm;
+=09margin-bottom:10.0pt;
+=09margin-left:0cm;
+=09line-height:115%;
+=09mso-pagination:widow-orphan;
+=09font-size:11.0pt;
+=09font-family:Calibri;
+=09mso-ascii-font-family:Calibri;
+=09mso-ascii-theme-font:minor-latin;
+=09mso-fareast-font-family:Calibri;
+=09mso-fareast-theme-font:minor-latin;
+=09mso-hansi-font-family:Calibri;
+=09mso-hansi-theme-font:minor-latin;
+=09mso-bidi-font-family:"Times New Roman";
+=09mso-bidi-theme-font:minor-bidi;
+=09mso-fareast-language:EN-US;}
+a:link, span.MsoHyperlink
+=09{mso-style-priority:99;
+=09color:blue;
+=09mso-themecolor:hyperlink;
+=09text-decoration:underline;
+=09text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+=09{mso-style-noshow:yes;
+=09mso-style-priority:99;
+=09color:purple;
+=09mso-themecolor:followedhyperlink;
+=09text-decoration:underline;
+=09text-underline:single;}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+=09{mso-style-priority:34;
+=09mso-style-unhide:no;
+=09mso-style-qformat:yes;
+=09margin-top:0cm;
+=09margin-right:0cm;
+=09margin-bottom:10.0pt;
+=09margin-left:36.0pt;
+=09mso-add-space:auto;
+=09line-height:115%;
+=09mso-pagination:widow-orphan;
+=09font-size:11.0pt;
+=09font-family:Calibri;
+=09mso-ascii-font-family:Calibri;
+=09mso-ascii-theme-font:minor-latin;
+=09mso-fareast-font-family:Calibri;
+=09mso-fareast-theme-font:minor-latin;
+=09mso-hansi-font-family:Calibri;
+=09mso-hansi-theme-font:minor-latin;
+=09mso-bidi-font-family:"Times New Roman";
+=09mso-bidi-theme-font:minor-bidi;
+=09mso-fareast-language:EN-US;}
+p.MsoListParagraphCxSpFirst, li.MsoListParagraphCxSpFirst, div.MsoListParag=
+raphCxSpFirst
+=09{mso-style-priority:34;
+=09mso-style-unhide:no;
+=09mso-style-qformat:yes;
+=09mso-style-type:export-only;
+=09margin-top:0cm;
+=09margin-right:0cm;
+=09margin-bottom:0cm;
+=09margin-left:36.0pt;
+=09margin-bottom:.0001pt;
+=09mso-add-space:auto;
+=09line-height:115%;
+=09mso-pagination:widow-orphan;
+=09font-size:11.0pt;
+=09font-family:Calibri;
+=09mso-ascii-font-family:Calibri;
+=09mso-ascii-theme-font:minor-latin;
+=09mso-fareast-font-family:Calibri;
+=09mso-fareast-theme-font:minor-latin;
+=09mso-hansi-font-family:Calibri;
+=09mso-hansi-theme-font:minor-latin;
+=09mso-bidi-font-family:"Times New Roman";
+=09mso-bidi-theme-font:minor-bidi;
+=09mso-fareast-language:EN-US;}
+p.MsoListParagraphCxSpMiddle, li.MsoListParagraphCxSpMiddle, div.MsoListPar=
+agraphCxSpMiddle
+=09{mso-style-priority:34;
+=09mso-style-unhide:no;
+=09mso-style-qformat:yes;
+=09mso-style-type:export-only;
+=09margin-top:0cm;
+=09margin-right:0cm;
+=09margin-bottom:0cm;
+=09margin-left:36.0pt;
+=09margin-bottom:.0001pt;
+=09mso-add-space:auto;
+=09line-height:115%;
+=09mso-pagination:widow-orphan;
+=09font-size:11.0pt;
+=09font-family:Calibri;
+=09mso-ascii-font-family:Calibri;
+=09mso-ascii-theme-font:minor-latin;
+=09mso-fareast-font-family:Calibri;
+=09mso-fareast-theme-font:minor-latin;
+=09mso-hansi-font-family:Calibri;
+=09mso-hansi-theme-font:minor-latin;
+=09mso-bidi-font-family:"Times New Roman";
+=09mso-bidi-theme-font:minor-bidi;
+=09mso-fareast-language:EN-US;}
+p.MsoListParagraphCxSpLast, li.MsoListParagraphCxSpLast, div.MsoListParagra=
+phCxSpLast
+=09{mso-style-priority:34;
+=09mso-style-unhide:no;
+=09mso-style-qformat:yes;
+=09mso-style-type:export-only;
+=09margin-top:0cm;
+=09margin-right:0cm;
+=09margin-bottom:10.0pt;
+=09margin-left:36.0pt;
+=09mso-add-space:auto;
+=09line-height:115%;
+=09mso-pagination:widow-orphan;
+=09font-size:11.0pt;
+=09font-family:Calibri;
+=09mso-ascii-font-family:Calibri;
+=09mso-ascii-theme-font:minor-latin;
+=09mso-fareast-font-family:Calibri;
+=09mso-fareast-theme-font:minor-latin;
+=09mso-hansi-font-family:Calibri;
+=09mso-hansi-theme-font:minor-latin;
+=09mso-bidi-font-family:"Times New Roman";
+=09mso-bidi-theme-font:minor-bidi;
+=09mso-fareast-language:EN-US;}
+.zimbra1
+=09{mso-style-type:export-only;
+=09mso-default-props:yes;
+=09font-size:11.0pt;
+=09mso-ansi-font-size:11.0pt;
+=09mso-bidi-font-size:11.0pt;
+=09font-family:Calibri;
+=09mso-ascii-font-family:Calibri;
+=09mso-ascii-theme-font:minor-latin;
+=09mso-fareast-font-family:Calibri;
+=09mso-fareast-theme-font:minor-latin;
+=09mso-hansi-font-family:Calibri;
+=09mso-hansi-theme-font:minor-latin;
+=09mso-bidi-font-family:"Times New Roman";
+=09mso-bidi-theme-font:minor-bidi;
+=09mso-fareast-language:EN-US;}
+.zimbra2
+=09{mso-style-type:export-only;
+=09margin-bottom:10.0pt;
+=09line-height:115%;}
+@page WordSection1
+=09{size:612.0pt 792.0pt;
+=09margin:70.85pt 70.85pt 70.85pt 70.85pt;
+=09mso-header-margin:36.0pt;
+=09mso-footer-margin:36.0pt;
+=09mso-paper-source:0;}
+div.WordSection1
+=09{page:WordSection1;}
+ /* List Definitions */
+@list l0
+=09{mso-list-id:366637045;
+=09mso-list-type:hybrid;
+=09mso-list-template-ids:1341681274 67895297 67895299 67895301 67895297 678=
+95299 67895301 67895297 67895299 67895301;}
+@list l0:level1
+=09{mso-level-number-format:bullet;
+=09mso-level-text:=EF=82=B7;
+=09mso-level-tab-stop:none;
+=09mso-level-number-position:left;
+=09text-indent:-18.0pt;
+=09font-family:Symbol;}
+@list l0:level2
+=09{mso-level-number-format:bullet;
+=09mso-level-text:o;
+=09mso-level-tab-stop:none;
+=09mso-level-number-position:left;
+=09text-indent:-18.0pt;
+=09font-family:"Courier New";}
+@list l0:level3
+=09{mso-level-number-format:bullet;
+=09mso-level-text:=EF=82=A7;
+=09mso-level-tab-stop:none;
+=09mso-level-number-position:left;
+=09text-indent:-18.0pt;
+=09font-family:Wingdings;}
+@list l0:level4
+=09{mso-level-number-format:bullet;
+=09mso-level-text:=EF=82=B7;
+=09mso-level-tab-stop:none;
+=09mso-level-number-position:left;
+=09text-indent:-18.0pt;
+=09font-family:Symbol;}
+@list l0:level5
+=09{mso-level-number-format:bullet;
+=09mso-level-text:o;
+=09mso-level-tab-stop:none;
+=09mso-level-number-position:left;
+=09text-indent:-18.0pt;
+=09font-family:"Courier New";}
+@list l0:level6
+=09{mso-level-number-format:bullet;
+=09mso-level-text:=EF=82=A7;
+=09mso-level-tab-stop:none;
+=09mso-level-number-position:left;
+=09text-indent:-18.0pt;
+=09font-family:Wingdings;}
+@list l0:level7
+=09{mso-level-number-format:bullet;
+=09mso-level-text:=EF=82=B7;
+=09mso-level-tab-stop:none;
+=09mso-level-number-position:left;
+=09text-indent:-18.0pt;
+=09font-family:Symbol;}
+@list l0:level8
+=09{mso-level-number-format:bullet;
+=09mso-level-text:o;
+=09mso-level-tab-stop:none;
+=09mso-level-number-position:left;
+=09text-indent:-18.0pt;
+=09font-family:"Courier New";}
+@list l0:level9
+=09{mso-level-number-format:bullet;
+=09mso-level-text:=EF=82=A7;
+=09mso-level-tab-stop:none;
+=09mso-level-number-position:left;
+=09text-indent:-18.0pt;
+=09font-family:Wingdings;}
+@list l1
+=09{mso-list-id:905183351;
+=09mso-list-type:hybrid;
+=09mso-list-template-ids:1961145198 1943042918 67895299 67895301 67895297 6=
+7895299 67895301 67895297 67895299 67895301;}
+@list l1:level1
+=09{mso-level-start-at:4;
+=09mso-level-number-format:bullet;
+=09mso-level-text:-;
+=09mso-level-tab-stop:none;
+=09mso-level-number-position:left;
+=09text-indent:-18.0pt;
+=09font-family:"Times New Roman";
+=09mso-fareast-font-family:Calibri;
+=09mso-fareast-theme-font:minor-latin;}
+@list l1:level2
+=09{mso-level-number-format:bullet;
+=09mso-level-text:o;
+=09mso-level-tab-stop:none;
+=09mso-level-number-position:left;
+=09text-indent:-18.0pt;
+=09font-family:"Courier New";}
+@list l1:level3
+=09{mso-level-number-format:bullet;
+=09mso-level-text:=EF=82=A7;
+=09mso-level-tab-stop:none;
+=09mso-level-number-position:left;
+=09text-indent:-18.0pt;
+=09font-family:Wingdings;}
+@list l1:level4
+=09{mso-level-number-format:bullet;
+=09mso-level-text:=EF=82=B7;
+=09mso-level-tab-stop:none;
+=09mso-level-number-position:left;
+=09text-indent:-18.0pt;
+=09font-family:Symbol;}
+@list l1:level5
+=09{mso-level-number-format:bullet;
+=09mso-level-text:o;
+=09mso-level-tab-stop:none;
+=09mso-level-number-position:left;
+=09text-indent:-18.0pt;
+=09font-family:"Courier New";}
+@list l1:level6
+=09{mso-level-number-format:bullet;
+=09mso-level-text:=EF=82=A7;
+=09mso-level-tab-stop:none;
+=09mso-level-number-position:left;
+=09text-indent:-18.0pt;
+=09font-family:Wingdings;}
+@list l1:level7
+=09{mso-level-number-format:bullet;
+=09mso-level-text:=EF=82=B7;
+=09mso-level-tab-stop:none;
+=09mso-level-number-position:left;
+=09text-indent:-18.0pt;
+=09font-family:Symbol;}
+@list l1:level8
+=09{mso-level-number-format:bullet;
+=09mso-level-text:o;
+=09mso-level-tab-stop:none;
+=09mso-level-number-position:left;
+=09text-indent:-18.0pt;
+=09font-family:"Courier New";}
+@list l1:level9
+=09{mso-level-number-format:bullet;
+=09mso-level-text:=EF=82=A7;
+=09mso-level-tab-stop:none;
+=09mso-level-number-position:left;
+=09text-indent:-18.0pt;
+=09font-family:Wingdings;}
+ol
+=09{margin-bottom:0cm;}
+ul
+=09{margin-bottom:0cm;}
+-->
+</style></div><div><!-- [if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Revision>0</o:Revision>
+  <o:TotalTime>0</o:TotalTime>
+  <o:Pages>1</o:Pages>
+  <o:Words>246</o:Words>
+  <o:Characters>1392</o:Characters>
+  <o:Company>ISEP</o:Company>
+  <o:Lines>44</o:Lines>
+  <o:Paragraphs>21</o:Paragraphs>
+  <o:CharactersWithSpaces>1617</o:CharactersWithSpaces>
+  <o:Version>14.0</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--> <!-- [if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:View>Normal</w:View>
+  <w:Zoom>0</w:Zoom>
+  <w:TrackMoves/>
+  <w:TrackFormatting/>
+  <w:HyphenationZone>21</w:HyphenationZone>
+  <w:PunctuationKerning/>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:DoNotPromoteQF/>
+  <w:LidThemeOther>FR</w:LidThemeOther>
+  <w:LidThemeAsian>JA</w:LidThemeAsian>
+  <w:LidThemeComplexScript>X-NONE</w:LidThemeComplexScript>
+  <w:Compatibility>
+   <w:BreakWrappedTables/>
+   <w:SnapToGridInCell/>
+   <w:WrapTextWithPunct/>
+   <w:UseAsianBreakRules/>
+   <w:DontGrowAutofit/>
+   <w:SplitPgBreakAndParaMark/>
+   <w:EnableOpenTypeKerning/>
+   <w:DontFlipMirrorIndents/>
+   <w:OverrideTableStyleHps/>
+  </w:Compatibility>
+  <m:mathPr>
+   <m:mathFont m:val=3D"Cambria Math"/>
+   <m:brkBin m:val=3D"before"/>
+   <m:brkBinSub m:val=3D"&#45;-"/>
+   <m:smallFrac m:val=3D"off"/>
+   <m:dispDef/>
+   <m:lMargin m:val=3D"0"/>
+   <m:rMargin m:val=3D"0"/>
+   <m:defJc m:val=3D"centerGroup"/>
+   <m:wrapIndent m:val=3D"1440"/>
+   <m:intLim m:val=3D"subSup"/>
+   <m:naryLim m:val=3D"undOvr"/>
+  </m:mathPr></w:WordDocument>
+</xml><![endif]--><!-- [if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState=3D"false" DefUnhideWhenUsed=3D"true"
+  DefSemiHidden=3D"true" DefQFormat=3D"false" DefPriority=3D"99"
+  LatentStyleCount=3D"276">
+  <w:LsdException Locked=3D"false" Priority=3D"0" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Normal"/>
+  <w:LsdException Locked=3D"false" Priority=3D"9" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"heading 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"9" QFormat=3D"true" Name=3D"=
+heading 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"9" QFormat=3D"true" Name=3D"=
+heading 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"9" QFormat=3D"true" Name=3D"=
+heading 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"9" QFormat=3D"true" Name=3D"=
+heading 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"9" QFormat=3D"true" Name=3D"=
+heading 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"9" QFormat=3D"true" Name=3D"=
+heading 7"/>
+  <w:LsdException Locked=3D"false" Priority=3D"9" QFormat=3D"true" Name=3D"=
+heading 8"/>
+  <w:LsdException Locked=3D"false" Priority=3D"9" QFormat=3D"true" Name=3D"=
+heading 9"/>
+  <w:LsdException Locked=3D"false" Priority=3D"39" Name=3D"toc 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"39" Name=3D"toc 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"39" Name=3D"toc 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"39" Name=3D"toc 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"39" Name=3D"toc 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"39" Name=3D"toc 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"39" Name=3D"toc 7"/>
+  <w:LsdException Locked=3D"false" Priority=3D"39" Name=3D"toc 8"/>
+  <w:LsdException Locked=3D"false" Priority=3D"39" Name=3D"toc 9"/>
+  <w:LsdException Locked=3D"false" Priority=3D"35" QFormat=3D"true" Name=3D=
+"caption"/>
+  <w:LsdException Locked=3D"false" Priority=3D"10" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Title"/>
+  <w:LsdException Locked=3D"false" Priority=3D"1" Name=3D"Default Paragraph=
+ Font"/>
+  <w:LsdException Locked=3D"false" Priority=3D"11" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Subtitle"/>
+  <w:LsdException Locked=3D"false" Priority=3D"22" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Strong"/>
+  <w:LsdException Locked=3D"false" Priority=3D"20" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Emphasis"/>
+  <w:LsdException Locked=3D"false" Priority=3D"59" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Table Grid"/>
+  <w:LsdException Locked=3D"false" UnhideWhenUsed=3D"false" Name=3D"Placeho=
+lder Text"/>
+  <w:LsdException Locked=3D"false" Priority=3D"1" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"No Spacing"/>
+  <w:LsdException Locked=3D"false" Priority=3D"60" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Shading"/>
+  <w:LsdException Locked=3D"false" Priority=3D"61" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light List"/>
+  <w:LsdException Locked=3D"false" Priority=3D"62" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Grid"/>
+  <w:LsdException Locked=3D"false" Priority=3D"63" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"64" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"65" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"66" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"67" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"68" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"69" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"70" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Dark List"/>
+  <w:LsdException Locked=3D"false" Priority=3D"71" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Shading"/>
+  <w:LsdException Locked=3D"false" Priority=3D"72" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful List"/>
+  <w:LsdException Locked=3D"false" Priority=3D"73" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Grid"/>
+  <w:LsdException Locked=3D"false" Priority=3D"60" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Shading Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"61" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light List Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"62" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Grid Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"63" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 1 Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"64" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 2 Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"65" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 1 Accent 1"/>
+  <w:LsdException Locked=3D"false" UnhideWhenUsed=3D"false" Name=3D"Revisio=
+n"/>
+  <w:LsdException Locked=3D"false" Priority=3D"34" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"List Paragraph"/>
+  <w:LsdException Locked=3D"false" Priority=3D"29" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Quote"/>
+  <w:LsdException Locked=3D"false" Priority=3D"30" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Intense Quote"/>
+  <w:LsdException Locked=3D"false" Priority=3D"66" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 2 Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"67" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 1 Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"68" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 2 Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"69" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 3 Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"70" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Dark List Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"71" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Shading Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"72" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful List Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"73" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Grid Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"60" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Shading Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"61" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light List Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"62" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Grid Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"63" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 1 Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"64" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 2 Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"65" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 1 Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"66" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 2 Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"67" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 1 Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"68" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 2 Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"69" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 3 Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"70" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Dark List Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"71" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Shading Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"72" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful List Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"73" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Grid Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"60" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Shading Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"61" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light List Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"62" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Grid Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"63" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 1 Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"64" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 2 Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"65" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 1 Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"66" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 2 Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"67" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 1 Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"68" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 2 Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"69" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 3 Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"70" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Dark List Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"71" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Shading Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"72" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful List Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"73" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Grid Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"60" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Shading Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"61" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light List Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"62" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Grid Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"63" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 1 Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"64" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 2 Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"65" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 1 Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"66" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 2 Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"67" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 1 Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"68" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 2 Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"69" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 3 Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"70" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Dark List Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"71" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Shading Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"72" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful List Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"73" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Grid Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"60" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Shading Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"61" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light List Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"62" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Grid Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"63" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 1 Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"64" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 2 Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"65" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 1 Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"66" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 2 Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"67" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 1 Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"68" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 2 Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"69" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 3 Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"70" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Dark List Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"71" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Shading Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"72" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful List Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"73" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Grid Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"60" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Shading Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"61" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light List Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"62" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Grid Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"63" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 1 Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"64" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 2 Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"65" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 1 Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"66" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 2 Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"67" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 1 Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"68" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 2 Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"69" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 3 Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"70" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Dark List Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"71" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Shading Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"72" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful List Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"73" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Grid Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"19" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Subtle Emphasis"/>
+  <w:LsdException Locked=3D"false" Priority=3D"21" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Intense Emphasis"/>
+  <w:LsdException Locked=3D"false" Priority=3D"31" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Subtle Reference"/>
+  <w:LsdException Locked=3D"false" Priority=3D"32" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Intense Reference"/>
+  <w:LsdException Locked=3D"false" Priority=3D"33" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Book Title"/>
+  <w:LsdException Locked=3D"false" Priority=3D"37" Name=3D"Bibliography"/>
+  <w:LsdException Locked=3D"false" Priority=3D"39" QFormat=3D"true" Name=3D=
+"TOC Heading"/>
+ </w:LatentStyles>
+</xml><![endif]--><!-- [if gte mso 10]>
+<style>
+ /* Style Definitions */
+table.MsoNormalTable
+=09{mso-style-name:"Tableau Normal";
+=09mso-tstyle-rowband-size:0;
+=09mso-tstyle-colband-size:0;
+=09mso-style-noshow:yes;
+=09mso-style-priority:99;
+=09mso-style-parent:"";
+=09mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+=09mso-para-margin-top:0cm;
+=09mso-para-margin-right:0cm;
+=09mso-para-margin-bottom:10.0pt;
+=09mso-para-margin-left:0cm;
+=09line-height:115%;
+=09mso-pagination:widow-orphan;
+=09font-size:11.0pt;
+=09font-family:Calibri;
+=09mso-ascii-font-family:Calibri;
+=09mso-ascii-theme-font:minor-latin;
+=09mso-hansi-font-family:Calibri;
+=09mso-hansi-theme-font:minor-latin;
+=09mso-fareast-language:EN-US;}
+</style>
+<![endif]--> <!--StartFragment--><p class=3D"MsoNormal" style=3D"line-heigh=
+t: normal; margin: 0px;" data-mce-style=3D"line-height: normal; margin: 0px=
+;"><b style=3D"mso-bidi-font-weight: normal;" data-mce-style=3D"mso-bidi-fo=
+nt-weight: normal;"><u><span style=3D"font-size: 12.0pt; mso-bidi-font-size=
+: 11.0pt; font-family: 'Times New Roman'; mso-ansi-language: EN-US;" data-m=
+ce-style=3D"font-size: 12.0pt; mso-bidi-font-size: 11.0pt; font-family: 'Ti=
+mes New Roman'; mso-ansi-language: EN-US;" lang=3D"EN-US">Context and Main =
+Purpose:<o:p></o:p></span></u></b></p><p class=3D"MsoNormal" style=3D"text-=
+align: justify; margin: 0px;" data-mce-style=3D"text-align: justify; margin=
+: 0px;"><span style=3D"font-size: 12.0pt; mso-bidi-font-size: 11.0pt; line-=
+height: 115%; font-family: 'Times New Roman'; mso-ansi-language: EN-US;" da=
+ta-mce-style=3D"font-size: 12.0pt; mso-bidi-font-size: 11.0pt; line-height:=
+ 115%; font-family: 'Times New Roman'; mso-ansi-language: EN-US;" lang=3D"E=
+N-US">The LISITE laboratory of ISEP is working with an industrial partner (=
+Cap2020) on an innovative project for smart farming =E2=80=9CIDEAC=E2=80=9D=
+. The IDEAC project aims to help farmers to make precise and predictive dec=
+isions for maximum productivity, greater profits and more sustainability. <=
+o:p></o:p></span></p><p class=3D"MsoNormal" style=3D"text-align: justify; m=
+argin: 0px;" data-mce-style=3D"text-align: justify; margin: 0px;"><span sty=
+le=3D"font-size: 12.0pt; mso-bidi-font-size: 11.0pt; line-height: 115%; fon=
+t-family: 'Times New Roman'; mso-ansi-language: EN-US;" data-mce-style=3D"f=
+ont-size: 12.0pt; mso-bidi-font-size: 11.0pt; line-height: 115%; font-famil=
+y: 'Times New Roman'; mso-ansi-language: EN-US;" lang=3D"EN-US"><!-- [if gt=
+e mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Revision>0</o:Revision>
+  <o:TotalTime>0</o:TotalTime>
+  <o:Pages>1</o:Pages>
+  <o:Words>142</o:Words>
+  <o:Characters>806</o:Characters>
+  <o:Company>ISEP</o:Company>
+  <o:Lines>26</o:Lines>
+  <o:Paragraphs>12</o:Paragraphs>
+  <o:CharactersWithSpaces>936</o:CharactersWithSpaces>
+  <o:Version>14.0</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->  <!-- [if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:View>Normal</w:View>
+  <w:Zoom>0</w:Zoom>
+  <w:TrackMoves/>
+  <w:TrackFormatting/>
+  <w:HyphenationZone>21</w:HyphenationZone>
+  <w:PunctuationKerning/>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:DoNotPromoteQF/>
+  <w:LidThemeOther>FR</w:LidThemeOther>
+  <w:LidThemeAsian>JA</w:LidThemeAsian>
+  <w:LidThemeComplexScript>X-NONE</w:LidThemeComplexScript>
+  <w:Compatibility>
+   <w:BreakWrappedTables/>
+   <w:SnapToGridInCell/>
+   <w:WrapTextWithPunct/>
+   <w:UseAsianBreakRules/>
+   <w:DontGrowAutofit/>
+   <w:SplitPgBreakAndParaMark/>
+   <w:EnableOpenTypeKerning/>
+   <w:DontFlipMirrorIndents/>
+   <w:OverrideTableStyleHps/>
+  </w:Compatibility>
+  <m:mathPr>
+   <m:mathFont m:val=3D"Cambria Math"/>
+   <m:brkBin m:val=3D"before"/>
+   <m:brkBinSub m:val=3D"&#45;-"/>
+   <m:smallFrac m:val=3D"off"/>
+   <m:dispDef/>
+   <m:lMargin m:val=3D"0"/>
+   <m:rMargin m:val=3D"0"/>
+   <m:defJc m:val=3D"centerGroup"/>
+   <m:wrapIndent m:val=3D"1440"/>
+   <m:intLim m:val=3D"subSup"/>
+   <m:naryLim m:val=3D"undOvr"/>
+  </m:mathPr></w:WordDocument>
+</xml><![endif]--><!-- [if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState=3D"false" DefUnhideWhenUsed=3D"true"
+  DefSemiHidden=3D"true" DefQFormat=3D"false" DefPriority=3D"99"
+  LatentStyleCount=3D"276">
+  <w:LsdException Locked=3D"false" Priority=3D"0" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Normal"/>
+  <w:LsdException Locked=3D"false" Priority=3D"9" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"heading 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"9" QFormat=3D"true" Name=3D"=
+heading 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"9" QFormat=3D"true" Name=3D"=
+heading 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"9" QFormat=3D"true" Name=3D"=
+heading 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"9" QFormat=3D"true" Name=3D"=
+heading 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"9" QFormat=3D"true" Name=3D"=
+heading 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"9" QFormat=3D"true" Name=3D"=
+heading 7"/>
+  <w:LsdException Locked=3D"false" Priority=3D"9" QFormat=3D"true" Name=3D"=
+heading 8"/>
+  <w:LsdException Locked=3D"false" Priority=3D"9" QFormat=3D"true" Name=3D"=
+heading 9"/>
+  <w:LsdException Locked=3D"false" Priority=3D"39" Name=3D"toc 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"39" Name=3D"toc 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"39" Name=3D"toc 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"39" Name=3D"toc 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"39" Name=3D"toc 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"39" Name=3D"toc 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"39" Name=3D"toc 7"/>
+  <w:LsdException Locked=3D"false" Priority=3D"39" Name=3D"toc 8"/>
+  <w:LsdException Locked=3D"false" Priority=3D"39" Name=3D"toc 9"/>
+  <w:LsdException Locked=3D"false" Priority=3D"35" QFormat=3D"true" Name=3D=
+"caption"/>
+  <w:LsdException Locked=3D"false" Priority=3D"10" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Title"/>
+  <w:LsdException Locked=3D"false" Priority=3D"1" Name=3D"Default Paragraph=
+ Font"/>
+  <w:LsdException Locked=3D"false" Priority=3D"11" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Subtitle"/>
+  <w:LsdException Locked=3D"false" Priority=3D"22" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Strong"/>
+  <w:LsdException Locked=3D"false" Priority=3D"20" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Emphasis"/>
+  <w:LsdException Locked=3D"false" Priority=3D"59" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Table Grid"/>
+  <w:LsdException Locked=3D"false" UnhideWhenUsed=3D"false" Name=3D"Placeho=
+lder Text"/>
+  <w:LsdException Locked=3D"false" Priority=3D"1" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"No Spacing"/>
+  <w:LsdException Locked=3D"false" Priority=3D"60" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Shading"/>
+  <w:LsdException Locked=3D"false" Priority=3D"61" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light List"/>
+  <w:LsdException Locked=3D"false" Priority=3D"62" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Grid"/>
+  <w:LsdException Locked=3D"false" Priority=3D"63" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"64" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"65" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"66" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"67" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"68" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"69" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"70" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Dark List"/>
+  <w:LsdException Locked=3D"false" Priority=3D"71" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Shading"/>
+  <w:LsdException Locked=3D"false" Priority=3D"72" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful List"/>
+  <w:LsdException Locked=3D"false" Priority=3D"73" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Grid"/>
+  <w:LsdException Locked=3D"false" Priority=3D"60" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Shading Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"61" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light List Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"62" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Grid Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"63" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 1 Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"64" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 2 Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"65" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 1 Accent 1"/>
+  <w:LsdException Locked=3D"false" UnhideWhenUsed=3D"false" Name=3D"Revisio=
+n"/>
+  <w:LsdException Locked=3D"false" Priority=3D"34" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"List Paragraph"/>
+  <w:LsdException Locked=3D"false" Priority=3D"29" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Quote"/>
+  <w:LsdException Locked=3D"false" Priority=3D"30" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Intense Quote"/>
+  <w:LsdException Locked=3D"false" Priority=3D"66" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 2 Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"67" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 1 Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"68" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 2 Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"69" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 3 Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"70" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Dark List Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"71" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Shading Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"72" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful List Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"73" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Grid Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"60" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Shading Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"61" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light List Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"62" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Grid Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"63" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 1 Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"64" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 2 Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"65" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 1 Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"66" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 2 Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"67" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 1 Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"68" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 2 Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"69" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 3 Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"70" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Dark List Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"71" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Shading Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"72" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful List Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"73" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Grid Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"60" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Shading Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"61" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light List Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"62" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Grid Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"63" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 1 Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"64" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 2 Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"65" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 1 Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"66" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 2 Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"67" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 1 Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"68" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 2 Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"69" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 3 Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"70" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Dark List Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"71" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Shading Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"72" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful List Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"73" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Grid Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"60" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Shading Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"61" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light List Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"62" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Grid Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"63" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 1 Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"64" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 2 Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"65" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 1 Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"66" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 2 Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"67" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 1 Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"68" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 2 Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"69" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 3 Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"70" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Dark List Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"71" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Shading Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"72" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful List Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"73" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Grid Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"60" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Shading Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"61" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light List Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"62" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Grid Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"63" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 1 Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"64" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 2 Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"65" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 1 Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"66" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 2 Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"67" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 1 Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"68" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 2 Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"69" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 3 Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"70" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Dark List Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"71" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Shading Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"72" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful List Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"73" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Grid Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"60" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Shading Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"61" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light List Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"62" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Grid Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"63" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 1 Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"64" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 2 Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"65" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 1 Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"66" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 2 Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"67" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 1 Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"68" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 2 Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"69" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 3 Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"70" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Dark List Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"71" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Shading Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"72" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful List Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"73" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Grid Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"19" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Subtle Emphasis"/>
+  <w:LsdException Locked=3D"false" Priority=3D"21" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Intense Emphasis"/>
+  <w:LsdException Locked=3D"false" Priority=3D"31" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Subtle Reference"/>
+  <w:LsdException Locked=3D"false" Priority=3D"32" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Intense Reference"/>
+  <w:LsdException Locked=3D"false" Priority=3D"33" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Book Title"/>
+  <w:LsdException Locked=3D"false" Priority=3D"37" Name=3D"Bibliography"/>
+  <w:LsdException Locked=3D"false" Priority=3D"39" QFormat=3D"true" Name=3D=
+"TOC Heading"/>
+ </w:LatentStyles>
+</xml><![endif]--><!-- [if gte mso 10]>
+<style>
+ /* Style Definitions */
+table.MsoNormalTable
+=09{mso-style-name:"Tableau Normal";
+=09mso-tstyle-rowband-size:0;
+=09mso-tstyle-colband-size:0;
+=09mso-style-noshow:yes;
+=09mso-style-priority:99;
+=09mso-style-parent:"";
+=09mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+=09mso-para-margin-top:0cm;
+=09mso-para-margin-right:0cm;
+=09mso-para-margin-bottom:10.0pt;
+=09mso-para-margin-left:0cm;
+=09line-height:115%;
+=09mso-pagination:widow-orphan;
+=09font-size:11.0pt;
+=09font-family:Calibri;
+=09mso-ascii-font-family:Calibri;
+=09mso-ascii-theme-font:minor-latin;
+=09mso-hansi-font-family:Calibri;
+=09mso-hansi-theme-font:minor-latin;
+=09mso-fareast-language:EN-US;}
+</style>
+<![endif]--> <!--StartFragment--></span></p><p class=3D"MsoNormal" style=3D=
+"text-align: justify; margin: 0px;" data-mce-style=3D"text-align: justify; =
+margin: 0px;"><span style=3D"font-size: 12.0pt; mso-bidi-font-size: 11.0pt;=
+ line-height: 115%; font-family: 'Times New Roman'; mso-ansi-language: EN-U=
+S;" data-mce-style=3D"font-size: 12.0pt; mso-bidi-font-size: 11.0pt; line-h=
+eight: 115%; font-family: 'Times New Roman'; mso-ansi-language: EN-US;" lan=
+g=3D"EN-US">An open source architecture have been proposed to address the d=
+ifferent challenges (heterogeneous data collection (sensors, server apis, s=
+ocial networks=E2=80=A6.), big data storage and data analytics=E2=80=A6).<s=
+pan style=3D"mso-spacerun: yes;" data-mce-style=3D"mso-spacerun: yes;">&nbs=
+p; </span>In this context, we are looking for a highly motivated intern wit=
+h strong background in <span style=3D"mso-spacerun: yes;" data-mce-style=3D=
+"mso-spacerun: yes;">&nbsp;</span>Machine Learning and Data Analysis. <o:p>=
+</o:p></span></p><p class=3D"MsoNormal" style=3D"text-align: justify; margi=
+n: 0px;" data-mce-style=3D"text-align: justify; margin: 0px;"><span style=
+=3D"font-size: 12.0pt; mso-bidi-font-size: 11.0pt; line-height: 115%; font-=
+family: 'Times New Roman'; mso-ansi-language: EN-US;" data-mce-style=3D"fon=
+t-size: 12.0pt; mso-bidi-font-size: 11.0pt; line-height: 115%; font-family:=
+ 'Times New Roman'; mso-ansi-language: EN-US;" lang=3D"EN-US">The goal of t=
+his intern is to <span style=3D"mso-bidi-font-style: italic;" data-mce-styl=
+e=3D"mso-bidi-font-style: italic;">propose predictive</span> models for eac=
+h data source (or use case) and to transform them into aggregate ones. <spa=
+n style=3D"mso-bidi-font-style: italic;" data-mce-style=3D"mso-bidi-font-st=
+yle: italic;">The proposed models will be implemented using TensorFlow and =
+integrated in the global architecture.<o:p></o:p></span></span></p><p class=
+=3D"MsoNormal" style=3D"line-height: normal; margin: 0px;" data-mce-style=
+=3D"line-height: normal; margin: 0px;"><b style=3D"mso-bidi-font-weight: no=
+rmal;" data-mce-style=3D"mso-bidi-font-weight: normal;"><u><span style=3D"f=
+ont-size: 12.0pt; mso-bidi-font-size: 11.0pt; font-family: 'Times New Roman=
+'; mso-ansi-language: EN-US;" data-mce-style=3D"font-size: 12.0pt; mso-bidi=
+-font-size: 11.0pt; font-family: 'Times New Roman'; mso-ansi-language: EN-U=
+S;" lang=3D"EN-US">Requirements: <o:p></o:p></span></u></b></p><p class=3D"=
+MsoListParagraphCxSpFirst" style=3D"text-indent: -18pt; line-height: normal=
+; margin: 0px;" data-mce-style=3D"text-indent: -18pt; line-height: normal; =
+margin: 0px;"><!-- [if !supportLists]--><span style=3D"font-size: 12.0pt; m=
+so-bidi-font-size: 11.0pt; font-family: Symbol; mso-fareast-font-family: Sy=
+mbol; mso-bidi-font-family: Symbol; mso-ansi-language: EN-US;" data-mce-sty=
+le=3D"font-size: 12.0pt; mso-bidi-font-size: 11.0pt; font-family: Symbol; m=
+so-fareast-font-family: Symbol; mso-bidi-font-family: Symbol; mso-ansi-lang=
+uage: EN-US;" lang=3D"EN-US"><span style=3D"mso-list: Ignore;" data-mce-sty=
+le=3D"mso-list: Ignore;">=C2=B7<span style=3D"font: 7.0pt 'Times New Roman'=
+;" data-mce-style=3D"font: 7.0pt 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp; </span></span></span><!--[endif]--><span style=3D"font-size: 12.0p=
+t; mso-bidi-font-size: 11.0pt; font-family: 'Times New Roman'; mso-ansi-lan=
+guage: EN-US;" data-mce-style=3D"font-size: 12.0pt; mso-bidi-font-size: 11.=
+0pt; font-family: 'Times New Roman'; mso-ansi-language: EN-US;" lang=3D"EN-=
+US">The candidate should have experience in machine learning, neuronal netw=
+orks or data sciences<o:p></o:p></span></p><p class=3D"MsoListParagraphCxSp=
+Middle" style=3D"text-indent: -18pt; line-height: normal; margin: 0px;" dat=
+a-mce-style=3D"text-indent: -18pt; line-height: normal; margin: 0px;"><!-- =
+[if !supportLists]--><span style=3D"font-size: 12.0pt; mso-bidi-font-size: =
+11.0pt; font-family: Symbol; mso-fareast-font-family: Symbol; mso-bidi-font=
+-family: Symbol; mso-ansi-language: EN-US;" data-mce-style=3D"font-size: 12=
+.0pt; mso-bidi-font-size: 11.0pt; font-family: Symbol; mso-fareast-font-fam=
+ily: Symbol; mso-bidi-font-family: Symbol; mso-ansi-language: EN-US;" lang=
+=3D"EN-US"><span style=3D"mso-list: Ignore;" data-mce-style=3D"mso-list: Ig=
+nore;">=C2=B7<span style=3D"font: 7.0pt 'Times New Roman';" data-mce-style=
+=3D"font: 7.0pt 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><=
+/span></span><!--[endif]--><span style=3D"font-size: 12.0pt; mso-bidi-font-=
+size: 11.0pt; font-family: 'Times New Roman'; mso-ansi-language: EN-US;" da=
+ta-mce-style=3D"font-size: 12.0pt; mso-bidi-font-size: 11.0pt; font-family:=
+ 'Times New Roman'; mso-ansi-language: EN-US;" lang=3D"EN-US">Experience in=
+ Big Data technologies (Big Data processing and management) and<span style=
+=3D"mso-spacerun: yes;" data-mce-style=3D"mso-spacerun: yes;">&nbsp; </span=
+>distributed systems: Hadoop, Spark, HBase is a plus<o:p></o:p></span></p><=
+p class=3D"MsoListParagraphCxSpMiddle" style=3D"text-indent: -18pt; line-he=
+ight: normal; margin: 0px;" data-mce-style=3D"text-indent: -18pt; line-heig=
+ht: normal; margin: 0px;"><!-- [if !supportLists]--><span style=3D"font-siz=
+e: 12.0pt; mso-bidi-font-size: 11.0pt; font-family: Symbol; mso-fareast-fon=
+t-family: Symbol; mso-bidi-font-family: Symbol; mso-ansi-language: EN-US;" =
+data-mce-style=3D"font-size: 12.0pt; mso-bidi-font-size: 11.0pt; font-famil=
+y: Symbol; mso-fareast-font-family: Symbol; mso-bidi-font-family: Symbol; m=
+so-ansi-language: EN-US;" lang=3D"EN-US"><span style=3D"mso-list: Ignore;" =
+data-mce-style=3D"mso-list: Ignore;">=C2=B7<span style=3D"font: 7.0pt 'Time=
+s New Roman';" data-mce-style=3D"font: 7.0pt 'Times New Roman';">&nbsp;&nbs=
+p;&nbsp;&nbsp;&nbsp; </span></span></span><!--[endif]--><span style=3D"font=
+-size: 12.0pt; mso-bidi-font-size: 11.0pt; font-family: 'Times New Roman'; =
+mso-ansi-language: EN-US;" data-mce-style=3D"font-size: 12.0pt; mso-bidi-fo=
+nt-size: 11.0pt; font-family: 'Times New Roman'; mso-ansi-language: EN-US;"=
+ lang=3D"EN-US">Knowledge of Machine Learning Tools and Frameworks (e.g Ten=
+sorFlow)<o:p></o:p></span></p><p class=3D"MsoListParagraphCxSpMiddle" style=
+=3D"text-indent: -18pt; line-height: normal; margin: 0px;" data-mce-style=
+=3D"text-indent: -18pt; line-height: normal; margin: 0px;"><!-- [if !suppor=
+tLists]--><span style=3D"font-size: 12.0pt; mso-bidi-font-size: 11.0pt; fon=
+t-family: Symbol; mso-fareast-font-family: Symbol; mso-bidi-font-family: Sy=
+mbol; mso-ansi-language: EN-US;" data-mce-style=3D"font-size: 12.0pt; mso-b=
+idi-font-size: 11.0pt; font-family: Symbol; mso-fareast-font-family: Symbol=
+; mso-bidi-font-family: Symbol; mso-ansi-language: EN-US;" lang=3D"EN-US"><=
+span style=3D"mso-list: Ignore;" data-mce-style=3D"mso-list: Ignore;">=C2=
+=B7<span style=3D"font: 7.0pt 'Times New Roman';" data-mce-style=3D"font: 7=
+.0pt 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></spa=
+n><!--[endif]--><span style=3D"font-size: 12.0pt; mso-bidi-font-size: 11.0p=
+t; font-family: 'Times New Roman'; mso-ansi-language: EN-US;" data-mce-styl=
+e=3D"font-size: 12.0pt; mso-bidi-font-size: 11.0pt; font-family: 'Times New=
+ Roman'; mso-ansi-language: EN-US;" lang=3D"EN-US">Good <span style=3D"mso-=
+bidi-font-style: italic;" data-mce-style=3D"mso-bidi-font-style: italic;">s=
+cripting and coding skills (python, java or C++)</span><o:p></o:p></span></=
+p><p class=3D"MsoListParagraphCxSpLast" style=3D"text-indent: -18pt; line-h=
+eight: normal; margin: 0px;" data-mce-style=3D"text-indent: -18pt; line-hei=
+ght: normal; margin: 0px;"><!-- [if !supportLists]--><span style=3D"font-si=
+ze: 12.0pt; mso-bidi-font-size: 11.0pt; font-family: Symbol; mso-fareast-fo=
+nt-family: Symbol; mso-bidi-font-family: Symbol; mso-ansi-language: EN-US;"=
+ data-mce-style=3D"font-size: 12.0pt; mso-bidi-font-size: 11.0pt; font-fami=
+ly: Symbol; mso-fareast-font-family: Symbol; mso-bidi-font-family: Symbol; =
+mso-ansi-language: EN-US;" lang=3D"EN-US"><span style=3D"mso-list: Ignore;"=
+ data-mce-style=3D"mso-list: Ignore;">=C2=B7<span style=3D"font: 7.0pt 'Tim=
+es New Roman';" data-mce-style=3D"font: 7.0pt 'Times New Roman';">&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp; </span></span></span><!--[endif]--><span style=3D"fon=
+t-size: 12.0pt; mso-bidi-font-size: 11.0pt; font-family: 'Times New Roman';=
+ mso-ansi-language: EN-US;" data-mce-style=3D"font-size: 12.0pt; mso-bidi-f=
+ont-size: 11.0pt; font-family: 'Times New Roman'; mso-ansi-language: EN-US;=
+" lang=3D"EN-US">Autonomous and team working<o:p></o:p></span></p><p class=
+=3D"MsoNormal" style=3D"text-align: justify; margin: 0px;" data-mce-style=
+=3D"text-align: justify; margin: 0px;"><span style=3D"font-size: 12.0pt; ms=
+o-bidi-font-size: 11.0pt; line-height: 115%; font-family: 'Times New Roman'=
+; mso-ansi-language: EN-US;" data-mce-style=3D"font-size: 12.0pt; mso-bidi-=
+font-size: 11.0pt; line-height: 115%; font-family: 'Times New Roman'; mso-a=
+nsi-language: EN-US;" lang=3D"EN-US"><!--EndFragment--> <o:p></o:p></span><=
+/p><span style=3D"font-size: 12.0pt; mso-bidi-font-size: 11.0pt; line-heigh=
+t: 115%; font-family: 'Times New Roman'; mso-ansi-language: EN-US;" data-mc=
+e-style=3D"font-size: 12.0pt; mso-bidi-font-size: 11.0pt; line-height: 115%=
+; font-family: 'Times New Roman'; mso-ansi-language: EN-US;" lang=3D"EN-US"=
+><o:p></o:p></span><p class=3D"MsoListParagraphCxSpLast" style=3D"text-inde=
+nt: -18pt; line-height: normal; margin: 0px;" data-mce-style=3D"text-indent=
+: -18pt; line-height: normal; margin: 0px;"><br data-mce-bogus=3D"1"></p><p=
+ class=3D"MsoNormal" style=3D"margin: 0px;" data-mce-style=3D"margin: 0px;"=
+><b style=3D"mso-bidi-font-weight: normal;" data-mce-style=3D"mso-bidi-font=
+-weight: normal;"><u><span style=3D"font-size: 12.0pt; mso-bidi-font-size: =
+11.0pt; line-height: 115%; font-family: 'Times New Roman'; mso-ansi-languag=
+e: EN-US;" data-mce-style=3D"font-size: 12.0pt; mso-bidi-font-size: 11.0pt;=
+ line-height: 115%; font-family: 'Times New Roman'; mso-ansi-language: EN-U=
+S;" lang=3D"EN-US">Duration</span></u></b><b style=3D"mso-bidi-font-weight:=
+ normal;" data-mce-style=3D"mso-bidi-font-weight: normal;"><span style=3D"f=
+ont-size: 12.0pt; mso-bidi-font-size: 11.0pt; line-height: 115%; font-famil=
+y: 'Times New Roman'; mso-ansi-language: EN-US;" data-mce-style=3D"font-siz=
+e: 12.0pt; mso-bidi-font-size: 11.0pt; line-height: 115%; font-family: 'Tim=
+es New Roman'; mso-ansi-language: EN-US;" lang=3D"EN-US">:<span style=3D"ms=
+o-spacerun: yes;" data-mce-style=3D"mso-spacerun: yes;">&nbsp; </span></spa=
+n></b><span style=3D"font-size: 12.0pt; mso-bidi-font-size: 11.0pt; line-he=
+ight: 115%; font-family: 'Times New Roman'; mso-ansi-language: EN-US;" data=
+-mce-style=3D"font-size: 12.0pt; mso-bidi-font-size: 11.0pt; line-height: 1=
+15%; font-family: 'Times New Roman'; mso-ansi-language: EN-US;" lang=3D"EN-=
+US">4 to 6 months<o:p></o:p></span></p><p class=3D"MsoNormal" style=3D"marg=
+in: 0px;" data-mce-style=3D"margin: 0px;"><b style=3D"mso-bidi-font-weight:=
+ normal;" data-mce-style=3D"mso-bidi-font-weight: normal;"><u><span style=
+=3D"font-size: 12.0pt; mso-bidi-font-size: 11.0pt; line-height: 115%; font-=
+family: 'Times New Roman'; mso-ansi-language: EN-US;" data-mce-style=3D"fon=
+t-size: 12.0pt; mso-bidi-font-size: 11.0pt; line-height: 115%; font-family:=
+ 'Times New Roman'; mso-ansi-language: EN-US;" lang=3D"EN-US">Start Date:</=
+span></u></b><span style=3D"font-family: 'Times New Roman'; mso-ansi-langua=
+ge: EN-US;" data-mce-style=3D"font-family: 'Times New Roman'; mso-ansi-lang=
+uage: EN-US;" lang=3D"EN-US"> </span><span style=3D"font-size: 12.0pt; mso-=
+bidi-font-size: 11.0pt; line-height: 115%; font-family: 'Times New Roman'; =
+mso-ansi-language: EN-US;" data-mce-style=3D"font-size: 12.0pt; mso-bidi-fo=
+nt-size: 11.0pt; line-height: 115%; font-family: 'Times New Roman'; mso-ans=
+i-language: EN-US;" lang=3D"EN-US">as soon as possible<o:p></o:p></span></p=
+><p class=3D"MsoNormal" style=3D"margin: 0px;" data-mce-style=3D"margin: 0p=
+x;"><b style=3D"mso-bidi-font-weight: normal;" data-mce-style=3D"mso-bidi-f=
+ont-weight: normal;"><u><span style=3D"font-size: 12.0pt; mso-bidi-font-siz=
+e: 11.0pt; line-height: 115%; font-family: 'Times New Roman';" data-mce-sty=
+le=3D"font-size: 12.0pt; mso-bidi-font-size: 11.0pt; line-height: 115%; fon=
+t-family: 'Times New Roman';">Grant:</span></u></b><b style=3D"mso-bidi-fon=
+t-weight: normal;" data-mce-style=3D"mso-bidi-font-weight: normal;"><span s=
+tyle=3D"font-size: 12.0pt; mso-bidi-font-size: 11.0pt; line-height: 115%; f=
+ont-family: 'Times New Roman';" data-mce-style=3D"font-size: 12.0pt; mso-bi=
+di-font-size: 11.0pt; line-height: 115%; font-family: 'Times New Roman';"> =
+</span></b><span style=3D"font-size: 12.0pt; mso-bidi-font-size: 11.0pt; li=
+ne-height: 115%; font-family: 'Times New Roman';" data-mce-style=3D"font-si=
+ze: 12.0pt; mso-bidi-font-size: 11.0pt; line-height: 115%; font-family: 'Ti=
+mes New Roman';"><span style=3D"mso-spacerun: yes;" data-mce-style=3D"mso-s=
+pacerun: yes;">&nbsp;</span>yes</span><span style=3D"font-family: 'Times Ne=
+w Roman';" data-mce-style=3D"font-family: 'Times New Roman';"><o:p></o:p></=
+span></p><p class=3D"MsoNormal" style=3D"margin: 0px;" data-mce-style=3D"ma=
+rgin: 0px;"><b style=3D"mso-bidi-font-weight: normal;" data-mce-style=3D"ms=
+o-bidi-font-weight: normal;"><u><span style=3D"font-size: 12.0pt; mso-bidi-=
+font-size: 11.0pt; line-height: 115%; font-family: 'Times New Roman';" data=
+-mce-style=3D"font-size: 12.0pt; mso-bidi-font-size: 11.0pt; line-height: 1=
+15%; font-family: 'Times New Roman';">Hosting team:</span></u></b><b style=
+=3D"mso-bidi-font-weight: normal;" data-mce-style=3D"mso-bidi-font-weight: =
+normal;"><span style=3D"font-size: 12.0pt; mso-bidi-font-size: 11.0pt; line=
+-height: 115%; font-family: 'Times New Roman';" data-mce-style=3D"font-size=
+: 12.0pt; mso-bidi-font-size: 11.0pt; line-height: 115%; font-family: 'Time=
+s New Roman';"> </span></b><span style=3D"font-size: 12.0pt; mso-bidi-font-=
+size: 11.0pt; line-height: 115%; font-family: 'Times New Roman'; mso-bidi-f=
+ont-style: italic;" data-mce-style=3D"font-size: 12.0pt; mso-bidi-font-size=
+: 11.0pt; line-height: 115%; font-family: 'Times New Roman'; mso-bidi-font-=
+style: italic;">LISITE, Institut Sup=C3=A9rieur d=E2=80=99=C3=89lectronique=
+ de Paris (ISEP)</span><span style=3D"font-size: 12.0pt; mso-bidi-font-size=
+: 11.0pt; line-height: 115%; font-family: 'Times New Roman';" data-mce-styl=
+e=3D"font-size: 12.0pt; mso-bidi-font-size: 11.0pt; line-height: 115%; font=
+-family: 'Times New Roman';"> <span style=3D"mso-spacerun: yes;" data-mce-s=
+tyle=3D"mso-spacerun: yes;">&nbsp;</span>(</span><a href=3D"https://www.ise=
+p.fr/" data-mce-href=3D"https://www.isep.fr/"><span style=3D"font-size: 12.=
+0pt; mso-bidi-font-size: 11.0pt; line-height: 115%; font-family: 'Times New=
+ Roman';" data-mce-style=3D"font-size: 12.0pt; mso-bidi-font-size: 11.0pt; =
+line-height: 115%; font-family: 'Times New Roman';">https://www.isep.fr/</s=
+pan></a><span style=3D"font-size: 12.0pt; mso-bidi-font-size: 11.0pt; line-=
+height: 115%; font-family: 'Times New Roman';" data-mce-style=3D"font-size:=
+ 12.0pt; mso-bidi-font-size: 11.0pt; line-height: 115%; font-family: 'Times=
+ New Roman';">)<b style=3D"mso-bidi-font-weight: normal;" data-mce-style=3D=
+"mso-bidi-font-weight: normal;"><o:p></o:p></b></span></p><p class=3D"MsoNo=
+rmal" style=3D"line-height: normal; margin: 0px;" data-mce-style=3D"line-he=
+ight: normal; margin: 0px;"><b style=3D"mso-bidi-font-weight: normal;" data=
+-mce-style=3D"mso-bidi-font-weight: normal;"><u><span style=3D"font-size: 1=
+2.0pt; mso-bidi-font-size: 11.0pt; font-family: 'Times New Roman'; mso-ansi=
+-language: EN-US;" data-mce-style=3D"font-size: 12.0pt; mso-bidi-font-size:=
+ 11.0pt; font-family: 'Times New Roman'; mso-ansi-language: EN-US;" lang=3D=
+"EN-US">Application instructions:</span></u></b><span style=3D"font-size: 1=
+2.0pt; font-family: 'Times New Roman'; mso-fareast-font-family: 'Times New =
+Roman'; mso-ansi-language: EN-US; mso-fareast-language: FR;" data-mce-style=
+=3D"font-size: 12.0pt; font-family: 'Times New Roman'; mso-fareast-font-fam=
+ily: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: FR;=
+" lang=3D"EN-US">To apply, please send a mail and CV to raja.chiky@isep.fr<=
+o:p></o:p></span></p><!--EndFragment--> <br></div><div><br></div><div data-=
+marker=3D"__SIG_POST__">-- <br></div><div>---------------<br>Raja CHIKY<br>=
+Directrice de la recherche<br>Responsable du parcours Innovation et Cr=C3=
+=A9ation d'Entreprise<br>01.49.54.52.34<br>06.84.67.45.95<br></div></div></=
+body></html>
+--=_3e3025fb-a0a3-47b9-8fb1-81e74002267c--

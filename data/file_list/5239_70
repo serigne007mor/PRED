@@ -1,0 +1,772 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (BounceSMTP2.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id B8ABE14017C9
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu, 29 Apr 2021 18:56:58 +0200 (CEST)
+Received: from mx3.d101.univ-nantes.fr (MX3.univ-nantes.fr [193.52.101.137])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id B1A5E61F0E7
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu, 29 Apr 2021 18:56:58 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTP id A6819412C341
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 29 Apr 2021 18:56:58 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 1.815
+X-Spam-Level: *
+X-Spam-Status: No, score=1.815 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+	FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+	FREEMAIL_REPLYTO_END_DIGIT=0.25, HTML_MESSAGE=0.001,
+	J_CHICKENPOX_102=0.6, MR_NOT_ATTRIBUTED_IP=0.2,
+	RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+	RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001,
+	SPF_PASS=-0.001, UN_PHISHING_PW=0.1, URIBL_BLOCKED=0.001,
+	VOWEL_TOCC_5=0.5] autolearn=disabled
+X-CRM114-Status: UNSURE ( 0.8747 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=yahoo.fr
+Received: from mx3.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 11bXrlX8G7_G for <liste-egc@polytech.univ-nantes.fr>;
+	Thu, 29 Apr 2021 18:56:56 +0200 (CEST)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from sonic305-20.consmr.mail.ir2.yahoo.com (sonic305-20.consmr.mail.ir2.yahoo.com [77.238.177.82])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTPS id 2AB284126164
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 29 Apr 2021 18:56:56 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.fr; s=s2048; t=1619715415; bh=CUedz+zMEUA+bkEnyfjrgg7zdw2BTw153APssKUWHH0=; h=Date:From:Reply-To:To:Subject:References:From:Subject:Reply-To; b=KVs1/Ks41gsdGf578s4Nejt6MubSVpWhRCxNzs9iAhKyrLHHvibbmB4CKrJdfs8szAsTEzicDL96DnjxDpPOz+UZ4TNbHFhGinheECz1N+5UuTxQ6X41n6MfjeYLbqRG59eYsw74iPk9EWjfOZdmn/N0tA3Hjo6jmDmQ0Lc0l01v4+d59fVTExoVDvtKo3Lfgrqn4eHrpVTSsFXKLzKwnDmStnOtxnIUX4/esNSoNTyLH/LxLx8sX7dNSOLVgwQi6R7so5nE5NzZkQdNtVrImPkyPeDT8i6T1ZVi4GVwmIaJObIaXS1+V89I+B41BKrHK1w706qqXt8QtMuEEa550w==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1619715415; bh=Dv/+0EO6IQ87mCdwun+slM9g0w3+4Y54pxi/Iu5McaE=; h=X-Sonic-MF:Date:From:To:Subject:From:Subject; b=lXFmL+TB6751ooSfifIt7GJ3Zk00x5T+cMPHM/Atbi7p1Z6FD3Uw3/uBoGB2e87fE9XA9VG7ihZjVvzM3SYBSuqmFRZh8EckBwXUAo2DSvQHN+GdQLhCVrEtUdPMnNbHDRY8zIpo2zIgaAqJeeeGrLMK/NxAKdg5M0A29rw2/6ehUMchouK9w2Bsg+1LgOJCV0z8CrojMgbKbNjC+soitNPfqDQJhbQvvhksUJht0GQaVKcFJMJskSh4kE1MD04UnlOVDcaLUDghc4zivr5Mu1/ctyjm5TK1bzDoy3t6sdazp+E+5WUG9knA2fLxCEHNLKmgq5sX51L7S95YW446+g==
+X-YMail-OSG: 9Ds7a6UVM1kvHv9HRimkzbU0XkUIzcB.aaa8KxQSQ.XylfwjnNhJ.k6JTs8e_5f
+ tX195uZk_.wYAzK7NgghmggmBEFV7EfmxST0fzMfe4r5WnfKfpWEvIp9aiQpkN2GYG8b7FOXsh5T
+ HFQg0xXM2owu3KANj7e9QFEwJcxgHhqCj5IVRkaxC8NNhQfzZI9b16w3cdfjurUGug1ACS6oOx8w
+ EHLKMa7RNZKWyL4toUwhutKcTfo.AewrP6cMyX2_BlJRUH36L0QpE5bHT5EuxkzPi5rCWB6srhDY
+ xamk2jldDTQrOfr.zLemZzaV3ZKFsDbaajZqVvUdT3T2VCGJUUFNWwJnByI_ALlq42njZSCEa6xN
+ 96sylGj4HtPr.ZyMYhajx71v9leeNSVQC38eYbAbtohJ._e99o3Zs9R9HbUJmkFEwoLV3CEERq2S
+ KuTv8MH8pHDuLZSAnwOHGrDJ561cbhdH8UExBcTFlVUFLU1.dBiBw0ojyuaw86ZW7orMDWNv4Y7V
+ CkByAo85am5fImpG3mocAgkyt9omzpop.RVX6DXzTEfVnSx1ZzpxcX4juR7GVZJ_nWXRyzFYPy3i
+ RAb0ZMY8MeEPeALDU5yJ5eq9Ttu4wVYM5KMF81W1dK8FFuWFTh4fC8XOAVd7u45sXq_jhfeWxEYM
+ HYiAmoETex9XBIx9Z3TJELOPTn2vw8hll24vpojTNFe4GxlORDd8lyM35cnTmXULLPHY19gHiiwU
+ lKwOfszkUu7rXpWoTqxwDcJQkhle0_nvU1efmRscMBvJBuIXuY1IUiZ3mse9rh9FSAoapMrBjQSr
+ WsJAJKmceMgpRcumY_4RMgLvDpbuGbvl659N2qJQjzRL1jUeniC3F.vOYXJA74O8_dBL3Os6Ebhm
+ eEnjvcSw10o8wR9p5MHvT5nZLH.oR9qXZS2YrmbSpq1ZiQpwxTEsJn_rcLsAAYFfO1mho6PpQRfp
+ jmsSKD0mc0e.aZgHh4KwdnCIL9ehwRSDHF12ii2bYbYniQvkfsHgNqTkskJeh7cGeXfeA2G51ISi
+ Kl32HltNy0197ITpRh6sRxJie8Q3JdoTc6AO8sPT8n2wB70d1vxadW9LVDdJzOJDZnLItLI2pi23
+ 0xmvc.BTTZ0RcWNIxi3DimoU_Oyy6mt9dKYOGc6pUqVdFvsgLV5piaE76.VDQWXOT76TPCal6Vmj
+ Z96tyCnLEO8n_WgoBnTCacOhvigBymwXnBxfQeWO8L2OUMK3zkaeJVZ1LAf89RS9oSDzLGJXXbwp
+ VEAOl88N0g0QtZjE4h5du9dlMsQ4s3FBorRtEdW97a6I4jX73E8R.x4JRaUKoDkixDKeQAXLAsYJ
+ VPCU5c17vV0FVC6wMMR3veTGyGuywVQdo1i0S5i3u3QG_cTWtd8fk4FBsCPgRlb73iGM52lCTM_A
+ PwHHeqwck84W.7o8GMqBCxix78zAexairoPkXJsbgZgAogVnZj4eNyQmdAYdUTe0vqDhXv5kwTpg
+ 47J1ATtbX3TWPu5rxWuIraByNKXyKcf26x5MHU7h7d4crRPcSSP9cAX4F0QggpTo56hcyeWaYq_I
+ BBYSkZ4FQ3NDFXWiPQVWVGt9O2c1OpvNUEUheQe8M.7spsIzz_IqBZQy6HU_9U3_tn562XXSP5_g
+ sKjv.xNQgmkN8Hxz1E2FbtLbRjMuEpfEzc0F6VXR2B2O0f1uJ5fQckF2feSz9jXmxQT6xT2VFrUF
+ k01gyS0GaghGaEmyhvwSm9o7cJjQ8x6JF7JP1hxf3iwCkultI_d7Mk8kwOVxCsNUHKH5q1WNKJBk
+ TUY3Evo.rKI5aIWrzDAK0qXwub.sShsrFbhfmNZgjur7I3I2IyxkZEF3HXAPEMN_X67TCZnt9PCx
+ URiyrCzQ39M0DtgqcQWo1t2CZv_3S1MlFAMs7iQ83TuOYuKDduNXolWLHFmHNwEHmIRLRqCst9eX
+ mOipg.xd5_GXpzORESwsZ3PnF.BKA8DkG7YsezNbOEjI_FIuR9Joe5zVuC368WkclXQuT6GYEguS
+ trIT.OwNZ97csfCNCYuiWSmVMS1OWxLBgtJMSQaYKafUlWUj5RNpw.cP7yDpmjKLDKEe3WUryUX6
+ X0D_FHbpipFXWnmHFX3fK91fMOLbNMAvFwHsoe8Q7tX83ha.aeU8A5o2WFIiE_JXENLMJ1I0bqyE
+ NN29Pktl9BLp4B9CwEvkJIEEUmOrF0Ck0mltXEP7hEKNbbjGAlkmLir51olabDhuySOTuFE3E4UJ
+ urHOMJN8BqlG0GtzQmE1XKqXVQ3kR.j5L5doaMwHp2ElOjdVhf9HOn4SKU8pgvx9CpP8VGg1WhWC
+ y3BtYBgqfB_NDu2lR0I4Iu7uF4d2WI1P0L3WUJmUTb1DjgfbAjDf008mosQV6Ty9sDopGnEnULB5
+ p.zllvbPcuRUGUGMJ4Ha7Izio00ppnoMhdiw0.vlEE89KBMGedQW9YtY5LH_jqKc17CtCd_uR8au
+ P31A28MuLKf0.78KcS2Lesg.G9xAwHcOIh_h3VYREotKLa0y9L2HaPGLfYkfXwlGSVlRb4dkR.z6
+ ._GYxAn1udikd9H_MQLFhNSzESvbDNYqSGdjz.xNgjCp9KkW0C4Zr3qH7D_fc0g.I4e2Y6sdqwkP
+ .yMGJl8dPFK9G6QYODv6BY2mT8liZECHAJas0MJBUkyLIjZNgHdNg0wY7Bp0GfmRRpndsoDS2GWV
+ gQcdMJd4F8TUR3lAGh9yzru7z3AEH4gVn6_zkQStA8GZeRB2GR42jN6ZGDiMS6EmioT1Y2Vls2.3
+ KgYA3xd8WAPNW5OswoVSsnamNiiZHcMAF_MxxTRuGYGLn3jd.foYBPlqDwosPcfaympaciuV37b1
+ gjIAdAtLCfwPBDslG4YEnF62ig8TiFGnzMawq0wXk5Ui65sKIo9a.Q4X.oxqrgbq7xjIzntGJ954
+ nuIkd7d_AbfbffGOMpK1Il1x7ISmKFwv9rBYu2dxgXsMbDVWnoHHf.XjovAYoP6J.eaMaKt8wv6.
+ 9uHzkjK4uaXTf0rEQ4g7JsAHx0G1THWX.PSginF2NkI7vvym3UM8d1YCqafCbCDrRQvgfmDoUZNe
+ 2_029IkQ5rt1NxwdTCDGFBUAyN0Ah57q5rXMnFHArziqoCXM6hkTwuQBD5GIJtf8bVxDgwOaYudm
+ l96BDHxFTGL5Isl3AdBeK72aCVOC77KERrSulsnDTTfYchYOyoafWd5HdRUNnPJgHy3_AG360Hyc
+ FvnKmQ8Hq3CHkrlHeFYIvubH7grZbwLJ3miaJ1dkFym3y8i7a6V9krx2rHaIKqG.w8p_Sr9HzGD_
+ .WBI679meX91aryMw1r4Rk_kJSLf9UP3C1XTHCPy3rvcGnZJorRR4FzR_j8CD0Ox3KqWlLAdhLxp
+ e27v2uniXjrBLG1hYjFKMa2dIO0FHy6KHhsNn90iQeJd4uSYm07V0cMHWUq6367X4QPUsLVSWEjs
+ rVd1wh1fWEAj7J17mMSuVDCRwZaIs.P8W_2uqS8Iu4EaydD3DQLollnuRp93bSxn5QSTVJfVpjDX
+ Yz_OPpZPOtsSzh5DTEMfCWERfseiFtTd77VBNvDYfizHwAbI01t.2WYL2DBQwEl8ciVlotJcgsUd
+ UTYjeHUJGzy8FkWOAi3wwiq5d.tAkgX1D37pf.kg3vAT7ETBu1po9jUxFYEEvBVJb6DTqfomlTdk
+ CH8tCj4XhJlBQyNBfnHpE5NaMchu53leR8mRnF2YoYGNRFtiRkaL.6SiQzH.WBWtrcvgkG972L.n
+ h.Ztmxh4f__y6dazojJP4mcGQqG6dQbq2mOaf6_hTfhcnW3gAgbZ4GXYDxhz20E00kiih5w9ZMRO
+ j3RJSMOxj4DQeS5unWc06jKTQYjlDWwpYK34H73afBLJhNf6FfEJfVeAwevqEyM2YqDh3hBdLs90
+ v7pIPOp_2eor1HV7SY1fyRiQ2L2IDAEYtYLRyAWocU5vlfLL7Ge2gyxg_Eidbd2MYt_cdyZJR.JJ
+ oSsvsb3VuNEGE6U7_pYkxQcm7q7q1FhzOcxsnBtGLMUSdP4VQgQV7e4F0f_HU0MIN3efSkMxxB_d
+ E9wBb7TsDtrPY55OafeKK8hI7afWjXw73LVXjIcksQxLCfv7bh9E32r2t7QzB__vakdDfJGODQY4
+ .GEVSHZVH6iR7dstN252lYWQJ5YnFBxWFNwWoC74517aKf1DBkRuBK7Kbp3OSu3ryJ7w8iQnr6vj
+ 8Y.V3ziTpHwpAdGZehyS9TByEWkPfmk3OGgb0ziMgiu9r4C5LqXP8BxSeakGkuCp.UaHzWzWqHCH
+ z9v5.oIKpKl8m8IwW2ud56.EZWMeXg0yZI4iD_2BoZLvWvGbeCbn_miCcaObQKsEeMkQaBFxPb6.
+ y3QVeRPcOwRK2mtEFxYqkZlg2hXcOtzCc72.KHYSV0LoMCCijuYSIpchhHL43e3lLt.qj1UIPDTD
+ uDmsx6NpPZ2M4ialDf1f2RfwGPYCSuhO.9fPdGoVS6Yi8pmaXVt8V3WLbZNggeNPOKAhLmbvx4.d
+ fyvsXC4TAprjnBhrivK8gRHnzbV0VAbVAeu6ShVa.eS89XZyHqMIT2z.cVJCIDqxTd2KxiuQLEau
+ Ue8SOntxjfDd_PQgnGdNRjoyyq2.nMHnT_JJJpglA9EN6ImIkRE6hwzYp3soeQETjK1MNfN1udMn
+ FY_F07vCz.cJLUkVJHaMuSKwq_63AxkyruXxN8CHK.3qrgC.HxHneSHpM.sMacZHcXskjdQs4Zan
+ 7hHrH_ZvBviCK5wVa24wJiEijSUGM1pg5V.JHJQChN.MB0bdizhCfxQz.xgnhm3ycCTXyI1b9rAn
+ Cx9UGqT_O3frudMsCKQ9HHWqVTCiAitjq2RubpIQIkJ69ojQ9f3ndrQiOTXeNTFiVi__hUHyvjcO
+ qqHoXbV6kjtApSf9cVuLFAWr1HiXZAXoeMIuRCMxwnTkB7MVEbYA3Zpk7hsujqk4k0OAj05MgsH.
+ uueiWA5smfdr49BOD37k7scIRaqYXT_rGmeLLnVvhkg2gDmdh3tq5UQF81bs83MrokByCRN8GmkZ
+ VNSslMRGn4XqG4kEBO.lsYK9lrfxtzZwmOVXgZf5eZWLlTHpM8HAdZ7OoThJAOIHGMtQ.XTz5SRu
+ QlppOiS2GhnuTMre.FvrNJ6q9wQQWgxvCJ01olLtPLX4n9PyvwDKNxdqyC0fEKUfBy.OaljH_HRS
+ PFZ1p387hQIYOHvaJ.2DMOsRdh4TiZ.I9qIiKBzDF5HEpfNg.yYb7Xn_FVARF3xlPdh5H7W7ENX9
+ 5UdLS8qKXR0K7Z.S9FvPTt16fEHQ.K8AL9Bkr9tLnr9Aa_5FbTUAD5lLB_gOjfG.XvXqDPxM76cE
+ rvpF7IWcc2qCGMly3Q0KFGyAKG5H0YNErrNtrF5IH7L9kfTB6pF3gGKq7GjteTVNLYTv52E4N3ik
+ 2ZoWLyDV4Et_DY.FKsH3tYzTWwveNtpmhUMsaeFWzaxVktdhDxge8I9DdRMg8ejaoZaaHTnaEKh2
+ 4hySM2B4hqrjA2MCzmaWxYBkalaVkBMe8iGUJJPcxw.oev8jBFFme336NfOJPxXuh_P9xJeNB1Aj
+ higfZXeAhn3u5E6emdZCWAlwRuuJdsOSuUIhQmMpJDVD1vbwEHW4J45ME9XXaxHajfXSyAzT.lc.
+ Bc3iqXQBrU6ucdsN0bB6kt_OPO1muHIg_A7tZZJnD.fffdabhVYcIKrYJ4uZrQhwoAyXj0c9BjOn
+ 6sv9.kIK4n86DV5QxCCJzeqV6y5lN_Kfps21n3ZoLfzybxaYt11OCyvpJaMFCc0fMjZBQLZC.7JA
+ a_iH8LVaQR6gBwnT8E29TY8YUG1n5PPcv3XfGhmLa5Ew0lTQXxipz2OOHINxeFmwmRAyHuOM1wg8
+ ePsRw8en9IXNVGaAi4kfg8zcnm4Qrpi6vo7dMWQJuxIa0kh7wAqgzgTf6QBS8wnfmA4gtmYrwjzT
+ gZ8KPY_1rMf4AySZivKtjtxxWlcwYhIaxw8Z8BIvvFr.cBIV3eKOC64thh3Q86Lbm29RX15ZDUpw
+ IgpTrxjTH.YW020hfALtx0KQIm.FkV98Qxo5Cgk4RhBG0X2GBrjvKWsjLPkRkkOVGkU271u3agV6
+ Jw9TkVK3TRyjcR6ri45OZC6SHwsGb3MhHGQqZtna2bHugjJZ_r9YiLD3WZKss_aZvQGkXHEVBWHn
+ e0XWHAI6gxfaoAkKY6JCAbdOkKpsnAy9uxffx6nY6EuzSyf501csx7SPx.6CcFVImi4iXyRaSIcb
+ viatVLROhwElp8LZnsg_VKhttYKPQDJU1Yv.1lN04TcfUI2mIOvOw5N7VNqSLPLdP6Vj6LLhzmYO
+ E7N1f3_BKY5Oz7lstXoU_i0p2QKlxGE041WsYQD6KAMzIm0Vn5G4enQiy8iy1_w3BCP2hY4Ajz8m
+ AQbDUVakXfocqsNc9YcqCXhR6NAESYN99wAd_955TYGXGbMlGFCGdrHutq3BoWh1vthhIX_oRIjo
+ 7VpPBIYHUt.1VFD0pJu4T1ZagHQRr.hZA3z3h86tjFjHOBBnNoMqJCLYQJyZ2bZihV_qkYIX3_By
+ bg4HE4uyfn3tjD6YEnvuFwJLMtsatRoE_6wru0pQTf0B4JiQSt7GLLfbF08lBgJYYSIw2d24I2k_
+ rSxIc.9seN3K0gU40B4zBFps6YUhhYurx6Gzb8koO7sQZpGSr686JCYAGQiQJEy9MC0q5lmOFiZ2
+ EMqmIAWhnO8vodKWfw0aLP1G7CgOCNNdk2taQcqW9eeUdZx2aZvNljxJgKoLjYgnv4wK1KJaxAwJ
+ 24bfUokbt_ATLnNTphS34hMZn8_dhejovVoKC0IEi_MggK4lPLdmEKksVggkSJC.JRF9vB3cybPP
+ 2Gy2thQaToT2o6IehxHfnYZoQ0ZkUnJk6QZBrycU.VCK8Q9czZOZ3NSYG3QPbZqi4SAk3zvMD5BL
+ tWIG0aDr0G4SNpNm80r1gtkExrLbva2jTMzbPDATEVlm1wiAu2tWbpMtZjC2DPvwwOhl5WEP0MIA
+ P6tvIqTh2rt_wgv.2csfORNVAstmayu4_pYWuHtb.ujMLRt8ARTlHhBeBy6z0ogZLvH2JxYeWoEP
+ 1wR8FIfOF0cfLSFl4LxaEmwooushSr2NM56BQbYsc3.7Mbp5jdkAruU4d8luRgAGKdv9R.9FZ4n2
+ I.KxrYroeo0MskawAXuaFhQjeVw5x89XDHTJKNE1Ju8I.QC8Q4d1Zj8JbFVobFv3gmaowIdiU3f1
+ sQ_grvtGQVFYaHEmai0rTmpYeVnkgH9ZnSOT3K_ksD_fqFIEGy91B9RJuHfTy4..OpcpEbXLuxwr
+ .4yJfe_Ef4PPKT8Zu7ToIq7xmOaRJED5GPt14RMDYPDCIaPbBrQlQwRwP74bzb0NLaIXT1MbSrZ9
+ DxS6kUo6i2ZNTwBKVYByYMtoqbhO_ZJnFZC1TibSZTnyWZD0L4V3v5sg0apRjYRWeDYLOag8e9_V
+ Cg4oFcgJcXc.usiHjNGPxXur_g2TMFpejyTmtT0cs5ahiCKY2YcSgFGm2_cTQ.Sf2hKPfwYTaGOc
+ aohdEv6cf.2KR0FjeSSRoyQhTMdRTZ7pyNCVmmj3go5Q16Srnp_U8rhnOLGypFNAwXG8GnCcL2ee
+ j1MxoO4XD.tgr7yZJdkPlMJTtuPzFE7m30TIhM9H5M4YDf8qHWy5PWTo49fT0.o13ghez089LqmI
+ 9GANwATa4sYubI_YYqN_eiqfbcZe193uwfV8YGsJ5KN5tXC9ZxK1yWDub5cFTerLdSs4lHtF5C3g
+ JUFEZ3VM0Zr4gyDgA3savIlQkTNgHDR6ejlsaL._XMily1rCmJqmKKYYKmzxlCGFmwDKdlCLhIc2
+ V8YuCx0XG.FPfdi368mXBd1gBsB00AccjdE4gLnoJIpz4vleoGwDp_VUYfVwwwbMKHg9r2Dbt1ow
+ HQP2S.C6a.q.5ESeKNhkxMB3BGlwNqsAScuONzQL3sXqKWplIC852aB7B3BVeTKOSExyWaBT7_vf
+ VkMoDY447JSt3Kix3onNGGav2vKhq7HMr0KGYZ15h_MacC7misClcSfVYTEMw0i7Wj0HcXYeRc4L
+ QrEVBNHf8.Pg3sHtTOyGwUVKzFcRvscU5RgO3YKtJEfhupxkuYAybGYbpq53QBpxgM3_x7tdTRi6
+ xkule.YvVVSNtPuB6OC6XR3fg2gyMLB.lm4nsU1SH38TjB0ZLZe8zmmjPJlu36Xo1z5H0k8EGGaY
+ YTPNRLMRsTbcHmUCUbWsB_Op8w8_c1Wf69q.IHaIBCJbk4qoUiLHmqMq6Z.B5Qz9JYHIRhxUhqIL
+ Hxn2nkv4KLuacfXpXXI7.GB9eD0RUnBOix7cwUn3tCHwdNoBoYggACPZRojgiUCiSjgL3w0jwQCw
+ SiDB51d0xXPJgIdSDYCq6w7Qerv9WFR36lNs_RrdKrSymhj62f8UzRJPx07uGVXps8D3YkxABBmk
+ DKGFink2TY6ayBKaiixXDQWOggJcP39QW7dT6m6a.KVfdqeGFNnryNlPfcY8c7jw2DgtmSP7dQwy
+ SlcS5GQTnqcHaswiUlcJMRg9EpLMkmBsHbk5VNbMUStbWA1k4EQJl3naAowg_RTQx.l2ChAb6ZZI
+ sAKHXxc2WFKCscBKc_6_1G1mWEboDI6NOz.iRUVzMOoE3STpGyqfGYCkmiIOsyl3mnFKfOY5W2ZA
+ D3NMD4VQ0oFthNlX9YvxOuCsHARvAlgkkXHiht_A5GfLb2StA7X05Ax27LWlcStwfBL2OnHy2ygg
+ zxwu3BlgSkwk-
+X-Sonic-MF: <djeddi_2008@yahoo.fr>
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic305.consmr.mail.ir2.yahoo.com with HTTP; Thu, 29 Apr 2021 16:56:55 +0000
+Date: Thu, 29 Apr 2021 16:56:53 +0000 (UTC)
+From: Chawki Djeddi <djeddi_2008@yahoo.fr>
+Reply-To: Chawki Djeddi <djeddi_2008@yahoo.fr>
+To: Grce <grce@diff.u-bordeaux.fr>, Javad Sadri <sadri_javad@yahoo.com>, 
+	Hanadi Hassen Mohammed <hm1409611@student.qu.edu.qa>, 
+	Liste-egc <liste-egc@polytech.univ-nantes.fr>, 
+	Bull-i3 <bull-i3@irit.fr>, 
+	Hocine Cherifi <polytech_liste-egc@univ-nantes.fr>, 
+	Liste-proml <liste-proml@lri.fr>, Info-ic <info-ic@listes.irisa.fr>, 
+	Eda-liste <eda-liste@listes.univ-lyon2.fr>, 
+	Liste-sfc <liste-sfc@sfc-classification.net>, 
+	"gt-dahlia@egc.asso.fr" <gt-dahlia@egc.asso.fr>, 
+	"acm-sigspatial@listserv.acm.org" <acm-sigspatial@listserv.acm.org>, 
+	"adbs-info@listes.adbs.fr" <adbs-info@listes.adbs.fr>, 
+	Afrif <afrif@afrif.asso.fr>, 
+	"aiia-announcements@lists.auth.gr" <aiia-announcements@lists.auth.gr>, 
+	"atief@listes.atief.fr" <atief@listes.atief.fr>, 
+	"benet@listserv.ulb.ac.be" <benet@listserv.ulb.ac.be>, 
+	Chawki DJEDDI <c.djeddi@univ-tebessa.dz>, 
+	GRCE <grce@math-info.univ-paris5.fr>, 
+	JiscMail <listserv@jiscmail.ac.uk>, 
+	Liste ADBS-INFO <moderateur@adbs.fr>, 
+	Liste ARIA <info-aria@liste.lis-lab.fr>, 
+	Liste ASR FORUM <asr-forum@cines.fr>, 
+	Liste Cassini <cassini@lirmm.fr>, 
+	Liste Magis <magis@univ-grenoble-alpes.fr>, 
+	Liste-gt-vif-request <liste-gt-vif-request@univ-nantes.fr>, 
+	"liste-gt-vif@univ-nantes.fr" <liste-gt-vif@univ-nantes.fr>, 
+	"liste-proml@serveur-listes.lri.fr" <liste-proml@serveur-listes.lri.fr>, 
+	Litis <litis@litislab.eu>, 
+	"polytech_liste-egc@sympa.univ-nantes.fr" <polytech_liste-egc@sympa.univ-nantes.fr>, 
+	"chi-announcements@listserv.acm.org" <chi-announcements@listserv.acm.org>, 
+	"cpm-spire-l@lists.cs.ucr.edu" <cpm-spire-l@lists.cs.ucr.edu>, 
+	"deri.ie-research@lists.deri.org" <deri.ie-research@lists.deri.org>, 
+	"doctorant@listes.societe-informatique-de-france.fr" <doctorant@listes.societe-informatique-de-france.fr>, 
+	"doctorants@listes.societe-informatique-de-france.fr" <doctorants@listes.societe-informatique-de-france.fr>, 
+	Gdr-mia <gdr-mia@listes.math.cnrs.fr>, 
+	"iapr-tc10@iapr-tc10.org" <iapr-tc10@iapr-tc10.org>, 
+	"iapr-tc11@jiscmail.ac.uk" <iapr-tc11@jiscmail.ac.uk>, 
+	"ieeestc@listserv.ieee.org" <ieeestc@listserv.ieee.org>, 
+	Inforsid <inforsid@listes.insa-lyon.fr>, 
+	"issi@listserv.rediris.es" <issi@listserv.rediris.es>, 
+	"madics-adoc@listes.univ-lyon2.fr" <madics-adoc@listes.univ-lyon2.fr>, 
+	"polmeth@listserv.wustl.edu" <polmeth@listserv.wustl.edu>, 
+	"redes@listserv.rediris.es" <redes@listserv.rediris.es>, 
+	"reseau-in-ovive@listes.inra.fr" <reseau-in-ovive@listes.inra.fr>, 
+	SIF <annonces@listes.societe-informatique-de-france.fr>, 
+	"sigir@listserv.acm.org" <sigir@listserv.acm.org>, 
+	"socnet@lists.ufl.edu" <socnet@lists.ufl.edu>, 
+	"ucam-cnn@lists.cam.ac.uk" <ucam-cnn@lists.cam.ac.uk>, 
+	Web Semantique <web.semantique@lists-sop.inria.fr>, 
+	LITIS LAB <litis@litislab.fr>, 
+	Moises Diaz <moises.diaz@atlanticomedio.es>, TC11 <tc11@cvc.uab.es>, 
+	Diffusion Afrif <diffusion_afrif@inria.fr>, 
+	"afrif@ai.univ-paris8.fr" <afrif@ai.univ-paris8.fr>, 
+	"afrif@greyc.fr" <afrif@greyc.fr>, 
+	Imran Siddiqi <imran.siddiqi@gmail.com>, Bull-ia <bull-ia@gdria.fr>, 
+	Gazettebd3 <gazettebd3@univ-grenoble-alpes.fr>, 
+	"ln@groupes.renater.fr" <ln@groupes.renater.fr>, 
+	Web Semantique <web.semantique@inria.fr>, 
+	"gazettebd3@imag.fr" <gazettebd3@imag.fr>, 
+	"sma@loria.fr" <sma@loria.fr>, 
+	"agents@cs.umbc.edu" <agents@cs.umbc.edu>, 
+	"rsd-forum@groupes.renater.fr" <rsd-forum@groupes.renater.fr>, 
+	"dl@dl.kr.org" <dl@dl.kr.org>, 
+	"event@in.tu-clausthal.de" <event@in.tu-clausthal.de>, 
+	Info-ic <info-ic@inria.fr>, Annonces <annonces@madics.fr>, 
+	"echos@ens.fr" <echos@ens.fr>, 
+	"gdrssi@univ-pau.fr" <gdrssi@univ-pau.fr>, 
+	"glc-np@i3s.unice.fr" <glc-np@i3s.unice.fr>, 
+	"glc-p@i3s.unice.fr" <glc-p@i3s.unice.fr>, 
+	"pourinfos@risc.cnrs.fr" <pourinfos@risc.cnrs.fr>, 
+	"sealife@lists.biotec.tu-dresden.de" <sealife@lists.biotec.tu-dresden.de>, 
+	"reseaux-sociaux@services.cnrs.fr" <reseaux-sociaux@services.cnrs.fr>, 
+	=?UTF-8?Q?Gr=C3=A9gory_SMITS?= <gregory.smits@irisa.fr>, 
+	Liste MARAMI <marami@lipn.univ-paris13.fr>, 
+	"philippe.calvez1@engie.com" <philippe.calvez1@engie.com>, 
+	"sarra.ben-abbes@external.engie.com" <sarra.ben-abbes@external.engie.com>, 
+	Rim Hantach <rim.hantach@external.engie.com>, 
+	"info-aria@lsis.org" <info-aria@lsis.org>, 
+	"ln@cines.fr" <ln@cines.fr>, "corpora@uib.no" <corpora@uib.no>, 
+	Christophe Roche <roche@univ-savoie.fr>, 
+	Rute Costa <costamrv@gmail.com>, 
+	"membresadherents@reseau-ltt.net" <membresadherents@reseau-ltt.net>, 
+	"membreseffectifs@reseau-ltt.net" <membreseffectifs@reseau-ltt.net>, 
+	"inforsid@groupes.renater.fr" <inforsid@groupes.renater.fr>, 
+	"parole@listes.afcp-parole.org" <parole@listes.afcp-parole.org>, 
+	"diglib@infoserv.inist.fr" <diglib@infoserv.inist.fr>, 
+	"francois.gaudin@univ-rouen.fr" <francois.gaudin@univ-rouen.fr>, 
+	Nicola Guarino <nicola.guarino@cnr.it>, 
+	Colin <lcu_songzhiqiang@foxmail.com>, 
+	Maria Papadopoulou <mpapado811@gmail.com>, 
+	Yangli Jia <jiayangli@163.com>, 
+	=?UTF-8?B?5L2N?= <weitong315@163.com>, 
+	"madics-annonces-request@univ-grenoble-alpes.fr" <madics-annonces-request@univ-grenoble-alpes.fr>, 
+	EAFT-AET <term@eaft-aet.net>
+Message-ID: <1837084972.3369915.1619715413377@mail.yahoo.com>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_3369914_948554338.1619715413372"
+References: <1837084972.3369915.1619715413377.ref@mail.yahoo.com>
+X-Mailer: WebService/1.1.18138 YMailNorrin Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] CfP - The 5th Mediterranean Conference on Pattern
+ Recognition and Artificial Intelligence (MedPRAI 2021)
+
+------=_Part_3369914_948554338.1619715413372
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+
+The 5th Mediterranean Conference onPattern Recognition and Artificial Intel=
+ligence (MedPRAI2021) will take placeon=C2=A017-18, December,=C2=A02021=C2=
+=A0inIstanbul, Turkey.
+
+https://medprai2021.sciencesconf.org/
+
+Following the three successful previous editions of=C2=A0MedPRAI=C2=A0(Alge=
+ria2016, Morocco 2018, Turkey 2019 and Tunisia 2020), the 5th edition of=C2=
+=A0MedPRAI=C2=A0willbe held in Istanbul (Turkey) from=C2=A017=C2=A0to18 Dec=
+ember=C2=A02021.=C2=A0MedPRAI=C2=A0isorganized by the Department of Compute=
+r Engineering, =C4=B0stanbul Sabahattin Zaim University;it aims to provide =
+researchers and practitioners from academia and industrywith a forum on the=
+ latest developments in pattern recognition and artificialintelligence. The=
+ conference will also provide a unique opportunity for sharingexperiences f=
+rom different backgrounds with the common interest in advancedmethods in th=
+e above-mentioned fields. The scientific program of=C2=A0MedPRAI=C2=A02021=
+=C2=A0willinclude the presentation of invited plenary talks, regular sessio=
+ns, postersessions and some special sessions.
+
+All submitted papers will be reviewed byat least 3 members of the internati=
+onal program committee; additional reviewerswill be consulted if needed. Pa=
+per acceptance will be based on originality,significance, technical soundne=
+ss, and clarity of presentation.=20
+
+=C2=A0[Topicsof Interest]
+
+Topics of interest for submissioninclude, but are not limited to:=20
+
+-Statistical, structural and syntactic pattern recognition,
+
+-Neural networks,
+
+-Machine learning,
+
+-Data mining,
+
+-Graph-based techniques for pattern recognition,
+
+-Object recognition,
+
+-Signal analysis,
+
+-Image coding and processing,
+
+-Shape and texture analysis
+
+-Computer vision,
+
+-Robotics,
+
+-Remote sensing,
+
+-Document processing,
+
+-Text and graphics recognition,
+
+-Digital libraries,
+
+-Speech recognition,
+
+-Music analysis,
+
+-Multimedia systems,
+
+- Natural language analysis,
+
+- Information retrieval,
+
+- Biometrics,
+
+- Biomedical pattern analysis,
+
+- Artificial intelligence.
+
+
+[Important Dates]
+
+=C2=A0
+
+- Paper Submission:=C2=A0August=C2=A015,2021
+
+- Review Notification:=C2=A0September 15,2021
+
+- Registration Opens:=C2=A0September 15,2021
+
+- Final Paper Submission:=C2=A0September30, 2021
+
+-Early Bird Registration Closes: =C2=A0September=C2=A030, 2021
+
+- Conference Dates: =C2=A0December 17-18, 2021
+
+=C2=A0
+
+[Inquiries]
+c.djeddi@univ-tebessa.dz
+
+
+
+
+--------------------------------------------------------------=C2=A0
+Chawki Djeddi=20
+Associate Professor=20
+Department of Mathematics and Computer Science=20
+Larbi Tebessi University, Tebessa, Algeria.=20
+Webpage:=C2=A0https://sites.google.com/site/cdjeddi/home
+
+
+------=_Part_3369914_948554338.1619715413372
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><head></head><body><div class=3D"ydpf63f196cyahoo-style-wrap" style=
+=3D"font-family: times new roman, new york, times, serif; font-size: 13px;"=
+><div><div dir=3D"ltr" data-setdir=3D"false"><div><p class=3D"ydpdf26432Mso=
+Normal" style=3D"text-align: justify; line-height: 11.45pt; background-imag=
+e: initial; background-position: initial; background-size: initial; backgro=
+und-repeat: initial; background-attachment: initial; background-origin: ini=
+tial; background-clip: initial; margin: 0cm 0cm 10pt; font-family: Calibri,=
+ sans-serif;"><font size=3D"4"><span lang=3D"EN-US" style=3D"font-family: T=
+imes New Roman, serif;">The 5th Mediterranean Conference on
+Pattern Recognition and Artificial Intelligence (</span><span lang=3D"EN-US=
+" style=3D"font-family: Times New Roman, serif;">MedPRAI</span><span lang=
+=3D"EN-US" style=3D"font-family: Times New Roman, serif;">
+</span><span lang=3D"EN-US" style=3D"font-family: Times New Roman, serif;">=
+2021</span><span lang=3D"EN-US" style=3D"font-family: Times New Roman, seri=
+f;">) will take place
+on&nbsp;</span><span lang=3D"EN-US" style=3D"font-family: Times New Roman, =
+serif;">17</span><span lang=3D"EN-US" style=3D"font-family: Times New Roman=
+, serif;">-18, December,&nbsp;</span><span lang=3D"EN-US" style=3D"font-fam=
+ily: Times New Roman, serif;">2021</span><span lang=3D"EN-US" style=3D"font=
+-family: Times New Roman, serif;">&nbsp;in
+Istanbul, Turkey.</span><span lang=3D"EN-US"></span></font></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"text-align: justify; line-height:=
+ 11.45pt; background-image: initial; background-position: initial; backgrou=
+nd-size: initial; background-repeat: initial; background-attachment: initia=
+l; background-origin: initial; background-clip: initial; margin: 0cm 0cm 10=
+pt; font-family: Calibri, sans-serif;"><font size=3D"4"><u><span lang=3D"EN=
+-US" style=3D"font-family: Times New Roman, serif; color: blue;"><a href=3D=
+"https://medprai2021.sciencesconf.org/" style=3D"color: blue;" rel=3D"nofol=
+low" target=3D"_blank">https://medprai2021.sciencesconf.org/</a></span></u>=
+<span lang=3D"EN-US" style=3D"font-family: Times New Roman, serif;"><br>
+<br>
+Following the three successful previous editions of&nbsp;</span><span lang=
+=3D"EN-US" style=3D"font-family: Times New Roman, serif;">MedPRAI</span><sp=
+an lang=3D"EN-US" style=3D"font-family: Times New Roman, serif;">&nbsp;(Alg=
+eria
+2016, Morocco 2018, Turkey 2019 and Tunisia 2020), the 5th edition of&nbsp;=
+</span><span lang=3D"EN-US" style=3D"font-family: Times New Roman, serif;">=
+MedPRAI</span><span lang=3D"EN-US" style=3D"font-family: Times New Roman, s=
+erif;">&nbsp;will
+be held in Istanbul (Turkey) from&nbsp;</span><span lang=3D"EN-US" style=3D=
+"font-family: Times New Roman, serif;">17</span><span lang=3D"EN-US" style=
+=3D"font-family: Times New Roman, serif;">&nbsp;to
+18 December&nbsp;</span><span lang=3D"EN-US" style=3D"font-family: Times Ne=
+w Roman, serif;">2021</span><span lang=3D"EN-US" style=3D"font-family: Time=
+s New Roman, serif;">.&nbsp;</span><span lang=3D"EN-US" style=3D"font-famil=
+y: Times New Roman, serif;">MedPRAI</span><span lang=3D"EN-US" style=3D"fon=
+t-family: Times New Roman, serif;">&nbsp;is
+organized by the Department of Computer Engineering, =C4=B0stanbul Sabahatt=
+in Zaim University;
+it aims to provide researchers and practitioners from academia and industry
+with a forum on the latest developments in pattern recognition and artifici=
+al
+intelligence. The conference will also provide a unique opportunity for sha=
+ring
+experiences from different backgrounds with the common interest in advanced
+methods in the above-mentioned fields. The scientific program of&nbsp;</spa=
+n><span lang=3D"EN-US" style=3D"font-family: Times New Roman, serif;">MedPR=
+AI</span><span lang=3D"EN-US" style=3D"font-family: Times New Roman, serif;=
+">&nbsp;</span><span lang=3D"EN-US" style=3D"font-family: Times New Roman, =
+serif;">2021</span><span lang=3D"EN-US" style=3D"font-family: Times New Rom=
+an, serif;">&nbsp;will
+include the presentation of invited plenary talks, regular sessions, poster
+sessions and some special sessions.</span><span lang=3D"EN-US"></span></fon=
+t></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"text-align: justify; line-height:=
+ 11.45pt; background-image: initial; background-position: initial; backgrou=
+nd-size: initial; background-repeat: initial; background-attachment: initia=
+l; background-origin: initial; background-clip: initial; margin: 0cm 0cm 10=
+pt; font-family: Calibri, sans-serif;"><span lang=3D"EN-US" style=3D"font-f=
+amily: Times New Roman, serif;"><font size=3D"4" style=3D"background-color:=
+ inherit;">All submitted papers will be reviewed by
+at least 3 members of the international program committee; additional revie=
+wers
+will be consulted if needed. Paper acceptance will be based on originality,
+significance, technical soundness, and clarity of presentation. </font></sp=
+an></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"text-align: justify; line-height:=
+ 11.45pt; background-image: initial; background-position: initial; backgrou=
+nd-size: initial; background-repeat: initial; background-attachment: initia=
+l; background-origin: initial; background-clip: initial; margin: 0cm 0cm 10=
+pt; font-family: Calibri, sans-serif;"><font size=3D"4"><span lang=3D"EN-US=
+" style=3D"font-family: Times New Roman, serif;">&nbsp;[Topics
+of Interest]</span><span lang=3D"EN-US"></span></font></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"text-align: justify; line-height:=
+ 11.45pt; background-image: initial; background-position: initial; backgrou=
+nd-size: initial; background-repeat: initial; background-attachment: initia=
+l; background-origin: initial; background-clip: initial; margin: 0cm 0cm 10=
+pt; font-family: Calibri, sans-serif;"><font size=3D"4"><span lang=3D"EN-US=
+" style=3D"font-family: Times New Roman, serif;">Topics of interest for sub=
+mission
+include, but are not limited to: </span><span lang=3D"EN-US"></span></font>=
+</p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><font size=3D"4"><span lang=3D"E=
+N-US" style=3D"font-family: Times New Roman, serif;">-
+Statistical, structural and syntactic pattern recognition,</span><span lang=
+=3D"EN-US"></span></font></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><font size=3D"4"><span lang=3D"E=
+N-US" style=3D"font-family: Times New Roman, serif;">-
+Neural networks,</span><span lang=3D"EN-US"></span></font></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><font size=3D"4"><span lang=3D"E=
+N-US" style=3D"font-family: Times New Roman, serif;">-
+Machine learning,</span><span lang=3D"EN-US"></span></font></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><font size=3D"4"><span lang=3D"E=
+N-US" style=3D"font-family: Times New Roman, serif;">-
+Data mining,</span><span lang=3D"EN-US"></span></font></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><font size=3D"4"><span lang=3D"E=
+N-US" style=3D"font-family: Times New Roman, serif;">-
+Graph-based techniques for pattern recognition,</span><span lang=3D"EN-US">=
+</span></font></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><font size=3D"4"><span lang=3D"E=
+N-US" style=3D"font-family: Times New Roman, serif;">-
+Object recognition,</span><span lang=3D"EN-US"></span></font></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><font size=3D"4"><span lang=3D"E=
+N-US" style=3D"font-family: Times New Roman, serif;">-
+Signal analysis,</span><span lang=3D"EN-US"></span></font></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><font size=3D"4"><span lang=3D"E=
+N-US" style=3D"font-family: Times New Roman, serif;">-
+Image coding and processing,</span><span lang=3D"EN-US"></span></font></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><font size=3D"4"><span lang=3D"E=
+N-US" style=3D"font-family: Times New Roman, serif;">-
+Shape and texture analysis</span><span lang=3D"EN-US"></span></font></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><font size=3D"4"><span lang=3D"E=
+N-US" style=3D"font-family: Times New Roman, serif;">-
+Computer vision,</span><span lang=3D"EN-US"></span></font></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><font size=3D"4"><span lang=3D"E=
+N-US" style=3D"font-family: Times New Roman, serif;">-
+Robotics,</span><span lang=3D"EN-US"></span></font></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><font size=3D"4"><span lang=3D"E=
+N-US" style=3D"font-family: Times New Roman, serif;">-
+Remote sensing,</span><span lang=3D"EN-US"></span></font></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><font size=3D"4"><span lang=3D"E=
+N-US" style=3D"font-family: Times New Roman, serif;">-
+Document processing,</span><span lang=3D"EN-US"></span></font></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><font size=3D"4"><span lang=3D"E=
+N-US" style=3D"font-family: Times New Roman, serif;">-
+Text and graphics recognition,</span><span lang=3D"EN-US"></span></font></p=
+>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><font size=3D"4"><span lang=3D"E=
+N-US" style=3D"font-family: Times New Roman, serif;">-
+Digital libraries,</span><span lang=3D"EN-US"></span></font></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><font size=3D"4"><span lang=3D"E=
+N-US" style=3D"font-family: Times New Roman, serif;">-
+Speech recognition,</span><span lang=3D"EN-US"></span></font></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><font size=3D"4"><span lang=3D"E=
+N-US" style=3D"font-family: Times New Roman, serif;">-
+Music analysis,</span><span lang=3D"EN-US"></span></font></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><font size=3D"4"><span lang=3D"E=
+N-US" style=3D"font-family: Times New Roman, serif;">-
+Multimedia systems,</span><span lang=3D"EN-US"></span></font></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><span style=3D"font-family: Time=
+s New Roman, serif;"><font size=3D"4" style=3D"background-color: inherit;">=
+- Natural language analysis,</font></span></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><span style=3D"font-family: Time=
+s New Roman, serif;"><font size=3D"4" style=3D"background-color: inherit;">=
+- Information retrieval,</font></span></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><span style=3D"font-family: Time=
+s New Roman, serif;"><font size=3D"4" style=3D"background-color: inherit;">=
+- Biometrics,</font></span></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><span style=3D"font-family: Time=
+s New Roman, serif;"><font size=3D"4" style=3D"background-color: inherit;">=
+- Biomedical pattern analysis,</font></span></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><span style=3D"font-family: Time=
+s New Roman, serif;"><font size=3D"4" style=3D"background-color: inherit;">=
+- Artificial intelligence.</font></span></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><span style=3D"font-family: Time=
+s New Roman, serif;"><font size=3D"4" style=3D"background-color: inherit;">=
+<br>
+[Important Dates]</font></span></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><span style=3D"font-family: Time=
+s New Roman, serif;"><font size=3D"4" style=3D"background-color: inherit;">=
+&nbsp;</font></span></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><font size=3D"4"><span style=3D"=
+font-family: Times New Roman, serif;">- </span><span lang=3D"EN-US" style=
+=3D"font-family: Times New Roman, serif;">Paper Submission:&nbsp;August&nbs=
+p;15,
+2021</span></font></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><font size=3D"4"><span style=3D"=
+font-family: Times New Roman, serif;">- </span><span lang=3D"EN-US" style=
+=3D"font-family: Times New Roman, serif;">Review Notification:&nbsp;Septemb=
+er 15,
+2021</span></font></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><font size=3D"4"><span style=3D"=
+font-family: Times New Roman, serif;">- </span><span lang=3D"EN-US" style=
+=3D"font-family: Times New Roman, serif;">Registration Opens:&nbsp;Septembe=
+r 15,
+2021</span></font></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><font size=3D"4"><span style=3D"=
+font-family: Times New Roman, serif;">- </span><span lang=3D"EN-US" style=
+=3D"font-family: Times New Roman, serif;">Final Paper Submission:&nbsp;Sept=
+ember
+30, 2021</span></font></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><span lang=3D"EN-US" style=3D"fo=
+nt-family: Times New Roman, serif;"><font size=3D"4" style=3D"background-co=
+lor: inherit;">-
+Early Bird Registration Closes: &nbsp;September&nbsp;30, 2021</font></span>=
+</p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><span style=3D"font-family: Time=
+s New Roman, serif;"><font size=3D"4" style=3D"background-color: inherit;">=
+- Conference Dates: &nbsp;December 17-18, 2021</font></span></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><span style=3D"font-family: Time=
+s New Roman, serif;"><font size=3D"4" style=3D"background-color: inherit;">=
+&nbsp;</font></span></p>
+
+<p class=3D"ydpdf26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-al=
+ign: justify; line-height: 14.95pt; background-image: initial; background-p=
+osition: initial; background-size: initial; background-repeat: initial; bac=
+kground-attachment: initial; background-origin: initial; background-clip: i=
+nitial; font-family: Calibri, sans-serif;"><font size=3D"4"><span style=3D"=
+font-family: Times New Roman, serif;">[Inquiries]<br>
+</span><span lang=3D"EN-US" style=3D"font-family: Times New Roman, serif;">=
+<a href=3D"mailto:c.djeddi@univ-tebessa.dz" style=3D"color: blue;" rel=3D"n=
+ofollow" target=3D"_blank"><span lang=3D"FR" style=3D"color: rgb(17, 85, 20=
+4);">c.djeddi@univ-tebessa.dz</span></a></span></font></p><p class=3D"ydpdf=
+26432MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; text-align: justify; lin=
+e-height: 14.95pt; background-image: initial; background-position: initial;=
+ background-size: initial; background-repeat: initial; background-attachmen=
+t: initial; background-origin: initial; background-clip: initial; font-size=
+: 11pt; font-family: Calibri, sans-serif;"></p></div><br></div><div><br></d=
+iv><div class=3D"ydpf63f196csignature"><div style=3D"font-family:new times,=
+ serif;font-size:13px;"><div>----------------------------------------------=
+----------------&nbsp;<br></div><div>Chawki Djeddi <br>Associate Professor =
+<br>Department of Mathematics and Computer Science <br>Larbi Tebessi Univer=
+sity, Tebessa, Algeria. <br><div>Webpage:&nbsp;https://sites.google.com/sit=
+e/cdjeddi/home</div><div><br></div><div><br></div><div></div></div></div></=
+div></div></div></body></html>
+------=_Part_3369914_948554338.1619715413372--
+

@@ -1,0 +1,651 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (BounceSMTP1.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 8068E14017DF
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu, 24 Mar 2022 14:30:41 +0100 (CET)
+Received: from mx1.d101.univ-nantes.fr (MX1.univ-nantes.fr [193.52.101.135])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id 79BF56D19C6
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu, 24 Mar 2022 14:30:41 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.d101.univ-nantes.fr (Postfix) with ESMTP id 68A134821B34
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 24 Mar 2022 14:30:41 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -14.578
+X-Spam-Level:
+X-Spam-Status: No, score=-14.578 tagged_above=-1000 required=5
+	tests=[CRM114_GOOD=-5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	NO_RDNS=0.5, NO_RDNS2=0.01, RCVD_IN_DNSWL_MED=-10, RCVD_IN_WSFF=0.01,
+	SPF_HELO_NONE=0.001, SPF_PASS=-0.001, UN_PHISHING_PW=0.1,
+	URIBL_BLOCKED=0.001] autolearn=disabled
+X-CRM114-Status: GOOD ( 17.7799 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=univ-poitiers.fr
+Received: from mx1.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Di292Ywrdu4H for <liste-egc@polytech.univ-nantes.fr>;
+	Thu, 24 Mar 2022 14:30:39 +0100 (CET)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from smtp.univ-poitiers.fr (actarus.univ-poitiers.fr [195.83.66.86])
+	by mx1.d101.univ-nantes.fr (Postfix) with ESMTPS id 0910A47EC059
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 24 Mar 2022 14:30:39 +0100 (CET)
+Received: from localhost (haproxy-mail.appli.univ-poitiers.fr [195.83.66.81])
+	by smtp.univ-poitiers.fr (Postfix) with ESMTP id C02FB86C85E
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 24 Mar 2022 14:30:38 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=univ-poitiers.fr;
+	s=mail; t=1648128638;
+	bh=B2vJ7tRj4eLuaxqKduSkNH3Z6Kf1D65ltmwPPZJP1kA=;
+	h=Date:From:To:Subject:From;
+	b=D/Im/IM3gZq71DrJ5K2dML+zc8T9MRT5+qZ02MAKKnQA/m4DJNpB7G+aR/WRHGoNY
+	 FE7s9p39l8DcM8Nb6k9BmuVI635knUkksx8QFRRZzrmUExqtMXcMzdHaAtFxOh2q6u
+	 MapCNy1/O8nmcyIiTK4+W/VLL1B043KdDWUvkHcs=
+X-Virus-Scanned: Debian amavisd-new at amavis-1.test.univ-poitiers.fr
+Received: from smtp.univ-poitiers.fr ([172.16.2.43])
+	by localhost (amavis-1.ldbal.sci.univ-poitiers.fr [172.16.2.1]) (amavisd-new, port 10026)
+	with ESMTP id tzJARGRZ3ZOb for <liste-egc@polytech.univ-nantes.fr>;
+	Thu, 24 Mar 2022 14:30:38 +0100 (CET)
+Received: from zimbra-mta-1.ldbal.sci.univ-poitiers.fr (unknown [172.16.2.39])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(Client did not present a certificate)
+	by smtp.univ-poitiers.fr (Postfix) with ESMTPS id A0F2086C85A
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 24 Mar 2022 14:30:38 +0100 (CET)
+Received: from zimbra-mta-1.ldbal.sci.univ-poitiers.fr (localhost.localdomain [127.0.0.1])
+	by zimbra-mta-1.ldbal.sci.univ-poitiers.fr (Postfix) with ESMTPS id 871F1DD2
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 24 Mar 2022 14:30:38 +0100 (CET)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by zimbra-mta-1.ldbal.sci.univ-poitiers.fr (Postfix) with ESMTP id 77AE2DD4
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 24 Mar 2022 14:30:38 +0100 (CET)
+X-Virus-Scanned: amavisd-new at zimbra-mta-1.ldbal.sci.univ-poitiers.fr
+Received: from zimbra-mta-1.ldbal.sci.univ-poitiers.fr ([127.0.0.1])
+	by localhost (zimbra-mta-1.ldbal.sci.univ-poitiers.fr [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id pWLb7spsvgA0 for <liste-egc@polytech.univ-nantes.fr>;
+	Thu, 24 Mar 2022 14:30:38 +0100 (CET)
+Received: from zimbra-store-8.ldbal.sci.univ-poitiers.fr (zimbra-haproxy.ldbal.sci.univ-poitiers.fr [172.16.2.41])
+	by zimbra-mta-1.ldbal.sci.univ-poitiers.fr (Postfix) with ESMTP id 581C0DD2
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 24 Mar 2022 14:30:38 +0100 (CET)
+Date: Thu, 24 Mar 2022 14:30:38 +0100 (CET)
+From: Hassina El Kechai <hassina.el.kechai@univ-poitiers.fr>
+To: liste-egc <liste-egc@polytech.univ-nantes.fr>
+Message-ID: <406822088.2924195.1648128638308.JavaMail.zimbra@univ-poitiers.fr>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="=_2665fa2e-422b-4315-b59d-df1108f7f958"
+X-Originating-IP: [88.160.236.231, 88.160.236.231]
+X-Mailer: Zimbra 8.8.15_GA_4203 (ZimbraWebClient - GC92 (Mac)/8.8.15_GA_4232)
+Thread-Index: U3H/Pjo8VwxULv/BfLAr9/gxNB4ktw==
+Thread-Topic: Offre de =?utf-8?Q?th=C3=A8se?=
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Offre de =?UTF-8?Q?th=C3=A8se?=
+
+--=_2665fa2e-422b-4315-b59d-df1108f7f958
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+
+
+
+
+
+
+
+Bonjour=20
+
+
+Nous vous transmettons une offre de th=C3=A8se financ=C3=A9e (allocation do=
+ctorale) en Sciences de l'Information et de la Communication avec une color=
+ation informatique, au sein du laboratoire TECHNE (Poitiers)=20
+
+
+Celle-ci s=E2=80=99inscrit dans le p=C3=A9rim=C3=A8tre du projet ANR COMPER=
+, et vise =C3=A0 travailler sur les processus d=E2=80=99auto-re=CC=81gulati=
+on des e=CC=81tudiants en apprentissage hybride synchrone. Pour plus d=E2=
+=80=99information voir : [ https://techne.labo.univ-poitiers.fr/wp-content/=
+uploads/sites/63/2019/07/2022-projet-these-allocation-doctoraleVF.pdf | Des=
+criptif de la th=C3=A8se ]=20
+
+BQ_BEGIN
+
+
+
+BQ_END
+
+Date de d=C3=A9but de la th=C3=A8se : 1er septembre 2022=20
+
+Pour postuler, merci d'envoyez =C3=A0 [ mailto:christine.michel@univ-poitie=
+rs.fr | christine.michel@univ-poitiers.fr ] et [ mailto:hassina.el.kechai@u=
+niv-poitiers.fr | hassina.el.kechai@univ-poitiers.fr ] :=20
+
+BQ_BEGIN
+
+- Un CV=20
+- Vos relev=C3=A9s de notes du Master=20
+- Une lettre de motivation.=20
+
+
+
+BQ_END
+
+BQ_BEGIN
+
+La date limite pour postuler est le 14 avril 2022=20
+Les candidats s=C3=A9lectionn=C3=A9s seront auditionn=C3=A9s sur le projet =
+de th=C3=A8se entre le 14 avril et le 1er Mai 2022 (La date pr=C3=A9cise se=
+ra communiqu=C3=A9e apr=C3=A8s s=C3=A9lection).=20
+
+Merci de bien vouloir diffuser tr=C3=A8s largement.=20
+
+Bien =C3=A0 vous=20
+Christine Michel et Hassina El Kecha=C3=AF=20
+
+--=20
+Hassina EL KECHAI=20
+Enseignante-chercheure ( MCF) en Informatique, Laboratoire TECHNE ( UR-2029=
+7 )=20
+[ https://techne.labo.univ-poitiers.fr/ | https://techne.labo.univ-poitiers=
+.fr ]=20
+Responsable M2 ( Master Ing=C3=A9nierie, M=C3=A9diation, e-=C3=89ducation,=
+=C2=A0D=C3=A9partement IME=20
+[ http://ll.univ-poitiers.fr/masterime/ | http://ll.univ-poitiers.fr/master=
+ime/ ]=20
+
+Salle personnelle Webex=20
+[ https://univ-poitiers.webex.com/meet/hassina.el.kechai | https://univ-poi=
+tiers.webex.com/meet/hassina.el.kechai ]=20
+Code d'acc=C3=A8s : [ https://univ-poitiers.webex.com/meet/hassina.el.kecha=
+i | 846694073 ]=20
+
+Universit=C3=A9 de Poitiers=20
+-----------------=20
+B=C3=A2t A3 - 1 rue Raymond Cantel - TSA 11102=20
+86073 POITIERS CEDEX 9=20
+
+BQ_END
+
+
+
+
+--=_2665fa2e-422b-4315-b59d-df1108f7f958
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><body><div style=3D"font-family: arial, helvetica, sans-serif; font-s=
+ize: 12pt; color: #000000"><div><div style=3D"color: #000000; font-style: n=
+ormal; font-variant-ligatures: normal; font-variant-caps: normal; font-weig=
+ht: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent=
+: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: =
+0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; text-decora=
+tion-thickness: initial; text-decoration-style: initial; text-decoration-co=
+lor: initial; font-family: arial, helvetica, sans-serif; font-size: 12pt;" =
+data-mce-style=3D"color: #000000; font-style: normal; font-variant-ligature=
+s: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: nor=
+mal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none;=
+ white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-wid=
+th: 0px; background-color: #ffffff; text-decoration-thickness: initial; tex=
+t-decoration-style: initial; text-decoration-color: initial; font-family: a=
+rial, helvetica, sans-serif; font-size: 12pt;"><div style=3D"font-family: a=
+rial, helvetica, sans-serif; font-size: 12pt; color: #000000;" data-mce-sty=
+le=3D"font-family: arial, helvetica, sans-serif; font-size: 12pt; color: #0=
+00000;"><div class=3D""><div><blockquote class=3D""><div class=3D""><div cl=
+ass=3D""><div class=3D"" style=3D"font-family: arial, helvetica, sans-serif=
+; font-size: 12pt;" data-mce-style=3D"font-family: arial, helvetica, sans-s=
+erif; font-size: 12pt;"></div></div></div></blockquote></div><br><div>Bonjo=
+ur</div><div><br></div><div><br></div><div>Nous vous transmettons une offre=
+ de th=C3=A8se financ=C3=A9e (allocation doctorale) en Sciences de l'Inform=
+ation et de la Communication avec une coloration informatique, au sein du l=
+aboratoire TECHNE (Poitiers)</div><div><br></div><div><br></div><div>Celle-=
+ci s=E2=80=99inscrit dans le p=C3=A9rim=C3=A8tre du projet ANR COMPER, et v=
+ise =C3=A0 travailler sur&nbsp;les processus d=E2=80=99auto-re=CC=81gulatio=
+n des e=CC=81tudiants en apprentissage hybride synchrone. Pour plus d=E2=80=
+=99information voir :&nbsp;<span class=3D"Object" role=3D"link" id=3D"OBJ_P=
+REFIX_DWT726_com_zimbra_url" style=3D"color: #005a95; text-decoration: none=
+; cursor: pointer;" data-mce-style=3D"color: #005a95; text-decoration: none=
+; cursor: pointer;"><span class=3D"Object" role=3D"link" id=3D"OBJ_PREFIX_D=
+WT738_com_zimbra_url" style=3D"color: #005a95; text-decoration: none; curso=
+r: pointer;" data-mce-style=3D"color: #005a95; text-decoration: none; curso=
+r: pointer;"><a href=3D"https://techne.labo.univ-poitiers.fr/wp-content/upl=
+oads/sites/63/2019/07/2022-projet-these-allocation-doctoraleVF.pdf" rel=3D"=
+nofollow noopener noreferrer nofollow noopener noreferrer nofollow noopener=
+ noreferrer" target=3D"_blank" style=3D"color: #00adef; text-decoration: no=
+ne; cursor: pointer; outline: none; font-family: 'noto sans', sans-serif; f=
+ont-size: 16px;" data-mce-href=3D"https://techne.labo.univ-poitiers.fr/wp-c=
+ontent/uploads/sites/63/2019/07/2022-projet-these-allocation-doctoraleVF.pd=
+f" data-mce-style=3D"color: #00adef; text-decoration: none; cursor: pointer=
+; outline: none; font-family: 'noto sans', sans-serif; font-size: 16px;">De=
+scriptif de la th=C3=A8se</a></span></span><br class=3D""><blockquote class=
+=3D""><div class=3D""><div class=3D""><div class=3D"" style=3D"font-family:=
+ arial, helvetica, sans-serif; font-size: 12pt;" data-mce-style=3D"font-fam=
+ily: arial, helvetica, sans-serif; font-size: 12pt;"><div class=3D""><div c=
+lass=3D""><br class=3D""></div></div></div></div></div></blockquote><div cl=
+ass=3D""><span class=3D"" style=3D"background-color: #ffffff;" data-mce-sty=
+le=3D"background-color: #ffffff;">Date de d=C3=A9but de la th=C3=A8se : 1er=
+<span>&nbsp;</span><span class=3D"Object" role=3D"link" id=3D"OBJ_PREFIX_DW=
+T727_com_zimbra_date" style=3D"color: #005a95; text-decoration: none; curso=
+r: pointer;" data-mce-style=3D"color: #005a95; text-decoration: none; curso=
+r: pointer;"><span class=3D"Object" role=3D"link" id=3D"OBJ_PREFIX_DWT739_c=
+om_zimbra_date" style=3D"color: #005a95; text-decoration: none; cursor: poi=
+nter;" data-mce-style=3D"color: #005a95; text-decoration: none; cursor: poi=
+nter;">septembre 2022</span></span></span></div><div class=3D""><span style=
+=3D"font-size: 12pt;" data-mce-style=3D"font-size: 12pt;"><br></span></div>=
+<div class=3D""><span style=3D"font-size: 12pt;" data-mce-style=3D"font-siz=
+e: 12pt;">Pour postuler, merci d'envoyez =C3=A0<span>&nbsp;</span></span><s=
+pan class=3D"Object" role=3D"link" id=3D"OBJ_PREFIX_DWT728_ZmEmailObjectHan=
+dler" style=3D"color: #005a95; text-decoration: none; cursor: pointer;" dat=
+a-mce-style=3D"color: #005a95; text-decoration: none; cursor: pointer;"><sp=
+an class=3D"Object" role=3D"link" id=3D"OBJ_PREFIX_DWT740_ZmEmailObjectHand=
+ler" style=3D"color: #005a95; text-decoration: none; cursor: pointer;" data=
+-mce-style=3D"color: #005a95; text-decoration: none; cursor: pointer;"><a h=
+ref=3D"mailto:christine.michel@univ-poitiers.fr" rel=3D"nofollow noopener n=
+oreferrer nofollow noopener noreferrer nofollow noopener noreferrer" target=
+=3D"_blank" style=3D"color: #000000; text-decoration: none; cursor: pointer=
+; font-size: 12pt;" data-mce-href=3D"mailto:christine.michel@univ-poitiers.=
+fr" data-mce-style=3D"color: #000000; text-decoration: none; cursor: pointe=
+r; font-size: 12pt;">christine.michel@univ-poitiers.fr</a></span></span><sp=
+an style=3D"font-size: 12pt;" data-mce-style=3D"font-size: 12pt;">&nbsp;et<=
+span>&nbsp;</span></span><span class=3D"Object" role=3D"link" id=3D"OBJ_PRE=
+FIX_DWT729_ZmEmailObjectHandler" style=3D"color: #005a95; text-decoration: =
+none; cursor: pointer;" data-mce-style=3D"color: #005a95; text-decoration: =
+none; cursor: pointer;"><span class=3D"Object" role=3D"link" id=3D"OBJ_PREF=
+IX_DWT741_ZmEmailObjectHandler" style=3D"color: #005a95; text-decoration: n=
+one; cursor: pointer;" data-mce-style=3D"color: #005a95; text-decoration: n=
+one; cursor: pointer;"><a href=3D"mailto:hassina.el.kechai@univ-poitiers.fr=
+" rel=3D"nofollow noopener noreferrer nofollow noopener noreferrer nofollow=
+ noopener noreferrer" target=3D"_blank" style=3D"color: #000000; text-decor=
+ation: none; cursor: pointer; font-size: 12pt;" data-mce-href=3D"mailto:has=
+sina.el.kechai@univ-poitiers.fr" data-mce-style=3D"color: #000000; text-dec=
+oration: none; cursor: pointer; font-size: 12pt;">hassina.el.kechai@univ-po=
+itiers.fr</a></span></span><span style=3D"font-size: 12pt;" data-mce-style=
+=3D"font-size: 12pt;">&nbsp;:</span></div></div><div><blockquote class=3D""=
+><div class=3D""><div class=3D"" style=3D"font-family: arial, helvetica, sa=
+ns-serif; font-size: 12pt;" data-mce-style=3D"font-family: arial, helvetica=
+, sans-serif; font-size: 12pt;"><div class=3D""><span class=3D"" style=3D"f=
+ont-family: arial, helvetica, sans-serif; font-size: 12pt; font-style: norm=
+al; font-weight: 400; letter-spacing: normal; text-indent: 0px; text-transf=
+orm: none; white-space: normal; word-spacing: 0px; background-color: #fffff=
+f; float: none; color: #000000; display: inline !important;" data-mce-style=
+=3D"font-family: arial, helvetica, sans-serif; font-size: 12pt; font-style:=
+ normal; font-weight: 400; letter-spacing: normal; text-indent: 0px; text-t=
+ransform: none; white-space: normal; word-spacing: 0px; background-color: #=
+ffffff; float: none; color: #000000; display: inline !important;">- Un CV</=
+span></div><div class=3D""><span class=3D"" style=3D"font-family: arial, he=
+lvetica, sans-serif; font-size: 12pt; font-style: normal; font-weight: 400;=
+ letter-spacing: normal; text-indent: 0px; text-transform: none; white-spac=
+e: normal; word-spacing: 0px; background-color: #ffffff; float: none; color=
+: #000000; display: inline !important;" data-mce-style=3D"font-family: aria=
+l, helvetica, sans-serif; font-size: 12pt; font-style: normal; font-weight:=
+ 400; letter-spacing: normal; text-indent: 0px; text-transform: none; white=
+-space: normal; word-spacing: 0px; background-color: #ffffff; float: none; =
+color: #000000; display: inline !important;">- Vos relev=C3=A9s de notes du=
+ Master</span></div><div class=3D""><span class=3D"" style=3D"font-family: =
+arial, helvetica, sans-serif; font-size: 12pt; font-style: normal; font-wei=
+ght: 400; letter-spacing: normal; text-indent: 0px; text-transform: none; w=
+hite-space: normal; word-spacing: 0px; background-color: #ffffff; float: no=
+ne; color: #000000; display: inline !important;" data-mce-style=3D"font-fam=
+ily: arial, helvetica, sans-serif; font-size: 12pt; font-style: normal; fon=
+t-weight: 400; letter-spacing: normal; text-indent: 0px; text-transform: no=
+ne; white-space: normal; word-spacing: 0px; background-color: #ffffff; floa=
+t: none; color: #000000; display: inline !important;">- Une lettre de motiv=
+ation.</span></div><div class=3D""><span class=3D"" style=3D"font-family: a=
+rial, helvetica, sans-serif; font-size: 12pt; font-style: normal; font-weig=
+ht: 400; letter-spacing: normal; text-indent: 0px; text-transform: none; wh=
+ite-space: normal; word-spacing: 0px; background-color: #ffffff; float: non=
+e; color: #000000; display: inline !important;" data-mce-style=3D"font-fami=
+ly: arial, helvetica, sans-serif; font-size: 12pt; font-style: normal; font=
+-weight: 400; letter-spacing: normal; text-indent: 0px; text-transform: non=
+e; white-space: normal; word-spacing: 0px; background-color: #ffffff; float=
+: none; color: #000000; display: inline !important;"><br class=3D""></span>=
+</div><div class=3D""><br class=3D""></div></div></div></blockquote><blockq=
+uote class=3D""><div class=3D""><div class=3D""><div class=3D"" style=3D"fo=
+nt-family: arial, helvetica, sans-serif; font-size: 12pt;" data-mce-style=
+=3D"font-family: arial, helvetica, sans-serif; font-size: 12pt;"><div class=
+=3D""><span style=3D"font-family: arial, helvetica, sans-serif; font-size: =
+12pt; color: #000000;" data-mce-style=3D"font-family: arial, helvetica, san=
+s-serif; font-size: 12pt; color: #000000;"><span class=3D"" style=3D"font-s=
+tyle: normal; font-weight: 400; letter-spacing: normal; text-indent: 0px; t=
+ext-transform: none; white-space: normal; word-spacing: 0px; background-col=
+or: #ffffff; float: none; display: inline !important;" data-mce-style=3D"fo=
+nt-style: normal; font-weight: 400; letter-spacing: normal; text-indent: 0p=
+x; text-transform: none; white-space: normal; word-spacing: 0px; background=
+-color: #ffffff; float: none; display: inline !important;">La date limite p=
+our postuler est le<span>&nbsp;</span></span><span class=3D"" style=3D"font=
+-style: normal; letter-spacing: normal; text-indent: 0px; text-transform: n=
+one; white-space: normal; word-spacing: 0px; background-color: #ffffff; flo=
+at: none; display: inline !important;" data-mce-style=3D"font-style: normal=
+; letter-spacing: normal; text-indent: 0px; text-transform: none; white-spa=
+ce: normal; word-spacing: 0px; background-color: #ffffff; float: none; disp=
+lay: inline !important;"><b class=3D""><span class=3D"Object" role=3D"link"=
+ id=3D"OBJ_PREFIX_DWT730_com_zimbra_date" style=3D"color: #005a95; text-dec=
+oration: none; cursor: pointer;" data-mce-style=3D"color: #005a95; text-dec=
+oration: none; cursor: pointer;"><span class=3D"Object" role=3D"link" id=3D=
+"OBJ_PREFIX_DWT742_com_zimbra_date" style=3D"color: #005a95; text-decoratio=
+n: none; cursor: pointer;" data-mce-style=3D"color: #005a95; text-decoratio=
+n: none; cursor: pointer;">14 avril 2022</span></span></b></span></span></d=
+iv><div class=3D""><span class=3D"" style=3D"font-family: arial, helvetica,=
+ sans-serif; font-size: 12pt; font-style: normal; font-weight: 400; letter-=
+spacing: normal; text-indent: 0px; text-transform: none; white-space: norma=
+l; word-spacing: 0px; background-color: #ffffff; float: none; color: #00000=
+0; display: inline !important;" data-mce-style=3D"font-family: arial, helve=
+tica, sans-serif; font-size: 12pt; font-style: normal; font-weight: 400; le=
+tter-spacing: normal; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; background-color: #ffffff; float: none; color: #=
+000000; display: inline !important;">Les candidats s=C3=A9lectionn=C3=A9s s=
+eront auditionn=C3=A9s sur le projet de th=C3=A8se entre le 14 avril et le =
+1er<span>&nbsp;</span><span class=3D"Object" role=3D"link" id=3D"OBJ_PREFIX=
+_DWT731_com_zimbra_date" style=3D"color: #005a95; text-decoration: none; cu=
+rsor: pointer;" data-mce-style=3D"color: #005a95; text-decoration: none; cu=
+rsor: pointer;"><span class=3D"Object" role=3D"link" id=3D"OBJ_PREFIX_DWT74=
+3_com_zimbra_date" style=3D"color: #005a95; text-decoration: none; cursor: =
+pointer;" data-mce-style=3D"color: #005a95; text-decoration: none; cursor: =
+pointer;">Mai 2022</span></span><span>&nbsp;</span>(La date pr=C3=A9cise se=
+ra communiqu=C3=A9e apr=C3=A8s s=C3=A9lection).</span></div><div class=3D""=
+><span class=3D"" style=3D"font-family: arial, helvetica, sans-serif; font-=
+size: 12pt; font-style: normal; font-weight: 400; letter-spacing: normal; t=
+ext-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0=
+px; background-color: #ffffff; float: none; color: #000000; display: inline=
+ !important;" data-mce-style=3D"font-family: arial, helvetica, sans-serif; =
+font-size: 12pt; font-style: normal; font-weight: 400; letter-spacing: norm=
+al; text-indent: 0px; text-transform: none; white-space: normal; word-spaci=
+ng: 0px; background-color: #ffffff; float: none; color: #000000; display: i=
+nline !important;"><br class=3D""></span></div><div class=3D""><span class=
+=3D"" style=3D"font-family: arial, helvetica, sans-serif; font-size: 12pt; =
+font-style: normal; font-weight: 400; letter-spacing: normal; text-indent: =
+0px; text-transform: none; white-space: normal; word-spacing: 0px; backgrou=
+nd-color: #ffffff; float: none; color: #000000; display: inline !important;=
+" data-mce-style=3D"font-family: arial, helvetica, sans-serif; font-size: 1=
+2pt; font-style: normal; font-weight: 400; letter-spacing: normal; text-ind=
+ent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; bac=
+kground-color: #ffffff; float: none; color: #000000; display: inline !impor=
+tant;">Merci de bien vouloir diffuser tr=C3=A8s largement.</span></div><div=
+ class=3D""><span class=3D"" style=3D"font-family: arial, helvetica, sans-s=
+erif; font-size: 12pt; font-style: normal; font-weight: 400; letter-spacing=
+: normal; text-indent: 0px; text-transform: none; white-space: normal; word=
+-spacing: 0px; background-color: #ffffff; float: none; color: #000000; disp=
+lay: inline !important;" data-mce-style=3D"font-family: arial, helvetica, s=
+ans-serif; font-size: 12pt; font-style: normal; font-weight: 400; letter-sp=
+acing: normal; text-indent: 0px; text-transform: none; white-space: normal;=
+ word-spacing: 0px; background-color: #ffffff; float: none; color: #000000;=
+ display: inline !important;"><br class=3D""></span></div><div class=3D""><=
+span class=3D"" style=3D"font-family: arial, helvetica, sans-serif; font-si=
+ze: 12pt; font-style: normal; font-weight: 400; letter-spacing: normal; tex=
+t-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px=
+; background-color: #ffffff; float: none; color: #000000; display: inline !=
+important;" data-mce-style=3D"font-family: arial, helvetica, sans-serif; fo=
+nt-size: 12pt; font-style: normal; font-weight: 400; letter-spacing: normal=
+; text-indent: 0px; text-transform: none; white-space: normal; word-spacing=
+: 0px; background-color: #ffffff; float: none; color: #000000; display: inl=
+ine !important;">Bien =C3=A0 vous</span></div><div class=3D""><span class=
+=3D"" style=3D"font-family: arial, helvetica, sans-serif; font-size: 12pt; =
+font-style: normal; font-weight: 400; letter-spacing: normal; text-indent: =
+0px; text-transform: none; white-space: normal; word-spacing: 0px; backgrou=
+nd-color: #ffffff; float: none; color: #000000; display: inline !important;=
+" data-mce-style=3D"font-family: arial, helvetica, sans-serif; font-size: 1=
+2pt; font-style: normal; font-weight: 400; letter-spacing: normal; text-ind=
+ent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; bac=
+kground-color: #ffffff; float: none; color: #000000; display: inline !impor=
+tant;">Christine Michel et Hassina El Kecha=C3=AF</span></div><div class=3D=
+""><br class=3D""></div><div class=3D"">--<br class=3D""></div><div class=
+=3D""><pre class=3D"" style=3D"white-space: pre-wrap; overflow-wrap: break-=
+word !important;" data-mce-style=3D"white-space: pre-wrap; overflow-wrap: b=
+reak-word !important;"><span class=3D"" style=3D"white-space: pre-wrap; ove=
+rflow-wrap: break-word !important; font-family: 'courier new', courier, mon=
+aco, monospace, sans-serif;" data-mce-style=3D"white-space: pre-wrap; overf=
+low-wrap: break-word !important; font-family: 'courier new', courier, monac=
+o, monospace, sans-serif;"><span class=3D"" style=3D"white-space: pre-wrap;=
+ overflow-wrap: break-word !important; font-family: arial, helvetica, sans-=
+serif;" data-mce-style=3D"white-space: pre-wrap; overflow-wrap: break-word =
+!important; font-family: arial, helvetica, sans-serif;"><span class=3D"" st=
+yle=3D"white-space: normal; overflow-wrap: break-word !important;" data-mce=
+-style=3D"white-space: normal; overflow-wrap: break-word !important;">Hassi=
+na EL KECHAI</span></span></span><br class=3D"" style=3D"white-space: norma=
+l; overflow-wrap: break-word !important; font-family: arial, helvetica, san=
+s-serif;" data-mce-style=3D"white-space: normal; overflow-wrap: break-word =
+!important; font-family: arial, helvetica, sans-serif;"><span class=3D"" st=
+yle=3D"white-space: pre-wrap; overflow-wrap: break-word !important; font-fa=
+mily: 'courier new', courier, monaco, monospace, sans-serif;" data-mce-styl=
+e=3D"white-space: pre-wrap; overflow-wrap: break-word !important; font-fami=
+ly: 'courier new', courier, monaco, monospace, sans-serif;">Enseignante-che=
+rcheure (<span class=3D"" style=3D"white-space: normal; overflow-wrap: brea=
+k-word !important;" data-mce-style=3D"white-space: normal; overflow-wrap: b=
+reak-word !important;">MCF) en Informatique,&nbsp;</span></span><span class=
+=3D"" style=3D"white-space: pre-wrap; overflow-wrap: break-word !important;=
+ font-family: 'courier new', courier, monaco, monospace, sans-serif;" data-=
+mce-style=3D"white-space: pre-wrap; overflow-wrap: break-word !important; f=
+ont-family: 'courier new', courier, monaco, monospace, sans-serif;"><span c=
+lass=3D"" style=3D"white-space: normal; overflow-wrap: break-word !importan=
+t;" data-mce-style=3D"white-space: normal; overflow-wrap: break-word !impor=
+tant;">Laboratoire TECHNE (</span></span>UR-20297<span class=3D"" style=3D"=
+white-space: pre-wrap; overflow-wrap: break-word !important; font-family: '=
+courier new', courier, monaco, monospace, sans-serif;" data-mce-style=3D"wh=
+ite-space: pre-wrap; overflow-wrap: break-word !important; font-family: 'co=
+urier new', courier, monaco, monospace, sans-serif;"><span class=3D"" style=
+=3D"white-space: normal; overflow-wrap: break-word !important;" data-mce-st=
+yle=3D"white-space: normal; overflow-wrap: break-word !important;">)</span>=
+<span class=3D"" style=3D"white-space: normal; overflow-wrap: break-word !i=
+mportant;" data-mce-style=3D"white-space: normal; overflow-wrap: break-word=
+ !important;">&nbsp;</span></span><br class=3D"" style=3D"white-space: norm=
+al; overflow-wrap: break-word !important; font-family: arial, helvetica, sa=
+ns-serif;" data-mce-style=3D"white-space: normal; overflow-wrap: break-word=
+ !important; font-family: arial, helvetica, sans-serif;"><span class=3D"" s=
+tyle=3D"white-space: pre-wrap; overflow-wrap: break-word !important; font-f=
+amily: 'courier new', courier, monaco, monospace, sans-serif;" data-mce-sty=
+le=3D"white-space: pre-wrap; overflow-wrap: break-word !important; font-fam=
+ily: 'courier new', courier, monaco, monospace, sans-serif;"><span class=3D=
+"Object" id=3D"OBJ_PREFIX_DWT3485_com_zimbra_url" style=3D"white-space: nor=
+mal; overflow-wrap: break-word !important; color: #005a95; text-decoration:=
+ none; cursor: pointer;" data-mce-style=3D"white-space: normal; overflow-wr=
+ap: break-word !important; color: #005a95; text-decoration: none; cursor: p=
+ointer;"><span class=3D"Object" id=3D"OBJ_PREFIX_DWT3513_com_zimbra_url" st=
+yle=3D"white-space: pre-wrap; overflow-wrap: break-word !important; color: =
+#005a95; text-decoration: none; cursor: pointer;" data-mce-style=3D"white-s=
+pace: pre-wrap; overflow-wrap: break-word !important; color: #005a95; text-=
+decoration: none; cursor: pointer;"><span class=3D"Object" role=3D"link" id=
+=3D"OBJ_PREFIX_DWT732_com_zimbra_url" style=3D"white-space: pre-wrap; overf=
+low-wrap: break-word !important; color: #005a95; text-decoration: none; cur=
+sor: pointer;" data-mce-style=3D"white-space: pre-wrap; overflow-wrap: brea=
+k-word !important; color: #005a95; text-decoration: none; cursor: pointer;"=
+><span class=3D"Object" role=3D"link" id=3D"OBJ_PREFIX_DWT744_com_zimbra_ur=
+l" style=3D"white-space: pre-wrap; overflow-wrap: break-word !important; co=
+lor: #005a95; text-decoration: none; cursor: pointer;" data-mce-style=3D"wh=
+ite-space: pre-wrap; overflow-wrap: break-word !important; color: #005a95; =
+text-decoration: none; cursor: pointer;"><a href=3D"https://techne.labo.uni=
+v-poitiers.fr/" rel=3D"nofollow noopener noreferrer nofollow noopener noref=
+errer nofollow noopener noreferrer nofollow noopener noreferrer nofollow no=
+opener noreferrer nofollow noopener noreferrer nofollow noopener noreferrer=
+ nofollow noopener noreferrer" target=3D"_blank" style=3D"white-space: pre-=
+wrap; overflow-wrap: break-word !important; color: #005a95; text-decoration=
+: none; cursor: pointer;" data-mce-href=3D"https://techne.labo.univ-poitier=
+s.fr/" data-mce-style=3D"white-space: pre-wrap; overflow-wrap: break-word !=
+important; color: #005a95; text-decoration: none; cursor: pointer;">https:/=
+/techne.labo.univ-poitiers.fr</a></span></span></span></span><span class=3D=
+"" style=3D"white-space: normal; overflow-wrap: break-word !important;" dat=
+a-mce-style=3D"white-space: normal; overflow-wrap: break-word !important;">=
+&nbsp;&nbsp;</span></span><br class=3D"" style=3D"white-space: normal; over=
+flow-wrap: break-word !important; font-family: arial, helvetica, sans-serif=
+;" data-mce-style=3D"white-space: normal; overflow-wrap: break-word !import=
+ant; font-family: arial, helvetica, sans-serif;"><span class=3D"" style=3D"=
+white-space: pre-wrap; overflow-wrap: break-word !important; font-family: '=
+courier new', courier, monaco, monospace, sans-serif;" data-mce-style=3D"wh=
+ite-space: pre-wrap; overflow-wrap: break-word !important; font-family: 'co=
+urier new', courier, monaco, monospace, sans-serif;"><span class=3D"" style=
+=3D"white-space: normal; overflow-wrap: break-word !important;" data-mce-st=
+yle=3D"white-space: normal; overflow-wrap: break-word !important;"></span><=
+/span></pre><pre class=3D"" style=3D"white-space: pre-wrap; overflow-wrap: =
+break-word !important;" data-mce-style=3D"white-space: pre-wrap; overflow-w=
+rap: break-word !important;"><span class=3D"" style=3D"white-space: pre-wra=
+p; overflow-wrap: break-word !important; font-family: 'courier new', courie=
+r, monaco, monospace, sans-serif;" data-mce-style=3D"white-space: pre-wrap;=
+ overflow-wrap: break-word !important; font-family: 'courier new', courier,=
+ monaco, monospace, sans-serif;"><span class=3D"" style=3D"white-space: nor=
+mal; overflow-wrap: break-word !important;" data-mce-style=3D"white-space: =
+normal; overflow-wrap: break-word !important;">Responsable M2</span><span c=
+lass=3D"" style=3D"white-space: normal; overflow-wrap: break-word !importan=
+t;" data-mce-style=3D"white-space: normal; overflow-wrap: break-word !impor=
+tant;">&nbsp;(</span></span><span class=3D"" style=3D"white-space: normal; =
+overflow-wrap: break-word !important; font-family: 'courier new', courier, =
+monaco, monospace, sans-serif;" data-mce-style=3D"white-space: normal; over=
+flow-wrap: break-word !important; font-family: 'courier new', courier, mona=
+co, monospace, sans-serif;">Master Ing=C3=A9nierie, M=C3=A9diation, e-=C3=
+=89ducation,&nbsp;D=C3=A9partement IME<br class=3D"" style=3D"white-space: =
+pre-wrap; overflow-wrap: break-word !important;" data-mce-style=3D"white-sp=
+ace: pre-wrap; overflow-wrap: break-word !important;"></span><span class=3D=
+"Object" id=3D"OBJ_PREFIX_DWT3486_com_zimbra_url" style=3D"white-space: pre=
+-wrap; overflow-wrap: break-word !important; color: #005a95; text-decoratio=
+n: none; cursor: pointer;" data-mce-style=3D"white-space: pre-wrap; overflo=
+w-wrap: break-word !important; color: #005a95; text-decoration: none; curso=
+r: pointer;"><span class=3D"Object" id=3D"OBJ_PREFIX_DWT3514_com_zimbra_url=
+" style=3D"white-space: pre-wrap; overflow-wrap: break-word !important; col=
+or: #005a95; text-decoration: none; cursor: pointer;" data-mce-style=3D"whi=
+te-space: pre-wrap; overflow-wrap: break-word !important; color: #005a95; t=
+ext-decoration: none; cursor: pointer;"><span class=3D"Object" role=3D"link=
+" id=3D"OBJ_PREFIX_DWT733_com_zimbra_url" style=3D"white-space: pre-wrap; o=
+verflow-wrap: break-word !important; color: #005a95; text-decoration: none;=
+ cursor: pointer;" data-mce-style=3D"white-space: pre-wrap; overflow-wrap: =
+break-word !important; color: #005a95; text-decoration: none; cursor: point=
+er;"><span class=3D"Object" role=3D"link" id=3D"OBJ_PREFIX_DWT745_com_zimbr=
+a_url" style=3D"white-space: pre-wrap; overflow-wrap: break-word !important=
+; color: #005a95; text-decoration: none; cursor: pointer;" data-mce-style=
+=3D"white-space: pre-wrap; overflow-wrap: break-word !important; color: #00=
+5a95; text-decoration: none; cursor: pointer;"><a href=3D"http://ll.univ-po=
+itiers.fr/masterime/" rel=3D"nofollow noopener noreferrer nofollow noopener=
+ noreferrer nofollow noopener noreferrer nofollow noopener noreferrer nofol=
+low noopener noreferrer nofollow noopener noreferrer" target=3D"_blank" sty=
+le=3D"white-space: normal; overflow-wrap: break-word !important; color: #00=
+5a95; text-decoration: none; cursor: pointer; font-family: 'courier new', c=
+ourier, monaco, monospace, sans-serif;" data-mce-href=3D"http://ll.univ-poi=
+tiers.fr/masterime/" data-mce-style=3D"white-space: normal; overflow-wrap: =
+break-word !important; color: #005a95; text-decoration: none; cursor: point=
+er; font-family: 'courier new', courier, monaco, monospace, sans-serif;">ht=
+tp://ll.univ-poitiers.fr/masterime/</a></span></span><span class=3D"" style=
+=3D"white-space: pre-wrap; overflow-wrap: break-word !important; color: #00=
+5a95; font-family: courier new, courier, monaco, monospace, sans-serif;" da=
+ta-mce-style=3D"white-space: pre-wrap; overflow-wrap: break-word !important=
+; color: #005a95; font-family: courier new, courier, monaco, monospace, san=
+s-serif;"><span class=3D"" style=3D"white-space: normal; overflow-wrap: bre=
+ak-word !important;" data-mce-style=3D"white-space: normal; overflow-wrap: =
+break-word !important;"><br class=3D"" style=3D"white-space: pre-wrap; over=
+flow-wrap: break-word !important;" data-mce-style=3D"white-space: pre-wrap;=
+ overflow-wrap: break-word !important;"><br class=3D"" style=3D"white-space=
+: pre-wrap; overflow-wrap: break-word !important;" data-mce-style=3D"white-=
+space: pre-wrap; overflow-wrap: break-word !important;">Salle personnelle W=
+ebex</span></span><span class=3D"" style=3D"white-space: normal; overflow-w=
+rap: break-word !important; font-family: 'segoe ui', 'lucida sans', sans-se=
+rif; font-size: 14.16px;" data-mce-style=3D"white-space: normal; overflow-w=
+rap: break-word !important; font-family: 'segoe ui', 'lucida sans', sans-se=
+rif; font-size: 14.16px;">&nbsp;</span><span class=3D"" style=3D"white-spac=
+e: pre-wrap; overflow-wrap: break-word !important; color: #005a95; font-fam=
+ily: courier new, courier, monaco, monospace, sans-serif;" data-mce-style=
+=3D"white-space: pre-wrap; overflow-wrap: break-word !important; color: #00=
+5a95; font-family: courier new, courier, monaco, monospace, sans-serif;"><s=
+pan class=3D"" style=3D"white-space: normal; overflow-wrap: break-word !imp=
+ortant;" data-mce-style=3D"white-space: normal; overflow-wrap: break-word !=
+important;"><br class=3D"" style=3D"white-space: pre-wrap; overflow-wrap: b=
+reak-word !important;" data-mce-style=3D"white-space: pre-wrap; overflow-wr=
+ap: break-word !important;"></span></span><span class=3D"" style=3D"white-s=
+pace: pre-wrap; overflow-wrap: break-word !important; font-family: segoe ui=
+, lucida sans, sans-serif;" data-mce-style=3D"white-space: pre-wrap; overfl=
+ow-wrap: break-word !important; font-family: segoe ui, lucida sans, sans-se=
+rif;"><span class=3D"" style=3D"white-space: normal; overflow-wrap: break-w=
+ord !important; font-size: 14.16px;" data-mce-style=3D"white-space: normal;=
+ overflow-wrap: break-word !important; font-size: 14.16px;"><span class=3D"=
+Object" role=3D"link" id=3D"OBJ_PREFIX_DWT734_com_zimbra_url" style=3D"whit=
+e-space: pre-wrap; overflow-wrap: break-word !important; color: #005a95; te=
+xt-decoration: none; cursor: pointer;" data-mce-style=3D"white-space: pre-w=
+rap; overflow-wrap: break-word !important; color: #005a95; text-decoration:=
+ none; cursor: pointer;"><span class=3D"Object" role=3D"link" id=3D"OBJ_PRE=
+FIX_DWT746_com_zimbra_url" style=3D"white-space: pre-wrap; overflow-wrap: b=
+reak-word !important; color: #005a95; text-decoration: none; cursor: pointe=
+r;" data-mce-style=3D"white-space: pre-wrap; overflow-wrap: break-word !imp=
+ortant; color: #005a95; text-decoration: none; cursor: pointer;"><a href=3D=
+"https://univ-poitiers.webex.com/meet/hassina.el.kechai" rel=3D"nofollow no=
+opener noreferrer nofollow noopener noreferrer nofollow noopener noreferrer=
+ nofollow noopener noreferrer nofollow noopener noreferrer nofollow noopene=
+r noreferrer" target=3D"_blank" style=3D"white-space: pre-wrap; overflow-wr=
+ap: break-word !important; color: #005a95; text-decoration: none; cursor: p=
+ointer;" data-mce-href=3D"https://univ-poitiers.webex.com/meet/hassina.el.k=
+echai" data-mce-style=3D"white-space: pre-wrap; overflow-wrap: break-word !=
+important; color: #005a95; text-decoration: none; cursor: pointer;">https:/=
+/univ-poitiers.webex.com/meet/hassina.el.kechai</a></span></span>&nbsp;</sp=
+an></span><span class=3D"" style=3D"white-space: normal; overflow-wrap: bre=
+ak-word !important; font-size: 14.16px;" data-mce-style=3D"white-space: nor=
+mal; overflow-wrap: break-word !important; font-size: 14.16px;"><br class=
+=3D"" style=3D"white-space: pre-wrap; overflow-wrap: break-word !important;=
+ font-family: 'segoe ui', 'lucida sans', sans-serif; font-size: 14.16px;" d=
+ata-mce-style=3D"white-space: pre-wrap; overflow-wrap: break-word !importan=
+t; font-family: 'segoe ui', 'lucida sans', sans-serif; font-size: 14.16px;"=
+></span><span class=3D"" style=3D"white-space: normal; overflow-wrap: break=
+-word !important; font-family: 'segoe ui', 'lucida sans', sans-serif; font-=
+size: 14.16px;" data-mce-style=3D"white-space: normal; overflow-wrap: break=
+-word !important; font-family: 'segoe ui', 'lucida sans', sans-serif; font-=
+size: 14.16px;">Code d'acc=C3=A8s :&nbsp;</span><span class=3D"Object" role=
+=3D"link" id=3D"OBJ_PREFIX_DWT735_com_zimbra_url" style=3D"white-space: pre=
+-wrap; overflow-wrap: break-word !important; color: #005a95; text-decoratio=
+n: none; cursor: pointer;" data-mce-style=3D"white-space: pre-wrap; overflo=
+w-wrap: break-word !important; color: #005a95; text-decoration: none; curso=
+r: pointer;"><span class=3D"Object" role=3D"link" id=3D"OBJ_PREFIX_DWT747_c=
+om_zimbra_url" style=3D"white-space: pre-wrap; overflow-wrap: break-word !i=
+mportant; color: #005a95; text-decoration: none; cursor: pointer;" data-mce=
+-style=3D"white-space: pre-wrap; overflow-wrap: break-word !important; colo=
+r: #005a95; text-decoration: none; cursor: pointer;"><a href=3D"https://uni=
+v-poitiers.webex.com/meet/hassina.el.kechai" rel=3D"nofollow noopener noref=
+errer nofollow noopener noreferrer nofollow noopener noreferrer nofollow no=
+opener noreferrer nofollow noopener noreferrer nofollow noopener noreferrer=
+ nofollow noopener noreferrer" target=3D"_blank" style=3D"white-space: norm=
+al; overflow-wrap: break-word !important; color: #005a95; text-decoration: =
+none; cursor: pointer; font-family: 'courier new', courier, monaco, monospa=
+ce, sans-serif; font-size: 12pt;" data-mce-href=3D"https://univ-poitiers.we=
+bex.com/meet/hassina.el.kechai" data-mce-style=3D"white-space: normal; over=
+flow-wrap: break-word !important; color: #005a95; text-decoration: none; cu=
+rsor: pointer; font-family: 'courier new', courier, monaco, monospace, sans=
+-serif; font-size: 12pt;">846694073</a></span></span><span class=3D"" style=
+=3D"white-space: normal; overflow-wrap: break-word !important; font-family:=
+ 'segoe ui', 'lucida sans', sans-serif; font-size: 14.16px;" data-mce-style=
+=3D"white-space: normal; overflow-wrap: break-word !important; font-family:=
+ 'segoe ui', 'lucida sans', sans-serif; font-size: 14.16px;"><br class=3D""=
+ style=3D"white-space: pre-wrap; overflow-wrap: break-word !important;" dat=
+a-mce-style=3D"white-space: pre-wrap; overflow-wrap: break-word !important;=
+"></span></span></span><br class=3D"" style=3D"white-space: normal; overflo=
+w-wrap: break-word !important; font-family: arial, helvetica, sans-serif;" =
+data-mce-style=3D"white-space: normal; overflow-wrap: break-word !important=
+; font-family: arial, helvetica, sans-serif;"></pre><div class=3D"" style=
+=3D"white-space: normal; overflow-wrap: break-word !important; font-family:=
+ arial, helvetica, sans-serif;" data-mce-style=3D"white-space: normal; over=
+flow-wrap: break-word !important; font-family: arial, helvetica, sans-serif=
+;"><span class=3D"" style=3D"white-space: pre-wrap; overflow-wrap: break-wo=
+rd !important; font-family: 'courier new', courier, monaco, monospace, sans=
+-serif;" data-mce-style=3D"white-space: pre-wrap; overflow-wrap: break-word=
+ !important; font-family: 'courier new', courier, monaco, monospace, sans-s=
+erif;">Universit=C3=A9 de Poitiers</span></div><div class=3D"" style=3D"whi=
+te-space: normal; overflow-wrap: break-word !important; font-family: arial,=
+ helvetica, sans-serif;" data-mce-style=3D"white-space: normal; overflow-wr=
+ap: break-word !important; font-family: arial, helvetica, sans-serif;"><spa=
+n class=3D"" style=3D"white-space: pre-wrap; overflow-wrap: break-word !imp=
+ortant; font-family: 'courier new', courier, monaco, monospace, sans-serif;=
+" data-mce-style=3D"white-space: pre-wrap; overflow-wrap: break-word !impor=
+tant; font-family: 'courier new', courier, monaco, monospace, sans-serif;">=
+-----------------</span></div><div class=3D"" style=3D"white-space: normal;=
+ overflow-wrap: break-word !important; font-family: arial, helvetica, sans-=
+serif;" data-mce-style=3D"white-space: normal; overflow-wrap: break-word !i=
+mportant; font-family: arial, helvetica, sans-serif;"><span class=3D"" styl=
+e=3D"white-space: pre-wrap; overflow-wrap: break-word !important; font-fami=
+ly: 'courier new', courier, monaco, monospace, sans-serif;" data-mce-style=
+=3D"white-space: pre-wrap; overflow-wrap: break-word !important; font-famil=
+y: 'courier new', courier, monaco, monospace, sans-serif;">B=C3=A2t A3 - 1 =
+rue Raymond Cantel - TSA 11102</span></div><div class=3D"" style=3D"white-s=
+pace: normal; overflow-wrap: break-word !important; font-family: arial, hel=
+vetica, sans-serif;" data-mce-style=3D"white-space: normal; overflow-wrap: =
+break-word !important; font-family: arial, helvetica, sans-serif;"><span cl=
+ass=3D"" style=3D"white-space: pre-wrap; overflow-wrap: break-word !importa=
+nt; font-family: 'courier new', courier, monaco, monospace, sans-serif;" da=
+ta-mce-style=3D"white-space: pre-wrap; overflow-wrap: break-word !important=
+; font-family: 'courier new', courier, monaco, monospace, sans-serif;">8607=
+3 POITIERS CEDEX 9</span></div></div></div></div></div></blockquote></div><=
+/div></div></div><br></div><div><pre><div class=3D"" style=3D"font-family:'=
+arial' , 'helvetica' , sans-serif;white-space:normal"><br data-mce-bogus=3D=
+"1"></div></pre></div></div></body></html>
+--=_2665fa2e-422b-4315-b59d-df1108f7f958--
+
+
+

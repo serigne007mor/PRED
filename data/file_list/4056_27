@@ -1,0 +1,720 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (bouncesmtp2.u12.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id DE11214014F4
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Fri,  5 May 2023 09:30:47 +0200 (CEST)
+Received: from mx3.localdomain (MX3.univ-nantes.fr [193.52.101.137])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id DA3385F9A
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Fri,  5 May 2023 09:30:47 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.localdomain (Postfix) with ESMTP id D0E082091D
+	for <liste-egc@polytech.univ-nantes.fr>; Fri,  5 May 2023 09:30:47 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 0
+X-Spam-Level:
+X-Spam-Status: No, score=x tagged_above=-1000 required=5 WHITELISTED tests=[]
+	autolearn=unavailable
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=inria.fr
+Received: from mx3.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id JRhuGUsCNegb for <liste-egc@polytech.univ-nantes.fr>;
+	Fri,  5 May 2023 09:30:47 +0200 (CEST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.134.164.83; helo=mail2-relais-roc.national.inria.fr; envelope-from=vanessa.pena-araya@inria.fr; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=none dis=none) header.from=inria.fr
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=vanessa.pena-araya@inria.fr
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (1024-bit key; unprotected) header.d=inria.fr header.i=@inria.fr header.b="TFXyBYBs";
+	dkim-atps=neutral
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mail2-relais-roc.national.inria.fr (mail2-relais-roc.national.inria.fr [192.134.164.83])
+	by mx3.localdomain (Postfix) with ESMTPS id ABEBA20F8C
+	for <liste-egc@polytech.univ-nantes.fr>; Fri,  5 May 2023 09:30:47 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=inria.fr; s=dc;
+  h=date:from:to:cc:message-id:subject:mime-version;
+  bh=SUTY6gRhkbtCd20XKJ7gDLXzPoK0+w+yAIhFPLY+9uQ=;
+  b=TFXyBYBsHOrmr306gh3kyhq1p1YTzno5iQ/RffftjsxSz8H3fcYG2VDf
+   /V7B8Yt9qKqcTijJZA3Qkjqjc2j+tfytDDjdDo8HejTXbbGKn3b7jE/WA
+   jDlBPoTa3ezzTfAWEeeuXswAskmfhcer7/M3f/UMLVydccQ+8lUK3BvC3
+   A=;
+Authentication-Results: mail2-relais-roc.national.inria.fr; dkim=none (message not signed) header.i=none; spf=Pass smtp.mailfrom=vanessa.pena-araya@inria.fr; spf=None smtp.helo=postmaster@zcs-store9.inria.fr
+Received-SPF: Pass (mail2-relais-roc.national.inria.fr: domain of
+  vanessa.pena-araya@inria.fr designates 128.93.142.36 as
+  permitted sender) identity=mailfrom; client-ip=128.93.142.36;
+  receiver=mail2-relais-roc.national.inria.fr;
+  envelope-from="vanessa.pena-araya@inria.fr";
+  x-sender="vanessa.pena-araya@inria.fr";
+  x-conformance=spf_only; x-record-type="v=spf1";
+  x-record-text="v=spf1 ip4:128.93.142.0/24
+  ip4:192.134.164.0/24 ip4:128.93.162.160 ip4:89.107.174.7 mx
+  ~all"
+Received-SPF: None (mail2-relais-roc.national.inria.fr: no sender
+  authenticity information available from domain of
+  postmaster@zcs-store9.inria.fr) identity=helo;
+  client-ip=128.93.142.36;
+  receiver=mail2-relais-roc.national.inria.fr;
+  envelope-from="vanessa.pena-araya@inria.fr";
+  x-sender="postmaster@zcs-store9.inria.fr";
+  x-conformance=spf_only
+X-IronPort-AV: E=Sophos;i="5.99,251,1677538800"; 
+   d="scan'208,217";a="106403538"
+X-MGA-submission: =?us-ascii?q?MDGUVj/4xhKxNe243YtVbsgruY7qrgtuQwy+V7?=
+ =?us-ascii?q?ttMLUaMb5kuX5RBs2jcU4AiA+10AGekwhMOm7Wgs7O9PDBbw87di9PSv?=
+ =?us-ascii?q?i2WgYgNG2iUnOuTyh8uTgcFXuFl7mHyfWZH9nX2E1CKocXpbVepUPmtD?=
+ =?us-ascii?q?syVvdxtYR07Me5FPjcUOmb1w=3D=3D?=
+Received: from zcs-store9.inria.fr ([128.93.142.36])
+  by mail2-relais-roc.national.inria.fr with ESMTP; 05 May 2023 09:30:47 +0200
+Date: Fri, 5 May 2023 09:30:47 +0200 (CEST)
+From: Vanessa =?iso-8859-1?Q?Pe=F1a-Araya?= <vanessa.pena-araya@inria.fr>
+To: liste-egc@polytech.univ-nantes.fr
+Cc: Florent Cabric <florent.cabric@inria.fr>
+Message-ID: <168731796.3405238.1683271847403.JavaMail.zimbra@inria.fr>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="=_2a66492a-35ea-46d1-9f1b-f45a1432f65e"
+X-Originating-IP: [129.175.5.6]
+X-Mailer: Zimbra 8.8.15_GA_4522 (ZimbraWebClient - FF112 (Linux)/8.8.15_GA_4527)
+Thread-Index: l/KfBIQfuNxQZf2EOGH2YsVcDhstig==
+Thread-Topic: =?utf-8?Q?Journ=C3=A9e?= Visu 2023 - Rappel inscriptions et nouvelle deadline
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] =?ISO-8859-1?Q?Journ=E9e?= Visu 2023 - Rappel
+ inscriptions et nouvelle deadline
+
+--=_2a66492a-35ea-46d1-9f1b-f45a1432f65e
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+
+
+N'oubliez pas de vous inscrire pour participer! Nombre de places limit=C3=
+=A9!=20
+
+
+
+**D=C3=A9sol=C3=A9 pour les r=C3=A9ceptions multiples**=20
+
+
+
+-----------------------------------------=20
+Journ=C3=A9e Visu 2023 - 22 juin 2023=20
+
+[ https://journee-visu.github.io/2023/ | https://journee-visu.github.io/202=
+3/ ]=20
+
+Universit=C3=A9 Paris-Saclay=20
+
+-----------------------------------------=20
+
+
+
+La journ=C3=A9e annuelle du GT Visualisation du GDR IG-RV aura lieu le jeud=
+i 22 juin 2023 dans [ https://www.imo.universite-paris-saclay.fr/fr/contact=
+s/ |  l=E2=80=99amphith=C3=A9=C3=A2tre du IMO, b=C3=A2timent 307, rue Miche=
+l Magat, Facult=C3=A9 des Sciences d=E2=80=99Orsay, Universit=C3=A9 Paris-S=
+aclay ] . Cette journ=C3=A9e a pour vocation de rassembler les acteurs, aca=
+d=C3=A9miques et industriels de la communaut=C3=A9 fran=C3=A7aise en visual=
+isation.=20
+
+
+
+[ https://aviz.fr/~bbach/homepage/index-homepage.html | Benjamin Bach ] , c=
+hercheur =C3=A0 l'Universit=C3=A9 d'Edimbourg, introduira la journ=C3=A9e p=
+ar un expos=C3=A9 sur [ https://journee-visu.github.io/2023/#keynote |  ses=
+ recherches portant sur la conception de visualisations interactives pour f=
+aciliter l'exploration, la communication et la compr=C3=A9hension des donn=
+=C3=A9es. ]=20
+
+
+
+-----------------------------------------=20
+
+*** Inscriptions ***=20
+-----------------------------------------=20
+
+La journ=C3=A9e Visu 2023 est gratuite et ouverte =C3=A0 tous dans la limit=
+e des capacit=C3=A9s d'accueil. L=E2=80=99inscription est obligatoire .=20
+
+
+
+Inscriptions jusqu'au lundi 5 juin 2023 sur: [ https://journee-visu.github.=
+io/2023/#inscription |  https://journee-visu.github.io/2023/#inscription ]=
+=20
+
+
+
+-----------------------------------------=20
+
+*** Soumissions ***=20
+-----------------------------------------=20
+
+
+
+Nous sollicitons des soumissions sur r=C3=A9sum=C3=A9 qui pr=C3=A9sentent d=
+es travaux originaux (poster, pr=C3=A9sentation ou d=C3=A9mo). La date limi=
+te de soumission est fix=C3=A9e au vendredi 12 mai 2023 mardi 23 mai 2023 .=
+ Les notifications d=E2=80=99acceptation seront envoy=C3=A9es le vendredi 2=
+6 mai 2023 lundi 29 mai 2023 .=20
+
+
+
+Les modalit=C3=A9s de soumission sont indiqu=C3=A9es sur le site [ https://=
+journee-visu.github.io/2023/#cfp |  https://journee-visu.github.io/2023/#cf=
+p ] .=20
+
+
+
+-----------------------------------------------------=20
+*** Organisateur et organisatrice ***=20
+
+-----------------------------------------------------=20
+
+Florent Cabric (AVIZ team, INRIA)=20
+Vanessa Pe=C3=B1a-Araya (ILDA team, INRIA)=20
+
+
+
+Cette journ=C3=A9e est organis=C3=A9e par l=E2=80=99Inria et le GDR IG-RV d=
+u CNRS.=20
+Nous remercions nos sponsors, LISN, Kitware et DataIA et l=E2=80=99Institut=
+ de Math=C3=A9matique d=E2=80=99Orsay pour leur support.=20
+
+Plus d'informations : [ https://journee-visu.github.io/2023 |  https://jour=
+nee-visu.github.io/2023 ] Pour toute question : visu2023@inria.fr=20
+
+
+--=_2a66492a-35ea-46d1-9f1b-f45a1432f65e
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><body><div style=3D"font-family: arial, helvetica, sans-serif; font-s=
+ize: 12pt; color: #000000"><p dir=3D"ltr" style=3D"line-height: 1.38; margi=
+n: 0px;" id=3D"docs-internal-guid-b1338719-7fff-7888-0af3-e36e72b1019b" dat=
+a-mce-style=3D"line-height: 1.38; margin: 0px;"><span style=3D"font-size: 1=
+0pt; font-family: Arial; color: #000000; background-color: #ffffff; font-we=
+ight: bold; font-style: normal; font-variant: normal; text-decoration: none=
+; vertical-align: baseline; white-space: pre-wrap;" data-mce-style=3D"font-=
+size: 10pt; font-family: Arial; color: #000000; background-color: #ffffff; =
+font-weight: bold; font-style: normal; font-variant: normal; text-decoratio=
+n: none; vertical-align: baseline; white-space: pre-wrap;">N'oubliez pas de=
+ vous inscrire pour participer! Nombre de places limit=C3=A9!</span></p><di=
+v><br></div><p dir=3D"ltr" style=3D"line-height: 1.656; margin: 0px;" data-=
+mce-style=3D"line-height: 1.656; margin: 0px;"><span style=3D"font-size: 10=
+pt; font-family: Arial; color: #000000; background-color: #ffffff; font-wei=
+ght: 400; font-style: normal; font-variant: normal; text-decoration: none; =
+vertical-align: baseline; white-space: pre-wrap;" data-mce-style=3D"font-si=
+ze: 10pt; font-family: Arial; color: #000000; background-color: #ffffff; fo=
+nt-weight: 400; font-style: normal; font-variant: normal; text-decoration: =
+none; vertical-align: baseline; white-space: pre-wrap;">**D=C3=A9sol=C3=A9 =
+pour les r=C3=A9ceptions multiples**</span></p><div><br></div><p dir=3D"ltr=
+" style=3D"line-height: 1.656; margin: 0px;" data-mce-style=3D"line-height:=
+ 1.656; margin: 0px;"><span style=3D"font-size: 10pt; font-family: Arial; c=
+olor: #000000; background-color: #ffffff; font-weight: 400; font-style: nor=
+mal; font-variant: normal; text-decoration: none; vertical-align: baseline;=
+ white-space: pre-wrap;" data-mce-style=3D"font-size: 10pt; font-family: Ar=
+ial; color: #000000; background-color: #ffffff; font-weight: 400; font-styl=
+e: normal; font-variant: normal; text-decoration: none; vertical-align: bas=
+eline; white-space: pre-wrap;">-----------------------------------------</s=
+pan><span style=3D"font-size: 10pt; font-family: Arial; color: #000000; bac=
+kground-color: #ffffff; font-weight: 400; font-style: normal; font-variant:=
+ normal; text-decoration: none; vertical-align: baseline; white-space: pre-=
+wrap;" data-mce-style=3D"font-size: 10pt; font-family: Arial; color: #00000=
+0; background-color: #ffffff; font-weight: 400; font-style: normal; font-va=
+riant: normal; text-decoration: none; vertical-align: baseline; white-space=
+: pre-wrap;"><br></span><span style=3D"font-size: 10pt; font-family: Arial;=
+ color: #000000; background-color: #ffffff; font-weight: 400; font-style: n=
+ormal; font-variant: normal; text-decoration: none; vertical-align: baselin=
+e; white-space: pre-wrap;" data-mce-style=3D"font-size: 10pt; font-family: =
+Arial; color: #000000; background-color: #ffffff; font-weight: 400; font-st=
+yle: normal; font-variant: normal; text-decoration: none; vertical-align: b=
+aseline; white-space: pre-wrap;">Journ=C3=A9e Visu 2023 - 22 juin 2023</spa=
+n></p><p dir=3D"ltr" style=3D"line-height: 1.656; margin: 0px;" data-mce-st=
+yle=3D"line-height: 1.656; margin: 0px;"><a href=3D"https://journee-visu.gi=
+thub.io/2023/" style=3D"text-decoration: none;" data-mce-href=3D"https://jo=
+urnee-visu.github.io/2023/" data-mce-style=3D"text-decoration: none;"><span=
+ style=3D"font-size: 10pt; font-family: Arial; color: #1155cc; background-c=
+olor: #ffffff; font-weight: 400; font-style: normal; font-variant: normal; =
+text-decoration: underline; -webkit-text-decoration-skip: none; text-decora=
+tion-skip-ink: none; vertical-align: baseline; white-space: pre-wrap;" data=
+-mce-style=3D"font-size: 10pt; font-family: Arial; color: #1155cc; backgrou=
+nd-color: #ffffff; font-weight: 400; font-style: normal; font-variant: norm=
+al; text-decoration: underline; -webkit-text-decoration-skip: none; text-de=
+coration-skip-ink: none; vertical-align: baseline; white-space: pre-wrap;">=
+https://journee-visu.github.io/2023/</span></a><span style=3D"font-size: 10=
+pt; font-family: Arial; color: #000000; background-color: #ffffff; font-wei=
+ght: 400; font-style: normal; font-variant: normal; text-decoration: none; =
+vertical-align: baseline; white-space: pre-wrap;" data-mce-style=3D"font-si=
+ze: 10pt; font-family: Arial; color: #000000; background-color: #ffffff; fo=
+nt-weight: 400; font-style: normal; font-variant: normal; text-decoration: =
+none; vertical-align: baseline; white-space: pre-wrap;">&nbsp;</span></p><p=
+ dir=3D"ltr" style=3D"line-height: 1.656; margin: 0px;" data-mce-style=3D"l=
+ine-height: 1.656; margin: 0px;"><span style=3D"font-size: 10pt; font-famil=
+y: Arial; color: #000000; background-color: #ffffff; font-weight: 400; font=
+-style: normal; font-variant: normal; text-decoration: none; vertical-align=
+: baseline; white-space: pre-wrap;" data-mce-style=3D"font-size: 10pt; font=
+-family: Arial; color: #000000; background-color: #ffffff; font-weight: 400=
+; font-style: normal; font-variant: normal; text-decoration: none; vertical=
+-align: baseline; white-space: pre-wrap;">Universit=C3=A9 Paris-Saclay</spa=
+n></p><p dir=3D"ltr" style=3D"line-height: 1.656; margin: 0px;" data-mce-st=
+yle=3D"line-height: 1.656; margin: 0px;"><span style=3D"font-size: 10pt; fo=
+nt-family: Arial; color: #000000; background-color: #ffffff; font-weight: 4=
+00; font-style: normal; font-variant: normal; text-decoration: none; vertic=
+al-align: baseline; white-space: pre-wrap;" data-mce-style=3D"font-size: 10=
+pt; font-family: Arial; color: #000000; background-color: #ffffff; font-wei=
+ght: 400; font-style: normal; font-variant: normal; text-decoration: none; =
+vertical-align: baseline; white-space: pre-wrap;">-------------------------=
+----------------</span><span style=3D"font-size: 10pt; font-family: Arial; =
+color: #000000; background-color: #ffffff; font-weight: 400; font-style: no=
+rmal; font-variant: normal; text-decoration: none; vertical-align: baseline=
+; white-space: pre-wrap;" data-mce-style=3D"font-size: 10pt; font-family: A=
+rial; color: #000000; background-color: #ffffff; font-weight: 400; font-sty=
+le: normal; font-variant: normal; text-decoration: none; vertical-align: ba=
+seline; white-space: pre-wrap;"><br><br></span></p><p dir=3D"ltr" style=3D"=
+line-height: 1.656; margin: 0px;" data-mce-style=3D"line-height: 1.656; mar=
+gin: 0px;"><span style=3D"font-size: 10pt; font-family: Arial; color: #0000=
+00; background-color: #ffffff; font-weight: 400; font-style: normal; font-v=
+ariant: normal; text-decoration: none; vertical-align: baseline; white-spac=
+e: pre-wrap;" data-mce-style=3D"font-size: 10pt; font-family: Arial; color:=
+ #000000; background-color: #ffffff; font-weight: 400; font-style: normal; =
+font-variant: normal; text-decoration: none; vertical-align: baseline; whit=
+e-space: pre-wrap;">La journ=C3=A9e annuelle du GT Visualisation du GDR IG-=
+RV aura lieu le jeudi 22 juin 2023 dans</span><a href=3D"https://www.imo.un=
+iversite-paris-saclay.fr/fr/contacts/" style=3D"text-decoration: none;" dat=
+a-mce-href=3D"https://www.imo.universite-paris-saclay.fr/fr/contacts/" data=
+-mce-style=3D"text-decoration: none;"><span style=3D"font-size: 10pt; font-=
+family: Arial; color: #000000; background-color: #ffffff; font-weight: 400;=
+ font-style: normal; font-variant: normal; text-decoration: none; vertical-=
+align: baseline; white-space: pre-wrap;" data-mce-style=3D"font-size: 10pt;=
+ font-family: Arial; color: #000000; background-color: #ffffff; font-weight=
+: 400; font-style: normal; font-variant: normal; text-decoration: none; ver=
+tical-align: baseline; white-space: pre-wrap;"> </span><span style=3D"font-=
+size: 10pt; font-family: Arial; color: #1155cc; background-color: #ffffff; =
+font-weight: 400; font-style: normal; font-variant: normal; text-decoration=
+: underline; -webkit-text-decoration-skip: none; text-decoration-skip-ink: =
+none; vertical-align: baseline; white-space: pre-wrap;" data-mce-style=3D"f=
+ont-size: 10pt; font-family: Arial; color: #1155cc; background-color: #ffff=
+ff; font-weight: 400; font-style: normal; font-variant: normal; text-decora=
+tion: underline; -webkit-text-decoration-skip: none; text-decoration-skip-i=
+nk: none; vertical-align: baseline; white-space: pre-wrap;">l=E2=80=99amphi=
+th=C3=A9=C3=A2tre du IMO, b=C3=A2timent 307, rue Michel Magat, Facult=C3=A9=
+ des Sciences d=E2=80=99Orsay, Universit=C3=A9 Paris-Saclay</span></a><span=
+ style=3D"font-size: 10pt; font-family: Arial; color: #000000; background-c=
+olor: #ffffff; font-weight: 400; font-style: normal; font-variant: normal; =
+text-decoration: none; vertical-align: baseline; white-space: pre-wrap;" da=
+ta-mce-style=3D"font-size: 10pt; font-family: Arial; color: #000000; backgr=
+ound-color: #ffffff; font-weight: 400; font-style: normal; font-variant: no=
+rmal; text-decoration: none; vertical-align: baseline; white-space: pre-wra=
+p;">. Cette journ=C3=A9e a pour vocation de rassembler les acteurs, acad=C3=
+=A9miques et industriels de la communaut=C3=A9 fran=C3=A7aise en visualisat=
+ion.</span></p><div><br></div><p dir=3D"ltr" style=3D"line-height: 1.656; m=
+argin: 0px;" data-mce-style=3D"line-height: 1.656; margin: 0px;"><a href=3D=
+"https://aviz.fr/~bbach/homepage/index-homepage.html" style=3D"text-decorat=
+ion: none;" data-mce-href=3D"https://aviz.fr/~bbach/homepage/index-homepage=
+.html" data-mce-style=3D"text-decoration: none;"><span style=3D"font-size: =
+10pt; font-family: Arial; color: #1155cc; background-color: #ffffff; font-w=
+eight: 400; font-style: normal; font-variant: normal; text-decoration: unde=
+rline; -webkit-text-decoration-skip: none; text-decoration-skip-ink: none; =
+vertical-align: baseline; white-space: pre-wrap;" data-mce-style=3D"font-si=
+ze: 10pt; font-family: Arial; color: #1155cc; background-color: #ffffff; fo=
+nt-weight: 400; font-style: normal; font-variant: normal; text-decoration: =
+underline; -webkit-text-decoration-skip: none; text-decoration-skip-ink: no=
+ne; vertical-align: baseline; white-space: pre-wrap;">Benjamin Bach</span><=
+/a><span style=3D"font-size: 10pt; font-family: Arial; color: #000000; back=
+ground-color: #ffffff; font-weight: 400; font-style: normal; font-variant: =
+normal; text-decoration: none; vertical-align: baseline; white-space: pre-w=
+rap;" data-mce-style=3D"font-size: 10pt; font-family: Arial; color: #000000=
+; background-color: #ffffff; font-weight: 400; font-style: normal; font-var=
+iant: normal; text-decoration: none; vertical-align: baseline; white-space:=
+ pre-wrap;">, chercheur =C3=A0 l'Universit=C3=A9 d'Edimbourg, introduira la=
+ journ=C3=A9e par un expos=C3=A9 sur</span><a href=3D"https://journee-visu.=
+github.io/2023/#keynote" style=3D"text-decoration: none;" data-mce-href=3D"=
+https://journee-visu.github.io/2023/#keynote" data-mce-style=3D"text-decora=
+tion: none;"><span style=3D"font-size: 10pt; font-family: Arial; color: #00=
+0000; background-color: #ffffff; font-weight: 400; font-style: normal; font=
+-variant: normal; text-decoration: none; vertical-align: baseline; white-sp=
+ace: pre-wrap;" data-mce-style=3D"font-size: 10pt; font-family: Arial; colo=
+r: #000000; background-color: #ffffff; font-weight: 400; font-style: normal=
+; font-variant: normal; text-decoration: none; vertical-align: baseline; wh=
+ite-space: pre-wrap;"> ses recherches portant sur la conception de visualis=
+ations interactives pour faciliter l'exploration, la communication et la co=
+mpr=C3=A9hension des donn=C3=A9es.</span></a><br data-mce-bogus=3D"1"></p><=
+div><br></div><p dir=3D"ltr" style=3D"line-height: 1.656; margin: 0px;" dat=
+a-mce-style=3D"line-height: 1.656; margin: 0px;"><span style=3D"font-size: =
+10pt; font-family: Arial; color: #000000; background-color: #ffffff; font-w=
+eight: 400; font-style: normal; font-variant: normal; text-decoration: none=
+; vertical-align: baseline; white-space: pre-wrap;" data-mce-style=3D"font-=
+size: 10pt; font-family: Arial; color: #000000; background-color: #ffffff; =
+font-weight: 400; font-style: normal; font-variant: normal; text-decoration=
+: none; vertical-align: baseline; white-space: pre-wrap;">-----------------=
+------------------------</span></p><p dir=3D"ltr" style=3D"line-height: 1.6=
+56; margin: 0px;" data-mce-style=3D"line-height: 1.656; margin: 0px;"><span=
+ style=3D"font-size: 10pt; font-family: Arial; color: #000000; background-c=
+olor: #ffffff; font-weight: 400; font-style: normal; font-variant: normal; =
+text-decoration: none; vertical-align: baseline; white-space: pre-wrap;" da=
+ta-mce-style=3D"font-size: 10pt; font-family: Arial; color: #000000; backgr=
+ound-color: #ffffff; font-weight: 400; font-style: normal; font-variant: no=
+rmal; text-decoration: none; vertical-align: baseline; white-space: pre-wra=
+p;">*** Inscriptions ***</span><span style=3D"font-size: 10pt; font-family:=
+ Arial; color: #000000; background-color: #ffffff; font-weight: 400; font-s=
+tyle: normal; font-variant: normal; text-decoration: none; vertical-align: =
+baseline; white-space: pre-wrap;" data-mce-style=3D"font-size: 10pt; font-f=
+amily: Arial; color: #000000; background-color: #ffffff; font-weight: 400; =
+font-style: normal; font-variant: normal; text-decoration: none; vertical-a=
+lign: baseline; white-space: pre-wrap;"><br></span><span style=3D"font-size=
+: 10pt; font-family: Arial; color: #000000; background-color: #ffffff; font=
+-weight: 400; font-style: normal; font-variant: normal; text-decoration: no=
+ne; vertical-align: baseline; white-space: pre-wrap;" data-mce-style=3D"fon=
+t-size: 10pt; font-family: Arial; color: #000000; background-color: #ffffff=
+; font-weight: 400; font-style: normal; font-variant: normal; text-decorati=
+on: none; vertical-align: baseline; white-space: pre-wrap;">---------------=
+--------------------------</span><span style=3D"font-size: 10pt; font-famil=
+y: Arial; color: #000000; background-color: #ffffff; font-weight: 400; font=
+-style: normal; font-variant: normal; text-decoration: none; vertical-align=
+: baseline; white-space: pre-wrap;" data-mce-style=3D"font-size: 10pt; font=
+-family: Arial; color: #000000; background-color: #ffffff; font-weight: 400=
+; font-style: normal; font-variant: normal; text-decoration: none; vertical=
+-align: baseline; white-space: pre-wrap;"><br></span><span style=3D"font-si=
+ze: 10pt; font-family: Arial; color: #000000; background-color: #ffffff; fo=
+nt-weight: 400; font-style: normal; font-variant: normal; text-decoration: =
+none; vertical-align: baseline; white-space: pre-wrap;" data-mce-style=3D"f=
+ont-size: 10pt; font-family: Arial; color: #000000; background-color: #ffff=
+ff; font-weight: 400; font-style: normal; font-variant: normal; text-decora=
+tion: none; vertical-align: baseline; white-space: pre-wrap;"><br></span><s=
+pan style=3D"font-size: 10pt; font-family: Arial; color: #000000; backgroun=
+d-color: #ffffff; font-weight: 400; font-style: normal; font-variant: norma=
+l; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;"=
+ data-mce-style=3D"font-size: 10pt; font-family: Arial; color: #000000; bac=
+kground-color: #ffffff; font-weight: 400; font-style: normal; font-variant:=
+ normal; text-decoration: none; vertical-align: baseline; white-space: pre-=
+wrap;">La journ=C3=A9e Visu 2023 est gratuite et ouverte =C3=A0 tous dans l=
+a limite des capacit=C3=A9s d'accueil. L=E2=80=99inscription est </span><sp=
+an style=3D"font-size: 10pt; font-family: Arial; color: #000000; background=
+-color: #ffffff; font-weight: bold; font-style: normal; font-variant: norma=
+l; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;"=
+ data-mce-style=3D"font-size: 10pt; font-family: Arial; color: #000000; bac=
+kground-color: #ffffff; font-weight: bold; font-style: normal; font-variant=
+: normal; text-decoration: none; vertical-align: baseline; white-space: pre=
+-wrap;">obligatoire</span><span style=3D"font-size: 10pt; font-family: Aria=
+l; color: #000000; background-color: #ffffff; font-weight: 400; font-style:=
+ normal; font-variant: normal; text-decoration: none; vertical-align: basel=
+ine; white-space: pre-wrap;" data-mce-style=3D"font-size: 10pt; font-family=
+: Arial; color: #000000; background-color: #ffffff; font-weight: 400; font-=
+style: normal; font-variant: normal; text-decoration: none; vertical-align:=
+ baseline; white-space: pre-wrap;">.&nbsp;</span></p><div><br></div><p dir=
+=3D"ltr" style=3D"line-height: 1.656; margin: 0px;" data-mce-style=3D"line-=
+height: 1.656; margin: 0px;"><span style=3D"font-size: 10pt; font-family: A=
+rial; color: #000000; background-color: #ffffff; font-weight: 400; font-sty=
+le: normal; font-variant: normal; text-decoration: none; vertical-align: ba=
+seline; white-space: pre-wrap;" data-mce-style=3D"font-size: 10pt; font-fam=
+ily: Arial; color: #000000; background-color: #ffffff; font-weight: 400; fo=
+nt-style: normal; font-variant: normal; text-decoration: none; vertical-ali=
+gn: baseline; white-space: pre-wrap;">Inscriptions jusqu'au </span><span st=
+yle=3D"font-size: 10pt; font-family: Arial; color: #000000; background-colo=
+r: #ffffff; font-weight: bold; font-style: normal; font-variant: normal; te=
+xt-decoration: none; vertical-align: baseline; white-space: pre-wrap;" data=
+-mce-style=3D"font-size: 10pt; font-family: Arial; color: #000000; backgrou=
+nd-color: #ffffff; font-weight: bold; font-style: normal; font-variant: nor=
+mal; text-decoration: none; vertical-align: baseline; white-space: pre-wrap=
+;">lundi 5 juin 2023</span><span style=3D"font-size: 10pt; font-family: Ari=
+al; color: #000000; background-color: #ffffff; font-weight: 400; font-style=
+: normal; font-variant: normal; text-decoration: none; vertical-align: base=
+line; white-space: pre-wrap;" data-mce-style=3D"font-size: 10pt; font-famil=
+y: Arial; color: #000000; background-color: #ffffff; font-weight: 400; font=
+-style: normal; font-variant: normal; text-decoration: none; vertical-align=
+: baseline; white-space: pre-wrap;"> sur:</span><a href=3D"https://journee-=
+visu.github.io/2023/#inscription" style=3D"text-decoration: none;" data-mce=
+-href=3D"https://journee-visu.github.io/2023/#inscription" data-mce-style=
+=3D"text-decoration: none;"><span style=3D"font-size: 10pt; font-family: Ar=
+ial; color: #000000; background-color: #ffffff; font-weight: 400; font-styl=
+e: normal; font-variant: normal; text-decoration: none; vertical-align: bas=
+eline; white-space: pre-wrap;" data-mce-style=3D"font-size: 10pt; font-fami=
+ly: Arial; color: #000000; background-color: #ffffff; font-weight: 400; fon=
+t-style: normal; font-variant: normal; text-decoration: none; vertical-alig=
+n: baseline; white-space: pre-wrap;"> </span><span style=3D"font-size: 10pt=
+; font-family: Arial; color: #1155cc; background-color: #ffffff; font-weigh=
+t: 400; font-style: normal; font-variant: normal; text-decoration: underlin=
+e; -webkit-text-decoration-skip: none; text-decoration-skip-ink: none; vert=
+ical-align: baseline; white-space: pre-wrap;" data-mce-style=3D"font-size: =
+10pt; font-family: Arial; color: #1155cc; background-color: #ffffff; font-w=
+eight: 400; font-style: normal; font-variant: normal; text-decoration: unde=
+rline; -webkit-text-decoration-skip: none; text-decoration-skip-ink: none; =
+vertical-align: baseline; white-space: pre-wrap;">https://journee-visu.gith=
+ub.io/2023/#inscription</span></a><span style=3D"font-size: 10pt; font-fami=
+ly: Arial; color: #000000; background-color: #ffffff; font-weight: 400; fon=
+t-style: normal; font-variant: normal; text-decoration: none; vertical-alig=
+n: baseline; white-space: pre-wrap;" data-mce-style=3D"font-size: 10pt; fon=
+t-family: Arial; color: #000000; background-color: #ffffff; font-weight: 40=
+0; font-style: normal; font-variant: normal; text-decoration: none; vertica=
+l-align: baseline; white-space: pre-wrap;">&nbsp;</span></p><div><br></div>=
+<p dir=3D"ltr" style=3D"line-height: 1.38; margin: 0px;" data-mce-style=3D"=
+line-height: 1.38; margin: 0px;"><span style=3D"font-size: 10pt; font-famil=
+y: Arial; color: #000000; background-color: #ffffff; font-weight: 400; font=
+-style: normal; font-variant: normal; text-decoration: none; vertical-align=
+: baseline; white-space: pre-wrap;" data-mce-style=3D"font-size: 10pt; font=
+-family: Arial; color: #000000; background-color: #ffffff; font-weight: 400=
+; font-style: normal; font-variant: normal; text-decoration: none; vertical=
+-align: baseline; white-space: pre-wrap;">---------------------------------=
+--------</span></p><p dir=3D"ltr" style=3D"line-height: 1.656; margin: 0px;=
+" data-mce-style=3D"line-height: 1.656; margin: 0px;"><span style=3D"font-s=
+ize: 10pt; font-family: Arial; color: #000000; background-color: #ffffff; f=
+ont-weight: 400; font-style: normal; font-variant: normal; text-decoration:=
+ none; vertical-align: baseline; white-space: pre-wrap;" data-mce-style=3D"=
+font-size: 10pt; font-family: Arial; color: #000000; background-color: #fff=
+fff; font-weight: 400; font-style: normal; font-variant: normal; text-decor=
+ation: none; vertical-align: baseline; white-space: pre-wrap;">*** Soumissi=
+ons ***</span><span style=3D"font-size: 10pt; font-family: Arial; color: #0=
+00000; background-color: #ffffff; font-weight: 400; font-style: normal; fon=
+t-variant: normal; text-decoration: none; vertical-align: baseline; white-s=
+pace: pre-wrap;" data-mce-style=3D"font-size: 10pt; font-family: Arial; col=
+or: #000000; background-color: #ffffff; font-weight: 400; font-style: norma=
+l; font-variant: normal; text-decoration: none; vertical-align: baseline; w=
+hite-space: pre-wrap;"><br></span><span style=3D"font-size: 10pt; font-fami=
+ly: Arial; color: #000000; background-color: #ffffff; font-weight: 400; fon=
+t-style: normal; font-variant: normal; text-decoration: none; vertical-alig=
+n: baseline; white-space: pre-wrap;" data-mce-style=3D"font-size: 10pt; fon=
+t-family: Arial; color: #000000; background-color: #ffffff; font-weight: 40=
+0; font-style: normal; font-variant: normal; text-decoration: none; vertica=
+l-align: baseline; white-space: pre-wrap;">--------------------------------=
+---------</span></p><div><br></div><p dir=3D"ltr" style=3D"line-height: 1.6=
+56; margin: 0px;" data-mce-style=3D"line-height: 1.656; margin: 0px;"><span=
+ style=3D"font-size: 10pt; font-family: Arial; color: #000000; background-c=
+olor: #ffffff; font-weight: 400; font-style: normal; font-variant: normal; =
+text-decoration: none; vertical-align: baseline; white-space: pre-wrap;" da=
+ta-mce-style=3D"font-size: 10pt; font-family: Arial; color: #000000; backgr=
+ound-color: #ffffff; font-weight: 400; font-style: normal; font-variant: no=
+rmal; text-decoration: none; vertical-align: baseline; white-space: pre-wra=
+p;">Nous sollicitons des soumissions sur r=C3=A9sum=C3=A9 qui pr=C3=A9sente=
+nt des travaux originaux (poster, pr=C3=A9sentation ou d=C3=A9mo). La date =
+limite de soumission est fix=C3=A9e au </span><span style=3D"font-size: 10p=
+t; font-family: Arial; color: #000000; background-color: #ffffff; font-weig=
+ht: bold; font-style: normal; font-variant: normal; text-decoration: line-t=
+hrough; -webkit-text-decoration-skip: none; text-decoration-skip-ink: none;=
+ vertical-align: baseline; white-space: pre-wrap;" data-mce-style=3D"font-s=
+ize: 10pt; font-family: Arial; color: #000000; background-color: #ffffff; f=
+ont-weight: bold; font-style: normal; font-variant: normal; text-decoration=
+: line-through; -webkit-text-decoration-skip: none; text-decoration-skip-in=
+k: none; vertical-align: baseline; white-space: pre-wrap;">vendredi 12 mai =
+2023</span><span style=3D"font-size: 10pt; font-family: Arial; color: #0000=
+00; background-color: #ffffff; font-weight: bold; font-style: normal; font-=
+variant: normal; text-decoration: none; vertical-align: baseline; white-spa=
+ce: pre-wrap;" data-mce-style=3D"font-size: 10pt; font-family: Arial; color=
+: #000000; background-color: #ffffff; font-weight: bold; font-style: normal=
+; font-variant: normal; text-decoration: none; vertical-align: baseline; wh=
+ite-space: pre-wrap;"> mardi 23 mai 2023</span><span style=3D"font-size: 10=
+pt; font-family: Arial; color: #000000; background-color: #ffffff; font-wei=
+ght: 400; font-style: normal; font-variant: normal; text-decoration: none; =
+vertical-align: baseline; white-space: pre-wrap;" data-mce-style=3D"font-si=
+ze: 10pt; font-family: Arial; color: #000000; background-color: #ffffff; fo=
+nt-weight: 400; font-style: normal; font-variant: normal; text-decoration: =
+none; vertical-align: baseline; white-space: pre-wrap;">.&nbsp; Les notific=
+ations d=E2=80=99acceptation seront envoy=C3=A9es le </span><span style=3D"=
+font-size: 10pt; font-family: Arial; color: #000000; background-color: #fff=
+fff; font-weight: bold; font-style: normal; font-variant: normal; text-deco=
+ration: line-through; -webkit-text-decoration-skip: none; text-decoration-s=
+kip-ink: none; vertical-align: baseline; white-space: pre-wrap;" data-mce-s=
+tyle=3D"font-size: 10pt; font-family: Arial; color: #000000; background-col=
+or: #ffffff; font-weight: bold; font-style: normal; font-variant: normal; t=
+ext-decoration: line-through; -webkit-text-decoration-skip: none; text-deco=
+ration-skip-ink: none; vertical-align: baseline; white-space: pre-wrap;">ve=
+ndredi 26 mai 2023</span><span style=3D"font-size: 10pt; font-family: Arial=
+; color: #000000; background-color: #ffffff; font-weight: bold; font-style:=
+ normal; font-variant: normal; text-decoration: none; vertical-align: basel=
+ine; white-space: pre-wrap;" data-mce-style=3D"font-size: 10pt; font-family=
+: Arial; color: #000000; background-color: #ffffff; font-weight: bold; font=
+-style: normal; font-variant: normal; text-decoration: none; vertical-align=
+: baseline; white-space: pre-wrap;"> lundi 29 mai 2023</span><span style=3D=
+"font-size: 10pt; font-family: Arial; color: #000000; background-color: #ff=
+ffff; font-weight: 400; font-style: normal; font-variant: normal; text-deco=
+ration: none; vertical-align: baseline; white-space: pre-wrap;" data-mce-st=
+yle=3D"font-size: 10pt; font-family: Arial; color: #000000; background-colo=
+r: #ffffff; font-weight: 400; font-style: normal; font-variant: normal; tex=
+t-decoration: none; vertical-align: baseline; white-space: pre-wrap;">.</sp=
+an></p><div><br></div><p dir=3D"ltr" style=3D"line-height: 1.656; margin: 0=
+px;" data-mce-style=3D"line-height: 1.656; margin: 0px;"><span style=3D"fon=
+t-size: 10pt; font-family: Arial; color: #000000; background-color: #ffffff=
+; font-weight: 400; font-style: normal; font-variant: normal; text-decorati=
+on: none; vertical-align: baseline; white-space: pre-wrap;" data-mce-style=
+=3D"font-size: 10pt; font-family: Arial; color: #000000; background-color: =
+#ffffff; font-weight: 400; font-style: normal; font-variant: normal; text-d=
+ecoration: none; vertical-align: baseline; white-space: pre-wrap;">Les moda=
+lit=C3=A9s de soumission sont indiqu=C3=A9es sur le site</span><a href=3D"h=
+ttps://journee-visu.github.io/2023/#cfp" style=3D"text-decoration: none;" d=
+ata-mce-href=3D"https://journee-visu.github.io/2023/#cfp" data-mce-style=3D=
+"text-decoration: none;"><span style=3D"font-size: 10pt; font-family: Arial=
+; color: #000000; background-color: #ffffff; font-weight: 400; font-style: =
+normal; font-variant: normal; text-decoration: none; vertical-align: baseli=
+ne; white-space: pre-wrap;" data-mce-style=3D"font-size: 10pt; font-family:=
+ Arial; color: #000000; background-color: #ffffff; font-weight: 400; font-s=
+tyle: normal; font-variant: normal; text-decoration: none; vertical-align: =
+baseline; white-space: pre-wrap;"> </span><span style=3D"font-size: 10pt; f=
+ont-family: Arial; color: #1155cc; background-color: #ffffff; font-weight: =
+400; font-style: normal; font-variant: normal; text-decoration: underline; =
+-webkit-text-decoration-skip: none; text-decoration-skip-ink: none; vertica=
+l-align: baseline; white-space: pre-wrap;" data-mce-style=3D"font-size: 10p=
+t; font-family: Arial; color: #1155cc; background-color: #ffffff; font-weig=
+ht: 400; font-style: normal; font-variant: normal; text-decoration: underli=
+ne; -webkit-text-decoration-skip: none; text-decoration-skip-ink: none; ver=
+tical-align: baseline; white-space: pre-wrap;">https://journee-visu.github.=
+io/2023/#cfp</span></a><span style=3D"font-size: 10pt; font-family: Arial; =
+color: #000000; background-color: #ffffff; font-weight: 400; font-style: no=
+rmal; font-variant: normal; text-decoration: none; vertical-align: baseline=
+; white-space: pre-wrap;" data-mce-style=3D"font-size: 10pt; font-family: A=
+rial; color: #000000; background-color: #ffffff; font-weight: 400; font-sty=
+le: normal; font-variant: normal; text-decoration: none; vertical-align: ba=
+seline; white-space: pre-wrap;">.</span></p><div><br></div><p dir=3D"ltr" s=
+tyle=3D"line-height: 1.656; margin: 0px;" data-mce-style=3D"line-height: 1.=
+656; margin: 0px;"><span style=3D"font-size: 10pt; font-family: Arial; colo=
+r: #000000; background-color: #ffffff; font-weight: 400; font-style: normal=
+; font-variant: normal; text-decoration: none; vertical-align: baseline; wh=
+ite-space: pre-wrap;" data-mce-style=3D"font-size: 10pt; font-family: Arial=
+; color: #000000; background-color: #ffffff; font-weight: 400; font-style: =
+normal; font-variant: normal; text-decoration: none; vertical-align: baseli=
+ne; white-space: pre-wrap;">-----------------------------------------------=
+------</span><span style=3D"font-size: 10pt; font-family: Arial; color: #00=
+0000; background-color: #ffffff; font-weight: 400; font-style: normal; font=
+-variant: normal; text-decoration: none; vertical-align: baseline; white-sp=
+ace: pre-wrap;" data-mce-style=3D"font-size: 10pt; font-family: Arial; colo=
+r: #000000; background-color: #ffffff; font-weight: 400; font-style: normal=
+; font-variant: normal; text-decoration: none; vertical-align: baseline; wh=
+ite-space: pre-wrap;"><br></span><span style=3D"font-size: 10pt; font-famil=
+y: Arial; color: #000000; background-color: #ffffff; font-weight: 400; font=
+-style: normal; font-variant: normal; text-decoration: none; vertical-align=
+: baseline; white-space: pre-wrap;" data-mce-style=3D"font-size: 10pt; font=
+-family: Arial; color: #000000; background-color: #ffffff; font-weight: 400=
+; font-style: normal; font-variant: normal; text-decoration: none; vertical=
+-align: baseline; white-space: pre-wrap;">*** Organisateur et organisatrice=
+ ***</span></p><p dir=3D"ltr" style=3D"line-height: 1.656; margin: 0px;" da=
+ta-mce-style=3D"line-height: 1.656; margin: 0px;"><span style=3D"font-size:=
+ 10pt; font-family: Arial; color: #000000; background-color: #ffffff; font-=
+weight: 400; font-style: normal; font-variant: normal; text-decoration: non=
+e; vertical-align: baseline; white-space: pre-wrap;" data-mce-style=3D"font=
+-size: 10pt; font-family: Arial; color: #000000; background-color: #ffffff;=
+ font-weight: 400; font-style: normal; font-variant: normal; text-decoratio=
+n: none; vertical-align: baseline; white-space: pre-wrap;">----------------=
+-------------------------------------</span><span style=3D"font-size: 10pt;=
+ font-family: Arial; color: #000000; background-color: #ffffff; font-weight=
+: 400; font-style: normal; font-variant: normal; text-decoration: none; ver=
+tical-align: baseline; white-space: pre-wrap;" data-mce-style=3D"font-size:=
+ 10pt; font-family: Arial; color: #000000; background-color: #ffffff; font-=
+weight: 400; font-style: normal; font-variant: normal; text-decoration: non=
+e; vertical-align: baseline; white-space: pre-wrap;"><br></span><span style=
+=3D"font-size: 10pt; font-family: Arial; color: #000000; background-color: =
+#ffffff; font-weight: 400; font-style: normal; font-variant: normal; text-d=
+ecoration: none; vertical-align: baseline; white-space: pre-wrap;" data-mce=
+-style=3D"font-size: 10pt; font-family: Arial; color: #000000; background-c=
+olor: #ffffff; font-weight: 400; font-style: normal; font-variant: normal; =
+text-decoration: none; vertical-align: baseline; white-space: pre-wrap;"><b=
+r></span><span style=3D"font-size: 10pt; font-family: Arial; color: #000000=
+; background-color: #ffffff; font-weight: 400; font-style: normal; font-var=
+iant: normal; text-decoration: none; vertical-align: baseline; white-space:=
+ pre-wrap;" data-mce-style=3D"font-size: 10pt; font-family: Arial; color: #=
+000000; background-color: #ffffff; font-weight: 400; font-style: normal; fo=
+nt-variant: normal; text-decoration: none; vertical-align: baseline; white-=
+space: pre-wrap;">Florent Cabric (AVIZ team, INRIA)</span><span style=3D"fo=
+nt-size: 10pt; font-family: Arial; color: #000000; background-color: #fffff=
+f; font-weight: 400; font-style: normal; font-variant: normal; text-decorat=
+ion: none; vertical-align: baseline; white-space: pre-wrap;" data-mce-style=
+=3D"font-size: 10pt; font-family: Arial; color: #000000; background-color: =
+#ffffff; font-weight: 400; font-style: normal; font-variant: normal; text-d=
+ecoration: none; vertical-align: baseline; white-space: pre-wrap;"><br></sp=
+an><span style=3D"font-size: 10pt; font-family: Arial; color: #000000; back=
+ground-color: #ffffff; font-weight: 400; font-style: normal; font-variant: =
+normal; text-decoration: none; vertical-align: baseline; white-space: pre-w=
+rap;" data-mce-style=3D"font-size: 10pt; font-family: Arial; color: #000000=
+; background-color: #ffffff; font-weight: 400; font-style: normal; font-var=
+iant: normal; text-decoration: none; vertical-align: baseline; white-space:=
+ pre-wrap;">Vanessa Pe=C3=B1a-Araya (ILDA team, INRIA)</span><span style=3D=
+"font-size: 10pt; font-family: Arial; color: #000000; background-color: #ff=
+ffff; font-weight: 400; font-style: normal; font-variant: normal; text-deco=
+ration: none; vertical-align: baseline; white-space: pre-wrap;" data-mce-st=
+yle=3D"font-size: 10pt; font-family: Arial; color: #000000; background-colo=
+r: #ffffff; font-weight: 400; font-style: normal; font-variant: normal; tex=
+t-decoration: none; vertical-align: baseline; white-space: pre-wrap;"><br><=
+br></span></p><p dir=3D"ltr" style=3D"line-height: 1.656; margin: 0px;" dat=
+a-mce-style=3D"line-height: 1.656; margin: 0px;"><span style=3D"font-size: =
+10pt; font-family: Arial; color: #000000; background-color: #ffffff; font-w=
+eight: 400; font-style: normal; font-variant: normal; text-decoration: none=
+; vertical-align: baseline; white-space: pre-wrap;" data-mce-style=3D"font-=
+size: 10pt; font-family: Arial; color: #000000; background-color: #ffffff; =
+font-weight: 400; font-style: normal; font-variant: normal; text-decoration=
+: none; vertical-align: baseline; white-space: pre-wrap;">Cette journ=C3=A9=
+e est organis=C3=A9e par l=E2=80=99Inria et le GDR IG-RV du CNRS.</span><sp=
+an style=3D"font-size: 10pt; font-family: Arial; color: #000000; background=
+-color: #ffffff; font-weight: 400; font-style: normal; font-variant: normal=
+; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;" =
+data-mce-style=3D"font-size: 10pt; font-family: Arial; color: #000000; back=
+ground-color: #ffffff; font-weight: 400; font-style: normal; font-variant: =
+normal; text-decoration: none; vertical-align: baseline; white-space: pre-w=
+rap;"><br></span><span style=3D"font-size: 10pt; font-family: Arial; color:=
+ #000000; background-color: #ffffff; font-weight: 400; font-style: normal; =
+font-variant: normal; text-decoration: none; vertical-align: baseline; whit=
+e-space: pre-wrap;" data-mce-style=3D"font-size: 10pt; font-family: Arial; =
+color: #000000; background-color: #ffffff; font-weight: 400; font-style: no=
+rmal; font-variant: normal; text-decoration: none; vertical-align: baseline=
+; white-space: pre-wrap;">Nous remercions nos sponsors, LISN, Kitware et Da=
+taIA et l=E2=80=99Institut de Math=C3=A9matique d=E2=80=99Orsay pour leur s=
+upport.</span></p><div><span style=3D"font-size: 10pt; font-family: Arial; =
+color: #000000; background-color: #ffffff; font-weight: 400; font-style: no=
+rmal; font-variant: normal; text-decoration: none; vertical-align: baseline=
+; white-space: pre-wrap;" data-mce-style=3D"font-size: 10pt; font-family: A=
+rial; color: #000000; background-color: #ffffff; font-weight: 400; font-sty=
+le: normal; font-variant: normal; text-decoration: none; vertical-align: ba=
+seline; white-space: pre-wrap;"><br></span><span style=3D"font-size: 10pt; =
+font-family: Arial; color: #000000; background-color: #ffffff; font-weight:=
+ 400; font-style: normal; font-variant: normal; text-decoration: none; vert=
+ical-align: baseline; white-space: pre-wrap;" data-mce-style=3D"font-size: =
+10pt; font-family: Arial; color: #000000; background-color: #ffffff; font-w=
+eight: 400; font-style: normal; font-variant: normal; text-decoration: none=
+; vertical-align: baseline; white-space: pre-wrap;">Plus d'informations :</=
+span><a href=3D"https://journee-visu.github.io/2023" style=3D"text-decorati=
+on: none;" data-mce-href=3D"https://journee-visu.github.io/2023" data-mce-s=
+tyle=3D"text-decoration: none;"><span style=3D"font-size: 10pt; font-family=
+: Arial; color: #000000; background-color: #ffffff; font-weight: 400; font-=
+style: normal; font-variant: normal; text-decoration: none; vertical-align:=
+ baseline; white-space: pre-wrap;" data-mce-style=3D"font-size: 10pt; font-=
+family: Arial; color: #000000; background-color: #ffffff; font-weight: 400;=
+ font-style: normal; font-variant: normal; text-decoration: none; vertical-=
+align: baseline; white-space: pre-wrap;"> </span><span style=3D"font-size: =
+10pt; font-family: Arial; color: #1155cc; background-color: #ffffff; font-w=
+eight: 400; font-style: normal; font-variant: normal; text-decoration: unde=
+rline; -webkit-text-decoration-skip: none; text-decoration-skip-ink: none; =
+vertical-align: baseline; white-space: pre-wrap;" data-mce-style=3D"font-si=
+ze: 10pt; font-family: Arial; color: #1155cc; background-color: #ffffff; fo=
+nt-weight: 400; font-style: normal; font-variant: normal; text-decoration: =
+underline; -webkit-text-decoration-skip: none; text-decoration-skip-ink: no=
+ne; vertical-align: baseline; white-space: pre-wrap;">https://journee-visu.=
+github.io/2023</span><span style=3D"font-size: 10pt; font-family: Arial; co=
+lor: #1155cc; background-color: #ffffff; font-weight: 400; font-style: norm=
+al; font-variant: normal; text-decoration: underline; -webkit-text-decorati=
+on-skip: none; text-decoration-skip-ink: none; vertical-align: baseline; wh=
+ite-space: pre-wrap;" data-mce-style=3D"font-size: 10pt; font-family: Arial=
+; color: #1155cc; background-color: #ffffff; font-weight: 400; font-style: =
+normal; font-variant: normal; text-decoration: underline; -webkit-text-deco=
+ration-skip: none; text-decoration-skip-ink: none; vertical-align: baseline=
+; white-space: pre-wrap;"><br></span></a><span style=3D"font-size: 10pt; fo=
+nt-family: Arial; color: #000000; background-color: #ffffff; font-weight: 4=
+00; font-style: normal; font-variant: normal; text-decoration: none; vertic=
+al-align: baseline; white-space: pre-wrap;" data-mce-style=3D"font-size: 10=
+pt; font-family: Arial; color: #000000; background-color: #ffffff; font-wei=
+ght: 400; font-style: normal; font-variant: normal; text-decoration: none; =
+vertical-align: baseline; white-space: pre-wrap;">Pour toute question : </s=
+pan><span style=3D"font-size: 10pt; font-family: Arial; color: #1155cc; bac=
+kground-color: #ffffff; font-weight: 400; font-style: normal; font-variant:=
+ normal; text-decoration: underline; -webkit-text-decoration-skip: none; te=
+xt-decoration-skip-ink: none; vertical-align: baseline; white-space: pre-wr=
+ap;" data-mce-style=3D"font-size: 10pt; font-family: Arial; color: #1155cc;=
+ background-color: #ffffff; font-weight: 400; font-style: normal; font-vari=
+ant: normal; text-decoration: underline; -webkit-text-decoration-skip: none=
+; text-decoration-skip-ink: none; vertical-align: baseline; white-space: pr=
+e-wrap;">visu2023@inria.fr</span><span style=3D"font-size: 10pt; font-famil=
+y: Arial; color: #000000; background-color: #ffffff; font-weight: 400; font=
+-style: normal; font-variant: normal; text-decoration: none; vertical-align=
+: baseline; white-space: pre-wrap;" data-mce-style=3D"font-size: 10pt; font=
+-family: Arial; color: #000000; background-color: #ffffff; font-weight: 400=
+; font-style: normal; font-variant: normal; text-decoration: none; vertical=
+-align: baseline; white-space: pre-wrap;"> </span></div><div><br></div></di=
+v></body></html>
+--=_2a66492a-35ea-46d1-9f1b-f45a1432f65e--
+

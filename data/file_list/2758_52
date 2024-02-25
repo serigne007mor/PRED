@@ -1,0 +1,616 @@
+Return-Path: <raja.chiky@isep.fr>
+X-Original-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (BounceSMTP2.univ-nantes.prive [172.20.12.67])
+	by sympa6.univ-nantes.prive (Postfix) with ESMTP id F2FE52292950
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Mon, 20 May 2019 15:00:40 +0200 (CEST)
+Received: from mx1.d101.univ-nantes.fr (MX1.univ-nantes.fr [193.52.101.135])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id F1556628824
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Mon, 20 May 2019 15:00:40 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.d101.univ-nantes.fr (Postfix) with ESMTP id ED1AF4821B6E
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 20 May 2019 15:00:40 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -4.689
+X-Spam-Level:
+X-Spam-Status: No, score=-4.689 tagged_above=-1000 required=5
+	tests=[CRM114_GOOD=-5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, HTML_MESSAGE=0.001, MR_NOT_ATTRIBUTED_IP=0.2,
+	RCVD_IN_WSFF=0.01, SPF_PASS=-0.001, UN_PHISHING_PW=0.1,
+	UN_PHISHING_WEBMAIL=0.1, URIBL_BLOCKED=0.001] autolearn=disabled
+X-CRM114-Status: GOOD ( 8.0711 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=isep.fr
+Received: from mx1.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id bpdIN6D6aW-K for <liste-egc@polytech.univ-nantes.fr>;
+	Mon, 20 May 2019 15:00:38 +0200 (CEST)
+X-Greylist: from auto-whitelisted by SQLgrey-1.6.7
+Received: from herbie.isep.fr (herbie.isep.fr [89.251.55.122])
+	by mx1.d101.univ-nantes.fr (Postfix) with ESMTPS id B458443A34C7
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 20 May 2019 15:00:38 +0200 (CEST)
+Received: from herbie.isep.fr (localhost [127.0.0.1])
+	by herbie.isep.fr (Postfix) with ESMTP id 36978604A1
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 20 May 2019 15:00:38 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=isep.fr; s=herbie;
+	t=1558357238; bh=2C32ELpZUkwyNcW0ugVgFx/IguKTOB9NlleX9q/UrE0=;
+	h=From:Subject:Date:To:From;
+	b=onOSCRd5LwzHEmAnCcGWNX/PwsZ77dnLdDrYCwEfToqtPQCW3UEBNS+2kxvNpR1fj
+	 jRaf2Y+Ypd6UnX+WzSdYUFmoBRXs2fQIZnHBnX2iAuJ0C7FPvubRe/yrSF2hnLIwP1
+	 qKvQIucxnW4aVo1SztrnlXx3WSHqSBv0hlKAY8nu02BUr2rny7BaLx+mCyFnMQyjsL
+	 vm/YV/QsjLlNFdTqA4ljk6mUWPxlb5Qu4sN6384tn/E4W1QNAIr7UzyUm12FsPmXPa
+	 Y8+BzhwGeL0K/AAOgrPUHOfZssb6M6EVYxkK/B3qI48jC+SeNPUT2BPyB+OY0af+WV
+	 hakb9r3CCLcfg==
+Received: from miles.isep.fr (miles.isep.fr [192.168.50.50])
+	by herbie.isep.fr (Postfix) with ESMTP id 0B8A06019A
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 20 May 2019 15:00:38 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by miles.isep.fr (Postfix) with ESMTP id F113064D
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 20 May 2019 15:00:37 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at isep.fr
+Received: from miles.isep.fr ([127.0.0.1])
+	by localhost (miles.isep.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id eLCopycUL348 for <liste-egc@polytech.univ-nantes.fr>;
+	Mon, 20 May 2019 15:00:37 +0200 (CEST)
+Received: from porta-17-11-1-wifi.isep.fr (porta-17-11-1-wifi.isep.fr [172.18.184.66])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: rchiky)
+	by miles.isep.fr (Postfix) with ESMTPSA id 71DC7432
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 20 May 2019 15:00:37 +0200 (CEST)
+From: Raja Chiky <raja.chiky@isep.fr>
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_0486FDCA-0EF2-4EED-9BF6-DDCB8CEDA089"
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.8\))
+Message-Id: <D0E35EC0-CB21-41A4-AD28-0144B573150F@isep.fr>
+Date: Mon, 20 May 2019 15:00:37 +0200
+To: liste-egc@polytech.univ-nantes.fr
+X-Mailer: Apple Mail (2.3445.104.8)
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] poste EC Data Science/Informatique ISEP
+
+
+--Apple-Mail=_0486FDCA-0EF2-4EED-9BF6-DDCB8CEDA089
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
+
+Enseignant-chercheur en Sciences des donn=C3=A9es/ Informatique
+
+L=E2=80=99ISEP recrute en CDI un(e) Enseignant(e)-Chercheur(euse) en =
+sciences des donn=C3=A9es. L=E2=80=99enseignant(e)-chercheur/euse =
+recrut=C3=A9(e) assurera des enseignements dans le cycle ing=C3=A9nieur =
+ISEP et participera aux activit=C3=A9s de recherche au sein du groupe =
+DASSIP (Data Science, Signal and Image Processing)
+
+Profil recherche
+
+Le candidat doit =C3=AAtre titulaire d=E2=80=99un doctorat en =
+informatique et faire preuve d=E2=80=99une grande autonomie et d=E2=80=99u=
+n fort potentiel en recherche scientifique qui doit se traduire par des =
+publications et la participation/montage de projets collaboratifs. Ses =
+th=C3=A9matiques de recherche devront aussi s=E2=80=99int=C3=A9grer dans =
+l=E2=80=99un des axes du groupe de recherche DASSIP :
+
+- Syst=C3=A8mes distribu=C3=A9s et gestion des donn=C3=A9es
+
+- Traitement et interpr=C3=A9tation des signaux et des images
+
+- Interaction Homme/Machine et EIAH (Environnement Informatique pour =
+l=E2=80=99Apprentissage Humain)
+
+
+
+ Profil enseignement
+
+ Concernant l=E2=80=99enseignement, le candidat/la candidate =
+interviendra dans diff=C3=A9rents modules en sciences des donn=C3=A9es =
+(et =C3=A9ventuellement en Informatique) durant tout le cycle ing=C3=A9nie=
+ur de niveau bac+3 =C3=A0 bac+5. Il/elle doit :
+
+     Faire preuve d=E2=80=99une exp=C3=A9rience significative en =
+enseignement et obligatoirement ma=C3=AEtriser l=E2=80=99anglais (=C3=A9cr=
+it et oral)
+
+    Avoir une expertise ou une bonne ma=C3=AEtrise en math=C3=A9matiques =
+appliqu=C3=A9es et plus sp=C3=A9cifiquement en machine learning.=20
+
+Une connaissance dans un ou plusieurs des domaines suivants serait =
+appr=C3=A9ciable :
+
+    Technologies Web (HTML, PHP, CSS, Javascript, SQL)
+
+    Programmation syst=C3=A8me en environnement Linux/Unix
+
+    Algorithmique et d=C3=A9veloppement (Java)
+
+    Architectures distribu=C3=A9es
+
+ Modalit=C3=A9 de candidature
+
+ La lettre de candidature, accompagn=C3=A9e d=E2=80=99un curriculum =
+vitae faisant =C3=A9tat des activit=C3=A9s d=E2=80=99enseignement, des =
+travaux de recherche, d=E2=80=99un projet d=E2=80=99int=C3=A9gration en =
+enseignement et en recherche et, =C3=A9ventuellement, des relations avec =
+le monde acad=C3=A9mique et industriel, est =C3=A0 adresser par email =
+avec comme objet EC-ISEP-DS-2019.
+
+ Poste =C3=A0 pourvoir d=C3=A8s que possible.
+
+Lieu de travail: ISEP, 10 Rue de Vanves , 92130 Issy les Moulineaux
+
+Possibilit=C3=A9 de d=C3=A9placement entre les 2 sites de l=E2=80=99ISEP, =
+le 2=C3=A8me est au 28 Rue Notre Dame Paris 6
+
+Contacts
+
+Florence Rossant : florence.rossant@isep.fr =
+<mailto:florence.rossant@isep.fr>
+Raja Chiky : raja.chiky@isep.fr <mailto:raja.chiky@isep.fr>
+
+Raja Chiky
+raja.chiky@isep.fr
+
+
+
+
+--Apple-Mail=_0486FDCA-0EF2-4EED-9BF6-DDCB8CEDA089
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
+charset=3Dutf-8"></head><body style=3D"word-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;" class=3D"">
+
+
+
+
+
+
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Revision>0</o:Revision>
+  <o:TotalTime>0</o:TotalTime>
+  <o:Pages>1</o:Pages>
+  <o:Words>326</o:Words>
+  <o:Characters>1796</o:Characters>
+  <o:Company>ISEP</o:Company>
+  <o:Lines>14</o:Lines>
+  <o:Paragraphs>4</o:Paragraphs>
+  <o:CharactersWithSpaces>2118</o:CharactersWithSpaces>
+  <o:Version>14.0</o:Version>
+ </o:DocumentProperties>
+ <o:OfficeDocumentSettings>
+  <o:AllowPNG/>
+ </o:OfficeDocumentSettings>
+</xml><![endif]-->
+
+<!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:View>Normal</w:View>
+  <w:Zoom>0</w:Zoom>
+  <w:TrackMoves/>
+  <w:TrackFormatting/>
+  <w:HyphenationZone>21</w:HyphenationZone>
+  <w:PunctuationKerning/>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:DoNotPromoteQF/>
+  <w:LidThemeOther>FR</w:LidThemeOther>
+  <w:LidThemeAsian>JA</w:LidThemeAsian>
+  <w:LidThemeComplexScript>X-NONE</w:LidThemeComplexScript>
+  <w:Compatibility>
+   <w:BreakWrappedTables/>
+   <w:SnapToGridInCell/>
+   <w:WrapTextWithPunct/>
+   <w:UseAsianBreakRules/>
+   <w:DontGrowAutofit/>
+   <w:SplitPgBreakAndParaMark/>
+   <w:EnableOpenTypeKerning/>
+   <w:DontFlipMirrorIndents/>
+   <w:OverrideTableStyleHps/>
+  </w:Compatibility>
+  <m:mathPr>
+   <m:mathFont m:val=3D"Cambria Math"/>
+   <m:brkBin m:val=3D"before"/>
+   <m:brkBinSub m:val=3D"&#45;-"/>
+   <m:smallFrac m:val=3D"off"/>
+   <m:dispDef/>
+   <m:lMargin m:val=3D"0"/>
+   <m:rMargin m:val=3D"0"/>
+   <m:defJc m:val=3D"centerGroup"/>
+   <m:wrapIndent m:val=3D"1440"/>
+   <m:intLim m:val=3D"subSup"/>
+   <m:naryLim m:val=3D"undOvr"/>
+  </m:mathPr></w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState=3D"false" DefUnhideWhenUsed=3D"true"
+  DefSemiHidden=3D"true" DefQFormat=3D"false" DefPriority=3D"99"
+  LatentStyleCount=3D"276">
+  <w:LsdException Locked=3D"false" Priority=3D"0" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Normal"/>
+  <w:LsdException Locked=3D"false" Priority=3D"9" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"heading 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"9" QFormat=3D"true" =
+Name=3D"heading 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"9" QFormat=3D"true" =
+Name=3D"heading 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"9" QFormat=3D"true" =
+Name=3D"heading 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"9" QFormat=3D"true" =
+Name=3D"heading 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"9" QFormat=3D"true" =
+Name=3D"heading 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"9" QFormat=3D"true" =
+Name=3D"heading 7"/>
+  <w:LsdException Locked=3D"false" Priority=3D"9" QFormat=3D"true" =
+Name=3D"heading 8"/>
+  <w:LsdException Locked=3D"false" Priority=3D"9" QFormat=3D"true" =
+Name=3D"heading 9"/>
+  <w:LsdException Locked=3D"false" Priority=3D"39" Name=3D"toc 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"39" Name=3D"toc 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"39" Name=3D"toc 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"39" Name=3D"toc 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"39" Name=3D"toc 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"39" Name=3D"toc 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"39" Name=3D"toc 7"/>
+  <w:LsdException Locked=3D"false" Priority=3D"39" Name=3D"toc 8"/>
+  <w:LsdException Locked=3D"false" Priority=3D"39" Name=3D"toc 9"/>
+  <w:LsdException Locked=3D"false" Priority=3D"35" QFormat=3D"true" =
+Name=3D"caption"/>
+  <w:LsdException Locked=3D"false" Priority=3D"10" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Title"/>
+  <w:LsdException Locked=3D"false" Priority=3D"0" Name=3D"Default =
+Paragraph Font"/>
+  <w:LsdException Locked=3D"false" Priority=3D"11" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Subtitle"/>
+  <w:LsdException Locked=3D"false" Priority=3D"22" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Strong"/>
+  <w:LsdException Locked=3D"false" Priority=3D"20" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Emphasis"/>
+  <w:LsdException Locked=3D"false" Priority=3D"39" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Table Grid"/>
+  <w:LsdException Locked=3D"false" UnhideWhenUsed=3D"false" =
+Name=3D"Placeholder Text"/>
+  <w:LsdException Locked=3D"false" Priority=3D"1" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"No Spacing"/>
+  <w:LsdException Locked=3D"false" Priority=3D"60" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Shading"/>
+  <w:LsdException Locked=3D"false" Priority=3D"61" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light List"/>
+  <w:LsdException Locked=3D"false" Priority=3D"62" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Grid"/>
+  <w:LsdException Locked=3D"false" Priority=3D"63" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"64" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"65" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"66" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"67" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"68" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"69" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"70" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Dark List"/>
+  <w:LsdException Locked=3D"false" Priority=3D"71" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Shading"/>
+  <w:LsdException Locked=3D"false" Priority=3D"72" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful List"/>
+  <w:LsdException Locked=3D"false" Priority=3D"73" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Grid"/>
+  <w:LsdException Locked=3D"false" Priority=3D"60" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Shading Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"61" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light List Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"62" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Grid Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"63" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 1 Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"64" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 2 Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"65" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 1 Accent 1"/>
+  <w:LsdException Locked=3D"false" UnhideWhenUsed=3D"false" =
+Name=3D"Revision"/>
+  <w:LsdException Locked=3D"false" Priority=3D"34" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"List Paragraph"/>
+  <w:LsdException Locked=3D"false" Priority=3D"29" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Quote"/>
+  <w:LsdException Locked=3D"false" Priority=3D"30" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Intense Quote"/>
+  <w:LsdException Locked=3D"false" Priority=3D"66" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 2 Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"67" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 1 Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"68" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 2 Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"69" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 3 Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"70" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Dark List Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"71" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Shading Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"72" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful List Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"73" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Grid Accent 1"/>
+  <w:LsdException Locked=3D"false" Priority=3D"60" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Shading Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"61" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light List Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"62" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Grid Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"63" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 1 Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"64" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 2 Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"65" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 1 Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"66" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 2 Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"67" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 1 Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"68" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 2 Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"69" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 3 Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"70" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Dark List Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"71" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Shading Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"72" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful List Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"73" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Grid Accent 2"/>
+  <w:LsdException Locked=3D"false" Priority=3D"60" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Shading Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"61" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light List Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"62" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Grid Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"63" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 1 Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"64" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 2 Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"65" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 1 Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"66" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 2 Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"67" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 1 Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"68" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 2 Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"69" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 3 Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"70" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Dark List Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"71" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Shading Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"72" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful List Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"73" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Grid Accent 3"/>
+  <w:LsdException Locked=3D"false" Priority=3D"60" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Shading Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"61" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light List Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"62" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Grid Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"63" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 1 Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"64" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 2 Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"65" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 1 Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"66" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 2 Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"67" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 1 Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"68" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 2 Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"69" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 3 Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"70" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Dark List Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"71" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Shading Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"72" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful List Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"73" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Grid Accent 4"/>
+  <w:LsdException Locked=3D"false" Priority=3D"60" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Shading Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"61" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light List Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"62" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Grid Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"63" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 1 Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"64" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 2 Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"65" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 1 Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"66" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 2 Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"67" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 1 Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"68" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 2 Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"69" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 3 Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"70" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Dark List Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"71" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Shading Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"72" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful List Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"73" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Grid Accent 5"/>
+  <w:LsdException Locked=3D"false" Priority=3D"60" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Shading Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"61" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light List Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"62" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Light Grid Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"63" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 1 Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"64" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Shading 2 Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"65" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 1 Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"66" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium List 2 Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"67" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 1 Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"68" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 2 Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"69" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Medium Grid 3 Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"70" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Dark List Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"71" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Shading Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"72" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful List Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"73" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" Name=3D"Colorful Grid Accent 6"/>
+  <w:LsdException Locked=3D"false" Priority=3D"19" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Subtle Emphasis"/>
+  <w:LsdException Locked=3D"false" Priority=3D"21" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Intense Emphasis"/>
+  <w:LsdException Locked=3D"false" Priority=3D"31" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Subtle Reference"/>
+  <w:LsdException Locked=3D"false" Priority=3D"32" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Intense =
+Reference"/>
+  <w:LsdException Locked=3D"false" Priority=3D"33" SemiHidden=3D"false"
+   UnhideWhenUsed=3D"false" QFormat=3D"true" Name=3D"Book Title"/>
+  <w:LsdException Locked=3D"false" Priority=3D"37" Name=3D"Bibliography"/>=
+
+  <w:LsdException Locked=3D"false" Priority=3D"39" QFormat=3D"true" =
+Name=3D"TOC Heading"/>
+ </w:LatentStyles>
+</xml><![endif]-->
+
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+table.MsoNormalTable
+	{mso-style-name:"Tableau Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-parent:"";
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:Cambria;}
+</style>
+<![endif]-->
+
+
+
+<!--StartFragment--><p class=3D"MsoNormal"><b =
+class=3D"">Enseignant-chercheur en Sciences des donn=C3=A9es/ =
+Informatique</b><o:p class=3D""></o:p></p><p class=3D"MsoNormal">L=E2=80=99=
+ISEP recrute en CDI un(e) Enseignant(e)-Chercheur(euse) en sciences des =
+donn=C3=A9es. L=E2=80=99enseignant(e)-chercheur/euse recrut=C3=A9(e) =
+assurera des enseignements dans le cycle ing=C3=A9nieur ISEP et =
+participera aux activit=C3=A9s de recherche au sein du groupe DASSIP =
+(Data Science, Signal and Image Processing)</p><p class=3D"MsoNormal"><b =
+class=3D"">Profil recherche</b></p><p class=3D"MsoNormal">Le candidat =
+doit =C3=AAtre titulaire d=E2=80=99un doctorat en informatique et faire =
+preuve d=E2=80=99une grande autonomie et d=E2=80=99un fort potentiel en =
+recherche scientifique qui doit se traduire par des publications et la =
+participation/montage de projets collaboratifs. Ses th=C3=A9matiques de =
+recherche devront aussi s=E2=80=99int=C3=A9grer dans l=E2=80=99un des =
+axes du groupe de recherche DASSIP :<o:p class=3D""></o:p></p><p =
+class=3D"MsoNormal">- Syst=C3=A8mes distribu=C3=A9s et gestion des =
+donn=C3=A9es<o:p class=3D""></o:p></p><p class=3D"MsoNormal"><b =
+class=3D"">-&nbsp;</b>Traitement et interpr=C3=A9tation des signaux et =
+des images<o:p class=3D""></o:p></p><p class=3D"MsoNormal">- Interaction =
+Homme/Machine et EIAH (Environnement Informatique pour l=E2=80=99Apprentis=
+sage Humain)<o:p class=3D""></o:p></p><p class=3D"MsoNormal"><o:p =
+class=3D""><br class=3D""></o:p></p><p class=3D"MsoNormal"><o:p =
+class=3D"">&nbsp;</o:p><b class=3D"">Profil enseignement</b></p><p =
+class=3D"MsoNormal"><o:p class=3D""></o:p></p><p class=3D"MsoNormal"><o:p =
+class=3D"">&nbsp;</o:p>Concernant l=E2=80=99enseignement, le candidat/la =
+candidate interviendra dans diff=C3=A9rents modules en sciences des =
+donn=C3=A9es (et =C3=A9ventuellement en Informatique) durant tout le =
+cycle ing=C3=A9nieur de niveau bac+3 =C3=A0 bac+5. Il/elle doit :</p><p =
+class=3D"MsoNormal"><o:p class=3D""></o:p></p><p class=3D"MsoNormal"><o:p =
+class=3D"">&nbsp;</o:p>&nbsp; &nbsp; Faire preuve d=E2=80=99une =
+exp=C3=A9rience significative en enseignement et obligatoirement =
+ma=C3=AEtriser l=E2=80=99anglais (=C3=A9crit et oral)</p><p =
+class=3D"MsoNormal"><o:p class=3D""></o:p></p><p =
+class=3D"MsoNormal">&nbsp;&nbsp;&nbsp; Avoir une expertise ou une bonne =
+ma=C3=AEtrise en math=C3=A9matiques appliqu=C3=A9es et plus =
+sp=C3=A9cifiquement en machine learning.&nbsp;<o:p class=3D""></o:p></p><p=
+ class=3D"MsoNormal">Une connaissance dans un ou plusieurs des domaines =
+suivants serait appr=C3=A9ciable :<o:p class=3D""></o:p></p><p =
+class=3D"MsoNormal">&nbsp;&nbsp;&nbsp; Technologies Web (HTML, PHP, CSS, =
+Javascript, SQL)<o:p class=3D""></o:p></p><p =
+class=3D"MsoNormal">&nbsp;&nbsp;&nbsp; Programmation syst=C3=A8me en =
+environnement Linux/Unix<o:p class=3D""></o:p></p><p =
+class=3D"MsoNormal">&nbsp;&nbsp;&nbsp; Algorithmique et d=C3=A9veloppement=
+ (Java)<o:p class=3D""></o:p></p><p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;=
+ Architectures distribu=C3=A9es<o:p class=3D""></o:p></p><p =
+class=3D"MsoNormal"><o:p class=3D"">&nbsp;</o:p><b class=3D"">Modalit=C3=A9=
+ de candidature</b></p><p class=3D"MsoNormal"><o:p class=3D""></o:p></p><p=
+ class=3D"MsoNormal"><o:p class=3D"">&nbsp;</o:p>La lettre de =
+candidature, accompagn=C3=A9e d=E2=80=99un curriculum vitae faisant =
+=C3=A9tat des activit=C3=A9s d=E2=80=99enseignement, des travaux de =
+recherche, d=E2=80=99un projet d=E2=80=99int=C3=A9gration en =
+enseignement et en recherche et, =C3=A9ventuellement, des relations avec =
+le monde acad=C3=A9mique et industriel, est =C3=A0 adresser par email =
+avec comme objet EC-ISEP-DS-2019.</p><p class=3D"MsoNormal"><o:p =
+class=3D""></o:p></p><p class=3D"MsoNormal"><o:p =
+class=3D"">&nbsp;</o:p>Poste =C3=A0 pourvoir d=C3=A8s que =
+possible.</p><p class=3D"MsoNormal"><o:p class=3D""></o:p></p><p =
+class=3D"MsoNormal">Lieu de travail: ISEP, 10 Rue de Vanves , 92130 Issy =
+les Moulineaux</p><p class=3D"MsoNormal"><o:p class=3D"">Possibilit=C3=A9 =
+de d=C3=A9placement entre les 2 sites de l=E2=80=99ISEP, le 2=C3=A8me =
+est au 28 Rue Notre Dame Paris 6</o:p></p><p class=3D"MsoNormal"><b =
+class=3D"">Contacts</b><o:p class=3D""></o:p></p><p =
+class=3D"MsoNormal">Florence Rossant&nbsp;:&nbsp;<a =
+href=3D"mailto:florence.rossant@isep.fr" =
+class=3D"">florence.rossant@isep.fr</a></p><p class=3D"MsoNormal">Raja =
+Chiky :&nbsp;<a href=3D"mailto:raja.chiky@isep.fr" =
+class=3D"">raja.chiky@isep.fr</a></p>
+
+<!--EndFragment--><br class=3D""><br class=3D""><div class=3D"">
+<div style=3D"color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+14px; font-style: normal; font-variant-caps: normal; font-weight: =
+normal; letter-spacing: normal; orphans: auto; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; widows: =
+auto; word-spacing: 0px; -webkit-text-size-adjust: auto; =
+-webkit-text-stroke-width: 0px;">Raja Chiky</div><div style=3D"color: =
+rgb(0, 0, 0); font-family: Helvetica; font-size: 14px; font-style: =
+normal; font-variant-caps: normal; font-weight: normal; letter-spacing: =
+normal; orphans: auto; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: auto; word-spacing: =
+0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;"><a =
+href=3D"mailto:raja.chiky@isep.fr" =
+class=3D"">raja.chiky@isep.fr</a></div><div style=3D"color: rgb(0, 0, =
+0); font-family: Helvetica; font-size: 14px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+orphans: auto; text-align: start; text-indent: 0px; text-transform: =
+none; white-space: normal; widows: auto; word-spacing: 0px; =
+-webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;" =
+class=3D""><br class=3D""></div><br class=3D"Apple-interchange-newline">
+</div>
+<br class=3D""></body></html>=
+
+--Apple-Mail=_0486FDCA-0EF2-4EED-9BF6-DDCB8CEDA089--

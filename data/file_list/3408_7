@@ -1,0 +1,362 @@
+Return-Path: <Patricia.Serrano-Alvarado@univ-nantes.fr>
+X-Original-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (BounceSMTP1.univ-nantes.prive [172.20.12.66])
+	by sympa6.univ-nantes.prive (Postfix) with ESMTP id 2E4C12292950
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Wed,  6 Nov 2019 07:22:58 +0100 (CET)
+Received: from mx2.d101.univ-nantes.fr (MX2.univ-nantes.fr [193.52.101.136])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id 2B5326D19BF
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Wed,  6 Nov 2019 07:22:58 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTP id 21AF3B4B124
+	for <liste-egc@polytech.univ-nantes.fr>; Wed,  6 Nov 2019 07:22:58 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=univ-nantes.fr header.b=O35QLnsr; dkim=pass (2048-bit key)
+	header.d=univ-nantes.fr header.b=O35QLnsr
+Received: from mx2.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 0UMMI-jqOV_Z for <liste-egc@polytech.univ-nantes.fr>;
+	Wed,  6 Nov 2019 07:22:58 +0100 (CET)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from smtp-tls.univ-nantes.fr (smtptls1-cha.cpub.univ-nantes.fr [IPv6:2001:660:7220:385:193:52:103:113])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTPS id 0B4DC6523EB
+	for <liste-egc@polytech.univ-nantes.fr>; Wed,  6 Nov 2019 07:22:58 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by smtp-tls.univ-nantes.fr (Postfix) with ESMTP id D161660F302;
+	Wed,  6 Nov 2019 07:22:57 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-nantes.fr;
+	s=mailv2; t=1573021377;
+	bh=zbvkAlzQndI+KAMl1Ao/kqoYO4sRZyGgWCCbZRPYAqg=;
+	h=From:To:Subject:Date:From;
+	b=O35QLnsrRoWlEggrwXr4Qe5tx1EK97Qxu8Y6YDVW2CgJMhM+K6s4cMRBYcZuxsHBt
+	 nL7Kv6cq3+X017yRZYjRL9HL1ifT9sb6OhC74D95AuLILG2WT0OrbXggtdtanf17ri
+	 pToe/fHScm5oxcnEv70+6IXYJdHZtwrsRLW8/Mp7LLsvsLIzF+rcmDfxcAlCoVpkLR
+	 3EJT+1CoCZKvnmubILvlwWc/aIir5ZItG/ThpWX7Osk6ZDJ5l1Tbc4O6vGzlJVU+2U
+	 yXiKRthTXX2F7sHBvh9aEvG0RybI7J5flKJE2tb5EQ4sNXfFQtOyyD95YHU1XFSFnT
+	 9BxXpeFJhezSA==
+X-Virus-Scanned: Debian amavisd-new at smtptls1-lmb.cpub.univ-nantes.fr
+Received: from smtp-tls.univ-nantes.fr ([127.0.0.1])
+	by localhost (smtptls1-cha.cpub.univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id ZWqtxFm0-h9C; Wed,  6 Nov 2019 07:22:57 +0100 (CET)
+Received: from macbook-serrano-2019.local (unknown [IPv6:2a01:e0a:1f7:ce60:e0a0:586b:ed3e:9eec])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp-tls.univ-nantes.fr (Postfix) with ESMTPSA id 4A7F260F6E2;
+	Wed,  6 Nov 2019 07:22:57 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-nantes.fr;
+	s=mailv2; t=1573021377;
+	bh=zbvkAlzQndI+KAMl1Ao/kqoYO4sRZyGgWCCbZRPYAqg=;
+	h=From:To:Subject:Date:From;
+	b=O35QLnsrRoWlEggrwXr4Qe5tx1EK97Qxu8Y6YDVW2CgJMhM+K6s4cMRBYcZuxsHBt
+	 nL7Kv6cq3+X017yRZYjRL9HL1ifT9sb6OhC74D95AuLILG2WT0OrbXggtdtanf17ri
+	 pToe/fHScm5oxcnEv70+6IXYJdHZtwrsRLW8/Mp7LLsvsLIzF+rcmDfxcAlCoVpkLR
+	 3EJT+1CoCZKvnmubILvlwWc/aIir5ZItG/ThpWX7Osk6ZDJ5l1Tbc4O6vGzlJVU+2U
+	 yXiKRthTXX2F7sHBvh9aEvG0RybI7J5flKJE2tb5EQ4sNXfFQtOyyD95YHU1XFSFnT
+	 9BxXpeFJhezSA==
+From: Patricia Serrano Alvarado <Patricia.Serrano-Alvarado@univ-nantes.fr>
+Organization: =?UTF-8?Q?Universit=c3=a9_de_Nantes?=
+To: liste-egc@polytech.univ-nantes.fr, bull-i3@irit.fr,
+ gazettebd3@univ-grenoble-alpes.fr, all@madics.fr,
+ annonces@listes.societe-informatique-de-france.fr,
+ privacy@sympa.rennes.supelec.fr
+Message-ID: <3ec4f1e3-cf16-f952-b3df-3ea934ab117b@univ-nantes.fr>
+Date: Wed, 6 Nov 2019 07:22:56 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
+ Gecko/20100101 Thunderbird/68.2.1
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="------------7B2F3FC017BE831A840DAC13"
+Content-Language: fr
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Appel =?UTF-8?Q?=C3=A0?=
+ contributions "Atelier Web des =?UTF-8?Q?Donn=C3=A9es=22?= @ EGC 2020
+
+This is a multi-part message in MIME format.
+--------------7B2F3FC017BE831A840DAC13
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+
+[Désolée pour les réceptions multiples]
+
+APPEL À CONTRIBUTIONS "ATELIER WEB DES DONNÉES" (EGC 2020)
+
+https://awd2020.ls2n.fr/
+
+CONFÉRENCIÈRE INVITÉE
+
+Catherine Faron Zucker
+MC HDR Université de Nice Sophia Antipolis, laboratoire I3S
+
+Après une première édition en 2019 de l’Atelier Web des Données (AWD), 
+nous proposons une seconde édition en 2020, à l’occasion de la 
+conférence EGC’20 qui fêtera ses 20 ans à Bruxelles. Cet atelier vise à 
+stimuler les discussions entre universitaires et industriels sur les 
+défis du développement du Web des Données.
+
+Depuis 2007, l’intérêt sur le Web des Données connaît une croissance 
+importante et régulière. Les principes du Web des Données sont en train 
+d’être adoptés par un nombre grandissant de fournisseurs de données. De 
+plus, les technologies du Web des Données sont fondamentales pour la 
+construction des graphes de connaissances, domaine en pleine croissance. 
+En témoigne l’adoption dans des domaines aussi variés que les sciences 
+de la vie, publications scientifiques, média, géographie, réseaux 
+sociaux, approches industrielles, etc.
+
+Afin de poursuivre le développement et l’adoption du Web des Données, 
+des solutions facilitant l’intégration automatique, la décentralisation, 
+la consommation, la capacité à déduire de nouvelles 
+données/connaissances et la gestion du contrôle d’usage des jeux de 
+données (contrôle d’accès, licences, législation, etc.) sont nécessaires.
+
+OBJECTIFS
+
+L’atelier vise à stimuler la discussion sur les défis et les tendances 
+de la publication, la consommation et l’intégration de données 
+structurées et interconnectées avec les principes du Web des Données.
+
+THÉMATIQUES
+
+Principaux thèmes (liste non exhaustive) :
+
+Exploration du Web des Données
+Qualité des données liées
+Publication de données liées
+Interrogation du Web des Données
+Intégration de données au Web des Données
+Licences et contrôle d’usage dans le Web des Données
+Sécurité et contrôle d’accès dans le Web des Données
+Confiance sur les données liées
+Provenance de données liées
+Données ouvertes liées
+Résolution d’entités
+Découverte de données liées
+Décentralisation, gestion pair-à-pair, registres distribués,
+Applications et outils sur le Web des Données
+etc.
+
+MODALITÉS
+
+Les soumission peuvent en français ou anglais et de trois types selon 
+leur état d’avancement :
+
+- des résumés étendus (4 pages)
+- des articles longs (maximum 12 pages)
+- des propositions de démonstrations logicielles (4 pages)
+
+SOUMISSION
+
+Les soumissions seront anonymes. Elles devront être soumises au format 
+PDF exclusivement et devront impérativement utiliser le format RNTI 
+latex disponible en téléchargement à l’adresse : 
+http://www.editions-rnti.fr/files/RNTI-X-Y2.1.zip
+
+Les soumissions qui dépasseront le nombre de pages maximal (4 ou 12) ou 
+qui ne respecteront pas l’anonymat et/ou le format RNTI Latex ne seront 
+pas évaluées.
+
+Site de soumission https://easychair.org/conferences/?conf=awd2020
+
+Les actes de l’atelier seront insérés sur support électronique et seront 
+accessibles à tous les participants de la conférence EGC 2020.
+
+DATES IMPORTANTES
+
+Soumissions le vendredi 29 novembre 2019 à minuit, heure de Paris.
+Notification aux auteurs le vendredi 27 décembre 2019.
+Version finale des articles le vendredi 10 janvier 2020.
+Atelier le mardi 28 janvier 2020.
+
+INSCRIPTION
+
+Voir https://egc2020.sciencesconf.org
+
+COMITÉ DE PROGRAMME
+(en cours de vérification)
+
+Bernd Amann    LIP6, Université Sorbonne
+Khalid Belhajjame    LAMSADE, Université Paris-Dauphine
+Jérôme David     Inria Rhône-Alpes, Université Grenoble Alpes
+Emmanuel Desmontils    LS2N, Université de Nantes
+Alban Gaignard    Institut du Thorax
+Luis-Daniel Ibáñez    Université de Southampton
+Clement Jonquet    LIRMM, Université de Montpellier, France
+Myriam Lamolle    LIASD, Université Paris 8
+Maxime Lefrançois    Laboratoire Hubert Curien, École des Mines de 
+Saint-Étienne
+Gabriela Montoya    Université Aalbork
+Catherine Roussey    TSCF, Irstea
+Fatiha Saïs LRI, Université Paris
+
+COMITÉ D’ORGANISATION
+
+Patricia Serrano Alvarado LS2N, Université de Nantes
+Olivier Curé LIGM, Université Paris-Est Marne la Vallée
+-- 
+Patricia Serrano Alvarado <https://pagespersowp.ls2n.fr/patriciaserrano/>
+Associate Professor, Université de Nantes
+UFR Sciences et Techniques <http://www.sciences-techniques.univ-nantes.fr/>
+International Relations Correspondent - CS department
+LS2N - CNRS UMR 6004 <www.ls2n.fr> - GDD team 
+<https://sites.google.com/site/gddlina/>
+2, rue de la Houssinière - BP 92208
+44322 Nantes Cedex 03 France
+Voice: +33 (0)2 51 12 57 42
+
+--------------7B2F3FC017BE831A840DAC13
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p><font face="Helvetica, Arial, sans-serif">[Désolée pour les
+        réceptions multiples]<br>
+      </font> </p>
+    <font face="Helvetica, Arial, sans-serif"> APPEL À CONTRIBUTIONS
+      "ATELIER WEB DES DONNÉES" (EGC 2020) </font>
+    <p><font face="Helvetica, Arial, sans-serif"><a
+          class="moz-txt-link-freetext" href="https://awd2020.ls2n.fr/">https://awd2020.ls2n.fr/</a></font></p>
+    <font face="Helvetica, Arial, sans-serif"> </font>
+    <p><font face="Helvetica, Arial, sans-serif">CONFÉRENCIÈRE INVITÉE</font></p>
+    <font face="Helvetica, Arial, sans-serif">
+      Catherine Faron Zucker<br>
+      MC HDR Université de Nice Sophia Antipolis, laboratoire I3S<br>
+    </font>
+    <p><font face="Helvetica, Arial, sans-serif">Après une première
+        édition en 2019 de l’Atelier Web des Données (AWD), nous
+        proposons une seconde édition en 2020, à l’occasion de la
+        conférence EGC’20 qui fêtera ses 20 ans à Bruxelles. Cet atelier
+        vise à stimuler les discussions entre universitaires et
+        industriels sur les défis du développement du Web des Données. <br>
+      </font> <font face="Helvetica, Arial, sans-serif"><br>
+        Depuis 2007, l’intérêt sur le Web des Données connaît une
+        croissance importante et régulière. Les principes du Web des
+        Données sont en train d’être adoptés par un nombre grandissant
+        de fournisseurs de données. De plus, les technologies du Web des
+        Données sont fondamentales pour la construction des graphes de
+        connaissances, domaine en pleine croissance. En témoigne
+        l’adoption dans des domaines aussi variés que les sciences de la
+        vie, publications scientifiques, média, géographie, réseaux
+        sociaux, approches industrielles, etc.<br>
+      </font> <font face="Helvetica, Arial, sans-serif"><br>
+        Afin de poursuivre le développement et l’adoption du Web des
+        Données, des solutions facilitant l’intégration automatique, la
+        décentralisation, la consommation, la capacité à déduire de
+        nouvelles données/connaissances et la gestion du contrôle
+        d’usage des jeux de données (contrôle d’accès, licences,
+        législation, etc.) sont nécessaires. <br>
+      </font> <font face="Helvetica, Arial, sans-serif"><br>
+        OBJECTIFS</font></p>
+    <font face="Helvetica, Arial, sans-serif"> </font>
+    <p><font face="Helvetica, Arial, sans-serif">L’atelier vise à
+        stimuler la discussion sur les défis et les tendances de la
+        publication, la consommation et l’intégration de données
+        structurées et interconnectées avec les principes du Web des
+        Données.<br>
+      </font> <font face="Helvetica, Arial, sans-serif"><br>
+        THÉMATIQUES<br>
+      </font> <font face="Helvetica, Arial, sans-serif"><br>
+        Principaux thèmes (liste non exhaustive) :<br>
+      </font> <font face="Helvetica, Arial, sans-serif"><br>
+        Exploration du Web des Données<br>
+        Qualité des données liées<br>
+        Publication de données liées<br>
+        Interrogation du Web des Données<br>
+        Intégration de données au Web des Données<br>
+        Licences et contrôle d’usage dans le Web des Données<br>
+        Sécurité et contrôle d’accès dans le Web des Données<br>
+        Confiance sur les données liées<br>
+        Provenance de données liées<br>
+        Données ouvertes liées<br>
+        Résolution d’entités<br>
+        Découverte de données liées<br>
+        Décentralisation, gestion pair-à-pair, registres distribués, <br>
+        Applications et outils sur le Web des Données<br>
+        etc.<br>
+      </font> </p>
+    <font face="Helvetica, Arial, sans-serif"> </font>
+    <p><font face="Helvetica, Arial, sans-serif">MODALITÉS <br>
+      </font> <font face="Helvetica, Arial, sans-serif"><br>
+        Les soumission peuvent en français ou anglais et de trois types
+        selon leur état d’avancement :<br>
+      </font> <font face="Helvetica, Arial, sans-serif"><br>
+        - des résumés étendus (4 pages)<br>
+        - des articles longs (maximum 12 pages)<br>
+        - des propositions de démonstrations logicielles (4 pages)<br>
+      </font> </p>
+    <font face="Helvetica, Arial, sans-serif"> </font>
+    <p><font face="Helvetica, Arial, sans-serif">SOUMISSION<br>
+      </font> <font face="Helvetica, Arial, sans-serif"><br>
+        Les soumissions seront anonymes. Elles devront être soumises au
+        format PDF exclusivement et devront impérativement utiliser le
+        format RNTI latex disponible en téléchargement à l’adresse : <a
+          class="moz-txt-link-freetext"
+          href="http://www.editions-rnti.fr/files/RNTI-X-Y2.1.zip">http://www.editions-rnti.fr/files/RNTI-X-Y2.1.zip</a><br>
+      </font> <font face="Helvetica, Arial, sans-serif"><br>
+        Les soumissions qui dépasseront le nombre de pages maximal (4 ou
+        12) ou qui ne respecteront pas l’anonymat et/ou le format RNTI
+        Latex ne seront pas évaluées.<br>
+      </font> <font face="Helvetica, Arial, sans-serif"><br>
+        Site de soumission <a class="moz-txt-link-freetext"
+          href="https://easychair.org/conferences/?conf=awd2020">https://easychair.org/conferences/?conf=awd2020</a><br>
+      </font> <font face="Helvetica, Arial, sans-serif"><br>
+        Les actes de l’atelier seront insérés sur support électronique
+        et seront accessibles à tous les participants de la conférence
+        EGC 2020.<br>
+      </font> <font face="Helvetica, Arial, sans-serif"><br>
+        DATES IMPORTANTES<br>
+      </font> <font face="Helvetica, Arial, sans-serif"><br>
+        Soumissions le vendredi 29 novembre 2019 à minuit, heure de
+        Paris.<br>
+        Notification aux auteurs le vendredi 27 décembre 2019.<br>
+        Version finale des articles le vendredi 10 janvier 2020. <br>
+        Atelier le mardi 28 janvier 2020.</font></p>
+    <font face="Helvetica, Arial, sans-serif"> </font>
+    <p><font face="Helvetica, Arial, sans-serif">INSCRIPTION<br>
+      </font> <font face="Helvetica, Arial, sans-serif"><br>
+        Voir <a class="moz-txt-link-freetext"
+          href="https://egc2020.sciencesconf.org">https://egc2020.sciencesconf.org</a>
+        <br>
+      </font> </p>
+    <font face="Helvetica, Arial, sans-serif">COMITÉ DE PROGRAMME<br>
+      (en cours de vérification)<br>
+      <br>
+      Bernd Amann    LIP6, Université Sorbonne<br>
+      Khalid Belhajjame    LAMSADE, Université Paris-Dauphine<br>
+      Jérôme David     Inria Rhône-Alpes, Université Grenoble Alpes<br>
+      Emmanuel Desmontils    LS2N, Université de Nantes<br>
+      Alban Gaignard    Institut du Thorax<br>
+      Luis-Daniel Ibáñez    Université de Southampton<br>
+      Clement Jonquet    LIRMM, Université de Montpellier, France<br>
+      Myriam Lamolle    LIASD, Université Paris 8<br>
+      Maxime Lefrançois    Laboratoire Hubert Curien, École des Mines de
+      Saint-Étienne<br>
+      Gabriela Montoya    Université Aalbork<br>
+      Catherine Roussey    TSCF, Irstea<br>
+      <span style="caret-color: rgb(51, 51, 51); color: rgb(51, 51, 51); font-size: 16px; font-style: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; word-spacing: 0px; -moz-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration: none; display: inline !important; float: none;">Fatiha Saïs    </span><span style="caret-color: rgb(51, 51, 51); color: rgb(51, 51, 51); font-size: 16px; font-style: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; word-spacing: 0px; -moz-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration: none; display: inline !important; float: none;">LRI, Université Paris</span><br>
+      <br>
+      COMITÉ D’ORGANISATION<br>
+      <br>
+      Patricia Serrano Alvarado LS2N, Université de Nantes<br>
+      Olivier Curé LIGM, Université Paris-Est Marne la Vallée</font>
+    <div class="moz-signature">-- <br>
+      <font size="2">
+        <a href="https://pagespersowp.ls2n.fr/patriciaserrano/">Patricia
+          Serrano Alvarado</a><br>
+        Associate Professor, Université de Nantes<br>
+        <a href="http://www.sciences-techniques.univ-nantes.fr/">UFR
+          Sciences et Techniques</a><br>
+        International Relations Correspondent - CS department<br>
+        <a href="www.ls2n.fr">LS2N - CNRS UMR 6004</a> - <a
+          href="https://sites.google.com/site/gddlina/">GDD team</a><br>
+        2, rue de la Houssinière - BP 92208<br>
+        44322 Nantes Cedex 03 France<br>
+        Voice: +33 (0)2 51 12 57 42</font></div>
+  </body>
+</html>
+
+--------------7B2F3FC017BE831A840DAC13--

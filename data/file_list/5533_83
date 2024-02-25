@@ -1,0 +1,567 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (bouncesmtp2.u12.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 646FC14006F3
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed, 29 Jun 2022 16:36:54 +0200 (CEST)
+Received: from mx3.d101.univ-nantes.fr (MX3.univ-nantes.fr [193.52.101.137])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id 60C535FA4
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed, 29 Jun 2022 16:36:54 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTP id 5992E2090F
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 29 Jun 2022 16:36:54 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 3.506
+X-Spam-Level: ***
+X-Spam-Status: No, score=3.506 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	IMPRONONCABLE_2=1.5, LONGWORD=0.3, MEGALONGWORD=0.6,
+	MR_NOT_ATTRIBUTED_IP=0.2, RCVD_IN_DNSWL_NONE=-0.0001,
+	RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_WSFF=0.01,
+	SARE_HEAD_8BIT_SPAM=0.888, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+	T_REMOTE_IMAGE=0.01, UN_PHISHING_PW=0.1] autolearn=disabled
+X-CRM114-Status: UNSURE ( 0.9616 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=devinci.fr
+Received: from mx3.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id bo7vcUjgeF-C for <liste-egc@polytech.univ-nantes.fr>;
+	Wed, 29 Jun 2022 16:36:51 +0200 (CEST)
+X-Greylist: whitelisted by SQLgrey-1.6.7
+Received: from EUR04-DB3-obe.outbound.protection.outlook.com (mail-eopbgr60045.outbound.protection.outlook.com [40.107.6.45])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTPS id A368520076
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 29 Jun 2022 16:36:51 +0200 (CEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=nNCROn2zx9ncj48dRJ7ldsxOQBUYlpsc1AYancSgNJWFlM4KPF/wsFVuwxSRD9c8l7TVCS1LO+y09gdMUdxRWWxY+0qylashAIPYmaot7N775GGl3a0oqguW1tvEBFNDZ7jFzCknmaDaUm4L2t/9lkmkM+mwYDAvC+/QJhsGJKxaWOQtxa0veCgurbsVMbietoDq1uWRybZXVeFs7IZLX4E+tYR2CDu9SaL1JhkJIq+HnlAxia2Z6FmrXyMoH9QqokH7l2Hq+YkuiVbkW6QUt11R5I2wtLLcRIHinFlDJiFQkhmS/rjBUAEwUOWPAUcAmxmxUPfMvsC4SUzi3vuGzg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=OacFba6pf4PzjfMCVMH8iZiPbk3mC1nRkPmv1Oa2K1U=;
+ b=n47CRn14TGuxaikYGgmXQprkTcHAy+2P+P+M1j91JzrsIlmbvPRL1H4HSQXc/cqdfD+L3Lva7W0jATWC/m9ABIejWP3Jx2yIyS1jpSNb64bTgcTXE4GlgTt32q0Y+IRh97ZEFxerFDq1Q1KYEFI7Dm+xmuKL6rH2VpVWCn5BMMMBbBUd9CCFHrAvi3s3f9/bd3KQfgYpLIUyiwpfBByRd5uoYL0AxG2sxR7JrjG72AfbWRyClerdq/w3Zfjbg4D8FxX/v5567k+sUW3rutXlQwiu25lEpRtGuxK8E6n8sJZhs1stWOi8qyZOFx8FrjDUX+ELfUppXk55hh/CttDzng==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=devinci.fr; dmarc=pass action=none header.from=devinci.fr;
+ dkim=pass header.d=devinci.fr; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=devinci.fr;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=OacFba6pf4PzjfMCVMH8iZiPbk3mC1nRkPmv1Oa2K1U=;
+ b=WJFSOjaQRkYvz1FwQi3O/WKES7bN6F2gK9WUgcAwFt7/Y5YuWM5qQ2rpmhjHJ6LM3p48f40B7FHkZgkUGrymH7jYxvFYH4QcsE/rtJbXzPdyc7858ZhKzOqjkY7LjAKFKd3tDEfJhpr0y1PkDYlkthObImOXadqeOn6IuLvF34HsbienX5lu8PlHN9kT0nrWI9KpAp/bSO/l7lyAs19NSHtNsSe/fEzmFZ2T1X/3kg9ylRsgSs/7mCIFrN128YAvBCYuo3yLHzYbmAAMS5HhdWYyE0Gr0t0WW9WcnwcVon1JaUarWOrXXplF30nSK/zelVD6ejHNoyjcG0uSKyi7ww==
+Received: from PA4PR02MB6896.eurprd02.prod.outlook.com (2603:10a6:102:fe::19)
+ by AM0PR02MB5682.eurprd02.prod.outlook.com (2603:10a6:208:15d::28) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5373.18; Wed, 29 Jun
+ 2022 14:36:49 +0000
+Received: from PA4PR02MB6896.eurprd02.prod.outlook.com
+ ([fe80::6c03:cbc2:cedd:651b]) by PA4PR02MB6896.eurprd02.prod.outlook.com
+ ([fe80::6c03:cbc2:cedd:651b%4]) with mapi id 15.20.5395.014; Wed, 29 Jun 2022
+ 14:36:49 +0000
+From: TRAVERS Nicolas <nicolas.travers@devinci.fr>
+To: "Liste-egc@polytech.univ-nantes.fr" <liste-egc@polytech.univ-nantes.fr>
+Thread-Topic:
+ =?Windows-1252?Q?[Applied_Sciences]_Invitation_to_Contribute_to_the_Speci?=
+ =?Windows-1252?Q?al_Issue_=93Recent_Advances_in_Systems_Engineering_Chall?=
+ =?Windows-1252?Q?enge=94_(IF_2.679)?=
+Thread-Index: AdiLxBeqcKqkFhWVTviCwYvtENy6ewAAWlvk
+Date: Wed, 29 Jun 2022 14:36:27 +0000
+Message-ID:
+ <PA4PR02MB68965E87D8124061FA71FFBB94BB9@PA4PR02MB6896.eurprd02.prod.outlook.com>
+References:
+ <PAXPR02MB734303F58C3132704172F14CF2BB9@PAXPR02MB7343.eurprd02.prod.outlook.com>
+In-Reply-To:
+ <PAXPR02MB734303F58C3132704172F14CF2BB9@PAXPR02MB7343.eurprd02.prod.outlook.com>
+Accept-Language: fr-FR, en-US
+Content-Language: fr-FR
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=devinci.fr;
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 0279fdbb-7784-4093-9434-08da59dccd55
+x-ms-traffictypediagnostic: AM0PR02MB5682:EE_
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:
+ nRPmIGz/+91EtXGt2LpB4om7kWvjFrxOzNYdPRpcKnJ2uK4NccHRl95+CoO191IPLw21Q8hizOCILtQsvZEcGrwZBUCeiiOp77Ux7ei2xNEP4GWJJOaNhralvenJjZ+DKS2+HiXIGd7ElFdScsE6GAPHykPfqjz/+I4mX3Rd4kdGwZUapL1QbowNAXpgCV3F1A4Fv0QLSpscca8D/TE4ADbJJjYGsoM7H9DGmRmFQq+26E5oY2JKcDpa8De7iAX+yIuaCaIe96UdWwxFFIStLRZ1zlRHiSLFAspuYVJd/dgpoviYnMlhud+1O35c0kqdsiBmYpsmUEXGrCT4PCCmdPM/t285HcXc/sDmHnPjVd+vU+DZ7XliPWe8oNZyMizuDwurm+4xh8ZBQvAI0YbuCfk/dewTd9Wchg+ozOMpmxa9fBavf4rilb/gPBsDuaqd9MnBuD14XvvfIr+NRlTlZ/KhaXoL+1zsKwlIqIg9/rmd6Qjx5mgr3Ipxthv2ldfkLFclLGo3VVT1acxsEVUQBfEffpVbPY2RhhDQKG13ZAEeSHkLkd5njc3avDFN8K/DsWYO7ZLfNDY7W9bpaOpDv8MvgfmNo4Iq0zu0hm1qjheWNi9+0y8u6cHTQpVG1ftcxkF53O//knIpcJk8CbNS0PqZ1F1iYLIYQzVGexJjviHb5L2bdhwBqPPiyT85DdFizjkX0qfhLRD9wrn6dAAEfDH9KPLg2EbEK5mnoVAlMfCtsRcmVMMJ/hIBh/XWP00j4Eo0QTQnugILZJDhq7H8AjKZZiIMiAkY+T+lgRV1ChygWl0ORZ3FMOeMsFWLgFst
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PA4PR02MB6896.eurprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230016)(366004)(39850400004)(396003)(376002)(136003)(346002)(84970400001)(33656002)(8936002)(186003)(66946007)(19627405001)(41300700001)(9686003)(83380400001)(45080400002)(6666004)(26005)(6916009)(478600001)(52536014)(5660300002)(2906002)(966005)(166002)(38070700005)(55016003)(316002)(786003)(38100700002)(71200400001)(91956017)(66574015)(6506007)(66556008)(76116006)(41320700001)(7696005)(66476007)(64756008)(66446008)(86362001)(122000001);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?Windows-1252?Q?Gk8UrKX1hKsx8s0EgnUojVBlit/dS/2E1CbVDTFYDBZOdp78475SYbHL?=
+ =?Windows-1252?Q?03yzZ7dZLqYHXmzU0YV4K9mchJ04hDvvG05tUP3oB4P2rRgJSMiWacfh?=
+ =?Windows-1252?Q?AuFT8tp69CPtnaRbw238SYrEAxybYOPfezl1S7Yr2N8MSFdPj/ZGEtZg?=
+ =?Windows-1252?Q?aNinYN+dgmzPaJVb4vklScVZlZDfsRx+nVM3e9wlmdrRoAqJawrHoJEF?=
+ =?Windows-1252?Q?62G0S+d7qU0Mg+YhtQ1bJIdHA4s5ontRNduSBAM9LTpyTjM9abk/D2iz?=
+ =?Windows-1252?Q?7C8OslKtXbUUce9NXCmtfoN/y6vMyNbpFn3UKYiRJlG+7Y6uZrEspGsr?=
+ =?Windows-1252?Q?8f1Byg+yDv5pz5DXo0Xi1M27xkuk7l2PT6KAsq9XG3PF+M9buY01Hvxx?=
+ =?Windows-1252?Q?4NPhn8l/qVieLlvv1NNzkOyh1OBKC+7PGlvkIelZw1ky8gxLAgYvzrGV?=
+ =?Windows-1252?Q?EtYZl60ddBxz212U8HP6OplLv6uruhcFWv9AVvK+dRPIpHsNTC9J917i?=
+ =?Windows-1252?Q?iE4aJMz2qT+ZESYszsU7cF1fbNQwtuSLARwKCKEom3W6mdChKlTxc/7W?=
+ =?Windows-1252?Q?iACuAHuFRqKRgvtlHfIMv7OInOAakwvls3fk7LeNRPC4YgrKXiFVDEvO?=
+ =?Windows-1252?Q?pOEKdkSa3gCcQrh5eV5jU0g0pUHV73m4Tor+ySDnv555ZVZqJTF+rTxt?=
+ =?Windows-1252?Q?t0c6jgR1KvVFFdgOFK0rY6td1wqN35DktoHurvXmihWuwEJaIJkEzYWd?=
+ =?Windows-1252?Q?1LSe7SminyidjPYBtH/9lqQYd/YqA80XvOmljGEGluYrJgJmJRRZrHK5?=
+ =?Windows-1252?Q?u2sKex85Voocz0Gi0DnHv4w4ahdKJWBMlRp/PvQQNTFflaRr2mIPTBhy?=
+ =?Windows-1252?Q?hY5UDIjtLAUvlxB5cO6bo+lbon/o5RV12rfXtkovV5YxkzlNxmgFjWd3?=
+ =?Windows-1252?Q?MEUSylbg3DSSSceVGj6j8gyqWjwRqzZYYtrNJYF1ctMy6fkyvtraLBsy?=
+ =?Windows-1252?Q?APx1NimBkKg2VGwxx2L3gszjw13gJ6fcfd9y2HLfH7DpPGg+z/QE87tT?=
+ =?Windows-1252?Q?dAReWj2p2gfPVc2E6GRsIkLPXIwB/kbiaE+Gb1XWeUvNsmkYKbfuf/eB?=
+ =?Windows-1252?Q?FTydyILgmKqRQmjEyv12NNIfcn8+nVFRGq+GcuixFvnSG4RnLYc0Ozq7?=
+ =?Windows-1252?Q?/KcyHbFpwk636PxIu1dBIndd5uLy3NBiPpSkNsR4DbjZcvFBxIsyFUtp?=
+ =?Windows-1252?Q?FCrD+S93ye4LgoBOlx09Ih1PyDZd2sfjpTTEHrye01M+ORtu8J4e/vIY?=
+ =?Windows-1252?Q?vbHpYyDyOcNUgXHVI3+oQPla1tfTeOvF+sLgcnpXBIO8BF1gf109P7kv?=
+ =?Windows-1252?Q?bgCA++Wyu2l0lLfdQn1+xvgkvwi/3VUhaso3u/8O6zLjBpaIHVGhiDfI?=
+ =?Windows-1252?Q?b3jpOsPt9Nrtm5UHWu0Rx9WlOhAQauRGJh62QrbtCBvQnz0xVZyg0jsD?=
+ =?Windows-1252?Q?6NUDjLF/XNQoX/WB0W2uFdbHjGjrTajFKhMKyaouw7WUpnyCnmmN4KWp?=
+ =?Windows-1252?Q?R6OrltgHRb7H5OdF68AuXb0YnOuOx6O6TOHINKRqQOchkXsuMyM8pvgV?=
+ =?Windows-1252?Q?7uRbbbVf6RCBSm0o/KcbrPFD9u0Sq1zU096lL1q8c4mZJjhUlnkqYTkh?=
+ =?Windows-1252?Q?nv8Z8of+5Ymy3quyvn36STmTzxZKPKhpVnMWl7tuQNCnID3sJGm2vw?=
+ =?Windows-1252?Q?=3D=3D?=
+Content-Type: multipart/alternative;
+	boundary="_000_PA4PR02MB68965E87D8124061FA71FFBB94BB9PA4PR02MB6896eurp_"
+MIME-Version: 1.0
+X-OriginatorOrg: devinci.fr
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PA4PR02MB6896.eurprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0279fdbb-7784-4093-9434-08da59dccd55
+X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Jun 2022 14:36:49.8492
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 88eebcae-d6e6-4ef7-bba4-4c34f4c2d5e0
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: dP1t8vXdEbRB9F3oE5eJHCi6Xd4IFci+Bc+AnQ7iZlxGu+wyO/gh8YsNZbqoUXu3n9qaHPoSaotYsAdRSeNMcohEvfvpKTGmkOin7mj/Bhg=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM0PR02MB5682
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] [Applied Sciences] Invitation to Contribute to the
+ Special Issue =?WINDOWS-1252?Q?=93Recent?= Advances in Systems Engineering
+ =?WINDOWS-1252?Q?Challenge=94?= (IF 2.679)
+
+--_000_PA4PR02MB68965E87D8124061FA71FFBB94BB9PA4PR02MB6896eurp_
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+Dear Colleague,
+
+Applied Sciences (ISSN 2076-3417, IF 2.679) is currently running a Special =
+Issue entitled =93Recent Advances in Systems Engineering Challenge=94. We a=
+re serving as the Guest Editors for this topic.
+
+We take great pleasure to have you informed that this issue is open for sub=
+mission. Given your innovative work in this area, we would like to inquire =
+whether you are interested in submitting your next paper to this issue. Det=
+ailed information can be found at:
+
+https://www.mdpi.com/journal/applsci/special_issues/systems_engineering_cha=
+llenge
+
+The official submission deadline for this special issue is 20 December 2022=
+. You may submit your manuscript now or up until the deadline.
+
+If the issue publishes over 10 papers, we will print it into an *E-book and=
+ real book*, making your works highly circulated. See http://www.mdpi.com/b=
+ooks/pdfview/book/250 (with ISBN number). The real book will be available o=
+ffline, and online in Amazon, eBookMall, Apple Books... From 2016 MDPI rank=
+ed as the 2nd largest purely open access (OA) publisher, providing ultimate=
+ free access to the latest research with readers. OA papers are downloaded =
+6x in average more than non-OA ones.
+
+The APC of CHF 2300 in 2022 applies to accepted papers. You may be entitled=
+ to a discount if you have previously received a discount code.
+
+By the way, we would appreciate receiving your reply within two weeks about=
+ your decision. For any questions regarding technical issues or the journal=
+, please contact Mr. Adrian Szilagyi, szilagy@mdpi.com
+
+Look forward to hearing from you.
+
+Kind regards,
+
+Dr. Nga Nguyen
+Dr. Lylia Alouache
+Dr. Nicolas Travers
+
+Guest Editors
+-----------------
+About /Applied Sciences/
+
+Applied Sciences (ISSN 2076-3417; IF: 2.679,
+https://www.mdpi.com/journal/applsci) is a journal published by MDPI,
+Basel, Switzerland. /Applied Sciences/ maintains rigorous peer-review
+and a rapid publication process.
+
+Open Access (http://www.mdpi.com/about/openaccess): free for readers,
+with publishing fees paid by authors or their institutions.
+(https://www.mdpi.com/journal/applsci/apc).
+
+*High Visibility*: Applied Sciences is indexed by the Science Citation
+Index Expanded (Web of Science) [search for =93Applied Sciences-Basel=94],
+Scopus, Inspec and other databases.
+
+*Rapid Publication*: manuscripts are peer-reviewed and a first decision
+provided to authors approximately 19.52 days after submission;
+acceptance to publication is undertaken in 5.8 days (median values for
+papers published in 2019).
+
+[https://storage.letsignit.com/5bbf3d27229c7c0001b516ac/logo_5bbf3d27229c7c=
+0001b516ac_01bd3d65d71441c8cae0bb17ecf3c669.png]
+Nicolas TRAVERS
+Enseignant Chercheur - Responsable Groupe Digital
+D=E9partement Informatique, Data & IA
++33 1 81 00 28 33
+https://www.linkedin.com/in/traversn/
+Retrouvez-nous sur devinci.fr/research-center<https://cloud.letsignit.com/c=
+ollect/bc/5f477b498afa65000aabd321?p=3DnP2-ScO6-vNP5RaGcPvyEKdWgVGNlodC4kLG=
+svUnUpY0qmRs1JsFfkWJSF8ZWmLjziuV1VmS02Lgh9TC4BtYMlMcWETBP8JnIZ84PHKkIFzAVei=
+vnJDMztduWrkaCID-mL-1hN1xDK18wi-o8gS3G2Prg4vze7v-P3S23OEx07I=3D>
+[https://storage.letsignit.com/5bbf3d27229c7c0001b516ac/logo_5bbf3d27229c7c=
+0001b516ac_fa26d4badf2c6377bc99410d39ab3e86.png]<https://cloud.letsignit.co=
+m/collect/bc/5f477b498afa65000aabd321?p=3DnP2-ScO6-vNP5RaGcPvyEKdWgVGNlodC4=
+kLGsvUnUpY0qmRs1JsFfkWJSF8ZWmLjziuV1VmS02Lgh9TC4BtYMlMcWETBP8JnIZ84PHKkIFx0=
+T6tFMYApEhXbZeoXLKRDbLaF7BTQrKKYn0nUrUWQah8hSmJWR2sYE9sYEAhSfrk=3D>[https:/=
+/storage.letsignit.com/5bbf3d27229c7c0001b516ac/logo_5bbf3d27229c7c0001b516=
+ac_30a7735a477788d7833988f38fa47b90.png]<https://cloud.letsignit.com/collec=
+t/bc/5f477b498afa65000aabd321?p=3DnP2-ScO6-vNP5RaGcPvyEKdWgVGNlodC4kLGsvUnU=
+pY0qmRs1JsFfkWJSF8ZWmLjziuV1VmS02Lgh9TC4BtYMlMcWETBP8JnIZ84PHKkIFx3Dw1uAPA-=
+oNIZIuLDKaQPM9epEevAF9WONbx-xxyOug=3D=3D>[https://storage.letsignit.com/5bb=
+f3d27229c7c0001b516ac/logo_5bbf3d27229c7c0001b516ac_959dfa6c5ceef1acde39b48=
+5b1e8493e.png]<https://cloud.letsignit.com/collect/bc/5f477b498afa65000aabd=
+321?p=3DnP2-ScO6-vNP5RaGcPvyEKdWgVGNlodC4kLGsvUnUpY0qmRs1JsFfkWJSF8ZWmLjziu=
+V1VmS02Lgh9TC4BtYMlMcWETBP8JnIZ84PHKkIFwHnZyp88uYMbvJZYe9aL6XkAV7EAuoMYMv--=
+iWCrWIuccvGiw5Yg8yCj-u28eHda17-FGMoeHmazGFAnu9nVbu>
+
+
+
+
+--_000_PA4PR02MB68965E87D8124061FA71FFBB94BB9PA4PR02MB6896eurp_
+Content-Type: text/html; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DWindows-1=
+252">
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<!--[if !mso]><style>v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style><![endif]--><style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Verdana;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:"Times New Roman \(Corps CS\)";
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+span.EmailStyle19
+	{mso-style-type:personal-reply;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;
+	position:relative;
+	top:0pt;
+	mso-text-raise:0pt;
+	letter-spacing:0pt;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-size:10.0pt;}
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:70.85pt 70.85pt 70.85pt 70.85pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"FR" link=3D"#0563C1" vlink=3D"#954F72" style=3D"word-wrap:bre=
+ak-word">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">Dear Colleague,</span><span style=3D"mso-fareast-language:EN-US"><o:p=
+></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">&nbsp;</span><span style=3D"mso-fareast-language:EN-US"><o:p></o:p></=
+span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">Applied Sciences (ISSN 2076-3417, IF 2.679) is currently running a Sp=
+ecial Issue entitled =93Recent Advances in Systems Engineering Challenge=94=
+. We are serving as the Guest Editors for
+ this topic.</span><span style=3D"mso-fareast-language:EN-US"><o:p></o:p></=
+span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">&nbsp;</span><span style=3D"mso-fareast-language:EN-US"><o:p></o:p></=
+span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">We take great pleasure to have you informed that this issue is open f=
+or submission. Given your innovative work in this area, we would like to in=
+quire whether you are interested in submitting
+ your next paper to this issue. Detailed information can be found at: </spa=
+n><span style=3D"mso-fareast-language:EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">&nbsp;</span><span style=3D"mso-fareast-language:EN-US"><o:p></o:p></=
+span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">https://www.mdpi.com/journal/applsci/special_issues/systems_engineeri=
+ng_challenge</span><span style=3D"mso-fareast-language:EN-US"><o:p></o:p></=
+span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">&nbsp;</span><span style=3D"mso-fareast-language:EN-US"><o:p></o:p></=
+span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">The official submission deadline for this special issue is 20 Decembe=
+r 2022. You may submit your manuscript now or up until the deadline.</span>=
+<span style=3D"mso-fareast-language:EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">&nbsp;</span><span style=3D"mso-fareast-language:EN-US"><o:p></o:p></=
+span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">If the issue publishes over 10 papers, we will print it into an *E-bo=
+ok and real book*, making your works highly circulated. See http://www.mdpi=
+.com/books/pdfview/book/250 (with ISBN
+ number). The real book will be available offline, and online in Amazon, eB=
+ookMall, Apple Books... From 2016 MDPI ranked as the 2nd largest purely ope=
+n access (OA) publisher, providing ultimate free access to the latest resea=
+rch with readers. OA papers are
+ downloaded 6x in average more than non-OA ones.</span><span style=3D"mso-f=
+areast-language:EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">&nbsp;</span><span style=3D"mso-fareast-language:EN-US"><o:p></o:p></=
+span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">The APC of CHF 2300 in 2022 applies to accepted papers. You may be en=
+titled to a discount if you have previously received a discount code.</span=
+><span style=3D"mso-fareast-language:EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">&nbsp;</span><span style=3D"mso-fareast-language:EN-US"><o:p></o:p></=
+span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">By the way, we would appreciate receiving your reply within two weeks=
+ about your decision. For any questions regarding technical issues or the j=
+ournal, please contact Mr. Adrian Szilagyi,
+ szilagy@mdpi.com</span><span style=3D"mso-fareast-language:EN-US"><o:p></o=
+:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">&nbsp;</span><span style=3D"mso-fareast-language:EN-US"><o:p></o:p></=
+span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">Look forward to hearing from you.</span><span style=3D"mso-fareast-la=
+nguage:EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">&nbsp;</span><span style=3D"mso-fareast-language:EN-US"><o:p></o:p></=
+span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">Kind regards,</span><span style=3D"mso-fareast-language:EN-US"><o:p><=
+/o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">&nbsp;</span><span style=3D"mso-fareast-language:EN-US"><o:p></o:p></=
+span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">Dr. Nga Nguyen</span><span style=3D"mso-fareast-language:EN-US"><o:p>=
+</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">Dr. Lylia Alouache</span><span style=3D"mso-fareast-language:EN-US"><=
+o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">Dr. Nicolas Travers</span><span style=3D"mso-fareast-language:EN-US">=
+<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">&nbsp;</span><span style=3D"mso-fareast-language:EN-US"><o:p></o:p></=
+span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">Guest Editors</span><span style=3D"mso-fareast-language:EN-US"><o:p><=
+/o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">-----------------
+</span><span style=3D"mso-fareast-language:EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">About /Applied Sciences/</span><span style=3D"mso-fareast-language:EN=
+-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">&nbsp;</span><span style=3D"mso-fareast-language:EN-US"><o:p></o:p></=
+span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">Applied Sciences (ISSN 2076-3417; IF: 2.679,</span><span style=3D"mso=
+-fareast-language:EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">https://www.mdpi.com/journal/applsci) is a journal published by MDPI,=
+</span><span style=3D"mso-fareast-language:EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">Basel, Switzerland. /Applied Sciences/ maintains rigorous peer-review=
+</span><span style=3D"mso-fareast-language:EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">and a rapid publication process.</span><span style=3D"mso-fareast-lan=
+guage:EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">&nbsp;</span><span style=3D"mso-fareast-language:EN-US"><o:p></o:p></=
+span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">Open Access (http://www.mdpi.com/about/openaccess): free for readers,=
+</span><span style=3D"mso-fareast-language:EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">with publishing fees paid by authors or their institutions.</span><sp=
+an style=3D"mso-fareast-language:EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">(https://www.mdpi.com/journal/applsci/apc).</span><span style=3D"mso-=
+fareast-language:EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">&nbsp;</span><span style=3D"mso-fareast-language:EN-US"><o:p></o:p></=
+span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">*High Visibility*: Applied Sciences is indexed by the Science Citatio=
+n</span><span style=3D"mso-fareast-language:EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">Index Expanded (Web of Science) [search for =93Applied Sciences-Basel=
+=94],</span><span style=3D"mso-fareast-language:EN-US"><o:p></o:p></span></=
+p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">Scopus, Inspec and other databases.</span><span style=3D"mso-fareast-=
+language:EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">&nbsp;</span><span style=3D"mso-fareast-language:EN-US"><o:p></o:p></=
+span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">*Rapid Publication*: manuscripts are peer-reviewed and a first decisi=
+on
+</span><span style=3D"mso-fareast-language:EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">provided to authors approximately 19.52 days after submission;
+</span><span style=3D"mso-fareast-language:EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:E=
+N-US">acceptance to publication is undertaken in 5.8 days (median values fo=
+r
+</span><span style=3D"mso-fareast-language:EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"mso-fareast-language:EN-US">papers pu=
+blished in 2019).<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"mso-fareast-language:EN-US">&nbsp;</s=
+pan><span style=3D"font-size:12.0pt"><o:p></o:p></span></p>
+<table class=3D"MsoNormalTable" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0" width=3D"0">
+<tbody>
+<tr>
+<td style=3D"padding:0cm 0cm 0cm 0cm">
+<table class=3D"MsoNormalTable" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0">
+<tbody>
+<tr>
+<td style=3D"padding:0cm 0cm 0cm 0cm">
+<table class=3D"MsoNormalTable" border=3D"0" cellspacing=3D"7" cellpadding=
+=3D"0">
+<tbody>
+<tr>
+<td width=3D"70" style=3D"width:52.5pt;padding:0cm 0cm 0cm 0cm">
+<p class=3D"MsoNormal"><img width=3D"70" style=3D"width:.7291in" id=3D"_x00=
+00_i1028" src=3D"https://storage.letsignit.com/5bbf3d27229c7c0001b516ac/log=
+o_5bbf3d27229c7c0001b516ac_01bd3d65d71441c8cae0bb17ecf3c669.png"><o:p></o:p=
+></p>
+</td>
+<td style=3D"padding:0cm 0cm 0cm 0cm">
+<p class=3D"MsoNormal" style=3D"line-height:110%"><b><span style=3D"font-si=
+ze:9.0pt;line-height:110%;font-family:&quot;Verdana&quot;,sans-serif;color:=
+#1C1C1B">Nicolas TRAVERS</span></b><span style=3D"font-size:9.0pt;line-heig=
+ht:110%;font-family:&quot;Verdana&quot;,sans-serif;color:#1C1C1B"><br>
+</span><b><span style=3D"font-size:9.0pt;line-height:110%;font-family:&quot=
+;Verdana&quot;,sans-serif;color:black">Enseignant Chercheur - Responsable G=
+roupe Digital</span></b><span style=3D"font-size:9.0pt;line-height:110%;fon=
+t-family:&quot;Verdana&quot;,sans-serif;color:black"><br>
+D=E9partement Informatique, Data &amp; IA<br>
++33 1 81 00 28 33 <br>
+https://www.linkedin.com/in/traversn/</span><span style=3D"font-family:&quo=
+t;Verdana&quot;,sans-serif"><o:p></o:p></span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"padding:0cm 0cm 0cm 0cm"></td>
+<td style=3D"padding:0cm 0cm 0cm 0cm">
+<table class=3D"MsoNormalTable" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0">
+<tbody>
+<tr>
+<td style=3D"padding:0cm 0cm 0cm 0cm">
+<p class=3D"MsoNormal"><i><span style=3D"font-size:9.0pt;font-family:&quot;=
+Verdana&quot;,sans-serif;color:black">Retrouvez-nous sur
+<b><a href=3D"https://cloud.letsignit.com/collect/bc/5f477b498afa65000aabd3=
+21?p=3DnP2-ScO6-vNP5RaGcPvyEKdWgVGNlodC4kLGsvUnUpY0qmRs1JsFfkWJSF8ZWmLjziuV=
+1VmS02Lgh9TC4BtYMlMcWETBP8JnIZ84PHKkIFzAVeivnJDMztduWrkaCID-mL-1hN1xDK18wi-=
+o8gS3G2Prg4vze7v-P3S23OEx07I=3D"><span style=3D"color:black;text-decoration=
+:none">devinci.fr/research-center</span></a></b></span></i><b><span style=
+=3D"font-size:9.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:black"=
+>
+</span></b><o:p></o:p></p>
+</td>
+</tr>
+<tr style=3D"height:18.0pt">
+<td style=3D"padding:0cm 0cm 0cm 0cm;height:18.0pt">
+<p class=3D"MsoNormal"><a href=3D"https://cloud.letsignit.com/collect/bc/5f=
+477b498afa65000aabd321?p=3DnP2-ScO6-vNP5RaGcPvyEKdWgVGNlodC4kLGsvUnUpY0qmRs=
+1JsFfkWJSF8ZWmLjziuV1VmS02Lgh9TC4BtYMlMcWETBP8JnIZ84PHKkIFx0T6tFMYApEhXbZeo=
+XLKRDbLaF7BTQrKKYn0nUrUWQah8hSmJWR2sYE9sYEAhSfrk=3D"><span style=3D"color:b=
+lue;text-decoration:none"><img border=3D"0" width=3D"16" height=3D"16" styl=
+e=3D"width:.1666in;height:.1666in" id=3D"_x0000_i1027" src=3D"https://stora=
+ge.letsignit.com/5bbf3d27229c7c0001b516ac/logo_5bbf3d27229c7c0001b516ac_fa2=
+6d4badf2c6377bc99410d39ab3e86.png"></span></a><a href=3D"https://cloud.lets=
+ignit.com/collect/bc/5f477b498afa65000aabd321?p=3DnP2-ScO6-vNP5RaGcPvyEKdWg=
+VGNlodC4kLGsvUnUpY0qmRs1JsFfkWJSF8ZWmLjziuV1VmS02Lgh9TC4BtYMlMcWETBP8JnIZ84=
+PHKkIFx3Dw1uAPA-oNIZIuLDKaQPM9epEevAF9WONbx-xxyOug=3D=3D"><span style=3D"co=
+lor:blue;text-decoration:none"><img border=3D"0" width=3D"16" height=3D"16"=
+ style=3D"width:.1666in;height:.1666in" id=3D"_x0000_i1026" src=3D"https://=
+storage.letsignit.com/5bbf3d27229c7c0001b516ac/logo_5bbf3d27229c7c0001b516a=
+c_30a7735a477788d7833988f38fa47b90.png"></span></a><a href=3D"https://cloud=
+.letsignit.com/collect/bc/5f477b498afa65000aabd321?p=3DnP2-ScO6-vNP5RaGcPvy=
+EKdWgVGNlodC4kLGsvUnUpY0qmRs1JsFfkWJSF8ZWmLjziuV1VmS02Lgh9TC4BtYMlMcWETBP8J=
+nIZ84PHKkIFwHnZyp88uYMbvJZYe9aL6XkAV7EAuoMYMv--iWCrWIuccvGiw5Yg8yCj-u28eHda=
+17-FGMoeHmazGFAnu9nVbu"><span style=3D"color:blue;text-decoration:none"><im=
+g border=3D"0" width=3D"16" height=3D"16" style=3D"width:.1666in;height:.16=
+66in" id=3D"_x0000_i1025" src=3D"https://storage.letsignit.com/5bbf3d27229c=
+7c0001b516ac/logo_5bbf3d27229c7c0001b516ac_959dfa6c5ceef1acde39b485b1e8493e=
+.png"></span></a><o:p></o:p></p>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td style=3D"border:none;border-top:solid #1C1C1B 2.25pt;padding:0cm 0cm 0c=
+m 0cm"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;display:none"><o:p>&=
+nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:12.0pt"><o:p>&nbsp;</o:p></=
+span></p>
+<p class=3D"MsoNormal"><span style=3D"mso-fareast-language:EN-US">&nbsp;<o:=
+p></o:p></span></p>
+</div>
+</body>
+</html>
+
+--_000_PA4PR02MB68965E87D8124061FA71FFBB94BB9PA4PR02MB6896eurp_--

@@ -1,0 +1,804 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (bouncesmtp2.u12.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 9EA5F14017C8
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed, 25 Oct 2023 11:11:54 +0200 (CEST)
+Received: from mx2.univ-nantes.fr (MX2.univ-nantes.fr [193.52.101.136])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id 9AEFA808
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed, 25 Oct 2023 11:11:54 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.univ-nantes.fr (Postfix) with ESMTP id 94D541002CB
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 25 Oct 2023 11:11:54 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 2.424
+X-Spam-Level: **
+X-Spam-Status: No, score=2.424 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	IMPRONONCABLE_2=1.5, NO_RDNS=0.5, NO_RDNS2=0.01, POISEN_SPAM_PILL=0.1,
+	POISEN_SPAM_PILL_1=0.1, POISEN_SPAM_PILL_3=0.1,
+	RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+	RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001,
+	SPF_PASS=-0.001, UN_PHISHING_COMPTE=0.1, UN_PHISHING_PW=0.1,
+	URIBL_BLOCKED=0.001] autolearn=disabled
+X-CRM114-Status: UNSURE ( 2.3194 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=unistra.fr
+Received: from mx2.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id yh5C9w9aAbcY for <liste-egc@polytech.univ-nantes.fr>;
+	Wed, 25 Oct 2023 11:11:48 +0200 (CEST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=194.254.241.31; helo=smtpout02-ext4.partage.renater.fr; envelope-from=gancarski@unistra.fr; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=none (p=none dis=none) header.from=unistra.fr
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=unistra.fr
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (2048-bit key; unprotected) header.d=unistra.fr header.i=@unistra.fr header.a=rsa-sha256 header.s=CF279DD4-6F58-4C59-BB33-73FDC6DFC1E3 header.b=maGWY3Y3;
+	dkim-atps=neutral
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from smtpout02-ext4.partage.renater.fr (smtpout02-ext4.partage.renater.fr [194.254.241.31])
+	by mx2.univ-nantes.fr (Postfix) with ESMTPS id A52811002DA
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 25 Oct 2023 11:11:48 +0200 (CEST)
+Received: from zmtaauth04.partage.renater.fr (zmtaauth04.partage.renater.fr [194.254.241.26])
+	by smtpout20.partage.renater.fr (Postfix) with ESMTP id D71BFC282F;
+	Wed, 25 Oct 2023 11:11:31 +0200 (CEST)
+Received: from zmtaauth04.partage.renater.fr (localhost [127.0.0.1])
+	by zmtaauth04.partage.renater.fr (Postfix) with ESMTPS id A8C241C0234;
+	Wed, 25 Oct 2023 11:11:31 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zmtaauth04.partage.renater.fr (Postfix) with ESMTP id 823791C029C;
+	Wed, 25 Oct 2023 11:11:31 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zmtaauth04.partage.renater.fr 823791C029C
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unistra.fr;
+	s=CF279DD4-6F58-4C59-BB33-73FDC6DFC1E3; t=1698225091;
+	bh=WMc0hvVac8EzWxdtG3Xt5TBUzubK9XRf2B5PNUDF9/c=;
+	h=Message-ID:Date:MIME-Version:From:To;
+	b=maGWY3Y3lL59xAUuS1R0NWajjJmVx/jihOBHQ6IpExqrwAHuTxx5rcJGI5sQOI8G9
+	 uZunL4/3U8tDOsUJ+7LfcsctiBMqN9V3xGbCTuaj536hp4ew8BNgvRfNaXY/1wNn3P
+	 wQ5c0nxRJkVRtngBNTBo3OoEn08dvRZ/pys8Ym3bVKlnVmacFDM0R0c4mclydpMtWt
+	 VUUJCyCa4SzYEaklwaoYIwWPwL+m7zkSqPfEXaU6W2ywJ5O4vSNf2JxQ4aMtawdhM5
+	 2h848Xs70t9jE277RTNLYqjZR3WMB9YJDTk89qe2+P0sPjNmA+rU4n4PVKTOB7ga6O
+	 aCSdKxMQgAG6w==
+Received: from zmtaauth04.partage.renater.fr ([127.0.0.1])
+ by localhost (zmtaauth04.partage.renater.fr [127.0.0.1]) (amavis, port 10026)
+ with ESMTP id lNOcJFuPseQN; Wed, 25 Oct 2023 11:11:31 +0200 (CEST)
+Received: from [130.79.91.71] (unknown [194.254.241.250])
+	by zmtaauth04.partage.renater.fr (Postfix) with ESMTPA id B29591C0234;
+	Wed, 25 Oct 2023 11:11:30 +0200 (CEST)
+Content-Type: multipart/alternative;
+ boundary="------------Eu25wRxyIQNVvOCBQbF3ARHK"
+Message-ID: <a5868c7f-c238-473e-8895-f2582376d621@unistra.fr>
+Date: Wed, 25 Oct 2023 11:11:30 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: =?UTF-8?Q?Pierre_Gan=C3=A7arski_=28Unistra=29?= <gancarski@unistra.fr>
+Reply-To: =?UTF-8?Q?Pierre_Gan=C3=A7arski_=28Unistra=29?=
+ <gancarski@unistra.fr>,
+ "antoine.cornuejols@agroparistech.fr" <antoine.cornuejols@agroparistech.fr>
+To: liste-egc@polytech.univ-nantes.fr,
+ Participants HERELLES <herelles-all@icube.unistra.fr>,
+ annonces@listes.societe-informatique-de-france.fr,
+ gazettebd3@univ-grenoble-alpes.fr, bull-ia <bull-ia@gdria.fr>,
+ sfc@framalistes.org, liste-sfc@sfc-classification.net,
+ assemblee-bda@inria.fr, SIMSOC@JISCMAIL.AC.UK, socnet@lists.ufl.edu,
+ info-ic <info-ic@listes.irisa.fr>, bull-i3 <bull-i3@irit.fr>,
+ flashinfo@afia.asso.fr, liste-proml@lri.fr
+References: <0654b9bf-f559-0c2a-380d-d082464a53b7@unicaen.fr>
+Content-Language: fr
+In-Reply-To: <0654b9bf-f559-0c2a-380d-d082464a53b7@unicaen.fr>
+X-Virus-Scanned: clamav-milter 0.103.8 at clamav02
+X-Virus-Status: Clean
+X-Renater-Ptge-SpamState: clean
+X-Renater-Ptge-SpamScore: -100
+X-Renater-Ptge-SpamCause: gggruggvucftvghtrhhoucdtuddrgedvkedrledtgddufecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucftgffptefvgfftnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpegtkfffgggfhffurhfvfhgjsegrtderredtvdejnecuhfhrohhmpefrihgvrhhrvgcuifgrnhoprghrshhkihculdgfnhhishhtrhgrmdcuoehgrghntggrrhhskhhisehunhhishhtrhgrrdhfrheqnecuggftrfgrthhtvghrnhepudejgfdutdejudelledtledtffejuddtueeggeeifffftdelfeehjeefjedvjeelnecuffhomhgrihhnpehunhhishhtrhgrrdhfrhenucfkphepudelgedrvdehgedrvdeguddrvdehtdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduleegrddvheegrddvgedurddvhedtpdhhvghloheplgdufedtrdejledrledurdejudgnpdhmrghilhhfrhhomheppeerfgfvhfdqkeersferrfhivghrrhgvpgfirghnpeevfeepteejrghrshhkihgppedvkegfnhhishhtrhgrpedvleerpecuoehgrghntggrrhhskhhisehunhhishhtrhgrrdhfrheqpdhnsggprhgtphhtthhopeduhedprhgtphhtthhopehlihhsthgvqdgvghgtsehpohhlhihtvggthhdruhhnihhvqdhnrghnthgvshdrfhhrpdhrtghpthhtohephhgvrhgvlhhlvghsqdgrlhhlsehitghusggvrdhunhhishhtrhgrrdhfrhdp
+ rhgtphhtthhopegrnhhnohhntggvsheslhhishhtvghsrdhsohgtihgvthgvqdhinhhfohhrmhgrthhiqhhuvgdquggvqdhfrhgrnhgtvgdrfhhrpdhrtghpthhtohepghgriigvthhtvggsugefsehunhhivhdqghhrvghnohgslhgvqdgrlhhpvghsrdhfrhdprhgtphhtthhopegsuhhllhdqihgrsehgughrihgrrdhfrhdprhgtphhtthhopehsfhgtsehfrhgrmhgrlhhishhtvghsrdhorhhg
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Urgent : Post-doc position "Collaborative Learning" in
+ Paris-Saclay (or Strasbourg)
+
+This is a multi-part message in MIME format.
+--------------Eu25wRxyIQNVvOCBQbF3ARHK
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+
+ >>>> English version below <<<
+
+Offre de Post-doctorat 2023 - 2024
+
+*Apprentissage collaboratif multiparadigme interactif pour l=E2=80=99anal=
+yse de=20
+s=C3=A9ries temporelles**
+*
+https://seafile.unistra.fr/f/6453ca212850438684bc/
+
+Le projet post-doctoral vise =C3=A0 proposer une m=C3=A9thode innovante=20
+d'apprentissage collaboratif interactif multi-paradigme, qui combine des=20
+m=C3=A9thodes supervis=C3=A9es et non-supervis=C3=A9es tout en permettant=
+ l'interaction=20
+avec l'expert.
+
+La personne recrut=C3=A9e proposera et d=C3=A9finira de nouveaux m=C3=A9c=
+anismes=20
+permettant aux m=C3=A9thodes supervis=C3=A9es et non supervis=C3=A9es de =
+collaborer=20
+efficacement pour atteindre un consensus de classification. Les=20
+modalit=C3=A9s d'=C3=A9change d'informations entre elles devront =C3=AAtr=
+e pr=C3=A9cis=C3=A9es.=20
+Elle devra =C3=A9galement d=C3=A9finir un protocole d'interaction entre=20
+l'utilisateur et les m=C3=A9thodes d'apprentissage par l'utilisation de=20
+contraintes. Enfin,elle devra mettre en =C5=93uvre concr=C3=A8tement les =
+approches=20
+propos=C3=A9es pour permettre leur test et leur validation.
+
+  * /Lieu/ : Saclay (Campus d=E2=80=99AgroParisTech, 22 place de l=E2=80=99=
+Agronomie,
+    91120 Palaiseau). La possibilit=C3=A9 d'effectuer ce post-doc =C3=A0
+    Strasbourg peut =C3=AAtre =C3=A9tudi=C3=A9e : (ICube, 300 bld S=C3=A9=
+bastien Brant 37400
+    Illkirch)
+  * /Dur=C3=A9e/ : Un an (d=C3=A9marrage d=C3=A8s que possible!)
+  * /Salaire/ : de 2000=E2=82=AC/mois =C3=A0 2300=E2=82=AC/mois (net) en =
+fonction de
+    l=E2=80=99exp=C3=A9rience.
+  * /Contact/ : Antoine Cornu=C3=A9jols antoine.cornuejols@agroparistech.=
+fr
+    et Pierre Gan=C3=A7arski, pierre.gancarski@unistra.fr
+
+
+PROFIL SOUHAITE
+
+  * Doctorat en informatique et sp=C3=A9cialis=C3=A9 en apprentissage
+    automatique/fouille de donn=C3=A9es.
+  * Connaissances solides en Science des Donn=C3=A9es et plus
+    particuli=C3=A8rement sur les m=C3=A9thodes standards de classificati=
+on et de
+    clustering. Une premi=C3=A8re exp=C3=A9rience sur l=E2=80=99utilisati=
+on de mod=C3=A8les
+    collaboratifs/ensemblistes ou d=E2=80=99int=C3=A9gration de contraint=
+es serait un
+    plus.
+  * Bonnes comp=C3=A9tences en communication verbale (anglais ou fran=C3=A7=
+ais) et
+    =C3=A9crite (anglais).
+  * Comp=C3=A9tences interpersonnelles et la capacit=C3=A9 =C3=A0 travail=
+ler
+    individuellement ou en tant que membre d=E2=80=99une =C3=A9quipe de p=
+rojet.
+
+*POUR POSTULER*
+
+Les personnes int=C3=A9ress=C3=A9es doivent soumettre (par courrier =C3=A9=
+lectronique=20
+adress=C3=A9 =C3=A0 antoine.cornuejols@agroparistech.fr=20
+<mailto:antoine.cornuejols@agroparistech.fr?subject=3DCandidature post-do=
+c=20
+HERELLES>) leur curriculum vitae, la liste de leurs publications, une=20
+lettre de motivation et les coordonn=C3=A9es de trois r=C3=A9f=C3=A9rence=
+s. Les=20
+candidatures seront admises jusqu=E2=80=99=C3=A0 ce que le poste soit pou=
+rvu. Le=20
+poste d=C3=A9butera le plus rapidement possible.
+
+Vu les d=C3=A9lais,=C2=A0 les personnes =C3=A9trang=C3=A8res devront =C3=AA=
+tre d=C3=A9j=C3=A0 en possession=20
+d'un visa et d'un titre de s=C3=A9jour valide.
+
+
+*>>> English version <<<<<
+*
+
+*Post-doct. position offer 2023 - 2024*
+
+*Multi-paradigm interactive collaborative learning for time series analys=
+is*
+
+https://seafile.unistra.fr/f/06bc4662cc3f4be8b956/*
+*
+
+
+The post-doctoral project aims to propose an innovative multi-paradigm=20
+interactive collaborative learning method, which combines supervised and=20
+unsupervised methods while allowing interaction with the expert.
+
+The recruited person will propose and define new mechanisms enabling=20
+supervised and unsupervised methods to work together effectively to=20
+reach a classification consensus. The methods for exchanging information=20
+between them will have to be specified. She/He will also have to define=20
+a protocol for interaction between the user and the learning methods=20
+through the use of constraints. Finally, She/He will have to implement=20
+the proposed approaches in concrete terms to enable them to be tested=20
+and validated. An engineer dedicated to the FoDoMuST platform will help=20
+her/him in this task.
+
+  * /Location: /Saclay (AgroParisTech campus, 22 place de l'Agronomie,
+    91120 Palaiseau). Possibility to transfert the post-doc to
+    Strasbourg can be studied : ICube, 300 bld S=C3=A9bastien Brant 37400
+    Illkirch)
+  * /Duration/: One year (starting as soon as possible!)
+  * /Salary/: from =E2=82=AC2,000/month to =E2=82=AC2,300/month (net) dep=
+ending on
+    experience.
+  * /Contact/: Antoine Cornu=C3=A9jols antoine.cornuejols@agroparistech.f=
+r
+    and Pierre Gan=C3=A7arski, pierre.gancarski@unistra.fr
+
+
+DESIRED PROFILE
+
+  * PhD in computer science, specialising in machine learning/data mining=
+.
+  * Solid knowledge of Data Science, and more specifically of standard
+    classification methods and data mining.
+  * Good verbal (English or French) and written (English) communication
+    skills.
+  * Interpersonal skills and the ability to work individually or as part
+    of a project team.
+
+
+TO APPLY
+
+Interested candidates should submit (by e-mail to=20
+antoine.cornuejols@agroparistech.fr and pierre.gancarski@unistra.fr)=20
+their curriculum vitae, a list of publications, a letter of motivation=20
+and the contact details of three references. Applications will be=20
+accepted until the position is filled. The position will start as soon=20
+as possible.
+
+In view of the deadlines, foreign nationals must already be in=20
+possession of a visa and a valid residence permit.
+
+
+--------------Eu25wRxyIQNVvOCBQbF3ARHK
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF=
+-8">
+  </head>
+  <body text=3D"#000000" bgcolor=3D"#FFFFFF">
+    <p>&gt;&gt;&gt;&gt; English version below &lt;&lt;&lt;</p>
+    <p>Offre de Post-doctorat 2023 - 2024<br>
+      <br>
+      <b>Apprentissage collaboratif multiparadigme interactif pour
+        l=E2=80=99analyse de s=C3=A9ries temporelles</b><b><br>
+      </b><br>
+      <font color=3D"#0432ff"><a class=3D"moz-txt-link-freetext" href=3D"=
+https://seafile.unistra.fr/f/6453ca212850438684bc/">https://seafile.unist=
+ra.fr/f/6453ca212850438684bc/</a></font></p>
+    <p>Le projet post-doctoral vise =C3=A0 proposer une m=C3=A9thode inno=
+vante
+      d'apprentissage collaboratif interactif multi-paradigme, qui
+      combine des m=C3=A9thodes supervis=C3=A9es et non-supervis=C3=A9es =
+tout en
+      permettant l'interaction avec l'expert. <br>
+      <br>
+      La personne recrut=C3=A9e proposera et d=C3=A9finira de nouveaux m=C3=
+=A9canismes
+      permettant aux m=C3=A9thodes supervis=C3=A9es et non supervis=C3=A9=
+es de
+      collaborer efficacement pour atteindre un consensus de
+      classification. Les modalit=C3=A9s d'=C3=A9change d'informations en=
+tre elles
+      devront =C3=AAtre pr=C3=A9cis=C3=A9es. Elle devra =C3=A9galement d=C3=
+=A9finir un protocole
+      d'interaction entre l'utilisateur et les m=C3=A9thodes d'apprentiss=
+age
+      par l'utilisation de contraintes. Enfin,elle devra mettre en =C5=93=
+uvre
+      concr=C3=A8tement les approches propos=C3=A9es pour permettre leur =
+test et
+      leur validation.<br>
+    </p>
+    <ul>
+      <li><i>Lieu</i> : Saclay (Campus d=E2=80=99AgroParisTech, 22 place =
+de
+        l=E2=80=99Agronomie, 91120 Palaiseau). La possibilit=C3=A9 d'effe=
+ctuer ce
+        post-doc =C3=A0 Strasbourg peut =C3=AAtre =C3=A9tudi=C3=A9e : (IC=
+ube, 300 bld
+        S=C3=A9bastien Brant 37400 Illkirch)
+        <style>@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:-536870145 1107305727 0 0 415 0;}@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:-469750017 -1073732485 9 0 511 0;}@font-face
+	{font-family:Roboto;
+	panose-1:2 11 6 4 2 2 2 2 2 4;
+	mso-font-alt:Arial;
+	mso-font-charset:0;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:-536870145 1342185563 32 0 415 0;}p.MsoNormal, li.Mso=
+Normal, div.MsoNormal
+	{mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-parent:"";
+	margin-top:6.0pt;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:-.05pt;
+	margin-bottom:.0001pt;
+	mso-para-margin-top:6.0pt;
+	mso-para-margin-right:0cm;
+	mso-para-margin-bottom:0cm;
+	mso-para-margin-left:-.01gd;
+	mso-para-margin-bottom:.0001pt;
+	text-align:justify;
+	text-indent:-.1pt;
+	mso-char-indent-count:-.01;
+	mso-pagination:widow-orphan;
+	mso-outline-level:1;
+	mso-hyphenate:none;
+	font-size:10.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-fareast-font-family:Roboto;
+	position:relative;
+	top:.5pt;
+	mso-text-raise:-.5pt;}.MsoChpDefault
+	{mso-style-type:export-only;
+	mso-default-props:yes;}.MsoPapDefault
+	{mso-style-type:export-only;
+	margin-top:6.0pt;
+	text-align:justify;}div.WordSection1
+	{page:WordSecti</style></li>
+      <li> <i>Dur=C3=A9e</i> : Un an (d=C3=A9marrage d=C3=A8s que possibl=
+e!)</li>
+      <li> <i>Salaire</i> : de 2000=E2=82=AC/mois =C3=A0 2300=E2=82=AC/mo=
+is (net) en
+        fonction de l=E2=80=99exp=C3=A9rience.</li>
+      <li> <i>Contact</i> : Antoine Cornu=C3=A9jols=C2=A0 <a
+          class=3D"moz-txt-link-abbreviated moz-txt-link-freetext"
+          href=3D"mailto:antoine.cornuejols@agroparistech.fr"
+          moz-do-not-send=3D"true">antoine.cornuejols@agroparistech.fr</a=
+>=C2=A0
+        et Pierre Gan=C3=A7arski, <a
+          class=3D"moz-txt-link-abbreviated moz-txt-link-freetext"
+          href=3D"mailto:pierre.gancarski@unistra.fr"
+          moz-do-not-send=3D"true">pierre.gancarski@unistra.fr</a></li>
+    </ul>
+    <br>
+    <font color=3D"#9437ff">PROFIL SOUHAITE</font><br>
+    <ul>
+      <li> Doctorat en informatique et sp=C3=A9cialis=C3=A9 en apprentiss=
+age
+        automatique/fouille de donn=C3=A9es.</li>
+      <li>Connaissances solides en Science des Donn=C3=A9es et plus
+        particuli=C3=A8rement sur les m=C3=A9thodes standards de classifi=
+cation et
+        de clustering. Une premi=C3=A8re exp=C3=A9rience sur l=E2=80=99ut=
+ilisation de
+        mod=C3=A8les collaboratifs/ensemblistes ou d=E2=80=99int=C3=A9gra=
+tion de
+        contraintes serait un plus.</li>
+      <li>Bonnes comp=C3=A9tences en communication verbale (anglais ou
+        fran=C3=A7ais) et =C3=A9crite (anglais).</li>
+      <li> Comp=C3=A9tences interpersonnelles et la capacit=C3=A9 =C3=A0 =
+travailler
+        individuellement ou en tant que membre d=E2=80=99une =C3=A9quipe =
+de projet.</li>
+    </ul>
+    <p><font color=3D"#9437ff"><b>POUR POSTULER</b></font></p>
+    <p>Les personnes int=C3=A9ress=C3=A9es doivent soumettre (par courrie=
+r
+      =C3=A9lectronique adress=C3=A9 =C3=A0 <a moz-do-not-send=3D"true"
+href=3D"mailto:antoine.cornuejols@agroparistech.fr?subject=3DCandidature
+        post-doc HERELLES">antoine.cornuejols@agroparistech.fr</a>) leur
+      curriculum vitae, la liste de leurs publications, une lettre de
+      motivation et les coordonn=C3=A9es de trois r=C3=A9f=C3=A9rences. L=
+es
+      candidatures seront admises jusqu=E2=80=99=C3=A0 ce que le poste so=
+it pourvu.
+      Le poste d=C3=A9butera le plus rapidement possible. </p>
+    <p>Vu les d=C3=A9lais,=C2=A0 les personnes =C3=A9trang=C3=A8res devro=
+nt =C3=AAtre d=C3=A9j=C3=A0 en
+      possession d'un visa et d'un titre de s=C3=A9jour valide.</p>
+    <p><br>
+    </p>
+    <p><b>&gt;&gt;&gt; English version &lt;&lt;&lt;&lt;&lt;<br>
+      </b> </p>
+    <font color=3D"#9437ff"><b><span
+style=3D"caret-color: rgb(0, 0, 0); font-family: -webkit-standard; font-s=
+ize: medium; font-style: normal; font-variant-caps: normal; letter-spacin=
+g: normal; text-align: start; text-indent: 0px; text-transform: none; whi=
+te-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; text=
+-decoration: none; display: inline !important; float: none;">Post-doct.
+          position offer 2023 - 2024</span></b></font><br
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-style: norm=
+al; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: auto; text-align: start; text-indent: 0px; text-transform: none;=
+ white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-strok=
+e-width: 0px; text-decoration: none;">
+    <br
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-style: norm=
+al; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: auto; text-align: start; text-indent: 0px; text-transform: none;=
+ white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-strok=
+e-width: 0px; text-decoration: none;">
+    <p><b><span
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: -we=
+bkit-standard; font-size: medium; font-style: normal; font-variant-caps: =
+normal; letter-spacing: normal; text-align: start; text-indent: 0px; text=
+-transform: none; white-space: normal; word-spacing: 0px; -webkit-text-st=
+roke-width: 0px; text-decoration: none; display: inline !important; float=
+: none;">Multi-paradigm
+          interactive collaborative learning for time series analysis</sp=
+an></b><font
+        color=3D"#0432ff"><span
+style=3D"caret-color: rgb(0, 0, 0); font-family: -webkit-standard; font-s=
+ize: medium; font-style: normal; font-variant-caps: normal; letter-spacin=
+g: normal; text-align: start; text-indent: 0px; text-transform: none; whi=
+te-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; text=
+-decoration: none; display: inline !important; float: none;"></span></fon=
+t></p>
+    <p><font color=3D"#0432ff"><span
+style=3D"caret-color: rgb(0, 0, 0); font-family: -webkit-standard; font-s=
+ize: medium; font-style: normal; font-variant-caps: normal; letter-spacin=
+g: normal; text-align: start; text-indent: 0px; text-transform: none; whi=
+te-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; text=
+-decoration: none; display: inline !important; float: none;"><a class=3D"=
+moz-txt-link-freetext" href=3D"https://seafile.unistra.fr/f/06bc4662cc3f4=
+be8b956/">https://seafile.unistra.fr/f/06bc4662cc3f4be8b956/</a></span><b=
+><span
+style=3D"caret-color: rgb(0, 0, 0); font-family: -webkit-standard; font-s=
+ize: medium; font-style: normal; font-variant-caps: normal; letter-spacin=
+g: normal; text-align: start; text-indent: 0px; text-transform: none; whi=
+te-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; text=
+-decoration: none; display: inline !important; float: none;"><br>
+          </span></b></font></p>
+    <br
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-style: norm=
+al; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: auto; text-align: start; text-indent: 0px; text-transform: none;=
+ white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-strok=
+e-width: 0px; text-decoration: none;">
+    <span
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: -we=
+bkit-standard; font-size: medium; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: auto; text-ali=
+gn: start; text-indent: 0px; text-transform: none; white-space: normal; w=
+idows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-deco=
+ration: none; display: inline !important; float: none;">The
+      post-doctoral project aims to propose an innovative multi-paradigm
+      interactive collaborative learning method, which combines
+      supervised and unsupervised methods while allowing interaction
+      with the expert.</span><br
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-style: norm=
+al; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: auto; text-align: start; text-indent: 0px; text-transform: none;=
+ white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-strok=
+e-width: 0px; text-decoration: none;">
+    <br
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-style: norm=
+al; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: auto; text-align: start; text-indent: 0px; text-transform: none;=
+ white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-strok=
+e-width: 0px; text-decoration: none;">
+    <span
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: -we=
+bkit-standard; font-size: medium; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: auto; text-ali=
+gn: start; text-indent: 0px; text-transform: none; white-space: normal; w=
+idows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-deco=
+ration: none; display: inline !important; float: none;">The
+    </span><span
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: -we=
+bkit-standard; font-size: medium; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: auto; text-ali=
+gn: start; text-indent: 0px; text-transform: none; white-space: normal; w=
+idows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-deco=
+ration: none; display: inline !important; float: none;">recruited
+    </span><span
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: -we=
+bkit-standard; font-size: medium; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: auto; text-ali=
+gn: start; text-indent: 0px; text-transform: none; white-space: normal; w=
+idows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-deco=
+ration: none; display: inline !important; float: none;">person=C2=A0
+      will propose and define new mechanisms enabling supervised and
+      unsupervised methods to work together effectively to reach a
+      classification consensus. The methods for exchanging information
+      between them will have to be specified. She/He will also have to
+      define a protocol for interaction between the user and the
+      learning methods through the use of constraints. Finally, She/He
+      will have to implement the proposed approaches in concrete terms
+      to enable them to be tested and validated. An engineer dedicated
+      to the FoDoMuST platform will help her/him in this task.</span><br
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-style: norm=
+al; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: auto; text-align: start; text-indent: 0px; text-transform: none;=
+ white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-strok=
+e-width: 0px; text-decoration: none;">
+    <ul>
+      <li><i><span
+style=3D"caret-color: rgb(0, 0, 0); font-family: -webkit-standard; font-s=
+ize: medium; font-variant-caps: normal; letter-spacing: normal; text-alig=
+n: start; text-indent: 0px; text-transform: none; white-space: normal; wo=
+rd-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: none; d=
+isplay: inline !important; float: none;">Location:
+          </span></i><span
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: -we=
+bkit-standard; font-size: medium; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: auto; text-ali=
+gn: start; text-indent: 0px; text-transform: none; white-space: normal; w=
+idows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-deco=
+ration: none; display: inline !important; float: none;">Saclay
+          (AgroParisTech campus, 22 place de l'Agronomie, 91120
+          Palaiseau). Possibility to transfert the post-doc to
+          Strasbourg can be studied : </span><span
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: -we=
+bkit-standard; font-size: medium; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: auto; text-ali=
+gn: start; text-indent: 0px; text-transform: none; white-space: normal; w=
+idows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-deco=
+ration: none; display: inline !important; float: none;">ICube,
+          300 bld S=C3=A9bastien Brant 37400 Illkirch)</span></li>
+      <li><span
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: -we=
+bkit-standard; font-size: medium; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: auto; text-ali=
+gn: start; text-indent: 0px; text-transform: none; white-space: normal; w=
+idows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-deco=
+ration: none; display: inline !important; float: none;"><i>Duration</i>:
+          One year (starting as soon as possible!)</span></li>
+      <li><span
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: -we=
+bkit-standard; font-size: medium; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: auto; text-ali=
+gn: start; text-indent: 0px; text-transform: none; white-space: normal; w=
+idows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-deco=
+ration: none; display: inline !important; float: none;"><i>Salary</i>:
+          from =E2=82=AC2,000/month to =E2=82=AC2,300/month (net) dependi=
+ng on
+          experience.</span></li>
+      <li><span
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: -we=
+bkit-standard; font-size: medium; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: auto; text-ali=
+gn: start; text-indent: 0px; text-transform: none; white-space: normal; w=
+idows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-deco=
+ration: none; display: inline !important; float: none;"><i>Contact</i>:
+          Antoine Cornu=C3=A9jols <a class=3D"moz-txt-link-abbreviated" h=
+ref=3D"mailto:antoine.cornuejols@agroparistech.fr">antoine.cornuejols@agr=
+oparistech.fr</a> and
+          Pierre Gan=C3=A7arski, <a class=3D"moz-txt-link-abbreviated" hr=
+ef=3D"mailto:pierre.gancarski@unistra.fr">pierre.gancarski@unistra.fr</a>=
+</span></li>
+    </ul>
+    <br
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-style: norm=
+al; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: auto; text-align: start; text-indent: 0px; text-transform: none;=
+ white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-strok=
+e-width: 0px; text-decoration: none;">
+    <font color=3D"#9437ff"><span
+style=3D"caret-color: rgb(0, 0, 0); font-family: -webkit-standard; font-s=
+ize: medium; font-style: normal; font-variant-caps: normal; font-weight: =
+400; letter-spacing: normal; text-align: start; text-indent: 0px; text-tr=
+ansform: none; white-space: normal; word-spacing: 0px; -webkit-text-strok=
+e-width: 0px; text-decoration: none; display: inline !important; float: n=
+one;">DESIRED
+        PROFILE</span></font><br
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-style: norm=
+al; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: auto; text-align: start; text-indent: 0px; text-transform: none;=
+ white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-strok=
+e-width: 0px; text-decoration: none;">
+    <ul>
+      <li><span
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: -we=
+bkit-standard; font-size: medium; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: auto; text-ali=
+gn: start; text-indent: 0px; text-transform: none; white-space: normal; w=
+idows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-deco=
+ration: none; display: inline !important; float: none;">PhD
+          in computer science, specialising in machine learning/data
+          mining.</span></li>
+      <li><span
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: -we=
+bkit-standard; font-size: medium; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: auto; text-ali=
+gn: start; text-indent: 0px; text-transform: none; white-space: normal; w=
+idows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-deco=
+ration: none; display: inline !important; float: none;">Solid
+          knowledge of Data Science, and more specifically of standard
+          classification methods and data mining.</span></li>
+      <li><span
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: -we=
+bkit-standard; font-size: medium; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: auto; text-ali=
+gn: start; text-indent: 0px; text-transform: none; white-space: normal; w=
+idows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-deco=
+ration: none; display: inline !important; float: none;">Good
+          verbal (English or French) and written (English) communication
+          skills.</span></li>
+      <li><span
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: -we=
+bkit-standard; font-size: medium; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: auto; text-ali=
+gn: start; text-indent: 0px; text-transform: none; white-space: normal; w=
+idows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-deco=
+ration: none; display: inline !important; float: none;">Interpersonal
+          skills and the ability to work individually or as part of a
+          project team.</span></li>
+    </ul>
+    <p><span
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: -we=
+bkit-standard; font-size: medium; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: auto; text-ali=
+gn: start; text-indent: 0px; text-transform: none; white-space: normal; w=
+idows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-deco=
+ration: none; display: inline !important; float: none;"><br>
+      </span><font color=3D"#9437ff"><span
+style=3D"caret-color: rgb(0, 0, 0); font-family: -webkit-standard; font-s=
+ize: medium; font-style: normal; font-variant-caps: normal; font-weight: =
+400; letter-spacing: normal; text-align: start; text-indent: 0px; text-tr=
+ansform: none; white-space: normal; word-spacing: 0px; -webkit-text-strok=
+e-width: 0px; text-decoration: none; display: inline !important; float: n=
+one;">TO
+          APPLY</span></font><span
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: -we=
+bkit-standard; font-size: medium; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: auto; text-ali=
+gn: start; text-indent: 0px; text-transform: none; white-space: normal; w=
+idows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-deco=
+ration: none; display: inline !important; float: none;"><br>
+        <br>
+        Interested candidates should submit (by e-mail to
+        <a class=3D"moz-txt-link-abbreviated" href=3D"mailto:antoine.corn=
+uejols@agroparistech.fr">antoine.cornuejols@agroparistech.fr</a> </span><=
+span
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: -we=
+bkit-standard; font-size: medium; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: auto; text-ali=
+gn: start; text-indent: 0px; text-transform: none; white-space: normal; w=
+idows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-deco=
+ration: none; display: inline !important; float: none;">and
+        <a class=3D"moz-txt-link-abbreviated" href=3D"mailto:pierre.ganca=
+rski@unistra.fr">pierre.gancarski@unistra.fr</a>) </span><span
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: -we=
+bkit-standard; font-size: medium; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: auto; text-ali=
+gn: start; text-indent: 0px; text-transform: none; white-space: normal; w=
+idows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-deco=
+ration: none; display: inline !important; float: none;">their
+        curriculum vitae, a list of publications, a letter of motivation
+        and the contact details of three references. Applications will
+        be accepted until the position is filled. The position will
+        start as soon as possible.<br>
+        <br>
+        In view of the deadlines, foreign nationals must already be in
+        possession of a visa and a valid residence permit.<br>
+        <br>
+        <br>
+      </span></p>
+    <style>@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:-536869121 1107305727 33554432 0 415 0;}@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:-469750017 -1073732485 9 0 511 0;}@font-face
+	{font-family:Roboto;
+	panose-1:2 11 6 4 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:-536870145 1342185563 32 0 415 0;}p.MsoNormal, li.Mso=
+Normal, div.MsoNormal
+	{mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-parent:"";
+	margin-top:6.0pt;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:-.05pt;
+	mso-para-margin-top:6.0pt;
+	mso-para-margin-right:0cm;
+	mso-para-margin-bottom:0cm;
+	mso-para-margin-left:-.01gd;
+	text-align:justify;
+	text-indent:-.1pt;
+	mso-char-indent-count:-.01;
+	mso-pagination:widow-orphan;
+	mso-outline-level:1;
+	mso-hyphenate:none;
+	font-size:10.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-fareast-font-family:Roboto;
+	position:relative;
+	top:.5pt;
+	mso-text-raise:-.5pt;}p.MsoFootnoteText, li.MsoFootnoteText, div.MsoFoot=
+noteText
+	{mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-link:"Note de bas de page Car";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:-.05pt;
+	mso-para-margin-top:0cm;
+	mso-para-margin-right:0cm;
+	mso-para-margin-bottom:0cm;
+	mso-para-margin-left:-.01gd;
+	text-indent:-.05pt;
+	mso-char-indent-count:-.01;
+	mso-line-height-alt:.05pt;
+	mso-pagination:none;
+	mso-outline-level:1;
+	font-size:10.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Times New Roman",serif;
+	mso-fareast-font-family:Roboto;
+	mso-bidi-font-family:Calibri;
+	position:relative;
+	top:.5pt;
+	mso-text-raise:-.5pt;}span.MsoFootnoteReference
+	{mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-parent:"";
+	mso-text-animation:none;
+	position:relative;
+	top:.5pt;
+	mso-text-raise:-.5pt;
+	mso-font-width:100%;
+	font-emphasize:none;
+	vertical-align:super;}a:link, span.MsoHyperlink
+	{mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-parent:"";
+	color:blue;
+	mso-text-animation:none;
+	position:relative;
+	top:.5pt;
+	mso-text-raise:-.5pt;
+	mso-font-width:100%;
+	font-emphasize:none;
+	text-decoration:underline;
+	text-underline:single;
+	vertical-align:baseline;}a:visited, span.MsoHyperlinkFollowed
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	color:purple;
+	mso-themecolor:followedhyperlink;
+	text-decoration:underline;
+	text-underline:single;}span.NotedebasdepageCar
+	{mso-style-name:"Note de bas de page Car";
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"Note de bas de page";
+	mso-ansi-font-size:10.0pt;
+	font-family:Roboto;
+	mso-fareast-font-family:Roboto;
+	mso-bidi-font-family:Calibri;
+	position:relative;
+	top:.5pt;
+	mso-text-raise:-.5pt;}.MsoChpDefault
+	{mso-style-type:export-only;
+	mso-default-props:yes;}.MsoPapDefault
+	{mso-style-type:export-only;
+	margin-top:6.0pt;
+	text-align:justify;}div.WordSection1
+	{page:WordSection1;}</style>
+  </body>
+</html>
+
+--------------Eu25wRxyIQNVvOCBQbF3ARHK--

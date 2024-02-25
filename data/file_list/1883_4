@@ -1,0 +1,892 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (bouncesmtp1.u12.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id A646714017D8
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed,  1 Nov 2023 00:44:01 +0100 (CET)
+Received: from mx2.univ-nantes.fr (MX2.univ-nantes.fr [193.52.101.136])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id 992B8D4C
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed,  1 Nov 2023 00:44:01 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.univ-nantes.fr (Postfix) with ESMTP id 8BE6B1002CB
+	for <liste-egc@polytech.univ-nantes.fr>; Wed,  1 Nov 2023 00:44:01 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=univ-nantes.fr header.b=Fb5M/fpD; dkim=pass (2048-bit key)
+	header.d=univ-nantes.fr header.b=iUKusbOQ
+Received: from mx2.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Om5gDMWzmNs4 for <liste-egc@polytech.univ-nantes.fr>;
+	Wed,  1 Nov 2023 00:44:01 +0100 (CET)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=2001:660:7220:385:193:52:103:113; helo=smtp-tls.univ-nantes.fr; envelope-from=claudia.marinica@univ-nantes.fr; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=none dis=none) header.from=univ-nantes.fr
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=univ-nantes.fr
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (2048-bit key; unprotected) header.d=univ-nantes.fr header.i=@univ-nantes.fr header.a=rsa-sha256 header.s=mailv2 header.b=Fb5M/fpD;
+	dkim=pass (2048-bit key) header.d=univ-nantes.fr header.i=@univ-nantes.fr header.a=rsa-sha256 header.s=mailv2 header.b=iUKusbOQ;
+	dkim-atps=neutral
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from smtp-tls.univ-nantes.fr (smtptls1-cha.cpub.univ-nantes.fr [IPv6:2001:660:7220:385:193:52:103:113])
+	by mx2.univ-nantes.fr (Postfix) with ESMTPS id 63BEB1002DA
+	for <liste-egc@polytech.univ-nantes.fr>; Wed,  1 Nov 2023 00:44:01 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by smtp-tls.univ-nantes.fr (Postfix) with ESMTP id EB5C02046F;
+	Wed,  1 Nov 2023 00:44:00 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-nantes.fr;
+	s=mailv2; t=1698795841;
+	bh=TZtfA6J3hIb8Ote7f+39Ae0aHCX4lCXAEtncGM6Y2S8=;
+	h=Date:To:From:Subject:From;
+	b=Fb5M/fpDN6fasFwIthOlMHUd+ApvKZMe1D+lPMyatujxZ7Lsy90Gp2ptKdbxjNl94
+	 suGoiopnY4OKlmpMeMrXsxeGufngwocWt81OoIZDONxZJhR/FSmkx+IsuaYfBwNTKN
+	 92J0pENGnH28p5DyNawS1NZUjo2Yrn0fjnyIIB3gue75V8SfkjkZKBFM+ce4UpEW+Y
+	 ED9lEG50EVSO+d8DDPZzJCaVLQcmGxVYh2sbrBmZbux/9FiZ9f7Xpg5Hdni7cKtCpf
+	 hFUPUW2qAAJ0ulg6chsUrEk84kZOBS/KEEsx1aV4yhtBmzI5uUoH7wjIdeMhd4nTdw
+	 hWw0NEYsa2YwA==
+X-Virus-Scanned: Debian amavisd-new at smtptls1-lmb.cpub.univ-nantes.fr
+Received: from smtp-tls.univ-nantes.fr ([127.0.0.1])
+	by localhost (smtptls1-cha.cpub.univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 10U4Wb-4YmBx; Wed,  1 Nov 2023 00:44:00 +0100 (CET)
+Received: from [IPV6:2a01:cb05:8424:7a00:24f7:7368:1a58:1a77] (2a01cb0584247a0024f773681a581a77.ipv6.abo.wanadoo.fr [IPv6:2a01:cb05:8424:7a00:24f7:7368:1a58:1a77])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-tls.univ-nantes.fr (Postfix) with ESMTPSA id 801EF20456;
+	Wed,  1 Nov 2023 00:44:00 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-nantes.fr;
+	s=mailv2; t=1698795840;
+	bh=TZtfA6J3hIb8Ote7f+39Ae0aHCX4lCXAEtncGM6Y2S8=;
+	h=Date:To:From:Subject:From;
+	b=iUKusbOQ70v2tKpiTLoSi+jELm26H6w42cjH787Hkwdq1A2fmgJ2ZAJbJMcqmlRkI
+	 VcgIL9PvkSrJOTPyErvpDPnz+DAZRg6gq1mVd/n68Dhic6oHnWfKlYyhTpDbIiI0vq
+	 Nzi3/ysLPSm+TJeXOWuLTiJZ8kGz744XJIN/hwyjJE/c8PGY9ACTA41tNQq4VBpD/U
+	 QW+IL5NNL+hohvk5mxeyII7iIOklKha71xbBSv/s8sRG0i3khjzeWXj+pXjhvPkC7w
+	 qYRtxAehTyzBiLrq48XFXUId74ExsDOr0WQiHGnV2vwrJjxbR/w7CNIPMkxdkNlAPt
+	 3yVllXinLyJhg==
+Content-Type: multipart/alternative;
+ boundary="------------00NtrsZGfQfl89SNQezlncxF"
+Message-ID: <379afc8b-4035-49d1-b602-da5cf2b0d226@univ-nantes.fr>
+Date: Wed, 1 Nov 2023 00:43:59 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Content-Language: fr
+To: Claudia Marinica <claudia.marinica@univ-nantes.fr>
+From: Claudia Marinica <claudia.marinica@univ-nantes.fr>
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] EXTENSION =?UTF-8?Q?10=C3=A8me_=C3=89cole_d=E2=80=99H?=
+ =?UTF-8?Q?iver_=C3=A9-EGC?= "Analyse des =?UTF-8?Q?donn=C3=A9es?= et
+ apprentissage face =?UTF-8?Q?=C3=A0?= l'urgence climatique et la crise
+ =?UTF-8?Q?=C3=A9cologique=2C?= humanitaire et
+ =?UTF-8?Q?=C3=A9conomique=22=2C?= Dijon, France - Appel =?UTF-8?Q?=C3=A0?=
+ participation
+
+This is a multi-part message in MIME format.
+--------------00NtrsZGfQfl89SNQezlncxF
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+
+**** Extension de la date limite de pré-inscription : 30 Novembre 2023 ***
+*
+
+*
+
+10ème Ecole d’Hiver é-EGC sur le thème «Analyse des données et 
+apprentissage face à l'urgence climatique et la crise écologique, 
+humanitaire et économique»
+
+22 – 23 Janvier 2024, Dijon - France
+
+https://iutdijon.u-bourgogne.fr/egc2024/ecole-e-egc/
+
+==============================================
+
+
+La dixième École d’Hiver é-EGC, sur le thème « Analyse des données et 
+apprentissage face à l'urgence climatique et la crise écologique, 
+humanitaire et économique  », est un  événement organisé par 
+l’Association Extraction et Gestion de Connaissances (EGC, 
+http://www.egc.asso.fr/ <http://www.egc.asso.fr/>).
+
+
+Cet événement s’organise autour de deux activités principales :
+
+•    deux jours de formation : les 22 et 23 Janvier 2024
+
+•    participation à la conférence EGC 2024 : du 24 au 26  janvier 2024
+
+
+THÈME DE L'ÉCOLE: Analyse des données et apprentissage face à l'urgence 
+climatique et la crise écologique, humanitaire et économique
+
+
+Cette école s’intéresse aux méthodes aujourd’hui disponibles permettant 
+la fusion de données multimodales (audio, image, texte, série 
+temporelle, etc.), l’analyse et l’apprentissage pour apporter des outils 
+et solutions aux problématiques posées par le changement climatique et 
+ses impacts sur notre environnement et nos sociétés. Cette thématique 
+englobe les approches de l’intelligence artificielle aussi bien 
+symbolique, que numérique ou hybride pour le traitement et l’analyse de 
+données complexes et de connaissances issues de différents domaines 
+scientifiques (sciences sociales, sciences de la Terre et du vivant, 
+sciences médicales, etc.). La multidisciplinarité, ainsi que la 
+diversité, la complexité et l’hétérogénéité des données mettent aux 
+défis nos approches actuelles et nécessitent de nouvelles directions de 
+recherche.
+
+
+OBJECTIFS DE L'ÉCOLE
+
+Les deux jours de formation ont pour but principal d’offrir aux 
+participants des tutoriaux d’initiation dans le domaine de recherche 
+couvrant les thèmes de l’école mais également des tutoriaux plus 
+spécifiques présentant les récentes avancées proposant des solutions et 
+des techniques nouvelles pour les différentes problématiques ayant 
+émergées dans ce domaine. Certains exposés seront associés à des séances 
+plus pratiques afin de permettre aux participants de manipuler quelques 
+outils.
+
+
+La participation à la conférence permettra aux participants de prendre 
+part à un des événements majeurs de la communauté francophone de 
+l’extraction et la gestion de connaissances. Elle leur permettra 
+d’assister à des présentations de nouvelles avancées et approches 
+développées dans la communauté, ceci pouvant ainsi inspirer leur 
+parcours scientifique futur.
+
+
+Enfin, cette école souhaite offrir aux jeunes chercheurs (doctorants, 
+post-doctorants et ingénieurs) et aux chercheurs confirmés du domaine la 
+possibilité de se rencontrer et d’échanger des idées, ce qui devrait 
+également permettre aux jeunes chercheurs d’enrichir leur réseau.
+
+
+PROGRAMME DE L'ÉCOLE
+
+Le programme sera finalisé et disponible sur le site de l’école dans les 
+plus brefs délais ; voici la liste des intervenants confirmés :
+
+  *
+
+    *Pierrick Bruneau* (Luxembourg Institute of Science and Technology,
+    Luxembourg)
+
+  *
+
+    *Reik Donner* (Magdeburg and Potsdam Institute for Climate Impact
+    Research, Allemagne)
+
+  *
+
+    *Davide Faranda* (Laboratoire des Sciences du Climat et de
+    l’Environnement, CNRS, Paris)
+
+  *
+
+    *Germain Forestier* (Institut de recherche en informatique,
+    mathématiques, automatiques et signal, Université de Haute-Alsace)
+
+  *
+
+    *Aidan Hogan* (Millennium Institute for Foundational Research on
+    Data, Universidad de Chile)
+
+
+PUBLIC CONCERNÉ
+
+L'École d'Hiver é-EGC 2024 s'adresse particulièrement aux doctorants et 
+étudiants souhaitant approfondir leurs connaissances dans le domaine de 
+l'exploration de données et de l'apprentissage, avec un focus sur 
+l'application de ces compétences pour soutenir les Objectifs de 
+développement durable.
+
+
+COMITÉ SCIENTIFIQUE ET ORGANISATION
+
+•  Jérome Gensel (LIG, Université Grenoble Alpes)
+
+•  Mustapha Lebbah (UVSQ, Paris-Saclay)
+
+•  Zaineb Chelly Dagdia (UVSQ, Paris-Saclay)
+
+•  Claudia Marinica (LS2N, Université de Nantes)
+
+
+DATES IMPORTANTES
+
+•    Date limite pré-inscriptions (CV à fournir) : 30/11/2023
+
+•    Inscription effective (École (formation + conférence EGC), sur le 
+site de la conférence) : 07/12/2023
+
+
+L’INSCRIPTION SE RÉALISE EN DEUX ÉTAPES
+
+ 1.
+
+    Les participants doivent manifester leur intérêt, avant le
+    30/11/2023, pour participer à l’École en s’inscrivant avec ce
+    formulaire :
+
+https://forms.gle/YcN8tSj7nP7A7kR58
+
+
+Pour que la pré-inscription soit prise en compte, elle doit être 
+accompagnée d’un CV récent du participant.
+
+
+ 2.
+
+    Après la confirmation de la pré-inscription par le comité
+    d’organisation, et avant le 07/12/2023, les participants doivent
+    s’inscrire via la page d’inscription de la conférence EGC 2024
+    (attention de bien choisir le tarif comprenant l’École).
+
+
+Le nombre de participants est limité à 30 personnes. Le tarif de 
+l’inscription sera affiché sur le site de la conférence EGC 
+(https://iutdijon.u-bourgogne.fr/egc2024/ecole-e-egc/) et il comprend :
+
+  *
+
+    la participation à l’École d’Hiver (22 et 23 janvier 2024) ;
+
+  *
+
+    la participation à la conférence (24 au 26  janvier 2024) ;
+
+  *
+
+    les déjeuners et le repas de gala.
+
+*
+
+-- 
+
+Université de Nantes
+*Claudia MARINICA*
+Assistant Professor
+Computer Science department
+Polytech'Nantes, University of Nantes
+
+email: Claudia.Marinica@univ-nantes.fr
+
+rue Christian Pauc CS 50609
+44306 Nantes cedex 3
+office: D210 - Ireste
+
+web.polytech.univ-nantes.fr <http://web.polytech.univ-nantes.fr>
+<https://www.facebook.com/PolytechNantes/?ref=aymt_homepage_panel><https://twitter.com/PolytechNantes><https://www.instagram.com/polytechnantes/?hl=fr><https://www.linkedin.com/school/3848702/> 
+
+
+*_Adoptez l'éco-attitude_ : n'imprimez ce mail que si cela est vraiment 
+nécessaire*
+--------------00NtrsZGfQfl89SNQezlncxF
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <meta http-equiv=3D"content-type" content=3D"text/html; charset=3DUTF=
+-8">
+  </head>
+  <body>
+    <p>
+      <p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;=
+"><b><font
+            color=3D"#ff0000">*** Extension de la date limite de
+            pr=C3=A9-inscription : 30 Novembre 2023 ***</font><br>
+        </b></p>
+      <b style=3D"font-weight:normal;"
+        id=3D"docs-internal-guid-e1859c6d-7fff-9e12-214d-14f59a18fd4e">
+        <p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;=
+"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;">
+</span></p>
+        <p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;=
+"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;">10=C3=A8me Ecole d=E2=80=99Hiver =C3=A9-EGC sur le th=C3=A8=
+me =C2=AB</span><span
+style=3D"font-size:9pt;font-family:Arial,sans-serif;color:#000000;backgro=
+und-color:transparent;font-weight:400;font-style:normal;font-variant:norm=
+al;text-decoration:none;vertical-align:baseline;white-space:pre;white-spa=
+ce:pre-wrap;"> </span><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:700;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;">Analyse des donn=C3=A9es et apprentissage face =C3=A0 l'ur=
+gence climatique et la crise =C3=A9cologique, humanitaire et =C3=A9conomi=
+que</span><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;"> =C2=BB</span></p>
+        <p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;=
+"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;">22 =E2=80=93 23 Janvier 2024, Dijon - France</span></p>
+        <p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;=
+"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;"><a class=3D"moz-txt-link-freetext" href=3D"https://iutdijo=
+n.u-bourgogne.fr/egc2024/ecole-e-egc/">https://iutdijon.u-bourgogne.fr/eg=
+c2024/ecole-e-egc/</a></span></p>
+        <p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;=
+"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D</span></p>
+        <br>
+        <p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;=
+"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;">La dixi=C3=A8me =C3=89cole d=E2=80=99Hiver =C3=A9-EGC, sur=
+ le th=C3=A8me =C2=AB </span><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:700;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;">Analyse des donn=C3=A9es et apprentissage face =C3=A0 l'ur=
+gence climatique et la crise =C3=A9cologique, humanitaire et =C3=A9conomi=
+que</span><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;">=C2=A0 =C2=BB, est un=C2=A0 =C3=A9v=C3=A9nement organis=C3=
+=A9 par l=E2=80=99Association Extraction et Gestion de Connaissances (EGC=
+, </span><a
+            href=3D"http://www.egc.asso.fr/" style=3D"text-decoration:non=
+e;"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:underline;-webkit-text-decoration-skip:none;text-deco=
+ration-skip-ink:none;vertical-align:baseline;white-space:pre;white-space:=
+pre-wrap;">http://www.egc.asso.fr/</span></a><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;">).</span></p>
+        <br>
+        <p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;=
+"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;">Cet =C3=A9v=C3=A9nement s=E2=80=99organise autour de deux =
+activit=C3=A9s principales :</span></p>
+        <p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;=
+"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;">=E2=80=A2=C2=A0 =C2=A0 deux jours de formation : les 22 et=
+ 23 Janvier 2024</span></p>
+        <p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;=
+"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;">=E2=80=A2=C2=A0 =C2=A0 participation =C3=A0 la conf=C3=A9r=
+ence EGC 2024 : du 24 au 26=C2=A0 janvier 2024</span></p>
+        <br>
+        <p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;=
+"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:700;font-style:normal;font-variant:nor=
+mal;text-decoration:underline;-webkit-text-decoration-skip:none;text-deco=
+ration-skip-ink:none;vertical-align:baseline;white-space:pre;white-space:=
+pre-wrap;">TH=C3=88ME DE L'=C3=89COLE</span><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;"> : Analyse des donn=C3=A9es et apprentissage face =C3=A0 l=
+'urgence climatique et la crise =C3=A9cologique, humanitaire et =C3=A9con=
+omique=C2=A0</span></p>
+        <br>
+        <p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;text-align: justify;margin-top:0p=
+t;margin-bottom:0pt;"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;">Cette =C3=A9cole s=E2=80=99int=C3=A9resse aux m=C3=A9thode=
+s aujourd=E2=80=99hui disponibles permettant la fusion de donn=C3=A9es mu=
+ltimodales (audio, image, texte, s=C3=A9rie temporelle, etc.), l=E2=80=99=
+analyse et l=E2=80=99apprentissage pour apporter des outils et solutions =
+aux probl=C3=A9matiques pos=C3=A9es par le changement climatique et ses i=
+mpacts sur notre environnement et nos soci=C3=A9t=C3=A9s. Cette th=C3=A9m=
+atique englobe les approches de l=E2=80=99intelligence artificielle aussi=
+ bien symbolique, que num=C3=A9rique ou hybride pour le traitement et l=E2=
+=80=99analyse de donn=C3=A9es complexes et de connaissances issues de dif=
+f=C3=A9rents domaines scientifiques (sciences sociales, sciences de la Te=
+rre et du vivant, sciences m=C3=A9dicales, etc.). La multidisciplinarit=C3=
+=A9, ainsi que la diversit=C3=A9, la complexit=C3=A9 et l=E2=80=99h=C3=A9=
+t=C3=A9rog=C3=A9n=C3=A9it=C3=A9 des donn=C3=A9es mettent aux d=C3=A9fis n=
+os approches actuelles et n=C3=A9cessitent de nouvelles directions de rec=
+herche.</span></p>
+        <br>
+        <p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;=
+"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:700;font-style:normal;font-variant:nor=
+mal;text-decoration:underline;-webkit-text-decoration-skip:none;text-deco=
+ration-skip-ink:none;vertical-align:baseline;white-space:pre;white-space:=
+pre-wrap;">OBJECTIFS DE L'=C3=89COLE</span></p>
+        <p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;text-align: justify;margin-top:0p=
+t;margin-bottom:0pt;"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;">Les deux jours de formation ont pour but principal d=E2=80=
+=99offrir aux participants des tutoriaux d=E2=80=99initiation dans le dom=
+aine de recherche couvrant les th=C3=A8mes de l=E2=80=99=C3=A9cole mais =C3=
+=A9galement des tutoriaux plus sp=C3=A9cifiques pr=C3=A9sentant les r=C3=A9=
+centes avanc=C3=A9es proposant des solutions et des techniques nouvelles =
+pour les diff=C3=A9rentes probl=C3=A9matiques ayant =C3=A9merg=C3=A9es da=
+ns ce domaine. Certains expos=C3=A9s seront associ=C3=A9s =C3=A0 des s=C3=
+=A9ances plus pratiques afin de permettre aux participants de manipuler q=
+uelques outils.</span></p>
+        <br>
+        <p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;text-align: justify;margin-top:0p=
+t;margin-bottom:0pt;"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;">La participation =C3=A0 la conf=C3=A9rence permettra aux p=
+articipants de prendre part =C3=A0 un des =C3=A9v=C3=A9nements majeurs de=
+ la communaut=C3=A9 francophone de l=E2=80=99extraction et la gestion de =
+connaissances. Elle leur permettra d=E2=80=99assister =C3=A0 des pr=C3=A9=
+sentations de nouvelles avanc=C3=A9es et approches d=C3=A9velopp=C3=A9es =
+dans la communaut=C3=A9, ceci pouvant ainsi inspirer leur parcours scient=
+ifique futur.</span></p>
+        <br>
+        <p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;text-align: justify;margin-top:0p=
+t;margin-bottom:0pt;"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;">Enfin, cette =C3=A9cole souhaite offrir aux jeunes cherche=
+urs (doctorants, post-doctorants et ing=C3=A9nieurs) et aux chercheurs co=
+nfirm=C3=A9s du domaine la possibilit=C3=A9 de se rencontrer et d=E2=80=99=
+=C3=A9changer des id=C3=A9es, ce qui devrait =C3=A9galement permettre aux=
+ jeunes chercheurs d=E2=80=99enrichir leur r=C3=A9seau.</span></p>
+        <br>
+        <p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;text-align: justify;margin-top:0p=
+t;margin-bottom:0pt;"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:700;font-style:normal;font-variant:nor=
+mal;text-decoration:underline;-webkit-text-decoration-skip:none;text-deco=
+ration-skip-ink:none;vertical-align:baseline;white-space:pre;white-space:=
+pre-wrap;">PROGRAMME DE L'=C3=89COLE</span></p>
+        <p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;text-align: justify;margin-top:0p=
+t;margin-bottom:0pt;"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;">Le programme sera finalis=C3=A9 et disponible sur le site =
+de l=E2=80=99=C3=A9cole dans les plus brefs d=C3=A9lais ; voici la liste =
+des intervenants confirm=C3=A9s :</span></p>
+        <ul
+style=3D"margin-top:0;margin-bottom:0;padding-inline-start:48px;">
+          <li dir=3D"ltr"
+style=3D"list-style-type:disc;font-size:11pt;font-family:Arial,sans-serif=
+;color:#000000;background-color:transparent;font-weight:400;font-style:no=
+rmal;font-variant:normal;text-decoration:none;vertical-align:baseline;whi=
+te-space:pre;"
+          aria-level=3D"1"><p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;text-align: justify;margin-top:0p=
+t;margin-bottom:0pt;"
+          role=3D"presentation"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;"><b>Pierrick Bruneau</b> (Luxembourg Institute of Science a=
+nd Technology, Luxembourg)</span></p></li>
+          <li dir=3D"ltr"
+style=3D"list-style-type:disc;font-size:11pt;font-family:Arial,sans-serif=
+;color:#000000;background-color:transparent;font-weight:400;font-style:no=
+rmal;font-variant:normal;text-decoration:none;vertical-align:baseline;whi=
+te-space:pre;"
+          aria-level=3D"1"><p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;text-align: justify;margin-top:0p=
+t;margin-bottom:0pt;"
+          role=3D"presentation"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;"><b>Reik Donner</b> (Magdeburg and Potsdam Institute for Cl=
+imate Impact Research, Allemagne)=C2=A0</span></p></li>
+          <li dir=3D"ltr"
+style=3D"list-style-type:disc;font-size:11pt;font-family:Arial,sans-serif=
+;color:#000000;background-color:transparent;font-weight:400;font-style:no=
+rmal;font-variant:normal;text-decoration:none;vertical-align:baseline;whi=
+te-space:pre;"
+          aria-level=3D"1"><p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;text-align: justify;margin-top:0p=
+t;margin-bottom:0pt;"
+          role=3D"presentation"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;"><b>Davide Faranda</b> (Laboratoire des Sciences du Climat =
+et de l=E2=80=99Environnement, CNRS, Paris)=C2=A0=C2=A0</span></p></li>
+          <li dir=3D"ltr"
+style=3D"list-style-type:disc;font-size:11pt;font-family:Arial,sans-serif=
+;color:#000000;background-color:transparent;font-weight:400;font-style:no=
+rmal;font-variant:normal;text-decoration:none;vertical-align:baseline;whi=
+te-space:pre;"
+          aria-level=3D"1"><p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;text-align: justify;margin-top:0p=
+t;margin-bottom:0pt;"
+          role=3D"presentation"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;"><b>Germain Forestier</b> (Institut de recherche en informa=
+tique, math=C3=A9matiques, automatiques et signal, Universit=C3=A9 de Hau=
+te-Alsace)</span></p></li>
+          <li dir=3D"ltr"
+style=3D"list-style-type:disc;font-size:11pt;font-family:Arial,sans-serif=
+;color:#000000;background-color:transparent;font-weight:400;font-style:no=
+rmal;font-variant:normal;text-decoration:none;vertical-align:baseline;whi=
+te-space:pre;"
+          aria-level=3D"1"><p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;text-align: justify;margin-top:0p=
+t;margin-bottom:0pt;"
+          role=3D"presentation"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;"><b>Aidan Hogan</b> (Millennium Institute for Foundational =
+Research on Data, Universidad de Chile)</span></p></li>
+        </ul>
+        <br>
+        <p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;=
+"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:700;font-style:normal;font-variant:nor=
+mal;text-decoration:underline;-webkit-text-decoration-skip:none;text-deco=
+ration-skip-ink:none;vertical-align:baseline;white-space:pre;white-space:=
+pre-wrap;">PUBLIC CONCERN=C3=89</span></p>
+        <p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;text-align: justify;margin-top:0p=
+t;margin-bottom:0pt;"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;">L'=C3=89cole d'Hiver =C3=A9-EGC 2024 s'adresse particuli=C3=
+=A8rement aux doctorants et =C3=A9tudiants souhaitant approfondir leurs c=
+onnaissances dans le domaine de l'exploration de donn=C3=A9es et de l'app=
+rentissage, avec un focus sur l'application de ces comp=C3=A9tences pour =
+soutenir les Objectifs de d=C3=A9veloppement durable.</span></p>
+        <br>
+        <p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;=
+"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:700;font-style:normal;font-variant:nor=
+mal;text-decoration:underline;-webkit-text-decoration-skip:none;text-deco=
+ration-skip-ink:none;vertical-align:baseline;white-space:pre;white-space:=
+pre-wrap;">COMIT=C3=89 SCIENTIFIQUE ET ORGANISATION</span></p>
+        <p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;=
+"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;">=E2=80=A2=C2=A0 J=C3=A9rome Gensel (LIG, Universit=C3=A9 G=
+renoble Alpes)</span></p>
+        <p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;=
+"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;">=E2=80=A2=C2=A0 Mustapha Lebbah (UVSQ, Paris-Saclay)</span=
+></p>
+        <p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;=
+"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;">=E2=80=A2=C2=A0 Zaineb Chelly Dagdia (UVSQ, Paris-Saclay)<=
+/span></p>
+        <p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;=
+"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;">=E2=80=A2=C2=A0 Claudia Marinica (LS2N, Universit=C3=A9 de=
+ Nantes)</span></p>
+        <br>
+        <p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;=
+"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:700;font-style:normal;font-variant:nor=
+mal;text-decoration:underline;-webkit-text-decoration-skip:none;text-deco=
+ration-skip-ink:none;vertical-align:baseline;white-space:pre;white-space:=
+pre-wrap;">DATES IMPORTANTES=C2=A0</span></p>
+        <p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;=
+"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;">=E2=80=A2=C2=A0 =C2=A0 Date limite pr=C3=A9-inscriptions (=
+CV =C3=A0 fournir) : 30/11/2023</span></p>
+        <p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;=
+"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;">=E2=80=A2=C2=A0 =C2=A0 Inscription effective (=C3=89cole (=
+formation + conf=C3=A9rence EGC), sur le site de la conf=C3=A9rence) : 07=
+/12/2023</span></p>
+        <br>
+        <p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;margin-top:0pt;margin-bottom:0pt;=
+"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:700;font-style:normal;font-variant:nor=
+mal;text-decoration:underline;-webkit-text-decoration-skip:none;text-deco=
+ration-skip-ink:none;vertical-align:baseline;white-space:pre;white-space:=
+pre-wrap;">L=E2=80=99INSCRIPTION SE R=C3=89ALISE EN DEUX =C3=89TAPES</spa=
+n></p>
+        <ol
+style=3D"margin-top:0;margin-bottom:0;padding-inline-start:48px;">
+          <li dir=3D"ltr"
+style=3D"list-style-type:decimal;font-size:11pt;font-family:Arial,sans-se=
+rif;color:#000000;background-color:transparent;font-weight:400;font-style=
+:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;=
+white-space:pre;"
+          aria-level=3D"1"><p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;text-align: justify;margin-top:0p=
+t;margin-bottom:0pt;"
+          role=3D"presentation"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;">Les participants doivent manifester leur int=C3=A9r=C3=AAt=
+, avant le 30/11/2023, pour participer =C3=A0 l=E2=80=99=C3=89cole en s=E2=
+=80=99inscrivant avec ce formulaire :</span></p></li>
+        </ol>
+        <p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;margin-left: 36pt;text-align: jus=
+tify;margin-top:0pt;margin-bottom:0pt;"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;"><a class=3D"moz-txt-link-freetext" href=3D"https://forms.g=
+le/YcN8tSj7nP7A7kR58">https://forms.gle/YcN8tSj7nP7A7kR58</a> </span></p>=
+
+        <br>
+        <p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;margin-left: 36pt;text-align: jus=
+tify;margin-top:0pt;margin-bottom:0pt;"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;">Pour que la pr=C3=A9-inscription soit prise en compte, ell=
+e doit =C3=AAtre accompagn=C3=A9e d=E2=80=99un CV r=C3=A9cent du particip=
+ant.</span></p>
+        <br>
+        <ol
+style=3D"margin-top:0;margin-bottom:0;padding-inline-start:48px;"
+          start=3D"2">
+          <li dir=3D"ltr"
+style=3D"list-style-type:decimal;font-size:11pt;font-family:Arial,sans-se=
+rif;color:#000000;background-color:transparent;font-weight:400;font-style=
+:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;=
+white-space:pre;"
+          aria-level=3D"1"><p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;text-align: justify;margin-top:0p=
+t;margin-bottom:0pt;"
+          role=3D"presentation"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;">Apr=C3=A8s la confirmation de la pr=C3=A9-inscription par =
+le comit=C3=A9 d=E2=80=99organisation, et avant le 07/12/2023, les partic=
+ipants doivent s=E2=80=99inscrire via la page d=E2=80=99inscription de la=
+ conf=C3=A9rence EGC 2024 (attention de bien choisir le tarif comprenant =
+l=E2=80=99=C3=89cole).</span></p></li>
+        </ol>
+        <br>
+        <p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;text-align: justify;margin-top:0p=
+t;margin-bottom:0pt;"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;">Le nombre de participants est limit=C3=A9 =C3=A0 30 person=
+nes. Le tarif de l=E2=80=99inscription sera affich=C3=A9 sur le site de l=
+a conf=C3=A9rence EGC (<a class=3D"moz-txt-link-freetext" href=3D"https:/=
+/iutdijon.u-bourgogne.fr/egc2024/ecole-e-egc/">https://iutdijon.u-bourgog=
+ne.fr/egc2024/ecole-e-egc/</a>) et il comprend :</span></p>
+        <ul
+style=3D"margin-top:0;margin-bottom:0;padding-inline-start:48px;">
+          <li dir=3D"ltr"
+style=3D"list-style-type:disc;font-size:11pt;font-family:Arial,sans-serif=
+;color:#000000;background-color:transparent;font-weight:400;font-style:no=
+rmal;font-variant:normal;text-decoration:none;vertical-align:baseline;whi=
+te-space:pre;"
+          aria-level=3D"1"><p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;text-align: justify;margin-top:0p=
+t;margin-bottom:0pt;"
+          role=3D"presentation"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;">la participation =C3=A0 l=E2=80=99=C3=89cole d=E2=80=99Hiv=
+er (22 et 23 janvier 2024) ;</span></p></li>
+          <li dir=3D"ltr"
+style=3D"list-style-type:disc;font-size:11pt;font-family:Arial,sans-serif=
+;color:#000000;background-color:transparent;font-weight:400;font-style:no=
+rmal;font-variant:normal;text-decoration:none;vertical-align:baseline;whi=
+te-space:pre;"
+          aria-level=3D"1"><p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;text-align: justify;margin-top:0p=
+t;margin-bottom:0pt;"
+          role=3D"presentation"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;">la participation =C3=A0 la conf=C3=A9rence (24 au 26=C2=A0=
+ janvier 2024) ;</span></p></li>
+          <li dir=3D"ltr"
+style=3D"list-style-type:disc;font-size:11pt;font-family:Arial,sans-serif=
+;color:#000000;background-color:transparent;font-weight:400;font-style:no=
+rmal;font-variant:normal;text-decoration:none;vertical-align:baseline;whi=
+te-space:pre;"
+          aria-level=3D"1"><p dir=3D"ltr"
+style=3D"line-height:1.3800000000000001;text-align: justify;margin-top:0p=
+t;margin-bottom:0pt;"
+          role=3D"presentation"><span
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgr=
+ound-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-sp=
+ace:pre-wrap;">les d=C3=A9jeuners et le repas de gala.</span></p></li>
+        </ul>
+      </b></p>
+    <div class=3D"moz-signature">-- <br>
+      <meta content=3D"text/html; charset=3DUTF-8" http-equiv=3D"content-=
+type">
+      <style>
+            DIV.TagHeader { background-color:#009ee0; height:2px; width:5=
+20px; }
+            DIV.Tag { border:0px dotted grey; width: 518px;}
+            DIV.TagFooter { font-family:Trebuchet MS, sans-serif; font-si=
+ze:8pt; size:1; color:#36a629; height:2em; text-align:center; width:520px=
+;}
+            DIV.NomTitre { font-family:Trebuchet MS, sans-serif; font-siz=
+e:10pt; size:1; color:#00305E; margin-left: 170px; }
+            DIV.Contact { font-family:Trebuchet MS, sans-serif; font-size=
+:8pt; size:1; color:#777777; margin-left:170px;}
+            DIV.Adresse { font-family:Trebuchet MS, sans-serif; font-size=
+:8pt; size:1; color:#777777; margin-left:170px;}
+
+            img.Logo {border: 0px solid ; width: 138px; height: 57px; lef=
+t: 25px; position:absolute; z-index:-1; moz-do-not-send:true;}
+            body { bgcolor:#FFFFFF; text:#000000; }
+            a { text-decoration:none; color:#777777;}
+        </style>
+      <div class=3D"moz-signature">
+        <div class=3D"TagHeader">=C2=A0</div>
+        <div class=3D"Tag"><br>
+          <img class=3D"Logo"
+src=3D"http://web.polytech.univ-nantes.fr/medias/photo/polytech-nantes-p-=
+univ_1516179753112-jpg?ID_FICHE=3D540435"
+            alt=3D"Universit=C3=A9 de Nantes" moz-do-not-send=3D"true">
+          <div class=3D"NomTitre"> <b>Claudia MARINICA</b><br>
+            Assistant Professor<br>
+            Computer Science department<br>
+            Polytech'Nantes, University of Nantes<br>
+          </div>
+          <div class=3D"Contact"><br>
+            <!-- t=C3=A9l : <br> --> email: <a
+              href=3D"mailto:Claudia.Marinica@univ-nantes.fr"
+              class=3D"moz-txt-link-freetext">Claudia.Marinica@univ-nante=
+s.fr</a><br>
+            <!--web site: <a href=3D"mailto:Claudia.Marinica@univ-nantes.=
+fr">Claudia.Marinica@univ-nantes.fr</a><br>--><br>
+            rue Christian Pauc CS 50609
+            <br>
+            44306 Nantes cedex 3<br>
+            office: D210 - Ireste<br>
+            <br>
+            <a href=3D"http://web.polytech.univ-nantes.fr">web.polytech.u=
+niv-nantes.fr</a>
+            <br>
+            <a
+href=3D"https://www.facebook.com/PolytechNantes/?ref=3Daymt_homepage_pane=
+l"
+              target=3D"_blank" alt=3D"Facebook"><img
+src=3D"http://www.polytech.univ-nantes.fr/com/signature/nouveau/reseaux_s=
+ociaux_01.jpg"
+                width=3D"32" height=3D"30"></a><a
+              href=3D"https://twitter.com/PolytechNantes" target=3D"_blan=
+k"
+              alt=3D"Twitter"><img
+src=3D"http://www.polytech.univ-nantes.fr/com/signature/nouveau/reseaux_s=
+ociaux_02.jpg"
+                width=3D"32" height=3D"30"></a><a
+              href=3D"https://www.instagram.com/polytechnantes/?hl=3Dfr"
+              target=3D"_blank" alt=3D"Instagram"><img
+src=3D"http://www.polytech.univ-nantes.fr/com/signature/nouveau/reseaux_s=
+ociaux_03.jpg"
+                width=3D"32" height=3D"30"></a><a
+              href=3D"https://www.linkedin.com/school/3848702/"
+              target=3D"_blank" alt=3D"LinkedIn"><img
+src=3D"http://www.polytech.univ-nantes.fr/com/signature/nouveau/reseaux_s=
+ociaux_04.jpg"
+                width=3D"32" height=3D"30"></a> </div>
+        </div>
+        <div class=3D"TagFooter"> <br>
+          <b><u>Adoptez l'=C3=A9co-attitude</u> : n'imprimez ce mail que =
+si
+            cela est vraiment n=C3=A9cessaire</b><br>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+--------------00NtrsZGfQfl89SNQezlncxF--
+
+

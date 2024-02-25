@@ -1,0 +1,510 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (BounceSMTP2.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 9CDE314017DE
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Tue, 26 Jan 2021 16:56:26 +0100 (CET)
+Received: from mx1.d101.univ-nantes.fr (MX1.univ-nantes.fr [193.52.101.135])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id 9B7D561F0E4
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Tue, 26 Jan 2021 16:56:26 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.d101.univ-nantes.fr (Postfix) with ESMTP id 971B05560EE2
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 26 Jan 2021 16:56:26 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -3.978
+X-Spam-Level:
+X-Spam-Status: No, score=-3.978 tagged_above=-1000 required=5
+	tests=[CRM114_GOOD=-5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	NO_RDNS2=0.01, RCVD_IN_SORBS=1, RCVD_IN_WSFF=0.01,
+	SPF_HELO_NONE=0.001, SPF_PASS=-0.001, UN_PHISHING_COMPTE=0.1,
+	UN_PHISHING_PW=0.1, URIBL_BLOCKED=0.001] autolearn=disabled
+X-CRM114-Status: GOOD ( 17.2867 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=emse.fr
+Received: from mx1.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id q506ILHYycrW for <liste-egc@polytech.univ-nantes.fr>;
+	Tue, 26 Jan 2021 16:56:23 +0100 (CET)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mincen.emse.fr (mincen.emse.fr [193.49.172.150])
+	by mx1.d101.univ-nantes.fr (Postfix) with ESMTPS id 7079E559CE85
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 26 Jan 2021 16:56:23 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mincen.emse.fr (Postfix) with ESMTP id 40A7C3FAD5
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 26 Jan 2021 16:56:23 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=emse.fr; h=
+	content-type:content-type:subject:subject:message-id:date:date
+	:from:from:mime-version:received:received:received; s=default;
+	 t=1611676583; x=1613490984; bh=ZJlxOHGljP0Odk8VClzftNpPHd3TKDj7
+	xLzfmquVCr4=; b=CY7/WcM5QaKjqZFO/zXW9vIczKsXz7eIl9CTS7Zi+dHLSdMJ
+	D9yItP4l1uYd1bMVBtFrDxG/I6GuHIWFiXlmPzAeJ/ie/QOGNJUes6wHVM9bUsSR
+	uNhA/gYczOJr7zpBnoBpSJsBq9OR+tTnudIb0kWpfjfPyYopRwhqd6IB2Sg=
+X-Virus-Scanned: Debian amavisd-new at mincen.emse.fr
+Received: from mincen.emse.fr ([127.0.0.1])
+	by localhost (mincen.emse.fr [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id akJ4mQB-muQp for <liste-egc@polytech.univ-nantes.fr>;
+	Tue, 26 Jan 2021 16:56:23 +0100 (CET)
+Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: maxime.lefrancois)
+	by mincen.emse.fr (Postfix) with ESMTPSA id C52AD3FAF4
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 26 Jan 2021 16:56:22 +0100 (CET)
+Received: by mail-yb1-f181.google.com with SMTP id r32so17197435ybd.5
+        for <liste-egc@polytech.univ-nantes.fr>; Tue, 26 Jan 2021 07:56:22 -0800 (PST)
+X-Gm-Message-State: AOAM53203fcC3JIA+X4O5Kwudx5FN0Dnl/fO5mG/MbOLTE/d/0bhnu18
+	2cb6XmP4t9/r5gBqvAn3Fy58rPii5t7roGOdaNI=
+X-Google-Smtp-Source: ABdhPJy4VeKL8KYjxvashXz5LH5DmcnGIhz5L8tQjUjD3irWiJe2iFaHL/rS7AtgsCBlweR3gpSGZyAdI4HrY6ocZVQ=
+X-Received: by 2002:a25:338b:: with SMTP id z133mr9206691ybz.313.1611676581865;
+ Tue, 26 Jan 2021 07:56:21 -0800 (PST)
+MIME-Version: 1.0
+From: =?UTF-8?Q?Maxime_Lefran=C3=A7ois?= <maxime.lefrancois@emse.fr>
+Date: Tue, 26 Jan 2021 16:56:10 +0100
+X-Gmail-Original-Message-ID: <CALsPASWLNdcisRqndazgD_zNZsF7F2NR=ka3HhQQK7DJ-zWhpQ@mail.gmail.com>
+Message-ID: <CALsPASWLNdcisRqndazgD_zNZsF7F2NR=ka3HhQQK7DJ-zWhpQ@mail.gmail.com>
+To: =?UTF-8?B?4oCcaW5mby1pY0BsaXN0ZXMuaXJpc2EuZnLigJ0=?= <info-ic@listes.irisa.fr>, 
+	info-aria@lsis.org, web.semantique@inria.fr, 
+	=?UTF-8?B?4oCcbGlzdGUtZWdjQHBvbHl0ZWNoLnVuaXYtbmFudGVzLmZy4oCd?= <liste-egc@polytech.univ-nantes.fr>, 
+	polytech_liste-egc@univ-nantes.fr, bull-ia@gdria.fr, 
+	=?UTF-8?B?4oCcYnVsbC1pM0Bpcml0LmZy4oCd?= <bull-i3@irit.fr>
+Content-Type: multipart/alternative; boundary="00000000000027ad8405b9cfb21a"
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] 2e appel =?UTF-8?Q?=C3=A0?= communication IC @ PFIA
+ 2021
+
+--00000000000027ad8405b9cfb21a
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Toutes mes excuses pour les r=C3=A9ceptions multiples
+
+Appel =C3=A0 communication IC 2021 (32es Journ=C3=A9es francophones d'Ing=
+=C3=A9nierie des
+Connaissances)
+   dans le cadre de PFIA 2021  (Plate-Forme de l'Intelligence Artificielle)
+   du 28 juin au 2 juillet 2021, =C3=A0 Bordeaux
+https://pfia2021.fr/conferences/ic/
+
+-------------------------
+Dates importantes
+-------------------------
+
+- 1 mars 2021: soumission des articles:
+- 15 f=C3=A9vrier 2021: propositions d'ateliers et de tutoriels - voir en b=
+as de
+ce message les modalit=C3=A9s
+- 7 avril 2021: notification aux auteurs
+- 28 juin 2021: ateliers et tutoriels
+- 29 juin 2021: journ=C3=A9e Informatique M=C3=A9dicale et IA, affili=C3=A9=
+e =C3=A0 IC
+- 30 juin: pr=C3=A9sentation de notre oratrice invit=C3=A9e Elena Simperl
+- 30 juin au 2 juillet 2021: sessions pl=C3=A9ni=C3=A8res
+
+----------------------------------------
+Pr=C3=A9sentation de la conf=C3=A9rence
+----------------------------------------
+
+Les journ=C3=A9es francophones d=E2=80=99Ing=C3=A9nierie des Connaissances =
+(IC) sont
+organis=C3=A9es chaque ann=C3=A9e depuis 1997, d=E2=80=99abord sous l=E2=80=
+=99=C3=A9gide du Gracq (Groupe
+de Recherche en Acquisition des Connaissances) puis sous celle du coll=C3=
+=A8ge
+SIC (Science de l=E2=80=99Ing=C3=A9nierie des Connaissances) de l=E2=80=99A=
+FIA. Cette ann=C3=A9e
+encore, IC est h=C3=A9berg=C3=A9e par la plateforme PFIA, avec plusieurs au=
+tre
+conf=C3=A9rences francophones dans le domaine de l=E2=80=99intelligence art=
+ificielle.
+
+L=E2=80=99ing=C3=A9nierie des connaissances peut =C3=AAtre vue comme la par=
+tie de
+l=E2=80=99Intelligence Artificielle se pr=C3=A9occupant des connaissances s=
+elon les
+points de vue de la repr=C3=A9sentation, l=E2=80=99acquisition et l=E2=80=
+=99int=C3=A9gration dans des
+environnements num=C3=A9riques. Sa finalit=C3=A9 est la production de m=C3=
+=A9thodes et
+outils =C2=AB intelligents =C2=BB, capables d=E2=80=99aider l=E2=80=99humai=
+n dans ses activit=C3=A9s et
+ses prises de d=C3=A9cisions.
+
+La conf=C3=A9rence Ing=C3=A9nierie des Connaissances r=C3=A9unit la communa=
+ut=C3=A9 francophone
+et est un lieu d=E2=80=99=C3=A9changes et de r=C3=A9flexions, de pr=C3=A9se=
+ntation et de
+confrontation des th=C3=A9ories, pratiques, m=C3=A9thodes et outils. Cette =
+communaut=C3=A9
+doit d=C3=A9sormais prendre en compte l=E2=80=99essor des algorithmes d=E2=
+=80=99apprentissage et
+leurs retomb=C3=A9es sur les pratiques individuelles et collectives, tout e=
+n
+conservant l=E2=80=99humain au centre des syst=C3=A8mes de donn=C3=A9es et =
+connaissances.
+
+-------------------------
+Oratrice Invit=C3=A9e
+-------------------------
+
+Elena Simperl, King=E2=80=99s College London - http://elenasimperl.com/
+
+Biographie: Elena Simperl est professeur d'informatique au King's College
+de Londres au Royaume-Uni, membre de la British Computer Society, et
+ancienne membre de Turing Fellow. Ses travaux de recherche se concentrent
+sur l'intersection entre l'IA et l'informatique de foule, en aidant les
+concepteurs =C3=A0 comprendre comment construire des syst=C3=A8mes socio-te=
+chniques
+qui combinent des algorithmes machine avec des capacit=C3=A9s humaines et
+sociales. Ses r=C3=A9cents travaux ont port=C3=A9 sur l'examen de plusieurs
+cat=C3=A9gories de syst=C3=A8mes en ligne mis en place pour l'engagement =
+=C3=A0 l'=C3=A9chelle,
+les applications de d=C3=A9tection participative et les bases de connaissan=
+ces
+universelles.
+
+-----------------------------------------
+Th=C3=A8mes de la conf=C3=A9rence
+-----------------------------------------
+
+Cette ann=C3=A9e, les propositions portant sur le th=C3=A8me =C2=AB apports=
+ de
+l=E2=80=99ing=C3=A9nierie des connaissances aux autres ing=C3=A9nieries =C2=
+=BB seront
+particuli=C3=A8rement bienvenues mais il est =C3=A9galement possible de pro=
+poser une
+communication originale ayant une port=C3=A9e th=C3=A9orique, m=C3=A9thodol=
+ogique ou
+pratique, sur l=E2=80=99un des th=C3=A8mes suivants (liste non exhaustive) =
+:
+
+Ing=C3=A9nierie des connaissances pour le Web
+
+-   Stockage et interrogation de connaissances distribu=C3=A9es
+-   Web s=C3=A9mantique, Web des donn=C3=A9es, Web social, Web des objets
+
+Repr=C3=A9sentation des connaissances, ontologies
+
+-   Mod=C3=A8les de connaissances : conception, =C3=A9volution, =C3=A9valua=
+tion,
+exploitation, cycle de vie
+-   Mod=C3=A9lisation et formalisation : langages formels et informels,
+standardisation
+-   M=C3=A9thodes et outils pour l'ing=C3=A9nierie ontologique : alignement=
+,
+int=C3=A9gration, modularit=C3=A9, fusion, m=C3=A9triques, patrons de conce=
+ption,
+visualisation
+-   Conception et r=C3=A9utilisation d'ontologies fondatrices, ontologies d=
+e
+core-domaine, ontologies de domaine, interop=C3=A9rabilit=C3=A9, terminolog=
+ies
+
+De la donn=C3=A9e =C3=A0 la connaissance
+
+-   Extraction et acquisition de connaissances, peuplement d'ontologies,
+annotation s=C3=A9mantique
+-   Acquisition de connaissances =C3=A0 partir de textes, =C3=A0 partir d'i=
+mages, =C3=A0
+partir de donn=C3=A9es non structur=C3=A9es, =C3=A0 partir d'interactions
+-   Ing=C3=A9nierie des syst=C3=A8mes collaboratifs, crowd-sourcing
+-   Traitements et raisonnements sur les connaissances
+-   Ing=C3=A9nierie des connaissances et fouille de donn=C3=A9es
+
+Qualit=C3=A9 des donn=C3=A9es et des connaissances
+
+-   Ing=C3=A9nierie des connaissances et donn=C3=A9es complexes : donn=C3=
+=A9es multim=C3=A9dia,
+multilingues, temporelles, spatiales, multi-=C3=A9chelles, impr=C3=A9cises =
+ou
+incertaines
+-   Propri=C3=A9t=C3=A9 et s=C3=A9curit=C3=A9 dans les syst=C3=A8mes =C3=A0=
+ base de connaissances
+-   Provenance et confiance dans les donn=C3=A9es, d=C3=A9tection de v=C3=
+=A9rit=C3=A9,
+incertitude
+-   M=C3=A9trique et =C3=A9valuation de la qualit=C3=A9 des donn=C3=A9es et=
+ connaissances
+
+Raisonnement et apprentissage
+
+-   Inf=C3=A9rences et r=C3=A8gles m=C3=A9tiers
+-   Raisonnement logique, approximations, raisonnement statistique,
+raisonnement par analogie, raisonnement =C3=A0 partir de cas, raisonnement =
+dans
+les logiques non classiques
+-   Calcul de plongements de graphes de connaissances
+-   Apprentissage profond et graphes de connaissances
+
+Applications de l'Ing=C3=A9nierie des Connaissances et retours d'exp=C3=A9r=
+ience
+
+-   Recherche d'Information, indexation, recommandation
+-   Interaction Homme-Machine : visualisation de donn=C3=A9es, de connaissa=
+nces
+et interconnexions, interface avec un syst=C3=A8me =C3=A0 base de connaissa=
+nces,
+explications
+-   Syst=C3=A8mes multi-agents
+-   Agents conversationnels
+-   Syst=C3=A8mes de recommandation =C3=A0 base de connaissances
+-   Adaptation, personnalisation : profils utilisateurs, mod=C3=A8les de
+contexte et adaptation, mod=C3=A8les d'=C3=A9motion
+-   Traitement de donn=C3=A9es massives, h=C3=A9t=C3=A9rog=C3=A8nes
+-   Applications aux sciences de la vie, =C3=A0 l'agriculture, la culture,
+l'=C3=A9ducation, l'industrie, l'=C3=A9conomie, le droit, l'informatique
+d=C3=A9cisionnelle (BI), etc.
+
+
+------------------
+Soumissions
+-------------------
+
+Plusieurs types de soumissions sont attendues pour cette =C3=A9dition 2021 =
+:
+
+- des articles longs pr=C3=A9sentant des r=C3=A9sultats nouveaux et valid=
+=C3=A9s (8 pages
+maximum, pr=C3=A9sentation orale 20 min, discussion 10 min)
+- des articles courts destin=C3=A9s =C3=A0 servir de support =C3=A0 des pos=
+ters ou
+d=C3=A9monstrations (4 pages maximum, pr=C3=A9sentation pendant les s=C3=A9=
+ances
+posters/d=C3=A9mos de la plateforme)
+- des articles de positionnement apportant une retrospective sur les
+travaux en lien avec un domaine bien identifi=C3=A9 en lien avec les th=C3=
+=A9matiques
+de la conf=C3=A9rence, et proposant un point de vue sur les prochains verro=
+us
+scientifiques importants de ce domaine (8 pages maximum, pr=C3=A9sentation =
+orale
+20 min, discussion 10 min)
+- des travaux d=C3=A9j=C3=A0 publi=C3=A9s dans de bonnes conf=C3=A9rences i=
+nternationales mais
+in=C3=A9dits en fran=C3=A7ais. La soumission, obligatoirement en fran=C3=A7=
+ais, doit dans
+ce cas citer l=E2=80=99article d=E2=80=99origine (8 pages maximum, pr=C3=A9=
+sentation orale 10
+min, discussion 5 min)
+- des articles portant sur les apports de l=E2=80=99ing=C3=A9nierie des con=
+naissances
+aux autres ing=C3=A9nieries (longs, courts, positionnement, d=C3=A9j=C3=A0 =
+publi=C3=A9s =C3=A0
+l'international)
+
+Un prix du meilleur papier sera d=C3=A9cern=C3=A9 par le comit=C3=A9 de pro=
+gramme pendant
+la conf=C3=A9rence.
+
+Pour la soumission d'un article =C3=A0 IC, il est n=C3=A9cessaire de respec=
+ter le
+style PFIA:
+
+- Style d'article au format Word sur ce lien -
+https://afia.asso.fr/style_article_ch_pfia_word/
+- Style d'article au format LaTeX sur ce lien -
+https://afia.asso.fr/style_article_ch_pfia_latex/
+- Exemple et consignes au format PDF sur ce lien -
+https://afia.asso.fr/style_article_ch_pfia_v2_1/
+
+Les soumissions doivent se faire via la plateforme OpenReview -
+https://openreview.net/group?id=3DPFIA.fr/2021/Conference/IC
+
+------------------
+ Ateliers
+-------------------
+
+Les propositions d=E2=80=99ateliers doivent =C3=AAtre envoy=C3=A9es par cou=
+rriel =C3=A0
+maxime.lefrancois@emse.fr avant le 15 f=C3=A9vrier 2021. Elles seront soumi=
+ses
+pour avis au comit=C3=A9 de pilotage de la conf=C3=A9rence IC.
+
+---------------------------------
+  Comit=C3=A9s et organisation
+---------------------------------
+
+Pr=C3=A9sident du comit=C3=A9 de programme: Maxime Lefran=C3=A7ois (MINES S=
+aint-=C3=89tienne)
+Co-pr=C3=A9sidents du comit=C3=A9 d'organisation PFIA 2021: Beno=C3=AEt Le =
+Blanc (Bordeaux
+INP), Fleur Mougin (U. Bordeaux), Nicolas Roussel (INRIA Bordeaux), Laurent
+Simon (Bordeaux INP) - pfia2019-pres-co@irit.fr
+
+La constitution actuelle du comit=C3=A9 de programme de IC 2021 est pr=C3=
+=A9sent=C3=A9e
+sur le site de la plateforme
+https://pfia2021.fr/conferences/ic/?p=3Dcomite
+
+----------------
+  Programme g=C3=A9n=C3=A9ral et Inscriptions
+----------------
+
+Le programme g=C3=A9n=C3=A9ral est disponible =C3=A0 l'adresse suivante:
+https://pfia2021.fr/programme/
+
+Les frais d'inscription ont =C3=A9t=C3=A9 publi=C3=A9s =C3=A0 l'adresse sui=
+vante:
+https://pfia2021.fr/infos-locales/inscriptions/
+
+--00000000000027ad8405b9cfb21a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Toutes mes excuses pour les r=C3=A9ceptions multiples<br><=
+br>Appel =C3=A0 communication IC 2021 (32es Journ=C3=A9es francophones d&#3=
+9;Ing=C3=A9nierie des Connaissances)<br>=C2=A0 =C2=A0dans le cadre de PFIA =
+2021 =C2=A0(Plate-Forme de l&#39;Intelligence Artificielle)<br>=C2=A0 =C2=
+=A0du 28 juin au 2 juillet 2021, =C3=A0 Bordeaux<br><a href=3D"https://pfia=
+2021.fr/conferences/ic/">https://pfia2021.fr/conferences/ic/</a><br><br>---=
+----------------------<br>Dates importantes<br>-------------------------<br=
+><br>- 1 mars 2021: soumission des articles: <br>- 15 f=C3=A9vrier 2021: pr=
+opositions d&#39;ateliers et de tutoriels - voir en bas de ce message les m=
+odalit=C3=A9s<br>- 7 avril 2021: notification aux auteurs<br>- 28 juin 2021=
+: ateliers et tutoriels<br>- 29 juin 2021: journ=C3=A9e Informatique M=C3=
+=A9dicale et IA, affili=C3=A9e =C3=A0 IC=C2=A0<div>- 30 juin: pr=C3=A9senta=
+tion de notre oratrice invit=C3=A9e Elena Simperl<br>- 30 juin au 2 juillet=
+ 2021: sessions pl=C3=A9ni=C3=A8res<br><br>--------------------------------=
+--------<br>Pr=C3=A9sentation de la conf=C3=A9rence<br>--------------------=
+--------------------<br><br>Les journ=C3=A9es francophones d=E2=80=99Ing=C3=
+=A9nierie des Connaissances (IC) sont organis=C3=A9es chaque ann=C3=A9e dep=
+uis 1997, d=E2=80=99abord sous l=E2=80=99=C3=A9gide du Gracq (Groupe de Rec=
+herche en Acquisition des Connaissances) puis sous celle du coll=C3=A8ge SI=
+C (Science de l=E2=80=99Ing=C3=A9nierie des Connaissances) de l=E2=80=99AFI=
+A. Cette ann=C3=A9e encore, IC est h=C3=A9berg=C3=A9e par la plateforme PFI=
+A, avec plusieurs autre conf=C3=A9rences francophones dans le domaine de l=
+=E2=80=99intelligence artificielle.<br><br>L=E2=80=99ing=C3=A9nierie des co=
+nnaissances peut =C3=AAtre vue comme la partie de l=E2=80=99Intelligence Ar=
+tificielle se pr=C3=A9occupant des connaissances selon les points de vue de=
+ la repr=C3=A9sentation, l=E2=80=99acquisition et l=E2=80=99int=C3=A9gratio=
+n dans des environnements num=C3=A9riques. Sa finalit=C3=A9 est la producti=
+on de m=C3=A9thodes et outils =C2=AB intelligents =C2=BB, capables d=E2=80=
+=99aider l=E2=80=99humain dans ses activit=C3=A9s et ses prises de d=C3=A9c=
+isions.<br><br>La conf=C3=A9rence Ing=C3=A9nierie des Connaissances r=C3=A9=
+unit la communaut=C3=A9 francophone et est un lieu d=E2=80=99=C3=A9changes =
+et de r=C3=A9flexions, de pr=C3=A9sentation et de confrontation des th=C3=
+=A9ories, pratiques, m=C3=A9thodes et outils. Cette communaut=C3=A9 doit d=
+=C3=A9sormais prendre en compte l=E2=80=99essor des algorithmes d=E2=80=99a=
+pprentissage et leurs retomb=C3=A9es sur les pratiques individuelles et col=
+lectives, tout en conservant l=E2=80=99humain au centre des syst=C3=A8mes d=
+e donn=C3=A9es et connaissances.<br><br><div>-------------------------<br>O=
+ratrice Invit=C3=A9e<br>-------------------------<br><br>Elena Simperl, Kin=
+g=E2=80=99s College London - <a href=3D"http://elenasimperl.com/">http://el=
+enasimperl.com/</a><br><br>Biographie: Elena Simperl est professeur d&#39;i=
+nformatique au King&#39;s College de Londres au Royaume-Uni, membre de la B=
+ritish Computer Society, et ancienne membre de Turing Fellow. Ses travaux d=
+e recherche se concentrent sur l&#39;intersection entre l&#39;IA et l&#39;i=
+nformatique de foule, en aidant les concepteurs =C3=A0 comprendre comment c=
+onstruire des syst=C3=A8mes socio-techniques qui combinent des algorithmes =
+machine avec des capacit=C3=A9s humaines et sociales. Ses r=C3=A9cents trav=
+aux ont port=C3=A9 sur l&#39;examen de plusieurs cat=C3=A9gories de syst=C3=
+=A8mes en ligne mis en place pour l&#39;engagement =C3=A0 l&#39;=C3=A9chell=
+e, les applications de d=C3=A9tection participative et les bases de connais=
+sances universelles.</div><div><br>----------------------------------------=
+-<br>Th=C3=A8mes de la conf=C3=A9rence<br>---------------------------------=
+--------<br><br>Cette ann=C3=A9e, les propositions portant sur le th=C3=A8m=
+e =C2=AB apports de l=E2=80=99ing=C3=A9nierie des connaissances aux autres =
+ing=C3=A9nieries =C2=BB seront particuli=C3=A8rement bienvenues mais il est=
+ =C3=A9galement possible de proposer une communication originale ayant une =
+port=C3=A9e th=C3=A9orique, m=C3=A9thodologique ou pratique, sur l=E2=80=99=
+un des th=C3=A8mes suivants (liste non exhaustive) :<br><br>Ing=C3=A9nierie=
+ des connaissances pour le Web<br><br>- =C2=A0 Stockage et interrogation de=
+ connaissances distribu=C3=A9es<br>- =C2=A0 Web s=C3=A9mantique, Web des do=
+nn=C3=A9es, Web social, Web des objets<br><br>Repr=C3=A9sentation des conna=
+issances, ontologies<br><br>- =C2=A0 Mod=C3=A8les de connaissances : concep=
+tion, =C3=A9volution, =C3=A9valuation, exploitation, cycle de vie<br>- =C2=
+=A0 Mod=C3=A9lisation et formalisation : langages formels et informels, sta=
+ndardisation<br>- =C2=A0 M=C3=A9thodes et outils pour l&#39;ing=C3=A9nierie=
+ ontologique : alignement, int=C3=A9gration, modularit=C3=A9, fusion, m=C3=
+=A9triques, patrons de conception, visualisation<br>- =C2=A0 Conception et =
+r=C3=A9utilisation d&#39;ontologies fondatrices, ontologies de core-domaine=
+, ontologies de domaine, interop=C3=A9rabilit=C3=A9, terminologies<br><br>D=
+e la donn=C3=A9e =C3=A0 la connaissance<br><br>- =C2=A0 Extraction et acqui=
+sition de connaissances, peuplement d&#39;ontologies, annotation s=C3=A9man=
+tique<br>- =C2=A0 Acquisition de connaissances =C3=A0 partir de textes, =C3=
+=A0 partir d&#39;images, =C3=A0 partir de donn=C3=A9es non structur=C3=A9es=
+, =C3=A0 partir d&#39;interactions<br>- =C2=A0 Ing=C3=A9nierie des syst=C3=
+=A8mes collaboratifs, crowd-sourcing<br>- =C2=A0 Traitements et raisonnemen=
+ts sur les connaissances<br>- =C2=A0 Ing=C3=A9nierie des connaissances et f=
+ouille de donn=C3=A9es<br><br>Qualit=C3=A9 des donn=C3=A9es et des connaiss=
+ances<br><br>- =C2=A0 Ing=C3=A9nierie des connaissances et donn=C3=A9es com=
+plexes : donn=C3=A9es multim=C3=A9dia, multilingues, temporelles, spatiales=
+, multi-=C3=A9chelles, impr=C3=A9cises ou incertaines<br>- =C2=A0 Propri=C3=
+=A9t=C3=A9 et s=C3=A9curit=C3=A9 dans les syst=C3=A8mes =C3=A0 base de conn=
+aissances<br>- =C2=A0 Provenance et confiance dans les donn=C3=A9es, d=C3=
+=A9tection de v=C3=A9rit=C3=A9, incertitude<br>- =C2=A0 M=C3=A9trique et =
+=C3=A9valuation de la qualit=C3=A9 des donn=C3=A9es et connaissances<br><br=
+>Raisonnement et apprentissage<br><br>- =C2=A0 Inf=C3=A9rences et r=C3=A8gl=
+es m=C3=A9tiers<br>- =C2=A0 Raisonnement logique, approximations, raisonnem=
+ent statistique, raisonnement par analogie, raisonnement =C3=A0 partir de c=
+as, raisonnement dans les logiques non classiques<br>- =C2=A0 Calcul de plo=
+ngements de graphes de connaissances<br>- =C2=A0 Apprentissage profond et g=
+raphes de connaissances<br><br>Applications de l&#39;Ing=C3=A9nierie des Co=
+nnaissances et retours d&#39;exp=C3=A9rience<br><br>- =C2=A0 Recherche d&#3=
+9;Information, indexation, recommandation<br>- =C2=A0 Interaction Homme-Mac=
+hine : visualisation de donn=C3=A9es, de connaissances et interconnexions, =
+interface avec un syst=C3=A8me =C3=A0 base de connaissances, explications<b=
+r>- =C2=A0 Syst=C3=A8mes multi-agents<br>- =C2=A0 Agents conversationnels<b=
+r>- =C2=A0 Syst=C3=A8mes de recommandation =C3=A0 base de connaissances<br>=
+- =C2=A0 Adaptation, personnalisation : profils utilisateurs, mod=C3=A8les =
+de contexte et adaptation, mod=C3=A8les d&#39;=C3=A9motion<br>- =C2=A0 Trai=
+tement de donn=C3=A9es massives, h=C3=A9t=C3=A9rog=C3=A8nes<br>- =C2=A0 App=
+lications aux sciences de la vie, =C3=A0 l&#39;agriculture, la culture, l&#=
+39;=C3=A9ducation, l&#39;industrie, l&#39;=C3=A9conomie, le droit, l&#39;in=
+formatique d=C3=A9cisionnelle (BI), etc.<br><br><br>------------------<br>S=
+oumissions<br>-------------------<br><br>Plusieurs types de soumissions son=
+t attendues pour cette =C3=A9dition 2021 :<br><br>- des articles longs pr=
+=C3=A9sentant des r=C3=A9sultats nouveaux et valid=C3=A9s (8 pages maximum,=
+ pr=C3=A9sentation orale 20 min, discussion 10 min)<br>- des articles court=
+s destin=C3=A9s =C3=A0 servir de support =C3=A0 des posters ou d=C3=A9monst=
+rations (4 pages maximum, pr=C3=A9sentation pendant les s=C3=A9ances poster=
+s/d=C3=A9mos de la plateforme)<br>- des articles de positionnement apportan=
+t une retrospective sur les travaux en lien avec un domaine bien identifi=
+=C3=A9 en lien avec les th=C3=A9matiques de la conf=C3=A9rence, et proposan=
+t un point de vue sur les prochains verrous scientifiques importants de ce =
+domaine (8 pages maximum, pr=C3=A9sentation orale 20 min, discussion 10 min=
+)<br>- des travaux d=C3=A9j=C3=A0 publi=C3=A9s dans de bonnes conf=C3=A9ren=
+ces internationales mais in=C3=A9dits en fran=C3=A7ais. La soumission, obli=
+gatoirement en fran=C3=A7ais, doit dans ce cas citer l=E2=80=99article d=E2=
+=80=99origine (8 pages maximum, pr=C3=A9sentation orale 10 min, discussion =
+5 min)<br>- des articles portant sur les apports de l=E2=80=99ing=C3=A9nier=
+ie des connaissances aux autres ing=C3=A9nieries (longs, courts, positionne=
+ment, d=C3=A9j=C3=A0 publi=C3=A9s =C3=A0 l&#39;international)<br><br>Un pri=
+x du meilleur papier sera d=C3=A9cern=C3=A9 par le comit=C3=A9 de programme=
+ pendant la conf=C3=A9rence.<br><br>Pour la soumission d&#39;un article =C3=
+=A0 IC, il est n=C3=A9cessaire de respecter le style PFIA:<br><br>- Style d=
+&#39;article au format Word sur ce lien - <a href=3D"https://afia.asso.fr/s=
+tyle_article_ch_pfia_word/">https://afia.asso.fr/style_article_ch_pfia_word=
+/</a><br>- Style d&#39;article au format LaTeX sur ce lien - <a href=3D"htt=
+ps://afia.asso.fr/style_article_ch_pfia_latex/">https://afia.asso.fr/style_=
+article_ch_pfia_latex/</a><br>- Exemple et consignes au format PDF sur ce l=
+ien - <a href=3D"https://afia.asso.fr/style_article_ch_pfia_v2_1/">https://=
+afia.asso.fr/style_article_ch_pfia_v2_1/</a><br><br>Les soumissions doivent=
+ se faire via la plateforme OpenReview - <a href=3D"https://openreview.net/=
+group?id=3DPFIA.fr/2021/Conference/IC">https://openreview.net/group?id=3DPF=
+IA.fr/2021/Conference/IC</a><br><br>------------------<br>=C2=A0Ateliers<br=
+>-------------------<br><br>Les propositions d=E2=80=99ateliers doivent =C3=
+=AAtre envoy=C3=A9es par courriel =C3=A0 <a href=3D"mailto:maxime.lefrancoi=
+s@emse.fr">maxime.lefrancois@emse.fr</a> avant le 15 f=C3=A9vrier 2021. Ell=
+es seront soumises pour avis au comit=C3=A9 de pilotage de la conf=C3=A9ren=
+ce IC.<br><br>---------------------------------<br>=C2=A0 Comit=C3=A9s et o=
+rganisation<br>---------------------------------<br><br>Pr=C3=A9sident du c=
+omit=C3=A9 de programme: Maxime Lefran=C3=A7ois (MINES Saint-=C3=89tienne)<=
+br>Co-pr=C3=A9sidents du comit=C3=A9 d&#39;organisation PFIA 2021: Beno=C3=
+=AEt Le Blanc (Bordeaux INP), Fleur Mougin (U. Bordeaux), Nicolas Roussel (=
+INRIA Bordeaux), Laurent Simon (Bordeaux INP) - <a href=3D"mailto:pfia2019-=
+pres-co@irit.fr">pfia2019-pres-co@irit.fr</a><br><br>La constitution actuel=
+le du comit=C3=A9 de programme de IC 2021 est pr=C3=A9sent=C3=A9e sur le si=
+te de la plateforme<br><a href=3D"https://pfia2021.fr/conferences/ic/?p=3Dc=
+omite">https://pfia2021.fr/conferences/ic/?p=3Dcomite</a><br><br>----------=
+------<br>=C2=A0 Programme g=C3=A9n=C3=A9ral et Inscriptions<br>-----------=
+-----<br><br>Le programme g=C3=A9n=C3=A9ral est disponible =C3=A0 l&#39;adr=
+esse suivante: <br><a href=3D"https://pfia2021.fr/programme/">https://pfia2=
+021.fr/programme/</a><br><br>Les frais d&#39;inscription ont =C3=A9t=C3=A9 =
+publi=C3=A9s =C3=A0 l&#39;adresse suivante:<br><a href=3D"https://pfia2021.=
+fr/infos-locales/inscriptions/">https://pfia2021.fr/infos-locales/inscripti=
+ons/</a></div></div></div>
+
+--00000000000027ad8405b9cfb21a--

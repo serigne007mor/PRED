@@ -1,0 +1,746 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (bouncesmtp1.u12.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 0359114017C0
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed, 15 Feb 2023 10:48:23 +0100 (CET)
+Received: from mx1.localdomain (MX1.univ-nantes.fr [193.52.101.135])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id F36376FF9
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed, 15 Feb 2023 10:48:22 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.localdomain (Postfix) with ESMTP id EA066120E0C
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 15 Feb 2023 10:48:22 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 0.314
+X-Spam-Level:
+X-Spam-Status: No, score=0.314 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	NO_RDNS=0.5, NO_RDNS2=0.01, RCVD_IN_DNSWL_LOW=-1,
+	RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_WSFF=0.01, SARE_LWSHORTT=0.794,
+	SPF_HELO_NONE=0.001, SPF_PASS=-0.001, UN_PHISHING_PW=0.1]
+	autolearn=disabled
+X-CRM114-Status: UNSURE ( 4.0278 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=unistra.fr
+Received: from mx1.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 2CY8ep7-qgDl for <liste-egc@polytech.univ-nantes.fr>;
+	Wed, 15 Feb 2023 10:48:17 +0100 (CET)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from smtpout02-ext4.partage.renater.fr (smtpout02-ext4.partage.renater.fr [194.254.241.31])
+	by mx1.localdomain (Postfix) with ESMTPS id 0654F120E12
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 15 Feb 2023 10:48:17 +0100 (CET)
+Received: from zmtaauth02.partage.renater.fr (zmtaauth02.partage.renater.fr [194.254.241.25])
+	by smtpout20.partage.renater.fr (Postfix) with ESMTP id B9774BFF20;
+	Wed, 15 Feb 2023 10:48:05 +0100 (CET)
+Received: from zmtaauth02.partage.renater.fr (localhost [127.0.0.1])
+	by zmtaauth02.partage.renater.fr (Postfix) with ESMTPS id 957EEA0141;
+	Wed, 15 Feb 2023 10:48:05 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by zmtaauth02.partage.renater.fr (Postfix) with ESMTP id 7676AA0137;
+	Wed, 15 Feb 2023 10:48:05 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zmtaauth02.partage.renater.fr 7676AA0137
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unistra.fr;
+	s=CF279DD4-6F58-4C59-BB33-73FDC6DFC1E3; t=1676454485;
+	bh=JKWzjk57l1IypwSPHG1Lvi0ahiluQ7+coSXcDHDRwX0=;
+	h=Message-ID:Date:MIME-Version:From:To;
+	b=md/TzOa56f1U/+NpEIncG6zQt0ycM1wLFkZXoQLlZFW3CGo1HK1wp40HK5UApQb83
+	 NTW0UmMkcL3tCk64sYMRO0XwDWGXqRsi58z0XRL7K3x7vUUHB0/M0p+i9AbD1ltAf2
+	 yvSXh6CAjgYMk8KGFn2CgruJvTCF/sT2hwhLVoJ8kAIM8m5xI5zIRfZ7FVmvS8zD1n
+	 uDjTBOJqluUC3wM8ay3xM0uJsMgBMgHwUX07BkH0I54qFsAmXIBmqyM0n6Jb6DVIIe
+	 k0WOivjzbfPKtUO8UjaVEhglAKdPWp+CaCUy/rGqL4yQak/YubaT6VNXE4AnMgyQ9A
+	 L4rJ1PbEoo3Xg==
+Received: from zmtaauth02.partage.renater.fr ([127.0.0.1])
+	by localhost (zmtaauth02.partage.renater.fr [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id BLIsbb19-0jl; Wed, 15 Feb 2023 10:48:05 +0100 (CET)
+Received: from [192.168.0.189] (unknown [194.254.241.250])
+	by zmtaauth02.partage.renater.fr (Postfix) with ESMTPA id CFF8EA0141;
+	Wed, 15 Feb 2023 10:48:04 +0100 (CET)
+Content-Type: multipart/alternative;
+ boundary="------------vcAn1BPoyuYudVS7BIreo5NW"
+Message-ID: <9b3c9813-16c7-a1f9-289e-f7f0ef193ef4@unistra.fr>
+Date: Wed, 15 Feb 2023 10:48:04 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.7.2
+From: =?UTF-8?Q?Pierre_Gan=c3=a7arski_=28Unistra=29?= <gancarski@unistra.fr>
+To: gazettebd3@imag.fr, liste-proml@lri.fr,
+ liste-egc@polytech.univ-nantes.fr,
+ annonces@listes.societe-informatique-de-france.fr, bull-i3@irit.fr,
+ ssfam <ssfam@framalistes.org>, dept-dkm <dept-dkm@irisa.fr>,
+ info-ic@listes.irisa.fr, bull-ia@gdria.fr, tout-isis@lists.gdr-isis.fr,
+ dl@dl.kr.org
+Content-Language: fr
+X-Virus-Scanned: clamav-milter 0.103.6 at clamav03
+X-Virus-Status: Clean
+X-Renater-Ptge-SpamState: clean
+X-Renater-Ptge-SpamScore: 0
+X-Renater-Ptge-SpamCause: gggruggvucftvghtrhhoucdtuddrgedvhedrudeihedgtddvucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecutffgpfetvffgtfenuceurghilhhouhhtmecufedttdenucenucfjughrpegtkfffgggfhffuvfesrgdtreertdefjeenucfhrhhomheprfhivghrrhgvucfirghnpogrrhhskhhiucdlfghnihhsthhrrgdmuceoghgrnhgtrghrshhkihesuhhnihhsthhrrgdrfhhrqeenucggtffrrghtthgvrhhnpeegffekuefhgeeggfevlefhveeivefffeevgeffleefieeujeefjeegfeelgfetteenucffohhmrghinheptghnvghsrdhfrhenucfkphepudelgedrvdehgedrvdeguddrvdehtdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduleegrddvheegrddvgedurddvhedtpdhhvghloheplgduledvrdduieekrddtrddukeelngdpmhgrihhlfhhrohhmpeepregfvffhqdekrefsrefrihgvrhhrvggpifgrnheptgefpegrjegrrhhskhhipgepvdekfghnihhsthhrrgepvdelreepuceoghgrnhgtrghrshhkihesuhhnihhsthhrrgdrfhhrqedpnhgspghrtghpthhtohepuddupdhrtghpthhtohepghgriigvthhtvggsugefsehimhgrghdrfhhrpdhrtghpthhtoheplhhishhtvgdqphhrohhmlheslhhrihdrfhhrpdhrtghpthhtoheplhhishhtvgdqvghgtgesphholhihthgvtghhrdhunhhivhdqnhgrnhhtvghsrdhfrhdprhgtphhtthhopegr
+ nhhnohhntggvsheslhhishhtvghsrdhsohgtihgvthgvqdhinhhfohhrmhgrthhiqhhuvgdquggvqdhfrhgrnhgtvgdrfhhrpdhrtghpthhtohepsghulhhlqdhifeesihhrihhtrdhfrhdprhgtphhtthhopehsshhfrghmsehfrhgrmhgrlhhishhtvghsrdhorhhg
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Proposition de =?UTF-8?Q?th=C3=A8se_financ=C3=A9e?=
+ (URGENT)
+ : Representation Learning for Geographic Spatio-Temporal Generalisation -
+ ICube, Strasbourg and CNES
+
+This is a multi-part message in MIME format.
+--------------vcAn1BPoyuYudVS7BIreo5NW
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+
+L'=C3=A9quipe SDC du laboratoire ICube (Universit=C3=A9 de Strasbourg) en=
+=20
+collaboration avec le CNES propose un contrat doctoral
+
+https://recrutement.cnes.fr/fr/annonce/2035525-23-111-representation-lear=
+ning-for-geographic-spatiotemporal-generalisation-67400-illkirch-graffens=
+taden
+
+Cette th=C3=A8se est ouverte =C3=A0 toute personne titulaire d'un Master =
+en=20
+Informatique (ou =C3=A9quivalent) ou actuellement en M2 et ayant comp=C3=A9=
+tences=20
+fortes en machine learning et analyse d'images. Une exp=C3=A9rience en=20
+apprentissage profond est un plus ind=C3=A9niable.
+
+Elle se d=C3=A9roulera =C3=A0 Strasbourg.
+
+La date limite de candidature est fix=C3=A9e au *16 mars* et doit se fair=
+e=20
+via le site du CNES (lien donn=C3=A9 ci-dessus).
+
+Si vous =C3=AAtes int=C3=A9ress=C3=A9, veuillez prendre contact avec nous=
+ *le plus=20
+rapidement possible *en=C2=A0 envoyant un mail (joindre votre CV, lettre =
+de=20
+motivation et relev=C3=A9s de notes, avec si possible vos classements en =
+L3,=20
+M1 et =C3=A9ventuellement M2, ... ) =C3=A0 lampert@unistra.fr et gancarsk=
+i@unistra.fr
+
+Thomas Lampert - Pierre Gan=C3=A7arski
+
+
+=3D=3D=3D=3D=3D=3D
+
+**
+*
+*
+*Titre du th=C3=A8se :* Representation Learning for Geographic=20
+Spatio-Temporal Generalisation
+
+*Description du sujet :*Time-series are becoming prevalent in many=20
+fields, particularly when monitoring environmental changes of the=20
+Earth's surface in the long term (climate change, urbanisation, etc),=20
+medium term (annual crop cycle, etc) or short term (earthquakes, floods,=20
+etc). With the current and future satellite constellations satellite=20
+image time-series (SITS) expand remote sensing's impact. The project's=20
+goal is to develop domain invariant representations using deep learning=20
+for SITS analysis. Such methods will enable geographic generalisation,=20
+which consists of reusing information from the analysis of one=20
+geographic area to analyse others by using, or not, the same sensors, as=20
+proposed in [5]. Current approaches work for single images because they=20
+generally originate from the computer vision community. The internship=20
+will start the evaluation of the state-of-the-art and to implement and=20
+extend approaches already developed in ICube [5,6]. Current work on=20
+domain adaptation (DA) for time-series uses either weak supervision [1]=20
+or attention-based mechanisms [2,3] for classification or focus on the=20
+related problem of time-series forecasting [4]. However, none of these=20
+approaches tackle the problem of learning DIRs that can be applied to=20
+several geographical locations simultaneously. The work has two=20
+benefits: on the one hand, to reduce the burden of ground truth=20
+collection when sensors of different characteristics are used; and on=20
+the other to exploit the information contained in each data modality to=20
+learn representations that are more robust and general, i.e. to detect=20
+crops, land cover evolution, etc in different countries that exhibit=20
+different characteristics. Your contributions will be part of the global=20
+work of the SDC researchers and will be validated through the=20
+partnership with CNES and potential collaboration with Tour du Valat.=20
+SDC's aim is to propose and implement new generic methods and tools to=20
+exploit large sets of reference data from one domain/modality=20
+(sufficient to train an accurate detector) to train a multi-modal/domain=20
+detector that can be applied to imagery taken from another sensor for=20
+which there exists no reference data. As such, the work tackles key=20
+problems in many machine learning & computer vision applications.
+
+--------------vcAn1BPoyuYudVS7BIreo5NW
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+  <head>
+    <meta http-equiv=3D"content-type" content=3D"text/html; charset=3DUTF=
+-8">
+  </head>
+  <body>
+    <div id=3D"zimbraEditorContainer" style=3D"font-family: arial,
+      helvetica, sans-serif; font-size: 12pt; color: #000000" class=3D"2"=
+>
+      <div><span style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;"
+          data-mce-style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;">L'=C3=A9quipe SDC du
+          laboratoire ICube (Universit=C3=A9 de Strasbourg) en collaborat=
+ion
+          avec le CNES propose un contrat doctoral</span></div>
+      <div><br style=3D"caret-color: #000000; color: #000000; font-family=
+:
+          'Segoe UI', 'Lucida Sans', sans-serif; font-size: 14.16px;
+          font-style: normal; font-variant-caps: normal; font-weight:
+          400; letter-spacing: normal; orphans: auto; text-align: start;
+          text-indent: 0px; text-transform: none; white-space: normal;
+          widows: auto; word-spacing: 0px; -webkit-text-size-adjust:
+          auto; -webkit-text-stroke-width: 0px; text-decoration: none;"
+          data-mce-style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; text-decoration: none;">
+        <span style=3D"caret-color: #000000; color: #000000; font-family:
+          'Segoe UI', 'Lucida Sans', sans-serif; font-size: 14.16px;
+          font-style: normal; font-variant-caps: normal; font-weight:
+          400; letter-spacing: normal; orphans: auto; text-align: start;
+          text-indent: 0px; text-transform: none; white-space: normal;
+          widows: auto; word-spacing: 0px; -webkit-text-size-adjust:
+          auto; -webkit-text-stroke-width: 0px; background-color:
+          #ffffff; text-decoration: none; display: inline !important;
+          float: none;" data-mce-style=3D"caret-color: #000000; color:
+          #000000; font-family: 'Segoe UI', 'Lucida Sans', sans-serif;
+          font-size: 14.16px; font-style: normal; font-variant-caps:
+          normal; font-weight: 400; letter-spacing: normal; orphans:
+          auto; text-align: start; text-indent: 0px; text-transform:
+          none; white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;"><span
+            class=3D"Apple-converted-space"><a
+              class=3D"moz-txt-link-freetext"
+href=3D"https://recrutement.cnes.fr/fr/annonce/2035525-23-111-representat=
+ion-learning-for-geographic-spatiotemporal-generalisation-67400-illkirch-=
+graffenstaden"
+              moz-do-not-send=3D"true">https://recrutement.cnes.fr/fr/ann=
+once/2035525-23-111-representation-learning-for-geographic-spatiotemporal=
+-generalisation-67400-illkirch-graffenstaden</a></span></span></div>
+      <div><span style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;"
+          data-mce-style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;"><br>
+        </span></div>
+      <div><span style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;"
+          data-mce-style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;">Cette th=C3=A8se est
+          ouverte =C3=A0 toute personne titulaire d'un Master en Informat=
+ique
+          (ou =C3=A9quivalent) ou actuellement en M2 et ayant comp=C3=A9t=
+ences
+          fortes en machine learning et analyse d'images. Une exp=C3=A9ri=
+ence
+          en apprentissage profond est un plus ind=C3=A9niable. <br>
+        </span></div>
+      <div><span style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;"
+          data-mce-style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;"><br>
+        </span></div>
+      <div><span style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;"
+          data-mce-style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;">Elle se d=C3=A9rouler=
+a =C3=A0
+          Strasbourg.<br>
+        </span></div>
+      <div><span style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;"
+          data-mce-style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;"><br>
+        </span></div>
+      <div><span style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;"
+          data-mce-style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;">La date limite de
+          candidature est fix=C3=A9e au <font color=3D"#9437ff"><b>16 mar=
+s</b></font>
+          et doit se faire via le site du CNES (lien donn=C3=A9 ci-dessus=
+).</span></div>
+      <div><span style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;"
+          data-mce-style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;"><br>
+        </span></div>
+      <div><span style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;"
+          data-mce-style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;">Si vous =C3=AAtes
+          int=C3=A9ress=C3=A9, veuillez prendre contact avec nous <b>le p=
+lus
+            rapidement possible </b>en=C2=A0 envoyant un mail (joindre vo=
+tre
+          CV, lettre de motivation et relev=C3=A9s de notes, avec si poss=
+ible
+          vos classements en L3, M1 et =C3=A9ventuellement M2, ... ) =C3=A0=
+ <a
+            class=3D"moz-txt-link-abbreviated moz-txt-link-freetext"
+            href=3D"mailto:lampert@unistra.fr" moz-do-not-send=3D"true">l=
+ampert@unistra.fr</a>
+          et <a class=3D"moz-txt-link-abbreviated moz-txt-link-freetext"
+            href=3D"mailto:gancarski@unistra.fr" moz-do-not-send=3D"true"=
+>gancarski@unistra.fr</a></span></div>
+      <div><span style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;"
+          data-mce-style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;"><br>
+        </span></div>
+      <div><span style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;"
+          data-mce-style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;">Thomas Lampert -
+          Pierre Gan=C3=A7arski<br>
+        </span></div>
+      <div><span style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;"
+          data-mce-style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;"><br>
+        </span></div>
+      <div><span style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;"
+          data-mce-style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;"><br>
+        </span></div>
+      <div><span style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;"
+          data-mce-style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;">=3D=3D=3D=3D=3D=3D<br=
+>
+        </span></div>
+      <div><span style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;"
+          data-mce-style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;"><br>
+          <strong></strong></span></div>
+      <div><span style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;"
+          data-mce-style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;"><strong><br>
+          </strong></span></div>
+      <div data-marker=3D"__SIG_PRE__"><span style=3D"caret-color: #00000=
+0;
+          color: #000000; font-family: 'Segoe UI', 'Lucida Sans',
+          sans-serif; font-size: 14.16px; font-style: normal;
+          font-variant-caps: normal; font-weight: 400; letter-spacing:
+          normal; orphans: auto; text-align: start; text-indent: 0px;
+          text-transform: none; white-space: normal; widows: auto;
+          word-spacing: 0px; -webkit-text-size-adjust: auto;
+          -webkit-text-stroke-width: 0px; background-color: #ffffff;
+          text-decoration: none; display: inline !important; float:
+          none;" data-mce-style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;"><strong>Titre du
+            th=C3=A8se :</strong> Representation Learning for Geographic
+          Spatio-Temporal Generalisation</span><span style=3D"caret-color=
+:
+          #000000; color: #000000; font-family: 'Segoe UI', 'Lucida
+          Sans', sans-serif; font-size: 14.16px; font-style: normal;
+          font-variant-caps: normal; font-weight: 400; letter-spacing:
+          normal; orphans: auto; text-align: start; text-indent: 0px;
+          text-transform: none; white-space: normal; widows: auto;
+          word-spacing: 0px; -webkit-text-size-adjust: auto;
+          -webkit-text-stroke-width: 0px; background-color: #ffffff;
+          text-decoration: none; display: inline !important; float:
+          none;" data-mce-style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;"><span
+            class=3D"Apple-converted-space">=C2=A0</span></span><br
+          style=3D"caret-color: #000000; color: #000000; font-family:
+          'Segoe UI', 'Lucida Sans', sans-serif; font-size: 14.16px;
+          font-style: normal; font-variant-caps: normal; font-weight:
+          400; letter-spacing: normal; orphans: auto; text-align: start;
+          text-indent: 0px; text-transform: none; white-space: normal;
+          widows: auto; word-spacing: 0px; -webkit-text-size-adjust:
+          auto; -webkit-text-stroke-width: 0px; text-decoration: none;"
+          data-mce-style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; text-decoration: none;">
+        <br style=3D"caret-color: #000000; color: #000000; font-family:
+          'Segoe UI', 'Lucida Sans', sans-serif; font-size: 14.16px;
+          font-style: normal; font-variant-caps: normal; font-weight:
+          400; letter-spacing: normal; orphans: auto; text-align: start;
+          text-indent: 0px; text-transform: none; white-space: normal;
+          widows: auto; word-spacing: 0px; -webkit-text-size-adjust:
+          auto; -webkit-text-stroke-width: 0px; text-decoration: none;"
+          data-mce-style=3D"caret-color: #000000; color: #000000;
+          font-family: 'Segoe UI', 'Lucida Sans', sans-serif; font-size:
+          14.16px; font-style: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: auto;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; text-decoration: none;">
+        <strong><span style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0=
+,
+            0); font-family: &quot;Segoe UI&quot;, &quot;Lucida
+            Sans&quot;, sans-serif; font-size: 14.16px; font-style:
+            normal; font-variant-caps: normal; letter-spacing: normal;
+            text-align: start; text-indent: 0px; text-transform: none;
+            white-space: normal; word-spacing: 0px;
+            -webkit-text-stroke-width: 0px; background-color: rgb(255,
+            255, 255); text-decoration: none; float: none; display:
+            inline !important;" data-mce-style=3D"caret-color: #000000;
+            color: #000000; font-family: 'Segoe UI', 'Lucida Sans',
+            sans-serif; font-size: 14.16px; font-style: normal;
+            font-variant-caps: normal; letter-spacing: normal;
+            text-align: start; text-indent: 0px; text-transform: none;
+            white-space: normal; word-spacing: 0px;
+            -webkit-text-stroke-width: 0px; background-color: #ffffff;
+            text-decoration: none; float: none; display: inline
+            !important;">Description du sujet :</span></strong><span
+          style=3D"caret-color: #000000; color: #000000; font-family:
+          'Segoe UI', 'Lucida Sans', sans-serif; font-size: 14.16px;
+          font-style: normal; font-variant-caps: normal; font-weight:
+          400; letter-spacing: normal; orphans: auto; text-align: start;
+          text-indent: 0px; text-transform: none; white-space: normal;
+          widows: auto; word-spacing: 0px; -webkit-text-size-adjust:
+          auto; -webkit-text-stroke-width: 0px; background-color:
+          #ffffff; text-decoration: none; display: inline !important;
+          float: none;" data-mce-style=3D"caret-color: #000000; color:
+          #000000; font-family: 'Segoe UI', 'Lucida Sans', sans-serif;
+          font-size: 14.16px; font-style: normal; font-variant-caps:
+          normal; font-weight: 400; letter-spacing: normal; orphans:
+          auto; text-align: start; text-indent: 0px; text-transform:
+          none; white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;"><span
+            class=3D"Apple-converted-space">=C2=A0</span></span><span
+          style=3D"caret-color: #000000; color: #000000; font-family:
+          'Segoe UI', 'Lucida Sans', sans-serif; font-size: 14.16px;
+          font-style: normal; font-variant-caps: normal; font-weight:
+          400; letter-spacing: normal; orphans: auto; text-align: start;
+          text-indent: 0px; text-transform: none; white-space: normal;
+          widows: auto; word-spacing: 0px; -webkit-text-size-adjust:
+          auto; -webkit-text-stroke-width: 0px; background-color:
+          #ffffff; text-decoration: none; display: inline !important;
+          float: none;" data-mce-style=3D"caret-color: #000000; color:
+          #000000; font-family: 'Segoe UI', 'Lucida Sans', sans-serif;
+          font-size: 14.16px; font-style: normal; font-variant-caps:
+          normal; font-weight: 400; letter-spacing: normal; orphans:
+          auto; text-align: start; text-indent: 0px; text-transform:
+          none; white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;">Time-series are
+          becoming prevalent in many fields, particularly when
+          monitoring environmental changes of the Earth's surface in the
+          long term (climate change, urbanisation, etc), medium term
+          (annual crop cycle, etc) or short term (earthquakes, floods,
+          etc). With the current and future satellite constellations
+          satellite image time-series (SITS) expand remote sensing's
+          impact. The project's goal is to develop domain invariant
+          representations using deep learning for SITS analysis. Such
+          methods will enable geographic generalisation, which consists
+          of reusing information from the analysis of one geographic
+          area to analyse others by using, or not, the same sensors, as
+          proposed in [5]. Current approaches work for single images
+          because they generally originate from the computer vision
+          community. The internship will start the evaluation of the
+          state-of-the-art and to implement and extend approaches
+          already developed in ICube [5,6]. Current work on domain
+          adaptation (DA) for time-series uses either weak supervision
+          [1] or attention-based mechanisms [2,3] for classification or
+          focus on the related problem of time-series forecasting [4].
+          However, none of these approaches tackle the problem of
+          learning DIRs that can be applied to several geographical
+          locations simultaneously. The work has two benefits: on the
+          one hand, to reduce the burden of ground truth collection when
+          sensors of different characteristics are used; and on the
+          other to exploit the information contained in each data
+          modality to learn representations that are more robust and
+          general, i.e. to detect crops, land cover evolution, etc in
+          different countries that exhibit different characteristics.
+          Your contributions will be part of the global work of the SDC
+          researchers and will be validated through the partnership with
+          CNES and potential collaboration with Tour du Valat. SDC's aim
+          is to propose and implement new generic methods and tools to
+          exploit large sets of reference data from one domain/modality
+          (sufficient to train an accurate detector) to train a
+          multi-modal/domain detector that can be applied to imagery
+          taken from another sensor for which there exists no reference
+          data. As such, the work tackles key problems in many machine
+          learning &amp; computer vision applications.</span><span
+          style=3D"caret-color: #000000; color: #000000; font-family:
+          'Segoe UI', 'Lucida Sans', sans-serif; font-size: 14.16px;
+          font-style: normal; font-variant-caps: normal; font-weight:
+          400; letter-spacing: normal; orphans: auto; text-align: start;
+          text-indent: 0px; text-transform: none; white-space: normal;
+          widows: auto; word-spacing: 0px; -webkit-text-size-adjust:
+          auto; -webkit-text-stroke-width: 0px; background-color:
+          #ffffff; text-decoration: none; display: inline !important;
+          float: none;" data-mce-style=3D"caret-color: #000000; color:
+          #000000; font-family: 'Segoe UI', 'Lucida Sans', sans-serif;
+          font-size: 14.16px; font-style: normal; font-variant-caps:
+          normal; font-weight: 400; letter-spacing: normal; orphans:
+          auto; text-align: start; text-indent: 0px; text-transform:
+          none; white-space: normal; widows: auto; word-spacing: 0px;
+          -webkit-text-size-adjust: auto; -webkit-text-stroke-width:
+          0px; background-color: #ffffff; text-decoration: none;
+          display: inline !important; float: none;"><span
+            class=3D"Apple-converted-space">=C2=A0</span></span></div>
+      <div data-marker=3D"__SIG_PRE__">
+        <div><span style=3D"color: #808080; font-size: 10pt;">=C2=A0</spa=
+n></div>
+        <br>
+      </div>
+    </div>
+  </body>
+</html>
+
+--------------vcAn1BPoyuYudVS7BIreo5NW--
+
+

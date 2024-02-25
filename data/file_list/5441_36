@@ -1,0 +1,403 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (BounceSMTP2.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 498CD14014ED
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Sun, 16 Jan 2022 18:33:19 +0100 (CET)
+Received: from mx2.d101.univ-nantes.fr (MX2.univ-nantes.fr [193.52.101.136])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id 42AFD5F92
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Sun, 16 Jan 2022 18:33:19 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTP id 344CE100461
+	for <liste-egc@polytech.univ-nantes.fr>; Sun, 16 Jan 2022 18:33:19 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -13.884
+X-Spam-Level:
+X-Spam-Status: No, score=-13.884 tagged_above=-1000 required=5
+	tests=[CRM114_GOOD=-5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	MISSING_HEADERS=1.207, RCVD_IN_DNSWL_MED=-10, RCVD_IN_WSFF=0.01,
+	SPF_HELO_PASS=-0.001, SPF_PASS=-0.001, UN_PHISHING_PW=0.1]
+	autolearn=disabled
+X-CRM114-Status: GOOD ( 14.3400 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=univ-lyon2.fr
+Received: from mx2.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id VCRkzACjQFgA for <liste-egc@polytech.univ-nantes.fr>;
+	Sun, 16 Jan 2022 18:33:13 +0100 (CET)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from smtp.univ-lyon2.fr (smtp.univ-lyon2.fr [159.84.182.45])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTPS id 79F7B10045E
+	for <liste-egc@polytech.univ-nantes.fr>; Sun, 16 Jan 2022 18:33:13 +0100 (CET)
+Received: from ru.univ-lyon2.fr (localhost [127.0.0.1])
+	by smtp.univ-lyon2.fr (Postfix) with ESMTP id 3EDC913985F;
+	Sun, 16 Jan 2022 18:33:13 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=univ-lyon2.fr;
+	s=201509-490482f6; t=1642354393;
+	bh=kDJLkhq2FDxfEHA1cyNRKr6iEIRk1EkH2u1pyEJy4rU=;
+	h=From:Subject:Date;
+	b=zZbOtyRdcVCospY7KNDU9UMLovG9N7Swy6k17ROV0qvozSadnKscRUF3WfDWGOwyG
+	 Epm4+7fZoEVg2GLkG4N/qLJ62GGcxX17HRGmDGdEJ6ees8RmcBIkxZQmNSBMDWMb/S
+	 /2e4/JIvOhTJOfFFQWXZd00+4s7+RRfZkPCcANms+P1iadhzUcBlsmhpyawDp/w7wG
+	 7yuNA1sfgqVtFdA4gZTGREugIt4e+DNFvUN3mVMJSufUVZ6wlFfP/sMr89nQ7yG74U
+	 yktbDkPGj89D0IE4Uk+N6icp4bcHrrXVOK1RUCtmZB73nC0kSSGmJYerSYlSBA6Tcr
+	 8/5Kd9yYr3mkA==
+X-Virus-Scanned: amavisd-new at univ-lyon2.fr
+Received: from amavis.at.univ-lyon2.fr ([127.0.0.1])
+	by ru.univ-lyon2.fr (smtp.univ-lyon2.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id CFGNMdqgXYK9; Sun, 16 Jan 2022 18:33:12 +0100 (CET)
+Received: from EXCHG-1-B.ADLYON2.UNIV-LYON2.FR (exchg-1-b.univ-lyon2.fr [159.84.182.212])
+	by smtp.univ-lyon2.fr (Postfix) with ESMTP;
+	Sun, 16 Jan 2022 18:33:12 +0100 (CET)
+Received: from EXCHG-4-B.ADLYON2.UNIV-LYON2.FR (159.84.182.215) by
+ EXCHG-1-B.ADLYON2.UNIV-LYON2.FR (159.84.182.212) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.7; Sun, 16 Jan 2022 18:33:12 +0100
+Received: from EXCHG-4-B.ADLYON2.UNIV-LYON2.FR ([fe80::4d6c:30f7:c138:45e6])
+ by EXCHG-4-B.ADLYON2.UNIV-LYON2.FR ([fe80::4d6c:30f7:c138:45e6%4]) with mapi
+ id 15.01.2375.007; Sun, 16 Jan 2022 18:33:12 +0100
+From: Cecile Favre <cecile.favre@univ-lyon2.fr>
+Thread-Topic: =?iso-8859-1?Q?Appel_=E0_ateliers_-_Inforsid_2022?=
+Thread-Index: AdgK/vNydPunW4XsSduvqMdDykppnw==
+Date: Sun, 16 Jan 2022 17:33:12 +0000
+Message-ID: <dafdf713e0274884800f2954d398b389@univ-lyon2.fr>
+Accept-Language: fr-FR, en-US
+Content-Language: fr-FR
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+Content-Type: multipart/alternative;
+	boundary="_000_dafdf713e0274884800f2954d398b389univlyon2fr_"
+MIME-Version: 1.0
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Appel =?ISO-8859-1?Q?=E0?= ateliers - Inforsid 2022
+
+--_000_dafdf713e0274884800f2954d398b389univlyon2fr_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+Appel =E0 Ateliers
+40=E8me Congr=E8s INFORSID 2022
+Dijon, 31 mai-3 Juin 2022
+https://inforsid2022.sciencesconf.org/
+
+Pour favoriser des d=E9bats entre chercheurs, et entre chercheurs et indust=
+riels, des ateliers sont organis=E9s dans le cadre du congr=E8s INFORSID 20=
+21. Ils prennent la forme de demi-journ=E9es de travail sur des th=E9matiqu=
+es sp=E9cifiques ou =E9mergentes li=E9es aux syst=E8mes d'information. Leur=
+ programme pourra comporter des sessions de travail en groupe, des pr=E9sen=
+tations, des conf=E9rences invit=E9es et/ou des tables rondes. Chaque ateli=
+er est organis=E9 par 2 ou 3 porteurs qui constituent leur propre comit=E9 =
+de programme et g=E8re leur appel =E0 communications.
+Les propositions d'ateliers doivent =EAtre envoy=E9es =E0 nathalie.valles-p=
+arlangeau@ut-capitole.fr<mailto:nathalie.valles-parlangeau@ut-capitole.fr> =
+ et comporter les informations suivantes :
+*       Un titre
+*       Un r=E9sum=E9 (20 =E0 30 lignes)
+*       Une liste de mots cl=E9s
+*       L'ad=E9quation avec les th=E9matiques de recherche en syst=E8mes d'=
+information
+*       Le nombre de soumissions et de participants attendus
+*       L'organisation envisag=E9e (de travail en groupe, des pr=E9sentatio=
+ns, des conf=E9rences invit=E9es et/ou des tables rondes,...)
+*       Les porteurs (CV d'une demie page)
+*       Le comit=E9 de programme pressenti
+
+DATES IMPORTANTES
+*       Date limite de r=E9ception des propositions :  18 F=E9vrier 2022
+*       Notification aux porteurs d'ateliers :    3 mars 2022
+*       Date de soumission des articles aux ateliers :  15 avril 2022
+*       Notification (par les porteurs de l'atelier au pr=E9sident du comit=
+=E9 de programme) du nombre de soumissions, du nombre de pr=E9sentations pr=
+=E9vues et du nombre de participants pr=E9vu dans l'atelier : 22 Avril 2022
+*       Envoi de la liste d=E9finitive d'articles retenus, avec le nombre e=
+stim=E9 de participants =E0 l'atelier : 29 Avril  2022
+*       Dates du congr=E8s :  31 mai- 3 juin 2022
+
+CRITERES D'EVALUATION DES ATELIERS
+La s=E9lection des ateliers est r=E9alis=E9e sur la base de crit=E8res rela=
+tifs =E0 la pertinence et =E0 l'ad=E9quation de la proposition aux th=E9mat=
+iques de recherche en syst=E8mes d'information. La s=E9lection est effectu=
+=E9e par le pr=E9sident du comit=E9 de programme du congr=E8s INFORSID et l=
+es membres du bureau d'INFORSID.
+Les principaux crit=E8res d'=E9valuation sont :
+*       La qualit=E9 scientifique de la proposition
+*       L'ad=E9quation aux th=E9matiques de recherche en syst=E8mes d'infor=
+mation
+Les porteurs des ateliers retenus auront en charge d'organiser et d'animer =
+l'atelier. Les articles retenus ne seront pas int=E9gr=E9s dans les actes d=
+u congr=E8s INFORSID mais pourront faire l'objet d'une publication en ligne=
+.
+La langue officielle est le fran=E7ais. Toutefois les ateliers sont ouverts=
+ aux contributions de langue anglaise.
+
+
+--_000_dafdf713e0274884800f2954d398b389univlyon2fr_
+Content-Type: text/html; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1">
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Calibri Light";
+	panose-1:2 15 3 2 2 2 4 3 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+h1
+	{mso-style-priority:9;
+	mso-style-link:"Titre 1 Car";
+	mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	font-size:24.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+span.Titre1Car
+	{mso-style-name:"Titre 1 Car";
+	mso-style-priority:9;
+	mso-style-link:"Titre 1";
+	font-family:"Calibri",sans-serif;
+	mso-fareast-language:FR;
+	font-weight:bold;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;
+	mso-fareast-language:EN-US;}
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:70.85pt 70.85pt 70.85pt 70.85pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"FR" link=3D"#0563C1" vlink=3D"#954F72">
+<div class=3D"WordSection1">
+<h1><span style=3D"font-size:18.0pt;font-family:&quot;Calibri Light&quot;,s=
+ans-serif">Appel =E0 Ateliers</span><o:p></o:p></h1>
+<p class=3D"MsoNormal" style=3D"mso-margin-top-alt:auto;mso-margin-bottom-a=
+lt:auto"><strong><span style=3D"font-family:&quot;Calibri Light&quot;,sans-=
+serif">40=E8me Congr=E8s INFORSID 2022</span></strong><span style=3D"font-f=
+amily:&quot;Calibri Light&quot;,sans-serif"><br>
+</span><strong><span style=3D"font-size:9.0pt;font-family:&quot;Calibri Lig=
+ht&quot;,sans-serif">Dijon, 31 mai-3 Juin 2022</span></strong><b><span styl=
+e=3D"font-size:9.0pt;font-family:&quot;Calibri Light&quot;,sans-serif"><br>
+</span></b><a href=3D"https://inforsid2022.sciencesconf.org/"><span style=
+=3D"font-size:8.0pt;font-family:&quot;Arial&quot;,sans-serif">https://infor=
+sid2022.sciencesconf.org/</span></a><span style=3D"font-size:8.0pt"><br>
+<br>
+</span><o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"margin-top:6.0pt;text-align:justify"><span =
+style=3D"font-family:&quot;Calibri Light&quot;,sans-serif">Pour favoriser d=
+es d=E9bats entre chercheurs, et entre chercheurs et industriels, des ateli=
+ers sont organis=E9s dans le cadre du congr=E8s INFORSID
+ 2021. Ils prennent la forme de demi-journ=E9es de travail sur des th=E9mat=
+iques sp=E9cifiques ou =E9mergentes li=E9es aux syst=E8mes d'information. L=
+eur programme pourra comporter des sessions de travail en groupe, des pr=E9=
+sentations, des conf=E9rences invit=E9es et/ou des
+ tables rondes. Chaque atelier est organis=E9 par 2 ou 3 porteurs qui const=
+ituent leur propre comit=E9 de programme et g=E8re leur appel =E0 communica=
+tions.</span><o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"margin-top:6.0pt;text-align:justify"><span =
+style=3D"font-family:&quot;Calibri Light&quot;,sans-serif">Les propositions=
+ d'ateliers doivent =EAtre envoy=E9es =E0
+<a href=3D"mailto:nathalie.valles-parlangeau@ut-capitole.fr">nathalie.valle=
+s-parlangeau@ut-capitole.fr</a> &nbsp;et comporter les informations suivant=
+es :</span><o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"text-align:justify;text-indent:-17.85pt"><s=
+pan style=3D"font-family:Symbol">=B7</span><span style=3D"font-size:7.0pt;f=
+ont-family:&quot;Times New Roman&quot;,serif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;
+</span><span style=3D"font-family:&quot;Calibri Light&quot;,sans-serif">Un =
+titre</span><o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"text-align:justify;text-indent:-17.85pt"><s=
+pan style=3D"font-family:Symbol">=B7</span><span style=3D"font-size:7.0pt;f=
+ont-family:&quot;Times New Roman&quot;,serif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;
+</span><span style=3D"font-family:&quot;Calibri Light&quot;,sans-serif">Un =
+r=E9sum=E9 (20 =E0 30 lignes)</span><o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"text-align:justify;text-indent:-17.85pt"><s=
+pan style=3D"font-family:Symbol">=B7</span><span style=3D"font-size:7.0pt;f=
+ont-family:&quot;Times New Roman&quot;,serif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;
+</span><span style=3D"font-family:&quot;Calibri Light&quot;,sans-serif">Une=
+ liste de mots cl=E9s</span><o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"text-align:justify;text-indent:-17.85pt"><s=
+pan style=3D"font-family:Symbol">=B7</span><span style=3D"font-size:7.0pt;f=
+ont-family:&quot;Times New Roman&quot;,serif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;
+</span><span style=3D"font-family:&quot;Calibri Light&quot;,sans-serif">L'a=
+d=E9quation avec les th=E9matiques de recherche en syst=E8mes d'information=
+</span><o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"text-align:justify;text-indent:-17.85pt"><s=
+pan style=3D"font-family:Symbol">=B7</span><span style=3D"font-size:7.0pt;f=
+ont-family:&quot;Times New Roman&quot;,serif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;
+</span><span style=3D"font-family:&quot;Calibri Light&quot;,sans-serif">Le =
+nombre de soumissions et de participants attendus</span><o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"text-align:justify;text-indent:-17.85pt"><s=
+pan style=3D"font-family:Symbol">=B7</span><span style=3D"font-size:7.0pt;f=
+ont-family:&quot;Times New Roman&quot;,serif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;
+</span><span style=3D"font-family:&quot;Calibri Light&quot;,sans-serif">L&#=
+8217;organisation envisag=E9e (de travail en groupe, des pr=E9sentations, d=
+es conf=E9rences invit=E9es et/ou des tables rondes,&#8230;)</span><o:p></o=
+:p></p>
+<p class=3D"MsoNormal" style=3D"text-align:justify;text-indent:-17.85pt"><s=
+pan style=3D"font-family:Symbol">=B7</span><span style=3D"font-size:7.0pt;f=
+ont-family:&quot;Times New Roman&quot;,serif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;
+</span><span style=3D"font-family:&quot;Calibri Light&quot;,sans-serif">Les=
+ porteurs (CV d'une demie page)</span><o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"text-align:justify;text-indent:-17.85pt"><s=
+pan style=3D"font-family:Symbol">=B7</span><span style=3D"font-size:7.0pt;f=
+ont-family:&quot;Times New Roman&quot;,serif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;
+</span><span style=3D"font-family:&quot;Calibri Light&quot;,sans-serif">Le =
+comit=E9 de programme pressenti</span><o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"text-align:justify"><span style=3D"font-fam=
+ily:&quot;Calibri Light&quot;,sans-serif">&nbsp;</span><o:p></o:p></p>
+<div style=3D"mso-element:para-border-div;border-top:solid windowtext 1.0pt=
+;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;pa=
+dding:1.0pt 0cm 1.0pt 0cm">
+<p class=3D"MsoNormal" style=3D"mso-margin-top-alt:6.0pt;margin-right:0cm;m=
+argin-bottom:6.0pt;margin-left:0cm;border:none;padding:0cm">
+<span style=3D"font-family:&quot;Calibri Light&quot;,sans-serif">DATES IMPO=
+RTANTES</span><o:p></o:p></p>
+</div>
+<p class=3D"MsoNormal" style=3D"text-align:justify;text-indent:-17.85pt"><s=
+pan style=3D"font-family:Symbol">=B7</span><span style=3D"font-size:7.0pt;f=
+ont-family:&quot;Times New Roman&quot;,serif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;
+</span><span style=3D"font-family:&quot;Calibri Light&quot;,sans-serif">Dat=
+e limite de r=E9ception des propositions :&nbsp;&nbsp;18 F=E9vrier 2022
+</span><o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"text-align:justify;text-indent:-17.85pt"><s=
+pan style=3D"font-family:Symbol">=B7</span><span style=3D"font-size:7.0pt;f=
+ont-family:&quot;Times New Roman&quot;,serif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;
+</span><span style=3D"font-family:&quot;Calibri Light&quot;,sans-serif">Not=
+ification aux porteurs d&#8217;ateliers :&nbsp;&nbsp;&nbsp; 3 mars 2022</sp=
+an><o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"text-align:justify;text-indent:-17.85pt"><s=
+pan style=3D"font-family:Symbol">=B7</span><span style=3D"font-size:7.0pt;f=
+ont-family:&quot;Times New Roman&quot;,serif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;
+</span><span style=3D"font-family:&quot;Calibri Light&quot;,sans-serif">Dat=
+e de soumission des articles aux ateliers :&nbsp; 15 avril 2022</span><o:p>=
+</o:p></p>
+<p class=3D"MsoNormal" style=3D"text-align:justify;text-indent:-17.85pt"><s=
+pan style=3D"font-family:Symbol">=B7</span><span style=3D"font-size:7.0pt;f=
+ont-family:&quot;Times New Roman&quot;,serif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;
+</span><span style=3D"font-family:&quot;Calibri Light&quot;,sans-serif">Not=
+ification (par les porteurs de l'atelier au pr=E9sident du comit=E9 de prog=
+ramme) du nombre de soumissions, du nombre de pr=E9sentations pr=E9vues et =
+du nombre de participants pr=E9vu dans l'atelier : 22
+ Avril 2022</span><o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"text-align:justify;text-indent:-17.85pt"><s=
+pan style=3D"font-family:Symbol">=B7</span><span style=3D"font-size:7.0pt;f=
+ont-family:&quot;Times New Roman&quot;,serif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;
+</span><span style=3D"font-family:&quot;Calibri Light&quot;,sans-serif">Env=
+oi de la liste d=E9finitive d'articles retenus, avec le nombre estim=E9 de =
+participants =E0 l'atelier : 29 Avril &nbsp;2022</span><o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"text-align:justify;text-indent:-17.85pt"><s=
+pan style=3D"font-family:Symbol">=B7</span><span style=3D"font-size:7.0pt;f=
+ont-family:&quot;Times New Roman&quot;,serif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;
+</span><span style=3D"font-family:&quot;Calibri Light&quot;,sans-serif">Dat=
+es du congr=E8s :&nbsp; 31 mai- 3 juin 2022</span><o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"margin-top:6.0pt;text-align:justify"><span =
+style=3D"font-family:&quot;Calibri Light&quot;,sans-serif">&nbsp;</span><o:=
+p></o:p></p>
+<div style=3D"mso-element:para-border-div;border-top:solid windowtext 1.0pt=
+;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;pa=
+dding:1.0pt 0cm 1.0pt 0cm">
+<p class=3D"MsoNormal" style=3D"mso-margin-top-alt:6.0pt;margin-right:0cm;m=
+argin-bottom:6.0pt;margin-left:0cm;border:none;padding:0cm">
+<span style=3D"font-family:&quot;Calibri Light&quot;,sans-serif">CRITERES D=
+&#8217;EVALUATION DES ATELIERS</span><o:p></o:p></p>
+</div>
+<p class=3D"MsoNormal" style=3D"mso-margin-top-alt:auto;mso-margin-bottom-a=
+lt:auto;text-align:justify">
+<span style=3D"font-family:&quot;Calibri Light&quot;,sans-serif">La s=E9lec=
+tion des ateliers est r=E9alis=E9e sur la base de crit=E8res relatifs =E0 l=
+a pertinence et =E0 l'ad=E9quation de la proposition aux th=E9matiques de r=
+echerche en syst=E8mes d'information. La s=E9lection est effectu=E9e
+ par le pr=E9sident du comit=E9 de programme du congr=E8s INFORSID et les m=
+embres du bureau d'INFORSID.&nbsp;</span><o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"mso-margin-top-alt:auto;mso-margin-bottom-a=
+lt:auto;text-align:justify">
+<span style=3D"font-family:&quot;Calibri Light&quot;,sans-serif">Les princi=
+paux crit=E8res d'=E9valuation sont :</span><o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"mso-margin-top-alt:auto;mso-margin-bottom-a=
+lt:auto;margin-left:36.0pt;text-align:justify;text-indent:-18.0pt">
+<span style=3D"font-family:Symbol">=B7</span><span style=3D"font-size:7.0pt=
+;font-family:&quot;Times New Roman&quot;,serif">&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;
+</span><span style=3D"font-family:&quot;Calibri Light&quot;,sans-serif">La =
+qualit=E9 scientifique de la proposition</span><o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"mso-margin-top-alt:auto;mso-margin-bottom-a=
+lt:auto;margin-left:36.0pt;text-align:justify;text-indent:-18.0pt">
+<span style=3D"font-family:Symbol">=B7</span><span style=3D"font-size:7.0pt=
+;font-family:&quot;Times New Roman&quot;,serif">&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;
+</span><span style=3D"font-family:&quot;Calibri Light&quot;,sans-serif">L'a=
+d=E9quation aux th=E9matiques de recherche en syst=E8mes d'information</spa=
+n><o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"mso-margin-top-alt:auto;mso-margin-bottom-a=
+lt:auto;text-align:justify">
+<span style=3D"font-family:&quot;Calibri Light&quot;,sans-serif">Les porteu=
+rs des ateliers retenus auront en charge d'organiser et d'animer l'atelier.=
+ Les articles retenus ne seront pas int=E9gr=E9s dans les actes du congr=E8=
+s INFORSID mais pourront faire l'objet d'une publication
+ en ligne.</span><o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"mso-margin-top-alt:auto;mso-margin-bottom-a=
+lt:auto;text-align:justify">
+<span style=3D"font-family:&quot;Calibri Light&quot;,sans-serif">La langue =
+officielle est le fran=E7ais. Toutefois les ateliers sont ouverts aux contr=
+ibutions de langue anglaise.</span><o:p></o:p></p>
+<p class=3D"MsoNormal"><span style=3D"mso-fareast-language:EN-US"><o:p>&nbs=
+p;</o:p></span></p>
+</div>
+</body>
+</html>
+
+--_000_dafdf713e0274884800f2954d398b389univlyon2fr_--

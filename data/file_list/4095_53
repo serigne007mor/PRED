@@ -1,0 +1,312 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (bouncesmtp1.u12.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id B161814006F3
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon, 15 May 2023 09:34:30 +0200 (CEST)
+Received: from mx1.localdomain (MX1.univ-nantes.fr [193.52.101.135])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id AE579703D
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon, 15 May 2023 09:34:30 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.localdomain (Postfix) with ESMTP id A6E83120032
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 15 May 2023 09:34:30 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -2.879
+X-Spam-Level:
+X-Spam-Status: No, score=-2.879 tagged_above=-1000 required=5
+	tests=[CRM114_GOOD=-5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	MR_NOT_ATTRIBUTED_IP=0.2, NO_RDNS2=0.01, OFFER_URI=1, RCVD_IN_SORBS=1,
+	RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+	UN_PHISHING_PW=0.1] autolearn=disabled
+X-CRM114-Status: GOOD ( 7.5820 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=unicaen.fr
+Received: from mx1.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Bi4OiWmE_wGI for <liste-egc@polytech.univ-nantes.fr>;
+	Mon, 15 May 2023 09:34:27 +0200 (CEST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=194.199.107.75; helo=mailout.unicaen.fr; envelope-from=bruno.cremilleux@unicaen.fr; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=none dis=none) header.from=unicaen.fr
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=bruno.cremilleux@unicaen.fr
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (1024-bit key; unprotected) header.d=unicaen.fr header.i=@unicaen.fr header.b="qHtMPJF3";
+	dkim-atps=neutral
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mailout.unicaen.fr (mailout.unicaen.fr [194.199.107.75])
+	by mx1.localdomain (Postfix) with ESMTP id C756B12046A
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 15 May 2023 09:34:26 +0200 (CEST)
+Received: from wzproxy2.unicaen.fr (wzproxy2.unicaen.fr [193.55.120.53])
+	by mailout.unicaen.fr (Postfix) with ESMTP id AECB0857B9;
+	Mon, 15 May 2023 09:34:26 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=unicaen.fr; s=mail;
+	t=1684136066; bh=DOGLAIPAX+PtAnBzSdv2xEJSFHEka3JeGPGPbww7tSo=;
+	h=Date:From:Subject:To:From;
+	b=qHtMPJF3xNN3Qp9PpyhdyH7gdx3+BJGsbt7n8n9vWgIfRsGHeWyg680/tKO4wyuFN
+	 MLTBtLNTzKvpO0rkWLiTU9J5/KkhJPfTbttVcFu75sJ5c/R4hqSR5dW7d0aXkE4QLq
+	 Xah/yO6X6zhrxjDdF9MiCVbw9aBgxa43GASExkDA=
+Received: from localhost (localhost [127.0.0.1])
+	by wzproxy2.unicaen.fr (Postfix) with ESMTP id A205366885;
+	Mon, 15 May 2023 09:34:26 +0200 (CEST)
+X-Amavis-Modified: Mail body modified (using disclaimer) - wzproxy2.unicaen.fr
+X-Virus-Scanned: amavisd-new at wzproxy2.unicaen.fr
+Received: from wzproxy2.unicaen.fr ([127.0.0.1])
+	by localhost (wzproxy2.unicaen.fr [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id ooJKtNw8M458; Mon, 15 May 2023 09:34:26 +0200 (CEST)
+Received: from lsmtp1.unicaen.fr (lsmtp1.unicaen.fr [193.55.120.32])
+	by wzproxy2.unicaen.fr (Postfix) with ESMTP id 77EA467024;
+	Mon, 15 May 2023 09:34:26 +0200 (CEST)
+Received: from [192.168.1.21] (lfbn-cae-1-335-72.w90-22.abo.wanadoo.fr [90.22.54.72])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	(No client certificate requested)
+	by lsmtp1.unicaen.fr (Postfix) with ESMTPSA id AB5561001C9;
+	Mon, 15 May 2023 09:34:19 +0200 (CEST)
+Content-Type: multipart/alternative;
+ boundary="------------OvdFYwNASyJzVP5dIcPw5h9I"
+Message-ID: <7885d374-f08d-e4fa-8a98-49bfefddb760@unicaen.fr>
+Date: Mon, 15 May 2023 09:34:19 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+From: Bruno Cremilleux <bruno.cremilleux@unicaen.fr>
+To: bull-i3 <bull-i3@irit.fr>, liste-proml@lisn.upsaclay.fr,
+ liste-egc <liste-egc@polytech.univ-nantes.fr>, bull-ia <bull-ia@gdria.fr>,
+ info-ic <info-ic@listes.irisa.fr>, gazettebd3@univ-grenoble-alpes.fr
+Content-Language: fr-FR
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Offre de =?UTF-8?Q?th=C3=A8se_=C3=A0?= Innovation
+ Orange (Lannion) : Estimation de l'uplift dans les =?UTF-8?Q?syst=C3=A8m?=
+ =?UTF-8?Q?es?= de recommandation d'offres
+
+This is a multi-part message in MIME format.
+--------------OvdFYwNASyJzVP5dIcPw5h9I
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+
+
+*Titre :* Estimation de l'uplift dans les systèmes de recommandation 
+d'offres
+
+*Sujet :* Les systèmes de recommandation d'offres tels que les NBO (Next 
+Best Offer) sont de plus en plus courants dans les entreprises comme 
+Orange qui cherchent à améliorer leurs relations avec les usagers de 
+leurs services. On propose aux clients ou visiteurs une action 
+personnalisée en fonction de leurs profils et de leurs préférences. 
+Cependant, le traitement personnalisé en recommandant une offre sur ces 
+critères ne suffit pas toujours à satisfaire un client. Il est donc 
+important pour les entreprises de mesurer l’uplift [1], c'est-à-dire la 
+différence de revenu ou de satisfaction entre les choix que le client 
+aurait effectué sans recommandation et ceux qu'il effectue avec 
+recommandation. Le défi des systèmes de recommandation d'offres est donc 
+de trouver des algorithmes pour mesurer l’uplift et estimer des 
+politiques du système de recommandation efficaces. Le choix de la mesure 
+d’uplift et de la modélisation de la politique du système est un enjeu 
+important pour maximiser l’impact des actions. Une difficulté 
+intrinsèque de l'uplift est qu'on ne peut pas faire un traitement et un 
+non-traitement pour un même individu. Ce qui implique que l’uplift ne 
+peut pas être mesuré directement pour un individu mais uniquement pour 
+un groupe d’individus, ce qu'on appelle le CATE (Conditional Average 
+Treatment Effect). Hors la mesure du CATE dans un système ou les profils 
+changent selon le traitement que l’on veut faire devient difficile à 
+estimer [4]. De plus, les biais entre les données issues de différents 
+traitements biaisent la mesure de CATE. La littérature propose 
+différentes approches pour résoudre ce problème. Certaines visent à 
+débiaiser les données et utiliser un estimateur robuste [2] et d’autres 
+à utiliser directement les approches causales [5].
+
+L’objectif de la thèse consiste à proposer de nouvelles métriques 
+d'évaluation et des méthodes de modélisation pour l’uplift dans un 
+système de recommandation d’offres. Les défis principaux défis sont 
+l’évaluation de l’uplift dans un système de recommandation et 
+l’apprentissage de politique de recommandation optimisant l’uplift dans 
+un contexte de données biaisées. On s’intéressera en particulier aux 
+approches causales [3, 5] et approche bayésienne connues [2] pour leur 
+robustesse.
+
+[1] Sato Masahiro et al. "Uplift-based evaluation and optimization of 
+recommenders", proceedings of the 13th ACM Conference on Recommender 
+Systems, 2019.
+[2] Rafla Mina, et al. "A Non-Parametric Bayesian Approach for Uplift 
+Discretization and Feature Selection", ECML PKDD 2022.
+[3] Verlelst Théo et al. "Partial counterfactual identification and 
+uplift modeling: theoretical results and real-world assessment", Machine 
+Learning, 2023, p. 1-25.
+[4] Qian Xufeng et al. "Intelligent Request Strategy Design in 
+Recommender System", proceedings of the 28th ACM SIGKDD 2022.
+[5] Bang Heejung et Robins James M. "Doubly robust estimation in missing 
+data and causal inference models", Biometrics, 2005.
+
+*Profil :*
+- la doctorante ou le doctorant devra avoir une bonne connaissance des 
+statistiques et des mathématiques.
+- des connaissances en apprentissage machine sont un réel plus.
+- des compétences en programmation sont indispensables : maîtrise d’un 
+langage de script dédié à l’analyse de données (Python, éventuellement R 
+ou Matlab).
+- une forte motivation, des capacités de synthèse, à bien rédiger et 
+présenter les travaux (anglais) et à s'intégrer dans une équipe sont 
+également demandées
+- une expérience sous la forme d’un stage de recherche dans le domaine 
+statistique/ apprentissage machine.
+
+Le profil souhaité est BAC + 5, école d'ingénieur ou Master Recherche 
+statistiques et/ou mathématiques appliquées et/ou data sciences
+
+*Lieu :* Innovation Orange (Lannion) et laboratoire GREYC CNRS UMR 6072 
+(Caen)
+
+Au sein de Innovation Orange, vous serez intégré(e) dans une équipe de 
+recherche à la pointe de l’innovation et de l’expertise en Machine 
+Learning travaillant sur diverses thématiques, comme par exemple les 
+modèles génératifs, le traitement de séries temporelles, l’IA éthique et 
+la modélisation de l’Uplift. Vous ferez partie d’un écosystème de 
+recherche côtoyant les unités opérationnelles, ayant pour but de 
+développer des algorithmes à la pointe et de les diffuser dans le groupe.
+
+Sujet porteur permettant l'évolution vers les métiers de la recherche en 
+apprentissage artificiel ou de la data-science
+
+Valorisation des travaux via la collaboration au développement d’une 
+librairie open source python sur la modélisation de l’uplift (Kuplift).
+
+*Salaire :* Vous percevez une rémunération annuelle brute de 33 848 € en 
+1ère et 2ème année et de 38 480 € en troisième année.
+
+*Pour candidater :*
+déposer votre candidature à
+https://orange.jobs/jobs/v3/offers/124860?lang=fr
+
+
+--------------OvdFYwNASyJzVP5dIcPw5h9I
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <div style="font-family: arial, helvetica, sans-serif; font-size:
+      12pt; color: #000000">
+      <div><br>
+      </div>
+      <div id="2e4f07a0-2185-445e-98e5-6d6ab4fa1c88"><strong>Titre :</strong>
+        Estimation de l'uplift dans les systèmes de recommandation
+        d'offres</div>
+      <div><br data-mce-bogus="1">
+      </div>
+      <div><strong>Sujet :</strong> Les systèmes de recommandation
+        d'offres tels que les NBO (Next Best Offer) sont de plus en plus
+        courants dans les entreprises comme Orange qui cherchent à
+        améliorer leurs relations avec les usagers de leurs services. On
+        propose aux clients ou visiteurs une action personnalisée en
+        fonction de leurs profils et de leurs préférences. Cependant, le
+        traitement personnalisé en recommandant une offre sur ces
+        critères ne suffit pas toujours à satisfaire un client. Il est
+        donc important pour les entreprises de mesurer l’uplift [1],
+        c'est-à-dire la différence de revenu ou de satisfaction entre
+        les choix que le client aurait effectué sans recommandation et
+        ceux qu'il effectue avec recommandation. Le défi des systèmes de
+        recommandation d'offres est donc de trouver des algorithmes pour
+        mesurer l’uplift et estimer des politiques du système de
+        recommandation efficaces. Le choix de la mesure d’uplift et de
+        la modélisation de la politique du système est un enjeu
+        important pour maximiser l’impact des actions. Une difficulté
+        intrinsèque de l'uplift est qu'on ne peut pas faire un
+        traitement et un non-traitement pour un même individu. Ce qui
+        implique que l’uplift ne peut pas être mesuré directement pour
+        un individu mais uniquement pour un groupe d’individus, ce qu'on
+        appelle le CATE (Conditional Average Treatment Effect). Hors la
+        mesure du CATE dans un système ou les profils changent selon le
+        traitement que l’on veut faire devient difficile à estimer [4].
+        De plus, les biais entre les données issues de différents
+        traitements biaisent la mesure de CATE. La littérature propose
+        différentes approches pour résoudre ce problème. Certaines
+        visent à débiaiser les données et utiliser un estimateur robuste
+        [2] et d’autres à utiliser directement les approches causales
+        [5].<br>
+        <br>
+        L’objectif de la thèse consiste à proposer de nouvelles
+        métriques d'évaluation et des méthodes de modélisation pour
+        l’uplift dans un système de recommandation d’offres. Les défis
+        principaux défis sont l’évaluation de l’uplift dans un système
+        de recommandation et l’apprentissage de politique de
+        recommandation optimisant l’uplift dans un contexte de données
+        biaisées. On s’intéressera en particulier aux approches causales
+        [3, 5] et approche bayésienne connues [2] pour leur robustesse.<br>
+        <br>
+        [1] Sato Masahiro et al. "Uplift-based evaluation and
+        optimization of recommenders", proceedings of the 13th ACM
+        Conference on Recommender Systems, 2019.<br>
+        [2] Rafla Mina, et al. "A Non-Parametric Bayesian Approach for
+        Uplift Discretization and Feature Selection", ECML PKDD 2022.<br>
+        [3] Verlelst Théo et al. "Partial counterfactual identification
+        and uplift modeling: theoretical results and real-world
+        assessment", Machine Learning, 2023, p. 1-25.<br>
+        [4] Qian Xufeng et al. "Intelligent Request Strategy Design in
+        Recommender System", proceedings of the 28th ACM SIGKDD 2022.<br>
+        [5] Bang Heejung et Robins James M. "Doubly robust estimation in
+        missing data and causal inference models", Biometrics, 2005.<br>
+        <br>
+        <strong>Profil :</strong><br>
+        - la doctorante ou le doctorant devra avoir une bonne
+        connaissance des statistiques et des mathématiques.<br>
+        - des connaissances en apprentissage machine sont un réel plus.<br>
+        - des compétences en programmation sont indispensables :
+        maîtrise d’un langage de script dédié à l’analyse de données
+        (Python, éventuellement R ou Matlab).<br>
+        - une forte motivation, des capacités de synthèse, à bien
+        rédiger et présenter les travaux (anglais) et à s'intégrer dans
+        une équipe sont également demandées</div>
+      <div>- une expérience sous la forme d’un stage de recherche dans
+        le domaine statistique/ apprentissage machine.<br>
+        <br>
+        Le profil souhaité est BAC + 5, école d'ingénieur ou Master
+        Recherche statistiques et/ou mathématiques appliquées et/ou data
+        sciences<br>
+      </div>
+      <div><br data-mce-bogus="1">
+      </div>
+      <div><strong>Lieu :</strong> Innovation Orange (Lannion) et
+        laboratoire GREYC CNRS UMR 6072 (Caen)<br>
+        <br>
+        Au sein de Innovation Orange, vous serez intégré(e) dans une
+        équipe de recherche à la pointe de l’innovation et de
+        l’expertise en Machine Learning travaillant sur diverses
+        thématiques, comme par exemple les modèles génératifs, le
+        traitement de séries temporelles, l’IA éthique et la
+        modélisation de l’Uplift. Vous ferez partie d’un écosystème de
+        recherche côtoyant les unités opérationnelles, ayant pour but de
+        développer des algorithmes à la pointe et de les diffuser dans
+        le groupe.<br>
+        <br>
+        Sujet porteur permettant l'évolution vers les métiers de la
+        recherche en apprentissage artificiel ou de la data-science<br>
+        <br>
+        Valorisation des travaux via la collaboration au développement
+        d’une librairie open source python sur la modélisation de
+        l’uplift (Kuplift).<br>
+        <br>
+        <strong>Salaire :</strong> Vous percevez une rémunération
+        annuelle brute de 33 848 € en 1ère et 2ème année et de 38 480 €
+        en troisième année.</div>
+      <div><br data-mce-bogus="1">
+      </div>
+      <div><strong>Pour candidater :</strong> </div>
+      <div>déposer votre candidature à <br>
+        <a class="moz-txt-link-freetext" href="https://orange.jobs/jobs/v3/offers/124860?lang=fr">https://orange.jobs/jobs/v3/offers/124860?lang=fr</a><br>
+        <br>
+      </div>
+    </div>
+  
+<br>
+
+<br>
+</body>
+</html>
+
+--------------OvdFYwNASyJzVP5dIcPw5h9I--

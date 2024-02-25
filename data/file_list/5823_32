@@ -1,0 +1,922 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (bouncesmtp1.u12.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id CC72214017EE
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Fri, 15 Sep 2023 16:58:06 +0200 (CEST)
+Received: from mx3.univ-nantes.fr (MX3.univ-nantes.fr [193.52.101.137])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id C2A2941EA
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Fri, 15 Sep 2023 16:58:06 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.univ-nantes.fr (Postfix) with ESMTP id BC69A20A45
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 15 Sep 2023 16:58:06 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 0.312
+X-Spam-Level:
+X-Spam-Status: No, score=0.312 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+	HTML_MESSAGE=0.001, KAM_SHORT=0.001, MR_NOT_ATTRIBUTED_IP=0.2,
+	RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+	RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+	UN_PHISHING_COMPTE=0.1, UN_PHISHING_PW=0.1] autolearn=disabled
+X-CRM114-Status: UNSURE ( 3.7676 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=yahoo.fr
+Received: from mx3.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id SkZ8VIt6LMg5 for <liste-egc@polytech.univ-nantes.fr>;
+	Fri, 15 Sep 2023 16:58:03 +0200 (CEST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=77.238.179.174; helo=sonic304-49.consmr.mail.ir2.yahoo.com; envelope-from=gaelguibon@yahoo.fr; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=reject dis=none) header.from=yahoo.fr
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=yahoo.fr
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (2048-bit key; unprotected) header.d=yahoo.fr header.i=@yahoo.fr header.a=rsa-sha256 header.s=s2048 header.b=r++iVqvc;
+	dkim-atps=neutral
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from sonic304-49.consmr.mail.ir2.yahoo.com (sonic304-49.consmr.mail.ir2.yahoo.com [77.238.179.174])
+	by mx3.univ-nantes.fr (Postfix) with ESMTPS id 7730620681
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 15 Sep 2023 16:58:03 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.fr; s=s2048; t=1694789883; bh=vmlzNcrKrAx2AYPpOdLLMO75x1GeQblf6KAjw7s6vnk=; h=Date:From:To:Subject:References:From:Subject:Reply-To; b=r++iVqvc9AZon2VzPFqNMKkkaa6TEqZtPcGnNW0qPJBPkODRbIUHArwWCsbPPTVqF7rm3cK5sfqZ92f15LPwtCUNxJVLyGaLuLFsDGrZCdlVdQcxavCe7HQ8u6eN8XiQyJseCy7pqjyuBvpT/YV4w4+WeBc39g6VmphwTSE0P+RJ+5r73PPC8Ar9uE86BdkEGSuMCVolCSYBbhF+vc01Rlj+Pn7V5buwALHlGaDqzlVMFXoj3pTjLayrVWEPtL3v/0SUmafYSyKcevwokmAwly5BZHNWlvvPDuXijrTTmhB6ifyHjrPbNVTmBvRDm0M2jkbTq8C02uhfp3XqRA9Pig==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1694789883; bh=V3YGio9lfWevuQou7NT7H/ihzVCrovMr7QDcLZvZfh9=; h=X-Sonic-MF:Date:From:To:Subject:From:Subject; b=T0ZZLZomYjezxXWvToMIqXBFAaElTa2wearNpGsniw3vDW8eUuKlNyn2XWHw394nrWZ36Bc35WtLGyvI4SExBRfnU9NZCnWo3Xw24c+m5h/ucZAwniHdH907opIT2gFko40rAe1IFDze2vmaGS5p3bBtATVWdaOowjeVnVcNfykjEG3+PUIdBAjoG4Oh4is119fBQcsHhFTyNGlaJkTorBebNiaCbh9eYBAsS6SyLnnUXKqQvu3I9FH/oVpNJreDMs77usjWrlM43W/6Tk38VIkhDicbgKRwmjWG4Ix4ALPOzTuqL/14pvp1SDPF5IECwyz/M/FFLpS2uzOCEL6EHQ==
+X-YMail-OSG: U_k6O4wVM1nbHFWQ1v22GLktiaM0f0MqBJPyf96L.zwR49O0M7WP35B6a_yCyaH
+ IJ3Y3dNuQahS.UpQ4vO9OIXqykNUJTV4rxPfBq72IFp.lvj8c76gt8DFURG1mQarOeeWdVrEwwBy
+ 1SAw45plApyMM65gN111qW.4dj8xWvLAzqHuiwTTl213V7ihJaJgV8vKTo.GNsNqaWd830xTJj3R
+ Q1LbjTkxnvUAn8AUqAyAfhwTon9KnLSgBDOrQH4xs32CUp_.ZZOJJb8Gws37nGnyeiWiUbhRRAgq
+ ruLrNfBL0p0hLUsC3Lj_.mO3XpuCIkDHfVPVUOe692gc0XpcaoP2ag8E1E_q7_xhgayLHX8jgoG2
+ z6kGqGYbF.xltw9XI6uLW95Lft9WzHWAt_pVvcGlCMiuXpyyzECz95muWUuFd1pnh9cYXFCGLUTx
+ e17ZnkXhrmSDOO5oyc2TzsZwhAk5_4.a5lQyrk0hori5P3aMnCXtnU5DF0fGsVKSaI3ZvX3PrGr1
+ jHxTDOpwxXl364PQuctzeb_8ZbecgWlfw8rbNb7qj_MPiy9TteEHFRjV3GLZcrWYAv4uD6Wwgnr8
+ vjUt3JTA.k2L2j12Uhvlwsi9Y1IVw78x.ciEaJLrFbDJc.0nUhQ5mn0gSNOC8BjCKW3DDqRaGSGe
+ 2ve8A_qZnuGG1YKL8khrptvilCCz_IFiu.0ORslufDG78a9V0hhytTSv0lxygkgvBGreQmQ6XICi
+ vbxqdjUyK4lL.5eMyrSAzR81jZ4Xp0VNR.mdG__sFGC4zNXch.ZPhuM8p.AKcUHei2I5LAWbRUP1
+ shAXlUTGkv_8.lxFcdeHZyglAUCAUAD6ZivNlimLUYXCj45kNPvQOhDDZLvBl4BLPT3K3S.x1zle
+ T4wtJn4YLU.AV.sfEONEWf3IYt7s_NajIqpbKZ7Bw.7KCikzb3gQMSRcgPkWoSBSEzRSqf3023Ak
+ eYdlelAk5bUFgQbitf_lpwi0XnExZMatr0wMfFG_5F6Vy7Y4BpnIW8Om2K5Spm5ul5dfLQ0FuVJd
+ I3U_SneSYQd07cK3BAPU2Y0rZUtNknKFqf4gBKbTqRUFRYva2Lucw2x6_Jd.oIUrwBMQtvhsFCGX
+ sjAmb1eFV3tdeHob29aA9Qj29x5KuQBLot1LB0ObZo0tPjZSX9ZJJyfna0yLkI6Xn.fsLj9kLtwe
+ M_SFHDOall3SIiCEmGyZha4LeBw4zGbv6B_ZM0iWZSVDApnO9hJqHa_viKuSHP_iOeO0tBweRc0c
+ M9Sg6RrVAIzPVCyuuegceuo1SgoUzKWuh3FJmh5llkheUZEb.9lACmLWXXcjmaI5cmJx_HOKmCjd
+ Z40bH6Uf479aW9u4ElKaxb7HqTwOjbOQKRsQ6C6wIk3xzaY0DCmsenIc1LWEtcLWccZ4vbkwWJjG
+ X8zbcUOIdAMsYGD1Wcso16tyuGci7QRdY8NducKzgMFGUpYHQ6oKDdW6BtkK2CToNUYEsNAZs7BU
+ O5mvZwLQahUnJr1iN2TijUL6G1Ny0DSOzIf95QHF9x5Enm0y3WVO0QlnN94DOPSAAVSMZ6l2KM3x
+ uKt7h1_Wygt4kxDEB8ubwM7pG6ca1mIxMTuJbVLxpXmmoGJ2Y.0Lg0cZ_9tv3K_qRopLbOxmW1uo
+ tN9tKLx_1Cm4OymaDJ85RHHjDR.mNZv7TCF2ZK47B3moEi4YxFsi5wD5BqvQZQCoijo9hZSIHgwT
+ 5piLstJTNcGomlMmggzeEQsGs7w0pR1dEmC.PEldMES1CBxUHSW6qhH69Nx6fw5WtZWxto3MjBR4
+ s6HUjW6EY8KhONx3haM1.H2htygKFm69tlrUadS0UNN1iUxZ7Q5OtRd2ga7XNCdaO2xXXQXEbBsM
+ 9oWNjOmtO1Ut6cpnM.jT1whCSYU73ht5edzC96.fv9K9PJ31Bhx8fPX0.SJCW_Ns8SgW5Wr1WtAA
+ gRMqb5wWWe9GfoZnkmsmZckqfigHI_PCbuALHJRQYkMoIZMCk8WhXa3awB6LcwKm2pbJKUQJ6Udm
+ Zw7NmMoS5snVRJ5axXbOEYfhJElTDiTyqGskTmaJThQJHINeG7r0Fh7lcaLBOHHwXyj8YInkT.0b
+ ORaw1FhOU4.hjfx6TfGIUhn8C24HSlXK0XRSHDcxw7s8QwsrKgDgnLUVIQcbYmLXPVD4x9L.A4JD
+ 7xnyvN_D3xt1fjvCaANPAa_3VOJ8y78YRbp9gFPzrO40JCw35Ww--
+X-Sonic-MF: <gaelguibon@yahoo.fr>
+X-Sonic-ID: eb7650a2-71b5-4791-8916-6e2a00553e62
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic304.consmr.mail.ir2.yahoo.com with HTTP; Fri, 15 Sep 2023 14:58:03 +0000
+Date: Fri, 15 Sep 2023 14:56:01 +0000 (UTC)
+From: gael guibon <gaelguibon@yahoo.fr>
+To: "liste-egc@polytech.univ-nantes.fr" <liste-egc@polytech.univ-nantes.fr>
+Message-ID: <2120784539.3106863.1694789761307@mail.yahoo.com>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_3106862_930337726.1694789761298"
+References: <2120784539.3106863.1694789761307.ref@mail.yahoo.com>
+X-Mailer: WebService/1.1.21797 YMailNorrin
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] PhD position : LLM adaptation and exploitation for
+ medical emergency call triage, LORIA (Nancy) / APHP (Paris)
+
+------=_Part_3106862_930337726.1694789761298
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+
+PhD Position:=C2=A0LLM adaptation and exploitation for medical emergency ca=
+ll triage
+
+=C2=A0
+
+This PhD offer is part of the ANR LLM4All project (2023-2027), which aims t=
+o design continual learning and footprint reduction mechanisms for LLMs, an=
+d to exploit them in challenging spoken dialog scenarios, including medical=
+ emergency calls. It will be co-supervised by=C2=A0Ga=C3=ABl Guibon,=C2=A0D=
+r. Ivan Lerner, and=C2=A0Emmanuel Vincent. The PhD student will have the op=
+portunity to spend time in both the=C2=A0Synalp=C2=A0and=C2=A0Multispeech=
+=C2=A0teams at LORIA and the PRIME team at=C2=A0Assistance Publique - H=C3=
+=B4pitaux de Paris (AP-HP), and to benefit from the hands-on expertise of D=
+r. Gustave Toury, an EMS physician at SAMU 92 =E2=80=94 the French EMS.
+
+=C2=A0
+
+Summary:
+
+Medical emergency call triage aims to assess the level of emergency and dir=
+ect the appropriate response. Given the significant impact of this response=
+ on the patient's health trajectory, improving the triage process is of utm=
+ost importance. Rapid decision-making with limited access to comprehensive =
+medical information is required [1]. Predictive models based on large volum=
+es of call data are believed to significantly enhance the safety and accura=
+cy of decisions, e.g., in the case of cardiac arrest [2]. In parallel, lear=
+ning deep patient representations from healthcare data has rapidly followed=
+ up trends in NLP [3], even though reaching application in emergency medici=
+ne [4]. However, the evolution and impact towards large language models (LL=
+Ms) has not yet been evaluated in the context of Emergency Medical Services=
+ (EMS) and call triage.
+
+=C2=A0
+
+The objective of this PhD is to adapt an open, general-purpose LLM such as =
+Llama2 [5] or Falcon [6] to the medical emergency call domain so as to help=
+ EMS physicians. Fine-tuning the LLM on in-domain data [7] is useful but no=
+t sufficient, due to the small amount of such data to adapt the LLM to both=
+ domain and task [8]. Instead, we will seek to incorporate structured medic=
+al knowledge in the form of medical ontologies such as the Unified Medical =
+Language System (UMLS) [9] or memory modules such as in Memory Augmented Ne=
+ural Networks [10]. We will also augment the LLM using semi-structured medi=
+cal knowledge [2,3], e.g., using an in-house emergency medical note dataset=
+ which reports the physician=E2=80=99s observations of a patient=E2=80=99s =
+medical state in textual form using sections such as =E2=80=9CComorbidities=
+=E2=80=9D, =E2=80=9CTreatment=E2=80=9D, and =E2=80=9CClinical examination=
+=E2=80=9D, as well as non-textual data including lab results, a severity sc=
+ore, the ICD-10 (International Classification of Diseases) diagnostics bill=
+ing code, and the clinical outcome. The overall challenge will be to align =
+the representations of medical emergency calls and these other knowledge so=
+urces. Different knowledge sources may translate into different data augmen=
+tation and/or fine-tuning approaches to improve the LLM while avoiding cata=
+strophic forgetting.
+
+=C2=A0
+
+Results will be evaluated on the SimSAMU dataset, a collection of acted med=
+ical emergency calls with diarization, transcription, dialog act, and slot =
+filling annotations. The duration of the calls is 1 to 8 min, with a total =
+duration of 3 hours. Models will be evaluated in terms of perplexity and ot=
+her metrics such as Slot Error Rate, Sentence Level Semantic Accuracy, F1-s=
+cores on subtasks (e.g., dialog act detection), and BLEU/METEOR for surface=
+ quality.=C2=A0 The quality of the latent representation learned by the mod=
+el will also be assessed by predicting the severity score, the ICD-10 diagn=
+ostics billing code and the outcome. AP-HP experts, led by Dr. Ivan Lerner,=
+ will manually review the quality of the system=E2=80=99s response.
+
+
+
+
+
+Required Skills
+
+MSc in computer science or machine learning.
+
+Strong programming skills in Python/Pytorch.
+
+Prior experience in NLP and digital health will be an asset.
+
+
+
+
+
+Contacts
+
+Please contact the following persons.
+  =20
+   - emmanuel.vincent@inria.fr=C2=A0
+   - ivan.lerner2@aphp.fr
+   - gael.guibon@loria.fr=C2=A0
+
+=C2=A0
+
+=C2=A0
+
+=3D=3D=3D Version fran=C3=A7aise =3D=3D=3D
+
+=C2=A0
+
+Offre de th=C3=A8se=C2=A0:=C2=A0Adaptation et exploitation de LLM pour la r=
+=C3=A9gulation des appels d'urgences m=C3=A9dicales
+
+=C2=A0
+
+R=C3=A9sum=C3=A9 :
+
+La r=C3=A9gulation des appels d=E2=80=99urgences m=C3=A9dicales vise =C3=A0=
+ =C3=A9valuer le niveau d=E2=80=99urgence et =C3=A0 donner la r=C3=A9ponse =
+appropri=C3=A9e. Compte tenu de l=E2=80=99impact significatif de cette r=C3=
+=A9ponse sur la trajectoire de sant=C3=A9 du patient, l=E2=80=99am=C3=A9lio=
+ration du processus de r=C3=A9gulation est de la plus haute importance. Une=
+ prise de d=C3=A9cision rapide avec un acc=C3=A8s limit=C3=A9 =C3=A0 des in=
+formations m=C3=A9dicales compl=C3=A8tes est n=C3=A9cessaire [1]. Les mod=
+=C3=A8les pr=C3=A9dictifs bas=C3=A9s sur de grands volumes de donn=C3=A9es =
+d=E2=80=99appels am=C3=A9liorent consid=C3=A9rablement la s=C3=BBret=C3=A9 =
+et la pr=C3=A9cision des d=C3=A9cisions, par exemple en cas d=E2=80=99arr=
+=C3=AAt cardiaque [2]. En parall=C3=A8le, l=E2=80=99apprentissage profond d=
+e repr=C3=A9sentations des patients =C3=A0 partir des donn=C3=A9es de sant=
+=C3=A9 a rapidement suivi les tendances en TAL [3] et trouv=C3=A9 des appli=
+cations en m=C3=A9decine d=E2=80=99urgence [4]. Cependant, l'=C3=A9volution=
+ vers les grands mod=C3=A8les de langage (LLM) et leur impact n'ont pas enc=
+ore =C3=A9t=C3=A9 =C3=A9valu=C3=A9s dans le contexte des services m=C3=A9di=
+caux d'urgence et de la r=C3=A9gulation des appels.
+
+=C2=A0
+
+L'objectif de cette th=C3=A8se est d'adapter un LLM ouvert et g=C3=A9n=C3=
+=A9raliste tel que Llama2 [5] ou Falcon [6] au domaine des appels d'urgence=
+ m=C3=A9dicale afin d'aider les m=C3=A9decins r=C3=A9gulateurs. Fine-tuner =
+le LLM sur les donn=C3=A9es du domaine [7] est utile mais pas suffisant, en=
+ raison de la petite quantit=C3=A9 de donn=C3=A9es pour adapter le LLM au d=
+omaine et =C3=A0 la t=C3=A2che [8]. Au lieu de cela, nous chercherons =C3=
+=A0 incorporer des connaissances m=C3=A9dicales structur=C3=A9es sous la fo=
+rme d'ontologies m=C3=A9dicales telles que le Unified Medical Language Syst=
+em (UMLS) [9] ou de modules de m=C3=A9moire comme dans les r=C3=A9seaux de =
+neurones =C3=A0 m=C3=A9moire augment=C3=A9e [10]. Nous augmenterons =C3=A9g=
+alement le LLM en utilisant des connaissances m=C3=A9dicales semi-structur=
+=C3=A9es [2,3], par exemple en utilisant un ensemble de donn=C3=A9es de not=
+es m=C3=A9dicales d'urgence internes qui rapportent les observations du m=
+=C3=A9decin sur l'=C3=A9tat m=C3=A9dical d'un patient sous forme textuelle =
+en utilisant des sections telles que =C2=AB Comorbidit=C3=A9s =C2=BB, =C2=
+=AB Traitement =C2=BB et =C2=AB Examen clinique =C2=BB, ainsi que des donn=
+=C3=A9es non textuelles, notamment des r=C3=A9sultats de laboratoire, un sc=
+ore de gravit=C3=A9, le code diagnostic ICD-10 (International Classificatio=
+n of Diseases) de facturation du s=C3=A9jour hospitalier et le r=C3=A9sulta=
+t clinique. L=E2=80=99enjeu global sera d=E2=80=99aligner les repr=C3=A9sen=
+tations des appels d=E2=80=99urgence m=C3=A9dicale et ces autres sources de=
+ connaissances. Diff=C3=A9rentes sources de connaissances peuvent se tradui=
+re par diff=C3=A9rentes approches d=E2=80=99augmentation des donn=C3=A9es e=
+t/ou de fine-tuning pour am=C3=A9liorer le LLM tout en =C3=A9vitant le cata=
+strophic forgetting.
+
+=C2=A0
+
+Les r=C3=A9sultats seront =C3=A9valu=C3=A9s sur le jeu de donn=C3=A9es SimS=
+AMU, un ensemble d'appels d'urgences m=C3=A9dicales jou=C3=A9s avec des ann=
+otations de diarisation, transcription, actes de dialogue et slot filling. =
+La dur=C3=A9e des appels est de 1 =C3=A0 8 min, pour une dur=C3=A9e totale =
+de 3 heures. Les mod=C3=A8les seront =C3=A9valu=C3=A9s en termes de perplex=
+it=C3=A9 et d'autres mesures telles que le Slot Error Rate, la Sentence Lev=
+el Semantic Accuracy, les scores F1 sur des sous-t=C3=A2ches (par exemple, =
+la d=C3=A9tection d'actes de dialogue) et BLEU/METEOR pour la qualit=C3=A9 =
+de la surface. La qualit=C3=A9 de la repr=C3=A9sentation latente apprise pa=
+r le mod=C3=A8le sera =C3=A9galement =C3=A9valu=C3=A9e en pr=C3=A9disant le=
+ score de gravit=C3=A9, le code ICD-10 et le r=C3=A9sultat clinique. Les ex=
+perts de l=E2=80=99AP-HP, dirig=C3=A9s par le Dr Ivan Lerner, examineront m=
+anuellement la qualit=C3=A9 de la r=C3=A9ponse du syst=C3=A8me.
+
+
+
+
+
+Comp=C3=A9tences
+
+Master en informatique ou en apprentissage automatique.
+
+Solides comp=C3=A9tences en programmation Python/Pytorch.
+
+Une exp=C3=A9rience pr=C3=A9alable en TAL et en sant=C3=A9 num=C3=A9rique s=
+era un atout.=C2=A0
+
+
+
+
+
+Contacts
+
+Veuillez contacter les personnes suivantes :
+  =20
+   - emmanuel.vincent@inria.fr=C2=A0
+   - ivan.lerner2@aphp.fr
+   - gael.guibon@loria.fr=C2=A0
+
+=C2=A0
+
+R=C3=A9f=C3=A9rences :
+
+[1] K. Bohm and L. Kurland, =E2=80=9CThe accuracy of medical dispatch =E2=
+=80=94 A systematic review=E2=80=9D,=C2=A0Scandinavian Journal of Trauma, R=
+esuscitation and Emergency Medicine=C2=A026:94, 2018.
+
+[2] M. L. Scholz, H. Collatz-Christensen, S. N. F. Blomberg, S. Boebel, J. =
+Verhoeven, and T. Krafft, =E2=80=9CArtificial intelligence in Emergency Med=
+ical Services dispatching: assessing the potential impact of an automatic s=
+peech recognition software on stroke detection taking the Capital Region of=
+ Denmark as case in point=E2=80=9D,=C2=A0Scandinavian Journal of Trauma, Re=
+suscitation and Emergency Medicine=C2=A030(1):36, 2022.
+
+[3] X. Yang, A. Chen, N. PourNejatian, H. C. Shin, K. E. Smith, et al., =E2=
+=80=9CA large language model for electronic health records=E2=80=9D,=C2=A0D=
+igital Medicine=C2=A05:194, 2022.
+
+[4] J. S. Obeid, E. R. Weeda, A. J. Matuskowitz, K. Gagnon, T. Crawford et =
+al., =E2=80=9CAutomated detection of altered mental status in emergency dep=
+artment clinical notes: a deep learning approach=E2=80=9D,=C2=A0BMC Medical=
+ Informatics and Decision Making=C2=A019:164, 2019.
+
+[5] H. Touvron, L. Martin, K. Stone, P. Albert, A. Almahairi et al., =E2=80=
+=9CLlama 2: Open foundation and fine-tuned chat models=E2=80=9D, arXiv prep=
+rint arXiv:2307.09288, 2023.
+
+[6] G. Penedo, Q. Malartic, D. Hesslow, R. Cojocaru, A. Cappelli et al., =
+=E2=80=9CThe RefinedWeb dataset for Falcon LLM: outperforming curated corpo=
+ra with web data, and web data only=E2=80=9D, arXiv preprint arXiv:2306.011=
+16, 2023.
+
+[7] I. A. Sheikh, E. Vincent, I. Illina, =E2=80=9CTraining RNN language mod=
+els on uncertain ASR hypotheses in limited data scenarios=E2=80=9D,=C2=A0Co=
+mputer Speech and Language, pp.101555, 2023.=C2=A0
+
+[8] G. Guibon, M. Labeau, L. Lefeuvre, and C. Clavel, =E2=80=9CAn adaptive =
+layer to leverage both domain and task specific information from scarce dat=
+a=E2=80=9D, in=C2=A0AAAI Conference on Artificial Intelligence, 37(6), 2023=
+.
+
+[9] I. Lerner, N. Paris, and X. Tannier, =E2=80=9CTerminologies augmented r=
+ecurrent neural network model for clinical named entity recognition=E2=80=
+=9D,=C2=A0Journal of Biomedical Informatics=C2=A0102: 103356,=C2=A0 2020.
+
+[10] A. Santoro, S. Bartunov, M. Botvinick, D. Wierstra, and T. Lillicrap, =
+=E2=80=9CMeta-learning with memory-augmented neural networks=E2=80=9D, in=
+=C2=A0International Conference on Machine Learning (ICML), pp. 1842=E2=80=
+=931850, 2016.
+
+=C2=A0
+
+
+------=_Part_3106862_930337726.1694789761298
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><head></head><body><div class=3D"yahoo-style-wrap" style=3D"font-fami=
+ly:Helvetica Neue, Helvetica, Arial, sans-serif;font-size:13px;"><div dir=
+=3D"ltr" data-setdir=3D"false"><div><p style=3D"color: rgb(29, 29, 29); fon=
+t-family: Calibri; font-size: 16px; font-style: normal; font-weight: 400; l=
+etter-spacing: normal; text-indent: 0px; text-transform: none; white-space:=
+ normal; word-spacing: 0px; text-decoration-line: none; text-decoration-sty=
+le: solid; text-decoration-color: currentcolor; margin: 0cm;"><span lang=3D=
+"EN-US" data-ogsc=3D"black" style=3D"font-family: Arial, sans-serif; color:=
+ rgb(0, 0, 0);">PhD Position:<span class=3D"ydp7b87700aApple-converted-spac=
+e">&nbsp;</span><b>LLM adaptation and exploitation for medical emergency ca=
+ll triage</b></span></p><p style=3D"color: rgb(29, 29, 29); font-family: Ca=
+libri; font-size: 16px; font-style: normal; font-weight: 400; letter-spacin=
+g: normal; text-indent: 0px; text-transform: none; white-space: normal; wor=
+d-spacing: 0px; text-decoration-line: none; text-decoration-style: solid; t=
+ext-decoration-color: currentcolor; margin: 0cm;"><span lang=3D"EN-US" data=
+-ogsc=3D"black" style=3D"font-family: Arial, sans-serif; color: rgb(0, 0, 0=
+);">&nbsp;</span></p><p style=3D"color: rgb(29, 29, 29); font-family: Calib=
+ri; font-size: 16px; font-style: normal; font-weight: 400; letter-spacing: =
+normal; text-indent: 0px; text-transform: none; white-space: normal; word-s=
+pacing: 0px; text-decoration-line: none; text-decoration-style: solid; text=
+-decoration-color: currentcolor; margin: 0cm;"><span lang=3D"EN-US" data-og=
+sc=3D"black" style=3D"font-family: Arial, sans-serif; color: rgb(0, 0, 0);"=
+>This PhD offer is part of the ANR LLM4All project (2023-2027), which aims =
+to design continual learning and footprint reduction mechanisms for LLMs, a=
+nd to exploit them in challenging spoken dialog scenarios, including medica=
+l emergency calls. It will be co-supervised by<span class=3D"ydp7b87700aApp=
+le-converted-space">&nbsp;</span></span><a href=3D"https://gguibon.github.i=
+o/" data-ogsc=3D"" title=3D"https://gguibon.github.io/" style=3D"color: rgb=
+(0, 88, 185); text-decoration-line: underline; text-decoration-style: solid=
+; text-decoration-color: currentcolor;" rel=3D"nofollow" target=3D"_blank">=
+<span lang=3D"EN-US" data-ogsc=3D"rgb(17, 85, 204)" style=3D"font-family: A=
+rial, sans-serif; color: rgb(0, 23, 119);">Ga=C3=ABl Guibon</span></a><span=
+ lang=3D"EN-US" data-ogsc=3D"black" style=3D"font-family: Arial, sans-serif=
+; color: rgb(0, 0, 0);">,<span class=3D"ydp7b87700aApple-converted-space">&=
+nbsp;</span></span><a href=3D"https://scholar.google.fr/citations?user=3D1T=
+glQmsAAAAJ" data-ogsc=3D"" title=3D"https://scholar.google.fr/citations?use=
+r=3D1TglQmsAAAAJ" style=3D"color: rgb(0, 88, 185); text-decoration-line: un=
+derline; text-decoration-style: solid; text-decoration-color: currentcolor;=
+" rel=3D"nofollow" target=3D"_blank"><span lang=3D"EN-US" data-ogsc=3D"rgb(=
+17, 85, 204)" style=3D"font-family: Arial, sans-serif; color: rgb(0, 23, 11=
+9);">Dr. Ivan Lerner</span></a><span lang=3D"EN-US" data-ogsc=3D"black" sty=
+le=3D"font-family: Arial, sans-serif; color: rgb(0, 0, 0);">, and<span clas=
+s=3D"ydp7b87700aApple-converted-space">&nbsp;</span></span><a href=3D"https=
+://members.loria.fr/EVincent/" data-ogsc=3D"" title=3D"https://members.lori=
+a.fr/EVincent/" style=3D"color: rgb(0, 88, 185); text-decoration-line: unde=
+rline; text-decoration-style: solid; text-decoration-color: currentcolor;" =
+rel=3D"nofollow" target=3D"_blank"><span lang=3D"EN-US" data-ogsc=3D"rgb(17=
+, 85, 204)" style=3D"font-family: Arial, sans-serif; color: rgb(0, 23, 119)=
+;">Emmanuel Vincent</span></a><span lang=3D"EN-US" data-ogsc=3D"black" styl=
+e=3D"font-family: Arial, sans-serif; color: rgb(0, 0, 0);">. The PhD studen=
+t will have the opportunity to spend time in both the<span class=3D"ydp7b87=
+700aApple-converted-space">&nbsp;</span></span><a href=3D"https://synalp.gi=
+tlabpages.inria.fr/synalp-website/" data-ogsc=3D"" title=3D"https://synalp.=
+gitlabpages.inria.fr/synalp-website/" style=3D"color: rgb(0, 88, 185); text=
+-decoration-line: underline; text-decoration-style: solid; text-decoration-=
+color: currentcolor;" rel=3D"nofollow" target=3D"_blank"><span lang=3D"EN-U=
+S" data-ogsc=3D"rgb(17, 85, 204)" style=3D"font-family: Arial, sans-serif; =
+color: rgb(0, 23, 119);">Synalp</span></a><span lang=3D"EN-US" data-ogsc=3D=
+"black" style=3D"font-family: Arial, sans-serif; color: rgb(0, 0, 0);"><spa=
+n class=3D"ydp7b87700aApple-converted-space">&nbsp;</span>and<span class=3D=
+"ydp7b87700aApple-converted-space">&nbsp;</span></span><a href=3D"https://t=
+eam.inria.fr/multispeech/" data-ogsc=3D"" title=3D"https://team.inria.fr/mu=
+ltispeech/" style=3D"color: rgb(0, 88, 185); text-decoration-line: underlin=
+e; text-decoration-style: solid; text-decoration-color: currentcolor;" rel=
+=3D"nofollow" target=3D"_blank"><span lang=3D"EN-US" data-ogsc=3D"rgb(17, 8=
+5, 204)" style=3D"font-family: Arial, sans-serif; color: rgb(0, 23, 119);">=
+Multispeech</span></a><span lang=3D"EN-US" data-ogsc=3D"black" style=3D"fon=
+t-family: Arial, sans-serif; color: rgb(0, 0, 0);"><span class=3D"ydp7b8770=
+0aApple-converted-space">&nbsp;</span>teams at LORIA and the PRIME team at<=
+span class=3D"ydp7b87700aApple-converted-space">&nbsp;</span></span><a href=
+=3D"https://www.aphp.fr/" data-ogsc=3D"" title=3D"https://www.aphp.fr/" sty=
+le=3D"color: rgb(0, 88, 185); text-decoration-line: underline; text-decorat=
+ion-style: solid; text-decoration-color: currentcolor;" rel=3D"nofollow" ta=
+rget=3D"_blank"><span lang=3D"EN-US" data-ogsc=3D"rgb(17, 85, 204)" style=
+=3D"font-family: Arial, sans-serif; color: rgb(0, 23, 119);">Assistance Pub=
+lique - H=C3=B4pitaux de Paris (AP-HP)</span></a><span lang=3D"EN-US" data-=
+ogsc=3D"black" style=3D"font-family: Arial, sans-serif; color: rgb(0, 0, 0)=
+;">, and to benefit from the hands-on expertise of Dr. Gustave Toury, an EM=
+S physician at SAMU 92 =E2=80=94 the French EMS.</span><span lang=3D"EN-US"=
+></span></p><p style=3D"color: rgb(29, 29, 29); font-family: Calibri; font-=
+size: 16px; font-style: normal; font-weight: 400; letter-spacing: normal; t=
+ext-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0=
+px; text-decoration-line: none; text-decoration-style: solid; text-decorati=
+on-color: currentcolor; margin: 0cm;"><span lang=3D"EN-US">&nbsp;</span></p=
+><p style=3D"color: rgb(29, 29, 29); font-family: Calibri; font-size: 16px;=
+ font-style: normal; font-weight: 400; letter-spacing: normal; text-indent:=
+ 0px; text-transform: none; white-space: normal; word-spacing: 0px; text-de=
+coration-line: none; text-decoration-style: solid; text-decoration-color: c=
+urrentcolor; margin: 0cm;"><b><span lang=3D"EN-US" data-ogsc=3D"black" styl=
+e=3D"font-family: Arial, sans-serif; color: rgb(0, 0, 0);">Summary:</span><=
+/b><span lang=3D"EN-US"></span></p><p style=3D"color: rgb(29, 29, 29); font=
+-family: Calibri; font-size: 16px; font-style: normal; font-weight: 400; le=
+tter-spacing: normal; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; text-decoration-line: none; text-decoration-styl=
+e: solid; text-decoration-color: currentcolor; margin: 0cm; text-align: jus=
+tify;"><span lang=3D"EN-US" data-ogsc=3D"black" style=3D"font-family: Arial=
+, sans-serif; color: rgb(0, 0, 0);">Medical emergency call triage aims to a=
+ssess the level of emergency and direct the appropriate response. Given the=
+ significant impact of this response on the patient's health trajectory, im=
+proving the triage process is of utmost importance. Rapid decision-making w=
+ith limited access to comprehensive medical information is required [1]. Pr=
+edictive models based on large volumes of call data are believed to signifi=
+cantly enhance the safety and accuracy of decisions, e.g., in the case of c=
+ardiac arrest [2]. In parallel, learning deep patient representations from =
+healthcare data has rapidly followed up trends in NLP [3], even though reac=
+hing application in emergency medicine [4]. However, the evolution and impa=
+ct towards large language models (LLMs) has not yet been evaluated in the c=
+ontext of Emergency Medical Services (EMS) and call triage.</span><span lan=
+g=3D"EN-US"></span></p><p class=3D"ydp7b87700aMsoNormal" style=3D"margin: 0=
+cm; font-size: 11pt; font-family: Calibri, sans-serif; color: rgb(29, 29, 2=
+9); font-style: normal; font-weight: 400; letter-spacing: normal; text-inde=
+nt: 0px; text-transform: none; white-space: normal; word-spacing: 0px; text=
+-decoration-line: none; text-decoration-style: solid; text-decoration-color=
+: currentcolor;"><span lang=3D"EN-US">&nbsp;</span></p><p style=3D"color: r=
+gb(29, 29, 29); font-family: Calibri; font-size: 16px; font-style: normal; =
+font-weight: 400; letter-spacing: normal; text-indent: 0px; text-transform:=
+ none; white-space: normal; word-spacing: 0px; text-decoration-line: none; =
+text-decoration-style: solid; text-decoration-color: currentcolor; margin: =
+0cm; text-align: justify;"><span lang=3D"EN-US" data-ogsc=3D"black" style=
+=3D"font-family: Arial, sans-serif; color: rgb(0, 0, 0);">The objective of =
+this PhD is to adapt an open, general-purpose LLM such as Llama2 [5] or Fal=
+con [6] to the medical emergency call domain so as to help EMS physicians. =
+Fine-tuning the LLM on in-domain data [7] is useful but not sufficient, due=
+ to the small amount of such data to adapt the LLM to both domain and task =
+[8]. Instead, we will seek to incorporate structured medical knowledge in t=
+he form of medical ontologies such as the Unified Medical Language System (=
+UMLS) [9] or memory modules such as in Memory Augmented Neural Networks [10=
+]. We will also augment the LLM using semi-structured medical knowledge [2,=
+3], e.g., using an in-house emergency medical note dataset which reports th=
+e physician=E2=80=99s observations of a patient=E2=80=99s medical state in =
+textual form using sections such as =E2=80=9CComorbidities=E2=80=9D, =E2=80=
+=9CTreatment=E2=80=9D, and =E2=80=9CClinical examination=E2=80=9D, as well =
+as non-textual data including lab results, a severity score, the ICD-10 (In=
+ternational Classification of Diseases) diagnostics billing code, and the c=
+linical outcome. The overall challenge will be to align the representations=
+ of medical emergency calls and these other knowledge sources. Different kn=
+owledge sources may translate into different data augmentation and/or fine-=
+tuning approaches to improve the LLM while avoiding catastrophic forgetting=
+.</span><span lang=3D"EN-US"></span></p><p class=3D"ydp7b87700aMsoNormal" s=
+tyle=3D"margin: 0cm; font-size: 11pt; font-family: Calibri, sans-serif; col=
+or: rgb(29, 29, 29); font-style: normal; font-weight: 400; letter-spacing: =
+normal; text-indent: 0px; text-transform: none; white-space: normal; word-s=
+pacing: 0px; text-decoration-line: none; text-decoration-style: solid; text=
+-decoration-color: currentcolor;"><span lang=3D"EN-US">&nbsp;</span></p><p =
+style=3D"color: rgb(29, 29, 29); font-family: Calibri; font-size: 16px; fon=
+t-style: normal; font-weight: 400; letter-spacing: normal; text-indent: 0px=
+; text-transform: none; white-space: normal; word-spacing: 0px; text-decora=
+tion-line: none; text-decoration-style: solid; text-decoration-color: curre=
+ntcolor; margin: 0cm; text-align: justify;"><span lang=3D"EN-US" data-ogsc=
+=3D"black" style=3D"font-family: Arial, sans-serif; color: rgb(0, 0, 0);">R=
+esults will be evaluated on the SimSAMU dataset, a collection of acted medi=
+cal emergency calls with diarization, transcription, dialog act, and slot f=
+illing annotations. The duration of the calls is 1 to 8 min, with a total d=
+uration of 3 hours. Models will be evaluated in terms of perplexity and oth=
+er metrics such as Slot Error Rate, Sentence Level Semantic Accuracy, F1-sc=
+ores on subtasks (e.g., dialog act detection), and BLEU/METEOR for surface =
+quality.&nbsp; The quality of the latent representation learned by the mode=
+l will also be assessed by predicting the severity score, the ICD-10 diagno=
+stics billing code and the outcome. AP-HP experts, led by Dr. Ivan Lerner, =
+will manually review the quality of the system=E2=80=99s response.</span><s=
+pan lang=3D"EN-US"></span></p><p style=3D"color: rgb(29, 29, 29); font-fami=
+ly: Calibri; font-size: 16px; font-style: normal; font-weight: 400; letter-=
+spacing: normal; text-indent: 0px; text-transform: none; white-space: norma=
+l; word-spacing: 0px; text-decoration-line: none; text-decoration-style: so=
+lid; text-decoration-color: currentcolor; margin: 0cm; text-align: justify;=
+"><span lang=3D"EN-US" data-ogsc=3D"black" style=3D"font-family: Arial, san=
+s-serif; color: rgb(0, 0, 0);"><br><br></span><span lang=3D"EN-US"></span><=
+/p><p style=3D"color: rgb(29, 29, 29); font-family: Calibri; font-size: 16p=
+x; font-style: normal; font-weight: 400; letter-spacing: normal; text-inden=
+t: 0px; text-transform: none; white-space: normal; word-spacing: 0px; text-=
+decoration-line: none; text-decoration-style: solid; text-decoration-color:=
+ currentcolor; margin: 0cm;"><b><span lang=3D"EN-US" data-ogsc=3D"black" st=
+yle=3D"font-family: Arial, sans-serif; color: rgb(0, 0, 0);">Required Skill=
+s</span></b><span lang=3D"EN-US"></span></p><p style=3D"color: rgb(29, 29, =
+29); font-family: Calibri; font-size: 16px; font-style: normal; font-weight=
+: 400; letter-spacing: normal; text-indent: 0px; text-transform: none; whit=
+e-space: normal; word-spacing: 0px; text-decoration-line: none; text-decora=
+tion-style: solid; text-decoration-color: currentcolor; margin: 0cm;"><span=
+ lang=3D"EN-US" data-ogsc=3D"black" style=3D"font-family: Arial, sans-serif=
+; color: rgb(0, 0, 0);">MSc in computer science or machine learning.</span>=
+<span lang=3D"EN-US"></span></p><p style=3D"color: rgb(29, 29, 29); font-fa=
+mily: Calibri; font-size: 16px; font-style: normal; font-weight: 400; lette=
+r-spacing: normal; text-indent: 0px; text-transform: none; white-space: nor=
+mal; word-spacing: 0px; text-decoration-line: none; text-decoration-style: =
+solid; text-decoration-color: currentcolor; margin: 0cm;"><span lang=3D"EN-=
+US" data-ogsc=3D"black" style=3D"font-family: Arial, sans-serif; color: rgb=
+(0, 0, 0);">Strong programming skills in Python/Pytorch.</span><span lang=
+=3D"EN-US"></span></p><p style=3D"color: rgb(29, 29, 29); font-family: Cali=
+bri; font-size: 16px; font-style: normal; font-weight: 400; letter-spacing:=
+ normal; text-indent: 0px; text-transform: none; white-space: normal; word-=
+spacing: 0px; text-decoration-line: none; text-decoration-style: solid; tex=
+t-decoration-color: currentcolor; margin: 0cm;"><span lang=3D"EN-US" data-o=
+gsc=3D"black" style=3D"font-family: Arial, sans-serif; color: rgb(0, 0, 0);=
+">Prior experience in NLP and digital health will be an asset.</span><span =
+lang=3D"EN-US"></span></p><p style=3D"color: rgb(29, 29, 29); font-family: =
+Calibri; font-size: 16px; font-style: normal; font-weight: 400; letter-spac=
+ing: normal; text-indent: 0px; text-transform: none; white-space: normal; w=
+ord-spacing: 0px; text-decoration-line: none; text-decoration-style: solid;=
+ text-decoration-color: currentcolor; margin: 0cm;"><span lang=3D"EN-US" da=
+ta-ogsc=3D"black" style=3D"font-family: Arial, sans-serif; color: rgb(0, 0,=
+ 0);"><br><br></span><span lang=3D"EN-US"></span></p><p style=3D"color: rgb=
+(29, 29, 29); font-family: Calibri; font-size: 16px; font-style: normal; fo=
+nt-weight: 400; letter-spacing: normal; text-indent: 0px; text-transform: n=
+one; white-space: normal; word-spacing: 0px; text-decoration-line: none; te=
+xt-decoration-style: solid; text-decoration-color: currentcolor; margin: 0c=
+m;"><b><span lang=3D"EN-US" data-ogsc=3D"black" style=3D"font-family: Arial=
+, sans-serif; color: rgb(0, 0, 0);">Contacts</span></b><span lang=3D"EN-US"=
+></span></p><p style=3D"color: rgb(29, 29, 29); font-family: Calibri; font-=
+size: 16px; font-style: normal; font-weight: 400; letter-spacing: normal; t=
+ext-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0=
+px; text-decoration-line: none; text-decoration-style: solid; text-decorati=
+on-color: currentcolor; margin: 0cm;"><span lang=3D"EN-US" data-ogsc=3D"bla=
+ck" style=3D"font-family: Arial, sans-serif; color: rgb(0, 0, 0);">Please c=
+ontact the following persons.</span><span lang=3D"EN-US"></span></p><ul typ=
+e=3D"disc" style=3D"margin-bottom: 0cm; color: rgb(29, 29, 29); font-family=
+: Calibri; font-size: 16px; font-style: normal; font-weight: 400; letter-sp=
+acing: normal; text-indent: 0px; text-transform: none; white-space: normal;=
+ word-spacing: 0px; text-decoration-line: none; text-decoration-style: soli=
+d; text-decoration-color: currentcolor; margin-top: 0cm;"><li class=3D"ydp7=
+b87700aMsoNormal" data-ogsc=3D"black" style=3D"margin: 0cm; font-size: 11pt=
+; font-family: Calibri, sans-serif; color: rgb(0, 0, 0); vertical-align: ba=
+seline;"><span style=3D"font-family: Arial, sans-serif;"><a href=3D"mailto:=
+emmanuel.vincent@inria.fr" data-ogsc=3D"" title=3D"mailto:emmanuel.vincent@=
+inria.fr" style=3D"color: rgb(0, 88, 185); text-decoration-line: underline;=
+ text-decoration-style: solid; text-decoration-color: currentcolor;" rel=3D=
+"nofollow" target=3D"_blank"><span data-ogsc=3D"rgb(17, 85, 204)" style=3D"=
+color: rgb(0, 23, 119);">emmanuel.vincent@inria.fr</span></a>&nbsp;</span><=
+/li><li class=3D"ydp7b87700aMsoNormal" data-ogsc=3D"black" style=3D"margin:=
+ 0cm; font-size: 11pt; font-family: Calibri, sans-serif; color: rgb(0, 0, 0=
+); vertical-align: baseline;"><span style=3D"font-family: Arial, sans-serif=
+;"><a href=3D"mailto:ivan.lerner2@aphp.fr" data-ogsc=3D"" title=3D"mailto:i=
+van.lerner2@aphp.fr" style=3D"color: rgb(0, 88, 185); text-decoration-line:=
+ underline; text-decoration-style: solid; text-decoration-color: currentcol=
+or;" rel=3D"nofollow" target=3D"_blank"><span data-ogsc=3D"rgb(17, 85, 204)=
+" style=3D"color: rgb(0, 23, 119);">ivan.lerner2@aphp.fr</span></a></span><=
+/li><li class=3D"ydp7b87700aMsoNormal" data-ogsc=3D"black" style=3D"margin:=
+ 0cm; font-size: 11pt; font-family: Calibri, sans-serif; color: rgb(0, 0, 0=
+); vertical-align: baseline;"><span style=3D"font-family: Arial, sans-serif=
+;"><a href=3D"mailto:gael.guibon@loria.fr" data-ogsc=3D"" title=3D"mailto:g=
+ael.guibon@loria.fr" style=3D"color: rgb(0, 88, 185); text-decoration-line:=
+ underline; text-decoration-style: solid; text-decoration-color: currentcol=
+or;" rel=3D"nofollow" target=3D"_blank"><span data-ogsc=3D"rgb(17, 85, 204)=
+" style=3D"color: rgb(0, 23, 119);">gael.guibon@loria.fr</span></a>&nbsp;</=
+span></li></ul><p style=3D"color: rgb(29, 29, 29); font-family: Calibri; fo=
+nt-size: 16px; font-style: normal; font-weight: 400; letter-spacing: normal=
+; text-indent: 0px; text-transform: none; white-space: normal; word-spacing=
+: 0px; text-decoration-line: none; text-decoration-style: solid; text-decor=
+ation-color: currentcolor; margin: 0cm; vertical-align: baseline;"><span da=
+ta-ogsc=3D"black" style=3D"font-family: Arial, sans-serif; color: rgb(0, 0,=
+ 0);">&nbsp;</span></p><p style=3D"color: rgb(29, 29, 29); font-family: Cal=
+ibri; font-size: 16px; font-style: normal; font-weight: 400; letter-spacing=
+: normal; text-indent: 0px; text-transform: none; white-space: normal; word=
+-spacing: 0px; text-decoration-line: none; text-decoration-style: solid; te=
+xt-decoration-color: currentcolor; margin: 0cm; vertical-align: baseline;">=
+<span data-ogsc=3D"black" style=3D"font-family: Arial, sans-serif; color: r=
+gb(0, 0, 0);">&nbsp;</span></p><p style=3D"color: rgb(29, 29, 29); font-fam=
+ily: Calibri; font-size: 16px; font-style: normal; font-weight: 400; letter=
+-spacing: normal; text-indent: 0px; text-transform: none; white-space: norm=
+al; word-spacing: 0px; text-decoration-line: none; text-decoration-style: s=
+olid; text-decoration-color: currentcolor; margin: 0cm; vertical-align: bas=
+eline;"><span data-ogsc=3D"black" style=3D"font-family: Arial, sans-serif; =
+color: rgb(0, 0, 0);">=3D=3D=3D Version fran=C3=A7aise =3D=3D=3D</span></p>=
+<p style=3D"color: rgb(29, 29, 29); font-family: Calibri; font-size: 16px; =
+font-style: normal; font-weight: 400; letter-spacing: normal; text-indent: =
+0px; text-transform: none; white-space: normal; word-spacing: 0px; text-dec=
+oration-line: none; text-decoration-style: solid; text-decoration-color: cu=
+rrentcolor; margin: 0cm; vertical-align: baseline;"><span data-ogsc=3D"blac=
+k" style=3D"font-family: Arial, sans-serif; color: rgb(0, 0, 0);">&nbsp;</s=
+pan></p><p style=3D"color: rgb(29, 29, 29); font-family: Calibri; font-size=
+: 16px; font-style: normal; font-weight: 400; letter-spacing: normal; text-=
+indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; =
+text-decoration-line: none; text-decoration-style: solid; text-decoration-c=
+olor: currentcolor; margin: 0cm; vertical-align: baseline;"><span data-ogsc=
+=3D"black" style=3D"font-family: Arial, sans-serif; color: rgb(0, 0, 0);">O=
+ffre de th=C3=A8se&nbsp;:<b><span class=3D"ydp7b87700aApple-converted-space=
+">&nbsp;</span>Adaptation et exploitation de LLM pour la r=C3=A9gulation de=
+s appels d'urgences m=C3=A9dicales</b></span></p><p class=3D"ydp7b87700aMso=
+Normal" style=3D"margin: 0cm; font-size: 11pt; font-family: Calibri, sans-s=
+erif; color: rgb(29, 29, 29); font-style: normal; font-weight: 400; letter-=
+spacing: normal; text-indent: 0px; text-transform: none; white-space: norma=
+l; word-spacing: 0px; text-decoration-line: none; text-decoration-style: so=
+lid; text-decoration-color: currentcolor;">&nbsp;</p><p style=3D"color: rgb=
+(29, 29, 29); font-family: Calibri; font-size: 16px; font-style: normal; fo=
+nt-weight: 400; letter-spacing: normal; text-indent: 0px; text-transform: n=
+one; white-space: normal; word-spacing: 0px; text-decoration-line: none; te=
+xt-decoration-style: solid; text-decoration-color: currentcolor; margin: 0c=
+m;"><b><span data-ogsc=3D"black" style=3D"font-family: Arial, sans-serif; c=
+olor: rgb(0, 0, 0);">R=C3=A9sum=C3=A9 :</span></b></p><p style=3D"color: rg=
+b(29, 29, 29); font-family: Calibri; font-size: 16px; font-style: normal; f=
+ont-weight: 400; letter-spacing: normal; text-indent: 0px; text-transform: =
+none; white-space: normal; word-spacing: 0px; text-decoration-line: none; t=
+ext-decoration-style: solid; text-decoration-color: currentcolor; margin: 0=
+cm; text-align: justify;"><span data-ogsc=3D"black" style=3D"font-family: A=
+rial, sans-serif; color: rgb(0, 0, 0);">La r=C3=A9gulation des appels d=E2=
+=80=99urgences m=C3=A9dicales vise =C3=A0 =C3=A9valuer le niveau d=E2=80=99=
+urgence et =C3=A0 donner la r=C3=A9ponse appropri=C3=A9e. Compte tenu de l=
+=E2=80=99impact significatif de cette r=C3=A9ponse sur la trajectoire de sa=
+nt=C3=A9 du patient, l=E2=80=99am=C3=A9lioration du processus de r=C3=A9gul=
+ation est de la plus haute importance. Une prise de d=C3=A9cision rapide av=
+ec un acc=C3=A8s limit=C3=A9 =C3=A0 des informations m=C3=A9dicales compl=
+=C3=A8tes est n=C3=A9cessaire [1]. Les mod=C3=A8les pr=C3=A9dictifs bas=C3=
+=A9s sur de grands volumes de donn=C3=A9es d=E2=80=99appels am=C3=A9liorent=
+ consid=C3=A9rablement la s=C3=BBret=C3=A9 et la pr=C3=A9cision des d=C3=A9=
+cisions, par exemple en cas d=E2=80=99arr=C3=AAt cardiaque [2]. En parall=
+=C3=A8le, l=E2=80=99apprentissage profond de repr=C3=A9sentations des patie=
+nts =C3=A0 partir des donn=C3=A9es de sant=C3=A9 a rapidement suivi les ten=
+dances en TAL [3] et trouv=C3=A9 des applications en m=C3=A9decine d=E2=80=
+=99urgence [4]. Cependant, l'=C3=A9volution vers les grands mod=C3=A8les de=
+ langage (LLM) et leur impact n'ont pas encore =C3=A9t=C3=A9 =C3=A9valu=C3=
+=A9s dans le contexte des services m=C3=A9dicaux d'urgence et de la r=C3=A9=
+gulation des appels.</span></p><p class=3D"ydp7b87700aMsoNormal" style=3D"m=
+argin: 0cm; font-size: 11pt; font-family: Calibri, sans-serif; color: rgb(2=
+9, 29, 29); font-style: normal; font-weight: 400; letter-spacing: normal; t=
+ext-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0=
+px; text-decoration-line: none; text-decoration-style: solid; text-decorati=
+on-color: currentcolor;">&nbsp;</p><p style=3D"color: rgb(29, 29, 29); font=
+-family: Calibri; font-size: 16px; font-style: normal; font-weight: 400; le=
+tter-spacing: normal; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; text-decoration-line: none; text-decoration-styl=
+e: solid; text-decoration-color: currentcolor; margin: 0cm; text-align: jus=
+tify;"><span data-ogsc=3D"black" style=3D"font-family: Arial, sans-serif; c=
+olor: rgb(0, 0, 0);">L'objectif de cette th=C3=A8se est d'adapter un LLM ou=
+vert et g=C3=A9n=C3=A9raliste tel que Llama2 [5] ou Falcon [6] au domaine d=
+es appels d'urgence m=C3=A9dicale afin d'aider les m=C3=A9decins r=C3=A9gul=
+ateurs. Fine-tuner le LLM sur les donn=C3=A9es du domaine [7] est utile mai=
+s pas suffisant, en raison de la petite quantit=C3=A9 de donn=C3=A9es pour =
+adapter le LLM au domaine et =C3=A0 la t=C3=A2che [8]. Au lieu de cela, nou=
+s chercherons =C3=A0 incorporer des connaissances m=C3=A9dicales structur=
+=C3=A9es sous la forme d'ontologies m=C3=A9dicales telles que le Unified Me=
+dical Language System (UMLS) [9] ou de modules de m=C3=A9moire comme dans l=
+es r=C3=A9seaux de neurones =C3=A0 m=C3=A9moire augment=C3=A9e [10]. Nous a=
+ugmenterons =C3=A9galement le LLM en utilisant des connaissances m=C3=A9dic=
+ales semi-structur=C3=A9es [2,3], par exemple en utilisant un ensemble de d=
+onn=C3=A9es de notes m=C3=A9dicales d'urgence internes qui rapportent les o=
+bservations du m=C3=A9decin sur l'=C3=A9tat m=C3=A9dical d'un patient sous =
+forme textuelle en utilisant des sections telles que =C2=AB Comorbidit=C3=
+=A9s =C2=BB, =C2=AB Traitement =C2=BB et =C2=AB Examen clinique =C2=BB, ain=
+si que des donn=C3=A9es non textuelles, notamment des r=C3=A9sultats de lab=
+oratoire, un score de gravit=C3=A9, le code diagnostic ICD-10 (Internationa=
+l Classification of Diseases) de facturation du s=C3=A9jour hospitalier et =
+le r=C3=A9sultat clinique. L=E2=80=99enjeu global sera d=E2=80=99aligner le=
+s repr=C3=A9sentations des appels d=E2=80=99urgence m=C3=A9dicale et ces au=
+tres sources de connaissances. Diff=C3=A9rentes sources de connaissances pe=
+uvent se traduire par diff=C3=A9rentes approches d=E2=80=99augmentation des=
+ donn=C3=A9es et/ou de fine-tuning pour am=C3=A9liorer le LLM tout en =C3=
+=A9vitant le catastrophic forgetting.</span></p><p class=3D"ydp7b87700aMsoN=
+ormal" style=3D"margin: 0cm; font-size: 11pt; font-family: Calibri, sans-se=
+rif; color: rgb(29, 29, 29); font-style: normal; font-weight: 400; letter-s=
+pacing: normal; text-indent: 0px; text-transform: none; white-space: normal=
+; word-spacing: 0px; text-decoration-line: none; text-decoration-style: sol=
+id; text-decoration-color: currentcolor;">&nbsp;</p><p style=3D"color: rgb(=
+29, 29, 29); font-family: Calibri; font-size: 16px; font-style: normal; fon=
+t-weight: 400; letter-spacing: normal; text-indent: 0px; text-transform: no=
+ne; white-space: normal; word-spacing: 0px; text-decoration-line: none; tex=
+t-decoration-style: solid; text-decoration-color: currentcolor; margin: 0cm=
+; text-align: justify;"><span data-ogsc=3D"black" style=3D"font-family: Ari=
+al, sans-serif; color: rgb(0, 0, 0);">Les r=C3=A9sultats seront =C3=A9valu=
+=C3=A9s sur le jeu de donn=C3=A9es SimSAMU, un ensemble d'appels d'urgences=
+ m=C3=A9dicales jou=C3=A9s avec des annotations de diarisation, transcripti=
+on, actes de dialogue et slot filling. La dur=C3=A9e des appels est de 1 =
+=C3=A0 8 min, pour une dur=C3=A9e totale de 3 heures. Les mod=C3=A8les sero=
+nt =C3=A9valu=C3=A9s en termes de perplexit=C3=A9 et d'autres mesures telle=
+s que le Slot Error Rate, la Sentence Level Semantic Accuracy, les scores F=
+1 sur des sous-t=C3=A2ches (par exemple, la d=C3=A9tection d'actes de dialo=
+gue) et BLEU/METEOR pour la qualit=C3=A9 de la surface. La qualit=C3=A9 de =
+la repr=C3=A9sentation latente apprise par le mod=C3=A8le sera =C3=A9galeme=
+nt =C3=A9valu=C3=A9e en pr=C3=A9disant le score de gravit=C3=A9, le code IC=
+D-10 et le r=C3=A9sultat clinique. Les experts de l=E2=80=99AP-HP, dirig=C3=
+=A9s par le Dr Ivan Lerner, examineront manuellement la qualit=C3=A9 de la =
+r=C3=A9ponse du syst=C3=A8me.</span></p><p style=3D"color: rgb(29, 29, 29);=
+ font-family: Calibri; font-size: 16px; font-style: normal; font-weight: 40=
+0; letter-spacing: normal; text-indent: 0px; text-transform: none; white-sp=
+ace: normal; word-spacing: 0px; text-decoration-line: none; text-decoration=
+-style: solid; text-decoration-color: currentcolor; margin: 0cm; text-align=
+: justify;"><span data-ogsc=3D"black" style=3D"font-family: Arial, sans-ser=
+if; color: rgb(0, 0, 0);"><br><br></span></p><p style=3D"color: rgb(29, 29,=
+ 29); font-family: Calibri; font-size: 16px; font-style: normal; font-weigh=
+t: 400; letter-spacing: normal; text-indent: 0px; text-transform: none; whi=
+te-space: normal; word-spacing: 0px; text-decoration-line: none; text-decor=
+ation-style: solid; text-decoration-color: currentcolor; margin: 0cm;"><b><=
+span data-ogsc=3D"black" style=3D"font-family: Arial, sans-serif; color: rg=
+b(0, 0, 0);">Comp=C3=A9tences</span></b></p><p id=3D"ydp7b87700agmail-docs-=
+internal-guid-a42d81be-7fff-416c-6f61-cd220f05c352" style=3D"color: rgb(29,=
+ 29, 29); font-family: Calibri; font-size: 16px; font-style: normal; font-w=
+eight: 400; letter-spacing: normal; text-indent: 0px; text-transform: none;=
+ white-space: normal; word-spacing: 0px; text-decoration-line: none; text-d=
+ecoration-style: solid; text-decoration-color: currentcolor; margin: 0cm;">=
+<span data-ogsc=3D"black" style=3D"font-family: Arial, sans-serif; color: r=
+gb(0, 0, 0);">Master en informatique ou en apprentissage automatique.</span=
+></p><p style=3D"color: rgb(29, 29, 29); font-family: Calibri; font-size: 1=
+6px; font-style: normal; font-weight: 400; letter-spacing: normal; text-ind=
+ent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; tex=
+t-decoration-line: none; text-decoration-style: solid; text-decoration-colo=
+r: currentcolor; margin: 0cm;"><span data-ogsc=3D"black" style=3D"font-fami=
+ly: Arial, sans-serif; color: rgb(0, 0, 0);">Solides comp=C3=A9tences en pr=
+ogrammation Python/Pytorch.</span></p><p style=3D"color: rgb(29, 29, 29); f=
+ont-family: Calibri; font-size: 16px; font-style: normal; font-weight: 400;=
+ letter-spacing: normal; text-indent: 0px; text-transform: none; white-spac=
+e: normal; word-spacing: 0px; text-decoration-line: none; text-decoration-s=
+tyle: solid; text-decoration-color: currentcolor; margin: 0cm;"><span data-=
+ogsc=3D"black" style=3D"font-family: Arial, sans-serif; color: rgb(0, 0, 0)=
+;">Une exp=C3=A9rience pr=C3=A9alable en TAL et en sant=C3=A9 num=C3=A9riqu=
+e sera un atout.<span class=3D"ydp7b87700aApple-converted-space">&nbsp;</sp=
+an></span></p><p style=3D"color: rgb(29, 29, 29); font-family: Calibri; fon=
+t-size: 16px; font-style: normal; font-weight: 400; letter-spacing: normal;=
+ text-indent: 0px; text-transform: none; white-space: normal; word-spacing:=
+ 0px; text-decoration-line: none; text-decoration-style: solid; text-decora=
+tion-color: currentcolor; margin: 0cm;"><span data-ogsc=3D"black" style=3D"=
+font-family: Arial, sans-serif; color: rgb(0, 0, 0);"><br><br></span></p><p=
+ style=3D"color: rgb(29, 29, 29); font-family: Calibri; font-size: 16px; fo=
+nt-style: normal; font-weight: 400; letter-spacing: normal; text-indent: 0p=
+x; text-transform: none; white-space: normal; word-spacing: 0px; text-decor=
+ation-line: none; text-decoration-style: solid; text-decoration-color: curr=
+entcolor; margin: 0cm;"><b><span data-ogsc=3D"black" style=3D"font-family: =
+Arial, sans-serif; color: rgb(0, 0, 0);">Contacts</span></b></p><p style=3D=
+"color: rgb(29, 29, 29); font-family: Calibri; font-size: 16px; font-style:=
+ normal; font-weight: 400; letter-spacing: normal; text-indent: 0px; text-t=
+ransform: none; white-space: normal; word-spacing: 0px; text-decoration-lin=
+e: none; text-decoration-style: solid; text-decoration-color: currentcolor;=
+ margin: 0cm;"><span data-ogsc=3D"black" style=3D"font-family: Arial, sans-=
+serif; color: rgb(0, 0, 0);">Veuillez contacter les personnes suivantes :</=
+span></p><ul type=3D"disc" style=3D"margin-bottom: 0cm; color: rgb(29, 29, =
+29); font-family: Calibri; font-size: 16px; font-style: normal; font-weight=
+: 400; letter-spacing: normal; text-indent: 0px; text-transform: none; whit=
+e-space: normal; word-spacing: 0px; text-decoration-line: none; text-decora=
+tion-style: solid; text-decoration-color: currentcolor; margin-top: 0cm;"><=
+li class=3D"ydp7b87700aMsoNormal" data-ogsc=3D"black" style=3D"margin: 0cm;=
+ font-size: 11pt; font-family: Calibri, sans-serif; color: rgb(0, 0, 0); ve=
+rtical-align: baseline;"><span style=3D"font-family: Arial, sans-serif;"><a=
+ href=3D"mailto:emmanuel.vincent@inria.fr" data-ogsc=3D"" title=3D"mailto:e=
+mmanuel.vincent@inria.fr" style=3D"color: rgb(0, 88, 185); text-decoration-=
+line: underline; text-decoration-style: solid; text-decoration-color: curre=
+ntcolor;" rel=3D"nofollow" target=3D"_blank"><span data-ogsc=3D"rgb(17, 85,=
+ 204)" style=3D"color: rgb(0, 23, 119);">emmanuel.vincent@inria.fr</span></=
+a>&nbsp;</span></li><li class=3D"ydp7b87700aMsoNormal" data-ogsc=3D"black" =
+style=3D"margin: 0cm; font-size: 11pt; font-family: Calibri, sans-serif; co=
+lor: rgb(0, 0, 0); vertical-align: baseline;"><span style=3D"font-family: A=
+rial, sans-serif;"><a href=3D"mailto:ivan.lerner2@aphp.fr" data-ogsc=3D"" t=
+itle=3D"mailto:ivan.lerner2@aphp.fr" style=3D"color: rgb(0, 88, 185); text-=
+decoration-line: underline; text-decoration-style: solid; text-decoration-c=
+olor: currentcolor;" rel=3D"nofollow" target=3D"_blank"><span data-ogsc=3D"=
+rgb(17, 85, 204)" style=3D"color: rgb(0, 23, 119);">ivan.lerner2@aphp.fr</s=
+pan></a></span></li><li class=3D"ydp7b87700aMsoNormal" data-ogsc=3D"black" =
+style=3D"margin: 0cm; font-size: 11pt; font-family: Calibri, sans-serif; co=
+lor: rgb(0, 0, 0); vertical-align: baseline;"><span style=3D"font-family: A=
+rial, sans-serif;"><a href=3D"mailto:gael.guibon@loria.fr" data-ogsc=3D"" t=
+itle=3D"mailto:gael.guibon@loria.fr" style=3D"color: rgb(0, 88, 185); text-=
+decoration-line: underline; text-decoration-style: solid; text-decoration-c=
+olor: currentcolor;" rel=3D"nofollow" target=3D"_blank"><span data-ogsc=3D"=
+rgb(17, 85, 204)" style=3D"color: rgb(0, 23, 119);">gael.guibon@loria.fr</s=
+pan></a>&nbsp;</span></li></ul><p class=3D"ydp7b87700aMsoNormal" style=3D"m=
+argin: 0cm; font-size: 11pt; font-family: Calibri, sans-serif; color: rgb(2=
+9, 29, 29); font-style: normal; font-weight: 400; letter-spacing: normal; t=
+ext-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0=
+px; text-decoration-line: none; text-decoration-style: solid; text-decorati=
+on-color: currentcolor;">&nbsp;</p><p style=3D"color: rgb(29, 29, 29); font=
+-family: Calibri; font-size: 16px; font-style: normal; font-weight: 400; le=
+tter-spacing: normal; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; text-decoration-line: none; text-decoration-styl=
+e: solid; text-decoration-color: currentcolor; margin: 0cm;"><b><span data-=
+ogsc=3D"black" style=3D"font-family: Arial, sans-serif; color: rgb(0, 0, 0)=
+;">R=C3=A9f=C3=A9rences :</span></b></p><p style=3D"color: rgb(29, 29, 29);=
+ font-family: Calibri; font-size: 16px; font-style: normal; font-weight: 40=
+0; letter-spacing: normal; text-indent: 0px; text-transform: none; white-sp=
+ace: normal; word-spacing: 0px; text-decoration-line: none; text-decoration=
+-style: solid; text-decoration-color: currentcolor; margin: 0cm; text-align=
+: justify;"><span lang=3D"EN-US" data-ogsc=3D"black" style=3D"font-family: =
+Arial, sans-serif; color: rgb(0, 0, 0);">[1] K. Bohm and L. Kurland, =E2=80=
+=9CThe accuracy of medical dispatch =E2=80=94 A systematic review=E2=80=9D,=
+<span class=3D"ydp7b87700aApple-converted-space">&nbsp;</span><i>Scandinavi=
+an Journal of Trauma, Resuscitation and Emergency Medicine</i><span class=
+=3D"ydp7b87700aApple-converted-space">&nbsp;</span>26:94, 2018.</span><span=
+ lang=3D"EN-US"></span></p><p style=3D"color: rgb(29, 29, 29); font-family:=
+ Calibri; font-size: 16px; font-style: normal; font-weight: 400; letter-spa=
+cing: normal; text-indent: 0px; text-transform: none; white-space: normal; =
+word-spacing: 0px; text-decoration-line: none; text-decoration-style: solid=
+; text-decoration-color: currentcolor; margin: 0cm; text-align: justify;"><=
+span lang=3D"EN-US" data-ogsc=3D"black" style=3D"font-family: Arial, sans-s=
+erif; color: rgb(0, 0, 0);">[2] M. L. Scholz, H. Collatz-Christensen, S. N.=
+ F. Blomberg, S. Boebel, J. Verhoeven, and T. Krafft, =E2=80=9CArtificial i=
+ntelligence in Emergency Medical Services dispatching: assessing the potent=
+ial impact of an automatic speech recognition software on stroke detection =
+taking the Capital Region of Denmark as case in point=E2=80=9D,<span class=
+=3D"ydp7b87700aApple-converted-space">&nbsp;</span><i>Scandinavian Journal =
+of Trauma, Resuscitation and Emergency Medicine</i><span class=3D"ydp7b8770=
+0aApple-converted-space">&nbsp;</span>30(1):36, 2022.</span><span lang=3D"E=
+N-US"></span></p><p style=3D"color: rgb(29, 29, 29); font-family: Calibri; =
+font-size: 16px; font-style: normal; font-weight: 400; letter-spacing: norm=
+al; text-indent: 0px; text-transform: none; white-space: normal; word-spaci=
+ng: 0px; text-decoration-line: none; text-decoration-style: solid; text-dec=
+oration-color: currentcolor; margin: 0cm; text-align: justify;"><span lang=
+=3D"EN-US" data-ogsc=3D"black" style=3D"font-family: Arial, sans-serif; col=
+or: rgb(0, 0, 0);">[3] X. Yang, A. Chen, N. PourNejatian, H. C. Shin, K. E.=
+ Smith, et al., =E2=80=9CA large language model for electronic health recor=
+ds=E2=80=9D,<span class=3D"ydp7b87700aApple-converted-space">&nbsp;</span><=
+i>Digital Medicine</i><span class=3D"ydp7b87700aApple-converted-space">&nbs=
+p;</span>5:194, 2022.</span><span lang=3D"EN-US"></span></p><p style=3D"col=
+or: rgb(29, 29, 29); font-family: Calibri; font-size: 16px; font-style: nor=
+mal; font-weight: 400; letter-spacing: normal; text-indent: 0px; text-trans=
+form: none; white-space: normal; word-spacing: 0px; text-decoration-line: n=
+one; text-decoration-style: solid; text-decoration-color: currentcolor; mar=
+gin: 0cm; text-align: justify;"><span lang=3D"EN-US" data-ogsc=3D"black" st=
+yle=3D"font-family: Arial, sans-serif; color: rgb(0, 0, 0);">[4] J. S. Obei=
+d, E. R. Weeda, A. J. Matuskowitz, K. Gagnon, T. Crawford et al., =E2=80=9C=
+Automated detection of altered mental status in emergency department clinic=
+al notes: a deep learning approach=E2=80=9D,<span class=3D"ydp7b87700aApple=
+-converted-space">&nbsp;</span><i>BMC Medical Informatics and Decision Maki=
+ng</i><span class=3D"ydp7b87700aApple-converted-space">&nbsp;</span>19:164,=
+ 2019.</span><span lang=3D"EN-US"></span></p><p style=3D"color: rgb(29, 29,=
+ 29); font-family: Calibri; font-size: 16px; font-style: normal; font-weigh=
+t: 400; letter-spacing: normal; text-indent: 0px; text-transform: none; whi=
+te-space: normal; word-spacing: 0px; text-decoration-line: none; text-decor=
+ation-style: solid; text-decoration-color: currentcolor; margin: 0cm; text-=
+align: justify;"><span lang=3D"EN-US" data-ogsc=3D"black" style=3D"font-fam=
+ily: Arial, sans-serif; color: rgb(0, 0, 0);">[5] H. Touvron, L. Martin, K.=
+ Stone, P. Albert, A. Almahairi et al., =E2=80=9CLlama 2: Open foundation a=
+nd fine-tuned chat models=E2=80=9D, arXiv preprint arXiv:2307.09288, 2023.<=
+/span><span lang=3D"EN-US"></span></p><p style=3D"color: rgb(29, 29, 29); f=
+ont-family: Calibri; font-size: 16px; font-style: normal; font-weight: 400;=
+ letter-spacing: normal; text-indent: 0px; text-transform: none; white-spac=
+e: normal; word-spacing: 0px; text-decoration-line: none; text-decoration-s=
+tyle: solid; text-decoration-color: currentcolor; margin: 0cm; text-align: =
+justify;"><span lang=3D"EN-US" data-ogsc=3D"black" style=3D"font-family: Ar=
+ial, sans-serif; color: rgb(0, 0, 0);">[6] G. Penedo, Q. Malartic, D. Hessl=
+ow, R. Cojocaru, A. Cappelli et al., =E2=80=9CThe RefinedWeb dataset for Fa=
+lcon LLM: outperforming curated corpora with web data, and web data only=E2=
+=80=9D, arXiv preprint arXiv:2306.01116, 2023.</span><span lang=3D"EN-US"><=
+/span></p><p style=3D"color: rgb(29, 29, 29); font-family: Calibri; font-si=
+ze: 16px; font-style: normal; font-weight: 400; letter-spacing: normal; tex=
+t-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px=
+; text-decoration-line: none; text-decoration-style: solid; text-decoration=
+-color: currentcolor; margin: 0cm; text-align: justify;"><span lang=3D"EN-U=
+S" data-ogsc=3D"black" style=3D"font-family: Arial, sans-serif; color: rgb(=
+0, 0, 0);">[7] I. A. Sheikh, E. Vincent, I. Illina, =E2=80=9CTraining RNN l=
+anguage models on uncertain ASR hypotheses in limited data scenarios=E2=80=
+=9D,<span class=3D"ydp7b87700aApple-converted-space">&nbsp;</span><i>Comput=
+er Speech and Language</i>, pp.101555, 2023.&nbsp;</span><span lang=3D"EN-U=
+S"></span></p><p style=3D"color: rgb(29, 29, 29); font-family: Calibri; fon=
+t-size: 16px; font-style: normal; font-weight: 400; letter-spacing: normal;=
+ text-indent: 0px; text-transform: none; white-space: normal; word-spacing:=
+ 0px; text-decoration-line: none; text-decoration-style: solid; text-decora=
+tion-color: currentcolor; margin: 0cm; text-align: justify;"><span lang=3D"=
+EN-US" data-ogsc=3D"black" style=3D"font-family: Arial, sans-serif; color: =
+rgb(0, 0, 0);">[8] G. Guibon, M. Labeau, L. Lefeuvre, and C. Clavel, =E2=80=
+=9CAn adaptive layer to leverage both domain and task specific information =
+from scarce data=E2=80=9D, in<span class=3D"ydp7b87700aApple-converted-spac=
+e">&nbsp;</span><i>AAAI Conference on Artificial Intelligence</i>, 37(6), 2=
+023.</span><span lang=3D"EN-US"></span></p><p style=3D"color: rgb(29, 29, 2=
+9); font-family: Calibri; font-size: 16px; font-style: normal; font-weight:=
+ 400; letter-spacing: normal; text-indent: 0px; text-transform: none; white=
+-space: normal; word-spacing: 0px; text-decoration-line: none; text-decorat=
+ion-style: solid; text-decoration-color: currentcolor; margin: 0cm; text-al=
+ign: justify;"><span lang=3D"EN-US" data-ogsc=3D"black" style=3D"font-famil=
+y: Arial, sans-serif; color: rgb(0, 0, 0);">[9] I. Lerner, N. Paris, and X.=
+ Tannier, =E2=80=9CTerminologies augmented recurrent neural network model f=
+or clinical named entity recognition=E2=80=9D,<span class=3D"ydp7b87700aApp=
+le-converted-space">&nbsp;</span><i>Journal of Biomedical Informatics</i><s=
+pan class=3D"ydp7b87700aApple-converted-space">&nbsp;</span>102: 103356,&nb=
+sp; 2020.</span><span lang=3D"EN-US"></span></p><p style=3D"color: rgb(29, =
+29, 29); font-family: Calibri; font-size: 16px; font-style: normal; font-we=
+ight: 400; letter-spacing: normal; text-indent: 0px; text-transform: none; =
+white-space: normal; word-spacing: 0px; text-decoration-line: none; text-de=
+coration-style: solid; text-decoration-color: currentcolor; margin: 0cm; te=
+xt-align: justify;"><span lang=3D"EN-US" data-ogsc=3D"black" style=3D"font-=
+family: Arial, sans-serif; color: rgb(0, 0, 0);">[10] A. Santoro, S. Bartun=
+ov, M. Botvinick, D. Wierstra, and T. Lillicrap, =E2=80=9CMeta-learning wit=
+h memory-augmented neural networks=E2=80=9D, in<span class=3D"ydp7b87700aAp=
+ple-converted-space">&nbsp;</span><i>International Conference on Machine Le=
+arning (ICML)</i>, pp. 1842=E2=80=931850, 2016.</span><span lang=3D"EN-US">=
+</span></p><p class=3D"ydp7b87700aMsoNormal" style=3D"margin: 0cm; font-siz=
+e: 11pt; font-family: Calibri, sans-serif; color: rgb(29, 29, 29); font-sty=
+le: normal; font-weight: 400; letter-spacing: normal; text-indent: 0px; tex=
+t-transform: none; white-space: normal; word-spacing: 0px; text-decoration-=
+line: none; text-decoration-style: solid; text-decoration-color: currentcol=
+or;"><span lang=3D"EN-US">&nbsp;</span></p></div><div><br></div></div></div=
+></body></html>
+------=_Part_3106862_930337726.1694789761298--

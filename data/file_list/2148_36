@@ -1,0 +1,463 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (bouncesmtp2.u12.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 8A2BD14006F3
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Sun, 22 Oct 2023 23:01:58 +0200 (CEST)
+Received: from mx1.univ-nantes.fr (MX1.univ-nantes.fr [193.52.101.135])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id 80FD49C3
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Sun, 22 Oct 2023 23:01:58 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.univ-nantes.fr (Postfix) with ESMTP id 7A4DF12009B
+	for <liste-egc@polytech.univ-nantes.fr>; Sun, 22 Oct 2023 23:01:58 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -12.691
+X-Spam-Level:
+X-Spam-Status: No, score=-12.691 tagged_above=-1000 required=5
+	tests=[CRM114_GOOD=-5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	MANGLED_VIDEO=2.3, RCVD_IN_DNSWL_MED=-10, RCVD_IN_WSFF=0.01,
+	SPF_HELO_PASS=-0.001, SPF_PASS=-0.001, UN_PHISHING_COMPTE=0.1,
+	UN_PHISHING_PW=0.1] autolearn=disabled
+X-CRM114-Status: GOOD ( 13.1407 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=univ-lyon2.fr
+Received: from mx1.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Gr-47jSowSLH for <liste-egc@polytech.univ-nantes.fr>;
+	Sun, 22 Oct 2023 23:01:55 +0200 (CEST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=159.84.182.45; helo=smtp.univ-lyon2.fr; envelope-from=fadila.bentayeb@univ-lyon2.fr; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=quarantine dis=none) header.from=univ-lyon2.fr
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=univ-lyon2.fr
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (2048-bit key; secure) header.d=univ-lyon2.fr header.i=@univ-lyon2.fr header.a=rsa-sha256 header.s=201509-490482f6 header.b=Czr/cJPU;
+	dkim-atps=neutral
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from smtp.univ-lyon2.fr (smtp.univ-lyon2.fr [159.84.182.45])
+	by mx1.univ-nantes.fr (Postfix) with ESMTPS id 9AE3812005D
+	for <liste-egc@polytech.univ-nantes.fr>; Sun, 22 Oct 2023 23:01:55 +0200 (CEST)
+Received: from ru.univ-lyon2.fr (localhost [127.0.0.1])
+	by smtp.univ-lyon2.fr (Postfix) with ESMTP id AAD0B139884;
+	Sun, 22 Oct 2023 23:01:54 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=univ-lyon2.fr;
+	s=201509-490482f6; t=1698008514;
+	bh=dd+8i1Q4S02vZLqrlZ/oJl0fnSbimL5hv+bgW8ZAWtE=;
+	h=From:To:CC:Subject:Date:References:In-Reply-To;
+	b=Czr/cJPUSx118oKJ2tly622AXbmyc509P/W/AgcQN8mznqTuaFUj3PZvHb3bhOCFd
+	 MamJqUtV4k6tNbElWuyrvkmNFEL4MyWlM5UWfX8Wg9sQuZu6jd7eYMn/O5BQhFiEWi
+	 w540znMyVLwvlfHighH3hkdvZlJjy2q+sa9yyLiy67416a7vHWw2UTGAqj7BzBvTiI
+	 Jk1fh/QXw8yER+E/buHepFX0/v1Hkce/grXL4AGDXaD4IJu8USJRiz7EgOUjbhs+s4
+	 DojZRvSNCTfOm1uOI7kfnVc5jCtKvH2OfdfCZhx3fQsc+sQ6NUjaPMYtQ+bDBNpxV1
+	 /w1yXDZfCMLcw==
+X-Virus-Scanned: amavisd-new at univ-lyon2.fr
+Received: from amavis.at.univ-lyon2.fr ([127.0.0.1])
+	by ru.univ-lyon2.fr (smtp.univ-lyon2.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id dSCCExxIe6UT; Sun, 22 Oct 2023 23:01:54 +0200 (CEST)
+Received: from EXCHG-5-Q.ADLYON2.UNIV-LYON2.FR (exchg-5-q.univ-lyon2.fr [159.84.182.196])
+	by smtp.univ-lyon2.fr (Postfix) with ESMTP;
+	Sun, 22 Oct 2023 23:01:53 +0200 (CEST)
+Received: from EXCHG-7-Q.ADLYON2.UNIV-LYON2.FR (159.84.182.198) by
+ EXCHG-5-Q.ADLYON2.UNIV-LYON2.FR (159.84.182.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.32; Sun, 22 Oct 2023 23:01:41 +0200
+Received: from EXCHG-7-Q.ADLYON2.UNIV-LYON2.FR ([fe80::d097:da6d:ba0:2f81]) by
+ EXCHG-7-Q.ADLYON2.UNIV-LYON2.FR ([fe80::d097:da6d:ba0:2f81%2]) with mapi id
+ 15.01.2507.032; Sun, 22 Oct 2023 23:01:41 +0200
+From: Fadila Bentayeb <fadila.Bentayeb@univ-lyon2.fr>
+To: "liste-egc@polytech.univ-nantes.fr" <liste-egc@polytech.univ-nantes.fr>,
+	"bull-i3@irit.fr" <bull-i3@irit.fr>
+CC: "Hussam.Ghanem@u-bourgogne.fr" <Hussam.Ghanem@u-bourgogne.fr>,
+	"Marinette.Savonnet@u-bourgogne.fr" <Marinette.Savonnet@u-bourgogne.fr>
+Thread-Topic: =?Windows-1252?Q?EGC_2024_:_Appel_=E0_communication_pour_les_d=E9monstrat?=
+ =?Windows-1252?Q?ions?=
+Thread-Index: AQHZ/0stEtccKSh3TkiFknqzw3n81LBWVmr6
+Date: Sun, 22 Oct 2023 21:01:41 +0000
+Message-ID: <44929bcd2ac14fe88846b0327b1d9540@univ-lyon2.fr>
+References: <c9511d18762f495d86ccbf514ee5fe61@univ-lyon2.fr>
+In-Reply-To: <c9511d18762f495d86ccbf514ee5fe61@univ-lyon2.fr>
+Accept-Language: fr-FR, en-US
+Content-Language: fr-FR
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+Content-Type: multipart/alternative;
+	boundary="_000_44929bcd2ac14fe88846b0327b1d9540univlyon2fr_"
+MIME-Version: 1.0
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] EGC 2024 : Appel =?WINDOWS-1252?Q?=E0?= communication
+ pour les =?WINDOWS-1252?Q?d=E9monstrations?=
+
+--_000_44929bcd2ac14fe88846b0327b1d9540univlyon2fr_
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+
+EGC 2024 : Appel =E0 communications pour les d=E9monstrations
+24=E8me =E9dition de la conf=E9rence francophone sur l'Extraction et la Ges=
+tion des Connaissances
+22 au 26 janvier 2024 - Dijon, France
+https://iutdijon.u-bourgogne.fr/egc2024/conference/
+
+Date limite des soumissions : 3 novembre 2024
+
+Cette ann=E9e, la 24=E8me =E9dition de la conf=E9rence EGC aura lieu =E0 Di=
+jon du 22 au 26 janvier 2024. La conf=E9rence EGC est un =E9v=E9nement annu=
+el r=E9unissant des chercheurs et praticiens de disciplines relevant des sc=
+iences des donn=E9es et des connaissances. Ces disciplines incluent notamme=
+nt l=92apprentissage automatique, l=92ing=E9nierie et la repr=E9sentation d=
+e connaissances, le raisonnement sur des donn=E9es et des connaissances, la=
+ fouille et l=92analyse de donn=E9es, les syst=E8mes d=92information, les b=
+ases de donn=E9es, le web s=E9mantique et les donn=E9es ouvertes, etc. Tous=
+ les travaux innovants portant sur ces th=E8mes sont les bienvenus.
+
+Une session sp=E9ciale de d=E9monstration de logiciels et de prototypes de =
+recherche est organis=E9e dans le cadre de la conf=E9rence EGC 2024. Les pr=
+opositions accept=E9es seront incluses dans les actes de la conf=E9rence. L=
+es crit=E8res d=92=E9valuation sont : contenu scientifique, originalit=E9 e=
+t pr=E9sentation de la d=E9monstration.
+
+Un prix de 500 euros sera d=E9cern=E9 =E0 l=92auteur.e (ou aux auteur.e.s) =
+de la meilleure d=E9monstration. Pour d=E9cerner le prix, le jury prend en =
+compte d=92une part le classement issu du vote du public (50% de la note fi=
+nale), et d=92autre part la qualit=E9 scientifique de la d=E9monstration, d=
+e l=92article et de la vid=E9o, le caract=E8re novateur de l=92approche pro=
+pos=E9e lors des soumissions (50% de la note finale).
+
+Une proposition consiste en :
+
+  *   Un article de 8 pages maximum
+  *   Une vid=E9o d'au plus 4 minutes
+
+Modalit=E9s de soumission
+Les soumissions se font par voie =E9lectronique exclusivement =E0 partir du=
+ site web Easychair de la conf=E9rence : https://easychair.org/my/conferenc=
+e?conf=3Degc2024
+
+L'article correspondant =E0 la d=E9monstration devra =EAtre envoy=E9 au for=
+mat pdf exclusivement, en respectant imp=E9rativement le format RNTI latex =
+accessible via le site web de la conf=E9rence : https://www.editions-rnti.f=
+r/files/RNTI-202208.zip
+Les soumissions qui d=E9passeraient 8 pages ou qui ne respecteraient pas le=
+ format RNTI Latex ne seront pas =E9valu=E9es. Le fichier de la vid=E9o de =
+4 minutes sera limit=E9 =E0 50Mo.
+Une soumission est compos=E9e d=92un seul fichier .zip compos=E9 de l=92art=
+icle de 8 pages au format pdf et de la vid=E9o.
+
+Dates importantes
+
+  *   Soumission des propositions : 3 novembre 2023
+  *   Notification aux auteurs : 24 novembre 2023
+  *   Version finale des articles : 8 d=E9cembre 2023
+  *   Pr=E9sentation =E0 la conf=E9rence : 24 janvier 2024
+
+Responsables de la session :
+Fadila Bentayeb, Universit=E9 Lyon 2
+Hussam Ghanem, Universit=E9 de Bourgogne
+Marinette Savonnet, Universit=E9 de Bourgogne
+
+Pour toute demande de renseignement compl=E9mentaire, merci d'envoyer un ma=
+il =E0 :
+fadila.bentayeb@univ-lyon2.fr<mailto:fadila.bentayeb@univ-lyon2.fr>
+Hussam.Ghanem@u-bourgogne.fr<mailto:Hussam.Ghanem@u-bourgogne.fr>
+Marinette.Savonnet@u-bourgogne.fr
+
+
+
+Fadila Bentayeb
+
+Professeure d'Informatique - Universit=E9 Lyon 2
+
+
+--_000_44929bcd2ac14fe88846b0327b1d9540univlyon2fr_
+Content-Type: text/html; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DWindows-1=
+252">
+<style type=3D"text/css" style=3D"display:none;"><!-- P {margin-top:0;margi=
+n-bottom:0;} --></style>
+</head>
+<body dir=3D"ltr">
+<div id=3D"divtagdefaultwrapper" style=3D"font-size:12pt;color:#000000;font=
+-family:Calibri,Helvetica,sans-serif;" dir=3D"ltr">
+<p><br>
+</p>
+<div style=3D"color: rgb(0, 0, 0);">
+<div id=3D"divRplyFwdMsg" dir=3D"ltr">
+<div><b style=3D"color: rgb(33, 33, 33); font-family: Arial, sans-serif, se=
+rif, EmojiFont;">EGC 2024 : Appel =E0 communications pour les d=E9monstrati=
+ons</b><br>
+</div>
+</div>
+<div>
+<div id=3D"divtagdefaultwrapper" dir=3D"ltr" style=3D"font-size:12pt; color=
+:#000000; font-family:Calibri,Helvetica,sans-serif">
+<div align=3D"justify" style=3D"font-family:Calibri,Helvetica,sans-serif,se=
+rif,EmojiFont; font-size:16px; margin-top:0px; margin-bottom:0px">
+<font face=3D"Calibri,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><spa=
+n style=3D"font-size:16px"><font face=3D"Arial,sans-serif,serif,EmojiFont" =
+color=3D"#212121">24=E8me =E9dition de la conf=E9rence francophone sur l'Ex=
+traction et la Gestion des Connaissances</font></span></font></div>
+<div align=3D"justify" style=3D"font-family:Calibri,Helvetica,sans-serif,se=
+rif,EmojiFont; font-size:16px; margin-top:0px; margin-bottom:0px">
+<font face=3D"Calibri,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><spa=
+n style=3D"font-size:16px"><font face=3D"Arial,sans-serif,serif,EmojiFont">=
+<b>22 au 26 janvier 2024 - Dijon, France</b></font></span></font></div>
+<div align=3D"justify" style=3D"font-family:Calibri,Helvetica,sans-serif,se=
+rif,EmojiFont; font-size:16px; margin-top:0px; margin-bottom:0px">
+<font face=3D"Calibri,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><spa=
+n style=3D"font-size:16px"><a href=3D"https://iutdijon.u-bourgogne.fr/egc20=
+24/conference/" target=3D"_blank" rel=3D"noopener noreferrer"><font face=3D=
+"Times New Roman,serif,serif,EmojiFont" size=3D"3"><span style=3D"font-size=
+:12pt">https://iutdijon.u-bourgogne.fr/egc2024/conference/</span></font></a=
+></span></font></div>
+<div align=3D"justify" style=3D"font-family:Calibri,Helvetica,sans-serif,se=
+rif,EmojiFont; font-size:16px; margin-top:0px; margin-bottom:0px">
+<font face=3D"Calibri,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><spa=
+n style=3D"font-size:16px"><font face=3D"Times New Roman,serif,serif,EmojiF=
+ont">&nbsp;</font></span></font></div>
+<div align=3D"justify" style=3D"font-family:Calibri,Helvetica,sans-serif,se=
+rif,EmojiFont; font-size:16px; margin-top:0px; margin-bottom:0px">
+<font face=3D"Calibri,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><spa=
+n style=3D"font-size:16px"><font face=3D"Arial,sans-serif,serif,EmojiFont" =
+color=3D"#212121"><b>Date limite des soumissions : 3 novembre 2024</b></fon=
+t></span></font></div>
+<div align=3D"justify" style=3D"font-family:Calibri,Helvetica,sans-serif,se=
+rif,EmojiFont; font-size:16px; margin-top:0px; margin-bottom:0px">
+<font face=3D"Calibri,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><spa=
+n style=3D"font-size:16px"><font face=3D"Arial,sans-serif,serif,EmojiFont">=
+&nbsp;</font></span></font></div>
+<div align=3D"justify" style=3D"font-family:Calibri,Helvetica,sans-serif,se=
+rif,EmojiFont; font-size:16px; margin-top:0px; margin-bottom:0px">
+<font face=3D"Calibri,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><spa=
+n style=3D"font-size:16px"><font face=3D"Arial,sans-serif,serif,EmojiFont">=
+Cette ann=E9e, la 24=E8me =E9dition de la conf=E9rence EGC aura lieu =E0 Di=
+jon du 22 au 26 janvier 2024.&nbsp;La conf=E9rence EGC est
+ un =E9v=E9nement annuel r=E9unissant des chercheurs et praticiens de disci=
+plines relevant des sciences des donn=E9es et des connaissances. Ces discip=
+lines incluent notamment l=92apprentissage automatique, l=92ing=E9nierie et=
+ la repr=E9sentation de connaissances, le raisonnement
+ sur des donn=E9es et des connaissances, la fouille et l=92analyse de donn=
+=E9es, les syst=E8mes d=92information, les bases de donn=E9es, le web s=E9m=
+antique et les donn=E9es ouvertes, etc. Tous les travaux innovants portant =
+sur ces th=E8mes sont les bienvenus.&nbsp;</font></span></font></div>
+<div align=3D"justify" style=3D"font-family:Calibri,Helvetica,sans-serif,se=
+rif,EmojiFont; font-size:16px; margin-top:0px; margin-bottom:0px">
+<font face=3D"Calibri,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><spa=
+n style=3D"font-size:16px"><font face=3D"Arial,sans-serif,serif,EmojiFont">=
+<b>&nbsp;</b></font></span></font></div>
+<div align=3D"justify" style=3D"font-family:Calibri,Helvetica,sans-serif,se=
+rif,EmojiFont; font-size:16px; margin-top:0px; margin-bottom:0px">
+<font face=3D"Calibri,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><spa=
+n style=3D"font-size:16px"><font face=3D"Arial,sans-serif,serif,EmojiFont">=
+<b>Une session sp=E9ciale de d=E9monstration de logiciels et de prototypes =
+de recherche</b></font><font face=3D"Arial,sans-serif,serif,EmojiFont">&nbs=
+p;est
+ organis=E9e dans le cadre de la conf=E9rence EGC 2024. Les propositions ac=
+cept=E9es seront incluses dans les actes de la conf=E9rence. Les crit=E8res=
+ d=92=E9valuation sont : contenu scientifique, originalit=E9 et pr=E9sentat=
+ion de la d=E9monstration.</font></span></font></div>
+<div align=3D"justify" style=3D"font-family:Calibri,Helvetica,sans-serif,se=
+rif,EmojiFont; font-size:16px; margin-top:0px; margin-bottom:0px">
+<font face=3D"Calibri,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><spa=
+n style=3D"font-size:16px"><font face=3D"Arial,sans-serif,serif,EmojiFont" =
+color=3D"#212121"><b>&nbsp;</b></font></span></font></div>
+<div align=3D"justify" style=3D"font-family:Calibri,Helvetica,sans-serif,se=
+rif,EmojiFont; font-size:16px; margin-top:0px; margin-bottom:0px">
+<font face=3D"Calibri,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><spa=
+n style=3D"font-size:16px"><font face=3D"Arial,sans-serif,serif,EmojiFont" =
+color=3D"#212121"><b>Un prix de 500 euros sera d=E9cern=E9 =E0 l=92auteur.e=
+ (ou aux auteur.e.s) de la meilleure d=E9monstration.&nbsp;</b></font><font=
+ face=3D"Arial,sans-serif,serif,EmojiFont">Pour
+ d=E9cerner le prix, le jury prend en compte d=92une part le classement iss=
+u du vote du public (50% de la note finale), et d=92autre part la qualit=E9=
+ scientifique de la d=E9monstration, de l=92article et de la vid=E9o, le ca=
+ract=E8re novateur de l=92approche propos=E9e lors des
+ soumissions (50% de la note finale).&nbsp;</font></span></font></div>
+<div align=3D"justify" style=3D"font-family:Calibri,Helvetica,sans-serif,se=
+rif,EmojiFont; font-size:16px; margin-top:0px; margin-bottom:0px">
+<font face=3D"Calibri,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><spa=
+n style=3D"font-size:16px"><font face=3D"Arial,sans-serif,serif,EmojiFont" =
+color=3D"#212121"><b>&nbsp;</b></font></span></font></div>
+<div align=3D"justify" style=3D"font-family:Calibri,Helvetica,sans-serif,se=
+rif,EmojiFont; font-size:16px; margin-top:0px; margin-bottom:0px">
+<font face=3D"Calibri,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><spa=
+n style=3D"font-size:16px"><font face=3D"Arial,sans-serif,serif,EmojiFont" =
+color=3D"#212121"><b>Une proposition consiste en :</b></font></span></font>=
+</div>
+<ul style=3D"font-family:Calibri,Helvetica,sans-serif,serif,EmojiFont; font=
+-size:16px; margin-top:0px; margin-bottom:14pt">
+<font face=3D"Calibri,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><spa=
+n style=3D"font-size:16px">
+<li style=3D"margin-bottom:0px"><font color=3D"#212121"><font face=3D"Arial=
+,sans-serif,serif,EmojiFont">Un article de 8 pages maximum&nbsp;</font></fo=
+nt></span></font></li><li><font face=3D"Calibri,Helvetica,sans-serif,serif,=
+EmojiFont" size=3D"2"><font color=3D"#212121"><font face=3D"Arial,sans-seri=
+f,serif,EmojiFont">Une vid=E9o d'au plus 4 minutes&nbsp;</font></font></fon=
+t></li></ul>
+<div align=3D"justify" style=3D"font-family:Calibri,Helvetica,sans-serif,se=
+rif,EmojiFont; font-size:16px; margin-top:0px; margin-bottom:0px">
+<font face=3D"Calibri,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><spa=
+n style=3D"font-size:16px"><font face=3D"Arial,sans-serif,serif,EmojiFont" =
+color=3D"#212121"><b>Modalit=E9s de soumission</b></font></span></font></di=
+v>
+<div align=3D"justify" style=3D"font-family:Calibri,Helvetica,sans-serif,se=
+rif,EmojiFont; font-size:16px; margin-top:0px; margin-bottom:0px">
+<font face=3D"Calibri,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><spa=
+n style=3D"font-size:16px"><font face=3D"Arial,sans-serif,serif,EmojiFont" =
+color=3D"#212121">Les soumissions se font par voie =E9lectronique exclusive=
+ment =E0 partir du site web Easychair de la conf=E9rence</font><font face=
+=3D"Arial,sans-serif,serif,EmojiFont">&nbsp;:&nbsp;</font><a href=3D"https:=
+//easychair.org/my/conference?conf=3Degc2024" target=3D"_blank" rel=3D"noop=
+ener noreferrer"><font face=3D"Arial,sans-serif,serif,EmojiFont">https://ea=
+sychair.org/my/conference?conf=3Degc2024</font></a></span></font></div>
+<div align=3D"justify" style=3D"font-family:Calibri,Helvetica,sans-serif,se=
+rif,EmojiFont; font-size:16px; margin-top:0px; margin-bottom:0px">
+<font face=3D"Calibri,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><spa=
+n style=3D"font-size:16px"><br>
+</span></font></div>
+<div align=3D"justify" style=3D"font-family:Calibri,Helvetica,sans-serif,se=
+rif,EmojiFont; font-size:16px; margin-top:0px; margin-bottom:0px">
+<font face=3D"Calibri,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><spa=
+n style=3D"font-size:16px"><font face=3D"Arial,sans-serif,serif,EmojiFont" =
+color=3D"#212121">L'article correspondant =E0 la d=E9monstration devra =EAt=
+re envoy=E9 au format pdf exclusivement, en respectant
+ imp=E9rativement le format RNTI latex accessible via le site web de la con=
+f=E9rence</font><font face=3D"Arial,sans-serif,serif,EmojiFont">&nbsp;:&nbs=
+p;</font><font face=3D"Arial,sans-serif,serif,EmojiFont" size=3D"2"><span s=
+tyle=3D"font-size:9pt; background-color:rgb(251,250,249)">https://www.editi=
+ons-rnti.fr/files/RNTI-202208.zip</span></font></span></font></div>
+<div align=3D"justify" style=3D"font-family:Calibri,Helvetica,sans-serif,se=
+rif,EmojiFont; font-size:16px; margin-top:0px; margin-bottom:0px">
+<font face=3D"Calibri,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><spa=
+n style=3D"font-size:16px"><font face=3D"Arial,sans-serif,serif,EmojiFont" =
+color=3D"#212121">Les soumissions qui d=E9passeraient 8 pages ou qui ne res=
+pecteraient pas le format RNTI Latex ne seront
+ pas =E9valu=E9es. Le fichier de la vid=E9o de 4 minutes sera limit=E9 =E0 =
+50Mo.</font></span></font></div>
+<div align=3D"justify" style=3D"font-family:Calibri,Helvetica,sans-serif,se=
+rif,EmojiFont; font-size:16px; margin-top:0px; margin-bottom:0px">
+<font face=3D"Calibri,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><spa=
+n style=3D"font-size:16px"><font face=3D"Arial,sans-serif,serif,EmojiFont" =
+color=3D"#212121"><b>Une soumission est compos=E9e d=92un seul fichier .zip=
+ compos=E9 de l=92article de 8 pages au format pdf
+ et de la vid=E9o.</b></font></span></font></div>
+<div align=3D"justify" style=3D"font-family:Calibri,Helvetica,sans-serif,se=
+rif,EmojiFont; font-size:16px; margin-top:0px; margin-bottom:0px">
+<font face=3D"Calibri,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><spa=
+n style=3D"font-size:16px"><font face=3D"Arial,sans-serif,serif,EmojiFont" =
+color=3D"#212121">&nbsp;</font></span></font></div>
+<div align=3D"justify" style=3D"font-family:Calibri,Helvetica,sans-serif,se=
+rif,EmojiFont; font-size:16px; margin-top:0px; margin-bottom:0px">
+<font face=3D"Calibri,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><spa=
+n style=3D"font-size:16px"><font face=3D"Arial,sans-serif,serif,EmojiFont" =
+color=3D"#212121"><b>Dates importantes</b></font></span></font></div>
+<ul style=3D"font-family:Calibri,Helvetica,sans-serif,serif,EmojiFont; font=
+-size:16px; margin-top:14pt; margin-bottom:14pt">
+<font face=3D"Calibri,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><spa=
+n style=3D"font-size:16px">
+<li><font face=3D"Arial,sans-serif,serif,EmojiFont" color=3D"#212121">Soumi=
+ssion des propositions :&nbsp;</font><font face=3D"Arial,sans-serif,serif,E=
+mojiFont" color=3D"#212121"><b>3 novembre 2023</b></font></li><li><font fac=
+e=3D"Arial,sans-serif,serif,EmojiFont" color=3D"#212121">Notification aux a=
+uteurs :&nbsp;</font><font face=3D"Arial,sans-serif,serif,EmojiFont" color=
+=3D"#212121"><b>24 novembre 2023</b></font></li><li><font face=3D"Arial,san=
+s-serif,serif,EmojiFont" color=3D"#212121">Version finale des articles</fon=
+t><font face=3D"Arial,sans-serif,serif,EmojiFont" color=3D"#212121"><b>&nbs=
+p;: 8 d=E9cembre 2023</b></font></span></font></li><li><font face=3D"Calibr=
+i,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><font face=3D"Arial,sans=
+-serif,serif,EmojiFont" color=3D"#212121"><span style=3D"font-size: 12pt;">=
+Pr=E9sentation =E0 la conf=E9rence</span></font><font face=3D"Arial,sans-se=
+rif,serif,EmojiFont" color=3D"#212121"><b>&nbsp;:
+<span style=3D"font-size: 12pt;">24 janvier 2024</span></b></font><font col=
+or=3D"#212121"><span style=3D"font-size: 12pt;">&nbsp;</span></font></font>=
+</li></ul>
+<div align=3D"justify" style=3D"font-family:Calibri,Helvetica,sans-serif,se=
+rif,EmojiFont; font-size:16px; margin-top:0px; margin-bottom:0px">
+<font face=3D"Calibri,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><spa=
+n style=3D"font-size:16px"><font face=3D"Arial,sans-serif,serif,EmojiFont" =
+color=3D"#212121"><b>Responsables de la session :</b></font></span></font><=
+/div>
+<div align=3D"justify" style=3D"font-family:Calibri,Helvetica,sans-serif,se=
+rif,EmojiFont; font-size:16px; margin-top:0px; margin-bottom:0px">
+<font face=3D"Calibri,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><spa=
+n style=3D"font-size:16px"><font face=3D"Arial,sans-serif,serif,EmojiFont" =
+color=3D"#212121">Fadila Bentayeb, Universit=E9 Lyon 2</font></span></font>=
+</div>
+<div align=3D"justify" style=3D"font-family:Calibri,Helvetica,sans-serif,se=
+rif,EmojiFont; font-size:16px; margin-top:0px; margin-bottom:0px">
+<font face=3D"Calibri,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><spa=
+n style=3D"font-size:16px"><font face=3D"Arial,sans-serif,serif,EmojiFont" =
+color=3D"#212121">Hussam Ghanem, Universit=E9 de Bourgogne</font></span></f=
+ont></div>
+<div align=3D"justify" style=3D"font-family:Calibri,Helvetica,sans-serif,se=
+rif,EmojiFont; font-size:16px; margin-top:0px; margin-bottom:0px">
+<font face=3D"Calibri,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><spa=
+n style=3D"font-size:16px"><font face=3D"Arial,sans-serif,serif,EmojiFont" =
+color=3D"#212121">Marinette Savonnet, Universit=E9 de Bourgogne</font></spa=
+n></font></div>
+<div align=3D"justify" style=3D"font-family:Calibri,Helvetica,sans-serif,se=
+rif,EmojiFont; font-size:16px; margin-top:0px; margin-bottom:0px">
+<font face=3D"Calibri,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><spa=
+n style=3D"font-size:16px"><font face=3D"Arial,sans-serif,serif,EmojiFont" =
+color=3D"#212121">&nbsp;</font></span></font></div>
+<div align=3D"justify" style=3D"font-family:Calibri,Helvetica,sans-serif,se=
+rif,EmojiFont; font-size:16px; margin-top:0px; margin-bottom:0px">
+<font face=3D"Calibri,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><spa=
+n style=3D"font-size:16px"><font face=3D"Arial,sans-serif,serif,EmojiFont" =
+color=3D"#212121">Pour toute demande de renseignement compl=E9mentaire, mer=
+ci d'envoyer un mail =E0 :&nbsp;&nbsp;</font></span></font></div>
+<div align=3D"justify" style=3D"font-family:Calibri,Helvetica,sans-serif,se=
+rif,EmojiFont; font-size:16px; margin-top:0px; margin-bottom:0px">
+<font face=3D"Calibri,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><spa=
+n style=3D"font-size:16px"><a href=3D"mailto:fadila.bentayeb@univ-lyon2.fr"=
+ target=3D"_blank" rel=3D"noopener noreferrer"><font face=3D"Arial,sans-ser=
+if,serif,EmojiFont" size=3D"2"><span style=3D"font-size:9pt; background-col=
+or:rgb(251,250,249)">fadila.bentayeb@univ-lyon2.fr</span></font></a></span>=
+</font></div>
+<div align=3D"justify" style=3D"font-family:Calibri,Helvetica,sans-serif,se=
+rif,EmojiFont; font-size:16px; margin-top:0px; margin-bottom:0px">
+<font face=3D"Calibri,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><spa=
+n style=3D"font-size:16px"><a href=3D"mailto:Hussam.Ghanem@u-bourgogne.fr" =
+target=3D"_blank" rel=3D"noopener noreferrer"><font face=3D"Arial,sans-seri=
+f,serif,EmojiFont" size=3D"2"><span style=3D"font-size:9pt; background-colo=
+r:rgb(251,250,249)">Hussam.Ghanem@u-bourgogne.fr</span></font></a></span></=
+font></div>
+<div align=3D"justify" style=3D"font-family:Calibri,Helvetica,sans-serif,se=
+rif,EmojiFont; font-size:16px; margin-top:0px; margin-bottom:0px">
+<font face=3D"Calibri,Helvetica,sans-serif,serif,EmojiFont" size=3D"2"><spa=
+n style=3D"font-size:16px"><font face=3D"Arial,sans-serif,serif,EmojiFont" =
+size=3D"2"><span style=3D"font-size:9pt; background-color:rgb(251,250,249)"=
+>Marinette.Savonnet@u-bourgogne.fr</span></font></span></font></div>
+<br>
+<p></p>
+<p><br>
+</p>
+<div id=3D"Signature">
+<div id=3D"divtagdefaultwrapper" dir=3D"ltr" style=3D"font-size:12pt; color=
+:rgb(0,0,0); font-family:Calibri,Helvetica,sans-serif,EmojiFont,&quot;Apple=
+ Color Emoji&quot;,&quot;Segoe UI Emoji&quot;,NotoColorEmoji,&quot;Segoe UI=
+ Symbol&quot;,&quot;Android Emoji&quot;,EmojiSymbols">
+<p></p>
+<p style=3D"font-family:Calibri,Helvetica,sans-serif; font-size:16px"><b><s=
+pan style=3D"color:rgb(0,111,201)">Fadila Bentayeb</span></b>&nbsp;</p>
+<p style=3D"font-family:Calibri,Helvetica,sans-serif; font-size:16px"><span=
+ style=3D"color:rgb(0,111,201)">Professeure&nbsp;d'Informatique -&nbsp;Univ=
+ersit=E9 Lyon 2</span></p>
+<span style=3D"color:rgb(0,111,201)"></span>
+<p style=3D"font-family:Calibri,Helvetica,sans-serif; font-size:16px"><br>
+</p>
+<p></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
+
+--_000_44929bcd2ac14fe88846b0327b1d9540univlyon2fr_--

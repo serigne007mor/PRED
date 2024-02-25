@@ -1,0 +1,1242 @@
+Return-Path: <sylvain.mahe@laposte.net>
+X-Original-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (BounceSMTP1.univ-nantes.prive [172.20.12.66])
+	by sympa6.univ-nantes.prive (Postfix) with ESMTP id CEE902292950
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Wed, 19 Dec 2018 20:12:57 +0100 (CET)
+Received: from mx1.d101.univ-nantes.fr (MX1.univ-nantes.fr [193.52.101.135])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id C5DBF6FE9ED
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Wed, 19 Dec 2018 20:12:57 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.d101.univ-nantes.fr (Postfix) with ESMTP id BF4884821B22
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 19 Dec 2018 20:12:57 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -3.686
+X-Spam-Level:
+X-Spam-Status: No, score=-3.686 tagged_above=-1000 required=5
+	tests=[CRM114_GOOD=-5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+	MANGLED_MEDS=2.3, MIME_QP_LONG_LINE=0.001, MR_NOT_ATTRIBUTED_IP=0.2,
+	NO_RDNS=0.5, RCVD_IN_DNSWL_LOW=-1, RCVD_IN_WSFF=0.01,
+	RP_MATCHES_RCVD=-0.55, SARE_FREE_WEBM_LAPOSTE=0.721, SPF_PASS=-0.001,
+	T_FREEMAIL_DOC_PDF=0.01, UN_FROM_LASPOSTE=-1, UN_JPG_ATTACH=0.01,
+	UN_PDF_ATTACH=0.01, UN_PHISHING_COMPTE=0.1, UN_PHISHING_PW=0.1,
+	URIBL_BLOCKED=0.001] autolearn=disabled
+X-CRM114-Status: GOOD ( 9.0869 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=laposte.net
+Received: from mx1.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id JKhjfC3-q4PA for <liste-egc@polytech.univ-nantes.fr>;
+	Wed, 19 Dec 2018 20:12:55 +0100 (CET)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from smtp.laposte.net (smtpoutz27.laposte.net [194.117.213.102])
+	by mx1.d101.univ-nantes.fr (Postfix) with ESMTPS id 5B27347EC0A0
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 19 Dec 2018 20:12:55 +0100 (CET)
+Received: from smtp.laposte.net (localhost [127.0.0.1])
+	by lpn-prd-vrout015 (Postfix) with ESMTP id 0A19027717D
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 19 Dec 2018 20:12:55 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=laposte.net; s=mail0;
+	t=1545246775; bh=ZdjahyqE/rjh8ppOAMPq8aN8BccIKAamzEuT4DreD8Y=;
+	h=From:Subject:Date:To;
+	b=bYo0fx4n8IZdvMc21RcwVwRWR6I+laFdSBxt32+mLFX9VciwJMuvUndXDmC5NGfJ5
+	 8rQvfAgIVJ9ukeOPBeLpl6ylk8CcSCxdwAAzsoxGwG5TZCgXHwaJblNoFCX9iEThPj
+	 DbrqvA4YTvcj83g1fes7je1sQe61RMUaftdaQc2GTH6hkUXmoiEf/kqGQBKGVVIDlx
+	 Ir21MKLZUPzsQDaWotmQUOWyXp18n9DR97VE9r6pSYGzVcpbC3g8DlKfIg48ARtEhH
+	 emA2ZiAse+HXrpagdnpH9OGsSLdm54dAG9+bJqRhTdfvwEeTgVisBhPfQAYqsCSt2n
+	 N0tmijDy2hL1g==
+Received: from smtp.laposte.net (localhost [127.0.0.1])
+	by lpn-prd-vrout015 (Postfix) with ESMTP id DB82B277442
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 19 Dec 2018 20:12:54 +0100 (CET)
+Received: from lpn-prd-vrin001 (lpn-prd-vrin001.laposte [10.128.63.2])
+	by lpn-prd-vrout015 (Postfix) with ESMTP id D59F927717D
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 19 Dec 2018 20:12:54 +0100 (CET)
+Received: from lpn-prd-vrin001 (localhost [127.0.0.1])
+	by lpn-prd-vrin001 (Postfix) with ESMTP id BE2F7373148
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 19 Dec 2018 20:12:54 +0100 (CET)
+Received: from [10.149.57.249] (unknown [92.184.105.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by lpn-prd-vrin001 (Postfix) with ESMTPSA id 36CC53730FB;
+	Wed, 19 Dec 2018 20:12:54 +0100 (CET)
+Content-Transfer-Encoding: 7bit
+Content-Type: multipart/alternative;
+	boundary=Apple-Mail-32BF4D4A-F4B2-411B-9488-12CBA0D16D15
+From: Sylvain Mahe <sylvain.mahe@laposte.net>
+Mime-Version: 1.0 (1.0)
+Message-Id: <E7187AB5-F0DB-48CA-9D93-FCE2DD393C0E@laposte.net>
+Date: Wed, 19 Dec 2018 20:11:22 +0100
+To: liste-egc@polytech.univ-nantes.fr
+X-Mailer: iPhone Mail (15C202)
+X-VR-FullState: 0
+X-VR-Score: 0
+X-VR-Cause-1: gggruggvucftvghtrhhoucdtuddrgedtkedrudejtddguddvudcutefuodetggdotefrodftvfcurfhr
+X-VR-Cause-2: ohhfihhlvgemucfntefrqffuvffgnecuuegrihhlohhuthemucehtddtnecunecujfgurhepgfgthfgg
+X-VR-Cause-3: uffkfffvofesrgejmherhhdtjeenucfhrhhomhepufihlhhvrghinhcuofgrhhgvuceoshihlhhvrghi
+X-VR-Cause-4: nhdrmhgrhhgvsehlrghpohhsthgvrdhnvghtqeenucffohhmrghinhepvggufhdrfhhrnecukfhppeel
+X-VR-Cause-5: vddrudekgedruddthedrgeenucfrrghrrghmpehmohguvgepshhmthhpohhuthdpihhnvghtpeelvddr
+X-VR-Cause-6: udekgedruddthedrgedphhgvlhhopegluddtrddugeelrdehjedrvdeglegnpdhmrghilhhfrhhomhep
+X-VR-Cause-7: shihlhhvrghinhdrmhgrhhgvsehlrghpohhsthgvrdhnvghtpdhrtghpthhtohepshihlhhvrghinhdr
+X-VR-Cause-8: mhgrhhgvsegvughfrdhfrhdprhgtphhtthhopehlihhsthgvqdgvghgtsehpohhlhihtvggthhdruhhn
+X-VR-Cause-9: ihhvqdhnrghnthgvshdrfhhrpdhrtghpthhtohepshihlhhvrghinhhmrghhvggvughfsehgmhgrihhl
+X-VR-Cause-10: rdgtohhmnecuvehluhhsthgvrhfuihiivgeptd
+X-VR-AvState: No
+X-VR-State: 0
+X-VR-State: 0
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Offre stage EDF R&D 2019 - TALN, text-mining et
+ ontologies pour la maintenance d'installations solaires =?UTF-8?Q?photov?=
+ =?UTF-8?Q?olta=C3=AFques?= H/F (Ref. St-19-0001)
+
+
+--Apple-Mail-32BF4D4A-F4B2-411B-9488-12CBA0D16D15
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+Bonjour,
+=20
+Veuillez trouver ci-dessous le sujet de stage que nous proposons en 2019 :
+=20
+<< TALN, text-mining et ontologies pour la maintenance d'installations solai=
+res photovolta=C3=AFques :
+Extension d'une cha=C3=AEne de traitement TAL (ontologie et r=C3=A8gles) d'e=
+xtraction de donn=C3=A9es =C3=A0 partir de comptes rendus textuels non struc=
+tur=C3=A9s d'interventions de maintenance >> .
+=20
+https://www.edf.fr/edf-recrute/rejoignez-nous/voir-les-offres/nos-offres?sea=
+rch[keyword]=3DST-19-0001
+=20
+D=C3=A9sol=C3=A9 pour les r=C3=A9ceptions multiples via plusieurs listes de d=
+iffusion.
+=20
+Pouvez-vous, svp, le faire suivre dans vos r=C3=A9seaux et aux personnes pot=
+entiellement int=C3=A9ress=C3=A9es ?
+=20
+Vous en remerciant par avance et restant =C3=A0 votre disposition pour toute=
+ information compl=C3=A9mentaire,
+=20
+Bien cordialement,
+=20
+Dr Sylvain MAHE
+Ing=C3=A9nieur Chercheur=20
+Ing=C3=A9nierie des Connaissances / SI M=C3=A9tiers pour le Producteurs
+Innovations SI pour le Producteur (ISIP)
+
+EDF - R&D D=C3=A9partement PRISME
+6, quai Watier
+78401 Chatou Cedex
+sylvain.mahe@edf.fr
+=20
+
+Stage - TALN, text-mining et ontologies pour la maintenance d'installations s=
+olaires photovolta=C3=AFques - H/F (St-19-0001)
+=20
+Extension d'une cha=C3=AEne de traitement TAL (ontologie et r=C3=A8gles) d'e=
+xtraction de donn=C3=A9es=20
+=C3=A0 partir de compte rendus textuels non structur=C3=A9s d'interventions d=
+e maintenance.
+=20
+R=C3=A9f=C3=A9rence de l=E2=80=99offre de stage : ST-19-0001
+https://www.edf.fr/edf-recrute/rejoignez-nous/voir-les-offres/nos-offres?sea=
+rch[keyword]=3DST-19-0001
+=20
+Type d'offre :
+Offre de Stage (long)
+Niveau de formation :
+A partir de bac +4
+Sp=C3=A9cialit=C3=A9(s) :
+G=C3=A9nie informatique / T=C3=A9l=C3=A9communications
+Domaine d=E2=80=99intervention :
+R&D
+Pays :
+France
+R=C3=A9gion(s) :
+Ile de France
+D=C3=A9partement(s) :
+Yvelines
+Ville(s) :
+CHATOU (78400)
+Nombre de postes :
+1
+Mise en ligne le :
+2018-12-18
+=20
+Description de l'offre
+CONTEXTE
+Les installations de production d'=C3=A9lectricit=C3=A9 solaires photovolta=C3=
+=AFques sont appel=C3=A9es =C3=A0 se d=C3=A9velopper tr=C3=A8s fortement en a=
+ccord avec la Programmation Pluriannuelle de l'Energie pr=C3=A9sent=C3=A9e p=
+ar le gouvernement fin novembre 2018 et le Plan Solaire d'EDF lanc=C3=A9 le 1=
+1 d=C3=A9cembre 2018 pour d=C3=A9velopper 30 GW d'=C3=A9nergie solaire en Fra=
+nce d'ici 2035.
+Comme toute installation de production d'=C3=A9lectricit=C3=A9, la bonne per=
+formance dans la dur=C3=A9e est conditionn=C3=A9e =C3=A0 une maintenance et u=
+ne surveillance adapt=C3=A9es des installations pour identifier au plus t=C3=
+=B4t les d=C3=A9fauts ou sous-performances, les corriger mais aussi affiner l=
+es politiques de maintenance pr=C3=A9ventives voire parfois les choix de con=
+ception ; pour cela, les ing=C3=A9nieurs et techniciens sp=C3=A9cialistes de=
+ ces installations peuvent notamment analyser le Retour d'Exp=C3=A9rience, c=
+'est-=C3=A0-dire analyser les =C3=A9v=C3=A9nements de surveillance et de mai=
+ntenance d=C3=A9j=C3=A0 intervenus sur les installations existantes pour en t=
+irer des le=C3=A7ons pour la maintenance =C3=A0 venir.
+Dans un domaine et une probl=C3=A9matique voisine, une cha=C3=AEne de traite=
+ment TALN a =C3=A9t=C3=A9 d=C3=A9velopp=C3=A9e pour extraire les actions de m=
+aintenance r=C3=A9alis=C3=A9es sur les composants =C3=A0 partir de textes de=
+ compte-rendu techniques d'intervention de maintenance d'=C3=A9oliennes afin=
+ de constituer des bases structur=C3=A9es d'historiques d'op=C3=A9rations de=
+ maintenance r=C3=A9alis=C3=A9es sur les installations ; cette cha=C3=AEne d=
+e traitement TAL se base notamment sur des ressources d=C3=A9di=C3=A9es qui o=
+nt =C3=A9t=C3=A9 structur=C3=A9es dans une ontologie et sur des r=C3=A8gles d=
+'extraction (JAPE) dans une application bas=C3=A9e sur la plateforme GATE de=
+ l'Universit=C3=A9 de Sheffield.
+Le besoin est de constituer des bases de donn=C3=A9es d'=C3=A9v=C3=A9nements=
+ de maintenance et d'exploitation =C3=A0 partir de corpus textuels non struc=
+tur=C3=A9s. Il s'agit de mettre en oeuvre des techniques de traitement autom=
+atique du langage naturel (TALN) et d'analyse s=C3=A9mantique afin d'identif=
+ier les =C3=A9v=C3=A8nements trac=C3=A9s dans les textes pour reconstituer c=
+es bases d'=C3=A9v=C3=A8nements de maintenance et d'exploitation des install=
+ations.
+Un =C3=A9v=C3=A9nement est une combinaison d'informations, comme par exemple=
+ pour la maintenance, une date, un composant d'un mat=C3=A9riel, un type d'o=
+p=C3=A9ration de maintenance et une action (prescription, r=C3=A9alisation, .=
+..) ou par exemple pour la surveillance une date, un composant d'un mat=C3=A9=
+riel, et un =C3=A9tat ou un d=C3=A9faut observ=C3=A9, ou encore une valeur m=
+esur=C3=A9e. Certaines de ces informations peuvent =C3=AAtre corrobor=C3=A9e=
+s par des informations structur=C3=A9es disponibles dans d'autres parties du=
+ syst=C3=A8me d'information (base de donn=C3=A9es de pi=C3=A8ces de rechange=
+...). Des documents peuvent ne contenir aucune des informations recherch=C3=A9=
+es alors que d'autres documents peuvent en contenir plusieurs qu'il ne faut p=
+as m=C3=A9langer.
+=20
+OBJECTIF ET DESCRIPTIF DU STAGE
+L'objectif du stage est de reprendre la cha=C3=AEne de traitement TALN d=C3=A9=
+velopp=C3=A9e pour la maintenance des =C3=A9oliennes et d'=C3=A9ventuelles e=
+xtensions sp=C3=A9cifiques d=C3=A9j=C3=A0 r=C3=A9alis=C3=A9es pour les docum=
+ents du domaine photovolta=C3=AFque et de proposer et de r=C3=A9aliser des a=
+m=C3=A9liorations pour en =C3=A9tendre le champ d'application au traitement d=
+u domaine de la maintenance des installations solaires photovolta=C3=AFques.=
+ Cela n=C3=A9cessitera notamment d'enrichir l'ontologie pour prendre en comp=
+te les composants des installations solaires, les actions de maintenance sp=C3=
+=A9cifiques =C3=A0 ces installations (en enrichissant les actions et composa=
+nts dans l'ontologie existante), ainsi que ladescription de constats relatif=
+s =C3=A0 l'=C3=A9tat (visuel et fonctionnel ainsi que des d=C3=A9fauts, d=C3=
+=A9gradations etc.) des composants qui constitue un nouveau besoin du domain=
+e (en plus de l'identification des actions sur les composants).
+Avec des techniques et outils de text-mining TALN/analyse s=C3=A9mantique, l=
+e travail de stage consiste donc =C3=A0 :
+-       Prendre connaissance de la cha=C3=AEne de traitement et de l'analyse=
+ =C3=A0 r=C3=A9aliser et proposer des pistes d'am=C3=A9lioration ;
+-       Contribuer =C3=A0 la priorisation des pistes d'am=C3=A9lioration ave=
+c les chercheurs EDF R&D ;
+-       Concevoir, d=C3=A9velopper et =C3=A9valuer des am=C3=A9liorations et=
+ compl=C3=A9ments dans l'ontologie et la cha=C3=AEne de traitement ;
+-       Positionner la solution mise en =C5=93uvre dans l'=C3=A9tude vis-=C3=
+=A0-vis des autres solutions d=C3=A9j=C3=A0 mises en =C5=93uvre par EDF sur d=
+'autres projets.
+=20
+Conditions du stage :
+Le stage se d=C3=A9roulera au sein des locaux d'EDF R&D =C3=A0 Chatou et ser=
+a r=C3=A9mun=C3=A9r=C3=A9.
+=20
+Dur=C3=A9e :
+6 mois.
+=20
+=20
+Profil souhait=C3=A9
+=20
+Etudiants concern=C3=A9s :
+MASTER, ou Fin d'=C3=A9tudes ing=C3=A9nieur.
+=20
+Comp=C3=A9tences souhait=C3=A9es :
+La r=C3=A9alisation de cette =C3=A9tude n=C3=A9cessite des comp=C3=A9tences e=
+n mod=C3=A9lisation des connaissances, en techniques de fouille de textes, e=
+n text-mining de type Traitement Automatique du Langage Naturel et Analyse S=
+=C3=A9mantique, ainsi que des techniques et outils du web s=C3=A9mantique, n=
+otamment RDF.
+=20
+=20
+Information et candidature :
+En postulant sur cette offre sur le site internet :
+https://www.edf.fr/edf-recrute/rejoignez-nous/voir-les-offres/nos-offres?sea=
+rch[keyword]=3DST-19-0001
+
+
+
+
+
+--Apple-Mail-32BF4D4A-F4B2-411B-9488-12CBA0D16D15
+Content-Type: multipart/mixed;
+	boundary=Apple-Mail-1EB12C3E-02FE-4FB9-A7C9-BD9DDDA83518
+Content-Transfer-Encoding: 7bit
+
+
+--Apple-Mail-1EB12C3E-02FE-4FB9-A7C9-BD9DDDA83518
+Content-Type: text/html;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><head><meta http-equiv=3D"content-type" content=3D"text/html; charset=3D=
+utf-8"></head><body dir=3D"auto"><div><span></span></div><div><meta http-equ=
+iv=3D"content-type" content=3D"text/html; charset=3Dutf-8"><div><span></span=
+></div><div><meta http-equiv=3D"content-type" content=3D"text/html; charset=3D=
+utf-8"><div><span></span></div><div><meta http-equiv=3D"content-type" conten=
+t=3D"text/html; charset=3Dutf-8"><div><span></span></div><div><meta http-equ=
+iv=3D"content-type" content=3D"text/html; charset=3Dutf-8"><div><span></span=
+></div><div><meta http-equiv=3D"content-type" content=3D"text/html; charset=3D=
+utf-8"><div class=3D"WordSection1" style=3D"page: WordSection1;"><p class=3D=
+"MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt;"><span style=3D"background-co=
+lor: rgba(255, 255, 255, 0);">Bonjour,<o:p></o:p></span></p><p style=3D"marg=
+in: 0cm 0cm 0.0001pt;"><span style=3D"background-color: rgba(255, 255, 255, 0=
+);">&nbsp;<o:p></o:p></span></p><p style=3D"margin: 0cm 0cm 0.0001pt;"><span=
+ style=3D"background-color: rgba(255, 255, 255, 0);">Veuillez trouver ci-des=
+sous le sujet de stage que nous proposons en 2019&nbsp;:<o:p></o:p></span></=
+p><p style=3D"margin: 0cm 0cm 0.0001pt;"><span style=3D"background-color: rg=
+ba(255, 255, 255, 0);">&nbsp;</span></p><p style=3D"margin: 0cm 0cm 0.0001pt=
+;"><span style=3D"background-color: rgba(255, 255, 255, 0);">&lt;&lt;&nbsp;<=
+b>TALN, text-mining et ontologies pour la maintenance d'installations solair=
+es photovolta=C3=AFques</b>&nbsp;:<br>Extension d'une cha=C3=AEne de traitem=
+ent TAL (ontologie et r=C3=A8gles) d'extraction de donn=C3=A9es =C3=A0 parti=
+r de comptes rendus textuels non structur=C3=A9s d'interventions de maintena=
+nce &gt;&gt;&nbsp;.<o:p></o:p></span></p><p style=3D"margin: 0cm 0cm 0.0001p=
+t;"><span style=3D"background-color: rgba(255, 255, 255, 0);">&nbsp;</span><=
+/p><p style=3D"margin-right: 0cm; margin-left: 35.4pt; margin-bottom: 0.0001=
+pt;"><span style=3D"background-color: rgba(255, 255, 255, 0);"><i><a href=3D=
+"https://www.edf.fr/edf-recrute/rejoignez-nous/voir-les-offres/nos-offres?se=
+arch%5bkeyword%5d=3DST-19-0001">https://www.edf.fr/edf-recrute/rejoignez-nou=
+s/voir-les-offres/nos-offres?search[keyword]=3DST-19-0001</a></i><o:p></o:p>=
+</span></p><p style=3D"margin: 0cm 0cm 0.0001pt;"><span style=3D"background-=
+color: rgba(255, 255, 255, 0);">&nbsp;<o:p></o:p></span></p><p style=3D"marg=
+in: 0cm 0cm 0.0001pt;"><span style=3D"background-color: rgba(255, 255, 255, 0=
+);">D=C3=A9sol=C3=A9 pour les r=C3=A9ceptions multiples via plusieurs listes=
+ de diffusion.<o:p></o:p></span></p><p style=3D"margin: 0cm 0cm 0.0001pt;"><=
+span style=3D"background-color: rgba(255, 255, 255, 0);">&nbsp;</span></p><p=
+ style=3D"margin: 0cm 0cm 0.0001pt;"><span style=3D"background-color: rgba(2=
+55, 255, 255, 0);">Pouvez-vous, svp, le faire suivre dans vos r=C3=A9seaux e=
+t aux personnes potentiellement int=C3=A9ress=C3=A9es&nbsp;?<o:p></o:p></spa=
+n></p><p style=3D"margin: 0cm 0cm 0.0001pt;"><span style=3D"background-color=
+: rgba(255, 255, 255, 0);">&nbsp;<o:p></o:p></span></p><p style=3D"margin: 0=
+cm 0cm 0.0001pt;"><span style=3D"background-color: rgba(255, 255, 255, 0);">=
+Vous en remerciant par avance et restant =C3=A0 votre disposition pour toute=
+ information compl=C3=A9mentaire,<o:p></o:p></span></p><p style=3D"margin: 0=
+cm 0cm 0.0001pt;"><span style=3D"background-color: rgba(255, 255, 255, 0);">=
+&nbsp;<o:p></o:p></span></p><p style=3D"margin: 0cm 0cm 0.0001pt;"><span sty=
+le=3D"background-color: rgba(255, 255, 255, 0);">Bien cordialement,<o:p></o:=
+p></span></p><table class=3D"MsoNormalTable" border=3D"1" cellspacing=3D"0" c=
+ellpadding=3D"0" style=3D"margin-left: 2.85pt; border-collapse: collapse;"><=
+tbody><tr><td width=3D"121" rowspan=3D"2" valign=3D"top" style=3D"width: 90.=
+8pt; border: none; padding: 1.5pt;"></td><td width=3D"450" valign=3D"top" st=
+yle=3D"width: 337.15pt; border: none; padding: 1.5pt;"><p style=3D"margin: 0=
+cm 0cm 0.0001pt; break-after: avoid-page;"><span style=3D"background-color: r=
+gba(255, 255, 255, 0);">&nbsp;<o:p></o:p></span></p></td></tr><tr><td width=3D=
+"450" valign=3D"top" style=3D"width: 337.15pt; border: none; padding: 1.5pt;=
+"><p style=3D"margin: 0cm 0cm 0.0001pt; break-after: avoid-page;"><span styl=
+e=3D"background-color: rgba(255, 255, 255, 0);"><b>Dr Sylvain MAHE<br>Ing=C3=
+=A9nieur Chercheur&nbsp;</b><o:p></o:p></span></p><p style=3D"margin: 0cm 0c=
+m 0.0001pt; break-after: avoid-page;"><span style=3D"background-color: rgba(=
+255, 255, 255, 0);"><b>Ing=C3=A9nierie des Connaissances / SI M=C3=A9tiers p=
+our le Producteurs</b><o:p></o:p></span></p><p style=3D"margin: 0cm 0cm 0.00=
+01pt; break-after: avoid-page;"><span style=3D"background-color: rgba(255, 2=
+55, 255, 0);"><b>Innovations SI pour le Producteur (ISIP)</b><o:p></o:p></sp=
+an></p><p style=3D"margin: 0cm 0cm 0.0001pt; break-after: avoid-page;"><span=
+ style=3D"background-color: rgba(255, 255, 255, 0);"><br>EDF - R&amp;D D=C3=A9=
+partement PRISME<br><a href=3D"x-apple-data-detectors://2/0" dir=3D"ltr" x-a=
+pple-data-detectors=3D"true" x-apple-data-detectors-type=3D"address" x-apple=
+-data-detectors-result=3D"2/0" style=3D"-webkit-text-decoration-color: rgba(=
+0, 98, 225, 0.258824);">6, quai Watier</a><br><a href=3D"x-apple-data-detect=
+ors://2/0" dir=3D"ltr" x-apple-data-detectors=3D"true" x-apple-data-detector=
+s-type=3D"address" x-apple-data-detectors-result=3D"2/0" style=3D"-webkit-te=
+xt-decoration-color: rgba(0, 98, 225, 0.258824);">78401 Chatou Cedex</a><o:p=
+></o:p></span></p><p style=3D"margin: 0cm 0cm 0.0001pt; break-after: avoid-p=
+age;"><span style=3D"background-color: rgba(255, 255, 255, 0);"><b><a href=3D=
+"mailto:sylvain.mahe@edf.fr">sylvain.mahe@edf.fr</a></b><o:p></o:p></span></=
+p></td></tr></tbody></table><p class=3D"MsoNormal" style=3D"margin: 0cm 0cm 0=
+.0001pt;"><span style=3D"background-color: rgba(255, 255, 255, 0);">&nbsp;</=
+span></p><p class=3D"MsoNormal" align=3D"right" style=3D"text-align: start; m=
+argin: 0cm 0cm 0.0001pt;"><span style=3D"background-color: rgba(255, 255, 25=
+5, 0);"></span></p></div></div><div></div></div><div></div></div><div></div>=
+</div><div></div></div><div></div></body></html>=
+
+--Apple-Mail-1EB12C3E-02FE-4FB9-A7C9-BD9DDDA83518
+Content-Type: image/jpeg;
+	name=image002.jpg;
+	x-apple-part-url=3242F7F3-4ACA-45EF-9D7F-EC96A6A2B88C
+Content-Disposition: inline;
+	filename=image002.jpg
+Content-Transfer-Encoding: base64
+
+/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIf
+IiEmKzcvJik0KSEiMEExNDk7Pj4+JS5ESUM8SDc9Pjv/2wBDAQoLCw4NDhwQEBw7KCIoOzs7Ozs7
+Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozv/wAARCAArAGUDASIA
+AhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQA
+AAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3
+ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWm
+p6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEA
+AwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSEx
+BhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElK
+U1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3
+uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD2akZg
+ilmOABkmqV7qtvY3lpbTEA3TlQc/d44P4nA/GrpAZSD0IwalSTbS6FuEopNrRnmuqeKNRvr5pbe5
+lt4VOI0jbHHqfU11Pg+CKTTBfu5nu5WYSSu25lGfu89OxrkNc0O40e+aPYzwOSYZAM5HofcV2/hS
+yex0CFZEKSSEyMpGCM9M/hivHwntXiH7TofRZg6EcHH2Oidtuq8/63Nqiqk2q6dA22W+t0b0MgzU
+0F1b3Sb7eeOVfVGDfyr2FKLdkz51wkldrQlooqj/AG1pXn+R/adn52ceX567s/TNWk2RcvUU15Ei
+RnkZURRksxwBVf8AtPT/APn+tv8Av8v+NFmFy1RTVZXUMrBlPQg5BqB9Qso3KSXkCOpwVaVQR+tF
+gLNFVf7T0/8A5/rb/v8AL/jRRZiujzHV4ryHVJ1v93n7y2STgjPVfatKDxpq8FsIS0MhUYEkiZbH
+vzzXe3un2eoRiO7t0mUdNw5H0PaqEHhXRYJBItkrMDkb2LAfgTXj/Uq0Jt056M+i/tPDVKajWp3a
+9Lf8As6LeT3+kW91cx+XLIuWAGB16/j1qn4m0/VNSt4oNPnWNCT5wLldw7cjt1qzba7p9zqj6bBK
+WmjBzhfl46gH2qvr3iBtEeLNjJPFJ1kDYVT6fWu2cqbotSlps2jzKcayxKcIWb1Sf/BOQuPB2sW0
+ZkEMcoAyRE+T+Rxms/SLm6tNUgks9xl3gFF/jGeQRXoek+JNP1ciOKQxz4/1UnBP09a0IrS1hkMk
+VvFG7dWVACfxriWBpyanRloenLNa0FKniIa/ceffF7xBdWFhaaTaStEbwM8zIcEoMDbn3J5+lcbN
+4Y8Lx+EPtq+IoX1cQiU24kXaTjPl7eue2c9a6X40abM39m6oikwoGgkYD7pOCufrzVHQ5/hjLo0M
+mqWvkXqRgTIxmJZgOSNpxg9a+ppPlpRcb/I+SnrUaf4knhvW7nUvhb4hsLqRpTYwERs5ydjA4H4E
+Gs3wB4F0zxbp19LeTTwywShI2iK45XPII5rpYJfC9z8PvElx4as2tR5TRzo7HccD5Tgk4BBOKy/h
+d4m0bQNL1FdUv47ZpJlZFYElgF7AChuXLNwVncLLmipdiv4VvtR8FeP/APhHJ7lpbSWcQMmfl+YZ
+R1HY8jP1NZWr2WnXvxRvrbVLj7LZyXj+bNuC7RtyOT74q/pjyeNfiuNStIXFtHcLOzMPuxxgBc+h
+JA496jl0611b4xXFhex+bbzXsgdAxGcIT1HuK0VlJt78upGrjZbXN2y+HPgbUy/2HX5p/Lxv8uaN
+tuc4z8vsaK7fSfBuhaIZjp9mYvO27/3rNnGcdT7miuN4iV9JM6FSVtUi9rd3PYaTPd22wyQgNhxk
+EZ5H5VxN9401S8hMUYitgwwWjyW/M9K9DdFkQo6hlYYII4IriNa0TTrW7VIbbYpzkB29R714mNjW
+teErI9/LZ4e/LVhd7plLwZBJL4hjkRSUhRmdvTIwP51395bQ3lpLbzqGjkUhgaj06wtNPtVjtIFi
+VgCdvUn3Perdb4bD+ypcj1uc2Oxf1iv7SKtbY8cy0UmVZldG4PQgjv7V6X4Y1V9W0hZJjmaJvLkP
+94jofxBrL8b2Vt9nt7ryVEzTBGccEr6Guh02xtdPs1itYREh+YgdzjrXJhKE6NeUb6HfmGLp4jDQ
+ly2k3+W5LdWtve20ltdQpNDINrxyLlWHuK5n/hWPhHzvM/ss9c7PPk2/lmusor14zlH4WfPuKe6M
+1PD2kRaTLpMNhDFZTKVkijG3cD1yRz+NZA+GvhAHP9jqfrNJ/wDFV1NFNVJrZg4xe6Kem6Tp+kW/
+2fTrOG1izkrGuMn1Pr+NUU8IaFHrh1pbEC/Mhk87zG+8RgnGcfpW1RS5pdx2QUUUVIz/2Q==
+
+--Apple-Mail-1EB12C3E-02FE-4FB9-A7C9-BD9DDDA83518
+Content-Type: text/html;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><body dir=3D"auto"><head><meta http-equiv=3D"content-type" content=3D"=
+text/html; charset=3Dutf-8"></head><div></div><div><meta http-equiv=3D"conte=
+nt-type" content=3D"text/html; charset=3Dutf-8"><div></div><div><meta http-e=
+quiv=3D"content-type" content=3D"text/html; charset=3Dutf-8"><div></div><div=
+><meta http-equiv=3D"content-type" content=3D"text/html; charset=3Dutf-8"><d=
+iv></div><div><meta http-equiv=3D"content-type" content=3D"text/html; charse=
+t=3Dutf-8"><div></div><div><meta http-equiv=3D"content-type" content=3D"text=
+/html; charset=3Dutf-8"><div class=3D"WordSection1" style=3D"page: WordSecti=
+on1;"><p class=3D"MsoNormal" align=3D"right" style=3D"text-align: start; mar=
+gin: 0cm 0cm 0.0001pt;"><span style=3D"background-color: rgba(255, 255, 255,=
+ 0);"><o:p></o:p></span></p><p class=3D"MsoNormal" align=3D"center" style=3D=
+"text-align: start; margin: 0cm 0cm 0.0001pt;"><b style=3D"background-color:=
+ rgba(255, 255, 255, 0);">Stage - TALN, text-mining et ontologies pour la ma=
+intenance d'installations solaires photovolta=C3=AFques - H/F (St-19-0001)<o=
+:p></o:p></b></p><p class=3D"MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt;">=
+<b style=3D"background-color: rgba(255, 255, 255, 0);">&nbsp;</b></p><p clas=
+s=3D"MsoNormal" align=3D"center" style=3D"margin: 0cm 0cm 0.0001pt; text-ali=
+gn: center;"></p><div style=3D"text-align: start;"><b style=3D"background-co=
+lor: rgba(255, 255, 255, 0);">Extension d'une cha=C3=AEne de traitement TAL (=
+ontologie et r=C3=A8gles) d'extraction de donn=C3=A9es&nbsp;</b></div><b><di=
+v style=3D"text-align: start;"><b style=3D"background-color: rgba(255, 255, 2=
+55, 0);">=C3=A0 partir de compte rendus textuels non structur=C3=A9s d'inter=
+ventions de maintenance.</b></div></b><p></p><p class=3D"MsoNormal" style=3D=
+"margin: 0cm 0cm 0.0001pt;"><o:p style=3D"background-color: rgba(255, 255, 2=
+55, 0);">&nbsp;</o:p></p><p class=3D"MsoNormal" align=3D"center" style=3D"te=
+xt-align: start; margin: 0cm 0cm 0.0001pt;"><i style=3D"background-color: rg=
+ba(255, 255, 255, 0);">R=C3=A9f=C3=A9rence de l=E2=80=99offre de stage : ST-=
+19-0001<o:p></o:p></i></p><p class=3D"MsoNormal" align=3D"center" style=3D"t=
+ext-align: start; margin: 0cm 0cm 0.0001pt;"><span style=3D"background-color=
+: rgba(255, 255, 255, 0);"><i><a href=3D"https://www.edf.fr/edf-recrute/rejo=
+ignez-nous/voir-les-offres/nos-offres?search%5bkeyword%5d=3DST-19-0001">http=
+s://www.edf.fr/edf-recrute/rejoignez-nous/voir-les-offres/nos-offres?search[=
+keyword]=3DST-19-0001</a></i><o:p></o:p></span></p><p class=3D"MsoNormal" st=
+yle=3D"margin: 0cm 0cm 0.0001pt;"><o:p style=3D"background-color: rgba(255, 2=
+55, 255, 0);">&nbsp;</o:p></p><table class=3D"MsoTableGrid" border=3D"0" cel=
+lspacing=3D"0" cellpadding=3D"0" style=3D"border-collapse: collapse; border:=
+ none;"><tbody><tr><td width=3D"180" valign=3D"top" style=3D"width: 134.65pt=
+; padding: 0cm 5.4pt;"><p class=3D"MsoNormal" style=3D"margin: 0cm 0cm 0.000=
+1pt; line-height: 17.600000381469727px;"><b><span style=3D"line-height: 14.6=
+66666030883789px; background-color: rgba(255, 255, 255, 0);">Type d'offre :<=
+o:p></o:p></span></b></p></td><td width=3D"378" valign=3D"top" style=3D"widt=
+h: 10cm; padding: 0cm 5.4pt;"><p class=3D"MsoNormal" style=3D"margin: 0cm 0c=
+m 0.0001pt; line-height: 17.600000381469727px;"><span style=3D"line-height: 1=
+4.666666030883789px; background-color: rgba(255, 255, 255, 0);">Offre de Sta=
+ge (long)<o:p></o:p></span></p></td></tr><tr><td width=3D"180" valign=3D"top=
+" style=3D"width: 134.65pt; padding: 0cm 5.4pt;"><p class=3D"MsoNormal" styl=
+e=3D"margin: 0cm 0cm 0.0001pt; line-height: 17.600000381469727px;"><b><span s=
+tyle=3D"line-height: 14.666666030883789px; background-color: rgba(255, 255, 2=
+55, 0);">Niveau de formation :<o:p></o:p></span></b></p></td><td width=3D"37=
+8" valign=3D"top" style=3D"width: 10cm; padding: 0cm 5.4pt;"><p class=3D"Mso=
+Normal" style=3D"margin: 0cm 0cm 0.0001pt; line-height: 17.600000381469727px=
+;"><span style=3D"line-height: 14.666666030883789px; background-color: rgba(=
+255, 255, 255, 0);">A partir de bac +4<o:p></o:p></span></p></td></tr><tr><t=
+d width=3D"180" valign=3D"top" style=3D"width: 134.65pt; padding: 0cm 5.4pt;=
+"><p class=3D"MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; line-height: 17.=
+600000381469727px;"><b><span style=3D"line-height: 14.666666030883789px; bac=
+kground-color: rgba(255, 255, 255, 0);">Sp=C3=A9cialit=C3=A9(s) :<o:p></o:p>=
+</span></b></p></td><td width=3D"378" valign=3D"top" style=3D"width: 10cm; p=
+adding: 0cm 5.4pt;"><p class=3D"MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt=
+; line-height: 17.600000381469727px;"><span style=3D"line-height: 14.6666660=
+30883789px; background-color: rgba(255, 255, 255, 0);">G=C3=A9nie informatiq=
+ue / T=C3=A9l=C3=A9communications<o:p></o:p></span></p></td></tr><tr><td wid=
+th=3D"180" valign=3D"top" style=3D"width: 134.65pt; padding: 0cm 5.4pt;"><p c=
+lass=3D"MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; line-height: 17.600000=
+381469727px;"><b><span style=3D"line-height: 14.666666030883789px; backgroun=
+d-color: rgba(255, 255, 255, 0);">Domaine d=E2=80=99intervention :<o:p></o:p=
+></span></b></p></td><td width=3D"378" valign=3D"top" style=3D"width: 10cm; p=
+adding: 0cm 5.4pt;"><p class=3D"MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt=
+; line-height: 17.600000381469727px;"><span style=3D"line-height: 14.6666660=
+30883789px; background-color: rgba(255, 255, 255, 0);">R&amp;D<o:p></o:p></s=
+pan></p></td></tr><tr><td width=3D"180" valign=3D"top" style=3D"width: 134.6=
+5pt; padding: 0cm 5.4pt;"><p class=3D"MsoNormal" style=3D"margin: 0cm 0cm 0.=
+0001pt; line-height: 17.600000381469727px;"><b><span style=3D"line-height: 1=
+4.666666030883789px; background-color: rgba(255, 255, 255, 0);">Pays :<o:p><=
+/o:p></span></b></p></td><td width=3D"378" valign=3D"top" style=3D"width: 10=
+cm; padding: 0cm 5.4pt;"><p class=3D"MsoNormal" style=3D"margin: 0cm 0cm 0.0=
+001pt; line-height: 17.600000381469727px;"><span style=3D"line-height: 14.66=
+6666030883789px; background-color: rgba(255, 255, 255, 0);">France<o:p></o:p=
+></span></p></td></tr><tr><td width=3D"180" valign=3D"top" style=3D"width: 1=
+34.65pt; padding: 0cm 5.4pt;"><p class=3D"MsoNormal" style=3D"margin: 0cm 0c=
+m 0.0001pt; line-height: 17.600000381469727px;"><b><span style=3D"line-heigh=
+t: 14.666666030883789px; background-color: rgba(255, 255, 255, 0);">R=C3=A9g=
+ion(s) :<o:p></o:p></span></b></p></td><td width=3D"378" valign=3D"top" styl=
+e=3D"width: 10cm; padding: 0cm 5.4pt;"><p class=3D"MsoNormal" style=3D"margi=
+n: 0cm 0cm 0.0001pt; line-height: 17.600000381469727px;"><span style=3D"line=
+-height: 14.666666030883789px; background-color: rgba(255, 255, 255, 0);">Il=
+e de France<o:p></o:p></span></p></td></tr><tr><td width=3D"180" valign=3D"t=
+op" style=3D"width: 134.65pt; padding: 0cm 5.4pt;"><p class=3D"MsoNormal" st=
+yle=3D"margin: 0cm 0cm 0.0001pt; line-height: 17.600000381469727px;"><b><spa=
+n style=3D"line-height: 14.666666030883789px; background-color: rgba(255, 25=
+5, 255, 0);">D=C3=A9partement(s) :<o:p></o:p></span></b></p></td><td width=3D=
+"378" valign=3D"top" style=3D"width: 10cm; padding: 0cm 5.4pt;"><p class=3D"=
+MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; line-height: 17.60000038146972=
+7px;"><span style=3D"line-height: 14.666666030883789px; background-color: rg=
+ba(255, 255, 255, 0);">Yvelines<o:p></o:p></span></p></td></tr><tr><td width=
+=3D"180" valign=3D"top" style=3D"width: 134.65pt; padding: 0cm 5.4pt;"><p cl=
+ass=3D"MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; line-height: 17.6000003=
+81469727px;"><b><span style=3D"line-height: 14.666666030883789px; background=
+-color: rgba(255, 255, 255, 0);">Ville(s) :<o:p></o:p></span></b></p></td><t=
+d width=3D"378" valign=3D"top" style=3D"width: 10cm; padding: 0cm 5.4pt;"><p=
+ class=3D"MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; line-height: 17.6000=
+00381469727px;"><span style=3D"line-height: 14.666666030883789px; background=
+-color: rgba(255, 255, 255, 0);">CHATOU (78400)<o:p></o:p></span></p></td></=
+tr><tr><td width=3D"180" valign=3D"top" style=3D"width: 134.65pt; padding: 0=
+cm 5.4pt;"><p class=3D"MsoNormal" style=3D"margin: 0cm 0cm 0.0001pt; line-he=
+ight: 17.600000381469727px;"><b><span style=3D"line-height: 14.6666660308837=
+89px; background-color: rgba(255, 255, 255, 0);">Nombre de postes :<o:p></o:=
+p></span></b></p></td><td width=3D"378" valign=3D"top" style=3D"width: 10cm;=
+ padding: 0cm 5.4pt;"><p class=3D"MsoNormal" style=3D"margin: 0cm 0cm 0.0001=
+pt; line-height: 17.600000381469727px;"><span style=3D"line-height: 14.66666=
+6030883789px; background-color: rgba(255, 255, 255, 0);">1<o:p></o:p></span>=
+</p></td></tr><tr><td width=3D"180" valign=3D"top" style=3D"width: 134.65pt;=
+ padding: 0cm 5.4pt;"><p class=3D"MsoNormal" style=3D"margin: 0cm 0cm 0.0001=
+pt; line-height: 17.600000381469727px;"><b><span style=3D"line-height: 14.66=
+6666030883789px; background-color: rgba(255, 255, 255, 0);">Mise en ligne le=
+ :<o:p></o:p></span></b></p></td><td width=3D"378" valign=3D"top" style=3D"w=
+idth: 10cm; padding: 0cm 5.4pt;"><p class=3D"MsoNormal" style=3D"margin: 0cm=
+ 0cm 0.0001pt; line-height: 17.600000381469727px;"><span style=3D"background=
+-color: rgba(255, 255, 255, 0);"><span style=3D"line-height: 14.666666030883=
+789px;"><a href=3D"tel:2018-12-18" dir=3D"ltr" x-apple-data-detectors=3D"tru=
+e" x-apple-data-detectors-type=3D"telephone" x-apple-data-detectors-result=3D=
+"4">2018-12-18</a></span><span style=3D"line-height: 16.133333206176758px;">=
+<o:p></o:p></span></span></p></td></tr></tbody></table><p class=3D"MsoNormal=
+" style=3D"margin: 0cm 0cm 0.0001pt;"><span style=3D"background-color: rgba(=
+255, 255, 255, 0);">&nbsp;</span></p><p class=3D"MsoNormal" style=3D"margin:=
+ 0cm 0cm 0.0001pt;"><span style=3D"background-color: rgba(255, 255, 255, 0);=
+"><b>Description de l'offre</b><o:p></o:p></span></p><p class=3D"MsoNormal" s=
+tyle=3D"margin: 0cm 0cm 0.0001pt;"><b style=3D"background-color: rgba(255, 2=
+55, 255, 0);">CONTEXTE<o:p></o:p></b></p><p class=3D"MsoNormal" style=3D"tex=
+t-align: start; margin: 6pt 0cm 0.0001pt;"><i style=3D"background-color: rgb=
+a(255, 255, 255, 0);">Les installations de production d'=C3=A9lectricit=C3=A9=
+ solaires photovolta=C3=AFques sont appel=C3=A9es =C3=A0 se d=C3=A9velopper t=
+r=C3=A8s fortement en accord avec la Programmation Pluriannuelle de l'Energi=
+e pr=C3=A9sent=C3=A9e par le gouvernement fin novembre 2018 et le Plan Solai=
+re d'EDF lanc=C3=A9 le 11 d=C3=A9cembre 2018 pour d=C3=A9velopper 30 GW d'=C3=
+=A9nergie solaire en France d'ici 2035.<o:p></o:p></i></p><p class=3D"MsoNor=
+mal" style=3D"text-align: start; margin: 6pt 0cm 0.0001pt;"><i style=3D"back=
+ground-color: rgba(255, 255, 255, 0);">Comme toute installation de productio=
+n d'=C3=A9lectricit=C3=A9, la bonne performance dans la dur=C3=A9e est condi=
+tionn=C3=A9e =C3=A0 une maintenance et une surveillance adapt=C3=A9es des in=
+stallations pour identifier au plus t=C3=B4t les d=C3=A9fauts ou sous-perfor=
+mances, les corriger mais aussi affiner les politiques de maintenance pr=C3=A9=
+ventives voire parfois les choix de conception ; pour cela, les ing=C3=A9nie=
+urs et techniciens sp=C3=A9cialistes de ces installations peuvent notamment a=
+nalyser le Retour d'Exp=C3=A9rience, c'est-=C3=A0-dire analyser les =C3=A9v=C3=
+=A9nements de surveillance et de maintenance d=C3=A9j=C3=A0 intervenus sur l=
+es installations existantes pour en tirer des le=C3=A7ons pour la maintenanc=
+e =C3=A0 venir.<o:p></o:p></i></p><p class=3D"MsoNormal" style=3D"text-align=
+: start; margin: 6pt 0cm 0.0001pt;"><i style=3D"background-color: rgba(255, 2=
+55, 255, 0);">Dans un domaine et une probl=C3=A9matique voisine, une cha=C3=AE=
+ne de traitement TALN a =C3=A9t=C3=A9 d=C3=A9velopp=C3=A9e pour extraire les=
+ actions de maintenance r=C3=A9alis=C3=A9es sur les composants =C3=A0 partir=
+ de textes de compte-rendu techniques d'intervention de maintenance d'=C3=A9=
+oliennes afin de constituer des bases structur=C3=A9es d'historiques d'op=C3=
+=A9rations de maintenance r=C3=A9alis=C3=A9es sur les installations ; cette c=
+ha=C3=AEne de traitement TAL se base notamment sur des ressources d=C3=A9di=C3=
+=A9es qui ont =C3=A9t=C3=A9 structur=C3=A9es dans une ontologie et sur des r=
+=C3=A8gles d'extraction (JAPE) dans une application bas=C3=A9e sur la platef=
+orme GATE de l'Universit=C3=A9 de Sheffield.<o:p></o:p></i></p><p class=3D"M=
+soNormal" style=3D"text-align: start; margin: 6pt 0cm 0.0001pt;"><span style=
+=3D"background-color: rgba(255, 255, 255, 0);">Le besoin est de constituer d=
+es bases de donn=C3=A9es d'=C3=A9v=C3=A9nements de maintenance et d'exploita=
+tion =C3=A0 partir de corpus textuels non structur=C3=A9s. Il s'agit de mett=
+re en oeuvre des&nbsp;<b>techniques de traitement automatique du langage nat=
+urel (TALN) et d'analyse s=C3=A9mantique&nbsp;</b>afin d'identifier les =C3=A9=
+v=C3=A8nements trac=C3=A9s dans les textes pour reconstituer ces bases d'=C3=
+=A9v=C3=A8nements de maintenance et d'exploitation des installations.<o:p></=
+o:p></span></p><p class=3D"MsoNormal" style=3D"text-align: start; margin: 6p=
+t 0cm 0.0001pt;"><span style=3D"background-color: rgba(255, 255, 255, 0);">U=
+n =C3=A9v=C3=A9nement est une combinaison d'informations, comme par exemple p=
+our la maintenance, une date, un composant d'un mat=C3=A9riel, un type d'op=C3=
+=A9ration de maintenance et une action (prescription, r=C3=A9alisation, ...)=
+ ou par exemple pour la surveillance une date, un composant d'un mat=C3=A9ri=
+el, et un =C3=A9tat ou un d=C3=A9faut observ=C3=A9, ou encore une valeur mes=
+ur=C3=A9e. Certaines de ces informations peuvent =C3=AAtre corrobor=C3=A9es p=
+ar des informations structur=C3=A9es disponibles dans d'autres parties du sy=
+st=C3=A8me d'information (base de donn=C3=A9es de pi=C3=A8ces de rechange...=
+). Des documents peuvent ne contenir aucune des informations recherch=C3=A9e=
+s alors que d'autres documents peuvent en contenir plusieurs qu'il ne faut p=
+as m=C3=A9langer.<o:p></o:p></span></p><p class=3D"MsoNormal" style=3D"text-=
+align: start; margin: 6pt 0cm 0.0001pt;"><span style=3D"background-color: rg=
+ba(255, 255, 255, 0);">&nbsp;</span></p><p class=3D"MsoNormal" style=3D"text=
+-align: start; margin: 6pt 0cm 0.0001pt;"><b style=3D"background-color: rgba=
+(255, 255, 255, 0);">OBJECTIF ET DESCRIPTIF DU STAGE<o:p></o:p></b></p><p cl=
+ass=3D"MsoNormal" style=3D"text-align: start; margin: 6pt 0cm 0.0001pt;"><sp=
+an style=3D"background-color: rgba(255, 255, 255, 0);">L'objectif du stage e=
+st de&nbsp;<b>reprendre la cha=C3=AEne de traitement&nbsp;</b>TALN d=C3=A9ve=
+lopp=C3=A9e pour la maintenance des =C3=A9oliennes et d'=C3=A9ventuelles ext=
+ensions sp=C3=A9cifiques d=C3=A9j=C3=A0 r=C3=A9alis=C3=A9es pour les documen=
+ts du domaine photovolta=C3=AFque et de&nbsp;<b>proposer et de r=C3=A9aliser=
+ des am=C3=A9liorations&nbsp;</b>pour&nbsp;<b>en =C3=A9tendre le champ d'app=
+lication au traitement du domaine de la maintenance des installations solair=
+es photovolta=C3=AFques</b>. Cela n=C3=A9cessitera&nbsp;<b>notamment&nbsp;</=
+b>d'<b>enrichir&nbsp;</b>l'ontologie pour prendre en compte les&nbsp;<b>comp=
+osants des installations solaires</b>, les&nbsp;<b>actions de maintenance sp=
+=C3=A9cifiques&nbsp;</b>=C3=A0 ces installations (en enrichissant les action=
+s et composants dans l'ontologie existante), ainsi que la<b>description de c=
+onstats relatifs =C3=A0 l'=C3=A9tat&nbsp;</b>(visuel et fonctionnel ainsi qu=
+e des d=C3=A9fauts, d=C3=A9gradations etc.) des composants qui constitue un n=
+ouveau besoin du domaine (en plus de l'identification des actions sur les co=
+mposants).<o:p></o:p></span></p><p class=3D"MsoNormal" style=3D"text-align: s=
+tart; margin: 6pt 0cm 0.0001pt;"><span style=3D"background-color: rgba(255, 2=
+55, 255, 0);">Avec des techniques et outils de text-mining TALN/analyse s=C3=
+=A9mantique, le travail de stage consiste donc =C3=A0 :<o:p></o:p></span></p=
+><p class=3D"MsoListParagraphCxSpFirst" style=3D"text-align: start; text-ind=
+ent: 0px; margin: 0cm 0cm 0.0001pt 36pt; line-height: normal;"><span style=3D=
+"background-color: rgba(255, 255, 255, 0);">-<span style=3D"font-stretch: no=
+rmal; line-height: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span=
+>Prendre connaissance de la cha=C3=AEne de traitement et de l'analyse =C3=A0=
+ r=C3=A9aliser et proposer des pistes d'am=C3=A9lioration ;<o:p></o:p></span=
+></p><p class=3D"MsoListParagraphCxSpMiddle" style=3D"text-align: start; tex=
+t-indent: 0px; margin: 0cm 0cm 0.0001pt 36pt; line-height: normal;"><span st=
+yle=3D"background-color: rgba(255, 255, 255, 0);">-<span style=3D"font-stret=
+ch: normal; line-height: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
+</span>Contribuer =C3=A0 la priorisation des pistes d'am=C3=A9lioration avec=
+ les chercheurs EDF R&amp;D ;<o:p></o:p></span></p><p class=3D"MsoListParagr=
+aphCxSpMiddle" style=3D"text-align: start; text-indent: 0px; margin: 0cm 0cm=
+ 0.0001pt 36pt; line-height: normal;"><span style=3D"background-color: rgba(=
+255, 255, 255, 0);">-<span style=3D"font-stretch: normal; line-height: norma=
+l;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Concevoir, d=C3=A9velop=
+per et =C3=A9valuer des am=C3=A9liorations et compl=C3=A9ments dans l'ontolo=
+gie et la cha=C3=AEne de traitement ;<o:p></o:p></span></p><p class=3D"MsoLi=
+stParagraphCxSpLast" style=3D"text-align: start; text-indent: 0px; margin: 0=
+cm 0cm 0.0001pt 36pt; line-height: normal;"><span style=3D"background-color:=
+ rgba(255, 255, 255, 0);">-<span style=3D"font-stretch: normal; line-height:=
+ normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Positionner la so=
+lution mise en =C5=93uvre dans l'=C3=A9tude vis-=C3=A0-vis des autres soluti=
+ons d=C3=A9j=C3=A0 mises en =C5=93uvre par EDF sur d'autres projets.<o:p></o=
+:p></span></p><p class=3D"MsoNormal" style=3D"text-align: start; margin: 6pt=
+ 0cm 0.0001pt;"><span style=3D"background-color: rgba(255, 255, 255, 0);">&n=
+bsp;</span></p><p class=3D"MsoNormal" style=3D"text-align: start; margin: 6p=
+t 0cm 0.0001pt;"><b style=3D"background-color: rgba(255, 255, 255, 0);">Cond=
+itions du stage :<o:p></o:p></b></p><p class=3D"MsoNormal" style=3D"text-ali=
+gn: start; margin: 6pt 0cm 0.0001pt;"><span style=3D"background-color: rgba(=
+255, 255, 255, 0);">Le stage se d=C3=A9roulera au sein des locaux d'EDF R&am=
+p;D =C3=A0 Chatou et sera r=C3=A9mun=C3=A9r=C3=A9.<o:p></o:p></span></p><p c=
+lass=3D"MsoNormal" style=3D"text-align: start; margin: 0cm 0cm 0.0001pt;"><b=
+ style=3D"background-color: rgba(255, 255, 255, 0);">&nbsp;</b></p><p class=3D=
+"MsoNormal" style=3D"text-align: start; margin: 6pt 0cm 0.0001pt;"><b style=3D=
+"background-color: rgba(255, 255, 255, 0);">Dur=C3=A9e :<o:p></o:p></b></p><=
+p class=3D"MsoNormal" style=3D"text-align: start; margin: 6pt 0cm 0.0001pt;"=
+><span style=3D"background-color: rgba(255, 255, 255, 0);">6 mois.<o:p></o:p=
+></span></p><p class=3D"MsoNormal" style=3D"text-align: start; margin: 0cm 0=
+cm 0.0001pt;"><span style=3D"background-color: rgba(255, 255, 255, 0);">&nbs=
+p;</span></p><p class=3D"MsoNormal" style=3D"text-align: start; margin: 0cm 0=
+cm 0.0001pt;"><span style=3D"background-color: rgba(255, 255, 255, 0);">&nbs=
+p;</span></p><p class=3D"MsoNormal" style=3D"text-align: start; margin: 6pt 0=
+cm 0.0001pt;"><b style=3D"background-color: rgba(255, 255, 255, 0);">Profil s=
+ouhait=C3=A9<o:p></o:p></b></p><p class=3D"MsoNormal" style=3D"text-align: s=
+tart; margin: 0cm 0cm 0.0001pt;"><b style=3D"background-color: rgba(255, 255=
+, 255, 0);">&nbsp;</b></p><p class=3D"MsoNormal" style=3D"text-align: start;=
+ margin: 6pt 0cm 0.0001pt;"><b style=3D"background-color: rgba(255, 255, 255=
+, 0);">Etudiants concern=C3=A9s :<o:p></o:p></b></p><p class=3D"MsoNormal" s=
+tyle=3D"text-align: start; margin: 6pt 0cm 0.0001pt;"><span style=3D"backgro=
+und-color: rgba(255, 255, 255, 0);">MASTER, ou Fin d'=C3=A9tudes ing=C3=A9ni=
+eur.<o:p></o:p></span></p><p class=3D"MsoNormal" style=3D"text-align: start;=
+ margin: 0cm 0cm 0.0001pt;"><span style=3D"background-color: rgba(255, 255, 2=
+55, 0);">&nbsp;</span></p><p class=3D"MsoNormal" style=3D"text-align: start;=
+ margin: 6pt 0cm 0.0001pt;"><b style=3D"background-color: rgba(255, 255, 255=
+, 0);">Comp=C3=A9tences souhait=C3=A9es :<o:p></o:p></b></p><p class=3D"MsoN=
+ormal" style=3D"text-align: start; margin: 6pt 0cm 0.0001pt;"><span style=3D=
+"background-color: rgba(255, 255, 255, 0);">La r=C3=A9alisation de cette =C3=
+=A9tude n=C3=A9cessite des comp=C3=A9tences en mod=C3=A9lisation des connais=
+sances, en techniques de fouille de textes, en text-mining de type Traitemen=
+t Automatique du Langage Naturel et Analyse S=C3=A9mantique, ainsi que des t=
+echniques et outils du web s=C3=A9mantique, notamment RDF.<o:p></o:p></span>=
+</p><p class=3D"MsoNormal" style=3D"text-align: start; margin: 0cm 0cm 0.000=
+1pt;"><span style=3D"background-color: rgba(255, 255, 255, 0);">&nbsp;</span=
+></p><p class=3D"MsoNormal" style=3D"text-align: start; margin: 0cm 0cm 0.00=
+01pt;"><span style=3D"background-color: rgba(255, 255, 255, 0);">&nbsp;</spa=
+n></p><p class=3D"MsoNormal" style=3D"text-align: start; margin: 6pt 0cm 0.0=
+001pt;"><b style=3D"background-color: rgba(255, 255, 255, 0);">Information e=
+t candidature :<o:p></o:p></b></p><p class=3D"MsoNormal" style=3D"text-align=
+: start; margin: 6pt 0cm 0.0001pt;"><span style=3D"background-color: rgba(25=
+5, 255, 255, 0);">En postulant sur cette offre sur le site internet&nbsp;:<o=
+:p></o:p></span></p><p class=3D"MsoNormal" style=3D"text-align: start; margi=
+n: 6pt 0cm 0.0001pt;"><font color=3D"#000000"><span style=3D"background-colo=
+r: rgba(255, 255, 255, 0);"><a href=3D"https://www.edf.fr/edf-recrute/rejoig=
+nez-nous/voir-les-offres/nos-offres?search%5bkeyword%5d=3DST-19-0001">https:=
+//www.edf.fr/edf-recrute/rejoignez-nous/voir-les-offres/nos-offres?search[ke=
+yword]=3DST-19-0001</a><o:p></o:p></span></font></p><p class=3D"MsoNormal" s=
+tyle=3D"margin: 0cm 0cm 0.0001pt;"><br></p></div><span style=3D"background-c=
+olor: rgba(255, 255, 255, 0);"></span></div><div></div></div><div></div></di=
+v><div></div></div><div></div></div><div></div></body></html>=
+
+--Apple-Mail-1EB12C3E-02FE-4FB9-A7C9-BD9DDDA83518
+Content-Type: application/pdf;
+	name*0=Sujet_stage_2019_EDF_RetD_Chatou_Text_Mining_pour_la_maintenance;
+	name*1=_d_installations_solaires_ref_ST-19-0001.pdf;
+	x-apple-part-url=F677F854-D8B8-490B-B6C0-42B53776C22D
+Content-Disposition: attachment;
+	filename*0=Sujet_stage_2019_EDF_RetD_Chatou_Text_Mining_pour_la_maintenance;
+	filename*1=_d_installations_solaires_ref_ST-19-0001.pdf
+Content-Transfer-Encoding: base64
+
+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
+i2kzkfSg1cQD3rgxGvGijir18POLvUVDaDuS1FgsN1+uwIfPHFDHzb9/Iu+p8F8yDIlruAocU0rw
++EJ4BjTO5NVq1OF9ntbzG22wiFrdodUVLykE9Suzxoie+nbRwAKIFfAdRrDMaEE1K2UAsHhNsATQ
+gBveUDJFBS7S4ip0tcw7RwdG4lpYVBsSW/i/qIUdidLLWB9STUzDHj8O+sc5LfSDPT+wTjMVo+mE
+FH7AmlF6z4GXag43+YvqOOCL41Q0ohXcJn8179TvYxR4mfWnxF3wX1dVN+svdGQ6jtWwa9pGOTdL
+IWLCmeX4O5bkUxX0TjeNRDylnthELGNYWTou5GNBAx0YmvlGLEQF5i54TCRMY/cFXbMFtIxTH6lK
+R00kP5hHMOV8eS+CIwiYfhfwnYOJOtwoS7tIKY2Fs4TPslNGKsmW7u8iUTRHHYS7ROF+3CNfWjrC
+mh75emEdPgmdmqap3YvE1mXT5s2SyiGAsav9IV+JRj5kn4nOTNYWTfafib4iTPOG8CYw5GN5/Yj+
+/NGHZuIfCdlGvBcO7JIg59CgxSNmcIvS8b1GBvcE8wWW3ytkoOfvHz7idMGoL1hZFTDYJVHv0P1f
+m8okNi8btQKlhQb7l9wIgysc9+LqjowIqJ+vs8q6eTrWNA5R02z0VR/6gZk+ba8+YKX3v50ffi6k
+1IFoXOaoXTzpGHD6WeVrXbOT/i5+xG8qSmKOGGjfysz/YNGr4HT9GEz8iaIy4eHvZczfbpzcOjU3
++pJ5r/sKtR1Ghm3EIccWqbRIw2T+YeEGgE+DHf+d+hkESk1SagSSAFOvSA/AQGPqVe56mbJeNVm1
+ylb7ZycXrtt/AG+5/pRlbmRzdHJlYW0KZW5kb2JqCjE3IDAgb2JqCjQ1MjAKZW5kb2JqCjQgMCBv
+YmoKPDwvVHlwZS9QYWdlL01lZGlhQm94IFswIDAgNTk1IDg0Ml0KL1JvdGF0ZSAwL1BhcmVudCAz
+IDAgUgovUmVzb3VyY2VzPDwvUHJvY1NldFsvUERGIC9JbWFnZUMgL1RleHRdCi9YT2JqZWN0IDEz
+IDAgUgovRm9udCAxNCAwIFIKPj4KL0NvbnRlbnRzIDUgMCBSCj4+CmVuZG9iagoxNSAwIG9iago8
+PC9UeXBlL1BhZ2UvTWVkaWFCb3ggWzAgMCA1OTUgODQyXQovUm90YXRlIDAvUGFyZW50IDMgMCBS
+Ci9SZXNvdXJjZXM8PC9Qcm9jU2V0Wy9QREYgL1RleHRdCi9Gb250IDE4IDAgUgo+PgovQ29udGVu
+dHMgMTYgMCBSCj4+CmVuZG9iagozIDAgb2JqCjw8IC9UeXBlIC9QYWdlcyAvS2lkcyBbCjQgMCBS
+CjE1IDAgUgpdIC9Db3VudCAyCj4+CmVuZG9iagoxIDAgb2JqCjw8L1R5cGUgL0NhdGFsb2cgL1Bh
+Z2VzIDMgMCBSCi9NZXRhZGF0YSAyNCAwIFIKPj4KZW5kb2JqCjEzIDAgb2JqCjw8L1IxMgoxMiAw
+IFI+PgplbmRvYmoKMTIgMCBvYmoKPDwvU3VidHlwZS9JbWFnZQovQ29sb3JTcGFjZS9EZXZpY2VS
+R0IKL1dpZHRoIDM4MAovSGVpZ2h0IDE2MgovQml0c1BlckNvbXBvbmVudCA4Ci9GaWx0ZXIvRENU
+RGVjb2RlL0xlbmd0aCA2MjA2Pj5zdHJlYW0K/9j/7gAOQWRvYmUAZAAAAAAB/9sAQwAOCgsNCwkO
+DQwNEA8OERYkFxYUFBYsICEaJDQuNzYzLjIyOkFTRjo9Tj4yMkhiSU5WWF1eXThFZm1lWmxTW11Z
+/9sAQwEPEBAWExYqFxcqWTsyO1lZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZ
+WVlZWVlZWVlZWVlZ/8AAEQgAogF8AwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgME
+BQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEV
+UtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3
+eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh
+4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALUR
+AAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDTh
+JfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJ
+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
+oooAKKKKACiiigAooooAKKKKACiiigBKr3kaPGN6K3PcZooqJ7Fw+JFZreHyv9TH/wB8irdtGiRg
+IiqPYYoorOC94ubfKT0UUVuYhRRRQAUUUUAFFFFACVznipRiA4GckZoornxX8NnXgv48SPw1Ghcs
+UUsOhI5rp6KKnC/wysd/GYtFFFdRxBRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFF
+ABRRRQAUUUUAFFFFABRRRQB//9kKZW5kc3RyZWFtCmVuZG9iagoxNCAwIG9iago8PC9SMTAKMTAg
+MCBSL1IxMQoxMSAwIFIvUjcKNyAwIFIvUjkKOSAwIFI+PgplbmRvYmoKMTggMCBvYmoKPDwvUjEx
+CjExIDAgUi9SNwo3IDAgUi9SOQo5IDAgUj4+CmVuZG9iagoxMCAwIG9iago8PC9CYXNlRm9udC9I
+ZWx2ZXRpY2EtT2JsaXF1ZS9UeXBlL0ZvbnQKL0VuY29kaW5nIDIwIDAgUi9TdWJ0eXBlL1R5cGUx
+Pj4KZW5kb2JqCjIwIDAgb2JqCjw8L1R5cGUvRW5jb2RpbmcvRGlmZmVyZW5jZXNbCjM5L3F1b3Rl
+c2luZ2xlCjE0Ni9xdW90ZXJpZ2h0CjIyNC9hZ3JhdmUKMjMxL2NjZWRpbGxhL2VncmF2ZS9lYWN1
+dGUKMjM4L2ljaXJjdW1mbGV4L2lkaWVyZXNpcwoyNDQvb2NpcmN1bWZsZXhdPj4KZW5kb2JqCjEx
+IDAgb2JqCjw8L0Jhc2VGb250L0hlbHZldGljYS9UeXBlL0ZvbnQKL0VuY29kaW5nIDIxIDAgUi9T
+dWJ0eXBlL1R5cGUxPj4KZW5kb2JqCjIxIDAgb2JqCjw8L1R5cGUvRW5jb2RpbmcvRGlmZmVyZW5j
+ZXNbCjM5L3F1b3Rlc2luZ2xlCjE1Ni9vZQoyMjQvYWdyYXZlCjIzMi9lZ3JhdmUvZWFjdXRlL2Vj
+aXJjdW1mbGV4CjIzOC9pY2lyY3VtZmxleC9pZGllcmVzaXNdPj4KZW5kb2JqCjIyIDAgb2JqCjw8
+L0ZpbHRlci9GbGF0ZURlY29kZS9MZW5ndGggMTU2Pj5zdHJlYW0KeJxdTzEOgzAM3PMK/yCBGbHQ
+haFVVfqB4DgoA04UwtDflyTQocNZOt+dfJbDeBvZJZDP6HGiBNaxibT5PSLBTItj0bRgHKaTlYmr
+DkIOdx3en0BwGMhW/tAryVdbN03NoDe0BY0UNS8kOqX6ztpeEJs/6QzM9nI2fYVqVfFfSo7mDtdJ
+wD1G4lSKliK5gGP6/RJ8yCk4IL7pElLmCmVuZHN0cmVhbQplbmRvYmoKNyAwIG9iago8PC9CYXNl
+Rm9udC9LUFNIQk8rQ2FsaWJyaS9Gb250RGVzY3JpcHRvciA4IDAgUi9Ub1VuaWNvZGUgMjIgMCBS
+L1R5cGUvRm9udAovRmlyc3RDaGFyIDEvTGFzdENoYXIgMS9XaWR0aHNbIDIyNl0KL1N1YnR5cGUv
+VHJ1ZVR5cGU+PgplbmRvYmoKOSAwIG9iago8PC9CYXNlRm9udC9IZWx2ZXRpY2EtQm9sZC9UeXBl
+L0ZvbnQKL0VuY29kaW5nIDIzIDAgUi9TdWJ0eXBlL1R5cGUxPj4KZW5kb2JqCjIzIDAgb2JqCjw8
+L1R5cGUvRW5jb2RpbmcvRGlmZmVyZW5jZXNbCjM5L3F1b3Rlc2luZ2xlCjE0Ni9xdW90ZXJpZ2h0
+CjIyNC9hZ3JhdmUKMjMyL2VncmF2ZS9lYWN1dGUKMjM4L2ljaXJjdW1mbGV4L2lkaWVyZXNpc10+
+PgplbmRvYmoKOCAwIG9iago8PC9UeXBlL0ZvbnREZXNjcmlwdG9yL0ZvbnROYW1lL0tQU0hCTytD
+YWxpYnJpL0ZvbnRCQm94WzAgMCA0ODUgNjMxXS9GbGFncyA0Ci9Bc2NlbnQgNjMxCi9DYXBIZWln
+aHQgNjMxCi9EZXNjZW50IDAKL0l0YWxpY0FuZ2xlIDAKL1N0ZW1WIDcyCi9NaXNzaW5nV2lkdGgg
+NTA2Ci9Gb250RmlsZTIgMTkgMCBSPj4KZW5kb2JqCjE5IDAgb2JqCjw8L0ZpbHRlci9GbGF0ZURl
+Y29kZQovTGVuZ3RoMSAyODM4OC9MZW5ndGggNjkzMD4+c3RyZWFtCnic7Z15eFPV2vbXSjqkQ9q0
+tKUQICmhFQxQZsogDZ2gVKClDSZlSkcKFCgdmKRYRQSjOM8jjqh12A0oBRVwnkFxnnE45+hRFMfj
+QaHvvfaTpwLf0e/74/2u857rTVZ+ue/1rGHvvfZeay8uuVBIIYRZtAmjKJ5ZmjlC6J9lA/Azu2pp
+RQPl618WQk6sWtls39XwzmgEPhAi/LHahoVL139kHCtExHXoxLmwfk0t1c/6EfXX19VUVP+0JzIS
+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
+5IFq0AyuAuGouwdld6JHKeyG83dEpcppeCg2sDmPzbls2ticw2Y9m1Y269iczWYtmzVsVrNZxWYl
+mxY2zWya2Kxg08BmOZtlbJayqWezhM1iNovY1LFZyKaWTQ2bajZVbCrZVLDxsVnAZj6beWzmspnD
+ppyNl42HzVlsZrNxsyljU8pmFpsSNsVsZrKZwWY6mzPZFLGZxqaQzVQ2U9gUsMlnk8cml00Om8ls
+XGyy2UxicwabiWwmsBnPZhybLDZj2YxhM5rNKDYj2YxgM5zNMDaZbIayGcJmMBsnm9PZDGIzkM1p
+bDLYpLMZwMbBpj+bNDZ2NjY2/dj0ZdOHjZVNbza92KSy6ckmhU0ymyQ2PdgksklgY2ETzyaOjZlN
+LJsYNtFsotiY2ESyiWATziaMjZGNgY1kI4JGdrE5zuYYm9/Y/MrmKJt/svmFzT/Y/MzmJzY/svmB
+zfdsvmNzhM23bL5hc5jN12y+YvN3Nl+y+YLN39j8lc1f2HzO5jM2n7L5hM0hNh+z+YjNh2w+YPM+
+m/fYvMvmHTZvs3mLzZts3mDzOpuDbF5j8yqbA2z2s3mFzctsXmLzIpsX2DzP5jk2z7J5hs3TbJ5i
+8ySbJ9jsY7OXzR42j7N5jM2jbHaz2cWmk81ONo+weZjNDjbb2QTYdLDR2DzE5kE2D7C5n007m/vY
+3MvmHjbb2NzN5i42d7K5g83tbG5js5XNrWxuYXMzm5vY3MjmBjbXs7mOzbVsrmFzNZur2FzJ5go2
+l7O5jM2lbC5hs4XNxWwuYuNncyGbzWw2sbmAzUY2vO2RvO2RvO2RvO2RvO2RvO2RvO2RvO2RvO2R
+vO2RvO2RvO2RvO2RvO2RvO2RvO2RvO2RvO2RjWx4/yN5/yN5/yN5/yN5/yN5/yN5/yN5/yN5/yN5
+/yN5/yN5/yN5/yN5/yN5/yN5/yN5/yN5/yN5/yN5/yN5/yN5/yN5/yN5/yN5/yN5/yN5/yN5/yN5
+/yN5/yN5/yN5/yN52yN52yN52yN5tyN5tyN5tyN5tyN5tyN5tyN5tyN5tyN5tyNztyvTaTg/0G+S
+DXvmQL9kyHmUOzfQbzykjXLnkKwP9IuFtFJuHcnZJGtJ1gT6ToasDvTNhawiWUnSQmXNlGsiaaTg
+ikDfHEgDyXKSZVRlKUk9yZJAn3zIYpJFJHUkC0lqA33yIDWUqyapIqkkqSDxkSwgmU/t5lFuLskc
+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
+xyIM6x3Zs0eG9+sdn2SOCDf0SU0cMjHdUjonfeLQvpHGyAhjuCly4Nic/kX1+f3fi0zom5zSN9Fk
+Suybktw3IfLY++FxR78Pj/s1N6z+16uMERPmZg8wXhdtMoRFRHT2S+11+oS0wtnxPSxhMT0sCSmm
+yMSE2IF5c49dkNxH9dEnOZn6OjZd//toe0MplEIplEIplEIplEIplEIplEIplEIplEIplEIplEIp
+lEIplEIplEIplEIplEIplEIplEIplEIplEIplEIplEIplEIplEIplELpf11SH0PwXz5OEkb9/y/T
+G0TAGP+7/t82/6GfMNFf/9X/HegjsquLf5EPEzQ+UiRi/AxC/WPSkULkVtQvqmxcJPQSIS8T4cL0
+/3i0U+odEUe6TgoE/3XqsLjfkQfE//0uqXYRw+7s0B7avSB+4k+iFx3o0a/Wvaz0jd1xn/169Fhb
+1NemMchG6deCz38B8zPNAwplbmRzdHJlYW0KZW5kb2JqCjI0IDAgb2JqCjw8L1R5cGUvTWV0YWRh
+dGEKL1N1YnR5cGUvWE1ML0xlbmd0aCAxNjQzPj5zdHJlYW0KPD94cGFja2V0IGJlZ2luPSfvu78n
+IGlkPSdXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQnPz4KPD9hZG9iZS14YXAtZmlsdGVycyBlc2M9
+IkNSTEYiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSdhZG9iZTpuczptZXRhLycgeDp4bXB0az0nWE1Q
+IHRvb2xraXQgMi45LjEtMTMsIGZyYW1ld29yayAxLjYnPgo8cmRmOlJERiB4bWxuczpyZGY9J2h0
+dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMnIHhtbG5zOmlYPSdodHRw
+Oi8vbnMuYWRvYmUuY29tL2lYLzEuMC8nPgo8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0ndXVp
+ZDpmN2FkNDc0ZC0wNTUyLTExZTktMDAwMC1iNzhiOGFkZjI5NzcnIHhtbG5zOnBkZj0naHR0cDov
+L25zLmFkb2JlLmNvbS9wZGYvMS4zLyc+PHBkZjpQcm9kdWNlcj5HUEwgR2hvc3RzY3JpcHQgOS4w
+NTwvcGRmOlByb2R1Y2VyPgo8cGRmOktleXdvcmRzPigpPC9wZGY6S2V5d29yZHM+CjwvcmRmOkRl
+c2NyaXB0aW9uPgo8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0ndXVpZDpmN2FkNDc0ZC0wNTUy
+LTExZTktMDAwMC1iNzhiOGFkZjI5NzcnIHhtbG5zOnhtcD0naHR0cDovL25zLmFkb2JlLmNvbS94
+YXAvMS4wLyc+PHhtcDpNb2RpZnlEYXRlPjIwMTgtMTItMThUMjA6MDE6MzMrMDE6MDA8L3htcDpN
+b2RpZnlEYXRlPgo8eG1wOkNyZWF0ZURhdGU+MjAxOC0xMi0xOFQyMDowMTozMyswMTowMDwveG1w
+OkNyZWF0ZURhdGU+Cjx4bXA6Q3JlYXRvclRvb2w+UERGQ3JlYXRvciBWZXJzaW9uIDEuNi4yPC94
+bXA6Q3JlYXRvclRvb2w+PC9yZGY6RGVzY3JpcHRpb24+CjxyZGY6RGVzY3JpcHRpb24gcmRmOmFi
+b3V0PSd1dWlkOmY3YWQ0NzRkLTA1NTItMTFlOS0wMDAwLWI3OGI4YWRmMjk3NycgeG1sbnM6eGFw
+TU09J2h0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8nIHhhcE1NOkRvY3VtZW50SUQ9J3V1
+aWQ6ZjdhZDQ3NGQtMDU1Mi0xMWU5LTAwMDAtYjc4YjhhZGYyOTc3Jy8+CjxyZGY6RGVzY3JpcHRp
+b24gcmRmOmFib3V0PSd1dWlkOmY3YWQ0NzRkLTA1NTItMTFlOS0wMDAwLWI3OGI4YWRmMjk3Nycg
+eG1sbnM6ZGM9J2h0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvJyBkYzpmb3JtYXQ9J2Fw
+cGxpY2F0aW9uL3BkZic+PGRjOnRpdGxlPjxyZGY6QWx0PjxyZGY6bGkgeG1sOmxhbmc9J3gtZGVm
+YXVsdCc+U3VqZXRfc3RhZ2VfMjAxOV9FREZfUmV0RF9DaGF0b3VfVGV4dF9NaW5pbmdfcG91cl9s
+YV9tYWludGVuYW5jZV9kX2luc3RhbGxhdGlvbnNfc29sYWlyZXNfcmVmX1NULTE5LTAwMDE8L3Jk
+ZjpsaT48L3JkZjpBbHQ+PC9kYzp0aXRsZT48ZGM6Y3JlYXRvcj48cmRmOlNlcT48cmRmOmxpPigp
+PC9yZGY6bGk+PC9yZGY6U2VxPjwvZGM6Y3JlYXRvcj48ZGM6ZGVzY3JpcHRpb24+PHJkZjpTZXE+
+PHJkZjpsaT4oKTwvcmRmOmxpPjwvcmRmOlNlcT48L2RjOmRlc2NyaXB0aW9uPjwvcmRmOkRlc2Ny
+aXB0aW9uPgo8L3JkZjpSREY+CjwveDp4bXBtZXRhPgogICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgCjw/eHBhY2tldCBlbmQ9J3cnPz4KZW5kc3RyZWFtCmVuZG9iagoyIDAgb2JqCjw8L1By
+b2R1Y2VyKEdQTCBHaG9zdHNjcmlwdCA5LjA1KQovQ3JlYXRpb25EYXRlKEQ6MjAxODEyMTgyMDAx
+MzMrMDEnMDAnKQovTW9kRGF0ZShEOjIwMTgxMjE4MjAwMTMzKzAxJzAwJykKL1RpdGxlKFwzNzZc
+Mzc3XDAwMFNcMDAwdVwwMDBqXDAwMGVcMDAwdFwwMDBfXDAwMHNcMDAwdFwwMDBhXDAwMGdcMDAw
+ZVwwMDBfXDAwMDJcMDAwMFwwMDAxXDAwMDlcMDAwX1wwMDBFXDAwMERcMDAwRlwwMDBfXDAwMFJc
+MDAwZVwwMDB0XDAwMERcMDAwX1wwMDBDXDAwMGhcMDAwYVwwMDB0XDAwMG9cMDAwdVwwMDBfXDAw
+MFRcMDAwZVwwMDB4XDAwMHRcMDAwX1wwMDBNXDAwMGlcMDAwblwwMDBpXDAwMG5cMDAwZ1wwMDBf
+XDAwMHBcMDAwb1wwMDB1XDAwMHJcMDAwX1wwMDBsXDAwMGFcMDAwX1wwMDBtXDAwMGFcMDAwaVww
+MDBuXDAwMHRcMDAwZVwwMDBuXDAwMGFcMDAwblwwMDBjXDAwMGVcMDAwX1wwMDBkXDAwMF9cMDAw
+aVwwMDBuXDAwMHNcMDAwdFwwMDBhXDAwMGxcMDAwbFwwMDBhXDAwMHRcMDAwaVwwMDBvXDAwMG5c
+MDAwc1wwMDBfXDAwMHNcMDAwb1wwMDBsXDAwMGFcMDAwaVwwMDByXDAwMGVcMDAwc1wwMDBfXDAw
+MHJcMDAwZVwwMDBmXDAwMF9cMDAwU1wwMDBUXDAwMC1cMDAwMVwwMDA5XDAwMC1cMDAwMFwwMDAw
+XDAwMDBcMDAwMSkKL0NyZWF0b3IoXDM3NlwzNzdcMDAwUFwwMDBEXDAwMEZcMDAwQ1wwMDByXDAw
+MGVcMDAwYVwwMDB0XDAwMG9cMDAwclwwMDAgXDAwMFZcMDAwZVwwMDByXDAwMHNcMDAwaVwwMDBv
+XDAwMG5cMDAwIFwwMDAxXDAwMC5cMDAwNlwwMDAuXDAwMDIpCi9BdXRob3IoKQovS2V5d29yZHMo
+KQovU3ViamVjdCgpPj5lbmRvYmoKeHJlZgowIDI1CjAwMDAwMDAwMDAgNjU1MzUgZiAKMDAwMDAx
+MTk5OSAwMDAwMCBuIAowMDAwMDI4NTQ0IDAwMDAwIG4gCjAwMDAwMTE5MzMgMDAwMDAgbiAKMDAw
+MDAxMTYyMyAwMDAwMCBuIAowMDAwMDAwMDE1IDAwMDAwIG4gCjAwMDAwMDY5OTAgMDAwMDAgbiAK
+MDAwMDAxOTI1MSAwMDAwMCBuIAowMDAwMDE5NjE3IDAwMDAwIG4gCjAwMDAwMTkzOTggMDAwMDAg
+biAKMDAwMDAxODU2MCAwMDAwMCBuIAowMDAwMDE4ODA4IDAwMDAwIG4gCjAwMDAwMTIwOTYgMDAw
+MDAgbiAKMDAwMDAxMjA2NCAwMDAwMCBuIAowMDAwMDE4NDQ5IDAwMDAwIG4gCjAwMDAwMTE3ODkg
+MDAwMDAgbiAKMDAwMDAwNzAxMCAwMDAwMCBuIAowMDAwMDExNjAyIDAwMDAwIG4gCjAwMDAwMTg1
+MTAgMDAwMDAgbiAKMDAwMDAxOTgxMCAwMDAwMCBuIAowMDAwMDE4NjQ5IDAwMDAwIG4gCjAwMDAw
+MTg4ODkgMDAwMDAgbiAKMDAwMDAxOTAyNyAwMDAwMCBuIAowMDAwMDE5NDgzIDAwMDAwIG4gCjAw
+MDAwMjY4MjQgMDAwMDAgbiAKdHJhaWxlcgo8PCAvU2l6ZSAyNSAvUm9vdCAxIDAgUiAvSW5mbyAy
+IDAgUgovSUQgWzxDNkZGMzMwMTYzOEQxNTE0NDVCQ0ExMzU0NkUyRTExNz48QzZGRjMzMDE2MzhE
+MTUxNDQ1QkNBMTM1NDZFMkUxMTc+XQo+PgpzdGFydHhyZWYKMjkzNzYKJSVFT0YK
+--Apple-Mail-1EB12C3E-02FE-4FB9-A7C9-BD9DDDA83518
+Content-Type: text/html;
+	charset=us-ascii
+Content-Transfer-Encoding: 7bit
+
+<html><head><meta http-equiv="content-type" content="text/html; charset=us-ascii"></head><body dir="auto"><div></div><div><meta http-equiv="content-type" content="text/html; charset=us-ascii"><div></div><div><meta http-equiv="content-type" content="text/html; charset=us-ascii"><div></div><div><meta http-equiv="content-type" content="text/html; charset=us-ascii"><div></div><div><meta http-equiv="content-type" content="text/html; charset=us-ascii"><div></div><div><meta http-equiv="content-type" content="text/html; charset=us-ascii"><span style="background-color: rgba(255, 255, 255, 0);"></span><br><br></div></div></div></div></div></body></html>
+--Apple-Mail-1EB12C3E-02FE-4FB9-A7C9-BD9DDDA83518--
+
+--Apple-Mail-32BF4D4A-F4B2-411B-9488-12CBA0D16D15--

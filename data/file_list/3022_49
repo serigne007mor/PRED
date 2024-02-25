@@ -1,0 +1,591 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (BounceSMTP1.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id A7C4614014EC
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu, 23 Sep 2021 16:15:28 +0200 (CEST)
+Received: from mx2.d101.univ-nantes.fr (MX2.univ-nantes.fr [193.52.101.136])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id A63506D19BE
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu, 23 Sep 2021 16:15:28 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTP id 9EFEC101493
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 23 Sep 2021 16:15:28 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -13.289
+X-Spam-Level:
+X-Spam-Status: No, score=-13.289 tagged_above=-1000 required=5
+	tests=[CRM114_GOOD=-5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	IMPRONONCABLE_2=1.5, LONGWORD=0.3, RCVD_IN_DNSWL_MED=-10,
+	RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001,
+	SPF_PASS=-0.001, UN_PHISHING_PW=0.1, URIBL_BLOCKED=0.001]
+	autolearn=disabled
+X-CRM114-Status: GOOD ( 5.2384 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=univ-lr.fr
+Received: from mx2.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id YZ0BZhmst9bF for <liste-egc@polytech.univ-nantes.fr>;
+	Thu, 23 Sep 2021 16:15:23 +0200 (CEST)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from bm-edge.univ-lr.fr (bm-edge.univ-lr.fr [193.48.38.146])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTPS id 0E4FF101508
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 23 Sep 2021 16:15:23 +0200 (CEST)
+Received: from bm-edge.univ-lr.fr (bm-edge.univ-lr.fr [193.48.38.146])
+	by mailout1.univ-lr.fr (Postfix) with ESMTPS id A152D1893ACB;
+	Thu, 23 Sep 2021 16:15:22 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=univ-lr.fr;
+	s=default; t=1632406522;
+	bh=daCQLIfHOj1mvIbOgdieKCIUnYfalsHEYstA+xOPHG8=;
+	h=To:From:Subject:Date:From;
+	b=a2Bmor/vEFSUlLtE3xQgn/6o9B4dLKhN51uFtPwWUsHzE0vZqCmfEQ/jxFaC0xOUJ
+	 b0OMeYz1OgxfbVhL7opEa/XUBs6wnXseZlc8ItQZufL4WKE34Xw/dZ+HK73TPqgmkq
+	 rV09jM29J2inAlAtr1/lQ1C9Sts2+cotbZY3ixdETrSB+r9G/WUUAedaFHMNzFIqJR
+	 e9RYG8yEqeZAmAlQDa3FdZIrEEa2NbOx+dqQ5UedEEgERa4OLodWDwLf5ZbnkSuhCt
+	 46/1AWN7CdwdJkeutHFw0Kg0qTK0EO8OmmMxIsc0zqpXQW1UGiP2nqHH/aHio4AB2+
+	 lx7UCeGFBcKOg==
+Authentication-Results: univ-lr.fr; spf=none (no SPF record) 
+   smtp.mailfrom=univ-lr.fr (client-ip=138.232.236.32; 
+   helo=nat032-WLIE1.uibk.ac.at; envelope-from=antoine.doucet@univ-lr.fr; 
+   receiver=<UNKNOWN>)
+Authentication-Results: univ-lr.fr; dkim=none; dkim-atps=neutral
+Received: from ydWLI-E1-55-79.uibk.ac.at (nat032-WLIE1.uibk.ac.at [138.232.236.32])
+	(Authenticated sender: adoucet@univ-lr.fr)
+	by bm-edge.univ-lr.fr (Postfix) with ESMTPSA id 2320E201A7E2;
+	Thu, 23 Sep 2021 16:15:21 +0200 (CEST)
+To: bull-i3@irit.fr, ln@groupes.renater.fr,
+ liste-egc@polytech.univ-nantes.fr, info-aria@liste.lis-lab.fr,
+ breves@afia.asso.fr, info-ic@listes.irisa.fr, liste-proml@lri.fr
+From: Antoine Doucet <antoine.doucet@univ-lr.fr>
+Message-ID: <0e646313-0436-fe1e-e19f-3cd449d1f083@univ-lr.fr>
+Date: Thu, 23 Sep 2021 16:15:20 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="------------33228F9D56691CFA64481191"
+Content-Language: fr
+X-Bm-Milter-Handled: a55ca0dc-14f7-44cb-a92c-8e94651dd88d
+X-Bm-Transport-Timestamp: 1632406522222
+X-Virus-Scanned: clamav-milter 0.103.2 at mailout1
+X-Virus-Status: Clean
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Postdoctoral position - Cross-lingual and cross-domain
+ terminology
+
+This is a multi-part message in MIME format.
+--------------33228F9D56691CFA64481191
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+
+*Cross-lingual and cross-domain terminology alignment*
+
+
+Interested in joining a young NLP group of 10+ people located in a 
+historical town by the Atlantic Ocean? And walk 10 minutes from the lab 
+to the beach. We have open positions in the *context of 2 ongoing 
+Horizon 2020* projects: Embeddia and NewsEye as well as related 
+projects. In 2020-2021, we have among others published long papers in 
+*CORE A* and A* conferences ACL, JCDL, CoNLL, ICDAR, COLING, ICADL, etc.
+
+*Location*: L3i laboratory, La Rochelle, France
+
+*Duration*: 2 years (1+1), with possible further extension
+
+*Net salary range*: 2100€-2300 € monthly
+
+*Context*: H2020 Embeddia project and regional project Termitrad
+
+*Start*: 1 January 2022
+
+
+Keywords: *terminology alignment, cross-lingual word embeddings, 
+named-entity recognition and linking, deep/machine learning, statistical 
+NLP, (text) mining*.
+
+
+Applications are invited for a postdoctoral researcher position around 
+the topic of project Termitrad: keyword and terminology alignment 1) 
+across languages and 2) across domains. In short, the overall objective 
+of the project is to improve the relevance of the keywords describing 
+research papers (and, time allowing, the quality of abstracts). One the 
+one hand (cross-lingual alignment), we will rely on a corpora of journal 
+articles with both French and English keywords and abstracts, both in as 
+written by authors and in versions curated by experts. On the other hand 
+(crossdomain alignment), we will work with use cases provided by 
+researchers from different fields using different terms to describe 
+similar concepts.
+
+To address this very project, the project team will consist of senior 
+staff, 2 post-doctoral researchers and 2-3 PhD students, one of which is 
+jointly supervised in the Józef Stefan Institute in Ljubljana, 
+coordinator of H2020 Embeddia. In this context, you will first be in 
+charge of building a state of the art of existing related approaches, 
+tools and resources, then to conduct further research and experiments, 
+as well as participate in the supervision of PhD students.
+
+
+Who we search for:
+
+-PhD in statistical NLP, IR, or ML, ideally with further postdoctoral 
+experience
+
+-proven record of high-level publications in one or more of those fields
+
+-fluency in written and spoken English (French language skills are 
+irrelevant)
+
+Applications including a CV and a one-page research statement discussing 
+how the candidate's background fits requirements and topic are to be 
+sent to by email to antoine.doucet@univ-lr.fr 
+<mailto:antoine.doucet@univ-lr.fr>, strictly with the subject 
+"Embeddia/Termitrad postdoc application".
+
+*Application deadline: 13 October 2021.*
+
+
+*PDF version of this call* 
+<https://l3i.univ-larochelle.fr/spip.php?action=acceder_document&arg=1663&cle=9cdd6bde3a5ff4d4b148201051594ccaf6fe5b7e&file=pdf%2Fpostdoc-crosslingual-crossdomain-termalignment_cle4ceb14.pdf>
+**
+
+
+--------------33228F9D56691CFA64481191
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p class="MsoNormal" style="text-align:center" align="center"><b><span
+style="font-size:16.0pt;mso-ascii-font-family:Calibri;mso-fareast-font-family:
+          &quot;Times New
+          Roman&quot;;mso-hansi-font-family:Calibri;mso-bidi-font-family:Calibri;
+color:#333333;background:white;mso-ansi-language:EN-US;mso-fareast-language:
+          FR" lang="EN-US">Cross-lingual and cross-domain terminology
+          alignment</span></b></p>
+    <p class="MsoNormal" style="text-align:center" align="center"><br>
+    </p>
+    <p class="MsoNormal"
+      style="mso-margin-top-alt:auto;margin-bottom:12.0pt;
+      text-align:justify"><span style="font-family:&quot;Times New
+        Roman&quot;,serif;
+        mso-fareast-font-family:&quot;Times New
+        Roman&quot;;mso-ansi-language:EN-US;mso-fareast-language:
+        FR" lang="EN-US">Interested in joining a young NLP group of 10+
+        people located in a historical
+        town by the Atlantic Ocean? And walk 10 minutes from the lab to
+        the beach. We
+        have open positions in the <b>context of 2 ongoing Horizon 2020</b>
+        projects:
+        Embeddia and NewsEye as well as related projects. In 2020-2021,
+        we have among
+        others published long papers in <b>CORE A* and A</b>
+        conferences ACL, JCDL,
+        CoNLL, ICDAR, COLING, ICADL, etc. <span
+          style="mso-spacerun:yes"> </span></span></p>
+    <p class="MsoNormal" style="text-align:justify"><b><span
+          style="font-family:&quot;Times New
+          Roman&quot;,serif;mso-fareast-font-family:&quot;Times New
+          Roman&quot;;
+          mso-ansi-language:EN-US;mso-fareast-language:FR" lang="EN-US">Location</span></b><span
+        style="font-family:&quot;Times New
+        Roman&quot;,serif;mso-fareast-font-family:
+        &quot;Times New
+        Roman&quot;;mso-ansi-language:EN-US;mso-fareast-language:FR"
+        lang="EN-US">: L3i
+        laboratory, La Rochelle, France</span></p>
+    <p class="MsoNormal" style="text-align:justify"><b><span
+          style="font-family:&quot;Times New
+          Roman&quot;,serif;mso-fareast-font-family:&quot;Times New
+          Roman&quot;;
+          mso-ansi-language:EN-US;mso-fareast-language:FR" lang="EN-US">Duration</span></b><span
+        style="font-family:&quot;Times New
+        Roman&quot;,serif;mso-fareast-font-family:
+        &quot;Times New
+        Roman&quot;;mso-ansi-language:EN-US;mso-fareast-language:FR"
+        lang="EN-US">: 2 years
+        (1+1), with possible further extension</span></p>
+    <p class="MsoNormal" style="text-align:justify"><b><span
+          style="font-family:&quot;Times New
+          Roman&quot;,serif;mso-fareast-font-family:&quot;Times New
+          Roman&quot;;
+          mso-ansi-language:EN-US;mso-fareast-language:FR" lang="EN-US">Net
+          salary range</span></b><span style="font-family:&quot;Times
+        New Roman&quot;,serif;mso-fareast-font-family:
+        &quot;Times New
+        Roman&quot;;mso-ansi-language:EN-US;mso-fareast-language:FR"
+        lang="EN-US">: 2100€-2300
+        € monthly</span></p>
+    <p class="MsoNormal" style="text-align:justify"><b><span
+          style="font-family:&quot;Times New
+          Roman&quot;,serif;mso-fareast-font-family:&quot;Times New
+          Roman&quot;;
+          mso-ansi-language:EN-US;mso-fareast-language:FR" lang="EN-US">Context</span></b><span
+        style="font-family:&quot;Times New
+        Roman&quot;,serif;mso-fareast-font-family:
+        &quot;Times New
+        Roman&quot;;mso-ansi-language:EN-US;mso-fareast-language:FR"
+        lang="EN-US">: H2020
+        Embeddia project and regional project Termitrad</span></p>
+    <p class="MsoNormal" style="text-align:justify"><b><span
+          style="font-family:&quot;Times New
+          Roman&quot;,serif;mso-fareast-font-family:&quot;Times New
+          Roman&quot;;
+          mso-ansi-language:EN-US;mso-fareast-language:FR" lang="EN-US">Start</span></b><span
+        style="font-family:&quot;Times New
+        Roman&quot;,serif;mso-fareast-font-family:
+        &quot;Times New
+        Roman&quot;;mso-ansi-language:EN-US;mso-fareast-language:FR"
+        lang="EN-US">: 1 January
+        2022</span></p>
+    <p class="MsoNormal" style="text-align:justify"><span
+        style="font-size:5.0pt;font-family:&quot;Times New
+        Roman&quot;,serif;mso-fareast-font-family:
+        &quot;Times New
+        Roman&quot;;mso-ansi-language:EN-US;mso-fareast-language:FR"
+        lang="EN-US"> </span></p>
+    <p class="MsoNormal" style="text-align:justify"><span
+        style="font-size:5.0pt;font-family:&quot;Times New
+        Roman&quot;,serif;mso-fareast-font-family:
+        &quot;Times New
+        Roman&quot;;mso-ansi-language:EN-US;mso-fareast-language:FR"
+        lang="EN-US"><br>
+      </span><span style="font-family:&quot;Times New
+        Roman&quot;,serif;mso-fareast-font-family:
+        &quot;Times New
+        Roman&quot;;mso-ansi-language:EN-US;mso-fareast-language:FR"
+        lang="EN-US">Keywords: <b>terminology
+          alignment, cross-lingual word embeddings, named-entity
+          recognition and linking,
+          deep/machine learning, statistical NLP, (text) mining</b>.</span></p>
+    <p class="MsoNormal" style="text-align:justify"><span
+        style="font-family:&quot;Times New
+        Roman&quot;,serif;mso-fareast-font-family:&quot;Times New
+        Roman&quot;;
+        mso-ansi-language:EN-US;mso-fareast-language:FR" lang="EN-US"><br>
+        Applications are invited for a postdoctoral researcher position
+        around the
+        topic of project Termitrad: keyword and terminology alignment 1)
+        across
+        languages and 2) across domains. In short, the overall objective
+        of the project
+        is to improve the relevance of the keywords describing research
+        papers (and,
+        time allowing, the quality of abstracts). One the one hand
+        (cross-lingual
+        alignment), we will rely on a corpora of journal articles with
+        both French and
+        English keywords and abstracts, both in as written by authors
+        and in versions
+        curated by experts. On the other hand (crossdomain alignment),
+        we will work
+        with use cases provided by researchers from different fields
+        using different
+        terms to describe similar concepts.</span></p>
+    <p class="MsoNormal" style="text-align:justify"><span
+        style="font-family:&quot;Times New
+        Roman&quot;,serif;mso-fareast-font-family:&quot;Times New
+        Roman&quot;;
+        mso-ansi-language:EN-US;mso-fareast-language:FR" lang="EN-US"> </span></p>
+    <p class="MsoNormal" style="text-align:justify"><span
+        style="font-family:&quot;Times New
+        Roman&quot;,serif;mso-fareast-font-family:&quot;Times New
+        Roman&quot;;
+        mso-ansi-language:EN-US;mso-fareast-language:FR" lang="EN-US">To
+        address this very project,
+        the project team will consist of senior staff, 2 post-doctoral
+        researchers and
+        2-3 PhD students, one of which is jointly supervised in the
+        Józef Stefan
+        Institute in Ljubljana, coordinator of H2020 Embeddia. In this
+        context, you will
+        first be in charge of building a state of the art of existing
+        related
+        approaches, tools and resources, then to conduct further
+        research and
+        experiments, as well as participate in the supervision of PhD
+        students.</span></p>
+    <p class="MsoNormal" style="text-align:justify"><span
+        style="font-family:&quot;Times New
+        Roman&quot;,serif;mso-fareast-font-family:&quot;Times New
+        Roman&quot;;
+        mso-ansi-language:EN-US;mso-fareast-language:FR" lang="EN-US"><br>
+        Who we search for:</span></p>
+    <p class="MsoListParagraphCxSpFirst"
+      style="text-align:justify;text-indent:-18.0pt;
+      mso-list:l0 level1 lfo1"><span style="font-family:&quot;Times New
+        Roman&quot;,serif;mso-fareast-font-family:&quot;Times New
+        Roman&quot;;
+        mso-ansi-language:EN-US" lang="EN-US"><span
+          style="mso-list:Ignore">-<span style="font:7.0pt &quot;Times
+            New Roman&quot;">      
+          </span></span></span><span style="font-family:&quot;Times New
+        Roman&quot;,serif;
+        mso-fareast-font-family:&quot;Times New
+        Roman&quot;;mso-ansi-language:EN-US;mso-fareast-language:
+        FR" lang="EN-US">PhD in statistical NLP, IR, or ML, ideally with
+        further postdoctoral
+        experience</span><span style="mso-ansi-language:EN-US"
+        lang="EN-US"></span></p>
+    <p class="MsoListParagraphCxSpMiddle"
+      style="text-align:justify;text-indent:-18.0pt;
+      mso-list:l0 level1 lfo1"><span style="font-family:&quot;Times New
+        Roman&quot;,serif;mso-fareast-font-family:&quot;Times New
+        Roman&quot;;
+        mso-ansi-language:EN-US" lang="EN-US"><span
+          style="mso-list:Ignore">-<span style="font:7.0pt &quot;Times
+            New Roman&quot;">      
+          </span></span></span><span style="font-family:&quot;Times New
+        Roman&quot;,serif;
+        mso-fareast-font-family:&quot;Times New
+        Roman&quot;;mso-ansi-language:EN-US;mso-fareast-language:
+        FR" lang="EN-US">proven record of high-level publications in one
+        or more of those fields</span><span
+        style="mso-ansi-language:EN-US" lang="EN-US"></span></p>
+    <p class="MsoListParagraphCxSpLast"
+      style="text-align:justify;text-indent:-18.0pt;
+      mso-list:l0 level1 lfo1"><span style="font-family:&quot;Times New
+        Roman&quot;,serif;mso-fareast-font-family:&quot;Times New
+        Roman&quot;;
+        mso-ansi-language:EN-US" lang="EN-US"><span
+          style="mso-list:Ignore">-<span style="font:7.0pt &quot;Times
+            New Roman&quot;">      
+          </span></span></span><span style="font-family:&quot;Times New
+        Roman&quot;,serif;
+        mso-fareast-font-family:&quot;Times New
+        Roman&quot;;mso-ansi-language:EN-US;mso-fareast-language:
+        FR" lang="EN-US">fluency in written and spoken English (French
+        language skills are
+        irrelevant)</span><span style="mso-ansi-language:EN-US"
+        lang="EN-US"></span></p>
+    <p class="MsoNormal" style="text-align:justify"><span
+        style="font-size:8.0pt;font-family:&quot;Times New
+        Roman&quot;,serif;mso-fareast-font-family:
+        &quot;Times New
+        Roman&quot;;mso-ansi-language:EN-US;mso-fareast-language:FR"
+        lang="EN-US"> </span></p>
+    <p class="MsoNormal" style="text-align:justify"><span
+        style="font-family:&quot;Times New
+        Roman&quot;,serif;mso-fareast-font-family:&quot;Times New
+        Roman&quot;;
+        mso-ansi-language:EN-US;mso-fareast-language:FR" lang="EN-US">Applications
+        including a CV
+        and a one-page research statement discussing how the candidate's
+        background
+        fits requirements and topic are to be sent to by email to  </span><a
+        href="mailto:antoine.doucet@univ-lr.fr"><span
+          style="font-family:
+          &quot;Times New
+          Roman&quot;,serif;mso-fareast-font-family:&quot;Times New
+          Roman&quot;;color:blue;
+          mso-ansi-language:EN-US;mso-fareast-language:FR" lang="EN-US">antoine.doucet@univ-lr.fr</span></a><span
+        style="font-family:&quot;Times New
+        Roman&quot;,serif;mso-fareast-font-family:
+        &quot;Times New
+        Roman&quot;;mso-ansi-language:EN-US;mso-fareast-language:FR"
+        lang="EN-US">, strictly
+        with the subject "Embeddia/Termitrad postdoc application". </span></p>
+    <p class="MsoNormal" style="text-align:justify"><b><span
+          style="font-family:&quot;Times New
+          Roman&quot;,serif;mso-fareast-font-family:&quot;Times New
+          Roman&quot;;
+          mso-ansi-language:EN-US;mso-fareast-language:FR" lang="EN-US">Application
+          deadline: 13 October
+          2021.</span></b></p>
+    <p class="MsoNormal" style="text-align:justify"><br>
+    </p>
+    <p class="MsoNormal" style="text-align:justify"><a
+href="https://l3i.univ-larochelle.fr/spip.php?action=acceder_document&amp;arg=1663&amp;cle=9cdd6bde3a5ff4d4b148201051594ccaf6fe5b7e&amp;file=pdf%2Fpostdoc-crosslingual-crossdomain-termalignment_cle4ceb14.pdf"
+        moz-do-not-send="true"><b>PDF version of this call</b></a><br>
+      <b><span style="font-family:&quot;Times New
+          Roman&quot;,serif;mso-fareast-font-family:&quot;Times New
+          Roman&quot;;
+          mso-ansi-language:EN-US;mso-fareast-language:FR" lang="EN-US"></span></b><span
+        style="font-family:&quot;Times New Roman&quot;,serif;
+        mso-fareast-font-family:&quot;Times New
+        Roman&quot;;mso-ansi-language:EN-US;mso-fareast-language:
+        FR" lang="EN-US"></span></p>
+    <style>@font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;
+	mso-font-charset:77;
+	mso-generic-font-family:decorative;
+	mso-font-pitch:variable;
+	mso-font-signature:3 0 0 0 -2147483647 0;}@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:3 0 0 0 1 0;}@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:-536859905 -1073732485 9 0 511 0;}p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-parent:"";
+	margin:0cm;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:Calibri;
+	mso-fareast-theme-font:minor-latin;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;
+	mso-fareast-language:EN-US;}p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{mso-style-priority:99;
+	mso-style-link:"En-tête Car";
+	margin:0cm;
+	mso-pagination:widow-orphan;
+	tab-stops:center 8.0cm right 16.0cm;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:Calibri;
+	mso-fareast-theme-font:minor-latin;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;
+	mso-fareast-language:EN-US;}p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{mso-style-priority:99;
+	mso-style-link:"Pied de page Car";
+	margin:0cm;
+	mso-pagination:widow-orphan;
+	tab-stops:center 8.0cm right 16.0cm;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:Calibri;
+	mso-fareast-theme-font:minor-latin;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;
+	mso-fareast-language:EN-US;}p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+	{mso-style-priority:34;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:36.0pt;
+	mso-add-space:auto;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:Calibri;
+	mso-fareast-theme-font:minor-latin;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;
+	mso-fareast-language:EN-US;}p.MsoListParagraphCxSpFirst, li.MsoListParagraphCxSpFirst, div.MsoListParagraphCxSpFirst
+	{mso-style-priority:34;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-type:export-only;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:36.0pt;
+	mso-add-space:auto;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:Calibri;
+	mso-fareast-theme-font:minor-latin;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;
+	mso-fareast-language:EN-US;}p.MsoListParagraphCxSpMiddle, li.MsoListParagraphCxSpMiddle, div.MsoListParagraphCxSpMiddle
+	{mso-style-priority:34;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-type:export-only;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:36.0pt;
+	mso-add-space:auto;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:Calibri;
+	mso-fareast-theme-font:minor-latin;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;
+	mso-fareast-language:EN-US;}p.MsoListParagraphCxSpLast, li.MsoListParagraphCxSpLast, div.MsoListParagraphCxSpLast
+	{mso-style-priority:34;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-type:export-only;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:36.0pt;
+	mso-add-space:auto;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:Calibri;
+	mso-fareast-theme-font:minor-latin;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;
+	mso-fareast-language:EN-US;}span.En-tteCar
+	{mso-style-name:"En-tête Car";
+	mso-style-priority:99;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:En-tête;}span.PieddepageCar
+	{mso-style-name:"Pied de page Car";
+	mso-style-priority:99;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"Pied de page";}.MsoChpDefault
+	{mso-style-type:export-only;
+	mso-default-props:yes;
+	font-family:"Calibri",sans-serif;
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:Calibri;
+	mso-fareast-theme-font:minor-latin;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;
+	mso-fareast-language:EN-US;}div.WordSection1
+	{page:WordSection1;}ol
+	{margin-bottom:0cm;}ul
+	{margin-bottom:0cm;}</style>
+  </body>
+</html>
+
+--------------33228F9D56691CFA64481191--

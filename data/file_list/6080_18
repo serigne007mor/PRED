@@ -1,0 +1,743 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (bouncesmtp1.u12.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 83A9414014F0
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Tue, 10 Jan 2023 17:25:30 +0100 (CET)
+Received: from mx3.localdomain (MX3.univ-nantes.fr [193.52.101.137])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id 7FD506749
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Tue, 10 Jan 2023 17:25:30 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.localdomain (Postfix) with ESMTP id 77D6F20DCD
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 10 Jan 2023 17:25:30 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 3.712
+X-Spam-Level: ***
+X-Spam-Status: No, score=3.712 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	HTML_MESSAGE=0.001, HTML_OBFUSCATE_05_10=0.001, J_CHICKENPOX_16=0.6,
+	J_CHICKENPOX_19=0.6, LONGWORD=0.3, RCVD_IN_DNSWL_NONE=-0.0001,
+	RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+	UN_COMMAS_IN_SUBJ=2, UN_PHISHING_PW=0.1] autolearn=disabled
+X-CRM114-Status: UNSURE ( 2.1165 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=dimes-unical-it.20210112.gappssmtp.com
+Received: from mx3.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id FjLZLDrMzc2J for <liste-egc@polytech.univ-nantes.fr>;
+	Tue, 10 Jan 2023 17:25:27 +0100 (CET)
+X-Greylist: delayed 00:08:02 by SQLgrey-1.6.7
+Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
+	by mx3.localdomain (Postfix) with ESMTPS id B711820060
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 10 Jan 2023 17:25:26 +0100 (CET)
+Received: by mail-qt1-x841.google.com with SMTP id x7so1228916qtv.13
+        for <liste-egc@polytech.univ-nantes.fr>; Tue, 10 Jan 2023 08:25:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dimes-unical-it.20210112.gappssmtp.com; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=d+xmk/zRZ1IrboW0cC12bE7DxY6CP/1pFIL3mGv8Qq8=;
+        b=wpzB43xOKO9GEiq1G+fqzj7RxBJu8qeAVwnU4E0iKBJgQRkh/wDDTNOdfUChbVY+MT
+         Ul0KLs5RX5nHylDZO8eHEaZeHIq+ogRw7RlafGYqnw/mECLlJg6LLufjaesKNaZ5RHnr
+         hqYKyth1IM/a1Pp1dg6xytuUvCyAMe/BcogDq6wKqXd6Sg3f+ZXJE5Fw5VBuJC1kzuf6
+         Lsx4ADEiH9VV5eASvw2yHIrX5GHUJzK9cXk1dd6OdcGShaYNaq7GGHMpDT3ru8itO+Ez
+         WL7yWNI1LYz5LEX5ZH37yyF2xVQeVr5vzMkLhurF/V5Qf5d2xqEOc7stSdvhWZrUODpB
+         eqDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=d+xmk/zRZ1IrboW0cC12bE7DxY6CP/1pFIL3mGv8Qq8=;
+        b=SRZtTiItDx+e46q/3MfjF5GQ+ww1WlkcZ1tahfk5SOU+YdIGzTQsuO+YVuuIDpvuFR
+         OGqqkYlbzOXAKh+VovqvsEUchx9cBIbhjJSikzbOu9/vT8Gk++laCzKCS9OchR8suMea
+         HsUhiGx93noD1Yyf0oLP/6UsdByhSJwdE5FEIIOSOjpb96CHR3Cd5+pR//aOoCwvfebj
+         hNsluRNxjNB052ngYqGdiQFx3A0++ZuogGFTGFqaISR0J9J0dJWLgsu2lBaPz57duVK7
+         nC8gK95ooW1yUPM7LK/0LjhFuB6rRqUdlqEX0E/EGH15+7qrOlML2zPHQPWv/s2xDRXW
+         SXVw==
+X-Gm-Message-State: AFqh2krXtczUyRHXWh3IjV+tchulwgM8Gr/GFRqpHW21qib1pZI6AYom
+	TImiqpdClzbpCRSzvSiUIiTM2fXxjxgv6pFem0amjbas2jsh+4pshsB3Og==
+X-Google-Smtp-Source: AMrXdXu4s6y7+h/C0vAiq6oItgn8c4Hs1nxsMg3d1HyDwzuK+MkiM10/r5nHmY0T7UI9ZM/flo0vVJyPK7E0GDeZZ8w=
+X-Received: by 2002:ac8:6f0c:0:b0:3af:2211:d34f with SMTP id
+ bs12-20020ac86f0c000000b003af2211d34fmr169413qtb.441.1673367442661; Tue, 10
+ Jan 2023 08:17:22 -0800 (PST)
+MIME-Version: 1.0
+From: Roberto Interdonato <rinterdonato@dimes.unical.it>
+Date: Tue, 10 Jan 2023 17:17:11 +0100
+Message-ID: <CAG4i7i=3gEW=xtgJy43UK9pH9Faf+KBj=VbGF6pAH94Py6R8Rg@mail.gmail.com>
+To: liste-egc@polytech.univ-nantes.fr
+Content-Type: multipart/alternative; boundary="000000000000ffb96f05f1eb372e"
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] CfP FRCCS 2023 - Third French Regional Conference on
+ Complex Systems, May 31 Le Havre, France, June 02, 2023
+
+--000000000000ffb96f05f1eb372e
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+*Third F*rench* R*egional* C*onference on* C*omplex* S*ystems
+
+May 31 =E2=80=93 June 02, 2023
+
+Le Havre, France
+
+*FRCCS 2023* <https://iutdijon.u-bourgogne.fr/ccs-france/>
+
+
+
+You are cordially invited to submit your contribution until *February 22,
+2023.*
+
+
+
+*FRCCS 2023 (F*rench *R*egional* C*onference on *C*omplex *S*ystems 2023)
+is the Third edition of the French Regional Conference on Complex Systems.
+It promotes interdisciplinary exchanges between regional researchers from
+various scientific disciplines and backgrounds (sociology, economics,
+history, management, archaeology, geography, linguistics, statistics,
+mathematics, and computer science). FRCCS 2023 is an opportunity to
+exchange and promote the cross-fertilization of ideas by presenting recent
+research work, industrial developments, and original applications. Special
+attention is given to research topics with a high societal impact from the
+complexity science perspective.
+
+
+
+*Keynote Speakers*
+
+Luca Maria Aiello <http://www.lajello.com/> ITU Copenhagen Denmark
+
+Ginestra Bianconi <https://webspace.maths.qmul.ac.uk/g.bianconi/> Queen
+Mary University UK
+
+V=C3=ADctor M. Egu=C3=ADluz
+<https://ifisc.uib-csic.es/en/people/victor-m-eguiluz/> University
+of the Balearic Islands Spain
+
+Adriana Iamnitchi <https://www.maastrichtuniversity.nl/p70074082> Maastrich=
+t
+University Netherlands
+
+Rosario N. Mantegna <https://unipa.academia.edu/RosarioMantegna> Palermo
+University Italy
+
+C=C3=A9line Rozenblat
+<https://www.unil.ch/gse/home/menuinst/vie-facultaire/promotions--nominatio=
+ns/rozenblat-celine.html>
+University
+of Lausanne Switzerland
+
+
+
+*Submission Guidelines*
+
+Finalized work (published or unpublished) and work in progress are welcome.=
+ Two
+types of contributions are accepted:
+
+=C2=B7       *Full paper* about *original research*
+
+
+
+=C2=B7       *Extended Abstract* about published or unpublished research. I=
+t is
+recommended to be between 3-4 pages. They should not exceed four pages.
+
+
+
+o   Submissions must follow the Springer publication format available in
+the journal Applied Network Science
+<https://appliednetsci.springeropen.com/> in the Instructions for Authors'
+instructions entry.
+
+
+
+o   All contributions should be submitted in *pdf format* via *EasyChair
+<https://easychair.org/conferences/?conf=3Dfrccs2023>.*
+
+
+
+*Publication*
+
+*Selected submissions of unpublished work will be invited for publication
+in special issues (fast track procedure) **of the journals:*
+
+
+
+o   Applied Network Science, <https://appliednetsci.springeropen.com/> edit=
+ed
+by Springer
+
+o   Complexity,
+<https://www.hindawi.com/journals/complexity/?utm_source=3Dgoogle&utm_mediu=
+m=3Dcpc&utm_campaign=3DHDW_MRKT_GBL_SUB_ADWO_PAI_DYNA_JOUR_X&gclid=3DCj0KCQ=
+iA1KiBBhCcARIsAPWqoSpsdfamsWlEH-_iGdjBvxVbOa6Es9IxZTzJtDxJf_i7e0afNhrwcdcaA=
+rDkEALw_wcB>
+edited
+by Hindawi
+
+
+
+
+
+*Topics include, but are not limited to:*
+
+=C2=B7       *Foundations of complex systems*
+
+   - Self-organization, non-linear dynamics, statistical physics,
+      mathematical modeling and simulation, conceptual frameworks, ways of
+      thinking, methodologies and methods, philosophy of complexity, knowle=
+dge
+      systems, Complexity and information, Dynamics and self-organization,
+      structure and dynamics at several scales, self-similarity, fractals
+   - *Complex Networks*
+      - Structure & Dynamics, Multilayer and Multiplex Networks, Adaptive
+      Networks, Temporal Networks, Centrality, Patterns, Cliques, Communiti=
+es,
+      Epidemics, Rumors, Control, Synchronization, Reputation, Influence, V=
+iral
+      Marketing, Link Prediction, Network Visualization, Network
+Digging, Network
+      Embedding & Learning.
+   - *Neuroscience, **Linguistics*
+      - Evolution of language, social consensus, artificial intelligence,
+      cognitive processes & education, Narrative complexity
+   - *Economics & Finance*
+      - Game Theory, Stock Markets and Crises, Financial Systems, Risk
+      Management, Globalization, Economics and Markets, Blockchain, Bitcoin=
+s,
+      Markets and Employment
+   - *Infrastructure, planning, and environment*
+      - critical infrastructure, urban planning, mobility, transport and
+      energy, smart cities, urban development, urban sciences
+   - *Biological and (bio)medical complexity*
+      - biological networks, systems biology, evolution, natural sciences,
+      medicine and physiology, dynamics of biological coordination, aging
+   - *Social complexity*
+
+o   social networks, computational social sciences, socio-ecological
+systems, social groups, processes of change, social evolution,
+self-organization and democracy, socio-technical systems, collective
+intelligence, corporate and social structures and dynamics, organizational
+behavior, and management, military and defense systems, social unrest,
+political networks, interactions between human and natural systems,
+diffusion/circulation of knowledge, diffusion of innovation
+
+   - *Socio-Ecological Systems*
+      - Global environmental change, green growth, sustainability &
+      resilience, and culture
+   - *Organisms and populations*
+
+o   Population biology, collective behavior of animals, ecosystems,
+ecology, ecological networks, microbiome, speciation, evolution
+
+   - *Engineering systems and systems of systems*
+      - bioengineering, modified and hybrid biological organisms,
+      multi-agent systems, artificial life, artificial intelligence, robots=
+,
+      communication networks, Internet, traffic systems, distributed
+      control, resilience, artificial resilient systems, complex systems
+      engineering, biologically inspired engineering, synthetic biology
+   - *Complexity in physics and chemistry*
+      - quantum computing, quantum synchronization, quantum chaos, random
+      matrix theory)
+
+
+
+*GENERAL CHAIRS*
+
+Cyrille Bertelle          LITIS, Normastic, Le Havre
+
+Roberto Interdonato  CIRAD, UMR TETIS, Montpellier
+
+--=20
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Roberto Interdonato, PhD
+Research Scientist
+CIRAD
+UMR TETIS
+Montpellier
+France
+email: roberto.interdonato@cirad.fr
+tel: +33 (0) 467558615
+ =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+--000000000000ffb96f05f1eb372e
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><p align=3D"center" style=3D"text-align:center;line-height=
+:normal;margin:0cm;font-size:11pt;font-family:Arial,sans-serif;color:black"=
+><b><span lang=3D"EN-US" style=3D"font-size:16pt;font-family:&quot;CMU Seri=
+f Roman&quot;">Third F</span></b><span lang=3D"EN-US" style=3D"font-size:16=
+pt;font-family:&quot;CMU Serif Roman&quot;">rench<b>=C2=A0R</b>egional<b>=
+=C2=A0C</b>onference<b>=C2=A0</b>on<b>=C2=A0C</b>omplex<b>=C2=A0S</b>ystems=
+<b></b></span></p><p align=3D"center" style=3D"text-align:center;line-heigh=
+t:normal;margin:0cm;font-size:11pt;font-family:Arial,sans-serif;color:black=
+"><span style=3D"font-size:16pt;font-family:&quot;CMU Serif Roman&quot;">Ma=
+y 31 =E2=80=93 June 02, 2023</span></p><p align=3D"center" style=3D"text-al=
+ign:center;line-height:normal;margin:0cm;font-size:11pt;font-family:Arial,s=
+ans-serif;color:black"><span style=3D"font-size:16pt;font-family:&quot;CMU =
+Serif Roman&quot;">Le Havre, France</span></p><p align=3D"center" style=3D"=
+text-align:center;line-height:normal;margin:0cm;font-size:11pt;font-family:=
+Arial,sans-serif;color:black"><span lang=3D"EN-GB"><a href=3D"https://iutdi=
+jon.u-bourgogne.fr/ccs-france/" target=3D"_blank" style=3D"color:blue"><b><=
+span lang=3D"FR" style=3D"font-size:16pt;font-family:&quot;CMU Serif Roman&=
+quot;">FRCCS 2023</span></b></a></span><b><span style=3D"font-size:16pt;fon=
+t-family:&quot;CMU Serif Roman&quot;"></span></b></p><p style=3D"text-align=
+:justify;line-height:normal;margin:0cm;font-size:11pt;font-family:Arial,san=
+s-serif;color:black"><span style=3D"font-size:10pt;font-family:&quot;CMU Se=
+rif Roman&quot;;background-image:initial;background-position:initial;backgr=
+ound-size:initial;background-repeat:initial;background-origin:initial;backg=
+round-clip:initial">=C2=A0</span></p><p style=3D"text-align:justify;line-he=
+ight:normal;margin:0cm;font-size:11pt;font-family:Arial,sans-serif;color:bl=
+ack"><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;CMU Ser=
+if Roman&quot;">You are cordially invited to submit your contribution until=
+=C2=A0<b>February 22, 2023.</b><span style=3D"background-image:initial;back=
+ground-position:initial;background-size:initial;background-repeat:initial;b=
+ackground-origin:initial;background-clip:initial"></span></span></p><p styl=
+e=3D"text-align:justify;line-height:normal;margin:0cm;font-size:11pt;font-f=
+amily:Arial,sans-serif;color:black"><b><span lang=3D"EN-US" style=3D"font-s=
+ize:10pt;font-family:&quot;CMU Serif Roman&quot;">=C2=A0</span></b></p><p s=
+tyle=3D"text-align:justify;line-height:normal;margin:0cm;font-size:11pt;fon=
+t-family:Arial,sans-serif;color:black"><b><span lang=3D"EN-US" style=3D"fon=
+t-size:10pt;font-family:&quot;CMU Serif Roman&quot;">FRCCS 2023 (F</span></=
+b><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;CMU Serif =
+Roman&quot;">rench=C2=A0<b>R</b>egional<b>=C2=A0C</b>onference on=C2=A0<b>C=
+</b>omplex=C2=A0<b>S</b>ystems 2023) is the Third edition of the French Reg=
+ional Conference on Complex Systems. It promotes interdisciplinary exchange=
+s between regional researchers from various scientific disciplines and back=
+grounds (sociology, economics, history, management, archaeology, geography,=
+ linguistics, statistics, mathematics, and computer science). FRCCS 2023 is=
+ an opportunity to exchange and promote the cross-fertilization of ideas by=
+ presenting recent research work, industrial developments, and original app=
+lications. Special attention is given to research topics with a high societ=
+al impact from the complexity science perspective.</span></p><p style=3D"te=
+xt-align:justify;line-height:normal;margin:0cm;font-size:11pt;font-family:A=
+rial,sans-serif;color:black"><span lang=3D"EN-US" style=3D"font-size:10pt;f=
+ont-family:&quot;CMU Serif Roman&quot;">=C2=A0</span></p><p class=3D"MsoNor=
+mal" style=3D"margin:0cm;font-size:12pt;font-family:Cambria,serif"><b><span=
+ lang=3D"EN-US" style=3D"font-family:CMUSerif,serif">Keynote Speakers</span=
+></b><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:CMUSerif,seri=
+f"></span><span lang=3D"EN-US" style=3D"font-family:&quot;Times New Roman&q=
+uot;,serif"></span></p><p class=3D"MsoNormal" style=3D"margin:0cm;backgroun=
+d-image:initial;background-position:initial;background-size:initial;backgro=
+und-repeat:initial;background-origin:initial;background-clip:initial;font-s=
+ize:12pt;font-family:Cambria,serif"><span style=3D"color:black"><a href=3D"=
+http://www.lajello.com/" target=3D"_blank" style=3D"color:blue"><span lang=
+=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&quot;"=
+>Luca Maria Aiello</span></a></span><span lang=3D"EN-US" style=3D"font-size=
+:10pt;font-family:&quot;CMU Serif Roman&quot;">=C2=A0ITU Copenhagen Denmark=
+</span></p><p class=3D"MsoNormal" style=3D"margin:0cm;background-image:init=
+ial;background-position:initial;background-size:initial;background-repeat:i=
+nitial;background-origin:initial;background-clip:initial;font-size:12pt;fon=
+t-family:Cambria,serif"><span style=3D"color:black"><a href=3D"https://webs=
+pace.maths.qmul.ac.uk/g.bianconi/" target=3D"_blank" style=3D"color:blue"><=
+span lang=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;CMU Serif Rom=
+an&quot;">Ginestra Bianconi</span></a></span><span lang=3D"EN-US" style=3D"=
+font-size:10pt;font-family:&quot;CMU Serif Roman&quot;">=C2=A0Queen Mary Un=
+iversity UK</span></p><p class=3D"MsoNormal" style=3D"margin:0cm;font-size:=
+12pt;font-family:Cambria,serif"><a href=3D"https://ifisc.uib-csic.es/en/peo=
+ple/victor-m-eguiluz/" target=3D"_blank" style=3D"color:blue"><span lang=3D=
+"EN-US" style=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&quot;">V=
+=C3=ADctor M. Egu=C3=ADluz</span></a><span lang=3D"EN-US" style=3D"font-siz=
+e:10pt;font-family:&quot;CMU Serif Roman&quot;">=C2=A0University of the Bal=
+earic Islands Spain</span><span lang=3D"EN-US" style=3D"font-family:&quot;T=
+imes New Roman&quot;,serif"></span></p><p class=3D"MsoNormal" style=3D"marg=
+in:0cm;background-image:initial;background-position:initial;background-size=
+:initial;background-repeat:initial;background-origin:initial;background-cli=
+p:initial;font-size:12pt;font-family:Cambria,serif"><span style=3D"color:bl=
+ack"><a href=3D"https://www.maastrichtuniversity.nl/p70074082" target=3D"_b=
+lank" style=3D"color:blue"><span lang=3D"EN-US" style=3D"font-size:10pt;fon=
+t-family:&quot;CMU Serif Roman&quot;">Adriana Iamnitchi</span></a></span><s=
+pan lang=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;CMU Serif Roma=
+n&quot;">=C2=A0Maastricht University Netherlands</span></p><p class=3D"MsoN=
+ormal" style=3D"margin:0cm;background-image:initial;background-position:ini=
+tial;background-size:initial;background-repeat:initial;background-origin:in=
+itial;background-clip:initial;font-size:12pt;font-family:Cambria,serif"><sp=
+an style=3D"color:black"><a href=3D"https://unipa.academia.edu/RosarioMante=
+gna" target=3D"_blank" style=3D"color:blue"><span lang=3D"EN-US" style=3D"f=
+ont-size:10pt;font-family:&quot;CMU Serif Roman&quot;">Rosario N. Mantegna<=
+/span></a></span><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:&=
+quot;CMU Serif Roman&quot;">=C2=A0Palermo University Italy</span></p><p cla=
+ss=3D"MsoNormal" style=3D"margin:0cm;background-image:initial;background-po=
+sition:initial;background-size:initial;background-repeat:initial;background=
+-origin:initial;background-clip:initial;font-size:12pt;font-family:Cambria,=
+serif"><span style=3D"color:black"><a href=3D"https://www.unil.ch/gse/home/=
+menuinst/vie-facultaire/promotions--nominations/rozenblat-celine.html" targ=
+et=3D"_blank" style=3D"color:blue"><span lang=3D"EN-US" style=3D"font-size:=
+10pt;font-family:&quot;CMU Serif Roman&quot;">C=C3=A9line Rozenblat</span><=
+/a></span><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;CM=
+U Serif Roman&quot;">=C2=A0University of Lausanne Switzerland</span></p><p =
+class=3D"MsoNormal" style=3D"margin:4pt 0cm;font-size:12pt;font-family:Camb=
+ria,serif"><b><span lang=3D"EN-US" style=3D"font-family:&quot;CMU Serif Rom=
+an&quot;">=C2=A0</span></b></p><p class=3D"MsoNormal" style=3D"margin:4pt 0=
+cm;font-size:12pt;font-family:Cambria,serif"><b><span lang=3D"EN-US" style=
+=3D"font-family:&quot;CMU Serif Roman&quot;">Submission Guidelines</span></=
+b></p><p style=3D"margin:0cm 0cm 3pt;text-align:justify;line-height:normal;=
+font-size:11pt;font-family:Arial,sans-serif;color:black"><span lang=3D"EN-U=
+S" style=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&quot;">Finaliz=
+ed work (published or unpublished) and work in progress are welcome.<span s=
+tyle=3D"background-image:initial;background-position:initial;background-siz=
+e:initial;background-repeat:initial;background-origin:initial;background-cl=
+ip:initial">=C2=A0Two types of contributions are accepted:</span></span></p=
+><p style=3D"margin:0cm 0cm 0cm 35.7pt;text-align:justify;background-image:=
+initial;background-position:initial;background-size:initial;background-repe=
+at:initial;background-origin:initial;background-clip:initial;font-size:12pt=
+;font-family:Cambria,serif"><span lang=3D"EN-US" style=3D"font-size:10pt;fo=
+nt-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:normal;font-var=
+iant-east-asian:normal;font-stretch:normal;font-size:7pt;line-height:normal=
+;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0</span></span><b><span lang=3D"EN-US" style=3D"font-size:10pt;font=
+-family:&quot;CMU Serif Roman&quot;;color:black;background-image:initial;ba=
+ckground-position:initial;background-size:initial;background-repeat:initial=
+;background-origin:initial;background-clip:initial">Full paper</span></b><s=
+pan lang=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;CMU Serif Roma=
+n&quot;;color:black;background-image:initial;background-position:initial;ba=
+ckground-size:initial;background-repeat:initial;background-origin:initial;b=
+ackground-clip:initial">=C2=A0about=C2=A0<b>original research</b></span><sp=
+an lang=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;CMU Serif Roman=
+&quot;"></span></p><p style=3D"text-align:justify;margin:0cm 0cm 0cm 36pt;f=
+ont-size:12pt;font-family:Cambria,serif"><span lang=3D"EN-US" style=3D"font=
+-size:5pt;font-family:&quot;CMU Serif Roman&quot;">=C2=A0</span></p><p styl=
+e=3D"margin:0cm 0cm 0cm 36pt;font-size:12pt;font-family:Cambria,serif"><spa=
+n lang=3D"EN-US" style=3D"font-size:10pt;font-family:Symbol">=C2=B7<span st=
+yle=3D"font-variant-numeric:normal;font-variant-east-asian:normal;font-stre=
+tch:normal;font-size:7pt;line-height:normal;font-family:&quot;Times New Rom=
+an&quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span></span><b><span =
+lang=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&qu=
+ot;">Extended Abstract</span></b><span lang=3D"EN-US" style=3D"font-size:10=
+pt;font-family:&quot;CMU Serif Roman&quot;">=C2=A0about published or unpubl=
+ished research.=C2=A0</span><span lang=3D"EN-US" style=3D"font-size:10pt;fo=
+nt-family:&quot;CMU Serif Roman&quot;">It is recommended to be between=C2=
+=A03-4 pages. They should not exceed four pages.</span></p><p class=3D"MsoN=
+ormal" style=3D"margin:0cm;font-size:12pt;font-family:Cambria,serif"><span =
+lang=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&qu=
+ot;;color:black;background-image:initial;background-position:initial;backgr=
+ound-size:initial;background-repeat:initial;background-origin:initial;backg=
+round-clip:initial">=C2=A0</span></p><p style=3D"margin:0cm 0cm 0cm 36pt;fo=
+nt-size:12pt;font-family:Cambria,serif"><span lang=3D"EN-US" style=3D"font-=
+size:10pt;font-family:&quot;Courier New&quot;;color:black;background-image:=
+initial;background-position:initial;background-size:initial;background-repe=
+at:initial;background-origin:initial;background-clip:initial">o<span style=
+=3D"font-variant-numeric:normal;font-variant-east-asian:normal;font-stretch=
+:normal;font-size:7pt;line-height:normal;font-family:&quot;Times New Roman&=
+quot;">=C2=A0=C2=A0=C2=A0</span></span><span lang=3D"EN-US" style=3D"font-s=
+ize:10pt;font-family:&quot;CMU Serif Roman&quot;;color:black;background-ima=
+ge:initial;background-position:initial;background-size:initial;background-r=
+epeat:initial;background-origin:initial;background-clip:initial">Submission=
+s must follow the Springer publication format available in the journal</spa=
+n><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;CMU Serif =
+Roman&quot;;color:black">=C2=A0</span><a href=3D"https://appliednetsci.spri=
+ngeropen.com/" target=3D"_blank" style=3D"color:blue"><span lang=3D"EN-US" =
+style=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&quot;;background-=
+image:initial;background-position:initial;background-size:initial;backgroun=
+d-repeat:initial;background-origin:initial;background-clip:initial">Applied=
+ Network Science</span></a><span lang=3D"EN-US" style=3D"font-size:10pt;fon=
+t-family:&quot;CMU Serif Roman&quot;;background-image:initial;background-po=
+sition:initial;background-size:initial;background-repeat:initial;background=
+-origin:initial;background-clip:initial">=C2=A0</span><span lang=3D"EN-US" =
+style=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&quot;;color:black=
+;background-image:initial;background-position:initial;background-size:initi=
+al;background-repeat:initial;background-origin:initial;background-clip:init=
+ial">in the Instructions for Authors&#39; instructions entry.</span></p><p =
+style=3D"margin:0cm 0cm 0cm 36pt;font-size:12pt;font-family:Cambria,serif">=
+<span lang=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;CMU Serif Ro=
+man&quot;;color:black;background-image:initial;background-position:initial;=
+background-size:initial;background-repeat:initial;background-origin:initial=
+;background-clip:initial">=C2=A0</span></p><p style=3D"margin:0cm 0cm 3pt 3=
+6pt;line-height:normal;font-size:11pt;font-family:Arial,sans-serif;color:bl=
+ack"><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;Courier=
+ New&quot;;color:rgb(0,59,130);letter-spacing:0.1pt">o<span style=3D"font-v=
+ariant-numeric:normal;font-variant-east-asian:normal;font-stretch:normal;fo=
+nt-size:7pt;line-height:normal;font-family:&quot;Times New Roman&quot;">=C2=
+=A0=C2=A0=C2=A0</span></span><span lang=3D"EN-US" style=3D"font-size:10pt;f=
+ont-family:&quot;CMU Serif Roman&quot;;background-image:initial;background-=
+position:initial;background-size:initial;background-repeat:initial;backgrou=
+nd-origin:initial;background-clip:initial">All contributions should be subm=
+itted in=C2=A0<b>pdf format</b>=C2=A0via=C2=A0</span><u><span lang=3D"EN-US=
+" style=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&quot;;color:rgb=
+(0,59,130);letter-spacing:0.1pt;background-image:initial;background-positio=
+n:initial;background-size:initial;background-repeat:initial;background-orig=
+in:initial;background-clip:initial"><a href=3D"https://easychair.org/confer=
+ences/?conf=3Dfrccs2023" target=3D"_blank" style=3D"color:blue">EasyChair</=
+a>.</span></u></p><p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt=
+;font-family:Cambria,serif"><span lang=3D"EN-US" style=3D"font-size:8pt;fon=
+t-family:&quot;CMU Serif Roman&quot;">=C2=A0</span></p><p class=3D"MsoNorma=
+l" style=3D"margin:4pt 0cm;font-size:12pt;font-family:Cambria,serif"><b><sp=
+an lang=3D"EN-US" style=3D"font-family:&quot;CMU Serif Roman&quot;">Publica=
+tion</span></b></p><p style=3D"margin:0cm 0cm 3pt;line-height:normal;font-s=
+ize:11pt;font-family:Arial,sans-serif;color:black"><b><span lang=3D"EN-US" =
+style=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&quot;;background-=
+image:initial;background-position:initial;background-size:initial;backgroun=
+d-repeat:initial;background-origin:initial;background-clip:initial">Selecte=
+d submissions of unpublished work will be invited for publication in specia=
+l issues (fast track procedure)=C2=A0</span></b><b><span lang=3D"EN-US" sty=
+le=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&quot;">of the journa=
+ls:</span></b></p><p style=3D"line-height:normal;margin:0cm;font-size:11pt;=
+font-family:Arial,sans-serif;color:black"><b><span lang=3D"EN-US" style=3D"=
+font-size:10pt;font-family:&quot;CMU Serif Roman&quot;">=C2=A0</span></b></=
+p><p style=3D"margin:0cm 0cm 0cm 72pt;line-height:normal;font-size:11pt;fon=
+t-family:Arial,sans-serif;color:black"><span lang=3D"EN-US" style=3D"font-s=
+ize:10pt;font-family:&quot;Courier New&quot;;background-image:initial;backg=
+round-position:initial;background-size:initial;background-repeat:initial;ba=
+ckground-origin:initial;background-clip:initial">o<span style=3D"font-varia=
+nt-numeric:normal;font-variant-east-asian:normal;font-stretch:normal;font-s=
+ize:7pt;line-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=
+=C2=A0=C2=A0</span></span><span lang=3D"EN-GB"><a href=3D"https://appliedne=
+tsci.springeropen.com/" target=3D"_blank" style=3D"color:blue"><span lang=
+=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&quot;;=
+background-image:initial;background-position:initial;background-size:initia=
+l;background-repeat:initial;background-origin:initial;background-clip:initi=
+al">Applied Network Science,</span></a></span><span lang=3D"EN-US" style=3D=
+"font-size:10pt;font-family:&quot;CMU Serif Roman&quot;;background-image:in=
+itial;background-position:initial;background-size:initial;background-repeat=
+:initial;background-origin:initial;background-clip:initial">=C2=A0edited by=
+ Springer</span></p><p style=3D"margin:0cm 0cm 0cm 72pt;line-height:normal;=
+font-size:11pt;font-family:Arial,sans-serif;color:black"><span lang=3D"EN-U=
+S" style=3D"font-size:10pt;font-family:&quot;Courier New&quot;;background-i=
+mage:initial;background-position:initial;background-size:initial;background=
+-repeat:initial;background-origin:initial;background-clip:initial">o<span s=
+tyle=3D"font-variant-numeric:normal;font-variant-east-asian:normal;font-str=
+etch:normal;font-size:7pt;line-height:normal;font-family:&quot;Times New Ro=
+man&quot;">=C2=A0=C2=A0=C2=A0</span></span><span lang=3D"EN-GB"><a href=3D"=
+https://www.hindawi.com/journals/complexity/?utm_source=3Dgoogle&amp;utm_me=
+dium=3Dcpc&amp;utm_campaign=3DHDW_MRKT_GBL_SUB_ADWO_PAI_DYNA_JOUR_X&amp;gcl=
+id=3DCj0KCQiA1KiBBhCcARIsAPWqoSpsdfamsWlEH-_iGdjBvxVbOa6Es9IxZTzJtDxJf_i7e0=
+afNhrwcdcaArDkEALw_wcB" target=3D"_blank" style=3D"color:blue"><span lang=
+=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&quot;;=
+background-image:initial;background-position:initial;background-size:initia=
+l;background-repeat:initial;background-origin:initial;background-clip:initi=
+al">Complexity,</span></a></span><span lang=3D"EN-US" style=3D"font-size:10=
+pt;font-family:&quot;CMU Serif Roman&quot;;background-image:initial;backgro=
+und-position:initial;background-size:initial;background-repeat:initial;back=
+ground-origin:initial;background-clip:initial">=C2=A0edited by Hindawi</spa=
+n></p><p style=3D"margin:0cm;line-height:16.8667px;font-size:11pt;font-fami=
+ly:Arial,sans-serif;color:black"><b><span lang=3D"EN-US" style=3D"font-size=
+:10pt;line-height:15.3333px;font-family:&quot;CMU Serif Roman&quot;;color:r=
+gb(33,33,33);background-image:initial;background-position:initial;backgroun=
+d-size:initial;background-repeat:initial;background-origin:initial;backgrou=
+nd-clip:initial">=C2=A0</span></b></p><p style=3D"margin:0cm;line-height:16=
+.8667px;font-size:11pt;font-family:Arial,sans-serif;color:black"><b><span l=
+ang=3D"EN-US" style=3D"font-size:10pt;line-height:15.3333px;font-family:&qu=
+ot;CMU Serif Roman&quot;;color:rgb(33,33,33);background-image:initial;backg=
+round-position:initial;background-size:initial;background-repeat:initial;ba=
+ckground-origin:initial;background-clip:initial">=C2=A0</span></b></p><p st=
+yle=3D"margin:0cm;line-height:16.8667px;font-size:11pt;font-family:Arial,sa=
+ns-serif;color:black"><b><span lang=3D"EN-US" style=3D"font-size:10pt;line-=
+height:15.3333px;font-family:&quot;CMU Serif Roman&quot;;color:rgb(33,33,33=
+);background-image:initial;background-position:initial;background-size:init=
+ial;background-repeat:initial;background-origin:initial;background-clip:ini=
+tial">Topics include, but are not limited to:</span></b></p><p class=3D"Mso=
+Normal" style=3D"margin:0cm 0cm 0cm 35.7pt;background-image:initial;backgro=
+und-position:initial;background-size:initial;background-repeat:initial;back=
+ground-origin:initial;background-clip:initial;font-size:12pt;font-family:Ca=
+mbria,serif"><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:Symbo=
+l;color:black">=C2=B7<span style=3D"font-variant-numeric:normal;font-varian=
+t-east-asian:normal;font-stretch:normal;font-size:7pt;line-height:normal;fo=
+nt-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0</span></span><b><span lang=3D"EN-US" style=3D"font-size:10pt;font-fa=
+mily:&quot;CMU Serif Roman&quot;;color:black">Foundations of complex system=
+s</span></b></p><ul type=3D"disc" style=3D"margin-bottom:0cm"><ul type=3D"c=
+ircle" style=3D"margin-bottom:0cm"><li class=3D"MsoNormal" style=3D"margin:=
+0cm;color:black;text-align:justify;background-image:initial;background-posi=
+tion:initial;background-size:initial;background-repeat:initial;background-o=
+rigin:initial;background-clip:initial;font-size:12pt;font-family:Cambria,se=
+rif"><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;CMU Ser=
+if Roman&quot;">Self-organization, non-linear dynamics, statistical physics=
+, mathematical modeling and simulation, conceptual frameworks, ways of thin=
+king, methodologies and methods, philosophy of complexity, knowledge system=
+s, Complexity and information, Dynamics and self-organization, structure an=
+d dynamics at several scales, self-similarity, fractals</span></li></ul><li=
+ class=3D"MsoNormal" style=3D"margin:0cm;color:black;background-image:initi=
+al;background-position:initial;background-size:initial;background-repeat:in=
+itial;background-origin:initial;background-clip:initial;font-size:12pt;font=
+-family:Cambria,serif"><b><span lang=3D"EN-US" style=3D"font-size:10pt;font=
+-family:&quot;CMU Serif Roman&quot;">Complex Networks</span></b></li><ul ty=
+pe=3D"circle" style=3D"margin-bottom:0cm"><li class=3D"MsoNormal" style=3D"=
+margin:0cm;color:black;text-align:justify;background-image:initial;backgrou=
+nd-position:initial;background-size:initial;background-repeat:initial;backg=
+round-origin:initial;background-clip:initial;font-size:12pt;font-family:Cam=
+bria,serif"><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;=
+CMU Serif Roman&quot;">Structure &amp; Dynamics, Multilayer and Multiplex N=
+etworks, Adaptive Networks, Temporal Networks, Centrality, Patterns, Clique=
+s, Communities, Epidemics, Rumors, Control, Synchronization, Reputation, In=
+fluence, Viral Marketing, Link Prediction, Network Visualization, Network D=
+igging, Network Embedding &amp; Learning.</span></li></ul><li class=3D"MsoN=
+ormal" style=3D"margin:0cm;color:black;text-align:justify;background-image:=
+initial;background-position:initial;background-size:initial;background-repe=
+at:initial;background-origin:initial;background-clip:initial;font-size:12pt=
+;font-family:Cambria,serif"><b><span style=3D"font-size:10pt;font-family:&q=
+uot;CMU Serif Roman&quot;">Neuroscience,=C2=A0</span></b><b><span lang=3D"E=
+N-US" style=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&quot;">Ling=
+uistics</span></b></li><ul type=3D"circle" style=3D"margin-bottom:0cm"><li =
+class=3D"MsoNormal" style=3D"margin:0cm;color:black;text-align:justify;back=
+ground-image:initial;background-position:initial;background-size:initial;ba=
+ckground-repeat:initial;background-origin:initial;background-clip:initial;f=
+ont-size:12pt;font-family:Cambria,serif"><span lang=3D"EN-US" style=3D"font=
+-size:10pt;font-family:&quot;CMU Serif Roman&quot;">Evolution of language, =
+social consensus, artificial intelligence, cognitive processes &amp; educat=
+ion, Narrative complexity</span></li></ul><li class=3D"MsoNormal" style=3D"=
+margin:0cm;color:black;background-image:initial;background-position:initial=
+;background-size:initial;background-repeat:initial;background-origin:initia=
+l;background-clip:initial;font-size:12pt;font-family:Cambria,serif"><b><spa=
+n lang=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&=
+quot;">Economics &amp; Finance</span></b></li><ul type=3D"circle" style=3D"=
+margin-bottom:0cm"><li class=3D"MsoNormal" style=3D"margin:0cm;color:black;=
+text-align:justify;background-image:initial;background-position:initial;bac=
+kground-size:initial;background-repeat:initial;background-origin:initial;ba=
+ckground-clip:initial;font-size:12pt;font-family:Cambria,serif"><span lang=
+=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&quot;"=
+>Game Theory, Stock Markets and Crises, Financial Systems, Risk Management,=
+ Globalization, Economics and Markets, Blockchain, Bitcoins, Markets and Em=
+ployment</span></li></ul><li class=3D"MsoNormal" style=3D"margin:0cm;color:=
+black;text-align:justify;background-image:initial;background-position:initi=
+al;background-size:initial;background-repeat:initial;background-origin:init=
+ial;background-clip:initial;font-size:12pt;font-family:Cambria,serif"><b><s=
+pan lang=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;CMU Serif Roma=
+n&quot;">Infrastructure, planning, and environment</span></b></li><ul type=
+=3D"circle" style=3D"margin-bottom:0cm"><li class=3D"MsoNormal" style=3D"ma=
+rgin:0cm;color:black;text-align:justify;background-image:initial;background=
+-position:initial;background-size:initial;background-repeat:initial;backgro=
+und-origin:initial;background-clip:initial;font-size:12pt;font-family:Cambr=
+ia,serif"><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;CM=
+U Serif Roman&quot;">critical infrastructure, urban planning, mobility, tra=
+nsport and energy, smart cities, urban development, urban sciences</span></=
+li></ul><li class=3D"MsoNormal" style=3D"margin:0cm;color:black;text-align:=
+justify;background-image:initial;background-position:initial;background-siz=
+e:initial;background-repeat:initial;background-origin:initial;background-cl=
+ip:initial;font-size:12pt;font-family:Cambria,serif"><b><span lang=3D"EN-US=
+" style=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&quot;">Biologic=
+al and (bio)medical complexity</span></b></li><ul type=3D"circle" style=3D"=
+margin-bottom:0cm"><li class=3D"MsoNormal" style=3D"margin:0cm;color:black;=
+text-align:justify;background-image:initial;background-position:initial;bac=
+kground-size:initial;background-repeat:initial;background-origin:initial;ba=
+ckground-clip:initial;font-size:12pt;font-family:Cambria,serif"><span lang=
+=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&quot;"=
+>biological networks, systems biology, evolution, natural sciences, medicin=
+e and physiology, dynamics of biological coordination, aging</span></li></u=
+l><li class=3D"MsoNormal" style=3D"margin:0cm;color:black;background-image:=
+initial;background-position:initial;background-size:initial;background-repe=
+at:initial;background-origin:initial;background-clip:initial;font-size:12pt=
+;font-family:Cambria,serif"><b><span lang=3D"EN-US" style=3D"font-size:10pt=
+;font-family:&quot;CMU Serif Roman&quot;">Social complexity</span></b></li>=
+</ul><p class=3D"MsoNormal" style=3D"margin:0cm 0cm 0cm 54pt;text-align:jus=
+tify;background-image:initial;background-position:initial;background-size:i=
+nitial;background-repeat:initial;background-origin:initial;background-clip:=
+initial;font-size:12pt;font-family:Cambria,serif"><span lang=3D"EN-US" styl=
+e=3D"font-size:10pt;font-family:&quot;Courier New&quot;;color:black">o<span=
+ style=3D"font-variant-numeric:normal;font-variant-east-asian:normal;font-s=
+tretch:normal;font-size:7pt;line-height:normal;font-family:&quot;Times New =
+Roman&quot;">=C2=A0=C2=A0=C2=A0</span></span><span lang=3D"EN-US" style=3D"=
+font-size:10pt;font-family:&quot;CMU Serif Roman&quot;;color:black">social =
+networks, computational social sciences, socio-ecological systems, social g=
+roups, processes of change, social evolution, self-organization and democra=
+cy, socio-technical systems, collective intelligence, corporate and social =
+structures and dynamics, organizational behavior, and management, military =
+and defense systems, social unrest, political networks, interactions betwee=
+n human and natural systems, diffusion/circulation of knowledge, diffusion =
+of innovation</span></p><ul type=3D"disc" style=3D"margin-bottom:0cm"><li c=
+lass=3D"MsoNormal" style=3D"margin:0cm;color:black;background-image:initial=
+;background-position:initial;background-size:initial;background-repeat:init=
+ial;background-origin:initial;background-clip:initial;font-size:12pt;font-f=
+amily:Cambria,serif"><b><span lang=3D"EN-US" style=3D"font-size:10pt;font-f=
+amily:&quot;CMU Serif Roman&quot;">Socio-Ecological Systems</span></b></li>=
+<ul type=3D"circle" style=3D"margin-bottom:0cm"><li class=3D"MsoNormal" sty=
+le=3D"margin:0cm;color:black;background-image:initial;background-position:i=
+nitial;background-size:initial;background-repeat:initial;background-origin:=
+initial;background-clip:initial;font-size:12pt;font-family:Cambria,serif"><=
+span lang=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;CMU Serif Rom=
+an&quot;">Global environmental change, green growth, sustainability &amp; r=
+esilience, and culture</span></li></ul><li class=3D"MsoNormal" style=3D"mar=
+gin:0cm;color:black;background-image:initial;background-position:initial;ba=
+ckground-size:initial;background-repeat:initial;background-origin:initial;b=
+ackground-clip:initial;font-size:12pt;font-family:Cambria,serif"><b><span l=
+ang=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&quo=
+t;">Organisms and populations</span></b></li></ul><p class=3D"MsoNormal" st=
+yle=3D"margin:0cm 0cm 0cm 72pt;background-image:initial;background-position=
+:initial;background-size:initial;background-repeat:initial;background-origi=
+n:initial;background-clip:initial;font-size:12pt;font-family:Cambria,serif"=
+><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;Courier New=
+&quot;;color:black">o<span style=3D"font-variant-numeric:normal;font-varian=
+t-east-asian:normal;font-stretch:normal;font-size:7pt;line-height:normal;fo=
+nt-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0</span></span><spa=
+n lang=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&=
+quot;;color:black">Population biology, collective behavior of animals, ecos=
+ystems, ecology, ecological networks, microbiome, speciation, evolution</sp=
+an></p><ul type=3D"disc" style=3D"margin-bottom:0cm"><li class=3D"MsoNormal=
+" style=3D"margin:0cm;color:rgb(33,33,33);background-image:initial;backgrou=
+nd-position:initial;background-size:initial;background-repeat:initial;backg=
+round-origin:initial;background-clip:initial;font-size:12pt;font-family:Cam=
+bria,serif"><b><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:&qu=
+ot;CMU Serif Roman&quot;;color:black">Engineering systems and systems of sy=
+stems</span></b><b><span lang=3D"EN-US" style=3D"font-size:10pt;font-family=
+:&quot;CMU Serif Roman&quot;"></span></b></li><ul type=3D"circle" style=3D"=
+margin-bottom:0cm"><li class=3D"MsoNormal" style=3D"margin:0cm;color:rgb(33=
+,33,33);text-align:justify;background-image:initial;background-position:ini=
+tial;background-size:initial;background-repeat:initial;background-origin:in=
+itial;background-clip:initial;font-size:12pt;font-family:Cambria,serif"><sp=
+an lang=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;CMU Serif Roman=
+&quot;;color:black">bioengineering, modified and hybrid biological organism=
+s, multi-agent systems, artificial life, artificial intelligence, robots, c=
+ommunication networks,=C2=A0</span><span lang=3D"EN-US" style=3D"font-size:=
+10pt;font-family:&quot;CMU Serif Roman&quot;">Internet, traffic systems, di=
+stributed control, resilience, artificial resilient systems, complex system=
+s engineering, biologically inspired engineering, synthetic biology</span><=
+/li></ul><li class=3D"MsoNormal" style=3D"margin:0cm;color:rgb(33,33,33);te=
+xt-align:justify;background-image:initial;background-position:initial;backg=
+round-size:initial;background-repeat:initial;background-origin:initial;back=
+ground-clip:initial;font-size:12pt;font-family:Cambria,serif"><b><span lang=
+=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;CMU Serif Roman&quot;"=
+>Complexity in physics and chemistry</span></b></li><ul type=3D"circle" sty=
+le=3D"margin-bottom:0cm"><li class=3D"MsoNormal" style=3D"margin:0cm;color:=
+rgb(33,33,33);text-align:justify;background-image:initial;background-positi=
+on:initial;background-size:initial;background-repeat:initial;background-ori=
+gin:initial;background-clip:initial;font-size:12pt;font-family:Cambria,seri=
+f"><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;CMU Serif=
+ Roman&quot;">quantum computing, quantum synchronization, quantum chaos, ra=
+ndom matrix theory)</span></li></ul></ul><p style=3D"margin:0cm;font-size:1=
+0pt;font-family:&quot;Times New Roman&quot;,serif"><b><span lang=3D"EN-US" =
+style=3D"font-family:&quot;CMU Serif Roman&quot;;color:rgb(33,33,33);backgr=
+ound-image:initial;background-position:initial;background-size:initial;back=
+ground-repeat:initial;background-origin:initial;background-clip:initial">=
+=C2=A0</span></b></p><p style=3D"margin:0cm;font-size:10pt;font-family:&quo=
+t;Times New Roman&quot;,serif"><b><span lang=3D"EN-US" style=3D"font-family=
+:&quot;CMU Serif Roman&quot;;color:rgb(33,33,33);background-image:initial;b=
+ackground-position:initial;background-size:initial;background-repeat:initia=
+l;background-origin:initial;background-clip:initial">GENERAL CHAIRS</span><=
+/b></p><p style=3D"margin:0cm;text-indent:18pt;font-size:10pt;font-family:&=
+quot;Times New Roman&quot;,serif"><span style=3D"font-family:&quot;CMU Seri=
+f Roman&quot;;background-image:initial;background-position:initial;backgrou=
+nd-size:initial;background-repeat:initial;background-origin:initial;backgro=
+und-clip:initial">Cyrille Bertelle=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=
+=A0=C2=A0 LITIS, Normastic, Le Havre</span></p><p style=3D"margin:0cm;text-=
+indent:18pt;font-size:10pt;font-family:&quot;Times New Roman&quot;,serif"><=
+span lang=3D"EN-US" style=3D"font-family:&quot;CMU Serif Roman&quot;;backgr=
+ound-image:initial;background-position:initial;background-size:initial;back=
+ground-repeat:initial;background-origin:initial;background-clip:initial">Ro=
+berto Interdonato=C2=A0 CIRAD, UMR TETIS, Montpellier</span></p><div><br></=
+div>-- <br><div dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gma=
+il_signature"><div dir=3D"ltr"><div><div dir=3D"ltr"><div><div dir=3D"ltr">=
+<div><div dir=3D"ltr"><div><div dir=3D"ltr"><div dir=3D"ltr"><br><span><fon=
+t color=3D"#999999">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D<br>
+Roberto Interdonato, PhD<br><div dir=3D"ltr">Research Scientist=C2=A0</div>=
+<div dir=3D"ltr">CIRAD=C2=A0</div><div dir=3D"ltr">UMR TETIS</div>Montpelli=
+er</font></span></div><div dir=3D"ltr"><span><font color=3D"#999999">France=
+<br></font><font color=3D"#999999">
+email:=C2=A0</font></span><span style=3D"color:rgb(85,85,85);white-space:no=
+wrap"><a href=3D"mailto:roberto.interdonato@cirad.fr" target=3D"_blank">rob=
+erto.interdonato@cirad.fr</a><br></span><span style=3D"color:rgb(153,153,15=
+3)">tel: +33 (0) 467558615</span></div><div><span><font color=3D"#999999">=
+=C2=A0=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</font><b=
+r></span></div></div></div></div></div></div></div></div></div></div></div>=
+</div>
+
+--000000000000ffb96f05f1eb372e--
+

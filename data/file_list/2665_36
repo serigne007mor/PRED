@@ -1,0 +1,754 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (BounceSMTP2.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id E131014014EC
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon, 14 Jun 2021 17:45:02 +0200 (CEST)
+Received: from mx2.d101.univ-nantes.fr (MX2.univ-nantes.fr [193.52.101.136])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id DFB8E61F0E4
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon, 14 Jun 2021 17:45:02 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTP id D3A31B4B119
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 14 Jun 2021 17:45:02 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 4.924
+X-Spam-Level: ****
+X-Spam-Status: No, score=4.924 tagged_above=-1000 required=5
+	tests=[CRM114_SPAM=5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+	HTML_FONT_LOW_CONTRAST=0.001, HTML_MESSAGE=0.001,
+	RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001,
+	SPF_PASS=-0.001, T_KAM_HTML_FONT_INVALID=0.01, UN_PHISHING_PW=0.1,
+	URIBL_BLOCKED=0.001] autolearn=disabled
+X-CRM114-Status: SPAM ( -6.0498 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=gmail.com
+Received: from mx2.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id xvQBcv8uOBhh for <liste-egc@polytech.univ-nantes.fr>;
+	Mon, 14 Jun 2021 17:45:00 +0200 (CEST)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTPS id E68BAA3DAE9
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 14 Jun 2021 17:44:59 +0200 (CEST)
+Received: by mail-ot1-x334.google.com with SMTP id 7-20020a9d0d070000b0290439abcef697so5781083oti.2
+        for <liste-egc@polytech.univ-nantes.fr>; Mon, 14 Jun 2021 08:44:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=nwFBCHxQ39tGsBhb7kA6k5NGe4vUlBR51XebwxhkdMg=;
+        b=GnIDxQ2evLp25iB3Dk+e0dn+b/zxoS6Ch2rzC+PMlYZ/ho4ici8E4Q4JKA+avz4mmz
+         FAhEq2uy43p5uI4BNad6+rDh/0aedS/v7298i0pBqr0k5nTkt/nMQSAvbd/jILSJ0WVQ
+         L1VidRJCzWGX6xGEUMureQ9rQJBk9AeLVOE/sX70gd/+6mG3HczNbqsvOzlGAcJVsygL
+         a+8iS+eeUOh8+WqAFq1Z2W0q23R43M/EVdXDeMTW79K8oC6VZxFWJbwaD+bvlwU5wY4N
+         D3QP1kDeVONUtyJ/ufWAxdkWS8bgU5zGeu3x1VBBEn9ikZDF2FxqkQHU82bpS9iWgJ3V
+         3D7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=nwFBCHxQ39tGsBhb7kA6k5NGe4vUlBR51XebwxhkdMg=;
+        b=OiWKVZpRcKOEeY1+e9goTx+IwAyqLY5kMAWQq8cTSLUw2671k9zPYJRWAlrW2q5nBk
+         Y/V627nzVEl9VdSzfu3jQ26g12QkCQShlsdujSpMTXhJo+yc2gd0rtI6A6q0NAgmuaz4
+         butVQ5HucnPE20e1QfEnU9KVALP9Cgxd7SmZtyFrCX/ti/2djD45/j9fX7uhFzxIbmKE
+         lqPCAbYBHU8jYKsY5GUcZwEvCMxnfesIEsq6SXlD4fIaZTSfHH8EBvNzwd6+H2YEa78U
+         r4ug4nuCOH9AkV908aHY9ggUQb9mZ0p6UN9lD/J2MjCdD4D4FNix3DqFN6BAmZmpCuEm
+         fg1A==
+X-Gm-Message-State: AOAM532f7ip6EG5fSng+oGa5mZ1gHRlEfnNVq89DG4JomvE/Pk9Ejvaf
+	f1rSeL7f4THrP/bttsMyANeHPD3zjrswHpcudmM8p6qR/YjozgqhhyuWqA==
+X-Google-Smtp-Source: ABdhPJzouRFj191ijMWLD3evvH+h3s/xEryV/Afj10hVgJ8mqhtDWXH4p5K0JEF4p6w97aC70AF4o+lDtJTyg/AH39E=
+X-Received: by 2002:a05:6830:2415:: with SMTP id j21mr13654969ots.224.1623685498441;
+ Mon, 14 Jun 2021 08:44:58 -0700 (PDT)
+MIME-Version: 1.0
+From: rafika boutalbi <boutalbi.rafika@gmail.com>
+Date: Mon, 14 Jun 2021 17:43:23 +0100
+Message-ID: <CANx104sAi-ML_3jE+NuyhfUQ2yaA2qp8XVrkmu8apoZEf76idQ@mail.gmail.com>
+To: liste-egc@polytech.univ-nantes.fr, info-ic@inria.fr, bull-i3@irit.fr, 
+	bull-ia@gdria.fr, dl@dl.kr.org, ln@groupes.renater.fr, Liste-proml@lri.fr, 
+	web.semantique@inria.fr, "Event@CIG" <event@in.tu-clausthal.de>, sma@loria.fr, 
+	agents@cs.umbc.edu, eda-liste <eda-liste@listes.univ-lyon2.fr>
+Content-Type: multipart/alternative; boundary="0000000000005c93b705c4bbbd2c"
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] [CFP][CIKM 2021] 1st International workshop on
+ REthinking PAssage Retrieval for Question-Answering (REPARQA)
+
+--0000000000005c93b705c4bbbd2c
+Content-Type: text/plain; charset="UTF-8"
+
+Dear colleagues and researchers,
+
+
+
+*1st International workshop on *REthinking PAssage Retrieval for
+Question-Answering (REPARQA)
+
+
+
+*https://sites.google.com/view/reparqaworkshopcikm2021/home
+<https://sites.google.com/view/reparqaworkshopcikm2021/home>*
+
+*Deadline: July 15, 2021*
+
+
+As part of The 30th ACM International Conference on Information and
+Knowledge Management (CIKM 2021)
+
+
+
+https://www.cikm2021.org/
+
+
+
+November 1-5, 2021, Online
+Context
+
+Research on Question-Answering (QA) systems has recently achieved
+considerable success in simplified closed-domain settings such as the SQuAD
+dataset, which provides a preselected passage. Researchers tackled
+open-domain QA that presents a key challenge in natural language processing
+(NLP). Open-domain QA considers a large text corpus such as Wikipedia pages
+instead of a preselected passage for answering a given question. In this
+context, the Natural Questions (NQ) dataset has presented a more
+challenging problem. In fact, instead of providing one short passage for
+each question, NQ gives an entire Wikipedia page which is significantly
+longer than the passage provided in the other datasets.
+
+
+An effective open-domain QA system must be able to successfully retrieve
+the document and the passage on one hand, and comprehend the question
+context to answer on the other. The current state-of-the-art of deep
+learning-based research for open-domain QA is often complicated and consist
+of mainly two components: (1) a passage retriever that selects a small
+subset of passages from documents (e.g., Wikipedia pages), and then (2) a
+machine comprehension that examines the retrieved passages to identify the
+final answer. Several studies showed that passage retrieval impact and
+impacts and can significantly improve question answering task.
+
+Several elements are important for the passage retriever, such as question
+and passage representation, similarity and attention mechanism between the
+question and passages, passage ranking techniques, etc.
+
+The REPARQA workshop is the first one that tackles the issue of passage
+retrieval for open-domain QA. It aims to bring together experts from
+industry, science, and academia to exchange ideas and discuss ongoing
+research in open-domain QA and, more precisely, the passage retrieval
+component. We encourage the description of a novel problem definition of
+passage retrieval for open-domain QA and new datasets in this context.
+Furthermore, we also encourage contributions to developing new techniques
+for document retrieval for open-domain QA problems.
+
+*Objective*
+
+Traditional research on passage and document retrieval mainly focuses on
+superficial similarities between the question and the passage (respectively
+document), such as cosine similarity. The main distinguishing focus of this
+workshop will be the use of deep neural networks and encoders for passage
+retrievals, such as the use of encoders to represent questions and
+passages, integrate attention mechanisms in the passage retrieval
+framework, etc.
+
+
+This workshop aims to discover the recent advances in passage retrieval for
+open-domain QA and improve open-domain QA systems. Thereby, the REPARQ
+workshop is an opportunity to inspire experts and researchers to share
+theoretical and practical knowledge of the various aspects of QA systems,
+to have focused discussions on the topic leading to converting the novel
+ideas into future innovations.
+
+*Topics of interests*
+
+We invite the submission of original works that are related -- but are not
+limited to -- the topics below:
+
+
+   -
+
+   Passage and document representation for open-domain QA
+   -
+
+   Attention mechanism for passage retrieval
+   -
+
+   Self-attention for passage and document retrieval
+   -
+
+   Passage and document retrieval based on unsupervised approaches
+   -
+
+   Passage and document ranking for open-domain QA
+   -
+
+   Reinforcement learning for passage retrieval
+   -
+
+   Passage and document retrieval using language models
+   -
+
+   Graph neural network for passage retrieval
+   -
+
+   Graph-based approaches using kernels
+   -
+
+   Ensemble approach for passage retrieval
+   -
+
+   Semantic understanding of passage and document content
+   -
+
+   Entity detection in questions and passages for context retrieval
+   -
+
+   Probabilistic graphical models
+   -
+
+   Parameterizations of specific passage retrieval systems for open-domain
+   QA
+   -
+
+   Impact of passage retrieval performance on overall open-domain QA
+   performance
+   -
+
+   Evaluation measures for assessing passage retrieval for open-domain QA
+
+*Submission*
+
+We invite two types of submissions, including original research papers (6-8
+pages) as well as position papers (2-4 pages). Submissions must be
+formatted according to the CIKM 2021 conference submissions formatting
+guidelines. All papers will be peer-reviewed and assessed by the program
+committee based on their novelty, technical quality, potential impact,
+clarity, and reproducibility. Participants should publish their source
+codes and include a link to their repository in the submitted papers. All
+the papers are required to be submitted via the EasyChair
+<https://easychair.org/conferences/?conf=reparqa2021> system.
+
+At least one author of each accepted paper must register for the workshop,
+in order to present the paper. For further instructions please refer to the
+<https://www.google.com/url?q=https%3A%2F%2Fwww.cikm2021.org%2F&sa=D&sntz=1&usg=AFQjCNGXjrQEqNXJ4bUAhEdEwUH_ISR3YQ>CIKM
+<https://www.google.com/url?q=https%3A%2F%2Fwww.cikm2021.org%2F&sa=D&sntz=1&usg=AFQjCNGXjrQEqNXJ4bUAhEdEwUH_ISR3YQ>
+2021 <https://www.cikm2021.org/> page.
+
+*Important dates*
+
+   - July 15, 2021: Paper submission
+   - August 15, 2021: Paper acceptance notification
+   - November 1-5, 2021: Workshop dates will be flexible
+
+
+Workshop Chairs
+
+Rafika Boutalbi*, *University of Stuttgart, Germany
+
+Rim Hantach*, *Engie, France
+
+Mohamed Nadif*, *Universite de Paris, France
+
+--0000000000005c93b705c4bbbd2c
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><h3 id=3D"gmail-m_958215328554455948gmail-m_85238751786334=
+91094gmail-m_-6432543659395250620gmail-m_-4956397321580956980gmail-m_-62689=
+28288900069260gmail-m_7098844512203966228gmail-m_-309237671986272500gmail-m=
+_-1139504297638254686gmail-m_-5914441601677045308gmail-m_587745937822991927=
+7gmail-m_-1693841208724688500gmail-m_2522473243972615881gmail-m_45489882657=
+41471820gmail-m_3810846511310631558gmail-m_9169621892487355688gmail-m_-7908=
+633166678884986gmail-m_4229733924575016551gmail-m_5146125080209370541gmail-=
+m_1041739996496270710gmail-m_3853711880378550031gmail-m_5590849052228746836=
+gmail-h.f1wop99o5jqr" dir=3D"ltr" style=3D"box-sizing:border-box;font-varia=
+nt-ligatures:none;margin:18px 0px 0px;outline:none;text-decoration-line:inh=
+erit;line-height:1.27;white-space:pre-wrap"><div style=3D"box-sizing:border=
+-box;display:inline-block;max-width:100%"><span style=3D"box-sizing:border-=
+box"><span style=3D"box-sizing:border-box"><p class=3D"MsoNormal" style=3D"=
+font-weight:700;font-family:&quot;Times New Roman&quot;,serif;margin:0cm;fo=
+nt-size:12pt"><span style=3D"color:rgb(0,0,0);font-family:arial,sans-serif;=
+font-variant-ligatures:normal;font-weight:400;white-space:normal">Dear coll=
+eagues and researchers,</span><b><span style=3D"color:rgb(153,0,0)"><br></s=
+pan></b></p><p class=3D"MsoNormal" align=3D"center" style=3D"font-weight:70=
+0;font-family:&quot;Times New Roman&quot;,serif;margin:0cm;font-size:12pt;t=
+ext-align:center"><b style=3D"text-decoration-line:inherit;color:rgb(204,0,=
+0);font-family:&quot;times new roman&quot;,serif;font-size:large"><br></b><=
+/p><p class=3D"MsoNormal" align=3D"center" style=3D"font-weight:700;font-fa=
+mily:&quot;Times New Roman&quot;,serif;margin:0cm;font-size:12pt;text-align=
+:center"><b style=3D"text-decoration-line:inherit;color:rgb(204,0,0);font-f=
+amily:&quot;times new roman&quot;,serif;font-size:large"><br></b></p><p cla=
+ss=3D"MsoNormal" align=3D"center" style=3D"font-weight:700;font-family:&quo=
+t;Times New Roman&quot;,serif;margin:0cm;font-size:12pt;text-align:center">=
+<b style=3D"text-decoration-line:inherit;color:rgb(204,0,0);font-family:&qu=
+ot;times new roman&quot;,serif;font-size:large">1st=C2=A0<span style=3D"tex=
+t-decoration-line:inherit">International workshop on </span></b><span style=
+=3D"text-decoration-line:inherit;color:rgb(204,0,0);font-family:&quot;times=
+ new roman&quot;,serif;font-size:large">REthinking PAssage Retrieval for Qu=
+estion-Answering (REPARQA)</span><br></p><p class=3D"MsoNormal" align=3D"ce=
+nter" style=3D"font-weight:700;font-family:&quot;Times New Roman&quot;,seri=
+f;margin:0cm;font-size:12pt;text-align:center;font-variant-ligatures:normal=
+"><b><span style=3D"font-size:14pt;color:rgb(192,0,0)">=C2=A0</span></b><sp=
+an style=3D"color:black"></span></p><p class=3D"MsoNormal" align=3D"center"=
+ style=3D"font-weight:700;font-family:&quot;Times New Roman&quot;,serif;mar=
+gin:0cm;font-size:12pt;text-align:center;font-variant-ligatures:normal"><b>=
+<span style=3D"color:rgb(192,0,0)"><a href=3D"https://sites.google.com/view=
+/reparqaworkshopcikm2021/home">https://sites.google.com/view/reparqaworksho=
+pcikm2021/home</a></span></b><span style=3D"color:black"></span></p><p clas=
+s=3D"MsoNormal" align=3D"center" style=3D"font-weight:700;font-family:&quot=
+;Times New Roman&quot;,serif;margin:0cm;font-size:12pt;text-align:center;fo=
+nt-variant-ligatures:normal"><b><font color=3D"#ff0000">Deadline: July 15, =
+2021</font></b></p><p class=3D"MsoNormal" align=3D"center" style=3D"font-we=
+ight:700;font-family:&quot;Times New Roman&quot;,serif;margin:0cm;font-size=
+:12pt;text-align:center;font-variant-ligatures:normal"><font size=3D"4" sty=
+le=3D"text-decoration-line:inherit"><span style=3D"color:black;text-decorat=
+ion-line:inherit"><br></span></font></p><p class=3D"MsoNormal" align=3D"cen=
+ter" style=3D"margin:0cm;text-align:center;font-variant-ligatures:normal"><=
+font style=3D"" face=3D"times new roman, serif" size=3D"4"><font style=3D"t=
+ext-decoration-line:inherit"><span style=3D"color:black;text-decoration-lin=
+e:inherit">As part of=C2=A0The </span></font><span style=3D"text-decoration=
+-line:inherit;color:rgb(14,16,26);text-align:start;white-space:normal">30th=
+ ACM International Conference on Information and Knowledge Management</span=
+><span style=3D"text-decoration-line:inherit;text-align:start;white-space:n=
+ormal">=C2=A0</span><font style=3D"text-decoration-line:inherit"><span styl=
+e=3D"color:black;font-variant-ligatures:none;text-decoration-line:inherit">=
+(CIKM 2021)</span></font></font></p><p class=3D"MsoNormal" style=3D"font-we=
+ight:700;font-family:&quot;Times New Roman&quot;,serif;margin:0cm;font-size=
+:12pt"><b><span lang=3D"EN-IN" style=3D"color:black">=C2=A0</span></b><span=
+ style=3D"color:black"></span></p><p class=3D"MsoNormal" align=3D"center" s=
+tyle=3D"font-weight:700;font-family:&quot;Times New Roman&quot;,serif;margi=
+n:0cm;font-size:12pt;text-align:center;font-variant-ligatures:normal"><a hr=
+ef=3D"https://www.cikm2021.org/">https://www.cikm2021.org/</a><br></p><p cl=
+ass=3D"MsoNormal" align=3D"center" style=3D"font-weight:700;font-family:&qu=
+ot;Times New Roman&quot;,serif;margin:0cm;font-size:12pt;text-align:center"=
+><span style=3D"color:black">=C2=A0</span></p><p class=3D"MsoNormal" align=
+=3D"center" style=3D"font-weight:400;font-family:&quot;Times New Roman&quot=
+;,serif;margin:0cm 0cm 0.0001pt;font-size:12pt;font-variant-ligatures:norma=
+l;text-indent:0cm;white-space:normal;text-align:center;line-height:normal">=
+</p><p class=3D"MsoNormal" align=3D"center" style=3D"font-weight:700;font-f=
+amily:&quot;Times New Roman&quot;,serif;margin:0cm;font-size:12pt;text-alig=
+n:center;font-variant-ligatures:normal"><span style=3D"color:black">Novembe=
+r 1-5, 2021, Online</span></p></span></span></div></h3><h3 id=3D"gmail-m_95=
+8215328554455948gmail-m_8523875178633491094gmail-m_-6432543659395250620gmai=
+l-m_-4956397321580956980gmail-m_-6268928288900069260gmail-m_709884451220396=
+6228gmail-m_-309237671986272500gmail-m_-1139504297638254686gmail-m_-5914441=
+601677045308gmail-m_5877459378229919277gmail-m_-1693841208724688500gmail-m_=
+2522473243972615881gmail-m_4548988265741471820gmail-m_3810846511310631558gm=
+ail-m_9169621892487355688gmail-m_-7908633166678884986gmail-m_42297339245750=
+16551gmail-m_5146125080209370541gmail-m_1041739996496270710gmail-m_38537118=
+80378550031gmail-m_5590849052228746836gmail-h.f1wop99o5jqr" dir=3D"ltr" sty=
+le=3D"box-sizing:border-box;font-variant-ligatures:none;margin:18px 0px 0px=
+;outline:none;color:rgb(33,33,33);font-weight:300;text-decoration-line:inhe=
+rit;font-family:Roboto;line-height:1.27;white-space:pre-wrap"><div style=3D=
+"box-sizing:border-box;display:inline-block;max-width:100%"><span style=3D"=
+box-sizing:border-box"><span style=3D"font-weight:700;box-sizing:border-box=
+"><font size=3D"4">Context</font></span></span></div></h3><p dir=3D"ltr" cl=
+ass=3D"gmail-CDt4Ke gmail-zfr3Q" style=3D"box-sizing:border-box;font-varian=
+t-ligatures:none;margin:0px;outline:none;color:rgb(33,33,33);font-size:13pt=
+;text-decoration-line:inherit;font-family:Roboto;line-height:1.656;backgrou=
+nd-color:transparent;border-width:initial;border-style:none;border-color:in=
+itial;padding:0px;text-align:justify"><span style=3D"box-sizing:border-box;=
+color:rgb(0,0,0);font-family:Arial;font-size:11pt;vertical-align:baseline">=
+Research on Question-Answering (QA) systems has recently achieved considera=
+ble success in simplified closed-domain settings such as the SQuAD dataset,=
+ which provides a preselected passage. Researchers tackled open-domain QA t=
+hat presents a key challenge in natural language processing (NLP). Open-dom=
+ain QA considers a large text corpus such as Wikipedia pages instead of a p=
+reselected passage for answering a given question. In this context, the Nat=
+ural Questions (NQ) dataset has presented a more challenging problem. In fa=
+ct, instead of providing one short passage for each question, NQ gives an e=
+ntire Wikipedia page which is significantly longer than the passage provide=
+d in the other datasets.</span></p><p dir=3D"ltr" class=3D"gmail-CDt4Ke gma=
+il-zfr3Q" style=3D"box-sizing:border-box;font-variant-ligatures:none;margin=
+:0px;outline:none;color:rgb(33,33,33);font-size:13pt;text-decoration-line:i=
+nherit;font-family:Roboto;line-height:1.38;white-space:pre-wrap;background-=
+color:transparent;border-width:initial;border-style:none;border-color:initi=
+al;padding:0px"><br style=3D"box-sizing:border-box"></p><p dir=3D"ltr" clas=
+s=3D"gmail-CDt4Ke gmail-zfr3Q" style=3D"box-sizing:border-box;font-variant-=
+ligatures:none;margin:0px;outline:none;color:rgb(33,33,33);font-size:13pt;t=
+ext-decoration-line:inherit;font-family:Roboto;line-height:1.656;background=
+-color:transparent;border-width:initial;border-style:none;border-color:init=
+ial;padding:0px;text-align:justify"><span style=3D"box-sizing:border-box;co=
+lor:rgb(0,0,0);font-family:Arial;font-size:11pt;vertical-align:baseline">An=
+ effective open-domain QA system must be able to successfully retrieve the =
+document and the passage on one hand, and comprehend the question context t=
+o answer on the other. The current state-of-the-art of deep learning-based =
+research for open-domain QA is often complicated and consist of mainly two =
+components: (1) a passage retriever that selects a small subset of passages=
+ from documents (e.g., Wikipedia pages), and then (2) a machine comprehensi=
+on that examines the retrieved passages to identify the final answer. Sever=
+al studies showed that passage retrieval impact and impacts and can signifi=
+cantly improve question answering task.</span></p><p dir=3D"ltr" class=3D"g=
+mail-CDt4Ke gmail-zfr3Q" style=3D"box-sizing:border-box;font-variant-ligatu=
+res:none;margin:0px;outline:none;color:rgb(33,33,33);font-size:13pt;text-de=
+coration-line:inherit;font-family:Roboto;line-height:1.656;background-color=
+:transparent;border-width:initial;border-style:none;border-color:initial;pa=
+dding:0px;text-align:justify"><span style=3D"box-sizing:border-box;color:rg=
+b(0,0,0);font-family:Arial;font-size:11pt;vertical-align:baseline">Several =
+elements are important for the passage retriever, such as question and pass=
+age representation, similarity and attention mechanism between the question=
+ and passages, passage ranking techniques, etc.</span></p><p dir=3D"ltr" cl=
+ass=3D"gmail-CDt4Ke gmail-zfr3Q" style=3D"box-sizing:border-box;font-varian=
+t-ligatures:none;margin:15pt 0px 0px;outline:none;color:rgb(33,33,33);font-=
+size:13pt;text-decoration-line:inherit;font-family:Roboto;line-height:1.581=
+9;background-color:transparent;border-width:initial;border-style:none;borde=
+r-color:initial;padding:0px;text-align:justify"><span style=3D"box-sizing:b=
+order-box;color:rgb(14,16,26);font-family:Arial;font-size:11pt;vertical-ali=
+gn:baseline">The REPARQA workshop is the first one that tackles the issue o=
+f passage retrieval for open-domain QA. It aims to bring together experts f=
+rom industry, science, and academia to exchange ideas and discuss ongoing r=
+esearch in open-domain QA and, more precisely, the passage retrieval compon=
+ent. We encourage the description of a novel problem definition of passage =
+retrieval for open-domain QA and new datasets in this context. Furthermore,=
+ we also encourage contributions to developing new techniques for document =
+retrieval for open-domain QA problems.</span></p><p style=3D"box-sizing:bor=
+der-box;font-variant-ligatures:none;margin:14px 0px 0px;outline:none;color:=
+rgb(33,33,33);font-size:13pt;text-decoration-line:inherit;font-family:Robot=
+o;line-height:1.55;padding-left:0px;text-align:justify"><span style=3D"box-=
+sizing:border-box;font-size:13pt;vertical-align:baseline"><b>Objective</b><=
+/span></p><p dir=3D"ltr" class=3D"gmail-CDt4Ke gmail-zfr3Q" style=3D"box-si=
+zing:border-box;font-variant-ligatures:none;margin:0px;outline:none;color:r=
+gb(33,33,33);font-size:13pt;text-decoration-line:inherit;font-family:Roboto=
+;line-height:1.656;background-color:transparent;border-width:initial;border=
+-style:none;border-color:initial;padding:0px;text-align:justify"><span styl=
+e=3D"box-sizing:border-box;font-family:Arial;font-size:11pt;vertical-align:=
+baseline">Traditional research on passage and document retrieval mainly foc=
+uses on superficial similarities between the question and the passage (resp=
+ectively document), such as cosine similarity. The main distinguishing focu=
+s of this workshop will be the use of deep neural networks and encoders for=
+ passage retrievals, such as the use of encoders to represent questions and=
+ passages, integrate attention mechanisms in the passage retrieval framewor=
+k, etc.</span></p><p dir=3D"ltr" class=3D"gmail-CDt4Ke gmail-zfr3Q" style=
+=3D"box-sizing:border-box;font-variant-ligatures:none;margin:0px;outline:no=
+ne;color:rgb(33,33,33);font-size:13pt;text-decoration-line:inherit;font-fam=
+ily:Roboto;line-height:1.38;white-space:pre-wrap;background-color:transpare=
+nt;border-width:initial;border-style:none;border-color:initial;padding:0px"=
+><br style=3D"box-sizing:border-box"></p><p dir=3D"ltr" class=3D"gmail-CDt4=
+Ke gmail-zfr3Q" style=3D"box-sizing:border-box;font-variant-ligatures:none;=
+margin:0px;outline:none;color:rgb(33,33,33);font-size:13pt;text-decoration-=
+line:inherit;font-family:Roboto;line-height:1.656;background-color:transpar=
+ent;border-width:initial;border-style:none;border-color:initial;padding:0px=
+;text-align:justify"><span style=3D"box-sizing:border-box;font-family:Arial=
+;font-size:11pt;vertical-align:baseline">This workshop aims to discover the=
+ recent advances in passage retrieval for open-domain QA and improve open-d=
+omain QA systems. Thereby, the REPARQ workshop is an opportunity to inspire=
+ experts and researchers to share theoretical and practical knowledge of th=
+e various aspects of QA systems, to have focused discussions on the topic l=
+eading to converting the novel ideas into future innovations.</span></p><p =
+style=3D"box-sizing:border-box;font-variant-ligatures:none;margin:14px 0px =
+0px;outline:none;color:rgb(33,33,33);font-size:13pt;text-decoration-line:in=
+herit;font-family:Roboto;line-height:1.55;padding-left:0px;text-align:justi=
+fy"><span style=3D"box-sizing:border-box;font-size:13pt;vertical-align:base=
+line"><b>Topics of interests</b></span></p><p dir=3D"ltr" style=3D"font-sty=
+le:inherit;font-weight:inherit;text-decoration:inherit;box-sizing:border-bo=
+x;font-variant-ligatures:none;margin:0px;outline:none;color:rgb(33,33,33);f=
+ont-size:13pt;font-family:Roboto;line-height:1.55;padding-top:0px">We invit=
+e the submission of original works that are related -- but are not limited =
+to -- the topics below:</p><p dir=3D"ltr" style=3D"background-color:transpa=
+rent;box-sizing:border-box;font-variant-ligatures:none;margin:1pt 0px 0px 1=
+9pt;outline:none;color:rgb(33,33,33);font-size:13pt;text-decoration-line:in=
+herit;font-family:Roboto;line-height:1.2;white-space:pre-wrap;border-width:=
+initial;border-style:none;border-color:initial;padding:0px">
+</p><ul class=3D"gmail-n8H08c gmail-UVNKR" style=3D"list-style-type:square;=
+box-sizing:border-box;padding:0px;margin:6px 0px 0px;color:rgb(0,0,0);font-=
+family:sans-serif;font-size:16px;white-space:pre-wrap"><li dir=3D"ltr" clas=
+s=3D"gmail-TYR86d gmail-wXCUfe gmail-zfr3Q" style=3D"box-sizing:border-box;=
+font-variant-ligatures:none;margin:0px 0px 0px 30pt;outline:none;color:rgb(=
+33,33,33);font-size:13pt;font-style:inherit;font-weight:inherit;text-decora=
+tion:inherit;font-family:Roboto;line-height:0;padding-top:0px"><p dir=3D"lt=
+r" class=3D"gmail-CDt4Ke gmail-zfr3Q" style=3D"box-sizing:border-box;margin=
+:0px;outline:none;font-size:13pt;font-style:inherit;font-weight:inherit;tex=
+t-decoration:inherit;line-height:1.38;padding:0px;background-color:transpar=
+ent;border-width:initial;border-style:none;border-color:initial"><span styl=
+e=3D"box-sizing:border-box;color:rgb(14,16,26);font-family:Arial;font-size:=
+13pt;vertical-align:baseline">Passage and document representation for open-=
+domain QA</span></p></li><li dir=3D"ltr" class=3D"gmail-TYR86d gmail-wXCUfe=
+ gmail-zfr3Q" style=3D"box-sizing:border-box;font-variant-ligatures:none;ma=
+rgin:6px 0px 0px 30pt;outline:none;color:rgb(33,33,33);font-size:13pt;font-=
+style:inherit;font-weight:inherit;text-decoration:inherit;font-family:Robot=
+o;line-height:0"><p dir=3D"ltr" class=3D"gmail-CDt4Ke gmail-zfr3Q" style=3D=
+"box-sizing:border-box;margin:0px;outline:none;font-size:13pt;font-style:in=
+herit;font-weight:inherit;text-decoration:inherit;line-height:1.38;padding:=
+0px;background-color:transparent;border-width:initial;border-style:none;bor=
+der-color:initial"><span style=3D"box-sizing:border-box;color:rgb(14,16,26)=
+;font-family:Arial;font-size:13pt;vertical-align:baseline">Attention mechan=
+ism for passage retrieval  </span></p></li><li dir=3D"ltr" class=3D"gmail-T=
+YR86d gmail-wXCUfe gmail-zfr3Q" style=3D"box-sizing:border-box;font-variant=
+-ligatures:none;margin:6px 0px 0px 30pt;outline:none;color:rgb(33,33,33);fo=
+nt-size:13pt;font-style:inherit;font-weight:inherit;text-decoration:inherit=
+;font-family:Roboto;line-height:0"><p dir=3D"ltr" class=3D"gmail-CDt4Ke gma=
+il-zfr3Q" style=3D"box-sizing:border-box;margin:0px;outline:none;font-size:=
+13pt;font-style:inherit;font-weight:inherit;text-decoration:inherit;line-he=
+ight:1.38;padding:0px;background-color:transparent;border-width:initial;bor=
+der-style:none;border-color:initial"><span style=3D"box-sizing:border-box;c=
+olor:rgb(14,16,26);font-family:Arial;font-size:13pt;vertical-align:baseline=
+">Self-attention for passage and document retrieval </span></p></li><li dir=
+=3D"ltr" class=3D"gmail-TYR86d gmail-wXCUfe gmail-zfr3Q" style=3D"box-sizin=
+g:border-box;font-variant-ligatures:none;margin:6px 0px 0px 30pt;outline:no=
+ne;color:rgb(33,33,33);font-size:13pt;font-style:inherit;font-weight:inheri=
+t;text-decoration:inherit;font-family:Roboto;line-height:0"><p dir=3D"ltr" =
+class=3D"gmail-CDt4Ke gmail-zfr3Q" style=3D"box-sizing:border-box;margin:0p=
+x;outline:none;font-size:13pt;font-style:inherit;font-weight:inherit;text-d=
+ecoration:inherit;line-height:1.38;padding:0px;background-color:transparent=
+;border-width:initial;border-style:none;border-color:initial"><span style=
+=3D"box-sizing:border-box;color:rgb(14,16,26);font-family:Arial;font-size:1=
+3pt;vertical-align:baseline">Passage and document retrieval based on unsupe=
+rvised approaches </span></p></li><li dir=3D"ltr" class=3D"gmail-TYR86d gma=
+il-wXCUfe gmail-zfr3Q" style=3D"box-sizing:border-box;font-variant-ligature=
+s:none;margin:6px 0px 0px 30pt;outline:none;color:rgb(33,33,33);font-size:1=
+3pt;font-style:inherit;font-weight:inherit;text-decoration:inherit;font-fam=
+ily:Roboto;line-height:0"><p dir=3D"ltr" class=3D"gmail-CDt4Ke gmail-zfr3Q"=
+ style=3D"box-sizing:border-box;margin:0px;outline:none;font-size:13pt;font=
+-style:inherit;font-weight:inherit;text-decoration:inherit;line-height:1.38=
+;padding:0px;background-color:transparent;border-width:initial;border-style=
+:none;border-color:initial"><span style=3D"box-sizing:border-box;color:rgb(=
+14,16,26);font-family:Arial;font-size:13pt;vertical-align:baseline">Passage=
+ and document ranking for open-domain QA</span></p></li><li dir=3D"ltr" cla=
+ss=3D"gmail-TYR86d gmail-wXCUfe gmail-zfr3Q" style=3D"box-sizing:border-box=
+;font-variant-ligatures:none;margin:6px 0px 0px 30pt;outline:none;color:rgb=
+(33,33,33);font-size:13pt;font-style:inherit;font-weight:inherit;text-decor=
+ation:inherit;font-family:Roboto;line-height:0"><p dir=3D"ltr" class=3D"gma=
+il-CDt4Ke gmail-zfr3Q" style=3D"box-sizing:border-box;margin:0px;outline:no=
+ne;font-size:13pt;font-style:inherit;font-weight:inherit;text-decoration:in=
+herit;line-height:1.38;padding:0px;background-color:transparent;border-widt=
+h:initial;border-style:none;border-color:initial"><span style=3D"box-sizing=
+:border-box;color:rgb(14,16,26);font-family:Arial;font-size:13pt;vertical-a=
+lign:baseline">Reinforcement learning for passage retrieval </span></p></li=
+><li dir=3D"ltr" class=3D"gmail-TYR86d gmail-wXCUfe gmail-zfr3Q" style=3D"b=
+ox-sizing:border-box;font-variant-ligatures:none;margin:6px 0px 0px 30pt;ou=
+tline:none;color:rgb(33,33,33);font-size:13pt;font-style:inherit;font-weigh=
+t:inherit;text-decoration:inherit;font-family:Roboto;line-height:0"><p dir=
+=3D"ltr" class=3D"gmail-CDt4Ke gmail-zfr3Q" style=3D"box-sizing:border-box;=
+margin:0px;outline:none;font-size:13pt;font-style:inherit;font-weight:inher=
+it;text-decoration:inherit;line-height:1.38;padding:0px;background-color:tr=
+ansparent;border-width:initial;border-style:none;border-color:initial"><spa=
+n style=3D"box-sizing:border-box;color:rgb(14,16,26);font-family:Arial;font=
+-size:13pt;vertical-align:baseline">Passage and document retrieval using la=
+nguage models </span></p></li><li dir=3D"ltr" class=3D"gmail-TYR86d gmail-w=
+XCUfe gmail-zfr3Q" style=3D"box-sizing:border-box;font-variant-ligatures:no=
+ne;margin:6px 0px 0px 30pt;outline:none;color:rgb(33,33,33);font-size:13pt;=
+font-style:inherit;font-weight:inherit;text-decoration:inherit;font-family:=
+Roboto;line-height:0"><p dir=3D"ltr" class=3D"gmail-CDt4Ke gmail-zfr3Q" sty=
+le=3D"box-sizing:border-box;margin:0px;outline:none;font-size:13pt;font-sty=
+le:inherit;font-weight:inherit;text-decoration:inherit;line-height:1.38;pad=
+ding:0px;background-color:transparent;border-width:initial;border-style:non=
+e;border-color:initial"><span style=3D"box-sizing:border-box;color:rgb(14,1=
+6,26);font-family:Arial;font-size:13pt;vertical-align:baseline">Graph neura=
+l network for passage retrieval</span></p></li><li dir=3D"ltr" class=3D"gma=
+il-TYR86d gmail-wXCUfe gmail-zfr3Q" style=3D"box-sizing:border-box;font-var=
+iant-ligatures:none;margin:6px 0px 0px 30pt;outline:none;color:rgb(33,33,33=
+);font-size:13pt;font-style:inherit;font-weight:inherit;text-decoration:inh=
+erit;font-family:Roboto;line-height:0"><p dir=3D"ltr" class=3D"gmail-CDt4Ke=
+ gmail-zfr3Q" style=3D"box-sizing:border-box;margin:0px;outline:none;font-s=
+ize:13pt;font-style:inherit;font-weight:inherit;text-decoration:inherit;lin=
+e-height:1.38;padding:0px;background-color:transparent;border-width:initial=
+;border-style:none;border-color:initial"><span style=3D"box-sizing:border-b=
+ox;color:rgb(14,16,26);font-family:Arial;font-size:13pt;vertical-align:base=
+line">Graph-based approaches using kernels  </span></p></li><li dir=3D"ltr"=
+ class=3D"gmail-TYR86d gmail-wXCUfe gmail-zfr3Q" style=3D"box-sizing:border=
+-box;font-variant-ligatures:none;margin:6px 0px 0px 30pt;outline:none;color=
+:rgb(33,33,33);font-size:13pt;font-style:inherit;font-weight:inherit;text-d=
+ecoration:inherit;font-family:Roboto;line-height:0"><p dir=3D"ltr" class=3D=
+"gmail-CDt4Ke gmail-zfr3Q" style=3D"box-sizing:border-box;margin:0px;outlin=
+e:none;font-size:13pt;font-style:inherit;font-weight:inherit;text-decoratio=
+n:inherit;line-height:1.38;padding:0px;background-color:transparent;border-=
+width:initial;border-style:none;border-color:initial"><span style=3D"box-si=
+zing:border-box;color:rgb(14,16,26);font-family:Arial;font-size:13pt;vertic=
+al-align:baseline">Ensemble approach for passage retrieval </span></p></li>=
+<li dir=3D"ltr" class=3D"gmail-TYR86d gmail-wXCUfe gmail-zfr3Q" style=3D"bo=
+x-sizing:border-box;font-variant-ligatures:none;margin:6px 0px 0px 30pt;out=
+line:none;color:rgb(33,33,33);font-size:13pt;font-style:inherit;font-weight=
+:inherit;text-decoration:inherit;font-family:Roboto;line-height:0"><p dir=
+=3D"ltr" class=3D"gmail-CDt4Ke gmail-zfr3Q" style=3D"box-sizing:border-box;=
+margin:0px;outline:none;font-size:13pt;font-style:inherit;font-weight:inher=
+it;text-decoration:inherit;line-height:1.38;padding:0px;background-color:tr=
+ansparent;border-width:initial;border-style:none;border-color:initial"><spa=
+n style=3D"box-sizing:border-box;color:rgb(14,16,26);font-family:Arial;font=
+-size:13pt;vertical-align:baseline">Semantic understanding of passage and d=
+ocument content</span></p></li><li dir=3D"ltr" class=3D"gmail-TYR86d gmail-=
+wXCUfe gmail-zfr3Q" style=3D"box-sizing:border-box;font-variant-ligatures:n=
+one;margin:6px 0px 0px 30pt;outline:none;color:rgb(33,33,33);font-size:13pt=
+;font-style:inherit;font-weight:inherit;text-decoration:inherit;font-family=
+:Roboto;line-height:0"><p dir=3D"ltr" class=3D"gmail-CDt4Ke gmail-zfr3Q" st=
+yle=3D"box-sizing:border-box;margin:0px;outline:none;font-size:13pt;font-st=
+yle:inherit;font-weight:inherit;text-decoration:inherit;line-height:1.38;pa=
+dding:0px;background-color:transparent;border-width:initial;border-style:no=
+ne;border-color:initial"><span style=3D"box-sizing:border-box;color:rgb(14,=
+16,26);font-family:Arial;font-size:13pt;vertical-align:baseline">Entity det=
+ection in questions and passages for context retrieval</span></p></li><li d=
+ir=3D"ltr" class=3D"gmail-TYR86d gmail-wXCUfe gmail-zfr3Q" style=3D"box-siz=
+ing:border-box;font-variant-ligatures:none;margin:6px 0px 0px 30pt;outline:=
+none;color:rgb(33,33,33);font-size:13pt;font-style:inherit;font-weight:inhe=
+rit;text-decoration:inherit;font-family:Roboto;line-height:0"><p dir=3D"ltr=
+" class=3D"gmail-CDt4Ke gmail-zfr3Q" style=3D"box-sizing:border-box;margin:=
+0px;outline:none;font-size:13pt;font-style:inherit;font-weight:inherit;text=
+-decoration:inherit;line-height:1.38;padding:0px;background-color:transpare=
+nt;border-width:initial;border-style:none;border-color:initial"><span style=
+=3D"box-sizing:border-box;color:rgb(14,16,26);font-family:Arial;font-size:1=
+3pt;vertical-align:baseline">Probabilistic graphical models</span></p></li>=
+<li dir=3D"ltr" class=3D"gmail-TYR86d gmail-wXCUfe gmail-zfr3Q" style=3D"bo=
+x-sizing:border-box;font-variant-ligatures:none;margin:6px 0px 0px 30pt;out=
+line:none;color:rgb(33,33,33);font-size:13pt;font-style:inherit;font-weight=
+:inherit;text-decoration:inherit;font-family:Roboto;line-height:0"><p dir=
+=3D"ltr" class=3D"gmail-CDt4Ke gmail-zfr3Q" style=3D"box-sizing:border-box;=
+margin:0px;outline:none;font-size:13pt;font-style:inherit;font-weight:inher=
+it;text-decoration:inherit;line-height:1.38;padding:0px;background-color:tr=
+ansparent;border-width:initial;border-style:none;border-color:initial"><spa=
+n style=3D"box-sizing:border-box;color:rgb(14,16,26);font-family:Arial;font=
+-size:13pt;vertical-align:baseline">Parameterizations of specific passage r=
+etrieval systems for open-domain QA</span></p></li><li dir=3D"ltr" class=3D=
+"gmail-TYR86d gmail-wXCUfe gmail-zfr3Q" style=3D"box-sizing:border-box;font=
+-variant-ligatures:none;margin:6px 0px 0px 30pt;outline:none;color:rgb(33,3=
+3,33);font-size:13pt;font-style:inherit;font-weight:inherit;text-decoration=
+:inherit;font-family:Roboto;line-height:0"><p dir=3D"ltr" class=3D"gmail-CD=
+t4Ke gmail-zfr3Q" style=3D"box-sizing:border-box;margin:0px;outline:none;fo=
+nt-size:13pt;font-style:inherit;font-weight:inherit;text-decoration:inherit=
+;line-height:1.38;padding:0px;background-color:transparent;border-width:ini=
+tial;border-style:none;border-color:initial"><span style=3D"box-sizing:bord=
+er-box;color:rgb(14,16,26);font-family:Arial;font-size:13pt;vertical-align:=
+baseline">Impact of passage retrieval performance on overall open-domain QA=
+ performance</span></p></li><li dir=3D"ltr" class=3D"gmail-TYR86d gmail-wXC=
+Ufe gmail-zfr3Q" style=3D"box-sizing:border-box;font-variant-ligatures:none=
+;margin:6px 0px 0px 30pt;outline:none;color:rgb(33,33,33);font-size:13pt;fo=
+nt-style:inherit;font-weight:inherit;text-decoration:inherit;font-family:Ro=
+boto;line-height:0;padding-bottom:0px"><p dir=3D"ltr" class=3D"gmail-CDt4Ke=
+ gmail-zfr3Q" style=3D"box-sizing:border-box;margin:0px;outline:none;font-s=
+ize:13pt;font-style:inherit;font-weight:inherit;text-decoration:inherit;lin=
+e-height:1.38;padding:0px;background-color:transparent;border-width:initial=
+;border-style:none;border-color:initial"><span style=3D"box-sizing:border-b=
+ox;color:rgb(14,16,26);font-family:Arial;font-size:13pt;vertical-align:base=
+line">Evaluation measures for assessing passage retrieval for open-domain Q=
+A </span></p></li></ul><p dir=3D"ltr" style=3D"background-color:transparent=
+;box-sizing:border-box;font-variant-ligatures:none;margin:11pt 0px 0px;outl=
+ine:none;font-size:13pt;text-decoration-line:inherit;font-family:Roboto;lin=
+e-height:1.55;white-space:pre-wrap;border-width:initial;border-style:none;b=
+order-color:initial;padding:0px"><span style=3D"box-sizing:border-box;font-=
+family:Arial;font-size:13pt;vertical-align:baseline"><b><font color=3D"#000=
+000">Submission</font></b></span></p><p dir=3D"ltr" style=3D"background-col=
+or:transparent;box-sizing:border-box;font-variant-ligatures:none;margin:11p=
+t 0px 0px;outline:none;font-size:13pt;text-decoration-line:inherit;font-fam=
+ily:Roboto;line-height:1.55;white-space:pre-wrap;border-width:initial;borde=
+r-style:none;border-color:initial;padding:0px"><span style=3D"background-co=
+lor:transparent;font-size:13pt;text-align:justify;text-decoration-line:inhe=
+rit;box-sizing:border-box;color:rgb(14,16,26);font-family:Arial;vertical-al=
+ign:baseline">We invite two types of submissions, including original resear=
+ch papers (6-8 pages) as well as position papers (2-4 pages). Submissions m=
+ust be formatted according to the=C2=A0</span><span style=3D"background-col=
+or:transparent;font-size:13pt;text-align:justify;text-decoration-line:inher=
+it;box-sizing:border-box;color:rgb(14,16,26);font-family:Arial">CIKM=C2=A0<=
+/span><span style=3D"background-color:transparent;font-size:13pt;text-align=
+:justify;text-decoration-line:inherit;box-sizing:border-box;color:rgb(14,16=
+,26);font-family:Arial;vertical-align:baseline">2021 conference submissions=
+ formatting guidelines. All papers will be peer-reviewed and assessed by th=
+e program committee based on their novelty, technical quality, potential im=
+pact, clarity, and reproducibility. Participants should publish their sourc=
+e codes and include a link=C2=A0</span><span style=3D"background-color:tran=
+sparent;font-size:13pt;text-align:justify;text-decoration-line:inherit;box-=
+sizing:border-box;color:rgb(14,16,26);font-family:Arial">to</span><span sty=
+le=3D"background-color:transparent;font-size:13pt;text-align:justify;text-d=
+ecoration-line:inherit;box-sizing:border-box;color:rgb(14,16,26);font-famil=
+y:Arial;vertical-align:baseline">=C2=A0their repository in the submitted pa=
+pers. All the papers are required to be submitted via the <a href=3D"https:=
+//easychair.org/conferences/?conf=3Dreparqa2021">EasyChair</a> system.</spa=
+n><br></p><p dir=3D"ltr" class=3D"gmail-CDt4Ke gmail-zfr3Q" style=3D"box-si=
+zing:border-box;font-variant-ligatures:none;margin:11pt 0px 0px;outline:non=
+e;color:rgb(33,33,33);font-size:13pt;text-decoration-line:inherit;font-fami=
+ly:Roboto;line-height:1.86;white-space:pre-wrap;background-color:transparen=
+t;border-width:initial;border-style:none;border-color:initial;padding:0px">=
+<span style=3D"box-sizing:border-box;font-family:Arial;font-size:13pt;verti=
+cal-align:baseline">At least one author of each accepted paper must registe=
+r for the workshop, in order to present the paper</span><span style=3D"box-=
+sizing:border-box;font-family:Arial">. </span><span style=3D"box-sizing:bor=
+der-box;font-family:Arial;font-size:13pt;vertical-align:baseline">For furth=
+er instructions please refer to the<a class=3D"gmail-XqQF9c gmail-rXJpyf" h=
+ref=3D"https://www.google.com/url?q=3Dhttps%3A%2F%2Fwww.cikm2021.org%2F&amp=
+;sa=3DD&amp;sntz=3D1&amp;usg=3DAFQjCNGXjrQEqNXJ4bUAhEdEwUH_ISR3YQ" target=
+=3D"_blank" style=3D"box-sizing:border-box;color:inherit;text-decoration-li=
+ne:none"> </a></span><span class=3D"gmail-aw5Odc" style=3D"box-sizing:borde=
+r-box;color:inherit;font-family:Arial;text-decoration-line:underline"><a cl=
+ass=3D"gmail-XqQF9c" href=3D"https://www.google.com/url?q=3Dhttps%3A%2F%2Fw=
+ww.cikm2021.org%2F&amp;sa=3DD&amp;sntz=3D1&amp;usg=3DAFQjCNGXjrQEqNXJ4bUAhE=
+dEwUH_ISR3YQ" target=3D"_blank" style=3D"box-sizing:border-box;color:inheri=
+t;text-decoration-line:none">CIKM </a></span><span class=3D"gmail-aw5Odc" s=
+tyle=3D"box-sizing:border-box;color:inherit;font-family:Arial;font-size:13p=
+t;text-decoration-line:underline;vertical-align:baseline"><a class=3D"gmail=
+-XqQF9c" href=3D"https://www.cikm2021.org/" target=3D"_blank" style=3D"box-=
+sizing:border-box;color:inherit;text-decoration-line:none">2021</a></span><=
+span style=3D"box-sizing:border-box;font-family:Arial;font-size:13pt;text-d=
+ecoration-line:underline;vertical-align:baseline"> page.</span></p><p style=
+=3D"background-color:transparent;box-sizing:border-box;font-variant-ligatur=
+es:none;margin:11pt 0px 0px;outline:none;font-size:13pt;text-decoration-lin=
+e:inherit;font-family:Roboto;line-height:1.55;white-space:pre-wrap;border-w=
+idth:initial;border-style:none;border-color:initial;padding:0px"><span styl=
+e=3D"box-sizing:border-box;font-family:Arial;font-size:13pt;vertical-align:=
+baseline"><b><font color=3D"#000000">Important dates</font></b></span></p><=
+ul style=3D"list-style-type:square;box-sizing:border-box;padding:0px;margin=
+:6px 0px 0px;color:rgb(0,0,0);font-family:sans-serif;font-size:16px;white-s=
+pace:pre-wrap"><li style=3D"margin:0px 0px 0px 15pt;box-sizing:border-box;f=
+ont-variant-ligatures:none;outline:none;color:rgb(33,33,33);font-size:13pt;=
+font-style:inherit;text-decoration:inherit;font-family:Roboto;line-height:1=
+.55;padding-top:0px"><span style=3D"background-color:transparent;color:rgb(=
+51,51,51);font-family:Arial;font-size:13pt;font-style:inherit;font-weight:i=
+nherit;text-decoration-line:inherit;font-variant-ligatures:normal">July 15,=
+ 2021: Paper submission</span></li><li style=3D"margin:0px 0px 0px 15pt;box=
+-sizing:border-box;font-variant-ligatures:none;outline:none;color:rgb(33,33=
+,33);font-size:13pt;font-style:inherit;text-decoration:inherit;font-family:=
+Roboto;line-height:1.55;padding-top:0px">August 15, 2021: Paper acceptance =
+notification</li><li style=3D"margin:0px 0px 0px 15pt;box-sizing:border-box=
+;font-variant-ligatures:none;outline:none;color:rgb(33,33,33);font-size:13p=
+t;font-style:inherit;text-decoration:inherit;font-family:Roboto;line-height=
+:1.55;padding-top:0px">November 1-5, 2021: Workshop dates will be flexible<=
+/li></ul><h3 id=3D"gmail-m_958215328554455948gmail-m_8523875178633491094gma=
+il-m_-6432543659395250620gmail-m_-4956397321580956980gmail-m_-6268928288900=
+069260gmail-m_7098844512203966228gmail-m_-309237671986272500gmail-m_-113950=
+4297638254686gmail-m_-5914441601677045308gmail-m_5877459378229919277gmail-m=
+_-1693841208724688500gmail-m_2522473243972615881gmail-m_4548988265741471820=
+gmail-m_3810846511310631558gmail-m_9169621892487355688gmail-m_-790863316667=
+8884986gmail-m_4229733924575016551gmail-m_5146125080209370541gmail-m_104173=
+9996496270710gmail-m_3853711880378550031gmail-m_5590849052228746836gmail-h.=
+px6khf2olkac" dir=3D"ltr" style=3D"box-sizing:border-box;font-variant-ligat=
+ures:none;margin:0px;outline:none;color:rgb(33,33,33);font-size:16pt;font-w=
+eight:300;text-decoration-line:inherit;font-family:Roboto;line-height:1.27;=
+padding-top:0px;white-space:pre-wrap"><div style=3D"box-sizing:border-box;d=
+isplay:inline-block;max-width:100%"><span style=3D"box-sizing:border-box"><=
+span style=3D"font-weight:700;box-sizing:border-box"><br></span></span></di=
+v></h3><h3 id=3D"gmail-m_958215328554455948gmail-m_8523875178633491094gmail=
+-m_-6432543659395250620gmail-m_-4956397321580956980gmail-m_-626892828890006=
+9260gmail-m_7098844512203966228gmail-m_-309237671986272500gmail-m_-11395042=
+97638254686gmail-m_-5914441601677045308gmail-m_5877459378229919277gmail-m_-=
+1693841208724688500gmail-m_2522473243972615881gmail-m_4548988265741471820gm=
+ail-m_3810846511310631558gmail-m_9169621892487355688gmail-m_-79086331666788=
+84986gmail-m_4229733924575016551gmail-m_5146125080209370541gmail-m_10417399=
+96496270710gmail-m_3853711880378550031gmail-m_5590849052228746836gmail-h.px=
+6khf2olkac" dir=3D"ltr" style=3D"box-sizing:border-box;font-variant-ligatur=
+es:none;margin:0px;outline:none;color:rgb(33,33,33);font-weight:300;text-de=
+coration-line:inherit;font-family:Roboto;line-height:1.27;padding-top:0px;w=
+hite-space:pre-wrap"><div style=3D"box-sizing:border-box;display:inline-blo=
+ck;max-width:100%"><span style=3D"box-sizing:border-box"><span style=3D"fon=
+t-weight:700;box-sizing:border-box"><font size=3D"4">Workshop Chairs</font>=
+</span></span></div></h3><p dir=3D"ltr" style=3D"box-sizing:border-box;font=
+-variant-ligatures:none;margin:14px 0px 0px;outline:none;color:rgb(33,33,33=
+);text-decoration-line:inherit;line-height:1.55;white-space:pre-wrap"><span=
+ style=3D"box-sizing:border-box"><span style=3D"box-sizing:border-box"><fon=
+t face=3D"times new roman, serif" style=3D"" size=3D"4"><span style=3D"font=
+-weight:bold;font-variant-ligatures:normal;color:rgb(34,34,34);box-sizing:b=
+order-box"><span style=3D"box-sizing:border-box">Rafika Boutalbi</span></sp=
+an><span style=3D"font-variant-ligatures:normal;color:rgb(34,34,34)"><b>, <=
+/b>University of Stuttgart, Germany</span>  </font></span></span></p><p dir=
+=3D"ltr" style=3D"box-sizing:border-box;font-variant-ligatures:none;margin:=
+14px 0px 0px;outline:none;color:rgb(33,33,33);text-decoration-line:inherit;=
+line-height:1.55;white-space:pre-wrap"><font face=3D"times new roman, serif=
+" size=3D"4"><span style=3D"font-weight:bold;text-decoration-line:inherit;b=
+ox-sizing:border-box"><span style=3D"box-sizing:border-box">Rim Hantach</sp=
+an></span><span style=3D"text-decoration-line:inherit"><b>, </b>Engie, Fran=
+ce</span></font></p><p dir=3D"ltr" style=3D"box-sizing:border-box;font-vari=
+ant-ligatures:none;margin:14px 0px 0px;outline:none;color:rgb(33,33,33);tex=
+t-decoration-line:inherit;line-height:1.55;white-space:pre-wrap"><font face=
+=3D"times new roman, serif" style=3D"" size=3D"4"><span style=3D"font-weigh=
+t:bold;text-decoration-line:inherit;box-sizing:border-box"><span style=3D"b=
+ox-sizing:border-box">Mohamed Nadif</span></span><span style=3D"text-decora=
+tion-line:inherit"><b>, </b>Universite de Paris, France</span></font></p><p=
+ dir=3D"ltr" style=3D"box-sizing:border-box;font-variant-ligatures:none;mar=
+gin:14px 0px 0px;outline:none;color:rgb(33,33,33);font-size:13pt;text-decor=
+ation-line:inherit;font-family:Roboto;line-height:1.55;white-space:pre-wrap=
+"><br></p></div>
+
+--0000000000005c93b705c4bbbd2c--
+

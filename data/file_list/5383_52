@@ -1,0 +1,518 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (BounceSMTP2.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id D28FF14017E6
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Tue, 26 Oct 2021 09:47:05 +0200 (CEST)
+Received: from mx2.d101.univ-nantes.fr (MX2.univ-nantes.fr [193.52.101.136])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id CF1CF5FA7
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Tue, 26 Oct 2021 09:47:05 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTP id C7B0B1006EA
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 26 Oct 2021 09:47:05 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -4.456
+X-Spam-Level:
+X-Spam-Status: No, score=-4.456 tagged_above=-1000 required=5
+	tests=[CRM114_GOOD=-5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+	HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_WSFF=0.01,
+	SARE_HTML_COLOR_B=0.621, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+	T_KAM_HTML_FONT_INVALID=0.01, UN_PHISHING_PW=0.1, URIBL_BLOCKED=0.001]
+	autolearn=disabled
+X-CRM114-Status: GOOD ( 5.1401 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=gmail.com
+Received: from mx2.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id TyC76rYsdO7y for <liste-egc@polytech.univ-nantes.fr>;
+	Tue, 26 Oct 2021 09:47:00 +0200 (CEST)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTPS id 1A7521006E1
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 26 Oct 2021 09:47:00 +0200 (CEST)
+Received: by mail-lf1-x12a.google.com with SMTP id y26so15218291lfa.11
+        for <liste-egc@polytech.univ-nantes.fr>; Tue, 26 Oct 2021 00:47:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=R6gtxgeHXMu1VA8Y7FO/AEHb0sgHRB35MvBSw3sSVQE=;
+        b=CuYPEbticbV6a6wmghbtG7Sn/wvM3sngNnsfAu9T7r6+Aqw4TVbqTDOwjOUzwGZWl2
+         vuOTjqsNc22qdmmfa/35nBNffS1Aq9Sh7DlZExmxvXbfPFMRl/hEeqF6ohmuWfjIvguk
+         6hryBrofet32JZ9OXL+yAuN7Ob2DTUwJnGOCQisaMSW2KEOkLpiXe+faBrN5HAfCNdVM
+         VFbD+1GMCtUgA4hbsWmOrAPBcE3NfW1XBG08lTnc6Fa2kE1XKWuhRJZtFGc0QrtCiFtx
+         0rV9MD3LVGfLIRj/GKsDSD9Xt3vXmfE1M/KBOIokDQdsgHM8sZCLqMo8xS/53pMHo+mm
+         r4JQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=R6gtxgeHXMu1VA8Y7FO/AEHb0sgHRB35MvBSw3sSVQE=;
+        b=gSe48Ne1tF/XR0y6XC9/7P+/1OfdKiZgi7b9D2Rlo5RblzgMADdqUQPP04MV1vrZYp
+         wtPHeFbSdEGjNPhFJwjEeKyBfnWl+OXoCMCLjqcaFD7aq8s7Q1WybwtPYExehNM0+2FB
+         d1NXMcJMJYBihzw/eK7yx163ORK5z7f6pw83siGZauPzJLOoqfwV9wEFxz4UubCmmX08
+         uCtigK+8/eQdQcyc+LvS8wlY1QhoDw3jcMN7/9Q0LNJr98nW8L7aSL7uHSfCfmOuddDj
+         HDvenCfW0AitU5T3enNhA1YKWtWt/UWatsmWEBZ7Op1P6UizOMAEKcSm/kgpRsil9QGs
+         fZ0g==
+X-Gm-Message-State: AOAM531SPFASrw7/H2rdIHL7HPndPkp8I4vvWzHyl+5s10Nbkar1eUw8
+	pA5svjCtOFduDzC+3uJkSQD7cd1jxWRqAjX7oCH+bF0+kU7dCsZ/p2A=
+X-Google-Smtp-Source: ABdhPJxjuVCAR6ZLsgtrcVYjTEqVQ8NYn9s7wCpZnq6ajpDwK5CXCCurbJDFCCSHHH8rJr2F6aL5TaZwCzFwG1Fwb+U=
+X-Received: by 2002:ac2:52bb:: with SMTP id r27mr681682lfm.516.1635234419295;
+ Tue, 26 Oct 2021 00:46:59 -0700 (PDT)
+MIME-Version: 1.0
+From: Rim Hantach <rim.hantach@gmail.com>
+Date: Tue, 26 Oct 2021 08:46:47 +0100
+Message-ID: <CAPD0GtK3UOuUGYwYNqtKAz73MfoNYuhE_u_nkyRPxOJvE0zZEQ@mail.gmail.com>
+To: liste-egc@polytech.univ-nantes.fr, info-ic@inria.fr, bull-i3@irit.fr, 
+	bull-ia@gdria.fr, dl@dl.kr.org, ln@groupes.renater.fr, Liste-proml@lri.fr, 
+	web.semantique@inria.fr, "Event@CIG" <event@in.tu-clausthal.de>, sma@loria.fr, 
+	agents@cs.umbc.edu, eda-liste <eda-liste@listes.univ-lyon2.fr>
+Content-Type: multipart/alternative; boundary="000000000000afc7fa05cf3cae79"
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] [CFP ] Atelier DL for NLP: Deep Learning pour le
+ traitement automatique des langues @EGC 2022
+
+--000000000000afc7fa05cf3cae79
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+3=C3=A8me =C3=A9dition: Atelier EGC 2022 DL for NLP:
+
+
+
+Deep learning pour le traitement automatique des langues
+
+Blois 25 janvier 2022
+
+
+
+*Site web:* *https://sites.google.com/view/dl-nlp2022/accueil
+<https://sites.google.com/view/dl-nlp2022/accueil>*
+
+*Lien soumission:*  https://easychair.org/cfp/DL4-NLP
+
+
+Cet atelier a pour but de r=C3=A9unir des professionnels, chercheurs et exp=
+erts
+en traitement du langage naturel et en apprentissage profond dont les
+travaux de recherches sont ax=C3=A9s sur les techniques du Deep Learning
+appliqu=C3=A9es au TAL. Nous discuterons =C3=A9galement des principaux d=C3=
+=A9fis qui se
+posent dans ce contexte et d=C3=A9finirons les orientations possibles pour =
+les
+futurs progr=C3=A8s.
+
+En r=C3=A9sum=C3=A9, cet atelier est l'occasion de:
+
+   -
+
+   Pr=C3=A9senter les derni=C3=A8res avanc=C3=A9es en mati=C3=A8re du TAL b=
+as=C3=A9s sur
+   l=E2=80=99apprentissage profond.
+   -
+
+   D=C3=A9crire les applications potentielles pouvant inspirer de nouvelles
+   approches d=E2=80=99apprentissage profond.
+   -
+
+   Evaluer et challenger les mod=C3=A8les du TAL
+
+ Th=C3=A8mes de l'atelier (liste non exhaustive) :  _
+
+   -
+
+   Traduction automatique
+   -
+
+   R=C3=A9sum=C3=A9 automatique
+   -
+
+   Classification s=C3=A9mantique de documents
+   -
+
+   Analyse des donn=C3=A9es textuelles
+   -
+
+   Extraction des donn=C3=A9es textuelles =C3=A0 partir des images, PDF, et=
+c
+   -
+
+   Syst=C3=A8me de question-r=C3=A9ponse (Chatbot, etc)
+   -
+
+   Synth=C3=A8se vocale / Reconnaissance audio
+   -
+
+   Recherche d'information
+   -
+
+   Identification des entit=C3=A9s nomm=C3=A9es
+   -
+
+   Transfert d=E2=80=99apprentissage
+   -
+
+   Apprentissage actif
+   -
+
+   etc.
+
+
+ Soumission :  _
+
+Les soumission peuvent =C3=AAtre en fran=C3=A7ais ou anglais et de trois ty=
+pes selon
+leur =C3=A9tat d=E2=80=99avancement :
+
+   -
+
+   Des r=C3=A9sum=C3=A9s =C3=A9tendus (4 pages)
+   -
+
+   Des articles longs (maximum 12 pages)
+   -
+
+   D=C3=A9monstrations logicielles (4 pages)
+
+ Dates importantes :  _
+
+   -
+
+   Date limite de soumission des articles : *01**/12/2021*
+   -
+
+   Notification aux auteurs : 13/12/2021
+   -
+
+   Version finale : 01/01/2022
+   -
+
+   Atelier : 25/01/2022
+
+
+ Comit=C3=A9 d'organisation :  _
+=C2=A7 *Rim HANTACH*, ENGIE
+=C2=A7 *Sarra BEN ABBES, *ENGIE
+=C2=A7 *Philippe CALVEZ*, ENGIE
+
+--000000000000afc7fa05cf3cae79
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"=
+gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote" style=3D"color:rgb=
+(80,0,80)"><div dir=3D"ltr"><blockquote style=3D"margin:0px 0px 0px 40px;bo=
+rder:none;padding:0px"><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:=
+0pt;margin-bottom:0pt"><span style=3D"background-color:transparent;color:rg=
+b(11,83,148);font-family:Arial;font-size:13.5pt;font-weight:700;white-space=
+:pre-wrap">           3=C3=A8me =C3=A9dition: Atelier EGC 2022 DL for NLP:=
+=C2=A0</span></p><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;ma=
+rgin-bottom:0pt"><span style=3D"background-color:transparent;color:rgb(11,8=
+3,148);font-family:Arial;font-size:13.5pt;font-weight:700;white-space:pre-w=
+rap">=C2=A0</span></p><p dir=3D"ltr" style=3D"text-align:center;line-height=
+:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"background-color:rgb=
+(11,83,148);color:rgb(255,255,0);font-family:Arial;font-size:13.5pt;font-we=
+ight:700;white-space:pre-wrap">Deep learning pour le traitement automatique=
+ des langues</span><span style=3D"background-color:rgb(11,83,148);color:rgb=
+(255,255,0);font-family:Arial;font-size:13.5pt;font-weight:700;white-space:=
+pre-wrap"> </span></p></blockquote><blockquote style=3D"margin:0px 0px 0px =
+40px;border:none;padding:0px"><p style=3D"text-align:center;line-height:1.3=
+8;margin-top:0pt;margin-bottom:0pt"><span style=3D"background-color:rgb(11,=
+83,148);color:rgb(255,255,0);font-family:Arial;font-weight:700;white-space:=
+pre-wrap"> Blois 25 janvier 2022  </span></p><p style=3D"text-align:center;=
+line-height:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"backgroun=
+d-color:rgb(11,83,148);color:rgb(255,255,0);font-family:Arial;font-weight:7=
+00;white-space:pre-wrap"><br></span></p></blockquote><blockquote style=3D"m=
+argin:0px 0px 0px 40px;border:none;padding:0px"><p dir=3D"ltr" style=3D"tex=
+t-align:center;line-height:1.38;margin-top:0pt;margin-bottom:0pt"><img src=
+=3D"https://lh6.googleusercontent.com/kaZKwalUluc9hCcVWa5-qpUFIyTZ-f4N8JcQa=
+1Nbi98_Vs4k2wpdX5-Oy3i19TJxwakPl76Xys0m-F8rhucGWrW9fxI5TXBkqonU2SXUfASBsdXA=
+vKPQW0bWDSTbZKP8rbaA9Nh-" width=3D"80" height=3D"80" class=3D"gmail-CToWUd"=
+ style=3D"margin-left: 0px; margin-top: 0px;"></p></blockquote></div></div>=
+</div></div></div></div><div class=3D"gmail_quote"><div dir=3D"ltr"><div cl=
+ass=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><blockquote=
+ style=3D"color:rgb(80,0,80);margin:0px 0px 0px 40px;border:none;padding:0p=
+x"><p style=3D"line-height:1.38;margin-left:252pt;margin-top:0pt;margin-bot=
+tom:0pt"></p></blockquote><div><span id=3D"gmail-m_-7610172081200949577gmai=
+l-m_-6276128237296188327m_-2558110859016301496gmail-m_8220295237303293215gm=
+ail-m_-9126293742859210583gmail-m_-6491005143916650060gmail-m_-496273762512=
+4941368gmail-m_-5108622890184021533gmail-m_-5809644145237397482gmail-m_4539=
+363680675249067gmail-m_-3676147969726867669gmail-m_6163268623018493980gmail=
+-m_6968682819526671304m_4213029437939235256m_6448937906607900194gmail-m_-63=
+48856271483300652m_1877174783777536760gmail-docs-internal-guid-6f312463-7ff=
+f-07f1-af56-f9efb6826608"><br><span id=3D"gmail-m_-7610172081200949577gmail=
+-m_-6276128237296188327m_-2558110859016301496gmail-m_8220295237303293215gma=
+il-m_-9126293742859210583gmail-m_-6491005143916650060gmail-m_-4962737625124=
+941368gmail-m_-5108622890184021533gmail-m_-5809644145237397482gmail-m_45393=
+63680675249067gmail-m_-3676147969726867669gmail-m_6163268623018493980gmail-=
+docs-internal-guid-519c53cd-7fff-edf6-579b-da3766086f93"><p class=3D"MsoNor=
+mal" style=3D"margin:0cm;font-size:12pt;font-family:&quot;Times New Roman&q=
+uot;,serif"><b><span style=3D"font-size:13.5pt;font-family:Arial,sans-serif=
+;color:rgb(11,83,148)">Site web:</span></b><span style=3D"font-size:13.5pt;=
+font-family:Arial,sans-serif">=C2=A0<u><span style=3D"color:rgb(11,83,148)"=
+><a href=3D"https://sites.google.com/view/dl-nlp2022/accueil" target=3D"_bl=
+ank">https://sites.google.com/view/dl-nlp2022/accueil</a></span></u></span>=
+</p><p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:&=
+quot;Times New Roman&quot;,serif"></p><p class=3D"MsoNormal" style=3D"margi=
+n:0cm;font-size:12pt;font-family:&quot;Times New Roman&quot;,serif"><b><spa=
+n style=3D"font-size:13.5pt;font-family:Arial,sans-serif;color:rgb(11,83,14=
+8)">Lien soumission:</span></b><b><span style=3D"font-size:13.5pt;font-fami=
+ly:Arial,sans-serif;color:rgb(33,33,33)">=C2=A0</span></b><span style=3D"fo=
+nt-family:Arial,sans-serif;background-image:initial;background-position:ini=
+tial;background-size:initial;background-repeat:initial;background-origin:in=
+itial;background-clip:initial">=C2=A0</span><span style=3D"font-size:13.5pt=
+;font-family:Arial,sans-serif;color:rgb(47,84,150)"><a href=3D"https://easy=
+chair.org/cfp/DL4-NLP" target=3D"_blank" style=3D"color:blue"><span style=
+=3D"color:rgb(47,84,150)">https://easychair.org/cfp/DL4-NLP</span></a></spa=
+n></p></span><p dir=3D"ltr" style=3D"color:rgb(80,0,80);line-height:1.2;tex=
+t-align:justify;margin-top:11pt;margin-bottom:0pt"><span style=3D"font-size=
+:13.5pt;font-family:Arial;color:rgb(11,83,148);background-color:transparent=
+;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-align:=
+baseline;white-space:pre-wrap"><br></span></p><p dir=3D"ltr" style=3D"color=
+:rgb(80,0,80);line-height:1.2;text-align:justify;margin-top:11pt;margin-bot=
+tom:0pt"><span style=3D"font-size:13.5pt;font-family:Arial;color:rgb(11,83,=
+148);background-color:transparent;font-variant-numeric:normal;font-variant-=
+east-asian:normal;vertical-align:baseline;white-space:pre-wrap">Cet atelier=
+ a pour but de r=C3=A9unir des professionnels, chercheurs et experts en tra=
+itement du langage naturel et en apprentissage profond dont les travaux de =
+recherches sont ax=C3=A9s sur les techniques du Deep Learning appliqu=C3=A9=
+es au TAL. Nous discuterons =C3=A9galement des principaux d=C3=A9fis qui se=
+ posent dans ce contexte et d=C3=A9finirons les orientations possibles pour=
+ les futurs progr=C3=A8s.</span></p><p dir=3D"ltr" style=3D"color:rgb(80,0,=
+80);line-height:1.2;text-align:justify;margin-top:11pt;margin-bottom:0pt"><=
+span style=3D"font-size:13.5pt;font-family:Arial;color:rgb(11,83,148);backg=
+round-color:transparent;font-variant-numeric:normal;font-variant-east-asian=
+:normal;vertical-align:baseline;white-space:pre-wrap">En r=C3=A9sum=C3=A9, =
+cet atelier est l&#39;occasion de:</span></p><ul style=3D"color:rgb(80,0,80=
+);margin-top:0px;margin-bottom:0px"><li dir=3D"ltr" style=3D"margin-left:15=
+px;list-style-type:square;font-size:13.5pt;font-family:Arial;color:rgb(11,8=
+3,148);background-color:transparent;font-variant-numeric:normal;font-varian=
+t-east-asian:normal;vertical-align:baseline;white-space:pre-wrap"><p dir=3D=
+"ltr" style=3D"line-height:1.2;margin-top:20pt;margin-bottom:0pt"><span sty=
+le=3D"font-size:13.5pt;background-color:transparent;font-variant-numeric:no=
+rmal;font-variant-east-asian:normal;vertical-align:baseline">Pr=C3=A9senter=
+ les derni=C3=A8res avanc=C3=A9es en mati=C3=A8re du TAL bas=C3=A9s sur l=
+=E2=80=99apprentissage profond.</span></p></li><li dir=3D"ltr" style=3D"mar=
+gin-left:15px;list-style-type:square;font-size:13.5pt;font-family:Arial;col=
+or:rgb(11,83,148);background-color:transparent;font-variant-numeric:normal;=
+font-variant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap=
+"><p dir=3D"ltr" style=3D"line-height:1.2;margin-top:0pt;margin-bottom:0pt"=
+><span style=3D"font-size:13.5pt;background-color:transparent;font-variant-=
+numeric:normal;font-variant-east-asian:normal;vertical-align:baseline">D=C3=
+=A9crire les applications potentielles pouvant inspirer de nouvelles approc=
+hes d=E2=80=99apprentissage profond.</span></p></li><li dir=3D"ltr" style=
+=3D"margin-left:15px;list-style-type:square;font-size:13.5pt;font-family:Ar=
+ial;color:rgb(11,83,148);background-color:transparent;font-variant-numeric:=
+normal;font-variant-east-asian:normal;vertical-align:baseline;white-space:p=
+re-wrap"><p dir=3D"ltr" style=3D"line-height:1.2;margin-top:0pt;margin-bott=
+om:0pt"><span style=3D"font-size:13.5pt;background-color:transparent;font-v=
+ariant-numeric:normal;font-variant-east-asian:normal;vertical-align:baselin=
+e">Evaluer et challenger les mod=C3=A8les du TAL</span></p></li></ul><p dir=
+=3D"ltr" style=3D"color:rgb(80,0,80);line-height:1.86;margin-top:11pt;margi=
+n-bottom:0pt"><span style=3D"font-size:13.5pt;font-family:Arial;color:rgb(2=
+55,255,0);background-color:rgb(11,83,148);font-weight:700;font-variant-nume=
+ric:normal;font-variant-east-asian:normal;vertical-align:baseline;white-spa=
+ce:pre-wrap">=C2=A0Th=C3=A8mes de l&#39;atelier (liste non exhaustive) :=C2=
+=A0 </span><span style=3D"font-size:13.5pt;font-family:Arial;color:rgb(255,=
+255,255);background-color:transparent;font-weight:700;font-variant-numeric:=
+normal;font-variant-east-asian:normal;vertical-align:baseline;white-space:p=
+re-wrap">_</span></p><ul style=3D"color:rgb(80,0,80);margin-top:0px;margin-=
+bottom:0px"><li style=3D"margin-left:15px;list-style-type:square;font-size:=
+13.5pt;font-family:Arial;color:rgb(11,83,148);background-color:transparent;=
+font-variant-numeric:normal;font-variant-east-asian:normal;vertical-align:b=
+aseline;white-space:pre-wrap"><p style=3D"line-height:1.2;margin-top:20pt;m=
+argin-bottom:0pt"><span style=3D"font-size:13.5pt;background-color:transpar=
+ent;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-ali=
+gn:baseline">Traduction automatique</span></p></li><li style=3D"margin-left=
+:15px;list-style-type:square;font-size:13.5pt;font-family:Arial;color:rgb(1=
+1,83,148);background-color:transparent;font-variant-numeric:normal;font-var=
+iant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap"><p sty=
+le=3D"line-height:1.2;margin-top:0pt;margin-bottom:0pt"><span style=3D"font=
+-size:13.5pt;background-color:transparent;font-variant-numeric:normal;font-=
+variant-east-asian:normal;vertical-align:baseline">R=C3=A9sum=C3=A9 automat=
+ique</span></p></li><li style=3D"margin-left:15px;list-style-type:square;fo=
+nt-size:13.5pt;font-family:Arial;color:rgb(11,83,148);background-color:tran=
+sparent;font-variant-numeric:normal;font-variant-east-asian:normal;vertical=
+-align:baseline;white-space:pre-wrap"><p style=3D"line-height:1.2;margin-to=
+p:0pt;margin-bottom:0pt"><span style=3D"font-size:13.5pt;background-color:t=
+ransparent;font-variant-numeric:normal;font-variant-east-asian:normal;verti=
+cal-align:baseline">Classification s=C3=A9mantique de documents</span></p><=
+/li><li style=3D"margin-left:15px;list-style-type:square;font-size:13.5pt;f=
+ont-family:Arial;color:rgb(11,83,148);background-color:transparent;font-var=
+iant-numeric:normal;font-variant-east-asian:normal;vertical-align:baseline;=
+white-space:pre-wrap"><p style=3D"line-height:1.2;margin-top:0pt;margin-bot=
+tom:0pt"><span style=3D"font-size:13.5pt;background-color:transparent;font-=
+variant-numeric:normal;font-variant-east-asian:normal;vertical-align:baseli=
+ne">Analyse des donn=C3=A9es textuelles</span></p></li><li style=3D"margin-=
+left:15px;list-style-type:square;font-size:13.5pt;font-family:Arial;color:r=
+gb(11,83,148);background-color:transparent;font-variant-numeric:normal;font=
+-variant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap"><p=
+ style=3D"line-height:1.2;margin-top:0pt;margin-bottom:0pt"><span style=3D"=
+font-size:13.5pt;background-color:transparent;font-variant-numeric:normal;f=
+ont-variant-east-asian:normal;vertical-align:baseline">Extraction des donn=
+=C3=A9es textuelles =C3=A0 partir des images, PDF, etc</span></p></li><li s=
+tyle=3D"margin-left:15px;list-style-type:square;font-size:13.5pt;font-famil=
+y:Arial;color:rgb(11,83,148);background-color:transparent;font-variant-nume=
+ric:normal;font-variant-east-asian:normal;vertical-align:baseline;white-spa=
+ce:pre-wrap"><p style=3D"line-height:1.2;margin-top:0pt;margin-bottom:0pt">=
+<span style=3D"font-size:13.5pt;background-color:transparent;font-variant-n=
+umeric:normal;font-variant-east-asian:normal;vertical-align:baseline">Syst=
+=C3=A8me de question-r=C3=A9ponse (Chatbot, etc)</span></p></li><li style=
+=3D"margin-left:15px;list-style-type:square;font-size:13.5pt;font-family:Ar=
+ial;color:rgb(11,83,148);background-color:transparent;font-variant-numeric:=
+normal;font-variant-east-asian:normal;vertical-align:baseline;white-space:p=
+re-wrap"><p style=3D"line-height:1.2;margin-top:0pt;margin-bottom:0pt"><spa=
+n style=3D"font-size:13.5pt;background-color:transparent;font-variant-numer=
+ic:normal;font-variant-east-asian:normal;vertical-align:baseline">Synth=C3=
+=A8se vocale / Reconnaissance audio</span></p></li><li style=3D"margin-left=
+:15px;list-style-type:square;font-size:13.5pt;font-family:Arial;color:rgb(1=
+1,83,148);background-color:transparent;font-variant-numeric:normal;font-var=
+iant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap"><p sty=
+le=3D"line-height:1.2;margin-top:0pt;margin-bottom:0pt"><span style=3D"font=
+-size:13.5pt;background-color:transparent;font-variant-numeric:normal;font-=
+variant-east-asian:normal;vertical-align:baseline">Recherche d&#39;informat=
+ion</span></p></li><li style=3D"margin-left:15px;list-style-type:square;fon=
+t-size:13.5pt;font-family:Arial;color:rgb(11,83,148);background-color:trans=
+parent;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-=
+align:baseline;white-space:pre-wrap"><p style=3D"line-height:1.2;margin-top=
+:0pt;margin-bottom:0pt"><span style=3D"font-size:13.5pt;background-color:tr=
+ansparent;font-variant-numeric:normal;font-variant-east-asian:normal;vertic=
+al-align:baseline">Identification des entit=C3=A9s nomm=C3=A9es</span></p><=
+/li><li style=3D"margin-left:15px;list-style-type:square;font-size:13.5pt;f=
+ont-family:Arial;color:rgb(11,83,148);background-color:transparent;font-var=
+iant-numeric:normal;font-variant-east-asian:normal;vertical-align:baseline;=
+white-space:pre-wrap"><p style=3D"line-height:1.2;margin-top:0pt;margin-bot=
+tom:0pt"><span style=3D"font-size:13.5pt;background-color:transparent;font-=
+variant-numeric:normal;font-variant-east-asian:normal;vertical-align:baseli=
+ne">Transfert d=E2=80=99apprentissage</span></p></li><li style=3D"margin-le=
+ft:15px;list-style-type:square;font-size:13.5pt;font-family:Arial;color:rgb=
+(11,83,148);background-color:transparent;font-variant-numeric:normal;font-v=
+ariant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap"><p s=
+tyle=3D"line-height:1.2;margin-top:0pt;margin-bottom:0pt"><span style=3D"fo=
+nt-size:13.5pt;background-color:transparent;font-variant-numeric:normal;fon=
+t-variant-east-asian:normal;vertical-align:baseline">Apprentissage actif</s=
+pan></p></li><li style=3D"margin-left:15px;list-style-type:square;font-size=
+:13.5pt;font-family:Arial;color:rgb(11,83,148);background-color:transparent=
+;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-align:=
+baseline;white-space:pre-wrap"><p style=3D"line-height:1.2;margin-top:0pt;m=
+argin-bottom:0pt"><span style=3D"font-size:13.5pt;background-color:transpar=
+ent;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-ali=
+gn:baseline">etc.</span></p></li></ul><p dir=3D"ltr" style=3D"color:rgb(80,=
+0,80);line-height:1.38;margin-top:0pt;margin-bottom:0pt"><span id=3D"gmail-=
+m_-7610172081200949577gmail-m_-6276128237296188327m_-2558110859016301496gma=
+il-m_8220295237303293215gmail-m_-9126293742859210583gmail-m_-64910051439166=
+50060gmail-m_-4962737625124941368gmail-m_-5108622890184021533gmail-m_-58096=
+44145237397482gmail-m_4539363680675249067gmail-m_-3676147969726867669gmail-=
+m_6163268623018493980gmail-m_6968682819526671304m_4213029437939235256gmail-=
+docs-internal-guid-2fcdcf54-7fff-5c5e-c0c4-4ab0a3bac20c"><br></span></p><p =
+dir=3D"ltr" style=3D"color:rgb(80,0,80);line-height:1.86;text-align:justify=
+;margin-top:11pt;margin-bottom:0pt"><span style=3D"font-size:13.5pt;font-fa=
+mily:Arial;color:rgb(255,255,0);background-color:rgb(11,83,148);font-weight=
+:700;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-al=
+ign:baseline;white-space:pre-wrap">=C2=A0Soumission :=C2=A0 </span><span st=
+yle=3D"font-size:13.5pt;font-family:Arial;color:rgb(255,255,255);background=
+-color:transparent;font-weight:700;font-variant-numeric:normal;font-variant=
+-east-asian:normal;vertical-align:baseline;white-space:pre-wrap">_</span></=
+p><p dir=3D"ltr" style=3D"color:rgb(80,0,80);line-height:1.2;text-align:jus=
+tify;margin-top:11pt;margin-bottom:0pt"><span style=3D"font-size:13.5pt;fon=
+t-family:Arial;color:rgb(11,83,148);background-color:transparent;font-varia=
+nt-numeric:normal;font-variant-east-asian:normal;vertical-align:baseline;wh=
+ite-space:pre-wrap">Les soumission peuvent =C3=AAtre en fran=C3=A7ais ou an=
+glais et de trois types selon leur =C3=A9tat d=E2=80=99avancement :</span><=
+/p><ul style=3D"color:rgb(80,0,80);margin-top:0px;margin-bottom:0px"><li di=
+r=3D"ltr" style=3D"margin-left:15px;list-style-type:square;font-size:13.5pt=
+;font-family:Arial;color:rgb(11,83,148);background-color:transparent;font-v=
+ariant-numeric:normal;font-variant-east-asian:normal;vertical-align:baselin=
+e;white-space:pre-wrap"><p dir=3D"ltr" style=3D"line-height:1.2;margin-top:=
+0pt;margin-bottom:0pt"><span style=3D"font-size:13.5pt;background-color:tra=
+nsparent;font-variant-numeric:normal;font-variant-east-asian:normal;vertica=
+l-align:baseline">Des r=C3=A9sum=C3=A9s =C3=A9tendus (4 pages)</span></p></=
+li><li dir=3D"ltr" style=3D"margin-left:15px;list-style-type:square;font-si=
+ze:13.5pt;font-family:Arial;color:rgb(11,83,148);background-color:transpare=
+nt;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-alig=
+n:baseline;white-space:pre-wrap"><p dir=3D"ltr" style=3D"line-height:1.2;ma=
+rgin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:13.5pt;background-=
+color:transparent;font-variant-numeric:normal;font-variant-east-asian:norma=
+l;vertical-align:baseline">Des articles longs (maximum 12 pages)</span></p>=
+</li><li dir=3D"ltr" style=3D"margin-left:15px;list-style-type:square;font-=
+size:13.5pt;font-family:Arial;color:rgb(11,83,148);background-color:transpa=
+rent;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-al=
+ign:baseline;white-space:pre-wrap"><p dir=3D"ltr" style=3D"line-height:1.2;=
+margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:13.5pt;backgroun=
+d-color:transparent;font-variant-numeric:normal;font-variant-east-asian:nor=
+mal;vertical-align:baseline">D=C3=A9monstrations logicielles (4 pages)</spa=
+n></p></li></ul><p dir=3D"ltr" style=3D"color:rgb(80,0,80);line-height:1.86=
+;text-align:justify;margin-top:11pt;margin-bottom:0pt"><span style=3D"font-=
+size:13.5pt;font-family:Arial;color:rgb(255,255,0);background-color:rgb(11,=
+83,148);font-weight:700;font-variant-numeric:normal;font-variant-east-asian=
+:normal;vertical-align:baseline;white-space:pre-wrap">=C2=A0Dates important=
+es :=C2=A0 </span><span style=3D"font-size:13.5pt;font-family:Arial;color:r=
+gb(255,255,255);background-color:transparent;font-weight:700;font-variant-n=
+umeric:normal;font-variant-east-asian:normal;vertical-align:baseline;white-=
+space:pre-wrap">_</span></p><ul style=3D"color:rgb(80,0,80);margin-top:0px;=
+margin-bottom:0px"><li dir=3D"ltr" style=3D"margin-left:15px;list-style-typ=
+e:square;font-size:13.5pt;font-family:Arial;color:rgb(11,83,148);background=
+-color:transparent;font-variant-numeric:normal;font-variant-east-asian:norm=
+al;vertical-align:baseline;white-space:pre-wrap"><p dir=3D"ltr" style=3D"li=
+ne-height:1.2;margin-top:10pt;margin-bottom:0pt"><span style=3D"font-size:1=
+3.5pt;background-color:transparent;font-variant-numeric:normal;font-variant=
+-east-asian:normal;vertical-align:baseline">Date limite de soumission des a=
+rticles : <b>01</b></span><span style=3D"font-size:13.5pt;background-color:=
+transparent;font-variant-numeric:normal;font-variant-east-asian:normal;vert=
+ical-align:baseline"><b>/12/2021</b></span></p></li><li dir=3D"ltr" style=
+=3D"margin-left:15px;list-style-type:square;font-size:13.5pt;font-family:Ar=
+ial;color:rgb(11,83,148);background-color:transparent;font-variant-numeric:=
+normal;font-variant-east-asian:normal;vertical-align:baseline;white-space:p=
+re-wrap"><p dir=3D"ltr" style=3D"line-height:1.2;margin-top:0pt;margin-bott=
+om:0pt"><span style=3D"font-size:13.5pt;background-color:transparent;font-v=
+ariant-numeric:normal;font-variant-east-asian:normal;vertical-align:baselin=
+e">Notification aux auteurs : 13/12/2021</span></p></li><li dir=3D"ltr" sty=
+le=3D"margin-left:15px;list-style-type:square;font-size:13.5pt;font-family:=
+Arial;color:rgb(11,83,148);background-color:transparent;font-variant-numeri=
+c:normal;font-variant-east-asian:normal;vertical-align:baseline;white-space=
+:pre-wrap"><p dir=3D"ltr" style=3D"line-height:1.2;margin-top:0pt;margin-bo=
+ttom:0pt"><span style=3D"font-size:13.5pt;background-color:transparent;font=
+-variant-numeric:normal;font-variant-east-asian:normal;vertical-align:basel=
+ine">Version finale : 01/01/2022</span></p></li><li dir=3D"ltr" style=3D"ma=
+rgin-left:15px;list-style-type:square;font-size:13.5pt;font-family:Arial;co=
+lor:rgb(11,83,148);background-color:transparent;font-variant-numeric:normal=
+;font-variant-east-asian:normal;vertical-align:baseline;white-space:pre-wra=
+p"><p dir=3D"ltr" style=3D"line-height:1.2;margin-top:0pt;margin-bottom:0pt=
+"><span style=3D"font-size:13.5pt;background-color:transparent;font-variant=
+-numeric:normal;font-variant-east-asian:normal;vertical-align:baseline">Ate=
+lier : 25/01/2022</span></p></li></ul><p dir=3D"ltr" style=3D"color:rgb(80,=
+0,80);line-height:1.38;margin-top:0pt;margin-bottom:0pt"><br></p><p dir=3D"=
+ltr" style=3D"color:rgb(80,0,80);line-height:1.86;text-align:justify;margin=
+-top:11pt;margin-bottom:0pt"><span style=3D"font-size:13.5pt;font-family:Ar=
+ial;color:rgb(255,255,0);background-color:rgb(11,83,148);font-weight:700;fo=
+nt-variant-numeric:normal;font-variant-east-asian:normal;vertical-align:bas=
+eline;white-space:pre-wrap">=C2=A0Comit=C3=A9 d&#39;organisation :=C2=A0 </=
+span><span style=3D"font-size:13.5pt;font-family:Arial;color:rgb(255,255,25=
+5);background-color:transparent;font-weight:700;font-variant-numeric:normal=
+;font-variant-east-asian:normal;vertical-align:baseline;white-space:pre-wra=
+p">_</span></p></span></div></div></div></div></div></div><span style=3D"fo=
+nt-size:10pt;font-family:Wingdings;color:rgb(11,83,148)">=C2=A7<span style=
+=3D"font-variant-numeric:normal;font-variant-east-asian:normal;font-stretch=
+:normal;font-size:7pt;line-height:normal;font-family:&quot;Times New Roman&=
+quot;">=C2=A0</span></span><b style=3D"font-family:Calibri,sans-serif;font-=
+size:11pt"><span style=3D"font-size:13.5pt;font-family:Arial,sans-serif;col=
+or:rgb(11,83,148)">Rim HANTACH</span></b><span style=3D"font-size:13.5pt;fo=
+nt-family:Arial,sans-serif;color:rgb(11,83,148)">, ENGIE</span><br><span st=
+yle=3D"font-size:10pt;font-family:Wingdings;color:rgb(11,83,148)">=C2=A7<sp=
+an style=3D"font-variant-numeric:normal;font-variant-east-asian:normal;font=
+-stretch:normal;font-size:7pt;line-height:normal;font-family:&quot;Times Ne=
+w Roman&quot;">=C2=A0</span></span><b style=3D"font-family:Calibri,sans-ser=
+if;font-size:11pt"><span lang=3D"FR" style=3D"font-size:13.5pt;font-family:=
+Arial,sans-serif;color:rgb(11,83,148)">Sarra BEN ABBES,=C2=A0</span></b><sp=
+an lang=3D"FR" style=3D"font-size:13.5pt;font-family:Arial,sans-serif;color=
+:rgb(11,83,148)">ENGIE</span><div><span style=3D"font-size:10pt;font-family=
+:Wingdings;color:rgb(11,83,148)">=C2=A7<span style=3D"font-variant-numeric:=
+normal;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;lin=
+e-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0</span></spa=
+n><b style=3D"font-family:Calibri,sans-serif;font-size:11pt"><span style=3D=
+"font-size:13.5pt;font-family:Arial,sans-serif;color:rgb(11,83,148)">Philip=
+pe CALVEZ</span></b><span style=3D"font-size:13.5pt;font-family:Arial,sans-=
+serif;color:rgb(11,83,148)">, ENGIE</span></div></div>
+
+--000000000000afc7fa05cf3cae79--

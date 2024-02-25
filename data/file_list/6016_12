@@ -1,0 +1,730 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (bouncesmtp2.u12.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id DFF9E14017DE
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed, 23 Aug 2023 09:28:58 +0200 (CEST)
+Received: from mx2.univ-nantes.fr (MX2.univ-nantes.fr [193.52.101.136])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id DAD56A62
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed, 23 Aug 2023 09:28:58 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.univ-nantes.fr (Postfix) with ESMTP id D47B010015C
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 23 Aug 2023 09:28:58 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -11.404
+X-Spam-Level:
+X-Spam-Status: No, score=-11.404 tagged_above=-1000 required=5
+	tests=[CRM114_GOOD=-5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	LONGWORD=0.3, MANGLED_MEDS=2.3, RCVD_IN_DNSWL_MED=-10,
+	RCVD_IN_WSFF=0.01, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001, TW_EG=0.077,
+	UN_JPG_ATTACH=0.01, UN_PHISHING_PW=0.1, VOWEL_URI_5=1]
+	autolearn=disabled
+X-CRM114-Status: GOOD ( 7.3163 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=univ-lyon2.fr
+Received: from mx2.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id KJICMph4xWoI for <liste-egc@polytech.univ-nantes.fr>;
+	Wed, 23 Aug 2023 09:28:53 +0200 (CEST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=159.84.182.45; helo=smtp.univ-lyon2.fr; envelope-from=omar.boussaid@univ-lyon2.fr; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=quarantine dis=none) header.from=univ-lyon2.fr
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=univ-lyon2.fr
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (2048-bit key; secure) header.d=univ-lyon2.fr header.i=@univ-lyon2.fr header.a=rsa-sha256 header.s=201509-490482f6 header.b=W9IoOrEl;
+	dkim-atps=neutral
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from smtp.univ-lyon2.fr (smtp.univ-lyon2.fr [159.84.182.45])
+	by mx2.univ-nantes.fr (Postfix) with ESMTPS id 142DC100112
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 23 Aug 2023 09:28:53 +0200 (CEST)
+Received: from ru.univ-lyon2.fr (localhost [127.0.0.1])
+	by smtp.univ-lyon2.fr (Postfix) with ESMTP id B91C7139DAA;
+	Wed, 23 Aug 2023 09:28:52 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=univ-lyon2.fr;
+	s=201509-490482f6; t=1692775732;
+	bh=Y3i0y92aWyX4/Kxt8+qvzDNyoCpDR7ZsTHXRAVDpsUA=;
+	h=From:To:Subject:Date:References:In-Reply-To;
+	b=W9IoOrEl2UMRCTgc00pysju7Nnf+V4LgZF1lnlA9PpFas/aCljNZqMQt0G2H3wDr+
+	 85UnYteAHMztR4DQGTWK+d4hkMQC2/oFv26HjKWW6N8fIzvVK4AlbMWNrVhk2kTrEm
+	 ORNLs/DDM8WGKez5MTdqmeRQz5pem0sct8Qb7ba+2aNV0ukj+Kq8wTxVr60HEr3VFu
+	 pbezHSI5T4jwucXbm5p8qsc11DiKcB0nBIQGsywjKbB2sDbZsTA6e6s23kJXVP1F+b
+	 gAUyVLUIrqae15ZMKFkp/pP7RB0EPlnKf3ZLoWIDg5KurIWnDS0ABa6RHkBHeg/Ggo
+	 rvVhmcPDpJviQ==
+X-Virus-Scanned: amavisd-new at univ-lyon2.fr
+Received: from amavis.at.univ-lyon2.fr ([127.0.0.1])
+	by ru.univ-lyon2.fr (smtp.univ-lyon2.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 1wqtl9o8PPsA; Wed, 23 Aug 2023 09:28:52 +0200 (CEST)
+Received: from EXCHG-7-Q.ADLYON2.UNIV-LYON2.FR (exchg-7-q.univ-lyon2.fr [159.84.182.198])
+	by smtp.univ-lyon2.fr (Postfix) with ESMTP;
+	Wed, 23 Aug 2023 09:28:52 +0200 (CEST)
+Received: from EXCHG-5-Q.ADLYON2.UNIV-LYON2.FR (159.84.182.196) by
+ EXCHG-7-Q.ADLYON2.UNIV-LYON2.FR (159.84.182.198) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.27; Wed, 23 Aug 2023 09:28:45 +0200
+Received: from EXCHG-5-Q.ADLYON2.UNIV-LYON2.FR ([fe80::edd0:9567:7f47:3c32])
+ by EXCHG-5-Q.ADLYON2.UNIV-LYON2.FR ([fe80::edd0:9567:7f47:3c32%2]) with mapi
+ id 15.01.2507.027; Wed, 23 Aug 2023 09:28:45 +0200
+From: Omar Boussaid <omar.boussaid@univ-lyon2.fr>
+To: liste-egc <liste-egc@polytech.univ-nantes.fr>, Mustapha Lebbah
+	<lebbah@gmail.com>
+Thread-Topic: =?Windows-1252?Q?[liste-egc]_D=E9c=E8s_de_notre_coll=E8gue_Arnaud_Martin?=
+Thread-Index: AQHZ1QIZkFNqUP9DA0qixrTjLe27Pa/3e4I6
+Date: Wed, 23 Aug 2023 07:28:45 +0000
+Message-ID: <4bcf36b801e6402d83b526004f059168@univ-lyon2.fr>
+References: <CAFVunffAd9XGqZSz2UvuCgyi6+9fns=MQkJrZXknJsFSUiuRKw@mail.gmail.com>
+In-Reply-To: <CAFVunffAd9XGqZSz2UvuCgyi6+9fns=MQkJrZXknJsFSUiuRKw@mail.gmail.com>
+Accept-Language: fr-FR, en-US
+Content-Language: fr-FR
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator:
+Content-Type: multipart/related;
+	boundary="_004_4bcf36b801e6402d83b526004f059168univlyon2fr_";
+	type="multipart/alternative"
+MIME-Version: 1.0
+X-Validation-by: p_bruneau@hotmail.com
+Subject: RE: [liste-egc] =?WINDOWS-1252?Q?D=E9c=E8s?= de notre
+ =?WINDOWS-1252?Q?coll=E8gue?= Arnaud Martin
+
+--_004_4bcf36b801e6402d83b526004f059168univlyon2fr_
+Content-Type: multipart/alternative;
+	boundary="_000_4bcf36b801e6402d83b526004f059168univlyon2fr_"
+
+--_000_4bcf36b801e6402d83b526004f059168univlyon2fr_
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+Bonjour Mustapha,
+
+
+C'est une bien triste nouvelle ! C'est une vraie perte d'abord pour sa fami=
+lle et pour tous ceux qui l'ont connu.
+
+Mes sinc=E8res condol=E9ances =E0 sa famille et =E0 ses amis.
+
+Nous gardons tous de lui une image d'un gar=E7on d'une tr=E8s grande gentil=
+lesse et bienveillance.
+
+
+Cordialement
+
+
+[1551446114094]
+
+
+Omar BOUSSAID
+
+Professeur des Universit=E9s
+
+Responsable du Master 2 - Business Intelligence & Analytics (BI&A,  ex BI&B=
+D)
+
+Institut de la Communication - Universit=E9 Lumi=E8re Lyon 2
+
+5, avenue Pierre Mend=E8s-France - 69676 BRON Cedex
+
+Tel : +(33) 4 78 77 26 10 ;  Fax : +(33) 4 78 77 23 76
+
+https://eric.univ-lyon2.fr/~boussaid/
+
+<http://www.univ-lyon2.fr>http://www.univ-lyon2.fr<https://icom.univ-lyon2.=
+fr/formation/master-2-informatique-business-intelligence-et-big-data-bi-bd-=
+groupe-1>
+
+
+
+
+________________________________
+De : polytech_liste-egc-request@univ-nantes.fr <polytech_liste-egc-request@=
+univ-nantes.fr> de la part de Mustapha Lebbah <polytech_liste-egc@univ-nant=
+es.fr>
+Envoy=E9 : mardi 22 ao=FBt 2023 16:03
+=C0 : liste-egc
+Objet : [liste-egc] D=E9c=E8s de notre coll=E8gue Arnaud Martin
+
+Cher(e)s coll=E8gues et cher(e)s membres,
+
+C'est avec une profonde tristesse que nous vous annon=E7ons le d=E9c=E8s d'=
+Arnaud Martin, Professeur =E0 l'IUT de Lannion et pr=E9sident de l'associat=
+ion EGC de 2019 =E0 2023. C'est une nouvelle d=E9chirante pour tous ceux qu=
+i l'ont connu. Arnaud a =E9norm=E9ment =9Cuvr=E9 pour la communaut=E9 scien=
+tifique et particuli=E8rement au sein de l'association EGC, toujours dans l=
+e consensus et la bienveillance.
+
+Nous comprenons combien cette nouvelle peut =EAtre difficile =E0 accepter, =
+et nous tenons =E0 exprimer nos plus sinc=E8res condol=E9ances =E0 la famil=
+le et aux amis proches en cette p=E9riode de deuil.
+
+Pour ceux qui ne l=92ont pas connu, voici un bref aper=E7u de son parcours =
+:
+
+[https://lh6.googleusercontent.com/PNG8TBWNThbIT77VRx2wIxi-ob_hDkdNV3pjWWSl=
+ZacEOUeCsNMDdl6I-_IXYHd7xGiI2EDPKEF7HS9Ik4qz6WKTv_X6Gd-swEsGEFxHbQyCtJMMRj3=
+9bH7UuYW6SAnXpQPqYQmGsXhG4Jwn1Am8IGc]Arnaud Martin est titulaire d=92un dip=
+l=F4me d=92=E9tudes approfondies en probabilit=E9 de l=92universit=E9 de Re=
+nnes 1 (1998), d=92un doctorat en traitement du signal de l=92universit=E9 =
+de Rennes 1 (2001) et d=92une habilitation =E0 diriger des recherches de l=
+=92Universit=E9 de Bretagne Occidentale. =C0 la suite de son doctorat =E0 O=
+range Labs =E0 Lannion, il a occup=E9 un poste d=92ATER =E0 l=92IUT de Vann=
+es avant d=92=EAtre recrut=E9 =E0 l=92ENSTA Bretagne en 2003, puis en 2010 =
+=E0 l=92IUT de Lannion en tant que professeur des universit=E9s en informat=
+ique. Ses activit=E9s de recherche portent sur la fouille de donn=E9es et l=
+=92intelligence artificielle via la th=E9orie des fonctions de croyance. Il=
+ a =E9t=E9 pr=E9sident fondateur de l=92association Belief Function and App=
+lication Society (BFAS) et pr=E9sident de l=92association Extraction et Ges=
+tion de Connaissance (EGC). Depuis 2021, il occupait =E9galement la fonctio=
+n de directeur =E9lu de l'IUT de Lannion.
+
+
+Les d=E9tails sur les hommages rendus =E0 Arnaud seront communiqu=E9s ult=
+=E9rieurement.
+
+
+Bien cordialement
+
+Mustapha Lebbah, pr=E9sident de l'association EGC
+
+-------------------------------------------------------
+Professeur des Universit=E9s
+Universit=E9 Paris-Saclay  - UVSQ Campus
+Laboratoire David
+UFR des sciences
+45 avenue des Etats-Unis,
+78035 Versailles, France
+https://sites.google.com/site/lebbah/
+-------------------------------------------------------
+
+--_000_4bcf36b801e6402d83b526004f059168univlyon2fr_
+Content-Type: text/html; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DWindows-1=
+252">
+<style type=3D"text/css" style=3D"display:none;"><!-- P {margin-top:0;margi=
+n-bottom:0;} --></style>
+</head>
+<body dir=3D"ltr">
+<div id=3D"divtagdefaultwrapper" style=3D"font-size:14pt;color:#000000;font=
+-family:'Times New Roman',Times,serif;" dir=3D"ltr">
+<p>Bonjour Mustapha,</p>
+<p><br>
+</p>
+<p>C'est une bien triste nouvelle ! C'est une vraie perte d'abord pour sa f=
+amille et pour tous ceux qui l'ont connu.</p>
+<p>Mes sinc=E8res condol=E9ances =E0 sa famille et =E0 ses amis.</p>
+<p>Nous gardons tous de lui une image d'un gar=E7on d'une tr=E8s grande gen=
+tillesse et bienveillance.<br>
+</p>
+<p><br>
+</p>
+<p>Cordialement<br>
+</p>
+<p><br>
+</p>
+<div id=3D"Signature">
+<div id=3D"divtagdefaultwrapper" dir=3D"ltr" style=3D"font-size: 14pt; colo=
+r: rgb(0, 0, 0); font-family: Arial, Helvetica, sans-serif, &quot;EmojiFont=
+&quot;, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, NotoColo=
+rEmoji, &quot;Segoe UI Symbol&quot;, &quot;Android Emoji&quot;, EmojiSymbol=
+s;">
+<p></p>
+<div>
+<table class=3D"MsoNormalTable" style=3D"border-collapse:collapse; table-la=
+yout:fixed" cellspacing=3D"0" cellpadding=3D"0" border=3D"0">
+<tbody>
+<tr style=3D"">
+<td style=3D"width:134px; padding:0.75pt">
+<p style=3D"margin:0cm 0cm 0.0001pt; font-size:12pt; font-family:&quot;Cali=
+bri&quot;,sans-serif" align=3D"left">
+<span style=3D""><img class=3D"EmojiInsert" alt=3D"1551446114094" src=3D"ci=
+d:b1e04b9c-b4c8-4c4d-b62f-45c6c0d32802"></span><span style=3D"font-family:&=
+quot;Times New Roman&quot;,serif"></span></p>
+</td>
+<td style=3D"width:162px; padding:0.75pt">
+<p style=3D"margin:0cm 0cm 0.0001pt; font-size:12pt; font-family:&quot;Cali=
+bri&quot;,sans-serif">
+<b><i><span style=3D"font-size:11.0pt">Omar</span></i></b><b><i><span style=
+=3D"font-size:9.0pt">
+</span></i></b><b><i><span style=3D"font-size:11.0pt">BOUSSAID</span></i></=
+b><span style=3D"font-size:9.0pt"> &nbsp;
+</span><span style=3D"font-size:11.0pt"></span></p>
+<p style=3D"margin:0cm 0cm 0.0001pt; font-size:12pt; font-family:&quot;Cali=
+bri&quot;,sans-serif">
+<span style=3D"font-size:9.0pt">P<span style=3D"font-size:10pt">rofesseur d=
+es Universit=E9s&nbsp;</span></span></p>
+<span style=3D"font-size:10pt"></span>
+<p style=3D"margin:0cm 0cm 0.0001pt; font-size:12pt; font-family:&quot;Cali=
+bri&quot;,sans-serif">
+<span style=3D"font-size:10pt"></span><span style=3D"font-size:10pt">Respon=
+sable du Master 2 - Business Intelligence &amp; Analytics (BI&amp;A,&nbsp; =
+ex BI&amp;BD)</span></p>
+<p style=3D"margin:0cm 0cm 0.0001pt; font-size:12pt; font-family:&quot;Cali=
+bri&quot;,sans-serif">
+<span style=3D"font-size:9.0pt">Institut de la Communication - Universit=E9=
+ Lumi=E8re Lyon 2</span></p>
+<p style=3D"margin:0cm 0cm 0.0001pt; font-size:12pt; font-family:&quot;Cali=
+bri&quot;,sans-serif">
+<span style=3D"font-size:9.0pt">5, avenue Pierre Mend=E8s-France - 69676 BR=
+ON Cedex </span>
+</p>
+<p style=3D"margin:0cm 0cm 0.0001pt; font-size:12pt; font-family:&quot;Cali=
+bri&quot;,sans-serif">
+<span style=3D"font-size:9.0pt" lang=3D"EN-US">Tel : &#43;(33) 4 78 77 26 1=
+0 ;&nbsp; Fax : &#43;(33) 4 78 77 23 76&nbsp;
+</span></p>
+<p style=3D"margin:0cm 0cm 0.0001pt; font-size:12pt; font-family:&quot;Cali=
+bri&quot;,sans-serif">
+<span style=3D"font-size:9.0pt"><a href=3D"https://eric.univ-lyon2.fr/~bous=
+said/" id=3D"LPNoLP"><span style=3D"color:blue" lang=3D"EN-US">https://eric=
+.univ-lyon2.fr/~boussaid/</span></a></span><span style=3D"font-size:9.0pt" =
+lang=3D"EN-US"></span></p>
+<p style=3D"margin:0cm 0cm 0.0001pt; font-size:12pt; font-family:&quot;Cali=
+bri&quot;,sans-serif">
+<span style=3D"font-size:9.0pt"><a href=3D"http://www.univ-lyon2.fr" id=3D"=
+LPNoLP"><span style=3D"color:blue" lang=3D"EN-US"></span></a><a href=3D"htt=
+ps://icom.univ-lyon2.fr/formation/master-2-informatique-business-intelligen=
+ce-et-big-data-bi-bd-groupe-1" class=3D"OWAAutoLink" id=3D"LPNoLP">http://w=
+ww.univ-lyon2.fr</a></span><span style=3D"font-size:9.0pt" lang=3D"EN-US"><=
+/span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<span></span><span style=3D"font-size:12.0pt; font-family:Calibri"></span>
+<p></p>
+<br>
+<p></p>
+</div>
+</div>
+<br>
+<br>
+<div style=3D"color: rgb(0, 0, 0);">
+<hr tabindex=3D"-1" style=3D"display:inline-block; width:98%">
+<div id=3D"divRplyFwdMsg" dir=3D"ltr"><font style=3D"font-size:11pt" face=
+=3D"Calibri, sans-serif" color=3D"#000000"><b>De :</b> polytech_liste-egc-r=
+equest@univ-nantes.fr &lt;polytech_liste-egc-request@univ-nantes.fr&gt; de =
+la part de Mustapha Lebbah &lt;polytech_liste-egc@univ-nantes.fr&gt;<br>
+<b>Envoy=E9 :</b> mardi 22 ao=FBt 2023 16:03<br>
+<b>=C0 :</b> liste-egc<br>
+<b>Objet :</b> [liste-egc] D=E9c=E8s de notre coll=E8gue Arnaud Martin</fon=
+t>
+<div>&nbsp;</div>
+</div>
+<div>
+<div dir=3D"ltr">Cher(e)s coll=E8gues et cher(e)s membres,<br>
+<br>
+C'est avec une profonde tristesse que nous vous annon=E7ons le d=E9c=E8s d'=
+Arnaud Martin, Professeur =E0 l'IUT de Lannion et pr=E9sident de l'associat=
+ion EGC de 2019 =E0 2023. C'est une nouvelle d=E9chirante pour tous ceux qu=
+i l'ont connu. Arnaud a =E9norm=E9ment =9Cuvr=E9 pour
+ la communaut=E9 scientifique et particuli=E8rement au sein de l'associatio=
+n EGC, toujours dans le consensus et la bienveillance.<br>
+<br>
+Nous comprenons combien cette nouvelle peut =EAtre difficile =E0 accepter, =
+et nous tenons =E0 exprimer nos plus sinc=E8res condol=E9ances =E0 la famil=
+le et aux amis proches en cette p=E9riode de deuil.<br>
+<br>
+Pour ceux qui ne l=92ont pas connu, voici un bref aper=E7u de son parcours =
+:<span style=3D"font-size:11pt; font-family:Arial,sans-serif; color:rgb(0,0=
+,0); background-color:transparent; font-weight:400; font-style:normal; font=
+-variant:normal; text-decoration:none; vertical-align:baseline; white-space=
+:pre-wrap">&nbsp;</span>
+<p dir=3D"ltr" style=3D"line-height:1.38; text-align:justify; margin-top:0p=
+t; margin-bottom:0pt">
+<span style=3D"border:medium; display:inline-block; overflow:hidden; width:=
+132px; height:123px"><img style=3D"margin-left:0px; margin-top:0px; margin-=
+right:0px" width=3D"187" height=3D"105" src=3D"https://lh6.googleuserconten=
+t.com/PNG8TBWNThbIT77VRx2wIxi-ob_hDkdNV3pjWWSlZacEOUeCsNMDdl6I-_IXYHd7xGiI2=
+EDPKEF7HS9Ik4qz6WKTv_X6Gd-swEsGEFxHbQyCtJMMRj39bH7UuYW6SAnXpQPqYQmGsXhG4Jwn=
+1Am8IGc"></span>Arnaud
+ Martin est titulaire d=92un dipl=F4me d=92=E9tudes approfondies en probabi=
+lit=E9 de l=92universit=E9 de Rennes 1 (1998), d=92un doctorat en traitemen=
+t du signal de l=92universit=E9 de Rennes 1 (2001) et d=92une habilitation =
+=E0 diriger des recherches de l=92Universit=E9 de Bretagne Occidentale.
+ =C0 la suite de son doctorat =E0 Orange Labs =E0 Lannion, il a occup=E9 un=
+ poste d=92ATER =E0 l=92IUT de Vannes avant d=92=EAtre recrut=E9 =E0 l=92EN=
+STA Bretagne en 2003, puis en 2010 =E0 l=92IUT de Lannion en tant que profe=
+sseur des universit=E9s en informatique. Ses activit=E9s de recherche
+ portent sur la fouille de donn=E9es et l=92intelligence artificielle via l=
+a th=E9orie des fonctions de croyance. Il a =E9t=E9 pr=E9sident fondateur d=
+e l=92association Belief Function and Application Society (BFAS) et pr=E9si=
+dent de l=92association Extraction et Gestion de Connaissance
+ (EGC).&nbsp;Depuis 2021, il occupait =E9galement la fonction de directeur =
+=E9lu de l'IUT de Lannion.<br>
+</p>
+<p dir=3D"ltr" style=3D"line-height:1.38; text-align:justify; margin-top:0p=
+t; margin-bottom:0pt">
+<br>
+</p>
+<p dir=3D"ltr" style=3D"line-height:1.38; text-align:justify; margin-top:0p=
+t; margin-bottom:0pt">
+Les d=E9tails sur les hommages rendus =E0 Arnaud seront communiqu=E9s ult=
+=E9rieurement.<br>
+</p>
+<p dir=3D"ltr" style=3D"line-height:1.38; text-align:justify; margin-top:0p=
+t; margin-bottom:0pt">
+<br>
+</p>
+<p dir=3D"ltr" style=3D"line-height:1.38; text-align:justify; margin-top:0p=
+t; margin-bottom:0pt">
+Bien cordialement</p>
+<p dir=3D"ltr" style=3D"line-height:1.38; text-align:justify; margin-top:0p=
+t; margin-bottom:0pt">
+Mustapha Lebbah, pr=E9sident de l'association EGC</p>
+-------------------------------------------------------<br>
+Professeur des Universit=E9s<br>
+Universit=E9 Paris-Saclay &nbsp;- UVSQ Campus<br>
+Laboratoire David<br>
+UFR des sciences<br>
+45 avenue des Etats-Unis,<br>
+78035 Versailles, France<br>
+<a href=3D"https://sites.google.com/site/lebbah/" target=3D"_blank">https:/=
+/sites.google.com/site/lebbah/</a><br>
+-------------------------------------------------------</div>
+</div>
+</div>
+</div>
+</body>
+</html>
+
+--_000_4bcf36b801e6402d83b526004f059168univlyon2fr_--
+
+--_004_4bcf36b801e6402d83b526004f059168univlyon2fr_
+Content-Type: image/jpeg;
+	name="OutlookEmoji-1551446114094b035873b-ebb4-4e5d-a027-8be2163bc13d.jpg"
+Content-Description: OutlookEmoji-1551446114094b035873b-ebb4-4e5d-a027-8be2163bc13d.jpg
+Content-Disposition: inline;
+	filename="OutlookEmoji-1551446114094b035873b-ebb4-4e5d-a027-8be2163bc13d.jpg";
+	size=18213; creation-date="Wed, 23 Aug 2023 07:28:45 GMT";
+	modification-date="Wed, 23 Aug 2023 07:28:45 GMT"
+Content-ID: <b1e04b9c-b4c8-4c4d-b62f-45c6c0d32802>
+Content-Transfer-Encoding: base64
+
+/9j/4AAQSkZJRgABAQAASABIAAD/4QBeRXhpZgAATU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAA
+A5KGAAcAAAASAAAARKACAAQAAAABAAAA/6ADAAQAAAABAAAApwAAAABBU0NJSQAAAFNjcmVlbnNo
+b3T/7QA4UGhvdG9zaG9wIDMuMAA4QklNBAQAAAAAAAA4QklNBCUAAAAAABDUHYzZjwCyBOmACZjs
++EJ+/+IXXElDQ19QUk9GSUxFAAEBAAAXTGFwcGwCEAAAbW50clJHQiBYWVogB+AABgAQAAsAFwAh
+YWNzcEFQUEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPbWAAEAAAAA0y1hcHBsAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARZGVzYwAAAVAAAABvZHNjbQAA
+AcAAAABEY3BydAAAAgQAAAAjd3RwdAAAAigAAAAUclhZWgAAAjwAAAAUZ1hZWgAAAlAAAAAUYlhZ
+WgAAAmQAAAAUclRSQwAAAngAAAgMYWFyZwAACoQAAAAgdmNndAAACqQAAAYSbmRpbgAAELgAAAY+
+Y2hhZAAAFvgAAAAsbW1vZAAAFyQAAAAoYlRSQwAAAngAAAgMZ1RSQwAAAngAAAgMYWFiZwAACoQA
+AAAgYWFnZwAACoQAAAAgZGVzYwAAAAAAAAAVTENEIGNvdWxldXIgZXRhbG9ubmUAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAG1sdWMAAAAAAAAAAQAAAAxmckZSAAAAKAAAABwATABDAEQAIABjAG8AdQBs
+AGUAdQByACAA6QB0AGEAbABvAG4AbgDpdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUgSW5jLiwgMjAx
+NgAAWFlaIAAAAAAAAPNSAAEAAAABFs9YWVogAAAAAAAAZegAADwQAAAJ0FhZWiAAAAAAAABqkwAA
+qsUAABeKWFlaIAAAAAAAACZbAAAZLAAAsdJjdXJ2AAAAAAAABAAAAAAFAAoADwAUABkAHgAjACgA
+LQAyADYAOwBAAEUASgBPAFQAWQBeAGMAaABtAHIAdwB8AIEAhgCLAJAAlQCaAJ8AowCoAK0AsgC3
+ALwAwQDGAMsA0ADVANsA4ADlAOsA8AD2APsBAQEHAQ0BEwEZAR8BJQErATIBOAE+AUUBTAFSAVkB
+YAFnAW4BdQF8AYMBiwGSAZoBoQGpAbEBuQHBAckB0QHZAeEB6QHyAfoCAwIMAhQCHQImAi8COAJB
+AksCVAJdAmcCcQJ6AoQCjgKYAqICrAK2AsECywLVAuAC6wL1AwADCwMWAyEDLQM4A0MDTwNaA2YD
+cgN+A4oDlgOiA64DugPHA9MD4APsA/kEBgQTBCAELQQ7BEgEVQRjBHEEfgSMBJoEqAS2BMQE0wTh
+BPAE/gUNBRwFKwU6BUkFWAVnBXcFhgWWBaYFtQXFBdUF5QX2BgYGFgYnBjcGSAZZBmoGewaMBp0G
+rwbABtEG4wb1BwcHGQcrBz0HTwdhB3QHhgeZB6wHvwfSB+UH+AgLCB8IMghGCFoIbgiCCJYIqgi+
+CNII5wj7CRAJJQk6CU8JZAl5CY8JpAm6Cc8J5Qn7ChEKJwo9ClQKagqBCpgKrgrFCtwK8wsLCyIL
+OQtRC2kLgAuYC7ALyAvhC/kMEgwqDEMMXAx1DI4MpwzADNkM8w0NDSYNQA1aDXQNjg2pDcMN3g34
+DhMOLg5JDmQOfw6bDrYO0g7uDwkPJQ9BD14Peg+WD7MPzw/sEAkQJhBDEGEQfhCbELkQ1xD1ERMR
+MRFPEW0RjBGqEckR6BIHEiYSRRJkEoQSoxLDEuMTAxMjE0MTYxODE6QTxRPlFAYUJxRJFGoUixSt
+FM4U8BUSFTQVVhV4FZsVvRXgFgMWJhZJFmwWjxayFtYW+hcdF0EXZReJF64X0hf3GBsYQBhlGIoY
+rxjVGPoZIBlFGWsZkRm3Gd0aBBoqGlEadxqeGsUa7BsUGzsbYxuKG7Ib2hwCHCocUhx7HKMczBz1
+HR4dRx1wHZkdwx3sHhYeQB5qHpQevh7pHxMfPh9pH5Qfvx/qIBUgQSBsIJggxCDwIRwhSCF1IaEh
+ziH7IiciVSKCIq8i3SMKIzgjZiOUI8Ij8CQfJE0kfCSrJNolCSU4JWgllyXHJfcmJyZXJocmtybo
+JxgnSSd6J6sn3CgNKD8ocSiiKNQpBik4KWspnSnQKgIqNSpoKpsqzysCKzYraSudK9EsBSw5LG4s
+oizXLQwtQS12Last4S4WLkwugi63Lu4vJC9aL5Evxy/+MDUwbDCkMNsxEjFKMYIxujHyMioyYzKb
+MtQzDTNGM38zuDPxNCs0ZTSeNNg1EzVNNYc1wjX9Njc2cjauNuk3JDdgN5w31zgUOFA4jDjIOQU5
+Qjl/Obw5+To2OnQ6sjrvOy07azuqO+g8JzxlPKQ84z0iPWE9oT3gPiA+YD6gPuA/IT9hP6I/4kAj
+QGRApkDnQSlBakGsQe5CMEJyQrVC90M6Q31DwEQDREdEikTORRJFVUWaRd5GIkZnRqtG8Ec1R3tH
+wEgFSEtIkUjXSR1JY0mpSfBKN0p9SsRLDEtTS5pL4kwqTHJMuk0CTUpNk03cTiVObk63TwBPSU+T
+T91QJ1BxULtRBlFQUZtR5lIxUnxSx1MTU19TqlP2VEJUj1TbVShVdVXCVg9WXFapVvdXRFeSV+BY
+L1h9WMtZGllpWbhaB1pWWqZa9VtFW5Vb5Vw1XIZc1l0nXXhdyV4aXmxevV8PX2Ffs2AFYFdgqmD8
+YU9homH1YklinGLwY0Njl2PrZEBklGTpZT1lkmXnZj1mkmboZz1nk2fpaD9olmjsaUNpmmnxakhq
+n2r3a09rp2v/bFdsr20IbWBtuW4SbmtuxG8eb3hv0XArcIZw4HE6cZVx8HJLcqZzAXNdc7h0FHRw
+dMx1KHWFdeF2Pnabdvh3VnezeBF4bnjMeSp5iXnnekZ6pXsEe2N7wnwhfIF84X1BfaF+AX5ifsJ/
+I3+Ef+WAR4CogQqBa4HNgjCCkoL0g1eDuoQdhICE44VHhauGDoZyhteHO4efiASIaYjOiTOJmYn+
+imSKyoswi5aL/IxjjMqNMY2Yjf+OZo7OjzaPnpAGkG6Q1pE/kaiSEZJ6kuOTTZO2lCCUipT0lV+V
+yZY0lp+XCpd1l+CYTJi4mSSZkJn8mmia1ZtCm6+cHJyJnPedZJ3SnkCerp8dn4uf+qBpoNihR6G2
+oiailqMGo3aj5qRWpMelOKWpphqmi6b9p26n4KhSqMSpN6mpqhyqj6sCq3Wr6axcrNCtRK24ri2u
+oa8Wr4uwALB1sOqxYLHWskuywrM4s660JbSctRO1irYBtnm28Ldot+C4WbjRuUq5wro7urW7Lrun
+vCG8m70VvY++Cr6Evv+/er/1wHDA7MFnwePCX8Lbw1jD1MRRxM7FS8XIxkbGw8dBx7/IPci8yTrJ
+uco4yrfLNsu2zDXMtc01zbXONs62zzfPuNA50LrRPNG+0j/SwdNE08bUSdTL1U7V0dZV1tjXXNfg
+2GTY6Nls2fHadtr724DcBdyK3RDdlt4c3qLfKd+v4DbgveFE4cziU+Lb42Pj6+Rz5PzlhOYN5pbn
+H+ep6DLovOlG6dDqW+rl63Dr++yG7RHtnO4o7rTvQO/M8Fjw5fFy8f/yjPMZ86f0NPTC9VD13vZt
+9vv3ivgZ+Kj5OPnH+lf65/t3/Af8mP0p/br+S/7c/23//3BhcmEAAAAAAAMAAAACZmYAAPKnAAAN
+WQAAE9AAAAoOdmNndAAAAAAAAAAAAAMBAAACAAAAVgFFAkEDOAQYBQoGCAcwCFkJgwq/DAYNYQ63
+EAoRbBLKFDUVnBcAGGsZzhs2HJAd6x9AII8h0SMKJDklWSZrJ20oXClCKh0q8SvGLJktay49Lw0v
+3zCvMYAyUTMhM+00uTWFNlE3HDflOK45eDpBOwo70zycPWQ+LD7yP7dAfEFCQgxC30O+RKpFnUaR
+R35IYUk/ShhK8UvMTK5NnU6hT7xQ41IFUxlUGlUQVgNW/Ff7WQBaCVsOXA1dBF31XuJf0GDAYbNi
+pmOZZIpleWZnZ1RoQmk0aiprIWwZbQ9uA270b+Jw0HG7cqRzjnR/dYZ2tXgEeWV6wHwAfSZ+On9J
+gFuBdYKOg5WEe4U0heOGj4dQiCWJC4oAiwKMEY0ojj6PTpBXkVqSWpNYlFaVVJZRl06YS5lHmkKb
+Ppw5nTOeLZ8qoDChS6KDo+ClSaasp+upEaolqzGsO61Erk2vV7BfsWiycLN3tH61graFt4i4i7mP
+upW7nLymvbS+xb/XwODB1sKvw2bEGMTIxZbGd8dmyF3JV8pRy0vMR81IzlTPcdCg0dnTC9Qv1UPW
+SddF2DjZJdoO2vnb6NzY3cHeo9+D4GfhVeJO403kT+VP5krnOegX6ODpiuo06uDrqOx67UjuCO6p
+70fv4/Cj8XjyXvNP9E31avbC+If6t/1E//8AAABWAUUCMQMEA+kE4AXjBvAIAwk2CmgLnAzgDioP
+dxDGEhkTeRTUFjIXghjdGjUbhhzQHhofWCCRIbwi3CP1JPYl6ibNJ6Mocik+Kggq1CufLGotNS3+
+LsYvjjBXMR8x5zKuM3Y0PTUBNcU2ijdPOBM41jmZOls7HTvcPJw9XD4ZPtc/l0BbQSZB+0LVQ7FE
+jEVlRjxHEUfmSLxJlUp2S2VMYk1oTm9PbVBiUU9SO1MqVBtVDlYCVvZX51jWWcNarlubXIpdel5p
+X1hgRGEvYhhjAWPqZNVlxGa1Z6ZolmmEam9rWWxAbSduDW70b+Fw3nH0cyF0X3WZdsF32Hjjeex6
++XwLfR5+KH8ggAaA34G1go+DcoRehVWGWIdpiIOJnYqti7WMto20jrGPrZCpkaWSoJOblJWVj5aJ
+l4KYeZlvmmebaZyAnb+fKaCooiejkqTTpfmnDqgaqSOqKqsxrDetPq5Er02wWbFssoazo7S+tdG2
+3rfouPO6A7sXvCu9O75AvzfAIcECweLCx8O1xKfFm8aQx4XIeslyynTLicy8zhbPfdDd0hrTP9RU
+1WbWgNel2M/Z9NsS3C3dTN5w35fgu+HS4t7j4uTr5gXnOeiB6dHrEeww7TXuJu8P7/jw5vHX8srz
+ufSh9X/2Vvcn9/b4vPl6+jv7DPxE/en//wAAAFYBLgHrAp0DXgQpBQcF8QbpB+oI4gnxCwoMJQ1B
+DloPgRCsEdES/xQlFUUWaheFGJ8ZtBrFG8gcxh27HqEfeCBCIPohpCJLIusjiCQnJMIlXiX5JpQn
+MCfKKGcpBymnKkgq5yuGLCgsxS1jLgAunS88L9gwdTESMa8yTDLoM4M0HjS4NVI17DaFNx83tzhQ
+OOg5fzoWOqs7QTvSPGM87j17Pgc+mz80P9ZAekEeQbhCT0LZQ2hD/0SiRVBGCUbDR3xINEjqSaJK
+XEsYS9ZMlU1TTg9OyU+DUDtQ9FGvUmtTJ1PkVKFVXVYZVtRXj1hIWP9ZtVpsWyRb3VyWXU5d9l6U
+XyVftGBBYNpheGIiYthjmWRoZUdmN2c5aElpYWpta2FsP20QbdxupW9tcDVw/HHDcopzUHQVdNt1
+n3ZkdyZ35nieeUV53HpsexR703y7fb5+xH/DgLmBqYKWg4OEb4VbhkWHKogFiNSJmYpaiySL+4zg
+jc2OuY+gkH6RW5I6kxqT+ZTWlbKWl5eNmJKZoZqzm8ac2J3qnvugDaEgojOjSKRcpW+mfqeJqIyp
+gKphqzesDqzyre2u+bAMsR6yMrNQtHu1tLb4uDm5cLqZu7C8uL27vsm/9cFHwrnEU8X1x5bJM8rU
+zI3OYNBJ0kHUQtZs2Q7c6+LO6vX0+f//AABuZGluAAAAAAAABjYAAJOBAABYhgAAVT8AAJHEAAAm
+1QAAFwoAAFANAABUOQACJmYAAgzMAAE64QADAQAAAgAAAAEAAwAGAAsAEQAYAB8AJwAwADoARABP
+AFoAZgBzAIEAjwCeAK4AvgDPAOEA9AEHARwBMQFHAV8BdwGRAawByAHmAgYCKAJMAnMCnQLLAv8D
+OAN2A7kD/gRHBJME4gUzBYgF3wY6BpkG+wdhB8oINwinCRsJkQoLCokLCguQDBoMpw00DbwOPQ66
+DzgPuxBIENsRdBIQEq0TRBPRFFQU0RVPFdIWXxb4F5kYPRjeGX0aGxq6G14cCRy8HXYeNB7zH7Ig
+ciE1IfwixyOWJGglPCYOJuAnsyiIKWIqQSsmLA4s+y3uLuQv1TC1MXsyMTLeM4g0NTTvNbg2kjd5
+OGQ5TDowOxc8Dj0uPptAK0GNQslD70UIRhVHGUgcSSRKNEtOTHFNmE7ET/JRI1JXU45Ux1YEV0RY
+hlnMWxZcYl2qXuRgBmERYgZi9WPlZNxl6mcPaEtplWrnbDxtlG7ucEpxqnMMdHF12ndGeLh6LXum
+fSB+m4AWgZGDCoSBhfWHaojriouMbY61kRGTGpTtlqmYX5oWm9CdjZ9HoPWij6QUpYim9qhrqfKr
+kK1FrxGw8bLmtOi267jnuuO88b8XwUPDXsVgx1PJP8svzSnPNtFu0/jXBNoJ3J/fE+G+5Q7ofOtB
+7a/v+/I29Eb2CveN+Mr56Prl+9n8tP2Q/mL/MP//AAAAAQADAAcADAASABkAIQAqADMAPQBIAFQA
+YABtAHsAiQCZAKkAuQDLAN0A8AEFARoBMAFHAV8BeQGUAbABzgHtAg8CMwJaAoMCsgLlAx8DXwOk
+A+wENgSEBNUFKQWBBdwGOgabBwAHaAfVCEUIuAkvCaoKKQqsCzQLvwxQDOMNeA4JDpUPIQ+wEEMQ
+2xF3EhYStxNWE+0UfRUKFZgWLRbKF28YFxjAGWkaFBrAG28cJBzcHZkeWB8YH9kgnSFkIjAjACPU
+JKslhCZcJzQoDSjqKcwqsyufLI8tgy58L3QwYzFAMgwyzjOKNEs1FzXxNtk3xzi2OaI6jDt6PHY9
+iT64P/dBM0JkQ4tEpkW2RrtHu0i9SclK4UwCTSpOVk+FULdR7FMkVF9VnVbeWCJZalq2XAddV16a
+X8Vg0WHCYqljiGRpZVJmSGdZaIJpwGsNbGJtvG8acHpx3XNCdKl2D3dweMt6IXt2fNB+NX+kgRuC
+lIQKhXuG7IhhieKLeo0wjwKQ3ZKxlHaWNJfymbGbdZ06nvqgpqIyo52k56Ynp2iosKoXq5ytPa7t
+sJmyObPOtWG2+7iiulG8AL2pv0zA8cKfxGLGOsghygTLzc12zwbQitIM06LVX9dN2Wzbp93n4B/i
+UOSB5r7pF+uQ7ibwzfOU9oz5Sfsy/J795P7x//8AAAABAAQACQAQABgAIQArADYAQwBQAF4AbQB9
+AI8AoQC0AMgA3gD0AQwBJgFAAV0BewGbAb0B4QIJAjMCYQKVAtADFQNlA70EHASABOoFWQXNBkMG
+vQc9B8EITAjdCXMKDwqwC1YMAwy3DXEOMQ74D8UQmRF1ElkTSRRKFVEWShc3GCkZNRpfG3kcdB1i
+HlQfTiBNIU0iTCNNJFIlXyZzJ40oqinIKuksDS03LmYvmjDWMhozZDSvNfs3UDjNOok8WT4FP5BA
+/EJLQ4NEpkW3RrxHvkjOSftLS0y2Ti5PrFEuUrZUQ1XWV21ZClqsXFZeEWALYl9kW2XkZztoi2nm
+a1JszG5Nb9JxW3LodHt2HnfeecZ7wH2df1WA+oKhhFaGH4fwib2LjI1mj0eRGZLLlGaV9peDmRGa
+opw2nc2fZqEBopykOKXVp3WpG6rIrH+uR7Avska0f7aiuI+6WbwXvde/m8FZwwfEpcY0x7vJRcrX
+zHjOL9AD0fDT6NXR15HZJ9qd2/7dRd6K38vhD+JV46Dk6eYx52vooOnI6ursBe0c7jDvRPBX8WHy
+ZPNQ9CL09fWN9hz2qvc595r3+fhX+Lb5Fvly+bb5+/pA+oT6yfsO+1P7l/vQ/Aj8QPx4/LH86f0h
+/Vn9kv3K/f3+Mf5k/pf+y/7+/zH/Zf+Y/8z//wAAc2YzMgAAAAAAAQxCAAAF3v//8yYAAAeSAAD9
+kf//+6L///2jAAAD3AAAwGxtbW9kAAAAAAAABhAAAJzwAAAAAMu47qEAAAAAAAAAAAAAAAAAAAAA
+/8AAEQgApwD/AwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQ
+AAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYX
+GBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqS
+k5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz
+9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQE
+AAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1
+Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKj
+pKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/bAEMA
+AQEBAQEBAgEBAgMCAgIDBAMDAwMEBQQEBAQEBQYFBQUFBQUGBgYGBgYGBgcHBwcHBwgICAgICQkJ
+CQkJCQkJCf/bAEMBAQEBAgICBAICBAkGBQYJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJ
+CQkJCQkJCQkJCQkJCQkJCQkJCf/dAAQAEP/aAAwDAQACEQMRAD8A/v4ooooAKKKKACiiigAoopOe
+1AC0U0sAcUBgRxSbsA6imbiOtALHkUXAfRTd2Bz+lAJNLmQDqKKKoAooooAKKKKACiiigAooooAK
+KKKACiiigAooooAKKKKAP//Q/v4oopu4UmwHUVVe8t05dgPqcVlXHifQLX/j5vII8f3pFH9a8vE5
+7gaP8atGPrJL9RtNbm/RXmWpfGL4baQpN/rNqmOTiQH+Rrz+/wD2rfgbpxKza3GxHZATXweeeN3C
+GWu2PzKjD1nH/MS11R9GFgOtN3cZr481L9t/4K2Z2Wkl3dN6RxAfzauFvf27/DVwzReHdBvrxx0X
+AB9um7FfmeafTH8NsMnbNqU32i+Z/gieeOzZ9+ZGckc0rMFJPevzVvv23PHc1qt1o/hGRI3kMSSS
+yMyl8425CLznjrWe/wC0T+1Prd1c6dYaHZWUlqu+UOMsiEbgSTL6e1fnuK/aAcA+1VHBe2rSfSFK
+T3210WoOaP02Z1pQ+OMV+V158Rv2mda8ELr1tqCQagd9w1vGkan7Kv3XVGDk5weS446Cv0V+Gev3
+PiXwBo2u3jb5bqzhlkPqzICx496/S/Br6SWX8ZZhUy3DYWpSlGEaidSNlKMn09OpMaik7I73ev3u
+9HmKB7mvnX9pXWfGHhz4dS+IPB+onTp7SRWZvLWTepIG35unXrzX4cf8Fpf2p/23P2btG/Zu8I/s
+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
+
+--_004_4bcf36b801e6402d83b526004f059168univlyon2fr_--
+
+

@@ -1,0 +1,448 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (bouncesmtp2.u12.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 81F9C14014E0
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon, 30 Jan 2023 10:56:53 +0100 (CET)
+Received: from mx1.localdomain (MX1.univ-nantes.fr [193.52.101.135])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id 7D2E75F9B
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon, 30 Jan 2023 10:56:53 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.localdomain (Postfix) with ESMTP id 74345120061
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 30 Jan 2023 10:56:53 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 1.713
+X-Spam-Level: *
+X-Spam-Status: No, score=1.713 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+	HTML_FONT_LOW_CONTRAST=0.001, HTML_MESSAGE=0.001,
+	HTTPS_HTTP_MISMATCH=0.1, HTTP_ESCAPED_HOST=0.1,
+	MR_STRANGE_QUESTION=1.5, RCVD_IN_DNSWL_NONE=-0.0001,
+	RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+	UN_PHISHING_PW=0.1] autolearn=disabled
+X-CRM114-Status: UNSURE ( -1.4131 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=gmail.com
+Received: from mx1.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id G0lVnG9_Xfnh for <liste-egc@polytech.univ-nantes.fr>;
+	Mon, 30 Jan 2023 10:56:47 +0100 (CET)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+	by mx1.localdomain (Postfix) with ESMTPS id 39E18120013
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 30 Jan 2023 10:56:47 +0100 (CET)
+Received: by mail-pf1-x431.google.com with SMTP id ay1so7175273pfb.7
+        for <liste-egc@polytech.univ-nantes.fr>; Mon, 30 Jan 2023 01:56:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=ax67KEKscqJvR+oeGuJtlsiI0TXDLtfPqNObqag1jIE=;
+        b=KxTuixoNlmCIL8cvx1HT7KnSGMAsgOuq8iymEzxLFe5aLNI2AlfR+WvKadYjsiOIyA
+         /aQTkPCj1mTXcBHmaXmNGeyNu/jDbG+Fsg5Uie4A8KxzoLfybiHFxb4w6Ni0dP34XoLm
+         +Pad08XEZnOMiPYQf/CBPY+cm2CSQwSn2T4FUzr5jJ1BH+Fy5pKYTC21pdBXdNMOspWE
+         HmLBRRCwUno4+ctOnXhsBxeZbX+daFHM2v1riRX18dTk/nft+84b9885onEruLBkjnjj
+         JVcjnCfQZbFA/tKqcSNr0tgdh8AoyfO9DJGGXTjGg40oD0+HDNLkfGU5OMoNTTWITjGS
+         WwFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ax67KEKscqJvR+oeGuJtlsiI0TXDLtfPqNObqag1jIE=;
+        b=RRRAA5hjzzcOqh75qKcSBPXKhIE4Xm+hAbaVIF3FEzLTMEnCOTbnqnKaW7tLWSOxnB
+         7nVdcRGwc4V2k5Skj0Qo4g0rBLm/nnXj8PLgJxt1ki5ISSQUZ04kmry7aNij8PZPPjEF
+         8EB8ZILoywQ+QSbiMBEal0+AwEA910cn81H8I473v2sSIR4hRTRjJbumHAGf/on2wX9J
+         d72tuP1Ls6Zu3u4plEpYISwN2bHElh8j2uKP0+hI7iH2wBKoicgo3Yrze/M0SN73Icwr
+         0/bseYcHCjRHBbAw3mCynmHTygHEIlL7VWezKBHhI9nev1lr0EQmdmXxdCG/uivMxcfl
+         yt2w==
+X-Gm-Message-State: AO0yUKVtmoTzR7tX+fvzUJSKu52W9OHd1qOxXnKiDYNy617pv/RODaEz
+	bt6dj7lluzorAceePUEzAW8w7lQE1zM/nN+ZVvw=
+X-Google-Smtp-Source: AK7set9Yia1CkMU8JtLwWdLttWj51rgib6J071KK99fcTzy8l7SJ5NdG9glsYO1CUJNmRnJQFJaacZn0ZVn376CieCM=
+X-Received: by 2002:a05:6a00:f92:b0:592:edcc:7f3c with SMTP id
+ ct18-20020a056a000f9200b00592edcc7f3cmr1743529pfb.37.1675072605404; Mon, 30
+ Jan 2023 01:56:45 -0800 (PST)
+MIME-Version: 1.0
+From: rafika boutalbi <boutalbi.rafika@gmail.com>
+Date: Mon, 30 Jan 2023 10:56:34 +0100
+Message-ID: <CANx104sa_yw-+YB=Sc637+GiMyVfGrdv07ALWa8uhLi7Sy6dSw@mail.gmail.com>
+To: ssfam@framalistes.org, liste-egc@polytech.univ-nantes.fr, info-ic@inria.fr, 
+	bull-i3@irit.fr, bull-ia@gdria.fr, dl@dl.kr.org, ln@groupes.renater.fr, 
+	Liste-proml@lri.fr, web.semantique@inria.fr, 
+	"Event@CIG" <event@in.tu-clausthal.de>, sma@loria.fr, agents@cs.umbc.edu, 
+	eda-liste <eda-liste@listes.univ-lyon2.fr>, ml-news@googlegroups.com
+Content-Type: multipart/alternative; boundary="0000000000009e43e305f3783b81"
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] [CFP] 1st ICDAR International workshop on Machine
+ vision and NLP for Document Analysis, VINALDO
+
+--0000000000009e43e305f3783b81
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Dear colleagues and researchers,
+
+
+
+*1st International workshop on Machine vision and NLP for Document
+Analysis (VINALDO)*
+
+*https://sites.google.com/view/vinaldo-workshop-icdar-2023/home*
+<https://sites.google.com/view/vinaldo-workshop-icdar-2023/home>
+
+*As part of the 17th International Conference on Document Analysis and
+Recognition*
+
+(ICDAR 2023)
+
+*https://icdar2023.org/
+<https://streaklinks.com/BXBi2-i9_SjRqQcRPgs5ZAqi/https%3A%2F%2Ficdar2023.o=
+rg%2F?email=3Dboutalbi.rafika%40gmail.com>*
+
+*August 21-26, 2023 =E2=80=94 San Jos=C3=A9, California, USA*
+
+
+
+Context
+
+Document understanding is essential in various application areas such as
+data invoice extraction, subject review, medical prescription analysis,
+etc., and holds significant commercial potential. Several approaches are
+proposed in the literature, but datasets' availability and data privacy
+challenge it. Considering the problem of information extraction from
+documents, different aspects must be taken into account, such as (1)
+document classification, (2) text localization, (3) OCR (Optical Character
+Recognition), (4) table extraction, and (5) key information detection.
+
+In this context, machine vision and, more precisely, deep learning models
+for image processing are attractive methods. In fact, several models for
+document analysis were developed for text box detection, text extraction,
+table extraction, etc. Different kinds of deep learning approaches, such as
+GNN, are used to tackle these tasks. On the other hand, the extracted text
+from documents can be represented using different embeddings based on
+recent NLP approaches such as Transformers. Also, understanding spatial
+relationships is critical for text document extraction results for some
+applications such as invoice analysis.  Thus, the aim is to capture the
+structural connections between keywords (invoice number, date, amounts) and
+the main value (the desired information). An effective approach requires a
+combination of visual (spatial) and textual information.
+
+Objective
+
+The first edition of the machine VIsion and NAtural Language processing for
+DOcument analysis (VINALDO)  workshop comes as an extension of the GLESDO
+workshop, where we encourage the description of novel problems or
+applications for document analysis in the area of information retrieval
+that has emerged in recent years. We also encourage works that include NLP
+tools for extracted text, such as language models and Transforms.  Finally,
+we also encourage works that develop new scanned document datasets for
+novel applications.
+
+The VINALDO workshop aims to bring together an area for industry, science,
+and academia experts to exchange ideas and discuss ongoing research in
+graph representation learning for scanned document analysis.
+
+Topics of interests
+
+We invite the submission of original works that are related -- but are not
+limited to -- the topics below:
+
+   -
+
+   Document structure and layout learning
+   -
+
+   OCR based methods
+   -
+
+   Semi-supervised methods for document analysis
+   -
+
+   Dynamic graph analysis
+   -
+
+   Information Retrieval and Extraction from documents
+   -
+
+   Knowledge graph for semantic document analysis
+   -
+
+   Semantic understanding of document content
+   -
+
+   Entity and link prediction in graphs
+   -
+
+   Merging ontologies with graph-based methods using NLP techniques
+   -
+
+   Cleansing and image enhancement techniques for scanned document
+   -
+
+   Font text recognition in a scanned document
+   -
+
+   Table identification and extraction from scanned documents
+   -
+
+   Handwriting detection and recognition in documents
+   -
+
+   Signature detection and verification in documents
+   -
+
+   Visual document structure understanding
+   -
+
+   Visual Question Answering
+   -
+
+   Invoice analysis
+   -
+
+   Scanned documents classification
+   -
+
+   Scanned documents summarization
+   -
+
+   Scanned documents translation
+   -
+
+   Graph-based approaches for a spatial component in a scanned document
+   -
+
+   Graph representation learning for NLP
+
+Submission
+
+The workshop is open to original papers of theoretical or practical nature.
+Papers should be formatted according to LNCS instructions for authors
+<https://streaklinks.com/BX-6PoUCAoSjhZAIiwM_idJ6/https%3A%2F%2Fwww.springe=
+r.com%2Ffr>.
+VINALDO 2023 will follow a double-blind review process. Authors should not
+include their names and affiliations anywhere in the manuscript. Authors
+should also ensure that their identity is not revealed indirectly by citing
+their previous work in the third person and omitting acknowledgments until
+the camera-ready version. Papers have to be submitted via the workshop's
+EasyChair
+<https://streaklinks.com/BX-6PocJiR0G-W9sCwkKROH-/https%3A%2F%2Feasychair.o=
+rg%2Fconferences%2F%3Fconf%3Dvinaldo1>
+submission
+page.
+
+We welcome the following types of contributions:
+
+   -
+
+   Full research papers (12-15 pages): Finished or consolidated R&D works
+   to be included in one of the Workshop topics
+   -
+
+   Short papers (6-8 pages): ongoing works with relevant preliminary
+   results, opened to discussion.
+
+At least one author of each accepted paper must register for the workshop
+in order to present the paper. For further instructions, please refer to th=
+e
+
+<https://streaklinks.com/BX-6PoY7-5_v5PJ0Bw-mYvAO/https%3A%2F%2Fwww.google.=
+com%2Furl%3Fq%3Dhttps%253A%252F%252Ficdar2021.org%252F%26sa%3DD%26sntz%3D1%=
+26usg%3DAOvVaw0W4EcU263Y1GNomxyRFH3n>ICDAR
+2023
+<https://streaklinks.com/BX-6PoQ__5CDXwdIOAiVZWcA/https%3A%2F%2Ficdar2023.o=
+rg%2F>
+ page.
+
+Important dates
+
+Submission Deadline: March 17, 2023 at 11:59pm Pacific Time
+
+Decisions Announced: April 17, 2023, at 11:59pm Pacific Time
+
+Camera Ready Deadline: May 8, 2023, at 11:59pm Pacific Time
+
+Workshop: August 24-26, 2023
+
+Workshop Chairs
+
+Rim Hantach
+<http://rim.hantach%40gmail.com%20%3Crim.hantach@gmail.com%3E%3B/>, Engie,
+France
+
+Rafika Boutalbi
+<https://streaklinks.com/BX-6PoMTE3-ifQ3G2Q_OlkkK/http%3A%2F%2Frafika.bouta=
+lbi%40univ-amu.fr%2F>,
+Aix-Marseille University, France
+=E1=90=A7
+
+--0000000000009e43e305f3783b81
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><p dir=3D"ltr" style=3D"color:rgba(0,0,0,0.87);font-family=
+:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;font-size:14px">Dear colleag=
+ues and researchers,</p><p dir=3D"ltr" style=3D"color:rgba(0,0,0,0.87);font=
+-family:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;font-size:14px"><span=
+ style=3D"font-weight:700">=C2=A0</span></p><p dir=3D"ltr" style=3D"color:r=
+gba(0,0,0,0.87);font-family:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;f=
+ont-size:14px"><b>1st International workshop on=C2=A0Machine vision and NLP=
+ for Document Analysis=C2=A0(VINALDO)</b><span style=3D"font-weight:700">=
+=C2=A0</span></p><p dir=3D"ltr" style=3D"color:rgba(0,0,0,0.87);font-family=
+:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;font-size:14px"><a href=3D"h=
+ttps://sites.google.com/view/vinaldo-workshop-icdar-2023/home" target=3D"_b=
+lank" style=3D"color:rgb(41,98,255);text-decoration-line:none"><span style=
+=3D"text-decoration-line:underline"><b>https://sites.google.com/view/vinald=
+o-workshop-icdar-2023/home</b></span></a></p><p dir=3D"ltr" style=3D"color:=
+rgba(0,0,0,0.87);font-family:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;=
+font-size:14px"><b>As part of the 17th=C2=A0International Conference on Doc=
+ument Analysis and Recognition</b></p><p dir=3D"ltr" style=3D"color:rgba(0,=
+0,0,0.87);font-family:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;font-si=
+ze:14px"><span style=3D"font-weight:700">(ICDAR 2023)</span></p><p dir=3D"l=
+tr" style=3D"color:rgba(0,0,0,0.87);font-family:Roboto,RobotoDraft,Helvetic=
+a,Arial,sans-serif;font-size:14px"><b><a href=3D"https://streaklinks.com/BX=
+Bi2-i9_SjRqQcRPgs5ZAqi/https%3A%2F%2Ficdar2023.org%2F?email=3Dboutalbi.rafi=
+ka%40gmail.com" target=3D"_blank" style=3D"color:rgb(41,98,255);text-decora=
+tion-line:none">https://icdar2023.org/</a></b></p><p dir=3D"ltr" style=3D"c=
+olor:rgba(0,0,0,0.87);font-family:Roboto,RobotoDraft,Helvetica,Arial,sans-s=
+erif;font-size:14px"><b>August 21-26, 2023 =E2=80=94 San Jos=C3=A9, Califor=
+nia, USA</b><br></p><p dir=3D"ltr" style=3D"color:rgba(0,0,0,0.87);font-fam=
+ily:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;font-size:14px"><span sty=
+le=3D"font-weight:700">=C2=A0</span></p><p dir=3D"ltr" style=3D"color:rgba(=
+0,0,0,0.87);font-family:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;font-=
+size:14px"><span style=3D"font-weight:700">Context</span></p><p dir=3D"ltr"=
+ style=3D"color:rgba(0,0,0,0.87);font-family:Roboto,RobotoDraft,Helvetica,A=
+rial,sans-serif;font-size:14px">Document understanding is essential in vari=
+ous application areas such as data invoice extraction, subject review, medi=
+cal prescription analysis, etc., and holds significant commercial potential=
+. Several approaches are proposed in the literature, but datasets&#39; avai=
+lability and data privacy challenge it. Considering the problem of informat=
+ion extraction from documents, different aspects must be taken into account=
+, such as (1) document classification, (2) text localization, (3) OCR (Opti=
+cal Character Recognition), (4) table extraction, and (5) key information d=
+etection.=C2=A0</p><p dir=3D"ltr" style=3D"color:rgba(0,0,0,0.87);font-fami=
+ly:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;font-size:14px">In this co=
+ntext, machine vision and, more precisely, deep learning models for image p=
+rocessing are attractive methods. In fact, several models for document anal=
+ysis were developed for text box detection, text extraction, table extracti=
+on, etc. Different kinds of deep learning approaches, such as GNN, are used=
+ to tackle these tasks. On the other hand, the extracted text from document=
+s can be represented using different embeddings based on recent NLP approac=
+hes such as Transformers. Also, understanding spatial relationships is crit=
+ical for text document extraction results for some applications such as inv=
+oice analysis.=C2=A0 Thus, the aim is to capture the structural connections=
+ between keywords (invoice number, date, amounts) and the main value (the d=
+esired information). An effective approach requires a combination of visual=
+ (spatial) and textual information.=C2=A0</p><p dir=3D"ltr" style=3D"color:=
+rgba(0,0,0,0.87);font-family:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;=
+font-size:14px"><span style=3D"font-weight:700">Objective</span></p><p dir=
+=3D"ltr" style=3D"color:rgba(0,0,0,0.87);font-family:Roboto,RobotoDraft,Hel=
+vetica,Arial,sans-serif;font-size:14px">The first edition of the=C2=A0machi=
+ne VIsion and NAtural Language processing for DOcument analysis (VINALDO)=
+=C2=A0=C2=A0workshop comes as an extension of the GLESDO workshop, where we=
+ encourage the description of novel problems or applications for document a=
+nalysis in the area of information retrieval that has emerged in recent yea=
+rs. We also encourage works that include NLP tools for extracted text, such=
+ as language models and Transforms.=C2=A0 Finally, we also encourage works =
+that develop new scanned document datasets for novel applications.</p><div =
+style=3D"color:rgba(0,0,0,0.87);font-family:Roboto,RobotoDraft,Helvetica,Ar=
+ial,sans-serif;font-size:14px"><div><p dir=3D"ltr">The VINALDO workshop aim=
+s to bring together an area for industry, science, and academia experts to =
+exchange ideas and discuss ongoing research in graph representation learnin=
+g for scanned document analysis.</p><p dir=3D"ltr"><span style=3D"font-weig=
+ht:700">Topics of interests</span></p><p dir=3D"ltr">We invite the submissi=
+on of original works that are related -- but are not limited to -- the topi=
+cs below:</p><ul><li dir=3D"ltr" style=3D"margin-left:15px"><p dir=3D"ltr">=
+Document structure and layout learning=C2=A0</p></li><li dir=3D"ltr" style=
+=3D"margin-left:15px"><p dir=3D"ltr">OCR based methods=C2=A0</p></li><li di=
+r=3D"ltr" style=3D"margin-left:15px"><p dir=3D"ltr">Semi-supervised methods=
+ for document analysis</p></li><li dir=3D"ltr" style=3D"margin-left:15px"><=
+p dir=3D"ltr">Dynamic graph analysis=C2=A0</p></li><li dir=3D"ltr" style=3D=
+"margin-left:15px"><p dir=3D"ltr">Information Retrieval and Extraction from=
+ documents=C2=A0</p></li><li dir=3D"ltr" style=3D"margin-left:15px"><p dir=
+=3D"ltr">Knowledge graph for semantic document analysis=C2=A0</p></li><li d=
+ir=3D"ltr" style=3D"margin-left:15px"><p dir=3D"ltr">Semantic understanding=
+ of document content=C2=A0</p></li><li dir=3D"ltr" style=3D"margin-left:15p=
+x"><p dir=3D"ltr">Entity and link prediction in graphs=C2=A0</p></li><li di=
+r=3D"ltr" style=3D"margin-left:15px"><p dir=3D"ltr">Merging ontologies with=
+ graph-based methods using NLP techniques=C2=A0</p></li><li dir=3D"ltr" sty=
+le=3D"margin-left:15px"><p dir=3D"ltr">Cleansing and image enhancement tech=
+niques for scanned document=C2=A0</p></li><li dir=3D"ltr" style=3D"margin-l=
+eft:15px"><p dir=3D"ltr">Font text recognition in a scanned document=C2=A0<=
+/p></li><li dir=3D"ltr" style=3D"margin-left:15px"><p dir=3D"ltr">Table ide=
+ntification and extraction from scanned documents=C2=A0</p></li><li dir=3D"=
+ltr" style=3D"margin-left:15px"><p dir=3D"ltr">Handwriting detection and re=
+cognition in documents=C2=A0</p></li><li dir=3D"ltr" style=3D"margin-left:1=
+5px"><p dir=3D"ltr">Signature detection and verification in documents=C2=A0=
+</p></li><li dir=3D"ltr" style=3D"margin-left:15px"><p dir=3D"ltr">Visual d=
+ocument structure understanding=C2=A0</p></li><li dir=3D"ltr" style=3D"marg=
+in-left:15px"><p dir=3D"ltr">Visual Question Answering=C2=A0</p></li><li di=
+r=3D"ltr" style=3D"margin-left:15px"><p dir=3D"ltr">Invoice analysis=C2=A0<=
+/p></li><li dir=3D"ltr" style=3D"margin-left:15px"><p dir=3D"ltr">Scanned d=
+ocuments classification=C2=A0</p></li><li dir=3D"ltr" style=3D"margin-left:=
+15px"><p dir=3D"ltr">Scanned documents summarization=C2=A0</p></li><li dir=
+=3D"ltr" style=3D"margin-left:15px"><p dir=3D"ltr">Scanned documents transl=
+ation=C2=A0</p></li><li dir=3D"ltr" style=3D"margin-left:15px"><p dir=3D"lt=
+r">Graph-based approaches for a spatial component in a scanned document=C2=
+=A0</p></li><li dir=3D"ltr" style=3D"margin-left:15px"><p dir=3D"ltr">Graph=
+ representation learning for NLP</p></li></ul><p dir=3D"ltr"><span style=3D=
+"font-weight:700">Submission</span></p><p dir=3D"ltr">The workshop is open =
+to original papers of theoretical or practical nature. Papers should be for=
+matted=C2=A0according to=C2=A0<span style=3D"text-decoration-line:underline=
+"><a href=3D"https://streaklinks.com/BX-6PoUCAoSjhZAIiwM_idJ6/https%3A%2F%2=
+Fwww.springer.com%2Ffr" target=3D"_blank" style=3D"color:rgb(41,98,255);tex=
+t-decoration-line:none">LNCS instructions for authors</a></span>. VINALDO=
+=C2=A02023=C2=A0will follow a double-blind review process. Authors should n=
+ot include their names and affiliations anywhere in the manuscript. Authors=
+ should also ensure that their identity is not revealed indirectly by citin=
+g their previous work in the third person and omitting acknowledgments unti=
+l the camera-ready version.=C2=A0Papers=C2=A0have=C2=A0to be submitted=C2=
+=A0via the workshop&#39;s=C2=A0<span style=3D"text-decoration-line:underlin=
+e"><a href=3D"https://streaklinks.com/BX-6PocJiR0G-W9sCwkKROH-/https%3A%2F%=
+2Feasychair.org%2Fconferences%2F%3Fconf%3Dvinaldo1" target=3D"_blank" style=
+=3D"color:rgb(41,98,255);text-decoration-line:none">EasyChair</a></span>=C2=
+=A0submission page.</p><p dir=3D"ltr">We welcome the following types of con=
+tributions:</p><ul><li dir=3D"ltr" style=3D"margin-left:15px"><p dir=3D"ltr=
+">Full research papers (12-15 pages):=C2=A0Finished or consolidated R&amp;D=
+ works to be included in one of the Workshop topics</p></li><li dir=3D"ltr"=
+ style=3D"margin-left:15px"><p dir=3D"ltr">Short papers (6-8 pages):=C2=A0o=
+ngoing works with relevant preliminary results, opened to discussion.</p></=
+li></ul><p dir=3D"ltr">At least one author of each accepted paper must regi=
+ster for the workshop in order to present the paper.=C2=A0For further instr=
+uctions, please refer to the<a href=3D"https://streaklinks.com/BX-6PoY7-5_v=
+5PJ0Bw-mYvAO/https%3A%2F%2Fwww.google.com%2Furl%3Fq%3Dhttps%253A%252F%252Fi=
+cdar2021.org%252F%26sa%3DD%26sntz%3D1%26usg%3DAOvVaw0W4EcU263Y1GNomxyRFH3n"=
+ target=3D"_blank" style=3D"color:rgb(41,98,255);text-decoration-line:none"=
+>=C2=A0</a><a href=3D"https://streaklinks.com/BX-6PoQ__5CDXwdIOAiVZWcA/http=
+s%3A%2F%2Ficdar2023.org%2F" hspace=3D"streak-track" target=3D"_blank" style=
+=3D"color:rgb(41,98,255);text-decoration-line:none">ICDAR 2023</a>=C2=A0pag=
+e.</p><p dir=3D"ltr"><span style=3D"font-weight:700">Important dates</span>=
+</p><p dir=3D"ltr">Submission Deadline: March 17, 2023 at 11:59pm Pacific T=
+ime</p><p dir=3D"ltr">Decisions Announced: April 17, 2023, at 11:59pm Pacif=
+ic Time</p><p dir=3D"ltr">Camera Ready Deadline: May 8, 2023, at 11:59pm Pa=
+cific Time</p></div></div><p style=3D"color:rgba(0,0,0,0.87);font-family:Ro=
+boto,RobotoDraft,Helvetica,Arial,sans-serif;font-size:14px">Workshop: Augus=
+t 24-26, 2023</p><p dir=3D"ltr" style=3D"color:rgba(0,0,0,0.87);font-family=
+:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;font-size:14px"><span style=
+=3D"font-weight:700">Workshop Chairs</span></p><p dir=3D"ltr" style=3D"colo=
+r:rgba(0,0,0,0.87);font-family:Roboto,RobotoDraft,Helvetica,Arial,sans-seri=
+f;font-size:14px"><span style=3D"font-weight:700"><a href=3D"http://rim.han=
+tach%40gmail.com%20%3Crim.hantach@gmail.com%3E%3B/" hspace=3D"streak-track"=
+ target=3D"_blank" style=3D"color:rgb(41,98,255);text-decoration-line:none"=
+>Rim Hantach</a></span>, Engie, France</p><p dir=3D"ltr" style=3D"color:rgb=
+a(0,0,0,0.87);font-family:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;fon=
+t-size:14px"></p><p dir=3D"ltr" style=3D"color:rgba(0,0,0,0.87);font-family=
+:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;font-size:14px"><span style=
+=3D"font-weight:700"><a href=3D"https://streaklinks.com/BX-6PoMTE3-ifQ3G2Q_=
+OlkkK/http%3A%2F%2Frafika.boutalbi%40univ-amu.fr%2F" hspace=3D"streak-track=
+" target=3D"_blank" style=3D"color:rgb(41,98,255);text-decoration-line:none=
+">Rafika Boutalbi</a></span>, Aix-Marseille University, France</p></div><di=
+v hspace=3D"streak-pt-mark" style=3D"max-height:1px"><img alt=3D"" style=3D=
+"width:0px;max-height:0px;overflow:hidden" src=3D"https://mailfoogae.appspo=
+t.com/t?sender=3DaYm91dGFsYmkucmFmaWthQGdtYWlsLmNvbQ%3D%3D&amp;type=3Dzeroc=
+ontent&amp;guid=3D5f5f2039-49ec-44b0-b9f4-28be3d9343d4"><font color=3D"#fff=
+fff" size=3D"1">=E1=90=A7</font></div>
+
+--0000000000009e43e305f3783b81--

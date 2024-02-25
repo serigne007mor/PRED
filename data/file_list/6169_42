@@ -1,0 +1,680 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (bouncesmtp2.u12.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 865B714006F3
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Tue, 13 Jun 2023 16:06:35 +0200 (CEST)
+Received: from mx2.localdomain (MX2.univ-nantes.fr [193.52.101.136])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id 82F3B5FA0
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Tue, 13 Jun 2023 16:06:35 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.localdomain (Postfix) with ESMTP id 7AA0A1015DD
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 13 Jun 2023 16:06:35 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: YES
+X-Spam-Score: 5.123
+X-Spam-Level: *****
+X-Spam-Status: Yes, score=5.123 tagged_above=-1000 required=5
+	tests=[CRM114_SPAM=5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	MR_NOT_ATTRIBUTED_IP=0.2, NORMAL_HTTP_TO_IP=0.001, NO_RDNS2=0.01,
+	NUMERIC_HTTP_ADDR=0.001, RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001,
+	SPF_PASS=-0.001, UN_PHISHING_PW=0.1] autolearn=disabled
+X-CRM114-Status: SPAM ( -6.7608 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=univ-tours.fr
+Received: from mx2.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id zZEfn-9r-fnM for <liste-egc@polytech.univ-nantes.fr>;
+	Tue, 13 Jun 2023 16:06:29 +0200 (CEST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=193.52.209.24; helo=hermes.univ-tours.fr; envelope-from=prvs=521183a8e=beatrice.markhoff@univ-tours.fr; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=none dis=none) header.from=univ-tours.fr
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=prvs=521183a8e=beatrice.markhoff@univ-tours.fr
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (1024-bit key; unprotected) header.d=univ-tours.fr header.i=@univ-tours.fr header.b="1QBPuRP6";
+	dkim-atps=neutral
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from hermes.univ-tours.fr (hermes.univ-tours.fr [193.52.209.24])
+	by mx2.localdomain (Postfix) with ESMTPS id A18801015D5
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 13 Jun 2023 16:06:29 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=univ-tours.fr; i=@univ-tours.fr; q=dns/txt; s=main;
+  t=1686665189; x=1718201189;
+  h=message-id:date:mime-version:from:subject:to;
+  bh=TAPPGMrGKO8U9eMcDTOyOy4zZD1Yrxn0HeXyIIAz2A0=;
+  b=1QBPuRP6sBLfPL4hjzQmAToKRnvwiS7CgjVDCIij3Bue0Jaa6+ov25Pf
+   FnpViSpj9wCB6KMItG6kjjPy/OgaTTK/E1F3jJa1h25fdkuv6wAUfe61u
+   gjDZ11u1D4xtJsqxYSeMnkyPbvhlu2ytaj8MmaK5G+LQ9EmL7SvcKkkoa
+   k=;
+X-IPAS-Result: =?us-ascii?q?A2E+BQCkdohkPHVRqbANTR0BAQEBCQESAQUFAUmBRoEsg?=
+ =?us-ascii?q?XiBWASEUlyCc41RLpB2iAmFBg+BAgMYFigPAQEBDzkLBAEBAwEDhH8YOQmFH?=
+ =?us-ascii?q?iY4EwECBAEBAQEDAgMBAQEBAQEDAQEGAQEBAQEBBgUBAgMBAQEBQA0QNYUvO?=
+ =?us-ascii?q?YJEIn1QNwEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQ8CDQccNgEWLAZFQ?=
+ =?us-ascii?q?BkLCgIEQScIAQERBj+CJAGCcK0IeoEygQGDF50KgSeBQok4AYgngk+BFAEng?=
+ =?us-ascii?q?lOBdIEOTwEDGH8eBEUfgxwWglEEjSB5gW+NRmWBKG+BHoEifwIJAhFngQgIX?=
+ =?us-ascii?q?oFyQAINVAsLZYEcglQCAhE8FQVKex0DBwQCgQUQLwcEMigGCRgvJwZRBy0kC?=
+ =?us-ascii?q?RMVQgSDWQqBDT8VDhGCXCQCPUEbWhkHJAQOAxkrHUACAQtwPTUJKgYmIYIAg?=
+ =?us-ascii?q?XxInnUsA4MGXjgTFwETDQItARE3BTQTMB0MDS3ECAeCFoF1i3yVCQZCgRiCa?=
+ =?us-ascii?q?ZNYkX2aQYdDgRqCU5RtLxODOoF0gXqBf00nSwEFgRkJgT8BBQRJKFeNYCCDP?=
+ =?us-ascii?q?YJugiaKZ3MCOQIHAQoBAQMJgjmGNYJaAQE?=
+IronPort-PHdr: A9a23:CkyMMhEqlH2z9ak096gjYJ1Gf2xKhN3EVzX9CrIZgr5DOp6u447ld
+ BSGo6k30RmVBNqQtawMotGVmp6jcFRI2YyGvnEGfc4EfD4+ouJSoTYdBtWYA1bwNv/gYn9yN
+ s1DUFh44yPzahANS47xaFLIv3K98yMZFAnhOgppPOT1HZPZg9iq2+yo9JDffQVFiCCybL9vL
+ hi6ogTcu8gLioZ+N6g9zQfErXRPd+lK321jOEidnwz75se+/Z5j9zpftvc8/MNeUqv0Yro1Q
+ 6VAADspL2466svrtQLeTQSU/XsTTn8WkhtTDAfb6hzxQ4r8vTH7tup53ymaINH2QLUpUjms8
+ 6tnVBnlgzoBOjUk8m/Yl9ZwgbpHrxyiqRJwzIDbboGIOvp5YK3QZskVSXZbU8tLSyBMDIGxY
+ o0SBOQBJ+ZYqIz9qkMToBykHwasGPnvyj5UiXDowKY01P4uERvF3AwgGNIOvnrUp8jyOagJT
+ ++61rXIzS/Cb/xKxzjx8o3IfQo7ofGPXbJwdsTRyUc0GgPYiFWQqJLlMyqJ1uQKrmib9fFgW
+ fihi249sgx8pCWkycgwhIfTnI0V1kzE+jtjwIYzPdC1S0B1bNq5HZZftCyXM4R7T8I8T2xqt
+ ys21r0ItJ+lcCYF1ZkqxhHSZvKafoWH/h7uV/ucLSt6iX97Zr+xiBe//E69wePyUcm01UxFr
+ itDktTUrXACyRnT5dKBSvth/0euxTiO2B7I5e1eJkA0j6XbJ4Y8wr42l5ocqkXCEjX3mEXql
+ KOZalsr+vWy6+j+bLTmvYWQN4huigHxKqgundK/DvoiMggKQWeU4+q82Kf/8k3+RbVGluM5n
+ bPCsJHaOcsbprS2Aw5P0oo57Ba/FTim3dIFlncENFJIYA+LgoroNl3UPfz1DPOyj06vnTt23
+ fzKI6DtD5fLI3PeirnuZ6x95FRZyAcryNBf4I9bBa8ZLfLoX0/xqMTYDhgkMwyo2+rnCMty1
+ ocZWW+XBqCVLaffvUGS6u4yIuSBZ5UZtCvnJ/Q76fPhi2c1mV4bfaa3wZsacG20E/ZnLkmDf
+ Hbhg9MMHX0JswYjVuDmlUCOXDxLa3a3Ra085zU7CIy8DYfEQ4CgmKeO0zmhEZ1KfGBGC0yDH
+ mnye4WBQfgMciGSIs9mkjwKW7isUJIh1RevtA/k0rZnMu3U+jACtZL4ztR16ffTmQk09TNvF
+ 8udyX2CT3lonmMUQD87xKByrVRnylifyah4n+BYFdtL6vNIVAc6O5ncw/V7C9/uQQ/Bf9GJS
+ EynQtq8Gz0xQMgxz8cUY0lhA9WikgzD3y2yDr8RlryLH4A0/bzF03fvKMZy123L1LEmj1kiQ
+ spPKXOpibJ/9wTJGo7JlUSZl7izeaQaxiHN8nuDwnSVvE1CXg5wS73JXWoDaUvOsdT5+kTCQ
+ qe1BrQ6NgtBzdeOKqpEZ9DyjFVGXvbjOMjEb2K/gWe8HQyIya+UbIr2Z2Ud2z3QCUYanA8I5
+ 3qGLhYxBiK7rGLYEDxuFEvvY17y/uRlrHO7T1Q0zx2Rb0F4zLq1/QYVieadS/MVxLIEuT0up
+ y96HFanx97WEcaPpxJ9fKVAZtMw+EpI1WLCugxyJJygKL1ihkYAfARspU/uzQt4CoNansg2s
+ nwq1hB+KayC0AAJSzTN0Z3rJrzRI3X7/QqicObX3FrZ1tCL4fVHu6cWsVLm6SsoH1Y48n5qm
+ /xcyXic4ZvERF4YXJvtSEc8+l5/rqvZYi4z6avJ03xydLWzryXZndwzUrh2gi28dstSZfvXX
+ DT5FNcXUpDGFQ==
+IronPort-Data: A9a23:laCuIK/VkrT7xAhlTsBADrUDYn6TJUtcMsCJ2f8bNWPcYEJGY0x3m
+ zcfCjyDOP7ZMTT3eNolaY2xpkpQ7ZWBn9UwSVZtrChEQiMRo6IpJzg4wmTYZHrOc5KZHCqLy
+ +1HMrEs+ehtFie0Si+Fa+Sn9z8mvU2xbuKUIPbePSxsThNTRi4kiBZy88Y0mYcAbeKRWmthg
+ vus5ZWHULOZ82QsaDlMtfvY8EoHUMna4Vv0gHRvPZing3eG/5UlJMp3Db28KXL+Xr5VEoaSL
+ woU5Ojklo9x105F5uKNyt4XQGVTKlLhFVTmZk5tZkSXqkMqShrecEoMHKF0hU9/011llj3qo
+ TlHncTYpQwBZsUglAmBOvXx/u4X0aBuodf6zXaDXcO70kb4bH7h+v5SEmYMGIRF5cRrOV9Wz
+ KlNQNwNRkjra+Oe8+vqEK812JRldY+xZ7Z3VnNIlG6HS694ENaTGuOTvIAwMDQY36iiGd7Ua
+ sMFcztkYVLFagdMOlAZBrojmua2w2X4bidD7lyPzUYyyziNnFUgjtABNvLWQ/KsZ+ZXkn+3+
+ F/59ES+EB0gPYWmnG/tHnWE3LWWx3iTtJgpPLy++PkvgVa7x2oJCRRQW0HTif24kVKzHt9QI
+ GQM/S4/saU59Aq2SNjjGhuxpmKJpVgSQbJ4GfA+7ESMkYLV+QeFQGYeJhZeZdZgr8IzTDo21
+ 0aUkvvtBCdzq/iOTmrb97GOrDr0NzJ9BWMCTSAeShYd7sKluow1hw7CVJBtCsaIYsbdQG6uh
+ mnU/W1u3vBK1JFN3q+8u1rNhCLqqIKhohMJChv/Q2mb8QZ0XYWZeauSzFGG8tRcFLiBdwzU1
+ JQboPRy/NziHLnUynzTHr9RRO71jxqWGGGD3A8xQPHN4xz0oCT9JOi89RkjfC9U3tA4lSjBT
+ nW7Vel5zptUPWDCgURfP9vpU5xCIUTIPtnjSurZK+RHZtB9eUej+yB0aCatM4HRfKsEy/hX1
+ W+zK5rEMJrjIf0PIMCKb+kcy6Q34Ss12HneQ5v2pzz+j+rAOS/JF+xZbQTVBgzc0E9iiFiKm
+ zq4H5XToyizrMWhCsUq2dFLfAtQcShT6W7e8ZAIK7brzvVa9JEJUaWIm+hJl31NlaNIh+jV8
+ 2r1RkJcxVH4gBX6xfaiNBhehEfUdc8n9xoTZHV8VX71hihLXGpaxOJDL/Pbi5F3qbU7pRO1J
+ tFcE/i97gNnEGWfoGlANcWl8OSPtn2D3GqzAsZsWxBnF7YIeuAD0oaMktfHnMXWMheKiA==
+IronPort-HdrOrdr: A9a23:pOQzNKO20HJyGcBcTt6jsMiBIKoaSvp037BZ7S5MoH1uGfBw+P
+ rCoB12737JYVUqNE3I++rrBEBRewK+yXcd2+B4AV7IZmnbUQWTXeNfBMfZrAHdJw==
+X-Talos-CUID: =?us-ascii?q?9a23=3AsilwCmlrGavH7rJ1rLbU8lAfMwrXOWDW8mjVLna?=
+ =?us-ascii?q?zNXhOcpicFECy5Jtai/M7zg=3D=3D?=
+X-Talos-MUID: =?us-ascii?q?9a23=3ASHR1AgwyXW/oE01ZMm2Jt5sRziaaqKeXJmYvspc?=
+ =?us-ascii?q?KgubaCBN7G3CPgA6+G7Zyfw=3D=3D?=
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-AV: E=Sophos;i="6.00,239,1681164000"; 
+   d="scan'208,217";a="868196"
+Received: from 176-169-81-117.abo.bbox.fr (HELO [192.168.1.23]) ([176.169.81.117])
+  by hermes3.univ-tours.fr with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jun 2023 16:06:27 +0200
+Content-Type: multipart/alternative;
+ boundary="------------uOamZ2JmrvovlRRs0o0lNXOJ"
+Message-ID: <0e28e060-41b4-c615-c0d9-0fa5fe70a2bd@univ-tours.fr>
+Date: Tue, 13 Jun 2023 16:06:27 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.10.0
+Content-Language: fr
+From: =?UTF-8?Q?B=c3=a9atrice_Markhoff?= <beatrice.markhoff@univ-tours.fr>
+Organization: =?UTF-8?Q?Universit=c3=a9_Fran=c3=a7ois_Rabelais_Tours?=
+To: destinataires inconnus: ;
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] [SPAM] CfP Semantic Web and Ontology Design for
+ Cultural Heritage (SWODCH) at ISWC 2023
+
+This is a multi-part message in MIME format.
+--------------uOamZ2JmrvovlRRs0o0lNXOJ
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+
+LSBwYXJkb24gcG91ciBsZXMgw6l2ZW50dWVsbGVzIHLDqWNlcHRpb25zIG11bHRpcGxlcyoq
+LSoNCioNCg0KKg0KKg0KDQoqQ2FsbCBmb3IgUGFwZXJzKg0KDQoqKg0KDQozcmQgSW50ZXJu
+YXRpb25hbCBXb3Jrc2hvcCBvbiBTZW1hbnRpYyBXZWIgYW5kIE9udG9sb2d5IERlc2lnbiBm
+b3IgDQpDdWx0dXJhbCBIZXJpdGFnZSAoU1dPRENIIDIwMjMpQElTV0MgMjAyMyANCjxodHRw
+czovL2lzd2MyMDIzLnNlbWFudGljd2ViLm9yZy8+LCAyMm5kIEludGVybmF0aW9uYWwgU2Vt
+YW50aWMgV2ViIA0KQ29uZmVyZW5jZQ0KDQpOb3ZlbWJlciA2LzcsIDIwMjMsIEF0aGVucywg
+R3JlZWNlDQoNCmh0dHBzOi8vc3dvZGNoMjAyMy5pbmYudW5pYnouaXQvIDxodHRwczovL3N3
+b2RjaDIwMjMuaW5mLnVuaWJ6Lml0Lz4NCg0KKklNUE9SVEFOVCBEQVRFUyoNCg0KLSBQYXBl
+ciBzdWJtaXNzaW9uIGRlYWRsaW5lOiBBdWd1c3QgMjUsIDIwMjMNCg0KLSBOb3RpZmljYXRp
+b24gb2YgYWNjZXB0YW5jZTogU2VwdGVtYmVyIDIyLCAyMDIzDQoNCi0gQ2FtZXJhLXJlYWR5
+IHBhcGVyczogU2VwdGVtYmVyIDI5LCAyMDIzDQoNCi0gV29ya3Nob3AgRGF0ZTogTm92ZW1i
+ZXIgNi83LCAyMDIzDQoNCipMT0NBVElPTioNCg0KU1dPRENIIDIwMjMgd2lsbCBiZSBjby1s
+b2NhdGVkIHdpdGggdGhlIDIybmQgSW50ZXJuYXRpb25hbCBTZW1hbnRpYyBXZWIgDQpDb25m
+ZXJlbmNlIChJU1dDIDIwMjMgPGh0dHBzOi8vaXN3YzIwMjMuc2VtYW50aWN3ZWIub3JnLz4p
+IGluIEF0aGVucywgDQpHcmVlY2UuDQoNCipXT1JLU0hPUCBTQ09QRSBBTkQgQUlNUyoNCg0K
+U1dPRENIIDIwMjMgaXMgdGhlIHRoaXJkIGVkaXRpb24gb2YgdGhlIEludGVybmF0aW9uYWwg
+V29ya3Nob3Agb24gDQpTZW1hbnRpYyBXZWIgYW5kIE9udG9sb2d5IERlc2lnbiBmb3IgQ3Vs
+dHVyYWwgSGVyaXRhZ2UuIFRoZSBwdXJwb3NlIG9mIA0KdGhlIHdvcmtzaG9wIGlzIHR3by1m
+b2xkOiBGaXJzdCwgaXQgYWltcyB0byBnYXRoZXIgZm91bmRhdGlvbmFsIHJlc2VhcmNoIA0K
+d29yayBvbiB0aGUgZGVzaWduIG9mIGNvbmNlcHR1YWwgbW9kZWxzLCBrbm93bGVkZ2UgZ3Jh
+cGhzLCBvbnRvbG9naWVzLCANCmFuZCBTZW1hbnRpYyBXZWIgKFNXKSB0ZWNobm9sb2dpZXMg
+Zm9yIEN1bHR1cmFsIEhlcml0YWdlIChDSCkgYW5kIHRoZSANCkRpZ2l0YWwgSHVtYW5pdGll
+cyAoREgpLiBBIHBsZXRob3JhIG9mIGhldGVyb2dlbmVvdXMgYW5kIG11bHRpLWZvcm1hdCAN
+CmRhdGEgY3VycmVudGx5IGF2YWlsYWJsZSBpbiB0aGVzZSBkb21haW5zIGFza3MgZm9yIHBy
+aW5jaXBsZWQgDQptZXRob2RvbG9naWVzIGFuZCB0ZWNobm9sb2dpZXMgdG8gc2VtYW50aWNh
+bGx5IGNoYXJhY3RlcmlzZSwgaW50ZWdyYXRlLCANCmFuZCByZWFzb24gd2l0aCBkYXRhLCBh
+bmQgdG8gc3VwcG9ydCB0aGVpciByZXRyaWV2YWwsIG1hbmFnZW1lbnQsIA0KYW5hbHlzaXMg
+YW5kIHZpc3VhbGlzYXRpb24uIFdlIGFsc28gd2VsY29tZSBwaGlsb3NvcGhpY2FsIGFuZCAN
+CnNvY2lvbG9naWNhbCBhbmFseXNlcyBvZiBkYXRhLCBrbm93bGVkZ2UgcmVwcmVzZW50YXRp
+b24gbW9kZWxzIGFuZCANCm1vZGVsbGluZyBwcmFjdGljZXMgaW4gQ0ggYW5kIERILCBwb3Nz
+aWJseSB0YWtpbmcgaW50byBhY2NvdW50IHRoZSANCnNvY2lhbCBvciBoaXN0b3JpY2FsIGRp
+bWVuc2lvbnMgb2YgZGF0YS4gU2Vjb25kLCBTV09EQ0ggYWltcyB0byBicmluZyANCnRvZ2V0
+aGVyIHN0YWtlaG9sZGVycyBmcm9tIHZhcmlvdXMgZmllbGRzIG9mIENvbXB1dGVyIFNjaWVu
+Y2UgYW5kIHRoZSANCkh1bWFuaXRpZXMsIGludm9sdmVkIGluIHRoZSBkZXZlbG9wbWVudCBh
+bmQgZGVwbG95bWVudCBvZiBjb25jcmV0ZSBTVyANCnNvbHV0aW9ucyBmb3IgQ0gsIGVmZmlj
+aWVudGx5IGJ1aWxkaW5nLCBtYW5hZ2luZywgZXhwbG9yaW5nLCB2aXN1YWxpc2luZyANCm9y
+IG1pbmluZyBDSCBrbm93bGVkZ2UgZ3JhcGhzLiBNb3JlIHRoYW4gMjAgeWVhcnMgYWZ0ZXIg
+dGhlIGJlZ2lubmluZyBvZiANCnRoaXMgY2VudHVyeSwgYW55IFNXIHNvbHV0aW9uIHNob3Vs
+ZCBiZSBkZXNpZ25lZCBhY2NvcmRpbmcgdG8gdGhlIEZBSVIgDQpwcmluY2lwbGVzIGFuZCB0
+aGUgd29ya3Nob3Agc3VwcG9ydHMgdGhlIGNyZWF0aW9uIG9mIGRhdGFzZXRzIGFuZCANCmFw
+cGxpY2F0aW9ucyB0aGF0IHJlc3BlY3QgYW5kIGFyZSBjb21wbGlhbnQgd2l0aCB0aGVzZSBw
+cmluY2lwbGVzLg0KDQoNCipMSVNUIE9GIFRPUElDUyoNCg0KVG9waWNzIG9mIGludGVyZXN0
+IGluY2x1ZGUgKGJ1dCBhcmUgbm90IGxpbWl0ZWQgdG8pOg0KDQpDb25jZXB0dWFsIGFuYWx5
+c2lzIGFuZCBvbnRvbG9neSBkZXNpZ24gZm9yIHRoZSBEaWdpdGFsIEh1bWFuaXRpZXMNCg0K
+LSBEb21haW4gb250b2xvZ2llcyBvciBjb25jZXB0dWFsIG1vZGVscyBmb3IgZGlmZmVyZW50
+IGZpZWxkcyBvZiBIdW1hbml0aWVzDQoNCi0gTWV0aG9kb2xvZ2ljYWwgYXNwZWN0cyBvZiBv
+bnRvbG9neSBkZXZlbG9wbWVudCBmb3IgdGhlIERIDQoNCi0gQXBwbGljYXRpb24gb2YgZm9y
+bWFsIG9udG9sb2d5IHRoZW9yaWVzIGluIHRoZSBESA0KDQotIENhc2Ugc3R1ZGllcyBhbmQg
+bGVzc29ucyBsZWFybnQgZnJvbSB0aGUgdXNlIG9mIHN0YW5kYXJkIG9udG9sb2dpZXMgDQoo
+ZS5nLiBDSURPQy1DUk0pDQoNCi0gTG9naWNhbCBhbmQgb250b2xvZ2ljYWwgYW5hbHlzaXMg
+b2YgQ0lET0MtQ1JNIG9yIEZSQlIsIGUuZy4sIHdpdGggDQpyZXNwZWN0IHRvIGZvdW5kYXRp
+b25hbCBvbnRvbG9naWVzIChET0xDRSwgVUZPLCBCRk8sIGV0Yy4pDQoNCi0gUGhpbG9zb3Bo
+aWNhbCBhbmQgc29jaW9sb2dpY2FsIGFuYWx5c2lzIG9mIGRpZ2l0YWwgbW9kZWxzIGFuZCAN
+Cm1vZGVsbGluZyBwcmFjdGljZXMgaW4gREgNCg0KLSBTb2NpYWwgc3R1ZGllcyBvbiB0aGUg
+cG9saWNpZXMgdG93YXJkcyB0aGUgc3RhbmRhcmRpc2F0aW9uIG9mIA0Kb250b2xvZ2llcyBp
+biBESA0KDQpTZW1hbnRpYyBXZWIgVGVjaG5vbG9naWVzIGFuZCBBcHBsaWNhdGlvbnMgZm9y
+IEN1bHR1cmFsIEhlcml0YWdlDQoNCi0gU1cgdGVjaG5vbG9naWVzIGZvciBDSCBjb250ZW50
+IGNyZWF0aW9uLCBhbm5vdGF0aW9uIGFuZCBleHRyYWN0aW9uDQoNCi0gU1cgYXJjaGl0ZWN0
+dXJlcyBhbmQgaW5mcmFzdHJ1Y3R1cmVzIGZvciBDSA0KDQotIEludGVyb3BlcmFiaWxpdHkg
+b2YgQ0ggY29sbGVjdGlvbnMNCg0KLSBBcHBseWluZyB0aGUgRkFJUiBkYXRhIHByaW5jaXBs
+ZXMgdG8gQ0ggZGF0YQ0KDQotIENIIGtub3dsZWRnZSBncmFwaHMNCg0KLSBTZWFyY2hpbmcs
+IHF1ZXJ5aW5nIGFuZCB2aXN1YWxpc2luZyBDSCBkYXRhIG9uIHRoZSBTVw0KDQotIE9udG9s
+b2d5LWJhc2VkIGFjY2VzcyB0byBDSCBkYXRhDQoNCi0gUHVibGlzaGluZyBDSCBkYXRhIG9u
+IHRoZSBXZWINCg0KLSBOYXZpZ2F0aW5nIHRocm91Z2ggYW5kIGJyb3dzaW5nIENIIGRhdGEg
+b24gdGhlIFdlYg0KDQotIFNXIHNvbHV0aW9ucyBmb3IgdHJ1c3QgYW5kIHByb3ZlbmFuY2Ug
+aXNzdWVzIGluIENIDQoNCi0gU1cgYXBwbGljYXRpb25zIGZvciBkaWdpdGFsIGxpYnJhcmll
+cywgbXVzZXVtcywgdG91cmlzbSwgdGhlIGNyZWF0aXZlIA0KaW5kdXN0cmllcywgZXRjLg0K
+DQoqU1VCTUlTU0lPTiBHVUlERUxJTkVTKg0KDQpXZSB3aWxsIGFjY2VwdCB0d28gZGlmZmVy
+ZW50IHR5cGVzIG9mIGNvbnRyaWJ1dGlvbnM6DQoNCi0gRnVsbCBwYXBlcnMgZm9yIHByZXNl
+bnRpbmcgb3JpZ2luYWwgdW5wdWJsaXNoZWQgd29yaywgbmVpdGhlciANCnN1Ym1pdHRlZCB0
+byBub3IgYWNjZXB0ZWQgZm9yIHByZXNlbnRhdGlvbiBhdCBhbnkgb3RoZXIgdmVudWUuIFN1
+Ym1pdHRlZCANCipmdWxsIHBhcGVycyogc2hvdWxkIGJlIGJldHdlZW4gMTAgYW5kIDEyIHBh
+Z2VzLCBpbmNsdWRpbmcgcmVmZXJlbmNlcy4NCg0KLSBTaG9ydCBwYXBlcnMgZm9yIHByZXNl
+bnRpbmcgd29yayBpbiBwcm9ncmVzcywgYnJpZWYgZGVzY3JpcHRpb25zIG9mIA0KZG9jdG9y
+YWwgdGhlc2VzLCBvciBnZW5lcmFsIG92ZXJ2aWV3cyBvZiByZXNlYXJjaCBwcm9qZWN0cy4g
+U3VibWl0dGVkIA0KKnNob3J0IHBhcGVycyogc2hvdWxkIGJlIGJldHdlZW4gNiBhbmQgOCBw
+YWdlcywgaW5jbHVkaW5nIHJlZmVyZW5jZXMuDQoNCkFsbCBjb250cmlidXRpb25zIHRvIHRo
+ZSB3b3Jrc2hvcCBtdXN0IGJlIHN1Ym1pdHRlZCBhY2NvcmRpbmcgdG8gdGhlIA0KMS1jb2x1
+bW4gQ0VVUi1BUlQgc3R5bGUgZm9ybWF0LiBUaGUgc3R5bGUgZmlsZXMgZm9yIHRoaXMgZm9y
+bWF0IGFyZSANCmF2YWlsYWJsZSBhdCBodHRwOi8vY2V1ci13cy5vcmcvVm9sLVhYWC9DRVVS
+QVJULnppcCANCjxodHRwOi8vY2V1ci13cy5vcmcvVm9sLVhYWC9DRVVSQVJULnppcD4uIEFu
+IE92ZXJsZWFmIHBhZ2UgaXMgYWxzbyANCmF2YWlsYWJsZSBmb3IgTGFUZVggdXNlcnM6IGh0
+dHBzOi8vd3d3Lm92ZXJsZWFmLmNvbS9yZWFkL2d3aHhucWNnaGhkdCANCjxodHRwczovL3d3
+dy5vdmVybGVhZi5jb20vcmVhZC9nd2h4bnFjZ2hoZHQ+Lg0KDQpQYXBlcnMgc2hvdWxkIGJl
+IHN1Ym1pdHRlZCBpbiBQREYgZm9ybWF0IHRocm91Z2ggdGhpcyBsaW5rOiANCmh0dHBzOi8v
+ZWFzeWNoYWlyLm9yZy9jb25mZXJlbmNlcy8/Y29uZj1zd29kY2gyMDIzIA0KPGh0dHBzOi8v
+ZWFzeWNoYWlyLm9yZy9jb25mZXJlbmNlcy8/Y29uZj1zd29kY2gyMDIzPg0KDQpQYXBlcnMg
+d2lsbCBiZSByZXZpZXdlZCBvbiB0aGUgYmFzaXMgb2YgdGhlaXIgc2NpZW50aWZpYyBtZXJp
+dCwgDQpvcmlnaW5hbGl0eSBhbmQgcmVsZXZhbmNlIHRvIHRoZSB3b3Jrc2hvcC4gRWFjaCBw
+YXBlciB3aWxsIGJlIHJldmlld2VkIA0KYnkgYXQgbGVhc3QgdGhyZWUgUHJvZ3JhbSBDb21t
+aXR0ZWUgbWVtYmVycy4NCg0KKlBVQkxJQ0FUSU9OKg0KDQpBY2NlcHRlZCBwYXBlcnMgd2ls
+bCBiZSBwdWJsaXNoZWQgaW4gYSBDRVVSLVdTIHZvbHVtZS4gV2UgYXJlIGluIA0KZGlzY3Vz
+c2lvbnMgd2l0aCB0aGUgZWRpdG9ycyBvZiBhIGpvdXJuYWwgdG8gb3JnYW5pc2UgYSBzcGVj
+aWFsIGlzc3VlIA0Kd2l0aCBleHRlbmRlZCB2ZXJzaW9ucyBvZiBzZWxlY3RlZCBwYXBlcnMg
+YWZ0ZXIgdGhlIGVuZCBvZiB0aGUgd29ya3Nob3AuDQoNCipPUkdBTklTSU5HIENPTU1JVFRF
+RSoNCg0KLSBBbnRvbmlzIEJpa2FraXMsIFVuaXZlcnNpdHkgQ29sbGVnZSBMb25kb24sIFUu
+Sy4NCg0KLSBSb2JlcnRhIEZlcnJhcmlvLCBJU1RDLUNOUiwgSXRhbHkNCg0KLSBTdMOpcGhh
+bmUgSmVhbiwgVW5pdmVyc2l0eSBvZiBQb2l0aWVycyAtIEVOU01BLCBGcmFuY2UNCg0KLSBC
+w6lhdHJpY2UgTWFya2hvZmYsIFVuaXZlcnNpdHkgb2YgVG91cnMsIEZyYW5jZQ0KDQotIEFs
+ZXNzYW5kcm8gTW9zY2EsIEZyZWUgVW5pdmVyc2l0eSBvZiBCb3plbi1Cb2x6YW5vLCBJdGFs
+eQ0KDQotIE1hcmlhbm5hIE5pY29sb3NpIEFzbXVuZG8sIFVuaXZlcnNpdHkgb2YgQ2F0YW5p
+YSwgSXRhbHkNCg0K
+--------------uOamZ2JmrvovlRRs0o0lNXOJ
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+  <head>
+
+    <meta http-equiv=3D"content-type" content=3D"text/html; charset=3DUTF=
+-8">
+  </head>
+  <body>
+    <p>
+    </p>
+    <p class=3D"MsoNormal"><font size=3D"1"><span
+          style=3D"mso-bidi-font-weight:normal"><span
+            style=3D"font-size:14.0pt;line-height:115%;color:#222222;back=
+ground:white;
+            mso-highlight:white" lang=3D"EN">- pardon pour les =C3=A9vent=
+uelles
+            r=C3=A9ceptions multiples</span></span><b
+          style=3D"mso-bidi-font-weight:normal"><span
+            style=3D"font-size:14.0pt;line-height:115%;color:#222222;back=
+ground:white;
+            mso-highlight:white" lang=3D"EN"> </span></b><span
+          style=3D"mso-bidi-font-weight:normal"><span
+            style=3D"font-size:14.0pt;line-height:115%;color:#222222;back=
+ground:white;
+            mso-highlight:white" lang=3D"EN">-</span></span><b
+          style=3D"mso-bidi-font-weight:normal"><span
+            style=3D"font-size:14.0pt;line-height:115%;color:#222222;back=
+ground:white;
+            mso-highlight:white" lang=3D"EN"><br>
+          </span></b></font></p>
+    <p class=3D"MsoNormal"><b style=3D"mso-bidi-font-weight:normal"><span=
+
+          style=3D"font-size:14.0pt;line-height:115%;color:#222222;backgr=
+ound:white;
+          mso-highlight:white" lang=3D"EN"><br>
+        </span></b></p>
+    <p class=3D"MsoNormal"><b style=3D"mso-bidi-font-weight:normal"><span=
+
+          style=3D"font-size:14.0pt;line-height:115%;color:#222222;backgr=
+ound:white;
+          mso-highlight:white" lang=3D"EN">Call for Papers</span></b></p>=
+
+    <p class=3D"MsoNormal"><b style=3D"mso-bidi-font-weight:normal"><span=
+
+          style=3D"font-size:14.0pt;line-height:115%;color:#222222;backgr=
+ound:white;
+          mso-highlight:white" lang=3D"EN">=C2=A0</span></b></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">3rd International Workshop on
+        Semantic Web and Ontology
+        Design for Cultural Heritage (SWODCH 2023)@</span><span
+        lang=3D"EN"><a href=3D"https://iswc2023.semanticweb.org/"><span
+            style=3D"color:#1155CC;background:
+            white;mso-highlight:white">ISWC 2023</span></a><span
+          style=3D"color:#222222;
+          background:white;mso-highlight:white">, 22nd International
+          Semantic Web
+          Conference</span></span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">November 6/7, 2023, Athens,
+        Greece </span></p>
+    <p class=3D"MsoNormal"><span lang=3D"EN"><a
+          href=3D"https://swodch2023.inf.unibz.it/"><span
+            style=3D"color:#1155CC;background:white;mso-highlight:white">=
+https://swodch2023.inf.unibz.it/</span></a><span
+          style=3D"color:#222222;background:white;mso-highlight:white"></=
+span></span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN"><span style=3D"mso-spacerun:yes"=
+>=C2=A0</span></span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">*IMPORTANT DATES*</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">- Paper submission deadline:
+        August 25, 2023</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">- Notification of acceptance:
+        September 22, 2023</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">- Camera-ready papers: September=
+
+        29, 2023</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">- Workshop Date: November 6/7,
+        2023</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">=C2=A0</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">*LOCATION*</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">SWODCH 2023 will be co-located
+        with the 22nd International
+        Semantic Web Conference (</span><span lang=3D"EN"><a
+          href=3D"https://iswc2023.semanticweb.org/"><span
+            style=3D"color:#1155CC;background:
+            white;mso-highlight:white">ISWC 2023</span></a><span
+          style=3D"color:#222222;
+          background:white;mso-highlight:white">) in Athens, Greece.</spa=
+n></span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">=C2=A0</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">*WORKSHOP SCOPE AND AIMS*</span>=
+</p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">SWODCH 2023 is the third edition=
+
+        of the International
+        Workshop on Semantic Web and Ontology Design for Cultural
+        Heritage. The purpose
+        of the workshop is two-fold: First, it aims to gather
+        foundational research
+        work on the design of conceptual models, knowledge graphs,
+        ontologies, and
+        Semantic Web (SW) technologies for Cultural Heritage (CH) and
+        the Digital
+        Humanities (DH). A plethora of heterogeneous and multi-format
+        data currently
+        available in these domains asks for principled methodologies and
+        technologies
+        to semantically characterise, integrate, and reason with data,
+        and to support
+        their retrieval, management, analysis and visualisation. We also
+        welcome
+        philosophical and sociological analyses of data, knowledge
+        representation models
+        and modelling practices in CH and DH, possibly taking into
+        account the social
+        or historical dimensions of data. Second, SWODCH aims to bring
+        together
+        stakeholders from various fields of Computer Science and the
+        Humanities,
+        involved in the development and deployment of concrete SW
+        solutions for CH,
+        efficiently building, managing, exploring, visualising or mining
+        CH knowledge
+        graphs. More than 20 years after the beginning of this century,
+        any SW solution
+        should be designed according to the FAIR principles and the
+        workshop supports
+        the creation of datasets and applications that respect and are
+        compliant with
+        these principles.</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN"><br>
+      </span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">*LIST OF TOPICS*</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">Topics of interest include (but
+        are not limited to):</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">=C2=A0</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">Conceptual analysis and ontology=
+
+        design for the Digital
+        Humanities</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">- Domain ontologies or conceptua=
+l
+        models for different
+        fields of Humanities</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">- Methodological aspects of
+        ontology development for the
+        DH</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">- Application of formal ontology=
+
+        theories in the DH</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">- Case studies and lessons learn=
+t
+        from the use of standard
+        ontologies (e.g. CIDOC-CRM)</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">- Logical and ontological
+        analysis of CIDOC-CRM or FRBR,
+        e.g., with respect to foundational ontologies (DOLCE, UFO, BFO,
+        etc.)</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">- Philosophical and sociological=
+
+        analysis of digital
+        models and modelling practices in DH</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">- Social studies on the policies=
+
+        towards the
+        standardisation of ontologies in DH</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">=C2=A0</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">Semantic Web Technologies and
+        Applications for Cultural
+        Heritage</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">- SW technologies for CH content=
+
+        creation, annotation and
+        extraction</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">- SW architectures and
+        infrastructures for CH</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">- Interoperability of CH
+        collections</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">- Applying the FAIR data
+        principles to CH data </span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">- CH knowledge graphs</span></p>=
+
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">- Searching, querying and
+        visualising CH data on the SW</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">- Ontology-based access to CH
+        data</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">- Publishing CH data on the Web<=
+/span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">- Navigating through and browsin=
+g
+        CH data on the Web</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">- SW solutions for trust and
+        provenance issues in CH</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">- SW applications for digital
+        libraries, museums, tourism,
+        the creative industries, etc.</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">=C2=A0</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">*SUBMISSION GUIDELINES*</span></=
+p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">We will accept two different
+        types of contributions:</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">- Full papers for presenting
+        original unpublished work,
+        neither submitted to nor accepted for presentation at any other
+        venue.
+        Submitted *full papers* should be between 10 and 12 pages,
+        including
+        references.</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">- Short papers for presenting
+        work in progress, brief
+        descriptions of doctoral theses, or general overviews of
+        research projects.
+        Submitted *short papers* should be between 6 and 8 pages,
+        including references.</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">=C2=A0</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">All contributions to the worksho=
+p
+        must be submitted
+        according to the 1-column CEUR-ART style format. The style files
+        for this
+        format are available at </span><span lang=3D"EN"><a
+          href=3D"http://ceur-ws.org/Vol-XXX/CEURART.zip"><span
+            style=3D"color:#1155CC;
+            background:white;mso-highlight:white">http://ceur-ws.org/Vol-=
+XXX/CEURART.zip</span></a><span
+          style=3D"color:#222222;background:white;mso-highlight:white">.
+          An Overleaf page
+          is also available for LaTeX users: </span><a
+          href=3D"https://www.overleaf.com/read/gwhxnqcghhdt"><span
+            style=3D"color:#1155CC;
+            background:white;mso-highlight:white">https://www.overleaf.co=
+m/read/gwhxnqcghhdt</span></a><span
+          style=3D"color:#222222;background:white;mso-highlight:white">.<=
+/span></span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">=C2=A0</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">Papers should be submitted in PD=
+F
+        format through this
+        link: </span><span lang=3D"EN"><a
+          href=3D"https://easychair.org/conferences/?conf=3Dswodch2023"><=
+span
+            style=3D"color:#1155CC;background:white;mso-highlight:white">=
+https://easychair.org/conferences/?conf=3Dswodch2023</span></a><span
+          style=3D"color:#222222;background:white;mso-highlight:white"></=
+span></span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">=C2=A0</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">Papers will be reviewed on the
+        basis of their scientific
+        merit, originality and relevance to the workshop. Each paper
+        will be reviewed
+        by at least three Program Committee members.</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">=C2=A0</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">*PUBLICATION*</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">Accepted papers will be publishe=
+d
+        in a CEUR-WS volume. We
+        are in discussions with the editors of a journal to organise a
+        special issue
+        with extended versions of selected papers after the end of the
+        workshop.</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">=C2=A0</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">*ORGANISING COMMITTEE*</span></p=
+>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">- Antonis Bikakis, University
+        College London, U.K.</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">- Roberta Ferrario, ISTC-CNR,
+        Italy</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">- St=C3=A9phane Jean, University=
+ of
+        Poitiers - ENSMA, France</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">- B=C3=A9atrice Markhoff, Univer=
+sity
+        of Tours, France</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">- Alessandro Mosca, Free
+        University of Bozen-Bolzano,
+        Italy</span></p>
+    <p class=3D"MsoNormal"><span style=3D"color:#222222;background:white;=
+
+        mso-highlight:white" lang=3D"EN">- Marianna Nicolosi Asmundo,
+        University of Catania, Italy</span></p>
+    <p>
+      <style>@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:3 0 0 0 1 0;}p.MsoNormal, li.MsoNormal, div.MsoNormal=
+
+	{mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-parent:"";
+	margin:0cm;
+	line-height:115%;
+	mso-pagination:widow-orphan;
+	font-size:11.0pt;
+	font-family:"Arial",sans-serif;
+	mso-fareast-font-family:Arial;
+	mso-ansi-language:EN;}.MsoChpDefault
+	{mso-style-type:export-only;
+	mso-default-props:yes;
+	font-size:11.0pt;
+	mso-ansi-font-size:11.0pt;
+	mso-bidi-font-size:11.0pt;
+	font-family:"Arial",sans-serif;
+	mso-ascii-font-family:Arial;
+	mso-fareast-font-family:Arial;
+	mso-hansi-font-family:Arial;
+	mso-bidi-font-family:Arial;
+	mso-font-kerning:0pt;
+	mso-ligatures:none;
+	mso-ansi-language:EN;}.MsoPapDefault
+	{mso-style-type:export-only;
+	line-height:115%;}div.WordSection1
+	{page:WordSection1;}</style></p>
+    <pre class=3D"moz-signature" cols=3D"72">
+</pre>
+  </body>
+</html>
+
+--------------uOamZ2JmrvovlRRs0o0lNXOJ--

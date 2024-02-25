@@ -1,0 +1,531 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (bouncesmtp1.u12.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 7287F14017E3
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon, 18 Jul 2022 20:06:27 +0200 (CEST)
+Received: from mx1.d101.univ-nantes.fr (MX1.univ-nantes.fr [193.52.101.135])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id 6F3756D19C0
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon, 18 Jul 2022 20:06:27 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.d101.univ-nantes.fr (Postfix) with ESMTP id 685974821ABE
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 18 Jul 2022 20:06:27 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 1.012
+X-Spam-Level: *
+X-Spam-Status: No, score=1.012 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+	HTML_MESSAGE=0.001, IMPRONONCABLE_2=1.5, RCVD_IN_DNSWL_NONE=-0.0001,
+	RCVD_IN_WSFF=0.01, SMILEY=-0.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+	UN_PHISHING_PW=0.1] autolearn=disabled
+X-CRM114-Status: UNSURE ( 2.9186 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=gmail.com
+Received: from mx1.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id ARGdXS0ex1KV for <liste-egc@polytech.univ-nantes.fr>;
+	Mon, 18 Jul 2022 20:06:24 +0200 (CEST)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mail-oa1-x31.google.com (mail-oa1-x31.google.com [IPv6:2001:4860:4864:20::31])
+	by mx1.d101.univ-nantes.fr (Postfix) with ESMTPS id 3C5A747EC0DE
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 18 Jul 2022 20:06:24 +0200 (CEST)
+Received: by mail-oa1-x31.google.com with SMTP id 586e51a60fabf-10c0052da61so25818179fac.12
+        for <liste-egc@polytech.univ-nantes.fr>; Mon, 18 Jul 2022 11:06:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=fIlfMQbMID3vW+xM+JJgrg23zmjwK8bDLXNs/L6ZitQ=;
+        b=Uin8vw74Fywbz8bdvdkcKMy/lQS7Dv/5Ig6M6I7GAchI8SklfDYxdknCMBz6MwM/yS
+         Ey7PLgR1McHLR2ldRNcutTUfDN6U8hWs488aUG/2oFZkrUTKKjN4ZwAl392mKJbbHOga
+         WOWuyXNU9rszumRQ0qjZ0S0A3sdZzeSzVcaPL4Mpl+sN8FcBsnMDMaPpryltVEf+XH9E
+         ppbeX5lm+POW8OuIGp5w0egPXiiMNMmR07aJS8HuP3HXvjVpc9XGo3LZci6v3ytVFtpD
+         5tPNzjRGnUnFKWURU59m+hnxmgc5AZknJd3i1qFrM4rxL04YaFe/8DMO+7RTo4sQ9uk+
+         VzWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=fIlfMQbMID3vW+xM+JJgrg23zmjwK8bDLXNs/L6ZitQ=;
+        b=ztIgxIjNa+tXmQOh+gmmH/+4oiU3DtgKzeJ4xNDq1G3nngF+sNFrMT3dwnzIrN08Ek
+         QEBLxKK1oihZBMpfUpkaA2Rtnb0BThokykYrE5VHVFjPr+9aMlZdZCzp1zpbZNrCEKRZ
+         8olQdn2+J1oIOpbeKwewZYka99X+wNA9JoYgDAHeKiydEHq5809kpQNpmBzrqmP9ZnAy
+         gDmwCNEGpP8SuRL0fw4tYEdehv0a5dGWui/8lYSLaGD7830Bo+W5vhiJ5yDeSEBdV54C
+         sMsJH3+YC1UP24/H/lYMs3PO1vY5UFFZQd3TuY0zcEbCGjBF7d6Vw3vUDgG4btTVTJpM
+         WC6g==
+X-Gm-Message-State: AJIora8oqCCPhUWxR70VKEGwl6unrfHLdC4L4BW+vfU/sgGGT8HpIvqM
+	8rZsNGS1i/H4DpkUemudwcO4ZuBurohx42evpKLBCXM/993pSRzZ
+X-Google-Smtp-Source: AGRyM1tmzYbM5IS37UpXJPlUym0jzu1Kw/vB0LMdF/lkJZHuHnoSpqKkg5BtrgzKXDyI9fwFrUjuVt+3og7Dqbarba4=
+X-Received: by 2002:a05:6808:23c4:b0:33a:6562:517d with SMTP id
+ bq4-20020a05680823c400b0033a6562517dmr5134346oib.40.1658167582685; Mon, 18
+ Jul 2022 11:06:22 -0700 (PDT)
+MIME-Version: 1.0
+From: Moussa Amrani <moussa.amrani@gmail.com>
+Date: Mon, 18 Jul 2022 20:05:46 +0200
+Message-ID: <CAPQhgeN9rAJyYpNjf=2OvZq0_KoBTzPj2HP6qw3D9vwMcvBa0g@mail.gmail.com>
+To: bull-i3@irit.fr, liste-egc@polytech.univ-nantes.fr, 
+	gdr.gpl@univ-grenoble-alpes.fr, planetmde@univ-grenoble-alpes.fr, 
+	gdr.gpl@imag.fr, ecoop-info@ecoop.org, all@gemoc.org, 
+	announcements.mpm4cps@lcc.uma.es
+Content-Type: multipart/alternative; boundary="000000000000be811e05e41839a0"
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Last CfP + Deadline Extension for the MPM4CPS@MoDELS'22
+ Workshop (Multi-Paradigm Modelling for Cyber-Physical Systems)
+
+--000000000000be811e05e41839a0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Dear Colleagues,
+
+Responding to several requests, the OC has decided to extend the deadline
+by one week: it is now set to the 27th July.
+Hope this will allow some of you to improve their papers! :-)
+
+Regards,
+
+M.A
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D
+*Call for Papers:*
+*International Workshop on Multi-Paradigm Modelling for Cyber-Physical
+Systems (MPM4CPS)*
+(co-located with the MoDELS 2022 Conference)
+23-25 October 2022 (Exact date to be announced)
+Montr=C3=A9al, Canada
+http://msdl.uantwerpen.be/conferences/MPM4CPS/2022
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D
+
+*Scope of the Workshop*
+
+Tackling the complexity involved in developing truly complex, designed
+systems is a topic of intense research and development. System complexity
+has drastically increased once software components were introduced in the
+form of embedded systems, controlling physical parts of the system, and has
+only grown in CPS, where the networking aspect of the systems and their
+environment are also considered. The complexity faced when engineering CPS
+is mostly due to the plethora of cross-disciplinary design alternatives and
+inter-domain interactions. To date, no unifying theory or system design
+methods, techniques, or tools to design, analyze, and ultimately deploy CPS
+exist. Individual (physical systems, software and network) engineering
+disciplines offer only partial solutions and are no match for the
+complexity observed in CPS. Multi-Paradigm Modeling (MPM) offers a
+foundational framework for gluing the several disciplines together in a
+consistent way. The inherent complexity of CPS is broken down into
+different levels of abstraction and views, each expressed in appropriate
+modeling formalisms. MPM offers processes and tools that can combine,
+couple, and integrate each of the views that compose a system.
+
+MPM encompasses many research topics - from language engineering (for DSLs,
+including their (visual) syntax and semantics), to processes to support
+multi-view and multi-abstraction modeling, simulation for system analysis,
+and deployment. The added complexity that CPS brings compared to embedded
+and software-intensive systems requires looking at these new applications
+and how MPM techniques can be applied or adapted to them, tying together
+multiple domains. Many remaining research questions require answers from
+researchers in different domains, as well as a unified effort from
+researchers that work on supporting techniques and technologies.
+
+*Topics of Interest (including, but not limited to)*
+
+   - *Foundations of domain-specific modelling*, with a particular focus on
+   classifications of the various dimensions around MPM (formalisms;
+   processes; related activities such as V&V, deployment, calibration, etc.=
+;
+   tools, and methodologies);
+   - *Modelling language engineering*, modular design of modelling
+   languages, with a particular focus on de-/composition;
+- *Co-simulation*, coordination algorithms ensuring correct simulation
+   results.
+- *Model Management* with, and for, MPM4CPS: challenges, techniques, tools.
+- *Applications of MPM techniques* in automotive, aviation, manufacturing,
+   etc.
+- *MPM for (self-)adaptive systems*
+- *MPM approaches, techniques and tools* for related domains: IoT, Digital
+   Twins, SmartCPS
+- *Social impacts* processes in CPS, Large Data Management Modelling in CPS
+
+Contributions should clearly address the foundations of Multi-Paradigm
+Modeling by demonstrating the use of models to achieve the stated
+objectives and discuss the benefits of explicit modeling.
+
+*Submission Procedure*
+
+Papers should be submitted electronically in PDF using the ACM formatting
+instructions available here
+<https://www.acm.org/publications/proceedings-template>, following the
+acmart format, via EasyChair on the following link:
+
+https://easychair.org/my/conference?conf=3Dmpm4cps22
+Each submission will be peer-reviewed by at least three PC members, and
+should fit one of the following format:
+
+   - *Full research papers* (10 pages max) present a novel, innovative
+   approach;
+
+
+   - *Short papers* (5 pages max) present new ideas or early-stage
+   research, extensively discuss the experiences of the researchers with an
+   MPM approach or demonstrate a tool;
+
+
+   - *Exemplar descriptions* (10 pages max) describing a CPS Engineering
+   practice, highlighting both the processes at play and the formalisms,
+   languages and/or tools used to support these activities, all expressed
+   using the language described in the Workshop=E2=80=99s webpage.
+
+All papers will be published with the main conference=E2=80=99s workshop
+proceedings (which is properly indexed by classical search engines);
+authors submitting exemplars will eventually be invited to contribute to a
+Special Issue.
+
+*Important Dates*
+
+*Paper submission deadline:    *20 July 2022  *27 July 2022*
+
+*Notification of acceptance:*     19 August 2022
+
+*Camera-Ready deadline: *        26 August 2022
+
+*Workshop dates:*                      23 - 25 October 2021 (exact date TBA=
+)
+
+
+*Organisation Committee*
+
+
+*Moussa Amrani*, Universit=C3=A9 de Namur*, *Belgium
+*Dominique Blouin, *T=C3=A9l=C3=A9com ParisTech*, *France
+*Moharram Challenger, *University of Antwerp*, *Belgium
+*Joeri Exelmans, *University of Antwerp*, *Belgium
+*Randy Paredis*, University of Antwerp*, *Belgium
+*Robert Heinrich, *Karlsruhe Institute of Technology, Germany
+
+
+*Program Committee*
+
+
+Shaukat Ali, Simula Research Laboratory, Norway
+Soumyadip Bandyopadhyay, NVIDIA, India
+Ankica Barisic, University C=C3=B4te d'Azur, France
+Frederic Boulanger, CentraleSupelec, France
+Antonio Cicchetti, Malardalen University, Sweden
+Andrea D'Ambrogio, University of Roma TorVergata, Italy
+Ferhat Erata, Yale University, USA
+Mauro Iacono, Universita degli Studi della Campania "Luigi Vanvitelli",
+Italy
+Gabor Karsai, Vanderbilt University, USA
+Stefan Klikovits, National Institute of Informatics, Japan
+Letitia Li, BAE Systems, USA
+Sadaf Mustafiz, Ryerson University, Canada
+Ivan Ruchkin, University of Pennsylvania, USA
+Bran Selic, Malina Software Corp., USA
+Eugene Syriani, University of Montreal, Canada
+Antonio Vallecillo, Universidad de Malaga, Spain
+Clark Verbrugge, McGill University, Canada
+Andreas Wortmann, University of Stuttgart, Germany
+Jamal El-Hachem, University of South Britanny, France
+Hassna Louadah, University of Huddersfield, UK
+
+--=20
+M.A
+
+--000000000000be811e05e41839a0
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div><font size=3D"2"><span style=3D"font-family:arial,san=
+s-serif">Dear Colleagues,</span></font></div><div><font size=3D"2"><span st=
+yle=3D"font-family:arial,sans-serif"><br></span></font></div><div><font siz=
+e=3D"2"><span style=3D"font-family:arial,sans-serif">Responding to several =
+requests, the OC has decided to extend the deadline by one week: it is now =
+set to the 27th July.</span></font></div><div>Hope this will allow some of =
+you to improve their papers! :-)</div><div><br></div><div>Regards,</div><di=
+v><font size=3D"2"><span style=3D"font-family:arial,sans-serif"><br></span>=
+</font></div><div><font size=3D"2"><span style=3D"font-family:arial,sans-se=
+rif">M.A<br></span></font></div><div><font size=3D"2"><span style=3D"font-f=
+amily:arial,sans-serif"><br></span></font></div><div><font size=3D"2"><span=
+ style=3D"font-family:arial,sans-serif">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</span></font><=
+/div><div><font size=3D"2"><span style=3D"font-family:arial,sans-serif"><b>=
+Call for Papers:</b></span></font></div><div><font size=3D"2"><span style=
+=3D"font-family:arial,sans-serif"><i><b>International Workshop on Multi-Par=
+adigm Modelling for Cyber-Physical Systems (MPM4CPS)</b></i></span></font><=
+/div><div><font size=3D"2"><span style=3D"font-family:arial,sans-serif">(co=
+-located with the MoDELS 2022 Conference)</span></font></div><div><font siz=
+e=3D"2"><span style=3D"font-family:arial,sans-serif">23-25 October 2022 (Ex=
+act date to be announced)</span></font></div><div><font size=3D"2"><span st=
+yle=3D"font-family:arial,sans-serif">Montr=C3=A9al, Canada</span></font></d=
+iv><div><font size=3D"2"><span style=3D"font-family:arial,sans-serif"><a hr=
+ef=3D"http://msdl.uantwerpen.be/conferences/MPM4CPS/2022" target=3D"_blank"=
+>http://msdl.uantwerpen.be/conferences/MPM4CPS/2022</a></span></font></div>=
+<div><div><font size=3D"2"><span style=3D"font-family:arial,sans-serif">=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D</span></font></div></div><div><font size=3D"2"><span style=
+=3D"font-family:arial,sans-serif"><br></span></font></div><div><font size=
+=3D"4"><span style=3D"font-family:arial,sans-serif"><b>Scope of the Worksho=
+p</b></span></font></div><div><font size=3D"2"><span style=3D"font-family:a=
+rial,sans-serif"><br></span></font></div><div><p class=3D"MsoNormal" style=
+=3D"margin:0cm 0cm 8pt;line-height:10.7px"><font size=3D"2"><span style=3D"=
+font-family:arial,sans-serif"><span lang=3D"EN-US">Tackling the complexity =
+involved in developing truly complex, designed systems is a topic of intens=
+e research and development. System complexity has drastically increased onc=
+e software components were introduced in the form of embedded systems, cont=
+rolling physical parts of the system, and has only grown in CPS, where the =
+networking aspect of the systems and their environment are also considered.=
+ The complexity faced when engineering CPS is mostly due to the plethora of=
+ cross-disciplinary design alternatives and inter-domain interactions. To d=
+ate, no unifying theory or system design methods, techniques, or tools to d=
+esign, analyze, and ultimately deploy CPS exist. Individual (physical syste=
+ms, software and network) engineering disciplines offer only partial soluti=
+ons and are no match for the complexity observed in CPS. Multi-Paradigm Mod=
+eling (MPM) offers a foundational framework for gluing the several discipli=
+nes together in a consistent way. The inherent complexity of CPS is broken =
+down into different levels of abstraction and views, each expressed in appr=
+opriate modeling formalisms. MPM offers processes and tools that can combin=
+e, couple, and integrate each of the views that compose a system.</span></s=
+pan></font></p><p class=3D"MsoNormal" style=3D"margin:0cm 0cm 8pt;line-heig=
+ht:10.7px"><font size=3D"2"><span style=3D"font-family:arial,sans-serif"><s=
+pan lang=3D"EN-US">MPM encompasses many research topics - from language eng=
+ineering (for DSLs, including their (visual) syntax and semantics), to proc=
+esses to support multi-view and multi-abstraction modeling, simulation for =
+system analysis, and deployment. The added complexity that CPS brings compa=
+red to embedded and software-intensive systems requires looking at these ne=
+w applications and how MPM techniques can be applied or adapted to them, ty=
+ing together multiple domains. Many remaining research questions require an=
+swers from researchers in different domains, as well as a unified effort fr=
+om researchers that work on supporting techniques and technologies.</span><=
+/span></font></p><font size=3D"2"><span style=3D"font-family:arial,sans-ser=
+if"></span></font></div><div><font size=3D"2"><span style=3D"font-family:ar=
+ial,sans-serif"></span></font><div style=3D"border:1pt none black;padding:0=
+cm"><p class=3D"MsoNormal" style=3D"margin:12pt 0cm;padding:0cm;border-colo=
+r:currentcolor currentcolor black;border-style:none;border-width:medium med=
+ium 0cm"><font size=3D"4"><b><span style=3D"font-family:arial,sans-serif">T=
+opics of Interest (including, but not limited to)</span></b></font></p><fon=
+t size=3D"4"><b></b></font></div><font size=3D"4"><b><span style=3D"font-fa=
+mily:arial,sans-serif"></span></b></font><ul><li style=3D"margin-left:15px"=
+><font size=3D"2"><span style=3D"font-family:arial,sans-serif"><b><font siz=
+e=3D"4"><span lang=3D"EN-US"></span></font><span lang=3D"EN-US">Foundations=
+ of domain-specific modelling</span></b><span lang=3D"EN-US">, with a parti=
+cular focus on classifications of the various dimensions around MPM (formal=
+isms; processes; related activities such as V&amp;V, deployment, calibratio=
+n, etc.; tools, and methodologies);</span></span></font><font size=3D"2"><s=
+pan style=3D"font-family:arial,sans-serif"><span lang=3D"EN-US"><br></span>=
+</span></font></li><li style=3D"margin-left:15px"><font size=3D"2"><span st=
+yle=3D"font-family:arial,sans-serif"><b><span lang=3D"EN-US">Modelling lang=
+uage engineering</span></b><span lang=3D"EN-US">, modular design of modelli=
+ng languages, with a particular focus on de-/composition;</span></span></fo=
+nt><font size=3D"2"><span style=3D"font-family:arial,sans-serif"><b><span l=
+ang=3D"EN-US"><br></span></b></span></font></li><li style=3D"margin-left:15=
+px"><font size=3D"2"><span style=3D"font-family:arial,sans-serif"><b><span =
+lang=3D"EN-US">Co-simulation</span></b><span lang=3D"EN-US">, coordination =
+algorithms ensuring correct simulation results.</span></span></font><font s=
+ize=3D"2"><span style=3D"font-family:arial,sans-serif"><b><span lang=3D"EN-=
+US"><br></span></b></span></font></li><li style=3D"margin-left:15px"><font =
+size=3D"2"><span style=3D"font-family:arial,sans-serif"><b><span lang=3D"EN=
+-US">Model Management</span></b><span lang=3D"EN-US">=C2=A0with, and for, M=
+PM4CPS: challenges, techniques, tools.</span></span></font><font size=3D"2"=
+><span style=3D"font-family:arial,sans-serif"><b><span lang=3D"EN-US"><br><=
+/span></b></span></font></li><li style=3D"margin-left:15px"><font size=3D"2=
+"><span style=3D"font-family:arial,sans-serif"><b><span lang=3D"EN-US">Appl=
+ications of MPM techniques</span></b><span lang=3D"EN-US">=C2=A0in automoti=
+ve, aviation, manufacturing, etc.</span></span></font><font size=3D"2"><spa=
+n style=3D"font-family:arial,sans-serif"><span lang=3D"EN-US"><span style=
+=3D"font-variant-numeric:normal;font-variant-east-asian:normal;font-stretch=
+:normal;line-height:normal;font-kerning:auto;font-feature-settings:normal">=
+</span></span><b><span lang=3D"EN-US"><br></span></b></span></font></li><li=
+ style=3D"margin-left:15px"><font size=3D"2"><span style=3D"font-family:ari=
+al,sans-serif"><b><span lang=3D"EN-US">MPM for (self-)adaptive systems</spa=
+n></b></span></font><font size=3D"2"><span style=3D"font-family:arial,sans-=
+serif"><span lang=3D"EN-US"><span style=3D"font-variant-numeric:normal;font=
+-variant-east-asian:normal;font-stretch:normal;line-height:normal;font-kern=
+ing:auto;font-feature-settings:normal"></span></span><b><span lang=3D"EN-US=
+"><br></span></b></span></font></li><li style=3D"margin-left:15px"><font si=
+ze=3D"2"><span style=3D"font-family:arial,sans-serif"><b><span lang=3D"EN-U=
+S">MPM approaches, techniques and tools</span></b><span lang=3D"EN-US">=C2=
+=A0for related domains: IoT, Digital Twins, SmartCPS<b></b></span></span></=
+font><font size=3D"2"><span style=3D"font-family:arial,sans-serif"><span la=
+ng=3D"EN-US"><span style=3D"font-variant-numeric:normal;font-variant-east-a=
+sian:normal;font-stretch:normal;line-height:normal;font-kerning:auto;font-f=
+eature-settings:normal"></span></span><b><span lang=3D"EN-US"><br></span></=
+b></span></font></li><li style=3D"margin-left:15px"><font size=3D"2"><span =
+style=3D"font-family:arial,sans-serif"><b><span lang=3D"EN-US">Social impac=
+ts</span></b><span lang=3D"EN-US">=C2=A0processes in CPS, Large Data Manage=
+ment Modelling in CPS</span></span></font></li></ul><div style=3D"border:1p=
+t none black;padding:0cm"><p class=3D"MsoNormal" style=3D"margin:6pt 0cm 0.=
+0001pt;text-align:justify;padding:0cm;border-color:currentcolor currentcolo=
+r black;border-style:none;border-width:medium medium 0cm"><font size=3D"2">=
+<span style=3D"font-family:arial,sans-serif"><span lang=3D"EN-US">Contribut=
+ions should clearly address the foundations of Multi-Paradigm Modeling by d=
+emonstrating the use of models to achieve the stated objectives and discuss=
+ the benefits of explicit modeling.</span></span></font></p></div></div><di=
+v><font size=3D"2"><span style=3D"font-family:arial,sans-serif"></span></fo=
+nt></div><div><font size=3D"2"><span style=3D"font-family:arial,sans-serif"=
+></span></font><div style=3D"border:1pt none black;padding:0cm"><p class=3D=
+"MsoNormal" style=3D"margin:12pt 0cm;padding:0cm;border-color:currentcolor =
+currentcolor black;border-style:none;border-width:medium medium 0cm"><font =
+size=3D"4"><span style=3D"font-family:arial,sans-serif"><b>Submission Proce=
+dure</b></span></font></p><font size=3D"4"></font><p class=3D"MsoNormal" st=
+yle=3D"margin:0cm 0cm 0.0001pt;text-align:justify;padding:0cm;border-color:=
+currentcolor currentcolor black;border-style:none;border-width:medium mediu=
+m 0cm"><font size=3D"2"><span style=3D"font-family:arial,sans-serif"><span =
+lang=3D"EN-US">Papers should be submitted electronically in PDF using the A=
+CM formatting instructions available=C2=A0</span><span lang=3D"FR"><a href=
+=3D"https://www.acm.org/publications/proceedings-template" target=3D"_blank=
+" style=3D"color:blue"><span lang=3D"EN-US">here</span></a></span><span lan=
+g=3D"EN-US">, following the=C2=A0<font size=3D"1"><span style=3D"font-famil=
+y:monospace">acmart</span></font>=C2=A0format, via EasyChair on the followi=
+ng link:</span></span></font></p><p class=3D"MsoNormal" style=3D"margin:0cm=
+ 0cm 0.0001pt;text-align:justify;padding:0cm;border-color:currentcolor curr=
+entcolor black;border-style:none;border-width:medium medium 0cm"><font size=
+=3D"2"><span style=3D"font-family:arial,sans-serif"><span lang=3D"EN-US"><a=
+ href=3D"https://easychair.org/my/conference?conf=3Dmpm4cps22" target=3D"_b=
+lank">https://easychair.org/my/conference?conf=3Dmpm4cps22</a>=C2=A0<br></s=
+pan></span></font></p><font size=3D"2"><span style=3D"font-family:arial,san=
+s-serif"><span lang=3D"EN-US">Each submission will be peer-reviewed by at l=
+east three PC members, and should fit one of the following format:</span></=
+span></font><ul><li style=3D"margin-left:15px"><font size=3D"2"><span style=
+=3D"font-family:arial,sans-serif"><span lang=3D"EN-US"><b>Full research pap=
+ers</b>=C2=A0(10 pages max) present a novel, innovative approach;</span><br=
+></span></font></li></ul><ul><li style=3D"margin-left:15px"><font size=3D"2=
+"><span style=3D"font-family:arial,sans-serif"><b><span lang=3D"EN-US">Shor=
+t papers</span></b><span lang=3D"EN-US">=C2=A0(5 pages max) present new ide=
+as or early-stage research, extensively discuss the experiences of the rese=
+archers with an MPM approach or demonstrate a tool;<br></span></span></font=
+></li></ul><ul><li style=3D"margin-left:15px"><font size=3D"2"><span style=
+=3D"font-family:arial,sans-serif"><b><span lang=3D"EN-US">Exemplar descript=
+ions</span></b><span lang=3D"EN-US">=C2=A0(10 pages max) describing a CPS E=
+ngineering practice, highlighting both the processes at play and the formal=
+isms, languages and/or tools used to support these activities, all expresse=
+d using the language described in the Workshop=E2=80=99s webpage.</span></s=
+pan></font></li></ul><font size=3D"2"><span style=3D"font-family:arial,sans=
+-serif"><span lang=3D"EN-US">All papers will be published with the main con=
+ference=E2=80=99s workshop proceedings (which is properly indexed by classi=
+cal search engines); authors submitting exemplars will eventually be invite=
+d to contribute to a Special Issue.</span></span></font></div><div style=3D=
+"border:1pt none black;padding:0cm"><font size=3D"2"><span style=3D"font-fa=
+mily:arial,sans-serif"><span lang=3D"EN-US"></span></span></font></div><div=
+ style=3D"border:1pt none black;padding:0cm"><font size=3D"2"><span style=
+=3D"font-family:arial,sans-serif"><span lang=3D"EN-US"></span></span></font=
+><div style=3D"border:1pt none black;padding:0cm"><font size=3D"2"><span st=
+yle=3D"font-family:arial,sans-serif"></span></font><p class=3D"MsoNormal" s=
+tyle=3D"margin:12pt 0cm;padding:0cm;border-color:currentcolor currentcolor =
+black;border-style:none;border-width:medium medium 0cm"><font size=3D"4"><s=
+pan style=3D"font-family:arial,sans-serif"><b>Important Dates</b></span></f=
+ont></p><font size=3D"4"><span style=3D"font-family:arial,sans-serif"></spa=
+n></font><p class=3D"MsoNormal" style=3D"margin:0cm 0cm 0.0001pt;padding:0c=
+m;border-color:currentcolor currentcolor black;border-style:none;border-wid=
+th:medium medium 0cm"><font size=3D"2"><span style=3D"font-family:arial,san=
+s-serif"><b><span lang=3D"EN-US">Paper submission deadline:=C2=A0=C2=A0=C2=
+=A0=C2=A0</span></b><span lang=3D"EN-US"><strike>20 July 2022</strike>=C2=
+=A0 <b><font color=3D"#ff0000">27 July 2022</font></b></span></span></font>=
+</p><font size=3D"2"><span style=3D"font-family:arial,sans-serif"></span></=
+font><p class=3D"MsoNormal" style=3D"margin:0cm 0cm 0.0001pt;padding:0cm;bo=
+rder-color:currentcolor currentcolor black;border-style:none;border-width:m=
+edium medium 0cm"><font size=3D"2"><span style=3D"font-family:arial,sans-se=
+rif"><b><span lang=3D"EN-US">Notification of acceptance:</span></b><span la=
+ng=3D"EN-US">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A019 August 2022=C2=A0</span></spa=
+n></font></p><p class=3D"MsoNormal" style=3D"margin:0cm 0cm 0.0001pt;paddin=
+g:0cm;border-color:currentcolor currentcolor black;border-style:none;border=
+-width:medium medium 0cm"><font size=3D"2"><span style=3D"font-family:arial=
+,sans-serif"><span lang=3D"EN-US"><b>Camera-Ready deadline:=C2=A0</b>=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 26 August 2022<br></span></span></font=
+></p><p class=3D"MsoNormal" style=3D"margin:0cm 0cm 0.0001pt;padding:0cm;bo=
+rder-color:currentcolor currentcolor black;border-style:none;border-width:m=
+edium medium 0cm"><font size=3D"2"><span style=3D"font-family:arial,sans-se=
+rif"><span lang=3D"EN-US"></span></span></font></p><font size=3D"2"><span s=
+tyle=3D"font-family:arial,sans-serif"></span></font><p class=3D"MsoNormal" =
+style=3D"margin:0cm 0cm 0.0001pt;padding:0cm;border-color:currentcolor curr=
+entcolor black;border-style:none;border-width:medium medium 0cm"><font size=
+=3D"2"><span style=3D"font-family:arial,sans-serif"><b><span lang=3D"EN-US"=
+>Workshop dates:</span></b><span lang=3D"EN-US">=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A023 - 25 October 2021 (exact date TBA)</span><=
+/span></font></p><p class=3D"MsoNormal" style=3D"margin:0cm 0cm 0.0001pt;pa=
+dding:0cm;border-color:currentcolor currentcolor black;border-style:none;bo=
+rder-width:medium medium 0cm"><font size=3D"2"><span style=3D"font-family:a=
+rial,sans-serif"><span lang=3D"EN-US"><br></span></span></font></p><p class=
+=3D"MsoNormal" style=3D"margin:0cm 0cm 0.0001pt;padding:0cm;border-color:cu=
+rrentcolor currentcolor black;border-style:none;border-width:medium medium =
+0cm"><b><font size=3D"4"><span style=3D"font-family:arial,sans-serif"><span=
+ lang=3D"EN-US">Organisation Committee</span></span></font></b></p><p class=
+=3D"MsoNormal" style=3D"margin:0cm 0cm 0.0001pt;padding:0cm;border-color:cu=
+rrentcolor currentcolor black;border-style:none;border-width:medium medium =
+0cm"><font size=3D"2"><span style=3D"font-family:arial,sans-serif"><span la=
+ng=3D"EN-US"><br></span></span></font></p><p class=3D"MsoNormal" style=3D"m=
+argin:0cm 0cm 0.0001pt;padding:0cm;border-color:currentcolor currentcolor b=
+lack;border-style:none;border-width:medium medium 0cm"><font size=3D"2"><sp=
+an style=3D"font-family:arial,sans-serif"><span lang=3D"EN-US"></span></spa=
+n></font></p><div style=3D"border:1pt none black;padding:0cm"><font size=3D=
+"2"><span style=3D"font-family:arial,sans-serif"><b><span lang=3D"FR">Mouss=
+a Amrani</span></b><span lang=3D"FR">, Universit=C3=A9 de Namur</span></spa=
+n></font><font size=3D"2"><span style=3D"font-family:arial,sans-serif"><b><=
+span lang=3D"FR">,=C2=A0</span></b><span lang=3D"FR">Belgium</span><b><span=
+ lang=3D"FR"><br></span></b></span></font></div><div style=3D"border:1pt no=
+ne black;padding:0cm"><font size=3D"2"><span style=3D"font-family:arial,san=
+s-serif"><b><span lang=3D"FR">Dominique Blouin,=C2=A0</span></b><span lang=
+=3D"FR">T=C3=A9l=C3=A9com ParisTech</span></span></font><font size=3D"2"><s=
+pan style=3D"font-family:arial,sans-serif"><b>,=C2=A0</b>France<b><br></b><=
+/span></font></div><div style=3D"border:1pt none black;padding:0cm"><font s=
+ize=3D"2"><span style=3D"font-family:arial,sans-serif"><b>Moharram Challeng=
+er,=C2=A0</b>University of Antwerp</span></font><font size=3D"2"><span styl=
+e=3D"font-family:arial,sans-serif"><b>,=C2=A0</b>Belgium<b><br></b></span><=
+/font></div><div style=3D"border:1pt none black;padding:0cm"><font size=3D"=
+2"><span style=3D"font-family:arial,sans-serif"><b>Joeri Exelmans,=C2=A0</b=
+>University of Antwerp</span></font><font size=3D"2"><span style=3D"font-fa=
+mily:arial,sans-serif"><font size=3D"2"><b>,=C2=A0</b>Belgium<b><br></b></f=
+ont></span></font></div><div style=3D"border:1pt none black;padding:0cm"><f=
+ont size=3D"2"><span style=3D"font-family:arial,sans-serif"><b>Randy Paredi=
+s</b>, University of Antwerp</span></font><font size=3D"2"><span style=3D"f=
+ont-family:arial,sans-serif"><b><span lang=3D"NL-BE">,<font size=3D"2"><b>=
+=C2=A0</b></font></span></b><span lang=3D"NL-BE"><font size=3D"2">Belgium</=
+font></span><b><span lang=3D"NL-BE"><font size=3D"2"><b><br></b></font></sp=
+an></b></span></font></div><div style=3D"border:1pt none black;padding:0cm"=
+><font size=3D"2"><span style=3D"font-family:arial,sans-serif"><b><span lan=
+g=3D"NL-BE">Robert Heinrich,=C2=A0</span></b><span lang=3D"NL-BE">Karlsruhe=
+ Institute of Technology, Germany</span><b></b></span></font></div><p class=
+=3D"MsoNormal" style=3D"margin:0cm 0cm 0.0001pt;padding:0cm;border-color:cu=
+rrentcolor currentcolor black;border-style:none;border-width:medium medium =
+0cm;font-size:12pt;font-family:Cambria,serif"><span lang=3D"EN-US" style=3D=
+"font-size:9pt;font-family:Calibri,sans-serif"></span></p><p class=3D"MsoNo=
+rmal" style=3D"margin:0cm 0cm 0.0001pt;padding:0cm;border-color:currentcolo=
+r currentcolor black;border-style:none;border-width:medium medium 0cm"><b><=
+font size=3D"4"><span style=3D"font-family:arial,sans-serif"><span lang=3D"=
+EN-US"><br></span></span></font></b></p><p class=3D"MsoNormal" style=3D"mar=
+gin:0cm 0cm 0.0001pt;padding:0cm;border-color:currentcolor currentcolor bla=
+ck;border-style:none;border-width:medium medium 0cm"><b><font size=3D"4"><s=
+pan style=3D"font-family:arial,sans-serif"><span lang=3D"EN-US">Program Com=
+mittee</span></span></font></b></p><p class=3D"MsoNormal" style=3D"margin:0=
+cm 0cm 0.0001pt;padding:0cm;border-color:currentcolor currentcolor black;bo=
+rder-style:none;border-width:medium medium 0cm"><font size=3D"2"><span styl=
+e=3D"font-family:arial,sans-serif"><span lang=3D"EN-US"></span></span></fon=
+t></p><div><div><br></div><div>Shaukat Ali, Simula Research Laboratory, Nor=
+way<br>Soumyadip Bandyopadhyay, NVIDIA, India<br>Ankica Barisic, University=
+ C=C3=B4te d&#39;Azur, France<br>Frederic Boulanger, CentraleSupelec, Franc=
+e<br>Antonio Cicchetti, Malardalen University, Sweden<br>Andrea D&#39;Ambro=
+gio, University of Roma TorVergata, Italy<br>Ferhat Erata, Yale University,=
+ USA<br>Mauro Iacono, Universita degli Studi della Campania &quot;Luigi Van=
+vitelli&quot;, Italy<br>Gabor Karsai, Vanderbilt University, USA<br>Stefan =
+Klikovits, National Institute of Informatics, Japan<br>Letitia Li, BAE Syst=
+ems, USA<br>Sadaf Mustafiz, Ryerson University, Canada<br>Ivan Ruchkin, Uni=
+versity of Pennsylvania, USA<br>Bran Selic, Malina Software Corp., USA<br>E=
+ugene Syriani, University of Montreal, Canada<br>Antonio Vallecillo, Univer=
+sidad de Malaga, Spain<br>Clark Verbrugge, McGill University, Canada<br>And=
+reas Wortmann, University of Stuttgart, Germany<br>Jamal El-Hachem, Univers=
+ity of South Britanny, France<br>Hassna Louadah, University of Huddersfield=
+, UK</div></div></div></div></div><div><br></div>-- <br><div dir=3D"ltr" cl=
+ass=3D"gmail_signature" data-smartmail=3D"gmail_signature"><div dir=3D"ltr"=
+>M.A<br></div></div></div>
+
+--000000000000be811e05e41839a0--

@@ -1,0 +1,650 @@
+Return-Path: <raja.chiky@isep.fr>
+X-Original-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (BounceSMTP1.univ-nantes.prive [172.20.12.66])
+	by sympa6.univ-nantes.prive (Postfix) with ESMTP id 252BF2292950
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Fri, 26 Apr 2019 17:11:35 +0200 (CEST)
+Received: from mx2.d101.univ-nantes.fr (MX2.univ-nantes.fr [193.52.101.136])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id 23B686D3516
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Fri, 26 Apr 2019 17:11:35 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTP id 15A2EB4B130
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 26 Apr 2019 17:11:35 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 0.332
+X-Spam-Level:
+X-Spam-Status: No, score=0.332 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, HTML_FONT_LOW_CONTRAST=0.001, HTML_MESSAGE=0.001,
+	MR_NOT_ATTRIBUTED_IP=0.2, NO_RDNS2=0.01, RCVD_IN_DNSWL_NONE=-0.0001,
+	RCVD_IN_WSFF=0.01, SPF_PASS=-0.001, T_REMOTE_IMAGE=0.01,
+	UN_PHISHING_PW=0.1, URIBL_BLOCKED=0.001] autolearn=disabled
+X-CRM114-Status: UNSURE ( -2.3492 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=isep.fr
+Received: from mx2.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id tJ7YyjEnHMR9 for <liste-egc@polytech.univ-nantes.fr>;
+	Fri, 26 Apr 2019 17:11:32 +0200 (CEST)
+X-Greylist: from auto-whitelisted by SQLgrey-1.6.7
+Received: from mann.isep.fr (mann.isep.fr [89.251.55.124])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTPS id 613906523EC
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 26 Apr 2019 17:11:32 +0200 (CEST)
+Received: from mann.isep.fr (localhost [127.0.0.1])
+	by mann.isep.fr (Postfix) with ESMTP id D8E0FA3B27
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 26 Apr 2019 17:11:31 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=isep.fr; s=mann;
+	t=1556291491; bh=hEQuKOof69OEFlY45R7yQ7RZJjDYAcTDOvILL1n+4jQ=;
+	h=Date:From:To:Subject:From;
+	b=okxbVm/TS5GScJiTpCC71JDIXKD7y94JdH5ILpw5b9qgDBldXYm2/NeJjgind8Avm
+	 uaj1yKXurn8BxlF0qezAao9VA428Yzcu75VMGu6w/72UgHzK3SNZSGjhkECljae+qn
+	 AyimSEOdEo9hyJEFCiucVaNj1N+V6qtfCbcD2TiKRjZEbCJhYzAjMONv78tt4LQNwK
+	 qpSyIfepjT/ycWsi50Jm9Ev2mz256K4O2kpLcyEuN6+8/gAdiVMyeK7uS8ehJgAauU
+	 ZUuAYVVgFdX2Dg25LA7RPdR1ti/hOjA5AUXBwX+hWgvRatwFJVyI2bYBMO7MTgsXNX
+	 JdfgOHMbVmhpw==
+Received: from zimbra.isep.fr (zimbra.isep.fr [172.27.16.11])
+	by mann.isep.fr (Postfix) with ESMTP id D5153A3165
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 26 Apr 2019 17:11:31 +0200 (CEST)
+Received: from zimbra.isep.fr (localhost.localdomain [127.0.0.1])
+	by zimbra.isep.fr (Postfix) with ESMTPS id BF3D6A02CB
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 26 Apr 2019 17:11:31 +0200 (CEST)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by zimbra.isep.fr (Postfix) with ESMTP id B2B67A02C8
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 26 Apr 2019 17:11:31 +0200 (CEST)
+Received: from zimbra.isep.fr ([127.0.0.1])
+	by localhost (zimbra.isep.fr [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id m1tLHqgVBSou for <liste-egc@polytech.univ-nantes.fr>;
+	Fri, 26 Apr 2019 17:11:31 +0200 (CEST)
+Received: from zimbra.isep.fr (zimbra.isep.fr [172.27.16.11])
+	by zimbra.isep.fr (Postfix) with ESMTP id 91185A026F
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 26 Apr 2019 17:11:31 +0200 (CEST)
+Date: Fri, 26 Apr 2019 17:11:31 +0200 (CEST)
+From: Raja Chiky <raja.chiky@isep.fr>
+To: liste-egc <liste-egc@polytech.univ-nantes.fr>
+Message-ID: <2106014856.5404890.1556291491540.JavaMail.zimbra@isep.fr>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="=_9396db4b-33e0-4b4e-a6f8-dbd6a7fe0679"
+X-Originating-IP: [192.168.42.14, 192.168.50.59]
+X-Mailer: Zimbra 8.8.12_GA_3803 (ZimbraWebClient - FF66 (Mac)/8.8.12_GA_3794)
+Thread-Index: 2fCM0WKWwBhLl+i17hnhozcx2y18Jw==
+Thread-Topic: Nouvel Hackathon =?utf-8?Q?=C3=A0_l=27ISEP_Paris_/_IA-Blockchain-Big_Data_au_service_des_t=C3=A9l=C3=A9coms_en_partenariat_avec_l=27Agence_National_des_Fr=C3=A9quences?=
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Nouvel Hackathon =?UTF-8?Q?=C3=A0?= l'ISEP Paris /
+ IA-Blockchain-Big Data au service des =?UTF-8?Q?t=C3=A9l=C3=A9coms?= en
+ partenariat avec l'Agence National des =?UTF-8?Q?Fr=C3=A9quences?=
+
+--=_9396db4b-33e0-4b4e-a6f8-dbd6a7fe0679
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+
+
+[ http://www.facebook.com/sharer/sharer.php?u=3Dhttp%3A%2F%2Feepurl.com%2Fg=
+o9gOf ] =09
+
+[ http://www.facebook.com/sharer/sharer.php?u=3Dhttp%3A%2F%2Feepurl.com%2Fg=
+o9gOf | Partagez ] =09
+
+[ http://twitter.com/intent/tweet?text=3DL%27ANFR+lance+FrHack%21+2019%2C+s=
+on+hackathon+des+fr%C3%A9quences+-+ouverture+des+inscriptions:%20http%3A%2F=
+%2Feepurl.com%2Fgo9gOf ] =09
+
+[ http://twitter.com/intent/tweet?text=3DL%27ANFR+lance+FrHack%21+2019%2C+s=
+on+hackathon+des+fr%C3%A9quences+-+ouverture+des+inscriptions:%20http%3A%2F=
+%2Feepurl.com%2Fgo9gOf | Tweetez ] =09
+
+[ http://www.linkedin.com/shareArticle?url=3Dhttp%3A%2F%2Feepurl.com%2Fgo9g=
+Of&mini=3Dtrue&title=3DL%27ANFR+lance+FrHack%21+2019%2C+son+hackathon+des+f=
+r%C3%A9quences+-+ouverture+des+inscriptions ] =09
+
+[ http://www.linkedin.com/shareArticle?url=3Dhttp%3A%2F%2Feepurl.com%2Fgo9g=
+Of&mini=3Dtrue&title=3DL%27ANFR+lance+FrHack%21+2019%2C+son+hackathon+des+f=
+r%C3%A9quences+-+ouverture+des+inscriptions | Informez ]=20
+
+
+
+
+
+
+[ https://hackathon.anfr.fr/ ]=20
+
+
+[ http://www.anfr.fr/accueil/ ]=20
+
+
+
+
+L'ANFR et l'ISEP=20
+
+vous invitent =C3=A0=20
+
+FrHack! 2019 : le hackathon des fr=C3=A9quences=20
+
+=C2=AB Nouveaux services, nouvelles technos :=20
+se faire une place dans un spectre surcharg=C3=A9 =C2=BB=20
+
+Objets connect=C3=A9s, transport autonome, smart building, smart city, usin=
+e intelligente =E2=80=A6 Comment l=E2=80=99IA, le BigData et la Blockchain =
+peuvent leur permettre de trouver et de g=C3=A9rer dynamiquement leur place=
+=20
+dans le spectre des fr=C3=A9quences=20
+
+le week-end du 25 / 26 mai 2019=20
+sur le campus de l'ISEP =C3=A0 Issy-les-Moulineaux=20
+
+
+
+
+Avec l=E2=80=99essor de l' internet des objets et des nouveaux services con=
+nect=C3=A9s gr=C3=A2ce aux fr=C3=A9quences (transport autonome, t=C3=A9l=C3=
+=A9rel=C3=A8ve, eSant=C3=A9, smart city, smart building, smart manufacturin=
+g =E2=80=A6), les usages du spectre se densifient.=20
+Pour autant, la ressource en fr=C3=A9quences n'est pas extensible : dispose=
+r de solutions permettant de cartographier et de g=C3=A9rer dynamiquement s=
+on usage pour garantir, par exemple, la disponibilit=C3=A9 effective de fr=
+=C3=A9quences au moment o=C3=B9 les services les utilisent devient indispen=
+sable. Ces solutions doivent garantir l'absence de brouillages entre servic=
+es, pour une s=C3=A9curit=C3=A9 maximale.=20
+
+Avec son hackathon FrHack! 2019, l=E2=80=99ANFR vous propose d=E2=80=99expl=
+orer l=E2=80=99apport des nouvelles technologies, BigData, Intelligence Art=
+ificielle ou encore Blockchain, pour une gestion plus efficace du spectre e=
+n temps r=C3=A9el.=20
+
+> Vous connaissez les concepts de la Blockchain et voulez en d=C3=A9montrer=
+ le potentiel sur de nouveaux cas d=E2=80=99usages ?=20
+> Vous voulez tester vos algorithmes favoris de machine learning sur de nou=
+velles probl=C3=A9matiques ?=20
+> Vous adorez croiser les donn=C3=A9es de sources diverses pour en faire de=
+s cocktails d=C3=A9tonnants ?=20
+> Vous baignez dans les fr=C3=A9quences comme un poisson dans l=E2=80=99eau=
+ ?=20
+> Vous avez des donn=C3=A9es =C3=A0 partager qui pourraient se marier aux j=
+eux de donn=C3=A9es de l=E2=80=99ANFR ?=20
+> Le d=C3=A9veloppement rapide d=E2=80=99un POC est un d=C3=A9fi qui vous s=
+timule ?=20
+
+Venez nous aider =C3=A0 d=C3=A9velopper en =C3=A9quipe de nouvelles solutio=
+ns innovantes qui serviront =C3=A0 am=C3=A9liorer la gestion et l=E2=80=99u=
+tilisation optimale des fr=C3=A9quences !=20
+
+
+
+[ https://twitter.com/search?f=3Dtweets&vertical=3Ddefault&q=3D%23FrHack&sr=
+c=3Dtypd&lang=3Dfr | #FrHack ]=20
+
+
+
+
+
+[ https://hackathon.anfr.fr/ | Infos et inscription ]=20
+
+Inscriptions et Informations au https://hackathon.anfr.fr/=20
+--=20
+---------------=20
+Raja CHIKY=20
+Directrice de la recherche=20
+Responsable du parcours Innovation et Cr=C3=A9ation d'Entreprise=20
+01.49.54.52.34=20
+06.84.67.45.95=20
+
+
+--=_9396db4b-33e0-4b4e-a6f8-dbd6a7fe0679
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><body><div style=3D"font-family: Arial; font-size: 12pt; color: #0000=
+00"><div><table class=3D"MsoNormalTable" style=3D"caret-color: #000000; fon=
+t-family: Helvetica; letter-spacing: normal; orphans: auto; text-indent: 0p=
+x; text-transform: none; widows: auto; word-spacing: 0px; -webkit-text-size=
+-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: none; width=
+: 603px; border-collapse: collapse;" data-mce-style=3D"caret-color: #000000=
+; font-family: Helvetica; letter-spacing: normal; orphans: auto; text-inden=
+t: 0px; text-transform: none; widows: auto; word-spacing: 0px; -webkit-text=
+-size-adjust: auto; -webkit-text-stroke-width: 0px; text-decoration: none; =
+width: 603px; border-collapse: collapse;" width=3D"100%" cellspacing=3D"0" =
+cellpadding=3D"0" border=3D"1"><tbody><tr><td style=3D"background-color: #f=
+afafa; padding: 6.75pt 0cm; background-position: initial initial; backgroun=
+d-repeat: initial initial;" data-mce-style=3D"background-color: #fafafa; pa=
+dding: 6.75pt 0cm; background-position: initial initial; background-repeat:=
+ initial initial;" valign=3D"top"><table class=3D"MsoNormalTable" style=3D"=
+width: 603px; border-collapse: collapse; min-width: 100%;" data-mce-style=
+=3D"width: 603px; border-collapse: collapse; min-width: 100%;" width=3D"100=
+%" cellspacing=3D"0" cellpadding=3D"0" border=3D"1"><tbody><tr><td style=3D=
+"padding: 6.75pt;" data-mce-style=3D"padding: 6.75pt;" valign=3D"top"><tabl=
+e class=3D"MsoNormalTable" style=3D"width: 585px; border-collapse: collapse=
+;" data-mce-style=3D"width: 585px; border-collapse: collapse;" width=3D"100=
+%" cellspacing=3D"0" cellpadding=3D"0" border=3D"1"><tbody><tr><td style=3D=
+"padding: 0cm 6.75pt;" data-mce-style=3D"padding: 0cm 6.75pt;"><div align=
+=3D"center"><table class=3D"MsoNormalTable" style=3D"width: 567px; border-c=
+ollapse: collapse;" data-mce-style=3D"width: 567px; border-collapse: collap=
+se;" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" border=3D"1"><tbody=
+><tr><td style=3D"padding: 6.75pt 6.75pt 0cm;" data-mce-style=3D"padding: 6=
+.75pt 6.75pt 0cm;" valign=3D"top"><div align=3D"center"><table class=3D"Mso=
+NormalTable" style=3D"border-collapse: collapse; min-width: 100%;" data-mce=
+-style=3D"border-collapse: collapse; min-width: 100%;" cellspacing=3D"0" ce=
+llpadding=3D"0" border=3D"1"><tbody><tr><td style=3D"padding: 0cm;" data-mc=
+e-style=3D"padding: 0cm;" valign=3D"top"><div align=3D"center"><table class=
+=3D"MsoNormalTable" style=3D"border-collapse: collapse; min-width: 100%;" d=
+ata-mce-style=3D"border-collapse: collapse; min-width: 100%;" cellspacing=
+=3D"0" cellpadding=3D"0" border=3D"1"><tbody><tr><td style=3D"padding: 0cm;=
+" data-mce-style=3D"padding: 0cm;" valign=3D"top"><table class=3D"MsoNormal=
+Table" style=3D"border-collapse: collapse;" data-mce-style=3D"border-collap=
+se: collapse;" cellspacing=3D"0" cellpadding=3D"0" border=3D"1" align=3D"le=
+ft"><tbody><tr><td style=3D"padding: 0cm 6.75pt 6.75pt 0cm;" data-mce-style=
+=3D"padding: 0cm 6.75pt 6.75pt 0cm;" valign=3D"top"><table class=3D"MsoNorm=
+alTable" style=3D"width: 0cm; border-collapse: collapse;" data-mce-style=3D=
+"width: 0cm; border-collapse: collapse;" width=3D"0" cellspacing=3D"0" cell=
+padding=3D"0" border=3D"1"><tbody><tr><td style=3D"padding: 3.75pt 6.75pt;"=
+ data-mce-style=3D"padding: 3.75pt 6.75pt;"><table class=3D"MsoNormalTable"=
+ style=3D"width: 0cm; border-collapse: collapse; border-top-left-radius: 3p=
+x; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bo=
+ttom-left-radius: 3px;" data-mce-style=3D"width: 0cm; border-collapse: coll=
+apse; border-top-left-radius: 3px; border-top-right-radius: 3px; border-bot=
+tom-right-radius: 3px; border-bottom-left-radius: 3px;" width=3D"0" cellspa=
+cing=3D"0" cellpadding=3D"0" border=3D"1" align=3D"left"><tbody><tr><td sty=
+le=3D"width: 18pt; padding: 0cm;" data-mce-style=3D"width: 18pt; padding: 0=
+cm;" width=3D"24"><p class=3D"MsoNormal" style=3D"margin: 0px; font-size: 1=
+2pt; font-family: &quot;Times New Roman&quot;, serif; text-align: center;" =
+data-mce-style=3D"margin: 0px; font-size: 12pt; font-family: 'Times New Rom=
+an', serif; text-align: center;" align=3D"center"><a href=3D"http://www.fac=
+ebook.com/sharer/sharer.php?u=3Dhttp%3A%2F%2Feepurl.com%2Fgo9gOf" target=3D=
+"_blank" style=3D"color: purple; text-decoration: underline;" rel=3D"noopen=
+er" data-mce-href=3D"http://www.facebook.com/sharer/sharer.php?u=3Dhttp%3A%=
+2F%2Feepurl.com%2Fgo9gOf" data-mce-style=3D"color: purple; text-decoration:=
+ underline;"><span style=3D"text-decoration: none;" data-mce-style=3D"text-=
+decoration: none;"><img id=3D"_x0000_i1025" src=3D"https://cdn-images.mailc=
+himp.com/icons/social-block-v2/outline-dark-facebook-48.png" data-mce-src=
+=3D"https://cdn-images.mailchimp.com/icons/social-block-v2/outline-dark-fac=
+ebook-48.png" width=3D"24" height=3D"24" border=3D"0"></span></a><o:p></o:p=
+></p></td><td style=3D"padding: 0cm 0cm 0cm 3.75pt;" data-mce-style=3D"padd=
+ing: 0cm 0cm 0cm 3.75pt;"><p class=3D"MsoNormal" style=3D"margin: 0px; font=
+-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;" data-mce-sty=
+le=3D"margin: 0px; font-size: 12pt; font-family: 'Times New Roman', serif;"=
+><a href=3D"http://www.facebook.com/sharer/sharer.php?u=3Dhttp%3A%2F%2Feepu=
+rl.com%2Fgo9gOf" style=3D"color: purple; text-decoration: underline;" data-=
+mce-href=3D"http://www.facebook.com/sharer/sharer.php?u=3Dhttp%3A%2F%2Feepu=
+rl.com%2Fgo9gOf" data-mce-style=3D"color: purple; text-decoration: underlin=
+e;"><span style=3D"font-size: 9pt; font-family: Arial, sans-serif; color: #=
+202020; text-decoration: none;" data-mce-style=3D"font-size: 9pt; font-fami=
+ly: Arial, sans-serif; color: #202020; text-decoration: none;">Partagez</sp=
+an></a><o:p></o:p></p></td></tr></tbody></table></td></tr></tbody></table><=
+/td></tr></tbody></table></td><td style=3D"padding: 0cm;" data-mce-style=3D=
+"padding: 0cm;" valign=3D"top"><table class=3D"MsoNormalTable" style=3D"bor=
+der-collapse: collapse;" data-mce-style=3D"border-collapse: collapse;" cell=
+spacing=3D"0" cellpadding=3D"0" border=3D"1" align=3D"left"><tbody><tr><td =
+style=3D"padding: 0cm 6.75pt 6.75pt 0cm;" data-mce-style=3D"padding: 0cm 6.=
+75pt 6.75pt 0cm;" valign=3D"top"><table class=3D"MsoNormalTable" style=3D"w=
+idth: 0cm; border-collapse: collapse;" data-mce-style=3D"width: 0cm; border=
+-collapse: collapse;" width=3D"0" cellspacing=3D"0" cellpadding=3D"0" borde=
+r=3D"1"><tbody><tr><td style=3D"padding: 3.75pt 6.75pt;" data-mce-style=3D"=
+padding: 3.75pt 6.75pt;"><table class=3D"MsoNormalTable" style=3D"width: 0c=
+m; border-collapse: collapse; border-top-left-radius: 3px; border-top-right=
+-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3=
+px;" data-mce-style=3D"width: 0cm; border-collapse: collapse; border-top-le=
+ft-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3=
+px; border-bottom-left-radius: 3px;" width=3D"0" cellspacing=3D"0" cellpadd=
+ing=3D"0" border=3D"1" align=3D"left"><tbody><tr><td style=3D"width: 18pt; =
+padding: 0cm;" data-mce-style=3D"width: 18pt; padding: 0cm;" width=3D"24"><=
+p class=3D"MsoNormal" style=3D"margin: 0px; font-size: 12pt; font-family: &=
+quot;Times New Roman&quot;, serif; text-align: center;" data-mce-style=3D"m=
+argin: 0px; font-size: 12pt; font-family: 'Times New Roman', serif; text-al=
+ign: center;" align=3D"center"><a href=3D"http://twitter.com/intent/tweet?t=
+ext=3DL%27ANFR+lance+FrHack%21+2019%2C+son+hackathon+des+fr%C3%A9quences+-+=
+ouverture+des+inscriptions:%20http%3A%2F%2Feepurl.com%2Fgo9gOf" target=3D"_=
+blank" style=3D"color: purple; text-decoration: underline;" rel=3D"noopener=
+" data-mce-href=3D"http://twitter.com/intent/tweet?text=3DL%27ANFR+lance+Fr=
+Hack%21+2019%2C+son+hackathon+des+fr%C3%A9quences+-+ouverture+des+inscripti=
+ons:%20http%3A%2F%2Feepurl.com%2Fgo9gOf" data-mce-style=3D"color: purple; t=
+ext-decoration: underline;"><span style=3D"text-decoration: none;" data-mce=
+-style=3D"text-decoration: none;"><img id=3D"_x0000_i1026" src=3D"https://c=
+dn-images.mailchimp.com/icons/social-block-v2/outline-dark-twitter-48.png" =
+data-mce-src=3D"https://cdn-images.mailchimp.com/icons/social-block-v2/outl=
+ine-dark-twitter-48.png" width=3D"24" height=3D"24" border=3D"0"></span></a=
+><o:p></o:p></p></td><td style=3D"padding: 0cm 0cm 0cm 3.75pt;" data-mce-st=
+yle=3D"padding: 0cm 0cm 0cm 3.75pt;"><p class=3D"MsoNormal" style=3D"margin=
+: 0px; font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;" d=
+ata-mce-style=3D"margin: 0px; font-size: 12pt; font-family: 'Times New Roma=
+n', serif;"><a href=3D"http://twitter.com/intent/tweet?text=3DL%27ANFR+lanc=
+e+FrHack%21+2019%2C+son+hackathon+des+fr%C3%A9quences+-+ouverture+des+inscr=
+iptions:%20http%3A%2F%2Feepurl.com%2Fgo9gOf" style=3D"color: purple; text-d=
+ecoration: underline;" data-mce-href=3D"http://twitter.com/intent/tweet?tex=
+t=3DL%27ANFR+lance+FrHack%21+2019%2C+son+hackathon+des+fr%C3%A9quences+-+ou=
+verture+des+inscriptions:%20http%3A%2F%2Feepurl.com%2Fgo9gOf" data-mce-styl=
+e=3D"color: purple; text-decoration: underline;"><span style=3D"font-size: =
+9pt; font-family: Arial, sans-serif; color: #202020; text-decoration: none;=
+" data-mce-style=3D"font-size: 9pt; font-family: Arial, sans-serif; color: =
+#202020; text-decoration: none;">Tweetez</span></a><o:p></o:p></p></td></tr=
+></tbody></table></td></tr></tbody></table></td></tr></tbody></table></td><=
+td style=3D"padding: 0cm;" data-mce-style=3D"padding: 0cm;" valign=3D"top">=
+<table class=3D"MsoNormalTable" style=3D"border-collapse: collapse;" data-m=
+ce-style=3D"border-collapse: collapse;" cellspacing=3D"0" cellpadding=3D"0"=
+ border=3D"1" align=3D"left"><tbody><tr><td style=3D"padding: 0cm 0cm 6.75p=
+t;" data-mce-style=3D"padding: 0cm 0cm 6.75pt;" valign=3D"top"><table class=
+=3D"MsoNormalTable" style=3D"width: 0cm; border-collapse: collapse;" data-m=
+ce-style=3D"width: 0cm; border-collapse: collapse;" width=3D"0" cellspacing=
+=3D"0" cellpadding=3D"0" border=3D"1"><tbody><tr><td style=3D"padding: 3.75=
+pt 6.75pt;" data-mce-style=3D"padding: 3.75pt 6.75pt;"><table class=3D"MsoN=
+ormalTable" style=3D"width: 0cm; border-collapse: collapse; border-top-left=
+-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px=
+; border-bottom-left-radius: 3px;" data-mce-style=3D"width: 0cm; border-col=
+lapse: collapse; border-top-left-radius: 3px; border-top-right-radius: 3px;=
+ border-bottom-right-radius: 3px; border-bottom-left-radius: 3px;" width=3D=
+"0" cellspacing=3D"0" cellpadding=3D"0" border=3D"1" align=3D"left"><tbody>=
+<tr><td style=3D"width: 18pt; padding: 0cm;" data-mce-style=3D"width: 18pt;=
+ padding: 0cm;" width=3D"24"><p class=3D"MsoNormal" style=3D"margin: 0px; f=
+ont-size: 12pt; font-family: &quot;Times New Roman&quot;, serif; text-align=
+: center;" data-mce-style=3D"margin: 0px; font-size: 12pt; font-family: 'Ti=
+mes New Roman', serif; text-align: center;" align=3D"center"><a href=3D"htt=
+p://www.linkedin.com/shareArticle?url=3Dhttp%3A%2F%2Feepurl.com%2Fgo9gOf&am=
+p;mini=3Dtrue&amp;title=3DL%27ANFR+lance+FrHack%21+2019%2C+son+hackathon+de=
+s+fr%C3%A9quences+-+ouverture+des+inscriptions" target=3D"_blank" style=3D"=
+color: purple; text-decoration: underline;" rel=3D"noopener" data-mce-href=
+=3D"http://www.linkedin.com/shareArticle?url=3Dhttp%3A%2F%2Feepurl.com%2Fgo=
+9gOf&amp;mini=3Dtrue&amp;title=3DL%27ANFR+lance+FrHack%21+2019%2C+son+hacka=
+thon+des+fr%C3%A9quences+-+ouverture+des+inscriptions" data-mce-style=3D"co=
+lor: purple; text-decoration: underline;"><span style=3D"text-decoration: n=
+one;" data-mce-style=3D"text-decoration: none;"><img id=3D"_x0000_i1027" sr=
+c=3D"https://cdn-images.mailchimp.com/icons/social-block-v2/outline-dark-li=
+nkedin-48.png" data-mce-src=3D"https://cdn-images.mailchimp.com/icons/socia=
+l-block-v2/outline-dark-linkedin-48.png" width=3D"24" height=3D"24" border=
+=3D"0"></span></a><o:p></o:p></p></td><td style=3D"padding: 0cm 0cm 0cm 3.7=
+5pt;" data-mce-style=3D"padding: 0cm 0cm 0cm 3.75pt;"><p class=3D"MsoNormal=
+" style=3D"margin: 0px; font-size: 12pt; font-family: &quot;Times New Roman=
+&quot;, serif;" data-mce-style=3D"margin: 0px; font-size: 12pt; font-family=
+: 'Times New Roman', serif;"><a href=3D"http://www.linkedin.com/shareArticl=
+e?url=3Dhttp%3A%2F%2Feepurl.com%2Fgo9gOf&amp;mini=3Dtrue&amp;title=3DL%27AN=
+FR+lance+FrHack%21+2019%2C+son+hackathon+des+fr%C3%A9quences+-+ouverture+de=
+s+inscriptions" style=3D"color: purple; text-decoration: underline;" data-m=
+ce-href=3D"http://www.linkedin.com/shareArticle?url=3Dhttp%3A%2F%2Feepurl.c=
+om%2Fgo9gOf&amp;mini=3Dtrue&amp;title=3DL%27ANFR+lance+FrHack%21+2019%2C+so=
+n+hackathon+des+fr%C3%A9quences+-+ouverture+des+inscriptions" data-mce-styl=
+e=3D"color: purple; text-decoration: underline;"><span style=3D"font-size: =
+9pt; font-family: Arial, sans-serif; color: #202020; text-decoration: none;=
+" data-mce-style=3D"font-size: 9pt; font-family: Arial, sans-serif; color: =
+#202020; text-decoration: none;">Informez</span></a><o:p></o:p></p></td></t=
+r></tbody></table></td></tr></tbody></table></td></tr></tbody></table></td>=
+</tr></tbody></table></div></td></tr></tbody></table></div></td></tr></tbod=
+y></table></div></td></tr></tbody></table></td></tr></tbody></table><p clas=
+s=3D"MsoNormal" style=3D"margin: 0px; font-size: 12pt; font-family: &quot;T=
+imes New Roman&quot;, serif;" data-mce-style=3D"margin: 0px; font-size: 12p=
+t; font-family: 'Times New Roman', serif;"><o:p></o:p><br></p></td></tr><tr=
+><td id=3D"templateHeader" style=3D"background-color: white; padding: 0cm; =
+background-size: cover; background-position: 50% 50%; background-repeat: in=
+itial initial;" data-mce-style=3D"background-color: white; padding: 0cm; ba=
+ckground-size: cover; background-position: 50% 50%; background-repeat: init=
+ial initial;" valign=3D"top"><table class=3D"MsoNormalTable" style=3D"width=
+: 603px; border-collapse: collapse; min-width: 100%;" data-mce-style=3D"wid=
+th: 603px; border-collapse: collapse; min-width: 100%;" width=3D"100%" cell=
+spacing=3D"0" cellpadding=3D"0" border=3D"1"><tbody><tr><td style=3D"paddin=
+g: 0cm; min-width: 100%;" data-mce-style=3D"padding: 0cm; min-width: 100%;"=
+ valign=3D"top"><table class=3D"MsoNormalTable" style=3D"width: 603px; bord=
+er-collapse: collapse; min-width: 100%;" data-mce-style=3D"width: 603px; bo=
+rder-collapse: collapse; min-width: 100%;" width=3D"100%" cellspacing=3D"0"=
+ cellpadding=3D"0" border=3D"1" align=3D"left"><tbody><tr><td style=3D"padd=
+ing: 0cm; min-width: 100%;" data-mce-style=3D"padding: 0cm; min-width: 100%=
+;" valign=3D"top"><p class=3D"MsoNormal" style=3D"margin: 0px; font-size: 1=
+2pt; font-family: &quot;Times New Roman&quot;, serif; text-align: center;" =
+data-mce-style=3D"margin: 0px; font-size: 12pt; font-family: 'Times New Rom=
+an', serif; text-align: center;" align=3D"center"><a href=3D"https://hackat=
+hon.anfr.fr/" target=3D"_blank" title=3D"" style=3D"color: purple; text-dec=
+oration: underline;" rel=3D"noopener" data-mce-href=3D"https://hackathon.an=
+fr.fr/" data-mce-style=3D"color: purple; text-decoration: underline;"><span=
+ style=3D"text-decoration: none;" data-mce-style=3D"text-decoration: none;"=
+><img id=3D"_x0000_i1028" src=3D"https://gallery.mailchimp.com/97bbfd62cfc3=
+950c9c3d7d838/images/677be95d-ad5d-4cd9-bc4b-fa3d12b7a05a.png" data-mce-src=
+=3D"https://gallery.mailchimp.com/97bbfd62cfc3950c9c3d7d838/images/677be95d=
+-ad5d-4cd9-bc4b-fa3d12b7a05a.png" width=3D"600" border=3D"0"></span></a><o:=
+p></o:p></p></td></tr></tbody></table></td></tr></tbody></table></td></tr><=
+tr><td id=3D"templateBody" style=3D"border-style: none none solid; border-b=
+ottom-width: 1.5pt; border-bottom-color: #eaeaea; background-color: white; =
+padding: 0cm 0cm 6.75pt; background-size: cover; background-position: 50% 5=
+0%; background-repeat: initial initial;" data-mce-style=3D"border-style: no=
+ne none solid; border-bottom-width: 1.5pt; border-bottom-color: #eaeaea; ba=
+ckground-color: white; padding: 0cm 0cm 6.75pt; background-size: cover; bac=
+kground-position: 50% 50%; background-repeat: initial initial;" valign=3D"t=
+op"><table class=3D"MsoNormalTable" style=3D"width: 603px; border-collapse:=
+ collapse; min-width: 100%;" data-mce-style=3D"width: 603px; border-collaps=
+e: collapse; min-width: 100%;" width=3D"100%" cellspacing=3D"0" cellpadding=
+=3D"0" border=3D"1"><tbody><tr><td style=3D"padding: 6.75pt; min-width: 100=
+%;" data-mce-style=3D"padding: 6.75pt; min-width: 100%;" valign=3D"top"><ta=
+ble class=3D"MsoNormalTable" style=3D"width: 585px; border-collapse: collap=
+se; min-width: 100%;" data-mce-style=3D"width: 585px; border-collapse: coll=
+apse; min-width: 100%;" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" =
+border=3D"1" align=3D"left"><tbody><tr><td style=3D"padding: 0cm 6.75pt; mi=
+n-width: 100%;" data-mce-style=3D"padding: 0cm 6.75pt; min-width: 100%;" va=
+lign=3D"top"><p class=3D"MsoNormal" style=3D"margin: 0px; font-size: 12pt; =
+font-family: &quot;Times New Roman&quot;, serif;" data-mce-style=3D"margin:=
+ 0px; font-size: 12pt; font-family: 'Times New Roman', serif;"><a href=3D"h=
+ttp://www.anfr.fr/accueil/" target=3D"&quot;_blank&quot;" style=3D"color: p=
+urple; text-decoration: underline;" data-mce-href=3D"http://www.anfr.fr/acc=
+ueil/" data-mce-style=3D"color: purple; text-decoration: underline;"><img s=
+rc=3D"https://gallery.mailchimp.com/97bbfd62cfc3950c9c3d7d838/images/1c8867=
+6f-1f9a-43ac-bba1-e6ae2fb1d9ac.png" title=3D"&quot;&quot;" v:shapes=3D"_x00=
+00_s1026" data-mce-src=3D"https://gallery.mailchimp.com/97bbfd62cfc3950c9c3=
+d7d838/images/1c88676f-1f9a-43ac-bba1-e6ae2fb1d9ac.png" width=3D"564" heigh=
+t=3D"131" border=3D"0" align=3D"left"></a><o:p></o:p></p></td></tr></tbody>=
+</table></td></tr></tbody></table><p class=3D"MsoNormal" style=3D"margin: 0=
+px; font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif;" data=
+-mce-style=3D"margin: 0px; font-size: 12pt; font-family: 'Times New Roman',=
+ serif;"><o:p>&nbsp;</o:p></p><table class=3D"MsoNormalTable" style=3D"widt=
+h: 603px; border-collapse: collapse; min-width: 100%;" data-mce-style=3D"wi=
+dth: 603px; border-collapse: collapse; min-width: 100%;" width=3D"100%" cel=
+lspacing=3D"0" cellpadding=3D"0" border=3D"1"><tbody><tr><td style=3D"paddi=
+ng: 6.75pt 0cm 0cm;" data-mce-style=3D"padding: 6.75pt 0cm 0cm;" valign=3D"=
+top"><table class=3D"MsoNormalTable" style=3D"width: 603px; border-collapse=
+: collapse; margin-left: -2.25pt; margin-right: -2.25pt;" data-mce-style=3D=
+"width: 603px; border-collapse: collapse; margin-left: -2.25pt; margin-righ=
+t: -2.25pt;" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" border=3D"1=
+" align=3D"left"><tbody><tr><td style=3D"width: 450pt; padding: 0cm;" data-=
+mce-style=3D"width: 450pt; padding: 0cm;" width=3D"600" valign=3D"top"><tab=
+le class=3D"MsoNormalTable" style=3D"width: 603px; border-collapse: collaps=
+e;" data-mce-style=3D"width: 603px; border-collapse: collapse;" width=3D"10=
+0%" cellspacing=3D"0" cellpadding=3D"0" border=3D"1" align=3D"left"><tbody>=
+<tr><td style=3D"padding: 0cm 13.5pt 6.75pt;" data-mce-style=3D"padding: 0c=
+m 13.5pt 6.75pt;" valign=3D"top"><p class=3D"MsoNormal" style=3D"margin: 0p=
+x; font-size: 12pt; font-family: &quot;Times New Roman&quot;, serif; text-a=
+lign: center; line-height: 24px;" data-mce-style=3D"margin: 0px; font-size:=
+ 12pt; font-family: 'Times New Roman', serif; text-align: center; line-heig=
+ht: 24px;" align=3D"center"><span style=3D"font-family: Helvetica, sans-ser=
+if; color: #202020;" data-mce-style=3D"font-family: Helvetica, sans-serif; =
+color: #202020;"><br></span><strong><span style=3D"font-size: 16.5pt; line-=
+height: 33px; font-family: Helvetica, sans-serif; color: #007abc;" data-mce=
+-style=3D"font-size: 16.5pt; line-height: 33px; font-family: Helvetica, san=
+s-serif; color: #007abc;">L'ANFR et l'ISEP<span class=3D"Apple-converted-sp=
+ace">&nbsp;</span></span></strong><span style=3D"font-family: Helvetica, sa=
+ns-serif; color: #007abc;" data-mce-style=3D"font-family: Helvetica, sans-s=
+erif; color: #007abc;"><br><br><strong><span style=3D"font-family: Helvetic=
+a, sans-serif;" data-mce-style=3D"font-family: Helvetica, sans-serif;">vous=
+ invitent =C3=A0</span></strong><br><br></span><strong><span style=3D"font-=
+size: 15pt; line-height: 30px; font-family: Helvetica, sans-serif; color: #=
+007abc;" data-mce-style=3D"font-size: 15pt; line-height: 30px; font-family:=
+ Helvetica, sans-serif; color: #007abc;">FrHack! 2019 : le hackathon des fr=
+=C3=A9quences</span></strong><span style=3D"font-family: Helvetica, sans-se=
+rif; color: #202020;" data-mce-style=3D"font-family: Helvetica, sans-serif;=
+ color: #202020;"><br><br></span><em><b><span style=3D"font-size: 13pt; lin=
+e-height: 26px; font-family: Helvetica, sans-serif; color: #202020;" data-m=
+ce-style=3D"font-size: 13pt; line-height: 26px; font-family: Helvetica, san=
+s-serif; color: #202020;">=C2=AB&nbsp;Nouveaux services, nouvelles technos =
+:</span></b></em><b><i><span style=3D"font-size: 13pt; line-height: 26px; f=
+ont-family: Helvetica, sans-serif; color: #202020;" data-mce-style=3D"font-=
+size: 13pt; line-height: 26px; font-family: Helvetica, sans-serif; color: #=
+202020;"><br><em><span style=3D"font-family: Helvetica, sans-serif;" data-m=
+ce-style=3D"font-family: Helvetica, sans-serif;">se faire une place dans un=
+ spectre surcharg=C3=A9 =C2=BB</span></em></span></i></b><span style=3D"fon=
+t-family: Helvetica, sans-serif; color: #202020;" data-mce-style=3D"font-fa=
+mily: Helvetica, sans-serif; color: #202020;"><br><br><em><span style=3D"fo=
+nt-family: Helvetica, sans-serif;" data-mce-style=3D"font-family: Helvetica=
+, sans-serif;">Objets connect=C3=A9s, transport autonome, smart building, s=
+mart city, usine intelligente =E2=80=A6 Comment l=E2=80=99IA, le BigData et=
+ la Blockchain peuvent leur permettre de trouver et de g=C3=A9rer dynamique=
+ment &nbsp;leur place</span></em><i><br><em><span style=3D"font-family: Hel=
+vetica, sans-serif;" data-mce-style=3D"font-family: Helvetica, sans-serif;"=
+>dans le spectre des fr=C3=A9quences</span></em></i><br><br></span><strong>=
+<span style=3D"font-size: 13.5pt; line-height: 27px; font-family: Helvetica=
+, sans-serif; color: purple;" data-mce-style=3D"font-size: 13.5pt; line-hei=
+ght: 27px; font-family: Helvetica, sans-serif; color: purple;">le week-end =
+du<span class=3D"Apple-converted-space">&nbsp;</span></span></strong><span =
+style=3D"font-size: 13.5pt; line-height: 27px; font-family: Helvetica, sans=
+-serif; color: #202020;" data-mce-style=3D"font-size: 13.5pt; line-height: =
+27px; font-family: Helvetica, sans-serif; color: #202020;">25 / 26 mai 2019=
+</span><span style=3D"font-family: Helvetica, sans-serif; color: #202020;" =
+data-mce-style=3D"font-family: Helvetica, sans-serif; color: #202020;"><br>=
+</span><strong><span style=3D"font-size: 13.5pt; line-height: 27px; font-fa=
+mily: Helvetica, sans-serif; color: purple;" data-mce-style=3D"font-size: 1=
+3.5pt; line-height: 27px; font-family: Helvetica, sans-serif; color: purple=
+;">sur le campus de l'ISEP =C3=A0 Issy-les-Moulineaux</span></strong><span =
+style=3D"font-family: Helvetica, sans-serif; color: #202020;" data-mce-styl=
+e=3D"font-family: Helvetica, sans-serif; color: #202020;"><o:p></o:p></span=
+></p></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody>=
+</table><p class=3D"MsoNormal" style=3D"margin: 0px; font-size: 12pt; font-=
+family: &quot;Times New Roman&quot;, serif;" data-mce-style=3D"margin: 0px;=
+ font-size: 12pt; font-family: 'Times New Roman', serif;"><o:p>&nbsp;</o:p>=
+</p><table class=3D"MsoNormalTable" style=3D"width: 603px; border-collapse:=
+ collapse; min-width: 100%;" data-mce-style=3D"width: 603px; border-collaps=
+e: collapse; min-width: 100%;" width=3D"100%" cellspacing=3D"0" cellpadding=
+=3D"0" border=3D"1"><tbody><tr><td style=3D"padding: 6.75pt 0cm 0cm;" data-=
+mce-style=3D"padding: 6.75pt 0cm 0cm;" valign=3D"top"><table class=3D"MsoNo=
+rmalTable" style=3D"width: 603px; border-collapse: collapse; margin-left: -=
+2.25pt; margin-right: -2.25pt;" data-mce-style=3D"width: 603px; border-coll=
+apse: collapse; margin-left: -2.25pt; margin-right: -2.25pt;" width=3D"100%=
+" cellspacing=3D"0" cellpadding=3D"0" border=3D"1" align=3D"left"><tbody><t=
+r><td style=3D"width: 450pt; padding: 0cm;" data-mce-style=3D"width: 450pt;=
+ padding: 0cm;" width=3D"600" valign=3D"top"><table class=3D"MsoNormalTable=
+" style=3D"width: 603px; border-collapse: collapse;" data-mce-style=3D"widt=
+h: 603px; border-collapse: collapse;" width=3D"100%" cellspacing=3D"0" cell=
+padding=3D"0" border=3D"1" align=3D"left"><tbody><tr><td style=3D"padding: =
+0cm 13.5pt 6.75pt;" data-mce-style=3D"padding: 0cm 13.5pt 6.75pt;" valign=
+=3D"top"><p class=3D"MsoNormal" style=3D"margin: 0px; font-size: 12pt; font=
+-family: &quot;Times New Roman&quot;, serif; text-align: justify; line-heig=
+ht: 24px;" data-mce-style=3D"margin: 0px; font-size: 12pt; font-family: 'Ti=
+mes New Roman', serif; text-align: justify; line-height: 24px;"><span style=
+=3D"font-family: Helvetica, sans-serif; color: #202020;" data-mce-style=3D"=
+font-family: Helvetica, sans-serif; color: #202020;"><br></span><span style=
+=3D"font-size: 10.5pt; line-height: 21px; font-family: Helvetica, sans-seri=
+f; color: #202020;" data-mce-style=3D"font-size: 10.5pt; line-height: 21px;=
+ font-family: Helvetica, sans-serif; color: #202020;">Avec l=E2=80=99essor =
+de l'<strong><span style=3D"font-family: Helvetica, sans-serif;" data-mce-s=
+tyle=3D"font-family: Helvetica, sans-serif;">internet des objets</span></st=
+rong><span class=3D"Apple-converted-space">&nbsp;</span>et des<span class=
+=3D"Apple-converted-space">&nbsp;</span><strong><span style=3D"font-family:=
+ Helvetica, sans-serif;" data-mce-style=3D"font-family: Helvetica, sans-ser=
+if;">nouveaux services connect=C3=A9s</span></strong><span class=3D"Apple-c=
+onverted-space">&nbsp;</span>gr=C3=A2ce aux fr=C3=A9quences (transport auto=
+nome, t=C3=A9l=C3=A9rel=C3=A8ve, eSant=C3=A9, smart city, smart building, s=
+mart manufacturing =E2=80=A6), les usages du spectre se densifient.<br>Pour=
+ autant, la ressource en fr=C3=A9quences n'est pas extensible : disposer de=
+ solutions permettant de cartographier et de g=C3=A9rer dynamiquement son u=
+sage pour garantir, par exemple, la disponibilit=C3=A9 effective de fr=C3=
+=A9quences au moment o=C3=B9 les services les utilisent devient indispensab=
+le. Ces solutions doivent garantir l'absence de brouillages entre services,=
+ pour une s=C3=A9curit=C3=A9 maximale.&nbsp;<br><br><strong><span style=3D"=
+font-family: Helvetica, sans-serif;" data-mce-style=3D"font-family: Helveti=
+ca, sans-serif;">Avec son hackathon FrHack! 2019, l=E2=80=99ANFR vous propo=
+se d=E2=80=99explorer l=E2=80=99apport des nouvelles technologies, BigData,=
+ Intelligence Artificielle ou encore Blockchain, pour une gestion plus effi=
+cace du spectre en temps r=C3=A9el.</span></strong></span><span style=3D"fo=
+nt-family: Helvetica, sans-serif; color: #202020;" data-mce-style=3D"font-f=
+amily: Helvetica, sans-serif; color: #202020;"><br>&nbsp;<br></span><strong=
+><span style=3D"font-size: 10pt; line-height: 20px; font-family: 'Helvetica=
+ Neue'; color: #006699;" data-mce-style=3D"font-size: 10pt; line-height: 20=
+px; font-family: 'Helvetica Neue'; color: #006699;">&gt; Vous connaissez &n=
+bsp;les concepts de la Blockchain et voulez en d=C3=A9montrer le potentiel =
+sur de nouveaux cas d=E2=80=99usages ?</span></strong><b><span style=3D"fon=
+t-size: 10pt; line-height: 20px; font-family: 'Helvetica Neue'; color: #006=
+699;" data-mce-style=3D"font-size: 10pt; line-height: 20px; font-family: 'H=
+elvetica Neue'; color: #006699;"><br><strong><span style=3D"font-family: 'H=
+elvetica Neue';" data-mce-style=3D"font-family: 'Helvetica Neue';">&gt; Vou=
+s voulez tester vos algorithmes favoris de machine learning sur de nouvelle=
+s probl=C3=A9matiques&nbsp;?</span></strong><br><strong><span style=3D"font=
+-family: 'Helvetica Neue';" data-mce-style=3D"font-family: 'Helvetica Neue'=
+;">&gt; Vous adorez&nbsp;croiser les donn=C3=A9es&nbsp;de sources diverses =
+pour en faire des cocktails d=C3=A9tonnants ?</span></strong><br><strong><s=
+pan style=3D"font-family: 'Helvetica Neue';" data-mce-style=3D"font-family:=
+ 'Helvetica Neue';">&gt; Vous&nbsp;baignez dans les fr=C3=A9quences&nbsp;co=
+mme un poisson dans l=E2=80=99eau ?</span></strong><br><strong><span style=
+=3D"font-family: 'Helvetica Neue';" data-mce-style=3D"font-family: 'Helveti=
+ca Neue';">&gt; Vous avez des donn=C3=A9es =C3=A0 partager qui pourraient s=
+e marier aux jeux de donn=C3=A9es de l=E2=80=99ANFR ? &nbsp;</span></strong=
+><br><strong><span style=3D"font-family: 'Helvetica Neue';" data-mce-style=
+=3D"font-family: 'Helvetica Neue';">&gt; Le d=C3=A9veloppement rapide d=E2=
+=80=99un POC est un d=C3=A9fi qui vous stimule&nbsp;?</span></strong></span=
+></b><span style=3D"font-family: Helvetica, sans-serif; color: #202020;" da=
+ta-mce-style=3D"font-family: Helvetica, sans-serif; color: #202020;"><br></=
+span><span style=3D"font-size: 9pt; line-height: 18px; font-family: Helveti=
+ca, sans-serif; color: #202020;" data-mce-style=3D"font-size: 9pt; line-hei=
+ght: 18px; font-family: Helvetica, sans-serif; color: #202020;">&nbsp;</spa=
+n><span style=3D"font-family: Helvetica, sans-serif; color: #202020;" data-=
+mce-style=3D"font-family: Helvetica, sans-serif; color: #202020;"><br></spa=
+n><span style=3D"font-size: 10.5pt; line-height: 21px; font-family: Helveti=
+ca, sans-serif; color: #202020;" data-mce-style=3D"font-size: 10.5pt; line-=
+height: 21px; font-family: Helvetica, sans-serif; color: #202020;">Venez no=
+us aider =C3=A0 d=C3=A9velopper en =C3=A9quipe de<span class=3D"Apple-conve=
+rted-space">&nbsp;</span><strong><span style=3D"font-family: Helvetica, san=
+s-serif;" data-mce-style=3D"font-family: Helvetica, sans-serif;">nouvelles =
+solutions innovantes</span></strong><span class=3D"Apple-converted-space">&=
+nbsp;</span>qui serviront =C3=A0 am=C3=A9liorer la gestion et l=E2=80=99uti=
+lisation optimale des fr=C3=A9quences !</span><span style=3D"font-family: H=
+elvetica, sans-serif; color: #202020;" data-mce-style=3D"font-family: Helve=
+tica, sans-serif; color: #202020;"><o:p></o:p></span></p><p class=3D"MsoNor=
+mal" style=3D"margin: 0px; font-size: 12pt; font-family: &quot;Times New Ro=
+man&quot;, serif; line-height: 24px;" data-mce-style=3D"margin: 0px; font-s=
+ize: 12pt; font-family: 'Times New Roman', serif; line-height: 24px;"><span=
+ style=3D"font-family: Helvetica, sans-serif; color: #202020;" data-mce-sty=
+le=3D"font-family: Helvetica, sans-serif; color: #202020;">&nbsp;<o:p></o:p=
+></span></p><p class=3D"MsoNormal" style=3D"margin: 0px; font-size: 12pt; f=
+ont-family: &quot;Times New Roman&quot;, serif; text-align: center; line-he=
+ight: 24px;" data-mce-style=3D"margin: 0px; font-size: 12pt; font-family: '=
+Times New Roman', serif; text-align: center; line-height: 24px;" align=3D"c=
+enter"><strong><span style=3D"font-size: 13.5pt; line-height: 27px; font-fa=
+mily: Helvetica, sans-serif; color: #202020;" data-mce-style=3D"font-size: =
+13.5pt; line-height: 27px; font-family: Helvetica, sans-serif; color: #2020=
+20;"><a href=3D"https://twitter.com/search?f=3Dtweets&amp;vertical=3Ddefaul=
+t&amp;q=3D%23FrHack&amp;src=3Dtypd&amp;lang=3Dfr" target=3D"_blank" style=
+=3D"color: purple; text-decoration: underline;" rel=3D"noopener" data-mce-h=
+ref=3D"https://twitter.com/search?f=3Dtweets&amp;vertical=3Ddefault&amp;q=
+=3D%23FrHack&amp;src=3Dtypd&amp;lang=3Dfr" data-mce-style=3D"color: purple;=
+ text-decoration: underline;"><span style=3D"color: #007abc;" data-mce-styl=
+e=3D"color: #007abc;">#FrHack</span></a></span></strong><span style=3D"font=
+-family: Helvetica, sans-serif; color: #202020;" data-mce-style=3D"font-fam=
+ily: Helvetica, sans-serif; color: #202020;"><br>&nbsp;<o:p></o:p></span></=
+p></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></t=
+able><p class=3D"MsoNormal" style=3D"margin: 0px; font-size: 12pt; font-fam=
+ily: &quot;Times New Roman&quot;, serif;" data-mce-style=3D"margin: 0px; fo=
+nt-size: 12pt; font-family: 'Times New Roman', serif;"><o:p>&nbsp;</o:p></p=
+><table class=3D"MsoNormalTable" style=3D"width: 603px; border-collapse: co=
+llapse; min-width: 100%;" data-mce-style=3D"width: 603px; border-collapse: =
+collapse; min-width: 100%;" width=3D"100%" cellspacing=3D"0" cellpadding=3D=
+"0" border=3D"1"><tbody><tr><td style=3D"padding: 0cm 13.5pt 13.5pt;" data-=
+mce-style=3D"padding: 0cm 13.5pt 13.5pt;" valign=3D"top"><div align=3D"cent=
+er"><table class=3D"MsoNormalTable" style=3D"background-color: #007abc; bor=
+der-collapse: collapse; background-position: initial initial; background-re=
+peat: initial initial;" data-mce-style=3D"background-color: #007abc; border=
+-collapse: collapse; background-position: initial initial; background-repea=
+t: initial initial;" cellspacing=3D"0" cellpadding=3D"0" border=3D"1"><tbod=
+y><tr><td style=3D"padding: 11.25pt;" data-mce-style=3D"padding: 11.25pt;">=
+<p class=3D"MsoNormal" style=3D"margin: 0px; font-size: 12pt; font-family: =
+&quot;Times New Roman&quot;, serif; text-align: center;" data-mce-style=3D"=
+margin: 0px; font-size: 12pt; font-family: 'Times New Roman', serif; text-a=
+lign: center;" align=3D"center"><span style=3D"font-family: Arial, sans-ser=
+if;" data-mce-style=3D"font-family: Arial, sans-serif;"><a href=3D"https://=
+hackathon.anfr.fr/" target=3D"_blank" title=3D"Infos et inscription" style=
+=3D"color: purple; text-decoration: underline;" rel=3D"noopener" data-mce-h=
+ref=3D"https://hackathon.anfr.fr/" data-mce-style=3D"color: purple; text-de=
+coration: underline;"><b><span style=3D"color: white; text-decoration: none=
+;" data-mce-style=3D"color: white; text-decoration: none;">Infos et inscrip=
+tion</span></b></a><o:p></o:p></span></p></td></tr></tbody></table></div></=
+td></tr></tbody></table></td></tr></tbody></table><div style=3D"clear: both=
+;" data-mce-style=3D"clear: both;"><br></div></div><div>Inscriptions et Inf=
+ormations au https://hackathon.anfr.fr/<br></div><div data-marker=3D"__SIG_=
+POST__">-- <br></div><div>---------------<br>Raja CHIKY<br>Directrice de la=
+ recherche<br>Responsable du parcours Innovation et Cr=C3=A9ation d'Entrepr=
+ise<br>01.49.54.52.34<br>06.84.67.45.95<br></div><div style=3D"clear: both;=
+" data-mce-style=3D"clear: both;"><br data-mce-bogus=3D"1"></div></div></bo=
+dy></html>
+--=_9396db4b-33e0-4b4e-a6f8-dbd6a7fe0679--
+
+

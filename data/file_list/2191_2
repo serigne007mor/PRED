@@ -1,0 +1,436 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (BounceSMTP2.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id EB11514017C0
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Fri, 31 Jul 2020 18:58:11 +0200 (CEST)
+Received: from mx2.d101.univ-nantes.fr (MX2.univ-nantes.fr [193.52.101.136])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id E259F61F08E
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Fri, 31 Jul 2020 18:58:11 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTP id D8C63B4A249
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 31 Jul 2020 18:58:11 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 0.013
+X-Spam-Level:
+X-Spam-Status: No, score=0.013 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+	HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_WSFF=0.01,
+	SPF_HELO_NONE=0.001, SPF_PASS=-0.001, UN_PHISHING_PW=0.1,
+	URIBL_BLOCKED=0.001] autolearn=disabled
+X-CRM114-Status: UNSURE ( -2.2210 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=gmail.com
+Received: from mx2.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id pkTkD-V3bLz9 for <liste-egc@polytech.univ-nantes.fr>;
+	Fri, 31 Jul 2020 18:58:09 +0200 (CEST)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTPS id 20AC5A3DB48
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 31 Jul 2020 18:58:09 +0200 (CEST)
+Received: by mail-ot1-x32d.google.com with SMTP id h1so23117487otq.12
+        for <liste-egc@polytech.univ-nantes.fr>; Fri, 31 Jul 2020 09:58:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=DegF8qlfNyNZ5YAWmRLuEulcNFRkwAf8dIDFjFetyvE=;
+        b=e1DIDp95f+V8Jp0FzCoxVsr2CskzrFO7W2W70sbRdma1+S0Zbxp4EHnCJ5IE4YlA/A
+         jF2B/ftpgl972YuWXFnuTUptObNIp5TqgXwN2ks3EQs9fZLLJBqKqViS0MbSuBgWbUeD
+         vc0VbevRnUVwBMHSJhcH06asmCqp0dYI1kxB6eYvj+ZwRc0wOwrjFdcKE02j2WyW2haA
+         H4LqxKyq1MouENiJn84XOjUL79/KRmjlHFO7qEda0BpIK2POgyAu6bpHTysal98djBGf
+         k9mKmxZZ3wrGb3t9NVTo3N5aj35681mzRH9F4mXFhSV5UG/n5WuEpCOtibI2edP4/8Xh
+         mwLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=DegF8qlfNyNZ5YAWmRLuEulcNFRkwAf8dIDFjFetyvE=;
+        b=gthn7z2ZDmIVI5cUp6o+WR+/VepLKWVyjPa2Whs7u2+0vwx++L/Bljr7es/ShHBSBQ
+         fu9TMChfkFgy2ZfAe/Scr3Dfge2J72I5bTddI2TniXSe1QllVzWsKQSd+Yhpp/AEP28Z
+         Hl7mAX+OLreoeYv5+jlYJ0YTJKVV8YmmGW+oBxWZ7uoVyyvgswBZhajMY5Dt3GXWZ9W8
+         oTiIFElBFz7IC5R2LMGX1FajaJVO+9B1NSMFdh7mIVnyJGnUmngrTVhQIugxxBjHhVNT
+         NORsmqnNvPtJwJX7zWOyXYImCqzYsLGT20ihnOYAzANiJyFlwhadKVOYmN2PVr4houjN
+         q35A==
+X-Gm-Message-State: AOAM533xzre2Hde1Uty2ng5ZRjuczSJbppn4s9lvSlCPqxDN4ihcVlZJ
+	oE1ypn45M4oqGTlOSK+peXaKkIbWyOaloXp3nIssDTI/89Q=
+X-Google-Smtp-Source: ABdhPJwtCssGTUfhhIZg0j8rtGPojdKjIEx3VoggqVVJKIFlQBzyub3vpmCj7R5hSACtyvp6KLKookcZIm3sE2cbHoc=
+X-Received: by 2002:a9d:8e7:: with SMTP id 94mr3661438otf.205.1596214687590;
+ Fri, 31 Jul 2020 09:58:07 -0700 (PDT)
+MIME-Version: 1.0
+From: Philippe Fournier-Viger <philippe.fv@gmail.com>
+Date: Sat, 1 Aug 2020 00:57:56 +0800
+Message-ID: <CAFkUv0uYOq80vWZd9u9+Kf5_i1EvGOH2mLVFHoE=JJxCVd1sew@mail.gmail.com>
+To: liste-egc@polytech.univ-nantes.fr
+Content-Type: multipart/alternative; boundary="000000000000706c4b05abbfb161"
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Call for chapters - Tracking and Preventing Diseases
+ with Artificial Intelligence - Deadline: 15th October 2020
+
+--000000000000706c4b05abbfb161
+Content-Type: text/plain; charset="UTF-8"
+
+Apologies for cross-posting
+
+----------------------------------
+Call for chapters - *Tracking and Preventing Diseases with Artificial
+Intelligence *
+---------------------------------------
+Book to be published by Springer in early 2021
+
+
+*Scope of the book*
+All around the world, the spread of infectious diseases is a major concern
+as it directly impacts the health of people. In spite of the medical
+advancements, there remain several incurable diseases for which prevention
+is the only cure. Recently, Artificial Intelligence (AI) has been rapidly
+adopted to assist physicians in diagnosis, disease tracking, prevention and
+control. Due to increasing availability of electronic healthcare data and
+rapid progress of analytics techniques, a lot of research is being carried
+out in this area applying machine learning/deep learning techniques to
+assist the medical professionals for making a preliminary evaluation. This
+book aims to demonstrate the potential and advancements of artificial
+intelligence for tracking and preventing diseases. Prospective authors are
+invited to submit their original contributions that deal with theory,
+methods, systems and applications of Artificial Intelligence for tracking
+and preventing diseases.
+
+*The topics of interest include, but not limited to:*
+For better understanding by the readers, basic concepts, related work
+reviews, illustrations, empirical results and tables are expected to be
+integrated in each chapter to give the readers a maximum understanding and
+allow them to easily follow the methodology and the results presented. The
+target audience of the edited book will come from different backgrounds.
+The audience will share and exchange novel knowledge, methods, industry
+experience and theories. The chapter contributions should described solving
+challenging issues using machine learning or data mining in any of the
+following domains:
+
+Artificial intelligence in health informatics
+AI for predicting diseases
+Predicting disease progression using biomarkers
+Disease prevention using AI
+Data mining approaches for medical pathway analysis
+Big data analytics for predicting diseases
+Artificial intelligence for medical resource management
+Biomedical image analysis
+AI for infectious disease tracking
+Computer-aided automated diagnosis using AI
+Devices, systems and innovative technologies for disease tracking
+Wearable technology for disease tracking
+IoT for disease tracking
+AI for personal health management
+AI-based systems for training health professionals
+Software and public datasets for health informatics
+Issues, challenges and future prospects in health informatics
+Case studies related to incurable diseases, neurogenerative diseases, etc.
+
+*Important dates*
+
+Chapter Submission Deadline: 15th October 2020
+Acceptance Notification: 15th December 2020
+Camera Ready Submission: 31st December 2020
+
+*Main Highlights*
+
+Book series: Intelligent Systems Reference Library
+The books of this series are submitted to ISI Web of Science, SCOPUS, DBLP
+and Springerlink
+No publication fees
+
+*Submission guidelines*
+
+Please visit Book Manuscript Guidelines for chapter format (Word & Latex)
+<https://www.springer.com/gp/authors-editors/book-authors-editors/resources-guidelines/book-manuscript-guidelines/manuscript-preparation/5636>
+Maximum 30 pages per chapter
+
+All submissions should be done by email to:
+profmayurimehta@gmail.com, philfv8@yahoo.com,
+maulika.sandip@gmail.com, jerrylin@ieee.org
+
+*Editorial Team*
+
+Dr. Mayuri Mehta
+Dr. Philippe Fournier-Viger
+Dr. Maulika S. Patel
+Dr. Jerry Chun-Wei Lin
+
+*More information about the call for chapters:*
+http://philippe-fournier-viger.com/books/ai_disease_book/
+
+--000000000000706c4b05abbfb161
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><span style=3D"color:rgb(0,0,0)">Apologies for cross-posti=
+ng</span>=C2=A0<div><br><div>----------------------------------</div><div>C=
+all for chapters - <b>Tracking and Preventing Diseases with Artificial Inte=
+lligence </b><br clear=3D"all"><div><div dir=3D"ltr" class=3D"gmail_signatu=
+re" data-smartmail=3D"gmail_signature"></div></div></div><div>-------------=
+--------------------------</div><div>Book to be published by Springer in ea=
+rly 2021</div><div><br></div><div><br></div><div><b style=3D"color:rgb(0,0,=
+0);font-family:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&qu=
+ot;,&quot;Lucida Grande&quot;,Arial;font-size:12px">Scope of the book</b><s=
+pan style=3D"color:rgb(0,0,0);font-family:&quot;Bitstream Vera Sans&quot;,&=
+quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quot;,Arial;font-size:12=
+px"></span><br style=3D"color:rgb(0,0,0);font-family:&quot;Bitstream Vera S=
+ans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quot;,Arial;f=
+ont-size:12px"><span style=3D"color:rgb(0,0,0);font-family:&quot;Bitstream =
+Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quot;,A=
+rial;font-size:12px">All around the world, the spread of infectious disease=
+s is a major concern as it directly impacts the health of people. In spite =
+of the medical advancements, there remain several incurable diseases for wh=
+ich prevention is the only cure. Recently, Artificial Intelligence (AI) has=
+ been rapidly adopted to assist physicians in diagnosis, disease tracking, =
+prevention and control. Due to increasing availability of electronic health=
+care data and rapid progress of analytics techniques, a lot of research is =
+being carried out in this area applying machine learning/deep learning tech=
+niques to assist the medical professionals for making a preliminary evaluat=
+ion. This book aims to demonstrate the potential and advancements of artifi=
+cial intelligence for tracking and preventing diseases. Prospective authors=
+ are invited to submit their original contributions that deal with theory, =
+methods, systems and applications of Artificial Intelligence for tracking a=
+nd preventing diseases.</span><br style=3D"color:rgb(0,0,0);font-family:&qu=
+ot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida G=
+rande&quot;,Arial;font-size:12px"><br style=3D"color:rgb(0,0,0);font-family=
+:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Luci=
+da Grande&quot;,Arial;font-size:12px"><b style=3D"color:rgb(0,0,0);font-fam=
+ily:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;L=
+ucida Grande&quot;,Arial;font-size:12px">The topics of interest include, bu=
+t not limited to:</b><span style=3D"color:rgb(0,0,0);font-family:&quot;Bits=
+tream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&q=
+uot;,Arial;font-size:12px"></span><br style=3D"color:rgb(0,0,0);font-family=
+:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Luci=
+da Grande&quot;,Arial;font-size:12px"><span style=3D"color:rgb(0,0,0);font-=
+family:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quo=
+t;Lucida Grande&quot;,Arial;font-size:12px">For better understanding by the=
+ readers, basic concepts, related work reviews, illustrations, empirical re=
+sults and tables are expected to be integrated in each chapter to give the =
+readers a maximum understanding and allow them to easily follow the methodo=
+logy and the results presented. The target audience of the edited book will=
+ come from different backgrounds. The audience will share and exchange nove=
+l knowledge, methods, industry experience and theories. The chapter contrib=
+utions should described solving challenging issues using machine learning o=
+r data mining in any of the following domains:</span><br style=3D"color:rgb=
+(0,0,0);font-family:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unico=
+de&quot;,&quot;Lucida Grande&quot;,Arial;font-size:12px"><br style=3D"color=
+:rgb(0,0,0);font-family:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans U=
+nicode&quot;,&quot;Lucida Grande&quot;,Arial;font-size:12px"><span style=3D=
+"color:rgb(0,0,0);font-family:&quot;Bitstream Vera Sans&quot;,&quot;Lucida =
+Sans Unicode&quot;,&quot;Lucida Grande&quot;,Arial;font-size:12px">Artifici=
+al intelligence in health informatics</span><br style=3D"color:rgb(0,0,0);f=
+ont-family:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,=
+&quot;Lucida Grande&quot;,Arial;font-size:12px"><span style=3D"color:rgb(0,=
+0,0);font-family:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&=
+quot;,&quot;Lucida Grande&quot;,Arial;font-size:12px">AI for predicting dis=
+eases</span><br style=3D"color:rgb(0,0,0);font-family:&quot;Bitstream Vera =
+Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quot;,Arial;=
+font-size:12px"><span style=3D"color:rgb(0,0,0);font-family:&quot;Bitstream=
+ Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quot;,=
+Arial;font-size:12px">Predicting disease progression using biomarkers</span=
+><br style=3D"color:rgb(0,0,0);font-family:&quot;Bitstream Vera Sans&quot;,=
+&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quot;,Arial;font-size:1=
+2px"><span style=3D"color:rgb(0,0,0);font-family:&quot;Bitstream Vera Sans&=
+quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quot;,Arial;font-=
+size:12px">Disease prevention using AI</span><br style=3D"color:rgb(0,0,0);=
+font-family:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;=
+,&quot;Lucida Grande&quot;,Arial;font-size:12px"><span style=3D"color:rgb(0=
+,0,0);font-family:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode=
+&quot;,&quot;Lucida Grande&quot;,Arial;font-size:12px">Data mining approach=
+es for medical pathway analysis</span><br style=3D"color:rgb(0,0,0);font-fa=
+mily:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;=
+Lucida Grande&quot;,Arial;font-size:12px"><span style=3D"color:rgb(0,0,0);f=
+ont-family:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,=
+&quot;Lucida Grande&quot;,Arial;font-size:12px">Big data analytics for pred=
+icting diseases</span><br style=3D"color:rgb(0,0,0);font-family:&quot;Bitst=
+ream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&qu=
+ot;,Arial;font-size:12px"><span style=3D"color:rgb(0,0,0);font-family:&quot=
+;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Gra=
+nde&quot;,Arial;font-size:12px">Artificial intelligence for medical resourc=
+e management</span><br style=3D"color:rgb(0,0,0);font-family:&quot;Bitstrea=
+m Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quot;=
+,Arial;font-size:12px"><span style=3D"color:rgb(0,0,0);font-family:&quot;Bi=
+tstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande=
+&quot;,Arial;font-size:12px">Biomedical image analysis</span><br style=3D"c=
+olor:rgb(0,0,0);font-family:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sa=
+ns Unicode&quot;,&quot;Lucida Grande&quot;,Arial;font-size:12px"><span styl=
+e=3D"color:rgb(0,0,0);font-family:&quot;Bitstream Vera Sans&quot;,&quot;Luc=
+ida Sans Unicode&quot;,&quot;Lucida Grande&quot;,Arial;font-size:12px">AI f=
+or infectious disease tracking</span><br style=3D"color:rgb(0,0,0);font-fam=
+ily:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;L=
+ucida Grande&quot;,Arial;font-size:12px"><span style=3D"color:rgb(0,0,0);fo=
+nt-family:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&=
+quot;Lucida Grande&quot;,Arial;font-size:12px">Computer-aided automated dia=
+gnosis using AI</span><br style=3D"color:rgb(0,0,0);font-family:&quot;Bitst=
+ream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&qu=
+ot;,Arial;font-size:12px"><span style=3D"color:rgb(0,0,0);font-family:&quot=
+;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Gra=
+nde&quot;,Arial;font-size:12px">Devices, systems and innovative technologie=
+s for disease tracking</span><br style=3D"color:rgb(0,0,0);font-family:&quo=
+t;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Gr=
+ande&quot;,Arial;font-size:12px"><span style=3D"color:rgb(0,0,0);font-famil=
+y:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Luc=
+ida Grande&quot;,Arial;font-size:12px">Wearable technology for disease trac=
+king</span><br style=3D"color:rgb(0,0,0);font-family:&quot;Bitstream Vera S=
+ans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quot;,Arial;f=
+ont-size:12px"><span style=3D"color:rgb(0,0,0);font-family:&quot;Bitstream =
+Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quot;,A=
+rial;font-size:12px">IoT for disease tracking</span><br style=3D"color:rgb(=
+0,0,0);font-family:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicod=
+e&quot;,&quot;Lucida Grande&quot;,Arial;font-size:12px"><span style=3D"colo=
+r:rgb(0,0,0);font-family:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans =
+Unicode&quot;,&quot;Lucida Grande&quot;,Arial;font-size:12px">AI for person=
+al health management</span><br style=3D"color:rgb(0,0,0);font-family:&quot;=
+Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Gran=
+de&quot;,Arial;font-size:12px"><span style=3D"color:rgb(0,0,0);font-family:=
+&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucid=
+a Grande&quot;,Arial;font-size:12px">AI-based systems for training health p=
+rofessionals</span><br style=3D"color:rgb(0,0,0);font-family:&quot;Bitstrea=
+m Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quot;=
+,Arial;font-size:12px"><span style=3D"color:rgb(0,0,0);font-family:&quot;Bi=
+tstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande=
+&quot;,Arial;font-size:12px">Software and public datasets for health inform=
+atics</span><br style=3D"color:rgb(0,0,0);font-family:&quot;Bitstream Vera =
+Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quot;,Arial;=
+font-size:12px"><span style=3D"color:rgb(0,0,0);font-family:&quot;Bitstream=
+ Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quot;,=
+Arial;font-size:12px">Issues, challenges and future prospects in health inf=
+ormatics</span><br style=3D"color:rgb(0,0,0);font-family:&quot;Bitstream Ve=
+ra Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quot;,Ari=
+al;font-size:12px"><span style=3D"color:rgb(0,0,0);font-family:&quot;Bitstr=
+eam Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quo=
+t;,Arial;font-size:12px">Case studies related to incurable diseases, neurog=
+enerative diseases, etc.</span><br style=3D"color:rgb(0,0,0);font-family:&q=
+uot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida =
+Grande&quot;,Arial;font-size:12px"><br style=3D"color:rgb(0,0,0);font-famil=
+y:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Luc=
+ida Grande&quot;,Arial;font-size:12px"><b style=3D"color:rgb(0,0,0);font-fa=
+mily:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;=
+Lucida Grande&quot;,Arial;font-size:12px">Important dates</b><span style=3D=
+"color:rgb(0,0,0);font-family:&quot;Bitstream Vera Sans&quot;,&quot;Lucida =
+Sans Unicode&quot;,&quot;Lucida Grande&quot;,Arial;font-size:12px"></span><=
+br style=3D"color:rgb(0,0,0);font-family:&quot;Bitstream Vera Sans&quot;,&q=
+uot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quot;,Arial;font-size:12p=
+x"><br style=3D"color:rgb(0,0,0);font-family:&quot;Bitstream Vera Sans&quot=
+;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quot;,Arial;font-size=
+:12px"><span style=3D"color:rgb(0,0,0);font-family:&quot;Bitstream Vera San=
+s&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quot;,Arial;fon=
+t-size:12px">Chapter Submission Deadline: 15th October 2020</span><br style=
+=3D"color:rgb(0,0,0);font-family:&quot;Bitstream Vera Sans&quot;,&quot;Luci=
+da Sans Unicode&quot;,&quot;Lucida Grande&quot;,Arial;font-size:12px"><span=
+ style=3D"color:rgb(0,0,0);font-family:&quot;Bitstream Vera Sans&quot;,&quo=
+t;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quot;,Arial;font-size:12px"=
+>Acceptance Notification: 15th December 2020</span><br style=3D"color:rgb(0=
+,0,0);font-family:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode=
+&quot;,&quot;Lucida Grande&quot;,Arial;font-size:12px"><span style=3D"color=
+:rgb(0,0,0);font-family:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans U=
+nicode&quot;,&quot;Lucida Grande&quot;,Arial;font-size:12px">Camera Ready S=
+ubmission: 31st December 2020</span><br style=3D"color:rgb(0,0,0);font-fami=
+ly:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lu=
+cida Grande&quot;,Arial;font-size:12px"><br style=3D"color:rgb(0,0,0);font-=
+family:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quo=
+t;Lucida Grande&quot;,Arial;font-size:12px"><b style=3D"color:rgb(0,0,0);fo=
+nt-family:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&=
+quot;Lucida Grande&quot;,Arial;font-size:12px">Main Highlights</b><span sty=
+le=3D"color:rgb(0,0,0);font-family:&quot;Bitstream Vera Sans&quot;,&quot;Lu=
+cida Sans Unicode&quot;,&quot;Lucida Grande&quot;,Arial;font-size:12px"></s=
+pan><br style=3D"color:rgb(0,0,0);font-family:&quot;Bitstream Vera Sans&quo=
+t;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quot;,Arial;font-siz=
+e:12px"><br style=3D"color:rgb(0,0,0);font-family:&quot;Bitstream Vera Sans=
+&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quot;,Arial;font=
+-size:12px"><span style=3D"color:rgb(0,0,0);font-family:&quot;Bitstream Ver=
+a Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quot;,Aria=
+l;font-size:12px">Book series: Intelligent Systems Reference Library</span>=
+<br style=3D"color:rgb(0,0,0);font-family:&quot;Bitstream Vera Sans&quot;,&=
+quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quot;,Arial;font-size:12=
+px"><span style=3D"color:rgb(0,0,0);font-family:&quot;Bitstream Vera Sans&q=
+uot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quot;,Arial;font-s=
+ize:12px">The books of this series are submitted to ISI Web of Science, SCO=
+PUS, DBLP and Springerlink</span><br style=3D"color:rgb(0,0,0);font-family:=
+&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucid=
+a Grande&quot;,Arial;font-size:12px"><span style=3D"color:rgb(0,0,0);font-f=
+amily:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot=
+;Lucida Grande&quot;,Arial;font-size:12px">No publication fees</span><br st=
+yle=3D"color:rgb(0,0,0);font-family:&quot;Bitstream Vera Sans&quot;,&quot;L=
+ucida Sans Unicode&quot;,&quot;Lucida Grande&quot;,Arial;font-size:12px"><b=
+r style=3D"color:rgb(0,0,0);font-family:&quot;Bitstream Vera Sans&quot;,&qu=
+ot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quot;,Arial;font-size:12px=
+"><b style=3D"color:rgb(0,0,0);font-family:&quot;Bitstream Vera Sans&quot;,=
+&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quot;,Arial;font-size:1=
+2px">Submission guidelines</b><span style=3D"color:rgb(0,0,0);font-family:&=
+quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida=
+ Grande&quot;,Arial;font-size:12px"></span><br style=3D"color:rgb(0,0,0);fo=
+nt-family:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&=
+quot;Lucida Grande&quot;,Arial;font-size:12px"><br style=3D"color:rgb(0,0,0=
+);font-family:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quo=
+t;,&quot;Lucida Grande&quot;,Arial;font-size:12px"><span style=3D"color:rgb=
+(0,0,0);font-family:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unico=
+de&quot;,&quot;Lucida Grande&quot;,Arial;font-size:12px">Please visit=C2=A0=
+</span><a href=3D"https://www.springer.com/gp/authors-editors/book-authors-=
+editors/resources-guidelines/book-manuscript-guidelines/manuscript-preparat=
+ion/5636" target=3D"_blank" style=3D"color:rgb(0,0,153);text-decoration-lin=
+e:none;font-family:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicod=
+e&quot;,&quot;Lucida Grande&quot;,Arial;font-size:12px">Book Manuscript Gui=
+delines for chapter format (Word &amp; Latex)</a><span style=3D"color:rgb(0=
+,0,0);font-family:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode=
+&quot;,&quot;Lucida Grande&quot;,Arial;font-size:12px"></span><br style=3D"=
+color:rgb(0,0,0);font-family:&quot;Bitstream Vera Sans&quot;,&quot;Lucida S=
+ans Unicode&quot;,&quot;Lucida Grande&quot;,Arial;font-size:12px"><span sty=
+le=3D"color:rgb(0,0,0);font-family:&quot;Bitstream Vera Sans&quot;,&quot;Lu=
+cida Sans Unicode&quot;,&quot;Lucida Grande&quot;,Arial;font-size:12px">Max=
+imum 30 pages per chapter</span><br style=3D"color:rgb(0,0,0);font-family:&=
+quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida=
+ Grande&quot;,Arial;font-size:12px"><br style=3D"color:rgb(0,0,0);font-fami=
+ly:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lu=
+cida Grande&quot;,Arial;font-size:12px"><span style=3D"color:rgb(0,0,0);fon=
+t-family:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&q=
+uot;Lucida Grande&quot;,Arial;font-size:12px">All submissions should be don=
+e by email to:</span><br style=3D"color:rgb(0,0,0);font-family:&quot;Bitstr=
+eam Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quo=
+t;,Arial;font-size:12px"><span style=3D"color:rgb(0,0,0);font-family:&quot;=
+Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Gran=
+de&quot;,Arial;font-size:12px"><a href=3D"mailto:profmayurimehta@gmail.com"=
+>profmayurimehta@gmail.com</a>, <a href=3D"mailto:philfv8@yahoo.com">philfv=
+8@yahoo.com</a>, <br><a href=3D"mailto:maulika.sandip@gmail.com">maulika.sa=
+ndip@gmail.com</a>, <a href=3D"mailto:jerrylin@ieee.org">jerrylin@ieee.org<=
+/a></span><br style=3D"color:rgb(0,0,0);font-family:&quot;Bitstream Vera Sa=
+ns&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quot;,Arial;fo=
+nt-size:12px"></div></div><div><br></div><div><div><b style=3D"color:rgb(0,=
+0,0);font-family:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&=
+quot;,&quot;Lucida Grande&quot;,Arial;font-size:12px">Editorial Team</b><sp=
+an style=3D"color:rgb(0,0,0);font-family:&quot;Bitstream Vera Sans&quot;,&q=
+uot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quot;,Arial;font-size:12p=
+x"></span><br style=3D"color:rgb(0,0,0);font-family:&quot;Bitstream Vera Sa=
+ns&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quot;,Arial;fo=
+nt-size:12px"><br style=3D"color:rgb(0,0,0);font-family:&quot;Bitstream Ver=
+a Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quot;,Aria=
+l;font-size:12px"><span style=3D"color:rgb(0,0,0);font-family:&quot;Bitstre=
+am Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quot=
+;,Arial;font-size:12px">Dr. Mayuri Mehta</span><br style=3D"color:rgb(0,0,0=
+);font-family:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&quo=
+t;,&quot;Lucida Grande&quot;,Arial;font-size:12px"><span style=3D"color:rgb=
+(0,0,0);font-family:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unico=
+de&quot;,&quot;Lucida Grande&quot;,Arial;font-size:12px">Dr. Philippe Fourn=
+ier-Viger</span><br style=3D"color:rgb(0,0,0);font-family:&quot;Bitstream V=
+era Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&quot;,Ar=
+ial;font-size:12px"><span style=3D"color:rgb(0,0,0);font-family:&quot;Bitst=
+ream Vera Sans&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&qu=
+ot;,Arial;font-size:12px">Dr. Maulika S. Patel</span><br style=3D"color:rgb=
+(0,0,0);font-family:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unico=
+de&quot;,&quot;Lucida Grande&quot;,Arial;font-size:12px"><span style=3D"col=
+or:rgb(0,0,0);font-family:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans=
+ Unicode&quot;,&quot;Lucida Grande&quot;,Arial;font-size:12px">Dr. Jerry Ch=
+un-Wei Lin</span>=C2=A0=C2=A0</div></div><div><span style=3D"color:rgb(0,0,=
+0);font-family:&quot;Bitstream Vera Sans&quot;,&quot;Lucida Sans Unicode&qu=
+ot;,&quot;Lucida Grande&quot;,Arial;font-size:12px"><br></span></div><div><=
+font color=3D"#000000" face=3D"Bitstream Vera Sans, Lucida Sans Unicode, Lu=
+cida Grande, Arial"><span style=3D"font-size:12px"><b>More information abou=
+t the call for chapters:</b><br></span></font><a href=3D"http://philippe-fo=
+urnier-viger.com/books/ai_disease_book/">http://philippe-fournier-viger.com=
+/books/ai_disease_book/</a>=C2=A0=C2=A0<font color=3D"#000000" face=3D"Bits=
+tream Vera Sans, Lucida Sans Unicode, Lucida Grande, Arial"><span style=3D"=
+font-size:12px"><br></span></font></div></div>
+
+--000000000000706c4b05abbfb161--

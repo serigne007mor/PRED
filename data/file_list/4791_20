@@ -1,0 +1,530 @@
+Return-Path: <pierre.mandel@veolia.com>
+X-Original-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (BounceSMTP2.univ-nantes.prive [172.20.12.67])
+	by sympa6.univ-nantes.prive (Postfix) with ESMTP id 113D02292950
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Thu, 10 Jan 2019 18:10:39 +0100 (CET)
+Received: from mx2.d101.univ-nantes.fr (MX2.univ-nantes.fr [193.52.101.136])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id 0FD0B6B9B5F
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Thu, 10 Jan 2019 18:10:39 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTP id 0B746B4B130
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 10 Jan 2019 18:10:39 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -2.152
+X-Spam-Level:
+X-Spam-Status: No, score=-2.152 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIMWL_WL_HIGH=-2.374, DKIM_SIGNED=0.1,
+	DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HTML_MESSAGE=0.001,
+	HTML_OBFUSCATE_05_10=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+	RCVD_IN_WSFF=0.01, SPF_PASS=-0.001, T_KAM_HTML_FONT_INVALID=0.01,
+	UN_PHISHING_PW=0.1, UN_PHISHING_WEBMAIL=0.1, URIBL_BLOCKED=0.001]
+	autolearn=disabled
+X-CRM114-Status: UNSURE ( 3.8724 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=veolia.com
+Received: from mx2.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id HigJQ45G_qIz for <liste-egc@polytech.univ-nantes.fr>;
+	Thu, 10 Jan 2019 18:10:36 +0100 (CET)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTPS id 1E30CB190A4
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 10 Jan 2019 18:10:36 +0100 (CET)
+Received: by mail-yb1-xb33.google.com with SMTP id o73so4731293ybc.0
+        for <liste-egc@polytech.univ-nantes.fr>; Thu, 10 Jan 2019 09:10:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=veolia.com; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=iuUDDSqXsi1oqzVkP+sfKN/JhqLKzsFejlmOJIsq8FI=;
+        b=XM27EIWmYh5qo0c46J9VIAMy+ADMBPfPcN1kjsVuafaSBKgcD3JCkdHplcSf/B9v61
+         E6LmZHYHmKaZ4xGposYHAMCE5ogvaCBs452/o0ZRt6f5hyl5yrnrOBnoBmH66V0SE2jS
+         IwJP92ymMZjYZpAL+S7rpxqK8O1/NHD7kP9SE0PuVrXOQdd06hH9ScEDBWbh7yPYav6W
+         Pvn/YJFNLEzhDYyA2Tho8Mnqd9P91bUGUciHlEc5tQzZ8XcIlEs2CKHp4JSEBWPwgfdA
+         Let4vVx7TtYadW6b8hKpc6dLV+tvsKcUqwrkS907rakAu/iuYNFiCwRvO7WbKm13WpWl
+         +ufQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=iuUDDSqXsi1oqzVkP+sfKN/JhqLKzsFejlmOJIsq8FI=;
+        b=bmvZVcmnR2t7VsNzZF41YcwzNYQbOHPIpI1lnoikskgf2BOZcKJzyAqOK3GgMaziA6
+         MNHtvltyEn8IOF3yNYG9qBVnywGQyf8PIQlwdAi14hMYoaIeUKAoJIQyaGVsv9AG8/kN
+         vhahmr3jCbemEVELtL0wqxAEKdVuqIjOQWeH5CHWa1lAAAANiqleWYqp0YiB3KY/U0mo
+         GM1UOnWESA317jCi/g9QG/+sC6mAlHtu4sGuqJlcDnSIYs2PEq5yoxrdnWhfstflKuxQ
+         RPUIMAoLazg9isgqxZRJHSUQdCxTbtEuyMrnQOye3V+EQKiW58Hu49fVZZg5CNqSf5KF
+         Dtsg==
+X-Gm-Message-State: AJcUukcM+2/BWriVavBtWVHhB5eqz1g2YibkCXmXcdUeyuE8FrHutMM2
+	2pMf15l1PxeViAvdLQMmj0AWssVsx8h6+YxOM4CQDQp9oGrurPp+uTU9WdcrFS+bmXKfqRwWF+p
+	SKGKA5hLY0FwWHxncGhK111MQc1LEcIfd0vjTBDKv6l82gEc=
+X-Google-Smtp-Source: ALg8bN4PiuedTWnQ/AmyuI26qlcCfRaLg3eMIDk74GiSntuUWpngO0TTtolg6Bb5px83g/Wsvual/YA/IZj312ZeNqs=
+X-Received: by 2002:a25:3612:: with SMTP id d18mr6090435yba.198.1547140234169;
+ Thu, 10 Jan 2019 09:10:34 -0800 (PST)
+MIME-Version: 1.0
+From: "MANDEL, Pierre" <pierre.mandel@veolia.com>
+Date: Thu, 10 Jan 2019 18:10:11 +0100
+Message-ID: <CAP-hqh4vGU+-YQrVXKb7VGOAr82RuUE_s5h3PzsDrOZEnr5rbw@mail.gmail.com>
+To: liste-egc@polytech.univ-nantes.fr
+Content-Type: multipart/alternative; boundary="000000000000142df6057f1da820"
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Stage M2 de clustering dynamique de =?UTF-8?Q?donn?=
+ =?UTF-8?Q?=C3=A9es?= de =?UTF-8?Q?qualit=C3=A9?= d'eau en =?UTF-8?Q?r?=
+ =?UTF-8?Q?=C3=A9seau?=
+
+--000000000000142df6057f1da820
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Bonjour,
+je cherche actuellement un =C3=A9tudiant en master M2 pour le sujet suivant=
+ :
+
+
+=C2=B7         Entreprise
+
+Veolia Eau d=E2=80=99Ile de France est le d=C3=A9l=C3=A9gataire du Syndicat=
+ des Eaux d=E2=80=99Ile de
+France (SEDIF) et est en charge de la production, du transport, du stockage
+et de la distribution de l=E2=80=99eau potable sur l=E2=80=99ensemble du te=
+rritoire du
+Syndicat des Eaux d=E2=80=99Ile de France. Il s=E2=80=99agit du plus grand =
+service d=E2=80=99eau en
+France ; il assure la distribution de l=E2=80=99eau potable =C3=A0 plus de =
+4 millions
+d=E2=80=99habitants gr=C3=A2ce =C3=A0 un r=C3=A9seau de plus de 8 800 km. L=
+e stage se d=C3=A9roulera
+plus pr=C3=A9cis=C3=A9ment au sein de l=E2=80=99=C3=A9quipe R&D de Veolia E=
+au d=E2=80=99Ile-de-France, qui
+regroupe des profils vari=C3=A9s : chimistes, hydrauliciens, hydrog=C3=A9ol=
+ogues,
+biologistes, math=C3=A9maticiens=E2=80=A6
+
+=C2=B7         Contexte du stage
+
+Le stage s=E2=80=99inscrit dans la d=C3=A9marche de transformation de la do=
+nn=C3=A9e en
+information. Le d=C3=A9ploiement de sondes multiparam=C3=A9triques sur les =
+r=C3=A9seaux
+d=E2=80=99eau potable permet d=E2=80=99acc=C3=A9der =C3=A0 une masse de don=
+n=C3=A9es in=C3=A9dite. Ces donn=C3=A9es,
+coupl=C3=A9es =C3=A0 des connaissances expertes ou des donn=C3=A9es mod=C3=
+=A9lis=C3=A9es, permettent
+d'am=C3=A9liorer la connaissance des =C3=A9coulements en r=C3=A9seau, d'aut=
+omatiser
+certaines t=C3=A2ches et de produire des informations utiles =C3=A0 l'explo=
+itant.
+
+=C2=B7         But du stage
+
+Le but du stage est de d=C3=A9velopper des algorithmes originaux permettant=
+ de
+=C2=AB tracer =C2=BB l=E2=80=99eau, que ce soit en configuration normale ou=
+ lors d=E2=80=99=C3=A9v=C3=A9nement
+r=C3=A9pertori=C3=A9s et analys=C3=A9s.
+
+o   *Tracer l=E2=80=99eau en configuration normale*
+
+Un premier travail a permis de proposer des cartes globales de zones de
+qualit=C3=A9 d'eau homog=C3=A8ne en s'appuyant sur des algorithmes de group=
+ement
+statistique traitant des donn=C3=A9es de conductivit=C3=A9. L=E2=80=99id=C3=
+=A9e est de compl=C3=A9ter
+l=E2=80=99approche en utilisant d=E2=80=99autres donn=C3=A9es (temp=C3=A9ra=
+ture et chlore).
+
+o   *Tracer l=E2=80=99eau lors d=E2=80=99=C3=A9v=C3=A9nements *
+
+A partir de plusieurs chroniques d=E2=80=99=C3=A9v=C3=A9nements, le travail=
+ consistera =C3=A0
+proposer des algorithmes capables de quantifier les cons=C3=A9quences sur l=
+es
+mesures en r=C3=A9seau, et ce de mani=C3=A8re dynamique ; par exemple en pr=
+oposant
+une cartographie dynamique des zones de qualit=C3=A9 d=E2=80=99eau homog=C3=
+=A8ne.
+
+
+
+=C2=B7         Comp=C3=A9tences (savoir-faire)
+
+o   Excellentes connaissances analyse statistique et en calcul scientifique
+
+o   Bonnes connaissances en traitement du signal
+
+o   Des connaissances en hydraulique seraient un plus
+
+o   R=C3=A9daction de documents de synth=C3=A8se
+
+
+
+=C2=B7         Qualit=C3=A9s personnelles (savoir-=C3=AAtre)
+
+o   Autonomie, capacit=C3=A9 d=E2=80=99analyse et rigueur scientifique
+
+o   Aptitude =C3=A0 travailler en =C3=A9quipe
+
+o   Aisance en programmation informatique
+
+o   Curiosit=C3=A9 et honn=C3=AAtet=C3=A9 intellectuelles
+
+
+
+=C2=B7         Dur=C3=A9e et p=C3=A9riode du stage : 6 mois, =C3=A0 partir =
+de janvier-f=C3=A9vrier
+2019
+
+=C2=B7         Gratification et avantages :
+
+o   1070=E2=82=AC/mois
+
+o   Remboursement 50% pass navigo
+
+o   Acc=C3=A8s au CE
+
+=C2=B7         Lieu : Nanterre (proche station Nanterre-Pr=C3=A9fecture)
+
+=C2=B7         Contact : CV et lettre de motivation =C3=A0 envoyer =C3=A0
+pierre.mandel@veolia.com
+
+Merci !
+Pierre
+
+--=20
+
+*Pierre MANDEL *
+
+Veolia Eau d=E2=80=99Ile-de-France
+DACE - Service =C3=89tudes, Recherche et D=C3=A9veloppement
+T=C3=A9l=C3=A9phone : +33 1 55 67 69 07
+
+Le Vermont, 28 Boulevard de Pesaro - TSA 31197
+92739 Nanterre Cedex
+
+--=20
+
+
+
+---------------------------------------------------------------------------=
+-----------------This=20
+e-mail transmission (message and any attached files) may contain=20
+information that is proprietary, privileged and/or confidential to Veolia=
+=20
+Environnement and/or its affiliates and is intended exclusively for the=20
+person(s) to whom it is addressed. If you are not the intended recipient,=
+=20
+please notify the sender by return e-mail and delete all copies of this=20
+e-mail, including all attachments. Unless expressly authorized, any use,=20
+disclosure, publication, retransmission or dissemination of this e-mail=20
+and/or of its attachments is strictly prohibited.=C2=A0
+
+
+Ce message=20
+electronique et ses fichiers attaches sont strictement confidentiels et=20
+peuvent contenir des elements dont Veolia Environnement et/ou l'une de ses=
+=20
+entites affiliees sont proprietaires. Ils sont donc destines a l'usage de=
+=20
+leurs seuls destinataires. Si vous avez recu ce message par erreur, merci=
+=20
+de le retourner a son emetteur et de le detruire ainsi que toutes les=20
+pieces attachees. L'utilisation, la divulgation, la publication, la=20
+distribution, ou la reproduction non expressement autorisees de ce message=
+=20
+et de ses pieces attachees sont interdites.
+
+---------------------------------------------------------------------------=
+-----------------
+
+
+--000000000000142df6057f1da820
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Bonjour,<div>je cherche actuellement un =C3=A9tudiant en m=
+aster M2 pour le sujet suivant :</div><div><br></div><div><div><font face=
+=3D"tahoma, sans-serif"><br></font></div><div><p class=3D"gmail-MsoListPara=
+graph" style=3D"margin:0cm 0cm 7.5pt 36pt;background:rgb(252,252,252)"><fon=
+t face=3D"tahoma, sans-serif">=C2=B7<span style=3D"font-variant-numeric:nor=
+mal;font-variant-east-asian:normal;font-stretch:normal;line-height:normal">=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+</span><span style=3D"background:white">Entreprise</span></font></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm 0cm 7.5pt;background:rgb(252,252=
+,252)"><span style=3D"background:white"><font face=3D"tahoma, sans-serif">V=
+eolia
+Eau d=E2=80=99Ile de France est le d=C3=A9l=C3=A9gataire du Syndicat des Ea=
+ux d=E2=80=99Ile de France
+(SEDIF) et est en charge de la production, du transport, du stockage et de =
+la
+distribution de l=E2=80=99eau potable sur l=E2=80=99ensemble du territoire =
+du Syndicat des Eaux
+d=E2=80=99Ile de France. Il s=E2=80=99agit du plus grand service d=E2=80=99=
+eau en France ; il assure la
+distribution de l=E2=80=99eau potable =C3=A0 plus de 4 millions d=E2=80=99h=
+abitants gr=C3=A2ce =C3=A0 un
+r=C3=A9seau de plus de 8 800 km. Le stage se d=C3=A9roulera plus pr=C3=A9ci=
+s=C3=A9ment au sein de
+l=E2=80=99=C3=A9quipe R&amp;D de Veolia Eau d=E2=80=99Ile-de-France, qui re=
+groupe des profils
+vari=C3=A9s=C2=A0: chimistes, hydrauliciens, hydrog=C3=A9ologues, biologist=
+es,
+math=C3=A9maticiens=E2=80=A6</font></span></p>
+
+<p class=3D"gmail-MsoListParagraph" style=3D"margin:0cm 0cm 7.5pt 36pt;back=
+ground:rgb(252,252,252)"><font face=3D"tahoma, sans-serif"><span style=3D"c=
+olor:rgb(99,110,123)">=C2=B7<span style=3D"font-variant-numeric:normal;font=
+-variant-east-asian:normal;font-stretch:normal;line-height:normal">=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+</span></span><span style=3D"background:white">Contexte du stage</span><spa=
+n style=3D"color:rgb(99,110,123)"></span></font></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm 0cm 7.5pt;background:rgb(252,252=
+,252)"><span style=3D"background:white"><font face=3D"tahoma, sans-serif">L=
+e
+stage s=E2=80=99inscrit dans la d=C3=A9marche de transformation de la donn=
+=C3=A9e en information.
+Le d=C3=A9ploiement de sondes multiparam=C3=A9triques sur les r=C3=A9seaux =
+d=E2=80=99eau potable
+permet d=E2=80=99acc=C3=A9der =C3=A0 une masse de donn=C3=A9es in=C3=A9dite=
+. Ces donn=C3=A9es, coupl=C3=A9es =C3=A0 des
+connaissances expertes ou des donn=C3=A9es mod=C3=A9lis=C3=A9es, permettent=
+ d&#39;am=C3=A9liorer la
+connaissance des =C3=A9coulements en r=C3=A9seau, d&#39;automatiser certain=
+es t=C3=A2ches et de
+produire des informations utiles =C3=A0 l&#39;exploitant. </font></span></p=
+>
+
+<p class=3D"gmail-MsoListParagraph" style=3D"margin:0cm 0cm 7.5pt 36pt;back=
+ground:rgb(252,252,252)"><font face=3D"tahoma, sans-serif"><span style=3D"c=
+olor:rgb(99,110,123)">=C2=B7<span style=3D"font-variant-numeric:normal;font=
+-variant-east-asian:normal;font-stretch:normal;line-height:normal">=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+</span></span><span style=3D"background:white">But du stage</span><span sty=
+le=3D"color:rgb(99,110,123)"></span></font></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm 0cm 0.0001pt"><font face=3D"taho=
+ma, sans-serif">Le but du stage est de d=C3=A9velopper des algorithmes orig=
+inaux permettant de
+=C2=AB=C2=A0tracer=C2=A0=C2=BB l=E2=80=99eau, que ce soit en configuration =
+normale ou lors
+d=E2=80=99=C3=A9v=C3=A9nement r=C3=A9pertori=C3=A9s et analys=C3=A9s.</font=
+></p>
+
+<p class=3D"gmail-MsoListParagraph" style=3D"margin:0cm 0cm 0.0001pt 72pt">=
+<font face=3D"tahoma, sans-serif">o<span style=3D"font-variant-numeric:norm=
+al;font-variant-east-asian:normal;font-stretch:normal;line-height:normal">=
+=C2=A0=C2=A0 </span><u>Tracer l=E2=80=99eau en
+configuration normale</u></font></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm 0cm 0.0001pt"><font face=3D"taho=
+ma, sans-serif">Un premier travail a permis de proposer des cartes globales=
+ de zones de
+qualit=C3=A9 d&#39;eau homog=C3=A8ne en s&#39;appuyant sur des algorithmes =
+de groupement
+statistique traitant des donn=C3=A9es de conductivit=C3=A9. L=E2=80=99id=C3=
+=A9e est de compl=C3=A9ter l=E2=80=99approche
+en utilisant d=E2=80=99autres donn=C3=A9es (temp=C3=A9rature et chlore).</f=
+ont></p>
+
+<p class=3D"gmail-MsoListParagraph" style=3D"margin:0cm 0cm 0.0001pt 72pt">=
+<font face=3D"tahoma, sans-serif">o<span style=3D"font-variant-numeric:norm=
+al;font-variant-east-asian:normal;font-stretch:normal;line-height:normal">=
+=C2=A0=C2=A0 </span><u>Tracer l=E2=80=99eau lors
+d=E2=80=99=C3=A9v=C3=A9nements </u></font></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm 0cm 0.0001pt"><font face=3D"taho=
+ma, sans-serif">A partir de plusieurs chroniques d=E2=80=99=C3=A9v=C3=A9nem=
+ents, le travail consistera =C3=A0
+proposer des algorithmes capables de quantifier les cons=C3=A9quences sur l=
+es
+mesures en r=C3=A9seau, et ce de mani=C3=A8re dynamique=C2=A0; par exemple =
+en proposant
+une cartographie dynamique des zones de qualit=C3=A9 d=E2=80=99eau homog=C3=
+=A8ne.</font></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm 0cm 0.0001pt"><font face=3D"taho=
+ma, sans-serif">=C2=A0</font></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpFirst" style=3D"margin:0cm 0cm 7.5pt =
+36pt;background:rgb(252,252,252)"><font face=3D"tahoma, sans-serif">=C2=B7<=
+span style=3D"font-variant-numeric:normal;font-variant-east-asian:normal;fo=
+nt-stretch:normal;line-height:normal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0
+</span><span style=3D"background:white">Comp=C3=A9tences (savoir-faire)</sp=
+an></font></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D"margin:0cm 0cm 7.5pt=
+ 72pt;background:rgb(252,252,252)"><font face=3D"tahoma, sans-serif">o<span=
+ style=3D"font-variant-numeric:normal;font-variant-east-asian:normal;font-s=
+tretch:normal;line-height:normal">=C2=A0=C2=A0 </span>Excellentes
+connaissances analyse statistique et en calcul scientifique<span style=3D"b=
+ackground:white"></span></font></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D"margin:0cm 0cm 7.5pt=
+ 72pt;background:rgb(252,252,252)"><font face=3D"tahoma, sans-serif">o<span=
+ style=3D"font-variant-numeric:normal;font-variant-east-asian:normal;font-s=
+tretch:normal;line-height:normal">=C2=A0=C2=A0 </span>Bonnes connaissances
+en traitement du signal<span style=3D"background:white"></span></font></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D"margin:0cm 0cm 7.5pt=
+ 72pt;background:rgb(252,252,252)"><font face=3D"tahoma, sans-serif">o<span=
+ style=3D"font-variant-numeric:normal;font-variant-east-asian:normal;font-s=
+tretch:normal;line-height:normal">=C2=A0=C2=A0 </span>Des connaissances en
+hydraulique seraient un plus <span style=3D"background:white"></span></font=
+></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D"margin:0cm 0cm 7.5pt=
+ 72pt;background:rgb(252,252,252)"><font face=3D"tahoma, sans-serif">o<span=
+ style=3D"font-variant-numeric:normal;font-variant-east-asian:normal;font-s=
+tretch:normal;line-height:normal">=C2=A0=C2=A0 </span>R=C3=A9daction de
+documents de synth=C3=A8se<span style=3D"background:white"></span></font></=
+p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D"margin:0cm 0cm 7.5pt=
+ 72pt;background:rgb(252,252,252)"><span style=3D"background:white"><font f=
+ace=3D"tahoma, sans-serif">=C2=A0</font></span></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D"margin:0cm 0cm 7.5pt=
+ 36pt;background:rgb(252,252,252)"><font face=3D"tahoma, sans-serif">=C2=B7=
+<span style=3D"font-variant-numeric:normal;font-variant-east-asian:normal;f=
+ont-stretch:normal;line-height:normal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0
+</span><span style=3D"background:white">Qualit=C3=A9s personnelles (savoir-=
+=C3=AAtre)</span></font></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D"margin:0cm 0cm 7.5pt=
+ 72pt;background:rgb(252,252,252)"><font face=3D"tahoma, sans-serif">o<span=
+ style=3D"font-variant-numeric:normal;font-variant-east-asian:normal;font-s=
+tretch:normal;line-height:normal">=C2=A0=C2=A0 </span>Autonomie, capacit=C3=
+=A9
+d=E2=80=99analyse et rigueur scientifique<span style=3D"background:white"><=
+/span></font></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D"margin:0cm 0cm 7.5pt=
+ 72pt;background:rgb(252,252,252)"><font face=3D"tahoma, sans-serif">o<span=
+ style=3D"font-variant-numeric:normal;font-variant-east-asian:normal;font-s=
+tretch:normal;line-height:normal">=C2=A0=C2=A0 </span>Aptitude =C3=A0 trava=
+iller
+en =C3=A9quipe<span style=3D"background:white"></span></font></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D"margin:0cm 0cm 7.5pt=
+ 72pt;background:rgb(252,252,252)"><font face=3D"tahoma, sans-serif">o<span=
+ style=3D"font-variant-numeric:normal;font-variant-east-asian:normal;font-s=
+tretch:normal;line-height:normal">=C2=A0=C2=A0 </span>Aisance en
+programmation informatique<span style=3D"background:white"></span></font></=
+p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D"margin:0cm 0cm 7.5pt=
+ 72pt;background:rgb(252,252,252)"><font face=3D"tahoma, sans-serif">o<span=
+ style=3D"font-variant-numeric:normal;font-variant-east-asian:normal;font-s=
+tretch:normal;line-height:normal">=C2=A0=C2=A0 </span>Curiosit=C3=A9 et
+honn=C3=AAtet=C3=A9 intellectuelles<span style=3D"background:white"></span>=
+</font></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D"margin:0cm 0cm 7.5pt=
+ 72pt;background:rgb(252,252,252)"><span style=3D"background:white"><font f=
+ace=3D"tahoma, sans-serif">=C2=A0</font></span></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D"margin:0cm 0cm 7.5pt=
+ 36pt;background:rgb(252,252,252)"><font face=3D"tahoma, sans-serif">=C2=B7=
+<span style=3D"font-variant-numeric:normal;font-variant-east-asian:normal;f=
+ont-stretch:normal;line-height:normal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0
+</span><span style=3D"background:white">Dur=C3=A9e=C2=A0et p=C3=A9riode du =
+stage=C2=A0: 6 mois, =C3=A0 partir
+de janvier-f=C3=A9vrier 2019</span></font></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D"margin:0cm 0cm 7.5pt=
+ 36pt;background:rgb(252,252,252)"><font face=3D"tahoma, sans-serif">=C2=B7=
+<span style=3D"font-variant-numeric:normal;font-variant-east-asian:normal;f=
+ont-stretch:normal;line-height:normal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0
+</span><span style=3D"background:white">Gratification=C2=A0et avantages :</=
+span></font></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D"margin:0cm 0cm 7.5pt=
+ 72pt;background:rgb(252,252,252)"><font face=3D"tahoma, sans-serif">o<span=
+ style=3D"font-variant-numeric:normal;font-variant-east-asian:normal;font-s=
+tretch:normal;line-height:normal">=C2=A0=C2=A0 </span><span style=3D"backgr=
+ound:white">1070=E2=82=AC/mois</span></font></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D"margin:0cm 0cm 7.5pt=
+ 72pt;background:rgb(252,252,252)"><font face=3D"tahoma, sans-serif">o<span=
+ style=3D"font-variant-numeric:normal;font-variant-east-asian:normal;font-s=
+tretch:normal;line-height:normal">=C2=A0=C2=A0 </span><span style=3D"backgr=
+ound:white">Remboursement
+50% pass navigo=C2=A0</span></font></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D"margin:0cm 0cm 7.5pt=
+ 72pt;background:rgb(252,252,252)"><font face=3D"tahoma, sans-serif">o<span=
+ style=3D"font-variant-numeric:normal;font-variant-east-asian:normal;font-s=
+tretch:normal;line-height:normal">=C2=A0=C2=A0 </span><span style=3D"backgr=
+ound:white">Acc=C3=A8s
+au CE</span></font></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D"margin:0cm 0cm 7.5pt=
+ 36pt;background:rgb(252,252,252)"><font face=3D"tahoma, sans-serif">=C2=B7=
+<span style=3D"font-variant-numeric:normal;font-variant-east-asian:normal;f=
+ont-stretch:normal;line-height:normal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0
+</span><span style=3D"background:white">Lieu=C2=A0: Nanterre (proche statio=
+n Nanterre-Pr=C3=A9fecture)</span></font></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpLast" style=3D"margin:0cm 0cm 7.5pt 3=
+6pt;background:rgb(252,252,252)"><font face=3D"tahoma, sans-serif">=C2=B7<s=
+pan style=3D"font-variant-numeric:normal;font-variant-east-asian:normal;fon=
+t-stretch:normal;line-height:normal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0
+</span><span style=3D"background:white">Contact=C2=A0: CV et lettre de moti=
+vation =C3=A0 envoyer
+=C3=A0=C2=A0</span><a href=3D"mailto:pierre.mandel@veolia.com" style=3D""><=
+span style=3D"color:rgb(34,34,34);background:white;text-decoration-line:non=
+e">pierre.mandel@veolia.com</span></a></font><span style=3D"font-family:Ari=
+al,sans-serif;background:white;font-size:12pt;font-size:12pt;background-ima=
+ge:initial;background-position:initial;background-size:initial;background-r=
+epeat:initial;background-origin:initial;background-clip:initial"></span></p=
+></div><div><br></div><div>Merci !</div><div>Pierre</div><div><br></div>-- =
+<br><div dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_sign=
+ature"><div dir=3D"ltr"><div><div dir=3D"ltr"><p dir=3D"ltr" style=3D"line-=
+height:1.15;margin-top:0pt;margin-bottom:0pt"><span style=3D"vertical-align=
+:baseline;font-size:15px;white-space:pre-wrap;background-color:transparent;=
+font-family:Calibri;font-weight:bold"><u>Pierre MANDEL                     =
+                                                       </u></span></p><p di=
+r=3D"ltr" style=3D"line-height:1.15;margin-top:0pt;margin-bottom:0pt"><font=
+ face=3D"verdana,sans-serif" style=3D"font-size:12.8px;line-height:normal">=
+Veolia Eau d=E2=80=99Ile-de-France<br>DACE - Service =C3=89tudes, Recherche=
+ et D=C3=A9veloppement<br>T=C3=A9l=C3=A9phone : +33 1 55 67 69 07</font><fo=
+nt face=3D"verdana,sans-serif" style=3D"font-size:12.8px;line-height:normal=
+">=C2=A0</font></p><p dir=3D"ltr" style=3D"line-height:1.15;margin-top:0pt;=
+margin-bottom:0pt"><font face=3D"verdana,sans-serif" size=3D"1" style=3D"li=
+ne-height:normal">Le Vermont, 28 Boulevard de Pesaro - TSA 31197<br>92739 N=
+anterre Cedex</font><b style=3D"font-size:12.8px;line-height:normal"><font =
+face=3D"verdana,sans-serif"><br><img src=3D"http://nicolas.cheifetz.free.fr=
+/images/VEDIF.jpg" width=3D"96" height=3D"41"></font></b><br></p></div></di=
+v></div></div></div></div>
+
+<br>
+<div><br></div><font size=3D"2" face=3D"Arial">----------------------------=
+--<WBR>------------------------------<WBR>------------------------------<WB=
+R>--</font><div><font size=3D"2" face=3D"Arial">This e-mail transmission (m=
+essage and any attached files) may contain information that is proprietary,=
+ privileged and/or confidential to Veolia Environnement and/or its affiliat=
+es and is intended exclusively for the person(s) to whom it is addressed. I=
+f you are not the intended recipient, please notify the sender by return e-=
+mail and delete all copies of this e-mail, including all attachments. Unles=
+s expressly authorized, any use, disclosure, publication, retransmission or=
+ dissemination of this e-mail and/or of its attachments is strictly prohibi=
+ted.=C2=A0</font></div><div><font size=3D"2" face=3D"Arial"><br></font></di=
+v><div><font size=3D"2" face=3D"Arial">Ce message electronique et ses fichi=
+ers attaches sont strictement confidentiels et peuvent contenir des element=
+s dont Veolia Environnement et/ou l&#39;une de ses entites affiliees sont p=
+roprietaires. Ils sont donc destines a l&#39;usage de leurs seuls destinata=
+ires. Si vous avez recu ce message par erreur, merci de le retourner a son =
+emetteur et de le detruire ainsi que toutes les pieces attachees. L&#39;uti=
+lisation, la divulgation, la publication, la distribution, ou la reproducti=
+on non expressement autorisees de ce message et de ses pieces attachees son=
+t interdites.</font></div><div><font size=3D"2" face=3D"Arial">------------=
+------------------<WBR>------------------------------<WBR>-----------------=
+-------------<WBR>--</font></div>
+--000000000000142df6057f1da820--

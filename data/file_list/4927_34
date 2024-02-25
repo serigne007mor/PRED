@@ -1,0 +1,678 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (BounceSMTP2.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id A2F3714014F0
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Tue, 25 May 2021 11:23:10 +0200 (CEST)
+Received: from mx1.d101.univ-nantes.fr (MX1.univ-nantes.fr [193.52.101.135])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id A17D561F0E2
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Tue, 25 May 2021 11:23:10 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.d101.univ-nantes.fr (Postfix) with ESMTP id 9B2974821B1D
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 25 May 2021 11:23:10 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 0.966
+X-Spam-Level:
+X-Spam-Status: No, score=0.966 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_WSFF=0.01,
+	SPF_HELO_NONE=0.001, SPF_PASS=-0.001, T_REMOTE_IMAGE=0.01,
+	UN_PHISHING_PW=0.1, URIBL_BLOCKED=0.001, URIBL_SBL=0.644,
+	URIBL_SBL_A=0.1] autolearn=disabled
+X-CRM114-Status: UNSURE ( 0.5549 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=dimes-unical-it.20150623.gappssmtp.com
+Received: from mx1.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Is6EdNmfS4oE for <liste-egc@polytech.univ-nantes.fr>;
+	Tue, 25 May 2021 11:23:07 +0200 (CEST)
+X-Greylist: from auto-whitelisted by SQLgrey-1.6.7
+Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
+	by mx1.d101.univ-nantes.fr (Postfix) with ESMTPS id C669747EC046
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 25 May 2021 11:23:06 +0200 (CEST)
+Received: by mail-yb1-xb2b.google.com with SMTP id o18so4392975ybc.8
+        for <liste-egc@polytech.univ-nantes.fr>; Tue, 25 May 2021 02:23:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dimes-unical-it.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=bplgpKg7y32s5JSE23o7w6CXYoI0sy24mOhABS69zUE=;
+        b=SieNJxGA5Vspk7qedbrkivfYXRzdk+526fO5Vm0d8TOJ4AWYytEBaDszhBjuol/QrL
+         TWyglRTvdLdhN6T0VNIPD1hRMT9QTowLsIloXLnaGUppxmVRWcA/fIJEgr5i9jlZ2i9m
+         9yy/lRRKNEC5D/Z+OEKKBuO/zNNenRLMwjkk5JSMFrjZbpWSbA/9AE4tVNYS7ozvW4lM
+         VdKysGBsXfEFpEP/YhPm2Mep9OJXV9Mb388rQK/7uQ12J4vfkedsA3DMbGVvu7J4MeL/
+         lOT9O8BYMrdXtfI8s4awF34m+VmSKDEYJB5qyUVpMdrJqWRvmzX/fsEAqbsQS7GrA0Bf
+         IxpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=bplgpKg7y32s5JSE23o7w6CXYoI0sy24mOhABS69zUE=;
+        b=PhLcinqFM7C9SgkK+WwoZTRy74k/ZxZk8ewF+VX42/g54aB0PtKk9vr6nHnFAsL000
+         kiSGGUDj9uXPNZ+YHuFxz5KzY94xFchs8S4NVpSfjU3nxFIFdOQm4EyuJev/VQyS0X1b
+         g1zlf/ycD20/Yi0OZb1R0tIDUl6ULCdqY6lRFUcJZyWJHh09HsO6Mmb5fG70ay2g+jT1
+         PXtJvi8kCoOwfB4b8BbCXkbLC5MaFAEYncK1uBW0qRAz1eFrVaNJ5c4z2Ox6SzNxIlH5
+         STuyvkGRMzGYGJ44bCqq6WdE4CV+bgaVqDJn7kX1PNQzkNmqPL95xf/RSTPPbersneRm
+         VVrQ==
+X-Gm-Message-State: AOAM533kFA750bama8awd09vh6gXPzLG6v7cQ7w2oN2TM8ycISrhKeL5
+	bZSA4JwHYd41yxPJ2L93N3O7evJxtAA3t5TV01Tk9tojcf/EUYIk0dCt9YrijI8teg/cMw1JBl8
+	+kdEe8Oq5SmI5X2a8zWlb/CFZ8V18lQGrTvgUDRFfHYMteIM=
+X-Google-Smtp-Source: ABdhPJwJRjnWNq6dmx7kXMC7nNxn3hX/ycSWHjF9oC4Yh1Ujuw4L0i5UODsBlcjbufvOxBu5seLyTCIZS1shAg+Hyww=
+X-Received: by 2002:a25:9704:: with SMTP id d4mr40782750ybo.463.1621934585542;
+ Tue, 25 May 2021 02:23:05 -0700 (PDT)
+MIME-Version: 1.0
+From: Roberto Interdonato <rinterdonato@dimes.unical.it>
+Date: Tue, 25 May 2021 11:22:54 +0200
+Message-ID: <CAG4i7im3ERQHTtrHi=PexM76TdV-T1hpLFOmkA125FLkjy8UwA@mail.gmail.com>
+To: liste-egc@polytech.univ-nantes.fr
+Content-Type: multipart/alternative; boundary="000000000000d20de405c324123a"
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] CFP Urban Complex Systems 2021 @CCS2021
+
+--000000000000d20de405c324123a
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Urban Complex Systems <https://urbcompsys.github.io/>
+
+October 27 - 28, 2021
+
+An Online Workshop Satellite of the
+
+Conference on Complex Systems 2021 <https://ccs2021.univ-lyon1.fr/#HOME>
+
+
+
+Submission deadline: July 06, 2021
+
+Acceptance notification: July 09, 2021
+
+
+
+
+
+
+
+Cities are massive systems whose tremendous complexity requires even
+greater efforts to be modeled, analyzed, understood and governed. The city
+is the expression of a multitude of strongly intertwined systems that vary
+from people sociality to transport systems, from the cultural fabric to
+urban planning. Each of these city facets already represents in itself a
+complex system but their interconnection represents what is certainly one
+of the systems created by human beings with highest complexity in the
+world. The aim of this event is to bring together researchers and
+practitioners from around the world interested in urban systems from the
+perspective of complexity science.
+
+
+
+Topics of interest include but are not limited to theoretical aspects,
+algorithms, methods, and fields of applications, such as:
+
+
+
+=C2=B7        Urban Analytics
+
+=C2=B7        Social networks
+
+=C2=B7        Human behavior
+
+=C2=B7        Information diffusion
+
+=C2=B7        Epidemic spreading
+
+=C2=B7        Mobility and transportation
+
+=C2=B7        City services & infrastructures
+
+=C2=B7        City monitoring
+
+=C2=B7        Urban planning
+
+=C2=B7        Communication systems
+
+=C2=B7        Economic and financial systems
+
+=C2=B7        Healthcare
+
+=C2=B7        Emergency management
+
+=C2=B7        Smart environment & ecosystems
+
+=C2=B7        Digital city and smart growth
+
+=C2=B7        Sustainability and energy efficiency
+
+=C2=B7        Smart buildings and smart grids
+
+=C2=B7        Manufacturing and logistics
+
+=C2=B7        Intelligent infrastructure
+
+=C2=B7        Blockchain for Smart City Applications
+
+
+
+
+
+*CONTRIBUTION: *
+
+
+
+ Two types of contributions are welcome:
+
+=C2=B7        *Extended Abstracts* about published or unpublished research =
+(2to
+3 pages including references).
+
+=C2=B7        *Original research papers* discussing ongoing research projec=
+ts
+(10 to 12 pages including references).
+
+
+
+They must follow the BioMed Central article template available at:
+
+
+
+https://appliednetsci.springeropen.com/submission-guidelines/preparing-your=
+-manuscript/research-articles
+
+
+
+*PUBLICATION: *
+
+
+
+Accepted submission will be invited to submit an extended version of their
+contribution (either type) to a special issue of Applied Network Science
+<https://appliednetsci.springeropen.com/> edited by Springer
+
+
+
+
+
+*SUBMISSION WEBSITE*
+
+
+
+https://easychair.org/conferences/?conf=3Durbancomplexsystems20210.
+
+
+
+
+
+*PC-CHAIRS*
+
+
+
+Hocine Cherifi                                  *LIB University of
+Burgundy, France, **hocine.cherifi@gmail.com* <hocine.cherifi@gmail.com>
+
+Sabrina Gaito                                   *Universit=C3=A0 degli Stud=
+i di
+Milano, Italy,  **sabrina.gaito@unimi.it* <sabrina.gaito@unimi.it>
+
+Roberto Interdonato                     *CIRAD, UMR Tetis, Montpellier,
+France, **roberto.interdonato@cirad.fr* <roberto.interdonato@cirad.fr>
+
+Hamamache Kheddouci                *LIRIS Univ. of Lyon, France *
+*hamamache.kheddouci@univ-lyon1.fr* <hamamache.kheddouci@univ-lyon1.fr>
+
+Matteo Zignani                                *Universit=C3=A0 degli Studi =
+di
+Milano, Italy,  **matteo.zignani@unimi.it* <matteo.zignani@unimi.it>
+
+--=20
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Roberto Interdonato, PhD
+Research Scientist
+CIRAD
+UMR TETIS
+Montpellier
+France
+email: roberto.interdonato@cirad.fr
+tel: +33 (0) 467558615
+ =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+--=20
+---------------------------------------------------------------------------=
+---------------------------------------
+Il banner =C3=A8 generato automaticamente dal servizio di posta elettronica=
+=20
+dell'Universit=C3=A0 della Calabria
+ <http://www.unical.it/5x1000>
+
+
+--000000000000d20de405c324123a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><p class=3D"MsoNormal" align=3D"center" s=
+tyle=3D"text-align:center"><span lang=3D"FR"><a href=3D"https://urbcompsys.=
+github.io/"><span lang=3D"EN-US" style=3D"font-size:14pt;font-family:Calibr=
+i,sans-serif">Urban
+Complex Systems</span></a></span><span style=3D"font-size:14pt;font-family:=
+Calibri,sans-serif"><span></span></span></p>
+
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center"><span s=
+tyle=3D"font-size:14pt;font-family:Calibri,sans-serif">October 27 - 28, 202=
+1<span></span></span></p>
+
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center"><span s=
+tyle=3D"font-size:14pt;font-family:Calibri,sans-serif">An Online Workshop S=
+atellite of the<span></span></span></p>
+
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center"><span l=
+ang=3D"FR"><a href=3D"https://ccs2021.univ-lyon1.fr/#HOME"><span lang=3D"EN=
+-US" style=3D"font-size:14pt;font-family:Calibri,sans-serif">Conference on =
+Complex Systems 2021</span></a></span><span style=3D"font-size:14pt;font-fa=
+mily:Calibri,sans-serif"><span></span></span></p>
+
+<p class=3D"MsoNormal"><span style=3D"font-size:11pt;font-family:Calibri,sa=
+ns-serif">=C2=A0</span></p>
+
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center"><span s=
+tyle=3D"font-size:11pt;font-family:Calibri,sans-serif">Submission deadline:=
+ July 06, 2021<span></span></span></p>
+
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center"><span s=
+tyle=3D"font-size:11pt;font-family:Calibri,sans-serif">Acceptance notificat=
+ion: July 09, 2021<span></span></span></p>
+
+<p class=3D"MsoNormal"><span style=3D"font-size:11pt;font-family:Calibri,sa=
+ns-serif">=C2=A0</span></p>
+
+<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center"><i><spa=
+n style=3D"font-size:11pt;font-family:Calibri,sans-serif">=C2=A0</span></i>=
+</p>
+
+<p class=3D"MsoNormal"><span style=3D"font-size:11pt;font-family:Calibri,sa=
+ns-serif">=C2=A0</span></p>
+
+<p class=3D"MsoNormal" style=3D"text-align:justify"><span style=3D"font-siz=
+e:11pt;font-family:Calibri,sans-serif">Cities are massive systems whose tre=
+mendous complexity
+requires even greater efforts to be modeled, analyzed, understood and gover=
+ned.
+The city is the expression of a multitude of strongly intertwined systems t=
+hat
+vary from people sociality to transport systems, from the cultural fabric t=
+o
+urban planning. Each of these city facets already represents in itself a
+complex system but their interconnection represents what is certainly one o=
+f
+the systems created by human beings with highest complexity in the world. T=
+he
+aim of this event is to bring together researchers and practitioners from
+around the world interested in urban systems from the perspective of comple=
+xity
+science. <span></span></span></p>
+
+<p class=3D"MsoNormal" style=3D"text-align:justify"><span style=3D"font-siz=
+e:11pt;font-family:Calibri,sans-serif">=C2=A0</span></p>
+
+<p class=3D"MsoNormal"><span style=3D"font-size:11pt;font-family:Calibri,sa=
+ns-serif">Topics of interest include but are not
+limited to theoretical aspects, algorithms, methods, and fields of
+applications, such as: <span></span></span></p>
+
+<p class=3D"MsoNormal"><span style=3D"font-size:11pt;font-family:Calibri,sa=
+ns-serif">=C2=A0</span></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpFirst" style=3D""><span style=3D"font=
+-size:11pt;font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:no=
+rmal;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;line-=
+height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0
+</span></span><span style=3D"font-size:11pt;font-family:Calibri,sans-serif"=
+>Urban Analytics<span></span></span></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D""><span style=3D"fon=
+t-size:11pt;font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:n=
+ormal;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;line=
+-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0
+</span></span><span style=3D"font-size:11pt;font-family:Calibri,sans-serif"=
+>Social networks<span></span></span></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D""><span style=3D"fon=
+t-size:11pt;font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:n=
+ormal;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;line=
+-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0
+</span></span><span style=3D"font-size:11pt;font-family:Calibri,sans-serif"=
+>Human behavior<span></span></span></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D""><span style=3D"fon=
+t-size:11pt;font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:n=
+ormal;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;line=
+-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0
+</span></span><span style=3D"font-size:11pt;font-family:Calibri,sans-serif"=
+>Information diffusion<span></span></span></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D""><span style=3D"fon=
+t-size:11pt;font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:n=
+ormal;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;line=
+-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0
+</span></span><span style=3D"font-size:11pt;font-family:Calibri,sans-serif"=
+>Epidemic spreading<span></span></span></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D""><span style=3D"fon=
+t-size:11pt;font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:n=
+ormal;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;line=
+-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0
+</span></span><span style=3D"font-size:11pt;font-family:Calibri,sans-serif"=
+>Mobility and transportation<span></span></span></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D""><span style=3D"fon=
+t-size:11pt;font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:n=
+ormal;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;line=
+-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0
+</span></span><span style=3D"font-size:11pt;font-family:Calibri,sans-serif"=
+>City services &amp; infrastructures <span></span></span></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D""><span style=3D"fon=
+t-size:11pt;font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:n=
+ormal;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;line=
+-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0
+</span></span><span style=3D"font-size:11pt;font-family:Calibri,sans-serif"=
+>City monitoring <span></span></span></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D""><span style=3D"fon=
+t-size:11pt;font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:n=
+ormal;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;line=
+-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0
+</span></span><span style=3D"font-size:11pt;font-family:Calibri,sans-serif"=
+>Urban planning<span></span></span></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D""><span style=3D"fon=
+t-size:11pt;font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:n=
+ormal;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;line=
+-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0
+</span></span><span style=3D"font-size:11pt;font-family:Calibri,sans-serif"=
+>Communication systems<span></span></span></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D""><span style=3D"fon=
+t-size:11pt;font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:n=
+ormal;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;line=
+-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0
+</span></span><span style=3D"font-size:11pt;font-family:Calibri,sans-serif"=
+>Economic and financial systems <span></span></span></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D""><span style=3D"fon=
+t-size:11pt;font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:n=
+ormal;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;line=
+-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0
+</span></span><span style=3D"font-size:11pt;font-family:Calibri,sans-serif"=
+>Healthcare<span></span></span></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D""><span style=3D"fon=
+t-size:11pt;font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:n=
+ormal;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;line=
+-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0
+</span></span><span style=3D"font-size:11pt;font-family:Calibri,sans-serif"=
+>Emergency management<span></span></span></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D""><span style=3D"fon=
+t-size:11pt;font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:n=
+ormal;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;line=
+-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0
+</span></span><span style=3D"font-size:11pt;font-family:Calibri,sans-serif"=
+>Smart environment &amp; ecosystems<span></span></span></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D""><span style=3D"fon=
+t-size:11pt;font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:n=
+ormal;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;line=
+-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0
+</span></span><span style=3D"font-size:11pt;font-family:Calibri,sans-serif"=
+>Digital city and smart growth<span></span></span></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D""><span style=3D"fon=
+t-size:11pt;font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:n=
+ormal;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;line=
+-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0
+</span></span><span style=3D"font-size:11pt;font-family:Calibri,sans-serif"=
+>Sustainability and energy efficiency<span></span></span></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D""><span style=3D"fon=
+t-size:11pt;font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:n=
+ormal;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;line=
+-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0
+</span></span><span style=3D"font-size:11pt;font-family:Calibri,sans-serif"=
+>Smart buildings and smart grids<span></span></span></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D""><span style=3D"fon=
+t-size:11pt;font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:n=
+ormal;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;line=
+-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0
+</span></span><span style=3D"font-size:11pt;font-family:Calibri,sans-serif"=
+>Manufacturing and logistics<span></span></span></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D""><span style=3D"fon=
+t-size:11pt;font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:n=
+ormal;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;line=
+-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0
+</span></span><span style=3D"font-size:11pt;font-family:Calibri,sans-serif"=
+>Intelligent infrastructure<span></span></span></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpLast" style=3D""><span style=3D"font-=
+size:11pt;font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:nor=
+mal;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;line-h=
+eight:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0
+</span></span><span style=3D"font-size:11pt;font-family:Calibri,sans-serif"=
+>Blockchain for Smart City Applications<span></span></span></p>
+
+<p class=3D"MsoNormal"><span style=3D"font-size:11pt;font-family:Calibri,sa=
+ns-serif">=C2=A0</span></p>
+
+<p class=3D"MsoNormal"><span style=3D"font-size:11pt;font-family:Calibri,sa=
+ns-serif">=C2=A0</span></p>
+
+<p class=3D"MsoNormal"><b><span style=3D"font-size:11pt;font-family:Calibri=
+,sans-serif">CONTRIBUTION: <span></span></span></b></p>
+
+<p class=3D"MsoNormal"><span style=3D"font-size:11pt;font-family:Calibri,sa=
+ns-serif">=C2=A0</span></p>
+
+<p class=3D"MsoNormal"><span style=3D"font-size:11pt;font-family:Calibri,sa=
+ns-serif">=C2=A0Two
+types of contributions are welcome:<span></span></span></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpFirst" style=3D""><span style=3D"font=
+-size:11pt;font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:no=
+rmal;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;line-=
+height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0
+</span></span><b><span style=3D"font-size:11pt;font-family:Calibri,sans-ser=
+if">Extended
+Abstracts</span></b><span style=3D"font-size:11pt;font-family:Calibri,sans-=
+serif"> about published or unpublished research
+(2to 3 pages including references).<span></span></span></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpLast" style=3D""><span style=3D"font-=
+size:11pt;font-family:Symbol">=C2=B7<span style=3D"font-variant-numeric:nor=
+mal;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;line-h=
+eight:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0
+</span></span><b><span style=3D"font-size:11pt;font-family:Calibri,sans-ser=
+if">Original
+research papers</span></b><span style=3D"font-size:11pt;font-family:Calibri=
+,sans-serif"> discussing ongoing research projects (10
+to 12 pages including references).<span></span></span></p>
+
+<p class=3D"MsoNormal"><span style=3D"font-size:11pt;font-family:Calibri,sa=
+ns-serif">=C2=A0</span></p>
+
+<p class=3D"MsoNormal"><span style=3D"font-size:11pt;font-family:Calibri,sa=
+ns-serif">They must follow the BioMed Central
+article template available at:<span></span></span></p>
+
+<p class=3D"MsoNormal"><span style=3D"font-size:11pt;font-family:Calibri,sa=
+ns-serif">=C2=A0</span></p>
+
+<p class=3D"MsoNormal"><span lang=3D"FR"><a href=3D"https://appliednetsci.s=
+pringeropen.com/submission-guidelines/preparing-your-manuscript/research-ar=
+ticles"><span lang=3D"EN-US" style=3D"font-size:11pt;font-family:Calibri,sa=
+ns-serif">https://appliednetsci.springeropen.com/submission-guidelines/prep=
+aring-your-manuscript/research-articles</span></a></span><span style=3D"fon=
+t-size:11pt;font-family:Calibri,sans-serif"><span></span></span></p>
+
+<p class=3D"MsoNormal"><span style=3D"font-size:11pt;font-family:Calibri,sa=
+ns-serif">=C2=A0</span></p>
+
+<p class=3D"MsoNormal"><b><span style=3D"font-size:11pt;font-family:Calibri=
+,sans-serif">PUBLICATION: <span></span></span></b></p>
+
+<p class=3D"MsoNormal"><span style=3D"font-size:11pt;font-family:Calibri,sa=
+ns-serif">=C2=A0</span></p>
+
+<p class=3D"MsoNormal"><span style=3D"font-size:11pt;font-family:Calibri,sa=
+ns-serif">Accepted submission will be invited to
+submit an extended version of their contribution (either type) to a special
+issue of </span><span lang=3D"FR"><a href=3D"https://appliednetsci.springer=
+open.com/"><span lang=3D"EN-US" style=3D"font-size:11pt;font-family:Calibri=
+,sans-serif;background-image:initial;background-position:initial;background=
+-size:initial;background-repeat:initial;background-origin:initial;backgroun=
+d-clip:initial">Applied Network Science</span></a></span><span style=3D"fon=
+t-size:11pt;font-family:Calibri,sans-serif;background-image:initial;backgro=
+und-position:initial;background-size:initial;background-repeat:initial;back=
+ground-origin:initial;background-clip:initial"> edited by Springer</span><s=
+pan style=3D"font-size:11pt;font-family:Calibri,sans-serif"><span></span></=
+span></p>
+
+<p class=3D"MsoNormal"><span style=3D"font-size:11pt;font-family:Calibri,sa=
+ns-serif">=C2=A0</span></p>
+
+<p class=3D"MsoNormal"><span style=3D"font-size:11pt;font-family:Calibri,sa=
+ns-serif">=C2=A0</span></p>
+
+<p class=3D"MsoNormal"><b><span style=3D"font-size:11pt;font-family:Calibri=
+,sans-serif">SUBMISSION WEBSITE<span></span></span></b></p>
+
+<p class=3D"MsoNormal"><span style=3D"font-size:11pt;font-family:Calibri,sa=
+ns-serif">=C2=A0</span></p>
+
+<p class=3D"MsoNormal"><span lang=3D"FR"><a href=3D"https://easychair.org/c=
+onferences/?conf=3Durbancomplexsystems20210" target=3D"_blank"><span lang=
+=3D"EN-US" style=3D"font-size:11pt;font-family:Calibri,sans-serif;backgroun=
+d-image:initial;background-position:initial;background-size:initial;backgro=
+und-repeat:initial;background-origin:initial;background-clip:initial">https=
+://easychair.org/conferences/?conf=3Durbancomplexsystems20210</span></a></s=
+pan><span style=3D"font-size:11pt;font-family:Calibri,sans-serif;background=
+-image:initial;background-position:initial;background-size:initial;backgrou=
+nd-repeat:initial;background-origin:initial;background-clip:initial">.</spa=
+n><span style=3D"font-size:11pt;font-family:Calibri,sans-serif"><span></spa=
+n></span></p>
+
+<p class=3D"MsoNormal"><span style=3D"font-size:11pt;font-family:Calibri,sa=
+ns-serif">=C2=A0</span></p>
+
+<p class=3D"MsoNormal"><span style=3D"font-size:11pt;font-family:Calibri,sa=
+ns-serif">=C2=A0</span></p>
+
+<p class=3D"MsoNormal"><b><span style=3D"font-size:11pt;font-family:Calibri=
+,sans-serif">PC-CHAIRS<span></span></span></b></p>
+
+<p class=3D"MsoNormal"><b><span style=3D"font-size:11pt;font-family:Calibri=
+,sans-serif">=C2=A0</span></b></p>
+
+<p class=3D"MsoNormal"><span style=3D"font-size:11pt;font-family:Calibri,sa=
+ns-serif">Hocine Cherifi =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 <i>LI=
+B University of Burgundy,
+France, </i></span><span lang=3D"FR"><a href=3D"mailto:hocine.cherifi@gmail=
+.com"><i><span lang=3D"EN-US" style=3D"font-size:11pt;font-family:Calibri,s=
+ans-serif">hocine.cherifi@gmail.com</span></i></a></span><span class=3D"gma=
+il-MsoHyperlink"><i><span style=3D"font-size:11pt;font-family:Calibri,sans-=
+serif"><span></span></span></i></span></p>
+
+<p class=3D"MsoNormal"><span style=3D"font-size:11pt;font-family:Calibri,sa=
+ns-serif">Sabrina Gaito =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 <i=
+>Universit=C3=A0 degli Studi di
+Milano, Italy,=C2=A0 </i></span><span lang=3D"FR"><a href=3D"mailto:sabrina=
+.gaito@unimi.it"><i><span lang=3D"EN-US" style=3D"font-size:11pt;font-famil=
+y:Calibri,sans-serif">sabrina.gaito@unimi.it</span></i></a></span><i><span =
+style=3D"font-size:11pt;font-family:Calibri,sans-serif"><span></span></span=
+></i></p>
+
+<p class=3D"MsoNormal"><span style=3D"font-size:11pt;font-family:Calibri,sa=
+ns-serif">Roberto Interdonato =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 <i>CI=
+RAD, UMR Tetis,
+Montpellier, France, </i></span><span lang=3D"FR"><a href=3D"mailto:roberto=
+.interdonato@cirad.fr"><i><span lang=3D"EN-US" style=3D"font-size:11pt;font=
+-family:Calibri,sans-serif">roberto.interdonato@cirad.fr</span></i></a></sp=
+an><i><span style=3D"font-size:11pt;font-family:Calibri,sans-serif"><span><=
+/span></span></i></p>
+
+<p class=3D"MsoNormal"><span style=3D"font-size:11pt;font-family:Calibri,sa=
+ns-serif">Hamamache Kheddouci =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 <i>LIRIS Univ. of Lyon, France </i>=
+</span><span lang=3D"FR"><a href=3D"mailto:hamamache.kheddouci@univ-lyon1.f=
+r"><i><span lang=3D"EN-US" style=3D"font-size:11pt;font-family:Calibri,sans=
+-serif">hamamache.kheddouci@univ-lyon1.fr</span></i></a></span><span style=
+=3D"font-size:11pt;font-family:Calibri,sans-serif"><span></span></span></p>
+
+<p class=3D"MsoNormal"><span style=3D"font-size:11pt;font-family:Calibri,sa=
+ns-serif">Matteo Zignani=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 <i>Universit=
+=C3=A0 degli Studi di Milano,
+Italy,=C2=A0 </i></span><span lang=3D"FR"><a href=3D"mailto:matteo.zignani@=
+unimi.it"><i><span lang=3D"EN-US" style=3D"font-size:11pt;font-family:Calib=
+ri,sans-serif">matteo.zignani@unimi.it</span></i></a></span><span style=3D"=
+font-size:11pt;font-family:Calibri,sans-serif"><span></span></span></p><div=
+><br></div>-- <br><div dir=3D"ltr" class=3D"gmail_signature"><div dir=3D"lt=
+r"><div><div dir=3D"ltr"><div><div dir=3D"ltr"><div><div dir=3D"ltr"><div><=
+div dir=3D"ltr"><div dir=3D"ltr"><br><span><font color=3D"#999999">=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<br>
+Roberto Interdonato, PhD<br><div dir=3D"ltr">Research Scientist=C2=A0</div>=
+<div dir=3D"ltr">CIRAD=C2=A0</div><div dir=3D"ltr">UMR TETIS</div>Montpelli=
+er</font></span></div><div dir=3D"ltr"><span><font color=3D"#999999">France=
+<br></font><font color=3D"#999999">
+email:=C2=A0</font></span><span style=3D"color:rgb(85,85,85);white-space:no=
+wrap"><a href=3D"mailto:roberto.interdonato@cirad.fr" target=3D"_blank">rob=
+erto.interdonato@cirad.fr</a><br></span><span style=3D"color:rgb(153,153,15=
+3)">tel: +33 (0) 467558615</span></div><div><span><font color=3D"#999999">=
+=C2=A0=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</font><b=
+r></span></div></div></div></div></div></div></div></div></div></div></div>=
+</div></div>
+
+<br>
+<div style=3D"font-family:Arial,Helvetica,sans-serif;font-size:1.3em">-----=
+-------------------------<wbr>------------------------------<wbr>----------=
+--------------------<wbr>------------------------</div><div><font face=3D"A=
+rial, Helvetica, sans-serif"><span style=3D"font-size:13px">Il banner =C3=
+=A8 generato automaticamente dal servizio di posta elettronica dell&#39;Uni=
+versit=C3=A0 della Calabria</span></font></div><div><font face=3D"Arial, He=
+lvetica, sans-serif"><span style=3D"font-size:13px"><a href=3D"http://www.u=
+nical.it/5x1000" target=3D"_blank"><img src=3D"https://www.unical.it/portal=
+e/strutture/centri/centroict/5x1000_2021_45.jpg" alt=3D"http://www.unical.i=
+t/5x1000"></a><br></span></font></div>
+--000000000000d20de405c324123a--

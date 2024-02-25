@@ -1,0 +1,468 @@
+Return-Path: <etienne.come@ifsttar.fr>
+X-Original-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (BounceSMTP2.univ-nantes.prive [172.20.12.67])
+	by sympa6.univ-nantes.prive (Postfix) with ESMTP id 978932292950
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Tue, 11 Dec 2018 16:17:31 +0100 (CET)
+Received: from mx3.d101.univ-nantes.fr (MX3.univ-nantes.fr [193.52.101.137])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id 96553666E19
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Tue, 11 Dec 2018 16:17:31 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTP id 91AFB43D2CF4
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 11 Dec 2018 16:17:31 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 0.67
+X-Spam-Level:
+X-Spam-Status: No, score=0.67 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, HTML_MESSAGE=0.001, NO_RDNS2=0.01, NO_REAL_NAME=1,
+	RCVD_IN_WSFF=0.01, RP_MATCHES_RCVD=-0.55, SPF_HELO_PASS=-0.001,
+	SPF_PASS=-0.001, UN_PHISHING_COMPTE=0.1, UN_PHISHING_PW=0.1,
+	URIBL_BLOCKED=0.001] autolearn=disabled
+X-CRM114-Status: UNSURE ( -2.8550 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (1024-bit key)
+	header.d=ifsttar.fr
+Received: from mx3.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id h8k7zNCoxbKx for <liste-egc@polytech.univ-nantes.fr>;
+	Tue, 11 Dec 2018 16:17:30 +0100 (CET)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from smtp-out.ifsttar.fr (smtp-out.ifsttar.fr [137.121.250.9])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTP id 915A443D44F4
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 11 Dec 2018 16:17:30 +0100 (CET)
+Received: from mail.ifsttar.fr (mail.ifsttar.fr [137.121.250.44])
+	by smtp-out.ifsttar.fr (Postfix) with ESMTPS id 2A8345FEA2
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 11 Dec 2018 16:17:30 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ifsttar.fr; s=mail;
+	t=1544541450; bh=IM3QJgU3NeHZALJWFLYN1bAuGCmuwmdQLJtCAEDHy3M=;
+	h=Date:From:To:Subject:From;
+	b=RQGsRcFmGgL0UGET989lUKon1dPEZjdutBKwCWMIkFmyk7SbVBWUCoytWFO6dsDAq
+	 QO7w9dQ5oPTh6RcQ8nh9C2LSahy6ovb/mYFxOJpleo0N0ud5Tkx/aTyQYT3ahsJHaL
+	 yzA+Zvc3kkRwldPhpQjvwzMdDYj6r3E7ZpdPOotg=
+Received: from mail.ifsttar.fr (localhost.localdomain [127.0.0.1])
+	by mail.ifsttar.fr (Postfix) with ESMTPS id 5C2369FF9B
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 11 Dec 2018 16:17:30 +0100 (CET)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.ifsttar.fr (Postfix) with ESMTP id 4F0D9A0207
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 11 Dec 2018 16:17:30 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mail.ifsttar.fr
+Received: from mail.ifsttar.fr ([127.0.0.1])
+	by localhost (mail.ifsttar.fr [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id DV89s0K93WSz for <liste-egc@polytech.univ-nantes.fr>;
+	Tue, 11 Dec 2018 16:17:30 +0100 (CET)
+Received: from zimbra.ifsttar.fr (zimbra.ifsttar.fr [137.121.3.31])
+	by mail.ifsttar.fr (Postfix) with ESMTPS id 387259FF9B
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 11 Dec 2018 16:17:30 +0100 (CET)
+Received: from zimbra.ifsttar.fr (localhost.localdomain [127.0.0.1])
+	by zimbra.ifsttar.fr (Postfix) with ESMTPS id 31F453AA0CC5
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 11 Dec 2018 16:17:30 +0100 (CET)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by zimbra.ifsttar.fr (Postfix) with ESMTP id 24FDD3AA0CC4
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 11 Dec 2018 16:17:30 +0100 (CET)
+X-Virus-Scanned: amavisd-new at zimbra.ifsttar.fr
+Received: from zimbra.ifsttar.fr ([127.0.0.1])
+	by localhost (zimbra.ifsttar.fr [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id 9X67yKjel8Gy for <liste-egc@polytech.univ-nantes.fr>;
+	Tue, 11 Dec 2018 16:17:30 +0100 (CET)
+Received: from zimbra.ifsttar.fr (zimbra.ifsttar.fr [137.121.3.31])
+	by zimbra.ifsttar.fr (Postfix) with ESMTP id 0425D3AA0CBE
+	for <liste-egc@polytech.univ-nantes.fr>; Tue, 11 Dec 2018 16:17:30 +0100 (CET)
+Date: Tue, 11 Dec 2018 16:17:29 +0100 (CET)
+From: etienne.come@ifsttar.fr
+To: liste-egc <liste-egc@polytech.univ-nantes.fr>
+Message-ID: <1187242359.1583338.1544541449208.JavaMail.zimbra@ifsttar.fr>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="=_e519f96a-15b0-4de6-be84-8466d157e8b1"
+X-Originating-IP: [137.121.124.26]
+X-Mailer: Zimbra 8.8.9_GA_3717 (ZimbraWebClient - GC63 (Linux)/8.8.9_GA_3042)
+Thread-Index: AZB7KBHC/ifqPWAcwCN7a7nTJv2jVw==
+Thread-Topic: workshop gflowiz le 20 =?utf-8?Q?d=C3=A9cembre?=
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] workshop gflowiz le 20 =?ISO-8859-15?Q?d=E9cembre?=
+
+--=_e519f96a-15b0-4de6-be84-8466d157e8b1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+
+
+Cher.e.s coll=C3=A8gues,=20
+
+
+
+l'=C3=A9quipe du projet gFlowiz - geographic flow visualization vous invite=
+ =C3=A0 un workshop europ=C3=A9en et interdisciplinaire d=C3=A9di=C3=A9 aux=
+ flux et r=C3=A9seaux dans le geoweb.=20
+
+
+Flux et r=C3=A9seaux dans le geoweb : =C3=A9tat de la question, verrous, d=
+=C3=A9fis techniques et technologiques=20
+
+
+
+
+
+Le jeudi 20 d=C3=A9cembre 2018=20
+
+de 9h30 =C3=A0 16h30 environ=20
+=C3=A0=20
+
+l=E2=80=99IFSTTAR Marne-la-Vall=C3=A9e=20
+Cit=C3=A9 Descartes - B=C3=A2timent Bienven=C3=BCe=20
+Salle B015-019=20
+14-20, Boulevard Newton - F-77447 Marne la Vall=C3=A9e Cedex 2.=20
+
+
+
+La journ=C3=A9e est en acc=C3=A8s libre sur inscription : [ https://gflowiz=
+workshop.sciencesconf.org/ | https://gflowizworkshop.sciencesconf.org/ ]=20
+
+
+
+
+
+
+
+L=E2=80=99objectif g=C3=A9n=C3=A9ral est d=E2=80=99=C3=A9changer sur les ap=
+plications web d=C3=A9di=C3=A9es aux repr=C3=A9sentations (carto)graphiques=
+ de donn=C3=A9es d=C3=A9crivant des mobilit=C3=A9s spatio-temporelles. Au-d=
+el=C3=A0 des aspects th=C3=A9matiques, il s=E2=80=99agit de r=C3=A9aliser u=
+n =C3=A9tat de la question des dispositifs de g=C3=A9o visualisation exista=
+nts : les d=C3=A9crire, identifier les verrous existants, les solutions app=
+ort=C3=A9es, les d=C3=A9fis techniques et technologiques qui restent =C3=A0=
+ relever.=20
+
+
+
+
+Pour cela, nous proposons d=E2=80=99examiner, d=E2=80=99une part, leurs mod=
+alit=C3=A9s actuelles de stockage, d=E2=80=99exploration, de traitement de =
+l'information statistique et g=C3=A9ographique, de visualisation graphique =
+et de repr=C3=A9sentation cartographique ; d=E2=80=99autre part, de lister =
+collectivement les desiderata de future(s) application(s), en lien avec les=
+ fabriques actuelles de la cartographie th=C3=A9matique, les nouveaux usage=
+s de la carte statistique, compte tenu des possibilit=C3=A9s techniques et =
+technologiques actuelles.=20
+
+
+
+
+- Quels sont les probl=C3=A8mes sp=C3=A9cifiques li=C3=A9s =C3=A0 la visual=
+isation de flux ?=20
+- Quels sont ceux qui sont r=C3=A9solus ?=20
+- Quelles sont les sp=C3=A9cificit=C3=A9s des applications web pour cartogr=
+aphier des flux ?=20
+- Quels types d'interactions avec les donn=C3=A9es et leur visualisation de=
+vraient =C3=AAtre prioritaires ?=20
+- Comment combiner diff=C3=A9rentes repr=C3=A9sentations de flux au sein d'=
+une m=C3=AAme plateforme (co-visualisation, exploration de donn=C3=A9es), d=
+ans diff=C3=A9rents formats (statiques, anim=C3=A9s et dynamiques) ?=20
+
+
+
+
+
+
+
+Au plaisir d'=C3=A9changer avec vous sur ces questions, le 20 d=C3=A9cembre=
+ prochain.=20
+
+
+
+L'=C3=A9quipe gflowiz=20
+
+
+
+
+Fran=C3=A7o ise Bahoken (IFSTTAR / AME-SPLOTT ; ass. UMR G=C3=A9ographie-Ci=
+t=C3=A9s), Etienne C=C3=B4me (IFSTTAR / COSYS-GRETTIA), Laurent J=C3=A9gou =
+(Universit=C3=A9 de Toulouse / CNRS UMR LISST-cieu), Marion Maisonobe (CNRS=
+ - ENPC / UMR LATTS), Gr=C3=A9goire Le Campion (CNRS / UMR P assages)=20
+
+
+
+
+
+
+
+gFlowiz ( [ https://tinyurl.com/gflowiz | https://tinyurl.com/gflowiz ] ) e=
+st une action incitative de recherche interdisciplinaire financ=C3=A9e par =
+l=E2=80=99IFSTTAR (2018-2019), et port=C3=A9e par les d=C3=A9partements Am=
+=C3=A9nagement, mobilit=C3=A9 et environnement (AME-Splott) et Composants e=
+t syst=C3=A8mes (COSYS-Grettia), en collaboration avec le CNRS (UMR LISST-C=
+ieu). Le projet re=C3=A7oit =C3=A9galement le soutien du Projet f=C3=A9d=C3=
+=A9rateur Mobilit=C3=A9s et transitions num=C3=A9riques (PF MobtransNum) et=
+ de l'Action Pr ospective Th=C3=A9oriser, Observer, Analyser, Mod=C3=A9lise=
+r le G=C3=A9oweb ( AP- Geoweb) du GDR Magis.=20
+
+
+
+--=_e519f96a-15b0-4de6-be84-8466d157e8b1
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><body><div style=3D"font-family: arial, helvetica, sans-serif; font-s=
+ize: 12pt; color: #000000"><div><div style=3D"color: #000000; font-family: =
+arial, helvetica, sans-serif; font-size: 16px; font-style: normal; font-var=
+iant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter=
+-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-tra=
+nsform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-te=
+xt-stroke-width: 0px; background-color: #fdfdfd; text-decoration-style: ini=
+tial; text-decoration-color: initial;" data-mce-style=3D"color: #000000; fo=
+nt-family: arial, helvetica, sans-serif; font-size: 16px; font-style: norma=
+l; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: =
+400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0p=
+x; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px;=
+ -webkit-text-stroke-width: 0px; background-color: #fdfdfd; text-decoration=
+-style: initial; text-decoration-color: initial;"><p class=3D"MsoNormal" st=
+yle=3D"margin: 0px;" data-mce-style=3D"margin: 0px;"><span style=3D"font-fa=
+mily: arial, sans-serif; color: black;" data-mce-style=3D"font-family: aria=
+l, sans-serif; color: black;">Cher.e.s coll=C3=A8gues,<br><br></span></p></=
+div><div style=3D"color: #000000; font-family: arial, helvetica, sans-serif=
+; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font=
+-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2=
+; text-align: start; text-indent: 0px; text-transform: none; white-space: n=
+ormal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; backgr=
+ound-color: #fdfdfd; text-decoration-style: initial; text-decoration-color:=
+ initial;" data-mce-style=3D"color: #000000; font-family: arial, helvetica,=
+ sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: n=
+ormal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal;=
+ orphans: 2; text-align: start; text-indent: 0px; text-transform: none; whi=
+te-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: =
+0px; background-color: #fdfdfd; text-decoration-style: initial; text-decora=
+tion-color: initial;"><p class=3D"MsoNormal" style=3D"margin: 0px;" data-mc=
+e-style=3D"margin: 0px;"><span style=3D"font-family: arial, sans-serif; col=
+or: black;" data-mce-style=3D"font-family: arial, sans-serif; color: black;=
+">l'=C3=A9quipe du<span>&nbsp;</span><span style=3D"font-family: arial, hel=
+vetica, sans-serif; color: black; font-size: 12pt;" data-mce-style=3D"font-=
+family: arial, helvetica, sans-serif; color: black; font-size: 12pt;"><span=
+>projet&nbsp;</span></span><span style=3D"font-family: arial, helvetica, sa=
+ns-serif; color: black; font-size: 12pt;" data-mce-style=3D"font-family: ar=
+ial, helvetica, sans-serif; color: black; font-size: 12pt;"><em>gFlowiz - g=
+eographic flow visualization</em></span><span>&nbsp;</span></span><span sty=
+le=3D"font-family: arial, helvetica, sans-serif; color: black; font-size: 1=
+2pt;" data-mce-style=3D"font-family: arial, helvetica, sans-serif; color: b=
+lack; font-size: 12pt;">vous invite =C3=A0 un<span>&nbsp;</span><em>worksho=
+p</em><span>&nbsp;</span>europ=C3=A9en et interdisciplinaire d=C3=A9di=C3=
+=A9 aux<span>&nbsp;</span><strong>flux et r=C3=A9seaux dans le<span>&nbsp;<=
+/span></strong><em><strong>geoweb.</strong></em></span></p><br><p class=3D"=
+MsoNormal" style=3D"margin: 0px;" data-mce-style=3D"margin: 0px;"><span sty=
+le=3D"font-family: arial, helvetica, sans-serif; color: black; font-size: 1=
+2pt;" data-mce-style=3D"font-family: arial, helvetica, sans-serif; color: b=
+lack; font-size: 12pt;"><span style=3D"font-family: arial, sans-serif; colo=
+r: black;" data-mce-style=3D"font-family: arial, sans-serif; color: black;"=
+><span style=3D"font-family: arial, helvetica, sans-serif; font-size: 12pt;=
+ color: #339966;" data-mce-style=3D"font-family: arial, helvetica, sans-ser=
+if; font-size: 12pt; color: #339966;"><strong>Flux et r=C3=A9seaux dans le<=
+span>&nbsp;</span><em>geoweb</em><span>&nbsp;</span>: =C3=A9tat de la quest=
+ion, verrous, d=C3=A9fis techniques et technologiques<span id=3D"mce_11_end=
+" style=3D"overflow: hidden; line-height: 0px;" data-mce-style=3D"overflow:=
+ hidden; line-height: 0px;"></span></strong></span><i><br></i></span><em></=
+em></span></p><div><p class=3D"MsoNormal" style=3D"margin: 0px;" data-mce-s=
+tyle=3D"margin: 0px;"><span style=3D"font-family: arial, sans-serif; color:=
+ black;" data-mce-style=3D"font-family: arial, sans-serif; color: black;"><=
+br></span></p></div><div><p class=3D"MsoNormal" style=3D"margin: 0px;" data=
+-mce-style=3D"margin: 0px;"><span style=3D"font-family: arial, sans-serif; =
+color: black;" data-mce-style=3D"font-family: arial, sans-serif; color: bla=
+ck;">Le<span>&nbsp;</span></span><span class=3D"object" style=3D"color: #33=
+9966; text-decoration: none; cursor: pointer;" data-mce-style=3D"color: #33=
+9966; text-decoration: none; cursor: pointer;"><b><span style=3D"font-famil=
+y: arial, sans-serif;" data-mce-style=3D"font-family: arial, sans-serif;"><=
+span class=3D"Object" id=3D"OBJ_PREFIX_DWT839_com_zimbra_date" style=3D"col=
+or: darkblue; text-decoration: none; cursor: pointer;" data-mce-style=3D"co=
+lor: darkblue; text-decoration: none; cursor: pointer;"><span class=3D"Obje=
+ct" id=3D"OBJ_PREFIX_DWT855_com_zimbra_date" style=3D"color: darkblue; text=
+-decoration: none; cursor: pointer;" data-mce-style=3D"color: darkblue; tex=
+t-decoration: none; cursor: pointer;"><span class=3D"Object" role=3D"link" =
+id=3D"OBJ_PREFIX_DWT533_com_zimbra_date" style=3D"color: darkblue; text-dec=
+oration: none; cursor: pointer;" data-mce-style=3D"color: darkblue; text-de=
+coration: none; cursor: pointer;">jeudi 20 d=C3=A9cembre 2018</span></span>=
+</span></span></b></span><strong><span style=3D"font-family: arial, sans-se=
+rif; color: black;" data-mce-style=3D"font-family: arial, sans-serif; color=
+: black;"></span></strong></p><p class=3D"MsoNormal" style=3D"margin: 0px;"=
+ data-mce-style=3D"margin: 0px;"><strong><span style=3D"font-family: arial,=
+ sans-serif; color: black;" data-mce-style=3D"font-family: arial, sans-seri=
+f; color: black;">de 9h30 =C3=A0 16h30 environ</span></strong><span style=
+=3D"font-family: arial, sans-serif; color: black;" data-mce-style=3D"font-f=
+amily: arial, sans-serif; color: black;"><span>&nbsp;</span><br><span style=
+=3D"font-family: arial, helvetica, sans-serif; font-size: 12pt;" data-mce-s=
+tyle=3D"font-family: arial, helvetica, sans-serif; font-size: 12pt;">=C3=A0=
+</span></span></p><p class=3D"MsoNormal" style=3D"margin: 0px;" data-mce-st=
+yle=3D"margin: 0px;"><span style=3D"font-family: arial, sans-serif; color: =
+black;" data-mce-style=3D"font-family: arial, sans-serif; color: black;"><s=
+pan style=3D"font-family: arial, helvetica, sans-serif; font-size: 12pt;" d=
+ata-mce-style=3D"font-family: arial, helvetica, sans-serif; font-size: 12pt=
+;"><strong>l=E2=80=99IFSTTAR Marne-la-Vall=C3=A9e</strong></span></span></p=
+></div><div><span style=3D"font-family: arial, helvetica, sans-serif; font-=
+size: 12pt;" data-mce-style=3D"font-family: arial, helvetica, sans-serif; f=
+ont-size: 12pt;">Cit=C3=A9 Descartes - B=C3=A2timent Bienven=C3=BCe</span><=
+/div><div><strong><span style=3D"font-family: arial, helvetica, sans-serif;=
+ font-size: 12pt;" data-mce-style=3D"font-family: arial, helvetica, sans-se=
+rif; font-size: 12pt;">Salle B015-019</span></strong><br><span style=3D"fon=
+t-size: 12pt; font-family: arial, helvetica, sans-serif;" data-mce-style=3D=
+"font-size: 12pt; font-family: arial, helvetica, sans-serif;">14-20, Boulev=
+ard Newton - F-77447 Marne la Vall=C3=A9e Cedex 2.</span><br><span style=3D=
+"font-family: arial, helvetica, sans-serif; font-size: 12pt;" data-mce-styl=
+e=3D"font-family: arial, helvetica, sans-serif; font-size: 12pt;"></span><s=
+pan style=3D"font-family: arial, helvetica, sans-serif; color: black; font-=
+size: 12pt;" data-mce-style=3D"font-family: arial, helvetica, sans-serif; c=
+olor: black; font-size: 12pt;"><em></em></span></div><div><span style=3D"fo=
+nt-size: 12pt; font-family: arial, helvetica, sans-serif;" data-mce-style=
+=3D"font-size: 12pt; font-family: arial, helvetica, sans-serif;"></span><br=
+></div><p class=3D"MsoNormal" style=3D"margin: 0px;" data-mce-style=3D"marg=
+in: 0px;"><span style=3D"font-family: arial, helvetica, sans-serif; color: =
+black; font-size: 12pt;" data-mce-style=3D"font-family: arial, helvetica, s=
+ans-serif; color: black; font-size: 12pt;"><span style=3D"font-family: aria=
+l, sans-serif; color: black;" data-mce-style=3D"font-family: arial, sans-se=
+rif; color: black;">La journ=C3=A9e est en acc=C3=A8s libre sur inscription=
+ :<span>&nbsp;</span><span class=3D"object" style=3D"color: darkblue; text-=
+decoration: none; cursor: pointer;" data-mce-style=3D"color: darkblue; text=
+-decoration: none; cursor: pointer;"><i><span class=3D"Object" id=3D"OBJ_PR=
+EFIX_DWT837_com_zimbra_url" style=3D"color: darkblue; text-decoration: none=
+; cursor: pointer;" data-mce-style=3D"color: darkblue; text-decoration: non=
+e; cursor: pointer;"><span class=3D"Object" id=3D"OBJ_PREFIX_DWT853_com_zim=
+bra_url" style=3D"color: darkblue; text-decoration: none; cursor: pointer;"=
+ data-mce-style=3D"color: darkblue; text-decoration: none; cursor: pointer;=
+"></span></span></i></span><span style=3D"color: #339966;" data-mce-style=
+=3D"color: #339966;"><i><span class=3D"Object" role=3D"link" id=3D"OBJ_PREF=
+IX_DWT534_com_zimbra_url" style=3D"color: darkblue; text-decoration: none; =
+cursor: pointer;" data-mce-style=3D"color: darkblue; text-decoration: none;=
+ cursor: pointer;"><a target=3D"_blank" href=3D"https://gflowizworkshop.sci=
+encesconf.org/" style=3D"color: darkblue; text-decoration: none; cursor: po=
+inter;" rel=3D"noopener" data-mce-href=3D"https://gflowizworkshop.sciencesc=
+onf.org/" data-mce-style=3D"color: darkblue; text-decoration: none; cursor:=
+ pointer;">https://gflowizworkshop.sciencesconf.org/</a></span></i></span><=
+/span></span></p><p class=3D"MsoNormal" style=3D"margin: 0px;" data-mce-sty=
+le=3D"margin: 0px;"><span style=3D"font-family: arial, helvetica, sans-seri=
+f; color: black; font-size: 12pt;" data-mce-style=3D"font-family: arial, he=
+lvetica, sans-serif; color: black; font-size: 12pt;"></span><br></p><p clas=
+s=3D"MsoNormal" style=3D"margin: 0px;" data-mce-style=3D"margin: 0px;"><spa=
+n style=3D"font-family: arial, helvetica, sans-serif; color: black; font-si=
+ze: 12pt;" data-mce-style=3D"font-family: arial, helvetica, sans-serif; col=
+or: black; font-size: 12pt;"></span><br></p><p align=3D"left" style=3D"text=
+-align: justify; margin: 0px;" data-mce-style=3D"text-align: justify; margi=
+n: 0px;"><span style=3D"font-size: 12pt; font-family: arial, helvetica, san=
+s-serif;" data-mce-style=3D"font-size: 12pt; font-family: arial, helvetica,=
+ sans-serif;">L=E2=80=99objectif g=C3=A9n=C3=A9ral est d=E2=80=99=C3=A9chan=
+ger sur les applications<span>&nbsp;</span><em>web</em><span>&nbsp;</span>d=
+=C3=A9di=C3=A9es aux repr=C3=A9sentations (carto)graphiques de donn=C3=A9es=
+ d=C3=A9crivant des mobilit=C3=A9s spatio-temporelles. Au-del=C3=A0 des asp=
+ects th=C3=A9matiques, il s=E2=80=99agit de r=C3=A9aliser un =C3=A9tat de l=
+a question des dispositifs de g=C3=A9o visualisation existants : les d=C3=
+=A9crire, identifier les verrous&nbsp;existants, les solutions apport=C3=A9=
+es, les d=C3=A9fis techniques et technologiques qui restent&nbsp;=C3=A0 rel=
+ever.</span></p><p align=3D"left" style=3D"text-align: justify; margin: 0px=
+;" data-mce-style=3D"text-align: justify; margin: 0px;"><span style=3D"font=
+-size: 12pt; font-family: arial, helvetica, sans-serif;" data-mce-style=3D"=
+font-size: 12pt; font-family: arial, helvetica, sans-serif;"></span><br></p=
+><p align=3D"left" style=3D"text-align: justify; margin: 0px;" data-mce-sty=
+le=3D"text-align: justify; margin: 0px;"><span style=3D"font-size: 12pt; fo=
+nt-family: arial, helvetica, sans-serif;" data-mce-style=3D"font-size: 12pt=
+; font-family: arial, helvetica, sans-serif;">Pour cela, nous proposons d=
+=E2=80=99examiner, d=E2=80=99une part, leurs modalit=C3=A9s actuelles de st=
+ockage, d=E2=80=99exploration,&nbsp;de traitement de l'information statisti=
+que et g=C3=A9ographique, de visualisation graphique et de repr=C3=A9sentat=
+ion cartographique ; d=E2=80=99autre part, de lister collectivement les<spa=
+n>&nbsp;</span><em>desiderata</em><span>&nbsp;</span>de future(s) applicati=
+on(s), en lien avec les&nbsp;fabriques actuelles de la cartographie th=C3=
+=A9matique, les&nbsp;nouveaux usages de la carte statistique, compte tenu d=
+es possibilit=C3=A9s techniques et technologiques actuelles.</span></p><p a=
+lign=3D"left" style=3D"text-align: justify; margin: 0px;" data-mce-style=3D=
+"text-align: justify; margin: 0px;"><span style=3D"font-size: 12pt; font-fa=
+mily: arial, helvetica, sans-serif;" data-mce-style=3D"font-size: 12pt; fon=
+t-family: arial, helvetica, sans-serif;"></span><br></p><p align=3D"left" s=
+tyle=3D"margin: 0px;" data-mce-style=3D"margin: 0px;"><span style=3D"font-s=
+ize: 12pt; font-family: arial, helvetica, sans-serif;" data-mce-style=3D"fo=
+nt-size: 12pt; font-family: arial, helvetica, sans-serif;">- Quels sont les=
+ probl=C3=A8mes sp=C3=A9cifiques li=C3=A9s =C3=A0 la visualisation de flux =
+?</span><br><span style=3D"font-size: 12pt; font-family: arial, helvetica, =
+sans-serif;" data-mce-style=3D"font-size: 12pt; font-family: arial, helveti=
+ca, sans-serif;">- Quels sont ceux qui sont r=C3=A9solus ?<span>&nbsp;</spa=
+n></span><br><span style=3D"font-size: 12pt; font-family: arial, helvetica,=
+ sans-serif;" data-mce-style=3D"font-size: 12pt; font-family: arial, helvet=
+ica, sans-serif;">- Quelles sont les sp=C3=A9cificit=C3=A9s des application=
+s web pour cartographier des flux ?</span><br><span style=3D"font-size: 12p=
+t; font-family: arial, helvetica, sans-serif;" data-mce-style=3D"font-size:=
+ 12pt; font-family: arial, helvetica, sans-serif;">- Quels types d'interact=
+ions avec les donn=C3=A9es et leur visualisation devraient =C3=AAtre priori=
+taires ?</span><br><span style=3D"font-size: 12pt; font-family: arial, helv=
+etica, sans-serif;" data-mce-style=3D"font-size: 12pt; font-family: arial, =
+helvetica, sans-serif;">- Comment combiner diff=C3=A9rentes repr=C3=A9senta=
+tions de flux au sein d'une m=C3=AAme plateforme (co-visualisation, explora=
+tion de donn=C3=A9es), dans diff=C3=A9rents formats (statiques, anim=C3=A9s=
+ et dynamiques) ?</span></p><p class=3D"MsoNormal" style=3D"margin: 0px;" d=
+ata-mce-style=3D"margin: 0px;"><span style=3D"font-family: arial, helvetica=
+, sans-serif; color: black; font-size: 12pt;" data-mce-style=3D"font-family=
+: arial, helvetica, sans-serif; color: black; font-size: 12pt;"></span><br>=
+</p><p class=3D"MsoNormal" style=3D"margin: 0px;" data-mce-style=3D"margin:=
+ 0px;"><span style=3D"font-family: arial, helvetica, sans-serif; color: bla=
+ck; font-size: 12pt;" data-mce-style=3D"font-family: arial, helvetica, sans=
+-serif; color: black; font-size: 12pt;"></span><br></p><p class=3D"MsoNorma=
+l" style=3D"margin: 0px;" data-mce-style=3D"margin: 0px;"><span style=3D"fo=
+nt-family: arial, sans-serif; color: black;" data-mce-style=3D"font-family:=
+ arial, sans-serif; color: black;"><span style=3D"font-family: arial, helve=
+tica, sans-serif; font-size: 12pt;" data-mce-style=3D"font-family: arial, h=
+elvetica, sans-serif; font-size: 12pt;"></span>Au plaisir d'=C3=A9changer a=
+vec vous sur ces questions, le 20 d=C3=A9cembre prochain.<i><br><br></i></s=
+pan></p><p class=3D"MsoNormal" style=3D"margin: 0px;" data-mce-style=3D"mar=
+gin: 0px;"><span style=3D"font-family: arial, sans-serif; color: black;" da=
+ta-mce-style=3D"font-family: arial, sans-serif; color: black;">L'=C3=A9quip=
+e gflowiz</span></p><p class=3D"MsoNormal" style=3D"margin: 0px;" data-mce-=
+style=3D"margin: 0px;"><span style=3D"font-family: arial, sans-serif; color=
+: black;" data-mce-style=3D"font-family: arial, sans-serif; color: black;">=
+</span><br></p><p class=3D"MsoNormal" style=3D"margin: 0px;" data-mce-style=
+=3D"margin: 0px;"><span style=3D"font-family: arial, sans-serif; color: bla=
+ck; font-size: 11pt;" data-mce-style=3D"font-family: arial, sans-serif; col=
+or: black; font-size: 11pt;">Fran=C3=A7o<span style=3D"font-family: arial, =
+helvetica, sans-serif;" data-mce-style=3D"font-family: arial, helvetica, sa=
+ns-serif;">ise Bahoken (IFSTTAR / AME-SPLOTT ; ass. UMR G=C3=A9ographie-Cit=
+=C3=A9s), Etienne C=C3=B4me (IFSTTAR / COSYS-GRETTIA), Laurent J=C3=A9gou (=
+Universit=C3=A9 de Toulouse / CNRS UMR LISST-cieu), Marion Maisonobe (CNRS =
+- ENPC / UMR LATTS), Gr=C3=A9goire Le Campion (CNRS / UMR P</span>assages)<=
+/span></p><p class=3D"MsoNormal" style=3D"margin: 0px;" data-mce-style=3D"m=
+argin: 0px;"><span style=3D"font-family: arial, sans-serif; color: black; f=
+ont-size: 11pt;" data-mce-style=3D"font-family: arial, sans-serif; color: b=
+lack; font-size: 11pt;"></span><br></p><p class=3D"MsoNormal" style=3D"marg=
+in: 0px;" data-mce-style=3D"margin: 0px;"><span style=3D"font-family: arial=
+, sans-serif; color: black; font-size: 11pt;" data-mce-style=3D"font-family=
+: arial, sans-serif; color: black; font-size: 11pt;"></span><br></p><p clas=
+s=3D"MsoNormal" style=3D"margin: 0px;" data-mce-style=3D"margin: 0px;"><spa=
+n style=3D"font-size: 11pt;" data-mce-style=3D"font-size: 11pt;"><span styl=
+e=3D"font-family: arial, helvetica, sans-serif; color: black;" data-mce-sty=
+le=3D"font-family: arial, helvetica, sans-serif; color: black;"><em>gFlowiz=
+<span>&nbsp;</span></em>(<span class=3D"Object" role=3D"link" id=3D"OBJ_PRE=
+FIX_DWT535_com_zimbra_url" style=3D"color: darkblue; text-decoration: none;=
+ cursor: pointer;" data-mce-style=3D"color: darkblue; text-decoration: none=
+; cursor: pointer;"><a href=3D"https://tinyurl.com/gflowiz" target=3D"_blan=
+k" style=3D"color: darkblue; text-decoration: none; cursor: pointer;" rel=
+=3D"noopener" data-mce-href=3D"https://tinyurl.com/gflowiz" data-mce-style=
+=3D"color: darkblue; text-decoration: none; cursor: pointer;">https://tinyu=
+rl.com/gflowiz</a></span>) est<span>&nbsp;</span></span><span style=3D"font=
+-family: arial, helvetica, sans-serif; color: black;" data-mce-style=3D"fon=
+t-family: arial, helvetica, sans-serif; color: black;">une action incitativ=
+e de recherche interdisciplinaire financ=C3=A9e par l=E2=80=99IFSTTAR (2018=
+-2019), et port=C3=A9e par les d=C3=A9partements Am=C3=A9nagement, mobilit=
+=C3=A9 et environnement (AME-Splott) et Composants et syst=C3=A8mes (COSYS-=
+Grettia), en collaboration avec le CNRS (UMR LISST-Cieu).</span></span><spa=
+n style=3D"font-family: arial, helvetica, sans-serif; color: black; font-si=
+ze: 12pt;" data-mce-style=3D"font-family: arial, helvetica, sans-serif; col=
+or: black; font-size: 12pt;"><span style=3D"font-size: 11pt;" data-mce-styl=
+e=3D"font-size: 11pt;"><span>&nbsp;</span>Le projet re=C3=A7oit =C3=A9galem=
+ent le soutien du Projet f=C3=A9d=C3=A9rateur<span>&nbsp;</span><em>Mobilit=
+=C3=A9s et transitions num=C3=A9riques</em><span>&nbsp;</span>(PF MobtransN=
+um) et de l'Action Pr<span style=3D"font-family: arial, helvetica, sans-ser=
+if;" data-mce-style=3D"font-family: arial, helvetica, sans-serif;">ospectiv=
+e<span>&nbsp;</span></span></span></span><span style=3D"font-family: arial,=
+ helvetica, sans-serif; font-size: 11pt;" data-mce-style=3D"font-family: ar=
+ial, helvetica, sans-serif; font-size: 11pt;"><em>Th=C3=A9oriser, Observer,=
+ Analyser, Mod=C3=A9liser le G=C3=A9oweb</em><span>&nbsp;</span>(</span><sp=
+an style=3D"font-family: arial, helvetica, sans-serif; color: black; font-s=
+ize: 12pt;" data-mce-style=3D"font-family: arial, helvetica, sans-serif; co=
+lor: black; font-size: 12pt;"><span style=3D"font-size: 11pt;" data-mce-sty=
+le=3D"font-size: 11pt;">AP-<em>Geoweb)</em><span>&nbsp;</span>du GDR Magis.=
+</span></span></p></div><br></div><div data-marker=3D"__SIG_PRE__"><br data=
+-mce-bogus=3D"1"></div></div></body></html>
+--=_e519f96a-15b0-4de6-be84-8466d157e8b1--

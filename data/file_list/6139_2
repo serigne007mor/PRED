@@ -1,0 +1,397 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (bouncesmtp2.u12.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 9D6E714017DA
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed, 28 Dec 2022 16:37:45 +0100 (CET)
+Received: from mx1.localdomain (MX1.univ-nantes.fr [193.52.101.135])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id 9A1985FA7
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Wed, 28 Dec 2022 16:37:45 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.localdomain (Postfix) with ESMTP id 8D71612005D
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 28 Dec 2022 16:37:45 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 0.012
+X-Spam-Level:
+X-Spam-Status: No, score=0.012 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	HTML_OBFUSCATE_05_10=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+	RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+	UN_PHISHING_PW=0.1] autolearn=disabled
+X-CRM114-Status: UNSURE ( -2.2926 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=esi.dz
+Received: from mx1.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 0fTn4IBW1Hws for <liste-egc@polytech.univ-nantes.fr>;
+	Wed, 28 Dec 2022 16:37:43 +0100 (CET)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+	by mx1.localdomain (Postfix) with ESMTPS id 0801D12002B
+	for <liste-egc@polytech.univ-nantes.fr>; Wed, 28 Dec 2022 16:37:42 +0100 (CET)
+Received: by mail-ej1-x629.google.com with SMTP id jo4so39131272ejb.7
+        for <liste-egc@polytech.univ-nantes.fr>; Wed, 28 Dec 2022 07:37:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=esi.dz; s=google;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=vCNxTVF36gLkILg5RUu+Sfp2TmGfPvoy7/Gpu0kaB3M=;
+        b=M3ArecF2aW1xY58d+0l2ytAh5+k5vU3mtNSWR3j7WnYpmIe5ARZkmoeQq0QihOJZRN
+         vO+Y3ddRAYAnxIFADzR009jqrcpBjC/9ZXlfKgKAt10wU66k4GaxHLolt8uAwqG5WVbE
+         6PaaFCsv/AAxvBcr0zlY1pKCRmc6sD7yZRnELQeTglRtp7Jr2ywjhb3PzZn/u7K0iikl
+         YjDKU5xmUhQ5FGD8h+5PAUzKxQdmtyNBv24DwsdellUeifMzgzy52WNOYwmhru3TExsX
+         m2xlI2jyeZhVGugq93N2a8R0jxrQk3I15oTLI90eQkUMUj3TTqGUKDD3Ed7P7R0xUfP5
+         CarQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=vCNxTVF36gLkILg5RUu+Sfp2TmGfPvoy7/Gpu0kaB3M=;
+        b=8PLT5krsCpTX0WeB+uXun2yLHDtPZrVf+UOS/LO/WrtcCss/qfKaS6g7d/J6tqsFBm
+         4Qq2L/xAuRMaUoMoasFPQB1aolWWD3GLh6+g6mwrVGCfPvvbq8g1yQBDQz4v1clDCOEE
+         wdGfOonO7nTMQMF1IrKe54Kd1LWw3xOBEu2Npn1Xq0jNwNbNdxg9n3XDzek435gai+Lb
+         9LQA9poCJ4429V/6EsKB2oQ+JY90Tslft2LIERBgRbgJbM+m/OS3Gf7Xbsfwe9D+6hHF
+         AU5uXDXgrrhILV63LUKnfvfOA9VVRQPl2S8UbycsnHdACItUWZPX3GVhUmgHrOcFqIoE
+         bHLw==
+X-Gm-Message-State: AFqh2kpCZZ8cYM+ou1lH0/ScVaymGdaVkyAgJctJ4k24/STBsKq4cJFB
+	THYsVJWWJKtSO2kPp8O5WeTEekjoZc5LysFHT/a9tw==
+X-Google-Smtp-Source: AMrXdXs934vXh+i+srJ/7kVWidh0DU2O9FwBTnDCOuPbRx7MGiHHpvnFtxvKgE8yf8OP/PU8uGJgesbRca4wuMz29mM=
+X-Received: by 2002:a17:906:d0c6:b0:83e:cd6:644e with SMTP id
+ bq6-20020a170906d0c600b0083e0cd6644emr2229160ejb.519.1672241862280; Wed, 28
+ Dec 2022 07:37:42 -0800 (PST)
+MIME-Version: 1.0
+From: BOUZAR Lydia <l_bouzar@esi.dz>
+Date: Wed, 28 Dec 2022 11:37:30 -0400
+Message-ID: <CA+N+s-w_EhH2=B1nMWW4KFyV-V7+vj2jWFmLRGT6gXOTUC4tcQ@mail.gmail.com>
+To: undisclosed-recipients:;
+Content-Type: multipart/alternative; boundary="0000000000002e214405f0e52689"
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] [Submission Deadline Extended] Springer SNCS journal
+ Special Issue "Recent Trends on AI for HealthCare "
+
+--0000000000002e214405f0e52689
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+*Special Issue: Recent Trends on AI for HealthCare Journal and SI details
+<https://www.springer.com/journal/42979/updates/17257234>Journal: Springer
+Nature Computer Science, SNCS.    *
+Submission deadline: 01 January 2023, *January, 15th 2023*
+
+This Special Issue calls for scientific contributions as well as industrial
+experiences in applying Artificial Intelligence to HealthCare. Topics of
+interest include, but are not limited to:
+
+=E2=80=A2                     Machine/Deep learning for cancer detection an=
+d
+prediction
+
+=E2=80=A2                     Machine/Deep Learning for medical images
+classification
+
+=E2=80=A2                     Case-Based-Reasoning for automatic diagnosis
+
+=E2=80=A2                     Artificial intelligence techniques in medicin=
+e
+
+=E2=80=A2                     Knowledge discovery in medicine
+
+=E2=80=A2                     Medical expert systems
+
+=E2=80=A2                     Machine learning-based medical systems
+
+=E2=80=A2                     Medical signal and image processing technique=
+s
+
+=E2=80=A2                     Computer-assisted diagnosis
+
+=E2=80=A2                     Precision medicine
+
+=E2=80=A2                     ICT for in-silico trials
+
+=E2=80=A2                     Implantable medical devices
+
+=E2=80=A2                     Computational methods for medical device
+
+=E2=80=A2                     Models for human-device interaction for medic=
+ine
+
+=E2=80=A2                     AI methods for medical device testing
+
+=E2=80=A2                     Drug-eluting AI models
+
+=E2=80=A2                     Telemedicine
+
+*Paper Submission*
+Manuscripts must be submitted to the Springer Nature Computer Science
+Editorial Manager system at: Submission Link
+<https://www.editorialmanager.com/sncs/Default.aspx>
+At the time of article submission, please select the Topical Issue (TI) of
+your choice. This Topical Issue section can be found under the =E2=80=98Add=
+itional
+Information=E2=80=99 Section.
+Please follow the given steps:
+
+   - *Step I - =E2=80=98Does this manuscript belong to a special issue?
+Yes/No=E2=80=99. *Please
+   enter =E2=80=98Yes=E2=80=99.
+   - *Step II - Choose the Topical Issue of choice*, which will be: *Recent
+   Trends on AI for HealthCare*,  selects the title from the dropdown list,
+   see attached image.
+
+Paper submissions must conform to the following format guidelines:  Submiss=
+ion
+guidelines <https://www.springer.com/journal/42979/submission-guidelines>
+
+
+*Important Dates**Submission deadline: 15 January 2023*
+Author notification: 01 March 2023
+Revised paper due: 01 April 2023
+Final notification: 01 May 2023
+Final paper due: 01 June 2023
+
+We look forward to hearing from you soon.
+
+
+Best regards,
+
+*Contact:*
+
+l_bouzar@esi.dz
+
+--0000000000002e214405f0e52689
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div id=3D"gmail-:2xo" class=3D"gmail-ii gmail-gt" style=
+=3D"direction:ltr;margin:8px 0px 0px;padding:0px;font-size:0.875rem;font-fa=
+mily:&quot;Google Sans&quot;,Roboto,RobotoDraft,Helvetica,Arial,sans-serif"=
+><div id=3D"gmail-:2uy" class=3D"gmail-a3s gmail-aiL" style=3D"font-variant=
+-numeric:normal;font-variant-east-asian:normal;font-stretch:normal;font-siz=
+e:small;line-height:1.5;font-family:Arial,Helvetica,sans-serif;overflow:hid=
+den"><div dir=3D"ltr"><b><div><b>Special Issue</b><span style=3D"font-weigh=
+t:normal">:=C2=A0</span><span style=3D"font-weight:normal">Recent Trends on=
+ AI for HealthCare=C2=A0<a href=3D"https://www.springer.com/journal/42979/u=
+pdates/17257234" target=3D"_blank">Journal and SI details</a></span></div><=
+div><b>Journal:</b><span style=3D"font-weight:normal">=C2=A0Springer Nature=
+ Computer Science, SNCS.=C2=A0 =C2=A0=C2=A0</span></div></b><div><span styl=
+e=3D"color:rgb(0,0,255);font-size:large">Submission deadline:</span><span s=
+tyle=3D"font-size:large"><font color=3D"#000000"> </font><strike style=3D""=
+><font color=3D"#000000">01 January 2023,</font> </strike><b style=3D"color=
+:rgb(0,0,255)">January, 15th 2023</b></span><br></div><div><br></div><div><=
+p class=3D"MsoNormal" style=3D"margin:0cm 0cm 8pt;text-align:justify;text-i=
+ndent:18pt;line-height:15.6933px;font-size:11pt;font-family:Calibri,sans-se=
+rif"><span style=3D"font-size:12pt;line-height:17.12px;font-family:&quot;Ti=
+mes New Roman&quot;,serif;color:rgb(34,31,31)">This Special Issue calls for=
+ scientific contributions as well as industrial experiences in applying Art=
+ificial Intelligence to HealthCare.=C2=A0</span><span style=3D"color:rgb(34=
+,31,31);font-family:&quot;Times New Roman&quot;,serif;font-size:12pt">Topic=
+s of interest include, but are not limited to:</span></p><p style=3D"margin=
+:0cm 0cm 0cm 70.65pt;text-align:justify;line-height:15.5467px;font-size:11p=
+t;font-family:Calibri,sans-serif;color:rgb(0,0,10)"><span style=3D"font-siz=
+e:12pt;line-height:16.96px;font-family:&quot;Times New Roman&quot;,serif;co=
+lor:rgb(34,31,31)">=E2=80=A2<span style=3D"font-variant-numeric:normal;font=
+-variant-east-asian:normal;font-stretch:normal;font-size:7pt;line-height:no=
+rmal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0</span></span><span style=3D"font-size:12pt;line-he=
+ight:16.96px;font-family:&quot;Times New Roman&quot;,serif;color:rgb(34,31,=
+31)">Machine/Deep learning for cancer detection and prediction</span></p><p=
+ style=3D"margin:0cm 0cm 0cm 70.65pt;text-align:justify;line-height:15.5467=
+px;font-size:11pt;font-family:Calibri,sans-serif;color:rgb(0,0,10)"><span s=
+tyle=3D"font-size:12pt;line-height:16.96px;font-family:&quot;Times New Roma=
+n&quot;,serif;color:rgb(34,31,31)">=E2=80=A2<span style=3D"font-variant-num=
+eric:normal;font-variant-east-asian:normal;font-stretch:normal;font-size:7p=
+t;line-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span></span><span style=3D"font-si=
+ze:12pt;line-height:16.96px;font-family:&quot;Times New Roman&quot;,serif;c=
+olor:rgb(34,31,31)">Machine/Deep Learning for medical images classification=
+</span></p><p style=3D"margin:0cm 0cm 0cm 70.65pt;text-align:justify;line-h=
+eight:15.5467px;font-size:11pt;font-family:Calibri,sans-serif;color:rgb(0,0=
+,10)"><span style=3D"font-size:12pt;line-height:16.96px;font-family:&quot;T=
+imes New Roman&quot;,serif;color:rgb(34,31,31)">=E2=80=A2<span style=3D"fon=
+t-variant-numeric:normal;font-variant-east-asian:normal;font-stretch:normal=
+;font-size:7pt;line-height:normal;font-family:&quot;Times New Roman&quot;">=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span></span><span styl=
+e=3D"font-size:12pt;line-height:16.96px;font-family:&quot;Times New Roman&q=
+uot;,serif;color:rgb(34,31,31)">Case-Based-Reasoning for automatic diagnosi=
+s</span></p><p style=3D"margin:0cm 0cm 0cm 70.65pt;text-align:justify;line-=
+height:15.5467px;font-size:11pt;font-family:Calibri,sans-serif;color:rgb(0,=
+0,10)"><span style=3D"font-size:12pt;line-height:16.96px;font-family:&quot;=
+Times New Roman&quot;,serif;color:rgb(34,31,31)">=E2=80=A2<span style=3D"fo=
+nt-variant-numeric:normal;font-variant-east-asian:normal;font-stretch:norma=
+l;font-size:7pt;line-height:normal;font-family:&quot;Times New Roman&quot;"=
+>=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span></span><span s=
+tyle=3D"font-size:12pt;line-height:16.96px;font-family:&quot;Times New Roma=
+n&quot;,serif;color:rgb(34,31,31)">Artificial intelligence techniques in me=
+dicine</span></p><p style=3D"margin:0cm 0cm 0cm 70.65pt;text-align:justify;=
+line-height:15.5467px;font-size:11pt;font-family:Calibri,sans-serif;color:r=
+gb(0,0,10)"><span style=3D"font-size:12pt;line-height:16.96px;font-family:&=
+quot;Times New Roman&quot;,serif;color:rgb(34,31,31)">=E2=80=A2<span style=
+=3D"font-variant-numeric:normal;font-variant-east-asian:normal;font-stretch=
+:normal;font-size:7pt;line-height:normal;font-family:&quot;Times New Roman&=
+quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span></span><=
+span style=3D"font-size:12pt;line-height:16.96px;font-family:&quot;Times Ne=
+w Roman&quot;,serif;color:rgb(34,31,31)">Knowledge discovery in medicine</s=
+pan></p><p style=3D"margin:0cm 0cm 0cm 70.65pt;text-align:justify;line-heig=
+ht:15.5467px;font-size:11pt;font-family:Calibri,sans-serif;color:rgb(0,0,10=
+)"><span style=3D"font-size:12pt;line-height:16.96px;font-family:&quot;Time=
+s New Roman&quot;,serif;color:rgb(34,31,31)">=E2=80=A2<span style=3D"font-v=
+ariant-numeric:normal;font-variant-east-asian:normal;font-stretch:normal;fo=
+nt-size:7pt;line-height:normal;font-family:&quot;Times New Roman&quot;">=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span></span><span style=
+=3D"font-size:12pt;line-height:16.96px;font-family:&quot;Times New Roman&qu=
+ot;,serif;color:rgb(34,31,31)">Medical expert systems</span></p><p style=3D=
+"margin:0cm 0cm 0cm 70.65pt;text-align:justify;line-height:15.5467px;font-s=
+ize:11pt;font-family:Calibri,sans-serif;color:rgb(0,0,10)"><span style=3D"f=
+ont-size:12pt;line-height:16.96px;font-family:&quot;Times New Roman&quot;,s=
+erif;color:rgb(34,31,31)">=E2=80=A2<span style=3D"font-variant-numeric:norm=
+al;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;line-he=
+ight:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span></span><span style=3D"font-size:12pt;l=
+ine-height:16.96px;font-family:&quot;Times New Roman&quot;,serif;color:rgb(=
+34,31,31)">Machine learning-based medical systems</span></p><p style=3D"mar=
+gin:0cm 0cm 0cm 70.65pt;text-align:justify;line-height:15.5467px;font-size:=
+11pt;font-family:Calibri,sans-serif;color:rgb(0,0,10)"><span style=3D"font-=
+size:12pt;line-height:16.96px;font-family:&quot;Times New Roman&quot;,serif=
+;color:rgb(34,31,31)">=E2=80=A2<span style=3D"font-variant-numeric:normal;f=
+ont-variant-east-asian:normal;font-stretch:normal;font-size:7pt;line-height=
+:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0</span></span><span style=3D"font-size:12pt;line=
+-height:16.96px;font-family:&quot;Times New Roman&quot;,serif;color:rgb(34,=
+31,31)">Medical signal and image processing techniques</span></p><p style=
+=3D"margin:0cm 0cm 0cm 70.65pt;text-align:justify;line-height:15.5467px;fon=
+t-size:11pt;font-family:Calibri,sans-serif;color:rgb(0,0,10)"><span style=
+=3D"font-size:12pt;line-height:16.96px;font-family:&quot;Times New Roman&qu=
+ot;,serif;color:rgb(34,31,31)">=E2=80=A2<span style=3D"font-variant-numeric=
+:normal;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;li=
+ne-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span></span><span style=3D"font-size:=
+12pt;line-height:16.96px;font-family:&quot;Times New Roman&quot;,serif;colo=
+r:rgb(34,31,31)">Computer-assisted diagnosis</span></p><p style=3D"margin:0=
+cm 0cm 0cm 70.65pt;text-align:justify;line-height:15.5467px;font-size:11pt;=
+font-family:Calibri,sans-serif;color:rgb(0,0,10)"><span style=3D"font-size:=
+12pt;line-height:16.96px;font-family:&quot;Times New Roman&quot;,serif;colo=
+r:rgb(34,31,31)">=E2=80=A2<span style=3D"font-variant-numeric:normal;font-v=
+ariant-east-asian:normal;font-stretch:normal;font-size:7pt;line-height:norm=
+al;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0</span></span><span style=3D"font-size:12pt;line-heigh=
+t:16.96px;font-family:&quot;Times New Roman&quot;,serif;color:rgb(34,31,31)=
+">Precision medicine</span></p><p style=3D"margin:0cm 0cm 0cm 70.65pt;text-=
+align:justify;line-height:15.5467px;font-size:11pt;font-family:Calibri,sans=
+-serif;color:rgb(0,0,10)"><span style=3D"font-size:12pt;line-height:16.96px=
+;font-family:&quot;Times New Roman&quot;,serif;color:rgb(34,31,31)">=E2=80=
+=A2<span style=3D"font-variant-numeric:normal;font-variant-east-asian:norma=
+l;font-stretch:normal;font-size:7pt;line-height:normal;font-family:&quot;Ti=
+mes New Roman&quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</s=
+pan></span><span style=3D"font-size:12pt;line-height:16.96px;font-family:&q=
+uot;Times New Roman&quot;,serif;color:rgb(34,31,31)">ICT for in-silico tria=
+ls</span></p><p style=3D"margin:0cm 0cm 0cm 70.65pt;text-align:justify;line=
+-height:15.5467px;font-size:11pt;font-family:Calibri,sans-serif;color:rgb(0=
+,0,10)"><span style=3D"font-size:12pt;line-height:16.96px;font-family:&quot=
+;Times New Roman&quot;,serif;color:rgb(34,31,31)">=E2=80=A2<span style=3D"f=
+ont-variant-numeric:normal;font-variant-east-asian:normal;font-stretch:norm=
+al;font-size:7pt;line-height:normal;font-family:&quot;Times New Roman&quot;=
+">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span></span><span s=
+tyle=3D"font-size:12pt;line-height:16.96px;font-family:&quot;Times New Roma=
+n&quot;,serif;color:rgb(34,31,31)">Implantable medical devices</span></p><p=
+ style=3D"margin:0cm 0cm 0cm 70.65pt;text-align:justify;line-height:15.5467=
+px;font-size:11pt;font-family:Calibri,sans-serif;color:rgb(0,0,10)"><span s=
+tyle=3D"font-size:12pt;line-height:16.96px;font-family:&quot;Times New Roma=
+n&quot;,serif;color:rgb(34,31,31)">=E2=80=A2<span style=3D"font-variant-num=
+eric:normal;font-variant-east-asian:normal;font-stretch:normal;font-size:7p=
+t;line-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span></span><span style=3D"font-si=
+ze:12pt;line-height:16.96px;font-family:&quot;Times New Roman&quot;,serif;c=
+olor:rgb(34,31,31)">Computational methods for medical device</span></p><p s=
+tyle=3D"margin:0cm 0cm 0cm 70.65pt;text-align:justify;line-height:15.5467px=
+;font-size:11pt;font-family:Calibri,sans-serif;color:rgb(0,0,10)"><span sty=
+le=3D"font-size:12pt;line-height:16.96px;font-family:&quot;Times New Roman&=
+quot;,serif;color:rgb(34,31,31)">=E2=80=A2<span style=3D"font-variant-numer=
+ic:normal;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;=
+line-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span></span><span style=3D"font-size:=
+12pt;line-height:16.96px;font-family:&quot;Times New Roman&quot;,serif;colo=
+r:rgb(34,31,31)">Models for human-device interaction for medicine</span></p=
+><p style=3D"margin:0cm 0cm 0cm 70.65pt;text-align:justify;line-height:15.5=
+467px;font-size:11pt;font-family:Calibri,sans-serif;color:rgb(0,0,10)"><spa=
+n style=3D"font-size:12pt;line-height:16.96px;font-family:&quot;Times New R=
+oman&quot;,serif;color:rgb(34,31,31)">=E2=80=A2<span style=3D"font-variant-=
+numeric:normal;font-variant-east-asian:normal;font-stretch:normal;font-size=
+:7pt;line-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span></span><span style=3D"font=
+-size:12pt;line-height:16.96px;font-family:&quot;Times New Roman&quot;,seri=
+f;color:rgb(34,31,31)">AI methods for medical device testing</span></p><p s=
+tyle=3D"margin:0cm 0cm 0cm 70.65pt;text-align:justify;line-height:15.5467px=
+;font-size:11pt;font-family:Calibri,sans-serif;color:rgb(0,0,10)"><span sty=
+le=3D"font-size:12pt;line-height:16.96px;font-family:&quot;Times New Roman&=
+quot;,serif;color:rgb(34,31,31)">=E2=80=A2<span style=3D"font-variant-numer=
+ic:normal;font-variant-east-asian:normal;font-stretch:normal;font-size:7pt;=
+line-height:normal;font-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span></span><span style=3D"font-size:=
+12pt;line-height:16.96px;font-family:&quot;Times New Roman&quot;,serif;colo=
+r:rgb(34,31,31)">Drug-eluting AI models</span></p><p style=3D"margin:0cm 0c=
+m 8pt 70.65pt;text-align:justify;line-height:15.5467px;font-size:11pt;font-=
+family:Calibri,sans-serif;color:rgb(0,0,10)"><span style=3D"font-size:12pt;=
+line-height:16.96px;font-family:&quot;Times New Roman&quot;,serif;color:rgb=
+(34,31,31)">=E2=80=A2<span style=3D"font-variant-numeric:normal;font-varian=
+t-east-asian:normal;font-stretch:normal;font-size:7pt;line-height:normal;fo=
+nt-family:&quot;Times New Roman&quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0</span></span><span style=3D"font-size:12pt;line-height:16.9=
+6px;font-family:&quot;Times New Roman&quot;,serif;color:rgb(34,31,31)">Tele=
+medicine</span></p><p class=3D"MsoNormal" style=3D"margin:0cm 0cm 10pt;text=
+-align:justify;line-height:15.6933px;font-size:11pt;font-family:Calibri,san=
+s-serif"><b style=3D"font-size:11pt"><span style=3D"font-size:12pt;font-fam=
+ily:&quot;Times New Roman&quot;,serif"><u>Paper Submission</u></span></b></=
+p>Manuscripts must be submitted to the Springer Nature Computer Science Edi=
+torial Manager system at:=C2=A0<a href=3D"https://www.editorialmanager.com/=
+sncs/Default.aspx" target=3D"_blank">Submission Link</a>=C2=A0</div><div>At=
+ the time of article submission, please select the Topical Issue (TI) of yo=
+ur choice. This Topical Issue section can be found under the =E2=80=98Addit=
+ional Information=E2=80=99 Section.<br>Please follow the given steps:=C2=A0=
+</div><div><ul><li style=3D"margin-left:15px"><i>Step I - =E2=80=98Does thi=
+s manuscript belong to a special issue? Yes/No=E2=80=99.=C2=A0</i>Please en=
+ter =E2=80=98Yes=E2=80=99. =C2=A0</li><li style=3D"margin-left:15px"><i>Ste=
+p II - Choose the Topical Issue of choice</i>, which will be:=C2=A0<font co=
+lor=3D"#0000ff"><b>Recent Trends on AI for HealthCare</b>,</font>=C2=A0=C2=
+=A0selects the title from the dropdown list, see attached image.</li></ul><=
+/div><div>Paper submissions must conform to the following format guidelines=
+:=C2=A0=C2=A0<a href=3D"https://www.springer.com/journal/42979/submission-g=
+uidelines" target=3D"_blank">Submission guidelines</a><br><b><br><u>Importa=
+nt Dates</u><br></b><b>Submission deadline: 15 January 2023</b><br>Author n=
+otification: 01 March 2023<br>Revised paper due: 01 April 2023<br>Final not=
+ification: 01 May 2023<br>Final paper due: 01 June 2023<br>=C2=A0 =C2=A0 =
+=C2=A0<br>We look forward to hearing from you soon.<br>=C2=A0 =C2=A0 =C2=A0=
+<br><p class=3D"MsoNormal" style=3D"margin:0cm 0cm 10pt;text-align:justify;=
+line-height:15.6933px;font-size:11pt;font-family:Calibri,sans-serif"><span =
+style=3D"font-family:Arial,Helvetica,sans-serif;font-size:small">Best regar=
+ds,</span></p><p class=3D"MsoNormal" style=3D"margin:0cm 0cm 10pt;text-alig=
+n:justify;line-height:15.6933px;font-size:11pt;font-family:Calibri,sans-ser=
+if"><b><span style=3D"font-size:12pt;line-height:17.12px;font-family:&quot;=
+Times New Roman&quot;,serif">Contact:</span></b></p><p class=3D"MsoNormal" =
+style=3D"margin:0cm 0cm 10pt;text-align:justify;line-height:15.6933px;font-=
+size:11pt;font-family:Calibri,sans-serif"><span style=3D"font-size:12pt;lin=
+e-height:17.12px;font-family:&quot;Times New Roman&quot;,serif"><a href=3D"=
+mailto:l_bouzar@esi.dz" target=3D"_blank">l_bouzar@esi.dz</a></span></p></d=
+iv></div></div></div></div>
+
+--0000000000002e214405f0e52689--

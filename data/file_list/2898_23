@@ -1,0 +1,691 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (BounceSMTP2.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id DB4CE14006DE
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon, 19 Jul 2021 14:29:28 +0200 (CEST)
+Received: from mx2.d101.univ-nantes.fr (MX2.univ-nantes.fr [193.52.101.136])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id D3FEF61F0E0
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Mon, 19 Jul 2021 14:29:28 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTP id CB460B4B11A
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 19 Jul 2021 14:29:28 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: YES
+X-Spam-Score: 5.323
+X-Spam-Level: *****
+X-Spam-Status: Yes, score=5.323 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+	GOOG_MALWARE_DNLD=1, HTML_MESSAGE=0.001, LONGWORD=0.3,
+	RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001,
+	SPF_PASS=-0.001, T_KAM_HTML_FONT_INVALID=0.01, UN_PHISHING_PW=0.1,
+	UN_STOCK3=4, URIBL_BLOCKED=0.001] autolearn=disabled
+X-CRM114-Status: UNSURE ( -2.7116 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=gmail.com
+Received: from mx2.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 33_oN1eez8om for <liste-egc@polytech.univ-nantes.fr>;
+	Mon, 19 Jul 2021 14:29:26 +0200 (CEST)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+	by mx2.d101.univ-nantes.fr (Postfix) with ESMTPS id 2FA79A3DAE0
+	for <liste-egc@polytech.univ-nantes.fr>; Mon, 19 Jul 2021 14:29:26 +0200 (CEST)
+Received: by mail-ej1-x631.google.com with SMTP id hr1so28428029ejc.1
+        for <liste-egc@polytech.univ-nantes.fr>; Mon, 19 Jul 2021 05:29:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=ob1RjDUTtfPSVruh+0k57bFKAt/JPsGQ2PbXaJyYfvA=;
+        b=XSIb3UTtIgqdM/onFyEGd70tTglpybpmaHmFMfQBy128glj829TsTmGUt14tTEd842
+         FVEksKSd5QRJhy1Ll62lK+L8zpBiQ3ej+BxZGWPn8T6JNI3kQ68ggv3mLki6UGl7674R
+         DlQLCW1DQBaQZQyH9XPQ73Fc1f7u1/lnuIMj1vBvGkREhKduojPkqIivzM8kge8l3OHG
+         1a8KfilQ0TfXl0R1FIVzMJHm5bVML1Ej/kSWdRtYLmNYqiyfAxj40cqve2ZBGcDwYPvv
+         WtA4wwU0A4u0sUB568LK8MLU/zodFmlGgySePhcnfbIUMkwaTAVNUF9kNMnR1CXh3SSC
+         s5Og==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=ob1RjDUTtfPSVruh+0k57bFKAt/JPsGQ2PbXaJyYfvA=;
+        b=iECOVKPQarEkVfhU09V9Rch8gbHjieXw/DkMaNQgFnicKRMYEhcEVobkXgC7VSkvGV
+         7nwc0az78lzDYwCWzWiztRTd/gmxwi9kmN6qeLX7tg8IYeDPkui/z/J5962no21/lfjp
+         /9/VgfvB21vtBFw6EQjxu1SxfJM21cudaYDv8wwa0yJQoWo9ORFOX71Wbqfctsjt9cxZ
+         yKMYT9SULccpnab9VPoesIjCNFlGwuXJGDsUwZ9XjxDam/tSe03tXVs7Vp01RiBLzRQ1
+         +j69N2Qic+dVsTmpIx+jvIktD8z2Yt71ydhK1NHONWBhBMfK9JT7OLvbLu5JKGNcbNXE
+         Z3rA==
+X-Gm-Message-State: AOAM532r37IvxFMeyVB9tHlTkrDrpGLOBEdYmvosrINbm0AuF6YL9nFH
+	pbkRDOrhbn7tBZ674MkJIxlpD/lHhfys1inxL74x+q2sdbW8Kn7tQOY=
+X-Google-Smtp-Source: ABdhPJz14aQPBfepcIq+k0nbALyIojGx+JZ3DcgV0E7UWWS3urJg2CeJ92Xk3h4MUZPDv4PuYnpemYrg1uPKY2d5NHo=
+X-Received: by 2002:a17:906:2bd4:: with SMTP id n20mr27570319ejg.390.1626697765505;
+ Mon, 19 Jul 2021 05:29:25 -0700 (PDT)
+MIME-Version: 1.0
+From: =?UTF-8?Q?Sarra_Ben_Abb=C3=A8s?= <benabbessarra@gmail.com>
+Date: Mon, 19 Jul 2021 14:29:07 +0100
+Message-ID: <CAGWjCZXYYH-w7_MOkbVxjBgA93beWZuVKiNVnxvGmsqeomeg1A@mail.gmail.com>
+To: liste-egc@polytech.univ-nantes.fr, info-ic@inria.fr, bull-i3@irit.fr, 
+	bull-ia@gdria.fr, dl@dl.kr.org, ln@groupes.renater.fr, Liste-proml@lri.fr, 
+	web.semantique@inria.fr, "Event@CIG" <event@in.tu-clausthal.de>, sma@loria.fr, 
+	agents@cs.umbc.edu, eda-liste <eda-liste@listes.univ-lyon2.fr>
+Content-Type: multipart/alternative; boundary="000000000000784fd505c77916f0"
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] [SPAM] [CFP] DEADLINE EXTENSION for 1st International
+ Workshop on Ontology Uses and Contribution to Artificial Intelligence @
+ KR-2021
+
+--000000000000784fd505c77916f0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Dear colleagues and researchers,
+
+Please consider submitting a paper for the 1st International workshop on
+"Ontology Uses and Contribution to Artificial Intelligence"  which will be
+held online or in Hanoi, Vietnam - November 6-12, 2021.
+
+
+*                         ****  OnUCAI - CALL FOR PAPERS *****
+
+*                     Ontology Uses and Contribution to Artificial
+Intelligence*
+
+*                              1st International Workshop, in conjunction
+with *KR 2021 <https://kr2021.kbsg.rwth-aachen.de/>
+
+*                            November 6-12, 2021 - Online or in Hanoi,
+Vietnam*
+
+                           https://sites.google.com/view/onucai-kr2021
+
+
+** Important dates **
+
+   - *Workshop paper submission due: **July 19, 2021 **September 06, 2021*
+   - *Workshop paper notifications: *September 30, 2021
+   - *Workshop paper camera-ready versions due: *October 12, 2021
+   - *Workshop registration deadline: *TBA
+   - *Workshop: *November 06-12, 2021
+
+All deadlines are 23:59 anywhere on earth (UTC-12)
+
+
+** Workshop description **
+
+An ontology is well known to be the best way to represent knowledge in a
+domain of interest. It is defined by Gruber as =E2=80=9Can explicit specifi=
+cation
+of a conceptualization=E2=80=9D. It allows us to represent explicitly and f=
+ormally
+existing entities, their relationships and their constraints in an
+application domain. This representation is the most suitable and beneficial
+way to solve many challenging problems related to the information domain
+(e.g., knowledge representation, knowledge sharing, knowledge reusing,
+automated reasoning, knowledge capitalizing and ensuring semantic
+interoperability among heterogeneous systems). Using ontology has many
+advantages, among them we can cite ontology reusing, reasoning and
+explanation, commitment and agreement on a domain of discourse, ontology
+evolution and mapping, etc. As a field of artificial intelligence (AI),
+ontology aims at representing knowledge based on declarative and symbolic
+formalization. Combining this symbolic field with computational fields of
+IA such as Machine Learning (ML), Deep Learning (DL), Probabilistic
+Graphical Models (PGMs), Computer Vision (CV) and Natural Languages
+Processing (NLP) is a promising association. Indeed, ontological modeling
+plays a vital role to help AI reducing the complexity of the studied domain
+and organizing information inside it. It broadens AI=E2=80=99s scope allowi=
+ng it to
+include any data type as it supports unstructured, semi-structured, or
+structured data format which enables smoother data integration. The
+ontology also assists AI for interpretation process, learning, enrichment,
+prediction, semantic disambiguation and discovering of complex inferences.
+Finally, the ultimate goal of ontologies is the ability to be integrated in
+a software to make sense of all information.
+
+In the last decade, ontologies are increasingly being used to provide
+background knowledge for several AI domains in different sectors (e.g.
+energy, transport, health, banking and insurance, etc.). Some of these AI
+domains are:
+
+   - Machine learning and deep learning: semantic data selection, semantic
+   data pre-processing, semantic data transformation, semantic data
+   prediction, semantic clustering correction of the outputs, semantic
+   enrichment with ontological concepts, use the semantic structure for
+   promoting distance measure, etc.
+   - Probabilistic Graphical Models: learning PGM (structure or parameters)
+   using ontologies, probabilistic semantic reasoning, semantic causality a=
+nd
+   probability, etc.
+   - Computer Vision: semantic image processing, semantic image
+   classification, semantic object recognition/classification, etc.
+   - Blockchain: semantic transactions, interoperable blockchain systems,
+   etc.
+   - Natural Language Processing: semantic text mining, semantic text
+   classification, semantic role labelling, semantic machine translation,
+   semantic question answering, ontology based text summarizing, semantic
+   recommendation systems, etc.
+   - Robotics: semantic task composition, task assignment, communication,
+   cooperation and coordination, etc.
+   - Voice-video-speech: semantic voice recognition, semantic speech
+   annotation, etc.
+   - Game Theory: semantic definition of specific games, semantic rules and
+   goals definition, etc.
+   - etc.
+
+
+
+** Objective **
+
+This workshop aims at highlighting recent and future advances on the role
+of ontologies and knowledge graphs in different domains of AI and how it
+can be used in order to reduce the semantic gap between the data,
+applications, machine learning process, etc., in order to obtain a
+semantic-aware approaches. In addition, the goal of this workshop is to
+bring together an area for experts from industry, science and academia to
+exchange ideas and discuss results of on-going research in ontologies and
+AI approaches.
+
+We invite the submission of original works that are related -- but are not
+limited to -- the topics below.
+
+
+** Topics of interests **
+
+   - Ontology for Machine Learning/Deep Learning
+   - Ontology for Probabilistic Graphical Models
+   - Ontology for Federated Machine Learning
+   - Ontology for Smart Contracts
+   - Ontology for Computer Vision
+   - Ontology for Natural Language Processing
+   - Ontology for Robotics and Multi-agent Systems
+   - Ontology for Voice-video-speech
+   - Ontology for Game Theory
+   - and so on.
+
+
+
+** Submission **
+
+The workshop is open to submit unpublished work resulting from research
+that presents original scientific results, methodological aspects, concepts
+and approaches. All submissions are not anonymous and must be PDF documents
+written in English and formatted using the following style files:
+*KR2021_authors_kit
+<https://www.google.com/url?q=3Dhttps%3A%2F%2Fkr2021.kbsg.rwth-aachen.de%2F=
+downloads%2FKR21_authors_kit.zip&sa=3DD&sntz=3D1&usg=3DAFQjCNFYtenqTF-Mya6Z=
+rNGgBeit_xLXyw>*
+
+Papers are to be submitted through the workshop's *EasyChair
+<https://www.google.com/url?q=3Dhttps%3A%2F%2Feasychair.org%2F&sa=3DD&sntz=
+=3D1&usg=3DAFQjCNG4iC-6zde_-RJieT-QIFfKn8WSyA>*
+submission
+page.
+
+We welcome the following types of contributions:
+
+   - *Full papers* of up to 9 pages, including abstract, figures and
+   appendices (if any), but excluding references and acknowledgements:
+   Finished or consolidated R&D works, to be included in one of the Worksho=
+p
+   topics.
+   - *Short papers* of up to 4 pages, excluding references and
+   acknowledgements: Ongoing works with relevant preliminary results, opene=
+d
+   to discussion.
+
+
+At least one author of each accepted paper must register for the workshop,
+in order to present the paper. For further instructions, please refer to
+the *KR 2021
+<https://www.google.com/url?q=3Dhttps%3A%2F%2Fkr2021.kbsg.rwth-aachen.de%2F=
+&sa=3DD&sntz=3D1&usg=3DAFQjCNFSM6Btf5QWGflVsMEJT0AEx1kD7Q>*
+ page.
+
+
+** Workshop chairs **
+
+   - Sarra Ben Abb=C3=A8s, Engie, France
+   - Lynda Temal, Engie, France
+   - Nada Mimouni, CNAM, France
+   - Ahmed Mabrouk, Engie, France
+   - Philippe Calvez, Engie, France
+
+** Program Committee **
+
+   -
+
+   Shridhar Devamane, Physical Design Engineer, Tecsec Technologies,
+   Bangalore, India
+   -
+
+   Philippe Leray, Professor at University of Nantes
+   -
+
+   Stefan Fenz, key researcher at SBA Research and Senior Scientist at Vien=
+na
+   University of Technology
+   <https://informatics.tuwien.ac.at/people/stefan-fenz>
+   -
+
+   Olivier Dameron, Professor at Universit=C3=A9 de Rennes I, Dyliss team, =
+Irisa
+   / Inria Rennes-Bretagne Atlantique
+   -
+
+   Aar=C3=B3n Ayll=C3=B3n Benitez, Phd in bioinformatique, ontology leader =
+at BASF
+   digital solutions
+   -
+
+   Fran=C3=A7ois Scharffe, Researcher on Knowledge based AI, New York, Unit=
+ed
+   States
+   -
+
+   Maxime Lefran=C3=A7ois, Associate Professor at Saint Etienne University,
+   France
+   -
+
+   Pierre Maret, The QA Company & Saint Etienne University, France
+   - Sanju Tiwari, Universidad Autonoma de Tamaulipas, Mexico
+
+**Publication*
+
+The best papers from this workshop may be included in the supplementary
+proceedings of KR 2021.
+
+--000000000000784fd505c77916f0
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr" class=3D"gmail_signature" data-smartmail=
+=3D"gmail_signature"><div dir=3D"ltr"><div><div dir=3D"ltr"><div dir=3D"ltr=
+"><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><p cl=
+ass=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:Calibri,sa=
+ns-serif"><span lang=3D"EN-US" style=3D"font-family:&quot;Times New Roman&q=
+uot;,serif">Dear colleagues and researchers,<br><br></span></p><p class=3D"=
+MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:Calibri,sans-seri=
+f"><span lang=3D"EN-US" style=3D"font-family:&quot;Times New Roman&quot;,se=
+rif">Please consider submitting a paper for the 1st International workshop =
+on &quot;Ontology Uses and Contribution to Artificial Intelligence&quot;=C2=
+=A0 which will be held online or in Hanoi, Vietnam - November 6-12, 2021.</=
+span></p><p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-fam=
+ily:Calibri,sans-serif"><br><span lang=3D"EN-US" style=3D"font-family:&quot=
+;Times New Roman&quot;,serif"></span></p><p class=3D"MsoNormal" align=3D"ce=
+nter" style=3D"margin:0cm;text-align:center;font-size:12pt;font-family:Cali=
+bri,sans-serif"><b><span lang=3D"EN-US" style=3D"font-size:13.5pt;font-fami=
+ly:&quot;Times New Roman&quot;,serif;color:black;background:none 0% 0% repe=
+at scroll yellow"><span style=3D"background-color:rgb(255,255,255)">=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span=
+>****=C2=A0 OnUCAI - CALL FOR PAPERS ****</span></b><span lang=3D"EN-US" st=
+yle=3D"font-family:&quot;Times New Roman&quot;,serif"></span></p><p class=
+=3D"MsoNormal" align=3D"center" style=3D"margin:0cm;text-align:center;font-=
+size:12pt;font-family:Calibri,sans-serif"><b><span lang=3D"EN-US" style=3D"=
+font-size:18pt;font-family:&quot;Times New Roman&quot;,serif">=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Ontology Uses and Contribution to Artific=
+ial Intelligence</span></b><span lang=3D"EN-US" style=3D"font-family:&quot;=
+Times New Roman&quot;,serif"></span></p><p class=3D"MsoNormal" style=3D"mar=
+gin-top:0cm;margin-right:0cm;margin-bottom:0cm;font-size:12pt;font-family:C=
+alibri,sans-serif;text-align:center"><i><span lang=3D"EN-US" style=3D"font-=
+family:&quot;Times New Roman&quot;,serif">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0 1st Internati=
+onal Workshop, in conjunction with=C2=A0</span></i><span style=3D"font-fami=
+ly:&quot;Times New Roman&quot;,serif"><a href=3D"https://kr2021.kbsg.rwth-a=
+achen.de/" target=3D"_blank"><span lang=3D"EN-US" style=3D"color:blue">KR 2=
+021</span></a></span><i><span lang=3D"EN-US" style=3D"font-family:&quot;Tim=
+es New Roman&quot;,serif">=C2=A0</span></i><span lang=3D"EN-US" style=3D"fo=
+nt-family:&quot;Times New Roman&quot;,serif"></span></p><div style=3D"text-=
+align:center"></div><p class=3D"MsoNormal" style=3D"margin-top:0cm;margin-r=
+ight:0cm;margin-bottom:0cm;font-size:12pt;font-family:Calibri,sans-serif;te=
+xt-align:center"><i><span lang=3D"EN-US" style=3D"font-family:&quot;Times N=
+ew Roman&quot;,serif">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 November 6-12, 2021 - Online or in Han=
+oi, Vietnam</span></i><span lang=3D"EN-US" style=3D"font-family:&quot;Times=
+ New Roman&quot;,serif"></span></p><div style=3D"text-align:center"></div><=
+p class=3D"MsoNormal" style=3D"margin-top:0cm;margin-right:0cm;margin-botto=
+m:0cm;font-size:12pt;font-family:Calibri,sans-serif;text-align:center"><spa=
+n lang=3D"EN-US" style=3D"font-family:&quot;Times New Roman&quot;,serif">=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0</span><a href=3D"https://sites.google.com/view/onucai-kr2021" =
+target=3D"_blank">https://sites.google.com/view/onucai-kr2021</a><br><span =
+style=3D"font-family:&quot;Times New Roman&quot;,serif"></span><span lang=
+=3D"EN-US" style=3D"font-family:&quot;Times New Roman&quot;,serif"></span><=
+/p><p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:Ca=
+libri,sans-serif"><b><span style=3D"font-size:18pt;font-family:&quot;Times =
+New Roman&quot;,serif;color:black;background:none 0% 0% repeat scroll rgb(2=
+34,209,220)"><br></span></b></p><p class=3D"MsoNormal" style=3D"margin:0cm;=
+font-size:12pt;font-family:Calibri,sans-serif"><b><span style=3D"font-size:=
+18pt;font-family:&quot;Times New Roman&quot;,serif;color:black;background:n=
+one 0% 0% repeat scroll rgb(234,209,220)">* Important dates *</span></b><b>=
+<span style=3D"font-size:18pt;font-family:&quot;Times New Roman&quot;,serif=
+"></span></b></p><ul type=3D"disc" style=3D"margin-bottom:0cm"><li class=3D=
+"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:Calibri,sans-ser=
+if"><b><span lang=3D"EN-US" style=3D"font-family:&quot;Times New Roman&quot=
+;,serif">Workshop paper submission due:=C2=A0</span></b><span lang=3D"EN-US=
+" style=3D"font-family:&quot;Times New Roman&quot;,serif"><strike><b>July 1=
+9, 2021=C2=A0</b></strike><span style=3D"background-color:rgb(255,255,0)"><=
+span style=3D"color:rgb(255,0,0)"><b>September 06, 2021</b></span></span></=
+span></li><li class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-f=
+amily:Calibri,sans-serif"><b><span style=3D"font-family:&quot;Times New Rom=
+an&quot;,serif">Workshop paper notifications:=C2=A0</span></b><span style=
+=3D"font-family:&quot;Times New Roman&quot;,serif">September 30, 2021</span=
+></li><li class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-famil=
+y:Calibri,sans-serif"><b><span lang=3D"EN-US" style=3D"font-family:&quot;Ti=
+mes New Roman&quot;,serif">Workshop paper camera-ready versions due:=C2=A0<=
+/span></b><span lang=3D"EN-US" style=3D"font-family:&quot;Times New Roman&q=
+uot;,serif">October</span><span lang=3D"EN-US" style=3D"font-family:&quot;T=
+imes New Roman&quot;,serif">=C2=A012, 2021</span></li><li class=3D"MsoNorma=
+l" style=3D"margin:0cm;font-size:12pt;font-family:Calibri,sans-serif"><b><s=
+pan style=3D"font-family:&quot;Times New Roman&quot;,serif">Workshop regist=
+ration deadline:=C2=A0</span></b><span style=3D"font-family:&quot;Times New=
+ Roman&quot;,serif">TBA</span></li><li class=3D"MsoNormal" style=3D"margin:=
+0cm;font-size:12pt;font-family:Calibri,sans-serif"><b><span style=3D"font-f=
+amily:&quot;Times New Roman&quot;,serif">Workshop:=C2=A0</span></b><span st=
+yle=3D"font-family:&quot;Times New Roman&quot;,serif">November 06-12, 2021<=
+/span></li></ul><p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;f=
+ont-family:Calibri,sans-serif"><span lang=3D"EN-US" style=3D"font-family:&q=
+uot;Times New Roman&quot;,serif">All deadlines are 23:59 anywhere on earth =
+(UTC-12)</span></p></div><div dir=3D"ltr"><p class=3D"MsoNormal" style=3D"m=
+argin:0cm;font-size:12pt;font-family:Calibri,sans-serif"><br><span lang=3D"=
+EN-US" style=3D"font-family:&quot;Times New Roman&quot;,serif"></span></p><=
+p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:Calibr=
+i,sans-serif"><b><span lang=3D"EN-US" style=3D"font-size:18pt;font-family:&=
+quot;Times New Roman&quot;,serif;color:black;background:none 0% 0% repeat s=
+croll rgb(234,209,220)">* Workshop description *</span></b><b><span lang=3D=
+"EN-US" style=3D"font-size:18pt;font-family:&quot;Times New Roman&quot;,ser=
+if"></span></b></p><p class=3D"MsoNormal" style=3D"margin:0cm;text-align:ju=
+stify;font-size:12pt;font-family:Calibri,sans-serif"><span lang=3D"EN-US" s=
+tyle=3D"font-family:&quot;Times New Roman&quot;,serif">An ontology is well =
+known to be the best way to represent knowledge in a domain of interest. It=
+ is defined by Gruber as =E2=80=9Can explicit specification of a conceptual=
+ization=E2=80=9D. It allows us to represent explicitly and formally existin=
+g entities, their relationships and their constraints in an application dom=
+ain. This representation is the most suitable and beneficial way to solve m=
+any challenging problems related to the information domain (e.g., knowledge=
+ representation, knowledge sharing, knowledge reusing, automated reasoning,=
+ knowledge capitalizing and ensuring semantic interoperability among hetero=
+geneous systems). Using ontology has many advantages, among them we can cit=
+e ontology reusing, reasoning and explanation, commitment and agreement on =
+a domain of discourse, ontology evolution and mapping, etc. As a field of a=
+rtificial intelligence (AI), ontology aims at representing knowledge based =
+on declarative and symbolic formalization. Combining this symbolic field wi=
+th computational fields of IA such as Machine Learning (ML), Deep Learning =
+(DL), Probabilistic Graphical Models (PGMs), Computer Vision (CV) and Natur=
+al Languages Processing (NLP) is a promising association. Indeed, ontologic=
+al modeling plays a vital role to help AI reducing the complexity of the st=
+udied domain and organizing information inside it. It broadens AI=E2=80=99s=
+ scope allowing it to include any data type as it supports unstructured, se=
+mi-structured, or structured data format which enables smoother data integr=
+ation. The ontology also assists AI for interpretation process, learning, e=
+nrichment, prediction, semantic disambiguation and discovering of complex i=
+nferences. Finally, the ultimate goal of ontologies is the ability to be in=
+tegrated in a software to make sense of all information.</span></p><p class=
+=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;font-size:12pt;font-f=
+amily:Calibri,sans-serif"><span lang=3D"EN-US" style=3D"font-family:&quot;T=
+imes New Roman&quot;,serif">In the last decade, ontologies are increasingly=
+ being used to provide background knowledge for several AI domains in diffe=
+rent sectors (e.g. energy, transport, health, banking and insurance, etc.).=
+=C2=A0</span><span style=3D"font-family:&quot;Times New Roman&quot;,serif">=
+Some of these AI domains are:</span></p><ul type=3D"square" style=3D"margin=
+-bottom:0cm"><li class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify=
+;font-size:12pt;font-family:Calibri,sans-serif"><span lang=3D"EN-US" style=
+=3D"font-family:&quot;Times New Roman&quot;,serif">Machine learning and dee=
+p learning: semantic data selection, semantic data pre-processing, semantic=
+ data transformation, semantic data prediction, semantic clustering correct=
+ion of the outputs, semantic enrichment with ontological concepts, use the =
+semantic structure for promoting distance measure, etc.</span></li><li clas=
+s=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;font-size:12pt;font-=
+family:Calibri,sans-serif"><span lang=3D"EN-US" style=3D"font-family:&quot;=
+Times New Roman&quot;,serif">Probabilistic Graphical Models: learning PGM (=
+structure or parameters) using ontologies, probabilistic semantic reasoning=
+, semantic causality and probability, etc.</span></li><li class=3D"MsoNorma=
+l" style=3D"margin:0cm;text-align:justify;font-size:12pt;font-family:Calibr=
+i,sans-serif"><span style=3D"font-family:&quot;Times New Roman&quot;,serif"=
+>Computer Vision: semantic image processing, semantic image classification,=
+ semantic object recognition/classification, etc.</span></li><li class=3D"M=
+soNormal" style=3D"margin:0cm;text-align:justify;font-size:12pt;font-family=
+:Calibri,sans-serif"><span style=3D"font-family:&quot;Times New Roman&quot;=
+,serif">Blockchain: semantic transactions, interoperable blockchain systems=
+, etc.</span></li><li class=3D"MsoNormal" style=3D"margin:0cm;text-align:ju=
+stify;font-size:12pt;font-family:Calibri,sans-serif"><span lang=3D"EN-US" s=
+tyle=3D"font-family:&quot;Times New Roman&quot;,serif">Natural Language Pro=
+cessing: semantic text mining, semantic text classification, semantic role =
+labelling, semantic machine translation, semantic question answering, ontol=
+ogy based text summarizing, semantic recommendation systems, etc.</span></l=
+i><li class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;font-size:=
+12pt;font-family:Calibri,sans-serif"><span lang=3D"EN-US" style=3D"font-fam=
+ily:&quot;Times New Roman&quot;,serif">Robotics: semantic task composition,=
+ task assignment, communication, cooperation and coordination, etc.</span><=
+/li><li class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;font-siz=
+e:12pt;font-family:Calibri,sans-serif"><span lang=3D"EN-US" style=3D"font-f=
+amily:&quot;Times New Roman&quot;,serif">Voice-video-speech: semantic voice=
+ r</span><span lang=3D"EN-US" style=3D"font-size:10pt;font-family:&quot;Tim=
+es New Roman&quot;,serif">ecognition, se</span><span lang=3D"EN-US" style=
+=3D"font-family:&quot;Times New Roman&quot;,serif">mantic speech annotation=
+, etc.</span></li><li class=3D"MsoNormal" style=3D"margin:0cm;text-align:ju=
+stify;font-size:12pt;font-family:Calibri,sans-serif"><span lang=3D"EN-US" s=
+tyle=3D"font-family:&quot;Times New Roman&quot;,serif">Game Theory: semanti=
+c definition of specific games, semantic rules and goals definition, etc.</=
+span></li><li class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;fo=
+nt-size:12pt;font-family:Calibri,sans-serif"><span lang=3D"EN-US" style=3D"=
+font-family:&quot;Times New Roman&quot;,serif">etc.<br></span></li></ul><di=
+v><br></div><div><br></div><p class=3D"MsoNormal" style=3D"margin:0cm;font-=
+size:12pt;font-family:Calibri,sans-serif"><b><span style=3D"font-size:18pt;=
+color:black;background:none 0% 0% repeat scroll rgb(234,209,220)">* Objecti=
+ve *</span></b><b><span style=3D"font-size:18pt;color:black"></span></b></p=
+><p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;font-size:12=
+pt;font-family:Calibri,sans-serif"><span lang=3D"EN-US" style=3D"font-famil=
+y:&quot;Times New Roman&quot;,serif">This workshop aims at highlighting rec=
+ent and future advances on the role of ontologies and knowledge graphs in d=
+ifferent domains of AI and how it can be used in order to reduce the semant=
+ic gap between the data, applications, machine learning process, etc., in o=
+rder to obtain a semantic-aware approaches. In addition, the goal of this w=
+orkshop is to bring together an area for experts from industry, science and=
+ academia to exchange ideas and discuss results of on-going research in ont=
+ologies and AI approaches.</span></p><p class=3D"MsoNormal" style=3D"margin=
+:0cm;text-align:justify;font-size:12pt;font-family:Calibri,sans-serif"><spa=
+n lang=3D"EN-US" style=3D"font-family:&quot;Times New Roman&quot;,serif">We=
+ invite the submission of original works that are related -- but are not li=
+mited to -- the topics below.</span></p><p class=3D"MsoNormal" style=3D"mar=
+gin:0cm;text-align:justify;font-size:12pt;font-family:Calibri,sans-serif"><=
+br><span lang=3D"EN-US" style=3D"font-family:&quot;Times New Roman&quot;,se=
+rif"></span></p><p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;f=
+ont-family:Calibri,sans-serif"><b><span style=3D"font-size:18pt;font-family=
+:&quot;Times New Roman&quot;,serif;color:black;background:none 0% 0% repeat=
+ scroll rgb(234,209,220)">* Topics of interests *</span></b><b><span style=
+=3D"font-size:18pt;font-family:&quot;Times New Roman&quot;,serif"></span></=
+b></p><ul type=3D"disc" style=3D"margin-bottom:0cm"><li class=3D"MsoNormal"=
+ style=3D"margin:0cm;font-size:12pt;font-family:Calibri,sans-serif"><span l=
+ang=3D"EN-US" style=3D"font-family:&quot;Times New Roman&quot;,serif">Ontol=
+ogy for Machine Learning/Deep Learning</span></li><li class=3D"MsoNormal" s=
+tyle=3D"margin:0cm;font-size:12pt;font-family:Calibri,sans-serif"><span lan=
+g=3D"EN-US" style=3D"font-family:&quot;Times New Roman&quot;,serif">Ontolog=
+y for Probabilistic Graphical Models</span></li><li class=3D"MsoNormal" sty=
+le=3D"margin:0cm;font-size:12pt;font-family:Calibri,sans-serif"><span lang=
+=3D"EN-US" style=3D"font-family:&quot;Times New Roman&quot;,serif">Ontology=
+ for Federated Machine Learning</span></li><li class=3D"MsoNormal" style=3D=
+"margin:0cm;font-size:12pt;font-family:Calibri,sans-serif"><span lang=3D"EN=
+-US" style=3D"font-family:&quot;Times New Roman&quot;,serif">Ontology for S=
+mart Contracts</span></li><li class=3D"MsoNormal" style=3D"margin:0cm;font-=
+size:12pt;font-family:Calibri,sans-serif"><span lang=3D"EN-US" style=3D"fon=
+t-family:&quot;Times New Roman&quot;,serif">Ontology for Computer Vision</s=
+pan></li><li class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-fa=
+mily:Calibri,sans-serif"><span lang=3D"EN-US" style=3D"font-family:&quot;Ti=
+mes New Roman&quot;,serif">Ontology for Natural Language Processing</span><=
+/li><li class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:=
+Calibri,sans-serif"><span lang=3D"EN-US" style=3D"font-family:&quot;Times N=
+ew Roman&quot;,serif">Ontology for Robotics and Multi-agent Systems</span><=
+/li><li class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:=
+Calibri,sans-serif"><span lang=3D"EN-US" style=3D"font-family:&quot;Times N=
+ew Roman&quot;,serif">Ontology for Voice-video-speech</span></li><li class=
+=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:Calibri,sans-=
+serif"><span lang=3D"EN-US" style=3D"font-family:&quot;Times New Roman&quot=
+;,serif">Ontology for Game Theory</span></li><li class=3D"MsoNormal" style=
+=3D"margin:0cm;font-size:12pt;font-family:Calibri,sans-serif"><span lang=3D=
+"EN-US" style=3D"font-family:&quot;Times New Roman&quot;,serif">and so on.<=
+/span></li></ul><p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;f=
+ont-family:Calibri,sans-serif"><span style=3D"font-family:&quot;Times New R=
+oman&quot;,serif">=C2=A0</span></p><p class=3D"MsoNormal" style=3D"margin:0=
+cm;font-size:12pt;font-family:Calibri,sans-serif"><b><span style=3D"font-si=
+ze:18pt;font-family:&quot;Times New Roman&quot;,serif;color:black;backgroun=
+d:none 0% 0% repeat scroll rgb(234,209,220)">* Submission *</span></b><b><s=
+pan style=3D"font-size:18pt;font-family:&quot;Times New Roman&quot;,serif">=
+</span></b></p><p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justif=
+y;font-size:12pt;font-family:Calibri,sans-serif"><span lang=3D"EN-US" style=
+=3D"font-family:&quot;Times New Roman&quot;,serif">The workshop is open to =
+submit unpublished work resulting from research that presents original scie=
+ntific results, methodological aspects, concepts and approaches. All submis=
+sions are not anonymous and must be PDF documents written in English and fo=
+rmatted using the following style files:=C2=A0</span><u><span style=3D"font=
+-family:&quot;Times New Roman&quot;,serif"><a href=3D"https://www.google.co=
+m/url?q=3Dhttps%3A%2F%2Fkr2021.kbsg.rwth-aachen.de%2Fdownloads%2FKR21_autho=
+rs_kit.zip&amp;sa=3DD&amp;sntz=3D1&amp;usg=3DAFQjCNFYtenqTF-Mya6ZrNGgBeit_x=
+LXyw" target=3D"_blank"><span lang=3D"EN-US" style=3D"color:blue">KR2021_au=
+thors_kit</span></a></span></u><span lang=3D"EN-US" style=3D"font-family:&q=
+uot;Times New Roman&quot;,serif"></span></p><p class=3D"MsoNormal" style=3D=
+"margin:0cm;text-align:justify;font-size:12pt;font-family:Calibri,sans-seri=
+f"><span lang=3D"EN-US" style=3D"font-family:&quot;Times New Roman&quot;,se=
+rif">Papers are to be submitted through the workshop&#39;s=C2=A0</span><u><=
+span style=3D"font-family:&quot;Times New Roman&quot;,serif"><a href=3D"htt=
+ps://www.google.com/url?q=3Dhttps%3A%2F%2Feasychair.org%2F&amp;sa=3DD&amp;s=
+ntz=3D1&amp;usg=3DAFQjCNG4iC-6zde_-RJieT-QIFfKn8WSyA" target=3D"_blank"><sp=
+an lang=3D"EN-US" style=3D"color:blue">EasyChair</span></a></span></u><span=
+ lang=3D"EN-US" style=3D"font-family:&quot;Times New Roman&quot;,serif">=C2=
+=A0submission page.</span></p><p class=3D"MsoNormal" style=3D"margin:0cm;te=
+xt-align:justify;font-size:12pt;font-family:Calibri,sans-serif"><span lang=
+=3D"EN-US" style=3D"font-family:&quot;Times New Roman&quot;,serif">We welco=
+me the following types of contributions:</span></p><ul type=3D"square" styl=
+e=3D"margin-bottom:0cm"><li class=3D"MsoNormal" style=3D"margin:0cm;text-al=
+ign:justify;font-size:12pt;font-family:Calibri,sans-serif"><b><span lang=3D=
+"EN-US" style=3D"font-family:&quot;Times New Roman&quot;,serif">Full papers=
+</span></b><span lang=3D"EN-US" style=3D"font-family:&quot;Times New Roman&=
+quot;,serif">=C2=A0of up to 9 pages, including abstract, figures and append=
+ices (if any), but excluding references and acknowledgements: Finished or c=
+onsolidated R&amp;D works, to be included in one of the Workshop topics.</s=
+pan></li><li class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;fon=
+t-size:12pt;font-family:Calibri,sans-serif"><b><span lang=3D"EN-US" style=
+=3D"font-family:&quot;Times New Roman&quot;,serif">Short papers</span></b><=
+span lang=3D"EN-US" style=3D"font-family:&quot;Times New Roman&quot;,serif"=
+>=C2=A0of up to 4 pages, excluding references and acknowledgements: Ongoing=
+ works with relevant preliminary results, opened to discussion.</span></li>=
+</ul><p class=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;font-siz=
+e:12pt;font-family:Calibri,sans-serif"><span lang=3D"EN-US" style=3D"font-f=
+amily:&quot;Times New Roman&quot;,serif"><br></span></p><p class=3D"MsoNorm=
+al" style=3D"margin:0cm;text-align:justify;font-size:12pt;font-family:Calib=
+ri,sans-serif"><span lang=3D"EN-US" style=3D"font-family:&quot;Times New Ro=
+man&quot;,serif">At least one author of each accepted paper must register f=
+or the workshop, in order to present the paper. For further instructions, p=
+lease refer to the=C2=A0</span><u><span style=3D"font-family:&quot;Times Ne=
+w Roman&quot;,serif"><a href=3D"https://www.google.com/url?q=3Dhttps%3A%2F%=
+2Fkr2021.kbsg.rwth-aachen.de%2F&amp;sa=3DD&amp;sntz=3D1&amp;usg=3DAFQjCNFSM=
+6Btf5QWGflVsMEJT0AEx1kD7Q" target=3D"_blank"><span lang=3D"EN-US" style=3D"=
+color:blue">KR 2021</span></a></span></u><span lang=3D"EN-US" style=3D"font=
+-family:&quot;Times New Roman&quot;,serif">=C2=A0page.</span></p><p class=
+=3D"MsoNormal" style=3D"margin:0cm;text-align:justify;font-size:12pt;font-f=
+amily:Calibri,sans-serif"><br><span lang=3D"EN-US" style=3D"font-family:&qu=
+ot;Times New Roman&quot;,serif"></span></p><p class=3D"MsoNormal" style=3D"=
+margin:0cm;font-size:12pt;font-family:Calibri,sans-serif"><b><span lang=3D"=
+EN-US" style=3D"font-size:18pt;font-family:&quot;Times New Roman&quot;,seri=
+f;color:black;background:none 0% 0% repeat scroll rgb(234,209,220)">* Works=
+hop chairs *</span></b><b><span lang=3D"EN-US" style=3D"font-size:18pt;font=
+-family:&quot;Times New Roman&quot;,serif"></span></b></p><ul type=3D"disc"=
+ style=3D"margin-bottom:0cm"><li class=3D"MsoNormal" style=3D"margin:0cm;fo=
+nt-size:12pt;font-family:Calibri,sans-serif"><span lang=3D"EN-US" style=3D"=
+font-family:&quot;Times New Roman&quot;,serif">Sarra Ben Abb=C3=A8s, Engie,=
+ France</span></li><li class=3D"MsoNormal" style=3D"margin:0cm;font-size:12=
+pt;font-family:Calibri,sans-serif"><span lang=3D"EN-US" style=3D"font-famil=
+y:&quot;Times New Roman&quot;,serif">Lynda Temal, Engie, France</span></li>=
+<li class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:Cali=
+bri,sans-serif"><span lang=3D"EN-US" style=3D"font-family:&quot;Times New R=
+oman&quot;,serif">Nada Mimouni, CNAM, France</span></li><li class=3D"MsoNor=
+mal" style=3D"margin:0cm;font-size:12pt;font-family:Calibri,sans-serif"><sp=
+an lang=3D"EN-US" style=3D"font-family:&quot;Times New Roman&quot;,serif">A=
+hmed Mabrouk, Engie, France</span></li><li class=3D"MsoNormal" style=3D"mar=
+gin:0cm;font-size:12pt;font-family:Calibri,sans-serif"><span lang=3D"EN-US"=
+ style=3D"font-family:&quot;Times New Roman&quot;,serif">Philippe Calvez, E=
+ngie, France</span></li></ul><p class=3D"MsoNormal" style=3D"margin:0cm;fon=
+t-size:12pt;font-family:Calibri,sans-serif"><b><span style=3D"font-size:18p=
+t;font-family:&quot;Times New Roman&quot;,serif"><span style=3D"background-=
+color:rgb(234,209,220)">* Program Committee *</span></span></b></p><ul type=
+=3D"disc" style=3D"margin-bottom:0cm"><li class=3D"MsoNormal" style=3D"marg=
+in:0cm;font-size:12pt;font-family:Calibri,sans-serif"><p dir=3D"ltr" style=
+=3D"line-height:1.55;margin-top:10.5pt;margin-bottom:0pt"><span style=3D"fo=
+nt-size:11pt;font-family:Arial;color:rgb(0,0,0);background-color:transparen=
+t;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-align=
+:baseline;white-space:pre-wrap">Shridhar Devamane, Physical Design Engineer=
+, Tecsec Technologies, Bangalore, India</span></p></li><li class=3D"MsoNorm=
+al" style=3D"margin:0cm;font-size:12pt;font-family:Calibri,sans-serif"><p d=
+ir=3D"ltr" style=3D"line-height:1.38;margin-top:12pt;margin-bottom:12pt"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);background-c=
+olor:transparent;font-variant-numeric:normal;font-variant-east-asian:normal=
+;vertical-align:baseline;white-space:pre-wrap">Philippe Leray, Professor at=
+ University of Nantes=C2=A0</span></p></li><li class=3D"MsoNormal" style=3D=
+"margin:0cm;font-size:12pt;font-family:Calibri,sans-serif"><p dir=3D"ltr" s=
+tyle=3D"line-height:1.38;margin-top:12pt;margin-bottom:12pt"><span style=3D=
+"font-size:11pt;font-family:Arial;color:rgb(0,0,0);background-color:transpa=
+rent;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-al=
+ign:baseline;white-space:pre-wrap">Stefan Fenz, key researcher at SBA Resea=
+rch and Senior Scientist at</span><a href=3D"https://informatics.tuwien.ac.=
+at/people/stefan-fenz" target=3D"_blank" style=3D"text-decoration-line:none=
+"><span style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);backgrou=
+nd-color:transparent;font-variant-numeric:normal;font-variant-east-asian:no=
+rmal;vertical-align:baseline;white-space:pre-wrap"> </span><span style=3D"f=
+ont-size:11pt;font-family:Arial;color:rgb(33,33,33);background-color:transp=
+arent;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-a=
+lign:baseline;white-space:pre-wrap">Vienna University of Technology</span><=
+/a><span style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);backgro=
+und-color:transparent;font-variant-numeric:normal;font-variant-east-asian:n=
+ormal;vertical-align:baseline;white-space:pre-wrap"></span></p></li><li cla=
+ss=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-family:Calibri,san=
+s-serif"><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:12pt;margin-bo=
+ttom:12pt"><span style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0)=
+;background-color:transparent;font-variant-numeric:normal;font-variant-east=
+-asian:normal;vertical-align:baseline;white-space:pre-wrap">Olivier Dameron=
+, Professor at Universit=C3=A9 de Rennes I, Dyliss team, Irisa / Inria Renn=
+es-Bretagne Atlantique=C2=A0=C2=A0=C2=A0</span></p></li><li class=3D"MsoNor=
+mal" style=3D"margin:0cm;font-size:12pt;font-family:Calibri,sans-serif"><p =
+dir=3D"ltr" style=3D"line-height:1.38;margin-top:12pt;margin-bottom:12pt"><=
+span style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);background-=
+color:transparent;font-variant-numeric:normal;font-variant-east-asian:norma=
+l;vertical-align:baseline;white-space:pre-wrap">Aar=C3=B3n Ayll=C3=B3n Beni=
+tez, Phd in bioinformatique, ontology leader at BASF digital solutions</spa=
+n></p></li><li class=3D"MsoNormal" style=3D"margin:0cm;font-size:12pt;font-=
+family:Calibri,sans-serif"><p dir=3D"ltr" style=3D"line-height:1.38;margin-=
+top:12pt;margin-bottom:12pt"><span style=3D"font-size:11pt;font-family:Aria=
+l;color:rgb(0,0,0);background-color:transparent;font-variant-numeric:normal=
+;font-variant-east-asian:normal;vertical-align:baseline;white-space:pre-wra=
+p">Fran=C3=A7ois Scharffe, Researcher on Knowledge based AI, New York, Unit=
+ed States</span></p></li><li class=3D"MsoNormal" style=3D"margin:0cm;font-s=
+ize:12pt;font-family:Calibri,sans-serif"><p dir=3D"ltr" style=3D"line-heigh=
+t:1.38;margin-top:12pt;margin-bottom:12pt"><span style=3D"font-size:11pt;fo=
+nt-family:Arial;color:rgb(0,0,0);background-color:transparent;font-variant-=
+numeric:normal;font-variant-east-asian:normal;vertical-align:baseline;white=
+-space:pre-wrap">Maxime Lefran=C3=A7ois, Associate Professor at Saint Etien=
+ne University, France</span></p></li><li class=3D"MsoNormal" style=3D"margi=
+n:0cm;font-size:12pt;font-family:Calibri,sans-serif"><p dir=3D"ltr" style=
+=3D"line-height:1.38;margin-top:12pt;margin-bottom:12pt"><span style=3D"fon=
+t-size:11pt;font-family:Arial;color:rgb(0,0,0);background-color:transparent=
+;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-align:=
+baseline;white-space:pre-wrap">Pierre Maret, The QA Company &amp; Saint Eti=
+enne University, France </span></p></li><li class=3D"MsoNormal" style=3D"ma=
+rgin:0cm;font-size:12pt;font-family:Calibri,sans-serif"><span style=3D"font=
+-size:11pt;font-family:Arial;color:rgb(0,0,0);background-color:transparent;=
+font-variant-numeric:normal;font-variant-east-asian:normal;vertical-align:b=
+aseline;white-space:pre-wrap"><span style=3D"font-size:14.6667px;vertical-a=
+lign:baseline">Sanju Tiwari, Universidad Autonoma de Tamaulipas, Mexico</sp=
+an></span></li></ul><p class=3D"MsoNormal" style=3D"margin:0cm;font-size:12=
+pt;font-family:Calibri,sans-serif"><b><span style=3D"font-size:18pt;font-fa=
+mily:&quot;Times New Roman&quot;,serif"><span style=3D"background-color:rgb=
+(234,209,220)">*Publication</span></span></b></p><p class=3D"MsoNormal" sty=
+le=3D"margin:0cm;font-size:12pt;font-family:Calibri,sans-serif"><span lang=
+=3D"EN-US" style=3D"font-family:&quot;Times New Roman&quot;,serif">The best=
+ papers from this workshop may be included in the supplementary proceedings=
+ of KR 2021.</span></p></div></div></div></div></div></div></div></div></di=
+v></div>
+
+--000000000000784fd505c77916f0--
+

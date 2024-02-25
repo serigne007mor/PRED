@@ -1,0 +1,786 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (bouncesmtp1.u12.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 7F7D214014F0
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu, 23 Feb 2023 13:16:05 +0100 (CET)
+Received: from mx3.localdomain (MX3.univ-nantes.fr [193.52.101.137])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id 771CB6743
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Thu, 23 Feb 2023 13:16:05 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.localdomain (Postfix) with ESMTP id 6957B20F7A
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 23 Feb 2023 13:16:05 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 4.908
+X-Spam-Level: ****
+X-Spam-Status: No, score=4.908 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	IMPRONONCABLE_2=1.5, LONGWORD=0.3, MANGLED_AVOID=2.3,
+	MEGALONGWORD=0.6, MR_NOT_ATTRIBUTED_IP=0.2,
+	RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+	RCVD_IN_WSFF=0.01, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+	UN_PHISHING_PW=0.1] autolearn=disabled
+X-CRM114-Status: UNSURE ( 0.4372 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=devinci.fr
+Received: from mx3.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 2gBMILQhacGj for <liste-egc@polytech.univ-nantes.fr>;
+	Thu, 23 Feb 2023 13:16:02 +0100 (CET)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=40.107.8.82; helo=eur04-vi1-obe.outbound.protection.outlook.com; envelope-from=nicolas.travers@devinci.fr; receiver=liste-egc@polytech.univ-nantes.fr 
+Authentication-Results: dmarc.univ-nantes.fr; dmarc=pass (p=none dis=none) header.from=devinci.fr
+Authentication-Results: dmarc.univ-nantes.fr; spf=pass smtp.mailfrom=nicolas.travers@devinci.fr
+Authentication-Results: dkim.univ-nantes.fr;
+	dkim=pass (2048-bit key; unprotected) header.d=devinci.fr header.i=@devinci.fr header.b="IYn2xuPg";
+	dkim-atps=neutral
+X-Greylist: whitelisted by SQLgrey-1.6.7
+Received: from EUR04-VI1-obe.outbound.protection.outlook.com (mail-vi1eur04on2082.outbound.protection.outlook.com [40.107.8.82])
+	by mx3.localdomain (Postfix) with ESMTPS id 63B97208CB
+	for <liste-egc@polytech.univ-nantes.fr>; Thu, 23 Feb 2023 13:16:02 +0100 (CET)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=hPL2TyqvvcjSz1pvHqubKHxTt2JbZmN6W22ShCIH0oGHhXzHe387n2zUhDU38NC+7NjXZAmmbLXNzpPG/+s5VL2/8/5r4nK82Bs7JXpn99rvbhP4pf/1VzPb4PK7wBsNlJY+T4+34/TlL19oUzZTgfqROlfX2+12PKVDtZehaB/IqK+Pn0R4adehpumCMnuNqTlHzxctNWDt1hVTRqfd7rf4VlrJH4kDmCcNFvt843YS9Ejocc01lSrpeARBcEogO//XilV0pVX7yLCdy5/Vg2c+XxBALsAzxf2/lfyU0pyw5n9plqI270EtZLBJi4lhNp/W8AdCXXreYJsa1+OAnA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=hUfAs63IajpaijoBLo+sRAIxSQeSc1AmcVI6gezQ1mA=;
+ b=jKDGgADyDmU8opXNccDxyLlRA8LqokFM1U/oOCkazxJ2IZI8JImQtOgIfHGoXdfYf2HXhZ4U/FV3QyfE32ftyBjIy5rSOFBU3s4hnXd5WBRkY9xzY8pTNRNBSCpkEoFEXUO0gRWCcjQrEWhmwbN3GVuGrncTqHhAGyhdtfhx795FwRV0t+L3jpOk9ShqQSUopxnl8dI3GU7p91fwV8O+LsPictXNOyGRs0KFLg4Ccv2kr766fv4EE8edIUCfpyNHHYEkaHrR5v+r9qBKd6ywYS6NleddTCHccfs0QZy55kCyHKtQBp0OIL5GF7YCDnQMC01wUuJ2PLRd2zJQp3bp5w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=devinci.fr; dmarc=pass action=none header.from=devinci.fr;
+ dkim=pass header.d=devinci.fr; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=devinci.fr;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=hUfAs63IajpaijoBLo+sRAIxSQeSc1AmcVI6gezQ1mA=;
+ b=IYn2xuPgVTUpjkQdDD9F5znX7yz899dtsQocMh1hg7SU0UW5Vip1tNWRWHUtJk5RLVxLZUC6WgZX0XMJLORsJ1yAoVD9m8KbX3eknf4j3b20BJ/IYhA2bezM6PDVki7N5JP3iS/+tULW1rbTFrpoMq1tewmL5O3fNtcqHumicL4VWq/p64Y/i1SmlkFuZ+Si4cxjMRoM4EaEu0SVxR9pmKZLpwj0ZBD2MwFU5YbGIzX3ovfXhOYK4UJFFWV2wc2PoGWaYOAi4MJ1iw3ahTKNUqCYCX8SdOUUTVCo27e+/TbY1tXs7jbUHuZsUbW6VzcaS0XhY3EDD1UKaCoNEpPiHA==
+Received: from PA4PR02MB6896.eurprd02.prod.outlook.com (2603:10a6:102:fe::19)
+ by AS8PR02MB9577.eurprd02.prod.outlook.com (2603:10a6:20b:5a5::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6134.21; Thu, 23 Feb
+ 2023 12:16:00 +0000
+Received: from PA4PR02MB6896.eurprd02.prod.outlook.com
+ ([fe80::e6f2:d60b:e5f6:f6e6]) by PA4PR02MB6896.eurprd02.prod.outlook.com
+ ([fe80::e6f2:d60b:e5f6:f6e6%7]) with mapi id 15.20.6134.021; Thu, 23 Feb 2023
+ 12:16:00 +0000
+From: TRAVERS Nicolas <nicolas.travers@devinci.fr>
+To: "liste-egc@polytech.univ-nantes.fr" <liste-egc@polytech.univ-nantes.fr>
+Thread-Topic: CfP - The 34th International Conference on Database and Expert
+ Systems Applications - DEXA2023
+Thread-Index: AQHZR4B6N0JrZHkkLEqzRCazbmdjYw==
+Date: Thu, 23 Feb 2023 12:15:55 +0000
+Message-ID:
+ <PA4PR02MB6896AE0A79478BEAF659A3D294AB9@PA4PR02MB6896.eurprd02.prod.outlook.com>
+Accept-Language: fr-FR, en-US
+Content-Language: fr-FR
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=devinci.fr;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PA4PR02MB6896:EE_|AS8PR02MB9577:EE_
+x-ms-office365-filtering-correlation-id: bd63d6bb-1b0e-485a-4538-08db1597b9a6
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:
+ kfzuZIXL8fc3TgGUPmAspN/m5WR1elE1Yu9M0nJ2NZq8HfQR2xEfuJ3lWAapB2fG4LG8yI2LcNEKsfFCFC5cObd7I6TtuDVDSf3w8yU2QyhfCcUeviNRexzbJuQCso18TVCiQtudZhGsk6Ma5PGUh5hVm5eRRuUZgGS0XA1DWBTSvAOurIPK91jwzZcIfbdEEEG9jdzX2ar+ivvQB69vC9pOyjdGiOmVnnhaO4J+0tvV759i5WP1TU0zY171WeUGOZzai/0sbtvY3+BN3KcYpUIsTtkTDuJ+q2Lf32se2V0rVVqCqlHbl3L4Oq83DgpvJPXQJoO+oVfEqxQHRe8wgUpVWOC79lz1Vc2fUnS5qx+lIC53aa8wj3XlONw6TVfMD1d7vahEKHQftvP9HmZkP5THp6abAcLJg3rEK58IKd11f6+5XdnW1tUAZFjGfbDkvwv+aOAv9GryrPApL+HRERF7CpOoe0kGcUx4Sag7C1v/rp45rlD4hcP54qoeO4lQUYwzpwjJQRDepYXWfb5uubM/6CpkIbpdx9qBME3H8QwGcy95izF6XFwIbDQXQRm7M4Ka4f9qrjmdDdJIYBfr9dhUIWZu7HvqXvw9nYDOjT1hjhIdnUdrPHIwFhMhrc/XT1mzXXdSKLvmOnzpeVifqLeI/P6g8XtT/gI2N9a/FxuuaWiOm9yFSlmswWxHZ0S/ZeO2HafLVMor4Pl8pR59H5WdSdmJE91FZQdn7xqvkQVH2KeZUk2oSwjGE9ZVOPFRVY+G8VzeoeQrsK71l+qbmNY94vmIEj5Y2Gebshy/J6E=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PA4PR02MB6896.eurprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(396003)(346002)(376002)(136003)(39850400004)(366004)(1690799011)(451199018)(66574015)(41300700001)(122000001)(2906002)(52536014)(8936002)(83380400001)(5660300002)(7696005)(26005)(9686003)(186003)(38070700005)(71200400001)(86362001)(6666004)(33656002)(41320700001)(6506007)(19627405001)(966005)(8676002)(66899018)(66476007)(66556008)(66946007)(76116006)(6916009)(64756008)(66446008)(478600001)(45080400002)(38100700002)(316002)(786003)(166002)(55016003)(130980200001)(122110200001);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?Windows-1252?Q?iI3DujngZHe/IIOWl16Ne1ByOX3CAkKyg+6sqn9Fu/cwl+xogRn8Qx1m?=
+ =?Windows-1252?Q?Pu1Cnl93HkAiraz7Xabj6O7/hJTWk9is2EqdrRAm37QdzVOjIpjl3Isy?=
+ =?Windows-1252?Q?8SFCRctpNyqXPVHgGY9RBkmVeOiEfFNhFljJQUaQ/VBDzQ76RcuoS0en?=
+ =?Windows-1252?Q?DCzfh+dm2hDOClj+PP/yceQ0jd8QWA4cd4WfAgp8rUoiYxLn/UnXX7ND?=
+ =?Windows-1252?Q?7KDwllf+BMFYWWUOuX70aPAykAdAtzqYM1SzPUve9BPUCWLCQ7Hd1hQO?=
+ =?Windows-1252?Q?JPj55Nfd7oSvgcEL7LM+voKzRfxj05cKuJglVEUlRM1MXBCGSyJrsNKJ?=
+ =?Windows-1252?Q?T0k7v/SRWYGMg//EqMR1SUVjU+7dXJZg6ugHAsYsIdHNSLI/XBN+pM3V?=
+ =?Windows-1252?Q?SvN/wOqDyHIo4U2Wwoj6MXBhukeGBg+8Iasx91x05Ru+lddLFioQA9yx?=
+ =?Windows-1252?Q?5h8oDIE7zN02/iqZW9cI581HqoeG6O0R+cyT+j48atGWQ/H+l+ffm2bD?=
+ =?Windows-1252?Q?Lknjl8ULRWOopXLNaGGiWlhT9v6q+Pk638piqAm1CYLfeWU1Gnhi97Si?=
+ =?Windows-1252?Q?LcIif2FM495abv7+NP0Dr0cjsgh8Q0CskK8nqB9eidFbQbgsrW7VDrwc?=
+ =?Windows-1252?Q?+ji29rCLsFnimLxapDeVWZlSnnZXg6iV77oRXTKhoAukp2KAZ3KVex2c?=
+ =?Windows-1252?Q?T0Cdsnm/yjxwfVqLZt2QrEBJRpLzip75+BGu4SP0W2bf5gSyJ+WeNaMg?=
+ =?Windows-1252?Q?6L4fFTxKuORN+RvJFyBjJuwL3PgrQthwYjxKIdok2eygeG3GD7BKJOXH?=
+ =?Windows-1252?Q?I9kUBRknH+Vd7Wv0vmVAkQxtYep6V2DbuIU9tgCSX+KkVOukXBU5pasp?=
+ =?Windows-1252?Q?n91nV4/vPjhJSxrihuNl9ZyOr5CFF2ZDgaQGKMmQ/KVI8OYMiILxTLoN?=
+ =?Windows-1252?Q?FRHK4SutME/XgnPf05KluOsKhOHTdBbIcYEvB88kh/cK1eaPKNjDBjob?=
+ =?Windows-1252?Q?lVNRiucPGTq1wXg8txmgOlyco8QyTRBRjiZVrMjTV7Zw/LPfXaawz9sG?=
+ =?Windows-1252?Q?RFZpaORxPnk5kl5mVLnbyYTKNwRhIeHe5LTS7ri6cHgW2qQmHiqUV4Ff?=
+ =?Windows-1252?Q?TVA2i/JLCbW2ii583ylDfUDC/expV9jUgOOPWrcLCgn13/lgXlM1rzPY?=
+ =?Windows-1252?Q?9irqDac1NXIdVQZCe34bfdluqCxExjXU9v0mfaqcxgBI6KsFM4tU+2N7?=
+ =?Windows-1252?Q?1IhLp4wWB4EPK45MDlEg0oiKhqRchCn3qkjXdqeyKNNV7AZWVsKIXnht?=
+ =?Windows-1252?Q?2XsCdzFrSHlwT71WFd1nQHFRDmRMviAzUaUd/YRmmwENTz78NM2CiJ/u?=
+ =?Windows-1252?Q?KyLJjnJfMxI5hHWsfKZ3oDYyQSSOSc72nf6upOcPMuL++Ht+1xX5/xPu?=
+ =?Windows-1252?Q?4QfttnV5GpxLQMLRpkV71m8TSWKo2Hp7rmivZVIEFMwwpIijdYPU1SZ+?=
+ =?Windows-1252?Q?VjRQ1Mpv5iq/pjQmbIigUIEp+VLa5N1JcmyocPnHAUHL9Nf81ZlQQdBu?=
+ =?Windows-1252?Q?OvaJ1b+97USnfhfDmMmy0SxEF6TWXcMK3L5/mZES6crCyO+mRsZ0tqt3?=
+ =?Windows-1252?Q?2WWBptvzRi+PfHm/+4bNASsCJCNnUmdxq0mSysG2LdsasmudRK6EKMdr?=
+ =?Windows-1252?Q?LGDXGw0z+UG43Ly+w9S+E80+rF9kWyo8LmEVfZ+oH8z7e4M4498iMQ?=
+ =?Windows-1252?Q?=3D=3D?=
+Content-Type: multipart/alternative;
+	boundary="_000_PA4PR02MB6896AE0A79478BEAF659A3D294AB9PA4PR02MB6896eurp_"
+MIME-Version: 1.0
+X-OriginatorOrg: devinci.fr
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PA4PR02MB6896.eurprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bd63d6bb-1b0e-485a-4538-08db1597b9a6
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Feb 2023 12:16:00.1515
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 88eebcae-d6e6-4ef7-bba4-4c34f4c2d5e0
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 9nzAzFU+BCu6H/1eJDS3FW7W8KLGuGQ+VPd7SE3C2DcspG18Gp+7QCLku8tTUkYUbWmhfCOM9s/JrdlX4JzAyNsR3WLsSRWpuHfWmqW3Gx0=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR02MB9577
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] CfP - The 34th International Conference on Database and
+ Expert Systems Applications - DEXA2023
+
+--_000_PA4PR02MB6896AE0A79478BEAF659A3D294AB9PA4PR02MB6896eurp_
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+***************************************************************************
+           We apologize if you receive multiple copies of this CFP
+***************************************************************************
+
+
+                    C  A  L  L     F O R       P A P E R S
+
+
+The 34th International Conference on Database and Expert Systems Applicatio=
+ns - DEXA2023
+
+                          August 28-30, 2023
+                           Penang, Malaysia
+
+                    https://www.dexa.org/dexa2023
+                       email: dexa@iiwas.org<mailto:dexa@iiwas.org>
+    Papers submission: https://equinocs.springernature.com/service/DEXA2023
+
+
+**** IMPORTANT DATES ****
+Paper submission: 7 march 2023
+Notification of acceptance: 10 May 2023
+Camera-ready copies due: 1 June 2023
+Conference days: 28-30 August 2023
+
+
+**** PUBLICATION ****
+All accepted DEXA2023 papers will be published by Springer in their Lecture=
+ Notes in Computer Science (LNCS). LNCS volumes are indexed in the Conferen=
+ce Proceedings Citation Index (CPCI), part of Clarivate Analytics=92 Web of=
+ Science; Scopus; EI Engineering Index; Google Scholar; DBLP; etc. Selected=
+ high-quality papers, after revision and extension,  will be invited to be =
+published, in a special issue of Knowledge and Information Systems (KAIS), =
+Springer (IF =3D 3.161) and Transactions of Large Scale Data and Knowledge =
+Centered Systems (TLDKS), Springer.
+**** SCOPE ****
+Database, information, and knowledge systems have always been a core subjec=
+t of computer science. The ever increasing need to distribute, exchange, an=
+d integrate data, information, and knowledge has added further importance t=
+o this subject. Advances in the field will help facilitate new avenues of c=
+ommunication, to proliferate interdisciplinary discovery, and to drive inno=
+vation and commercial opportunity. Since 1990, DEXA has been an annual inte=
+rnational conference which showcases state-of-the-art research activities i=
+n database, information, and knowledge systems. DEXA provides a forum to pr=
+esent research results and to examine advanced applications in the field. T=
+he conference and its associated workshops offer an opportunity for develop=
+ers, scientists, and users to extensively discuss requirements, problems, a=
+nd solutions in database, information, and knowledge systems.
+DEXA 2023 invites research submissions on all topics related to database, i=
+nformation, and knowledge systems including, but not limited to the points =
+in the list below. We also welcome survey papers, provided that the survey =
+fills a void or goes beyond existing overview papers.
+- Acquisition, Modelling, Management and Processing of Knowledge
+- Authenticity, Privacy, Security, and Trust
+- Availability, Reliability and Fault Tolerance
+- Big Data Management and Analytics
+- Consistency, Integrity,  Quality of Data
+- Constraint Modelling and Processing
+- Cloud Computing and Database-as-a-Service
+- Database Federation and Integration, Interoperability, Multi-Databases
+- Data and Information Networks
+- Data and Information Semantics
+- Data Integration, Metadata Management, and Interoperability
+- Data Structures and Data Management Algorithms
+- Database and Information System Architecture and Performance
+- Data Streams, and Sensor Data
+- Data Warehousing
+- Decision Support Systems and Their Applications
+- Dependability, Reliability and Fault Tolerance
+- Digital Libraries, and Multimedia Databases
+- Distributed, Parallel, P2P, Grid, and Cloud Databases
+- Graph Databases
+- Incomplete and Uncertain Data
+- Information Retrieval
+- Information and Database Systems and Their Applications
+- Mobile, Pervasive and Ubiquitous Data
+- Modelling, Automation and Optimisation of Processes
+- NoSQL and NewSQL Databases
+- Object, Object-Relational, and Deductive Databases
+- Provenance of Data and Information
+- Semantic Web and Ontologies
+- Social Networks, Social Web, Graph, and Personal Information Management
+- Statistical and Scientific Databases
+- Temporal, Spatial, and High Dimensional Databases
+- Query Processing and Transaction Management
+- User Interfaces to Databases and Information Systems
+- Visual Data Analytics, Data Mining, and Knowledge Discovery
+- WWW and Databases, Web Services
+- Workflow Management and Databases
+- XML and Semi-structured Data
+**** SUBMISSION GUIDELINES ****
+Authors are invited to electronically submit original research contribution=
+s or experience reports in English. DEXA will accept submissions of both sh=
+ort (up to 6 pages) and full papers (up to 15 pages including references an=
+d appendixes). DEXA reserves the right to accept submitted full papers only=
+ as short papers, in which papers describe interesting and innovative ideas=
+ which still require further technical development.
+Any submission that significantly exceeds length limits or deviates from fo=
+rmatting requirements may be rejected without review.
+
+*** SUBMISSION PROCEDURE ***
+Papers submission will be managed using EquinOCS Springer Nature Conference=
+ Proceedings Submission System.
+Authors should consult Springer=92s authors=92 instructions (https://www.sp=
+ringer.com/gp/computer-science/lncs/conference-proceedings...) and use the =
+proceedings templates, either for LaTeX or for Word, for the preparation of=
+ their papers.
+Once you click on the submission link (https://equinocs.springernature.com/=
+service/DEXA2023), you will be guided to the EquinOCS Login page, which wil=
+l be open in your browser. Click on the button =93Submit now=94. This will =
+guide you directly to the paper submission process. If you already have an =
+account at EquinOCS you will be asked to Login. After Login you will be gui=
+ded to the start page where you can start with your submission. If you do n=
+ot have an account at EquinOCS yet, please follow the registration process.=
+ Once your Account has been created, an email will be sent to the email you=
+ have stated in the registration process. Please follow the instructions in=
+ this email to activate your account and start your submission.
+Please refer to EquinOCS user guide (https://support.springernature.com/en/=
+support/solutions/articles/6000245...) for more information.
+
+**** REVIEW PROCESS ****
+Submitted papers will be carefully evaluated based on originality, signific=
+ance, technical soundness, and clarity of exposition.
+Duplicate submissions are not allowed and will be rejected immediately with=
+out further review.
+Authors are expected to agree to the following terms: "I understand that th=
+e submission must not overlap substantially with any other paper that I am =
+a co-author of or that is currently submitted elsewhere. Furthermore, previ=
+ously published papers with any overlap are cited prominently in this submi=
+ssion."
+Questions about this policy or how it applies to a specific paper should be=
+ directed to the PC Co-chairs.
+
+**** ACCEPTED PAPERS ****
+All accepted conference papers will be published in a volume of "Lecture No=
+tes in Computer Science" (LNCS) by Springer Verlag.  Authors of all accepte=
+d papers must sign a Springer copyright release form. Papers are accepted w=
+ith the understanding that at least one author will register for the confer=
+ence to present the paper. Authors of selected papers presented at the conf=
+erence will be invited to submit extended versions of their papers for publ=
+ication in Knowledge and Information Systems (KAIS), Springer (IF =3D 3.161=
+) and Transactions of Large Scale Data and Knowledge Centered Systems (TLDK=
+S), Springer. The submitted extended versions will undergo a further review=
+ process.
+
+**** Program Committee Chair ****
+- Christine Strauss, University of Vienna, Austria
+- Toshiyuki Amagasa, University of Tsukuba, Japan
+
+Program Committees please refer to DEXA2023 website
+For further inquiries, please contact dexa@iiwas.org<mailto:dexa@iiwas.org>
+
+[https://storage.letsignit.com/5bbf3d27229c7c0001b516ac/2782124701973369373=
+01099848979050892918.png]
+Nicolas TRAVERS
+Enseignant Chercheur - Responsable Groupe Digital
+D=E9partement Informatique, Big Data et Objets Connect=E9s
++33 1 81 00 28 33
+https://www.linkedin.com/in/traversn/
+Retrouvez-nous sur esilv.fr<https://cloud.letsignit.com/collect/bc/5f476b7d=
+8afa650009d761f9?p=3DnP2-ScO6-vNP5RaGcPvyEKdWgVGNlodC4kLGsvUnUpY0qmRs1JsFfk=
+WJSF8ZWmLjziuV1VmS02Lgh9TC4BtYMlMcWETBP8JnIZ84PHKkIFx9xJqVZnPBRoZGBzbPB0LrF=
+BNOY9SMkZqJWdDoUo-I_A=3D=3D>
+[https://storage.letsignit.com/5bbf3d27229c7c0001b516ac/logo_5bbf3d27229c7c=
+0001b516ac_fa26d4badf2c6377bc99410d39ab3e86.png]<https://cloud.letsignit.co=
+m/collect/bc/5f476b7d8afa650009d761f9?p=3DnP2-ScO6-vNP5RaGcPvyEKdWgVGNlodC4=
+kLGsvUnUpY0qmRs1JsFfkWJSF8ZWmLjziuV1VmS02Lgh9TC4BtYMlMcWETBP8JnIZ84PHKkIFx8=
+wg0uYZ_mx-0p-SqUD9zxH_wpHvr3HJbo8rf42lEFKLe1qUDa1Q4HzoARy0RaSJE=3D>[https:/=
+/storage.letsignit.com/5bbf3d27229c7c0001b516ac/logo_5bbf3d27229c7c0001b516=
+ac_30a7735a477788d7833988f38fa47b90.png]<https://cloud.letsignit.com/collec=
+t/bc/5f476b7d8afa650009d761f9?p=3DnP2-ScO6-vNP5RaGcPvyEKdWgVGNlodC4kLGsvUnU=
+pY0qmRs1JsFfkWJSF8ZWmLjziuV1VmS02Lgh9TC4BtYMlMcWETBP8JnIZ84PHKkIFxKXiwuqfzB=
+eDt2YPLQU_LXxkXxV4oEwyI9-Tkv5FnNRlYEwTri5GCAEuWuGYaPbtegN0xp_92SxjeCfEve9-1=
+sFHnoU3SHtB3yapAJZBEA4BQTTmPUjJGaiVnQ6FKPiPw=3D>[https://storage.letsignit.=
+com/5bbf3d27229c7c0001b516ac/logo_5bbf3d27229c7c0001b516ac_959dfa6c5ceef1ac=
+de39b485b1e8493e.png]<https://cloud.letsignit.com/collect/bc/5f476b7d8afa65=
+0009d761f9?p=3DnP2-ScO6-vNP5RaGcPvyEKdWgVGNlodC4kLGsvUnUpY0qmRs1JsFfkWJSF8Z=
+WmLjziuV1VmS02Lgh9TC4BtYMlMcWETBP8JnIZ84PHKkIFwHnZyp88uYMbvJZYe9aL6XcfRYYbZ=
+aA10M4tWvj48RALe1PGvnIb4ZwDS_BGVRGeA=3D>[https://storage.letsignit.com/5bbf=
+3d27229c7c0001b516ac/logo_5bbf3d27229c7c0001b516ac_c4b2fc296b83f99e6fc2b58a=
+412ed46c.png]<https://cloud.letsignit.com/collect/bc/5f476b7d8afa650009d761=
+f9?p=3DnP2-ScO6-vNP5RaGcPvyEKdWgVGNlodC4kLGsvUnUpY0qmRs1JsFfkWJSF8ZWmLjziuV=
+1VmS02Lgh9TC4BtYMlMcWETBP8JnIZ84PHKkIFxJ0i4jG_JgSzSvg9PdlsgSeMMfclztB4ZtafN=
+Ro1rPUIbYm4BW5Gcin3MBUUWu7FS19qDAVrq5mZGEMii1SehZ0cBQIKMNHCo_nd3X9_OAn-45bN=
+iqwGBfDlo2AMQ5VWZc4027l8EcWt5oIB9OkF0F>[https://storage.letsignit.com/5bbf3=
+d27229c7c0001b516ac/logo_5bbf3d27229c7c0001b516ac_f357ead540d478d5ef45625e1=
+99c4e1d.png]<https://cloud.letsignit.com/collect/bc/5f476b7d8afa650009d761f=
+9?p=3DnP2-ScO6-vNP5RaGcPvyEKdWgVGNlodC4kLGsvUnUpY0qmRs1JsFfkWJSF8ZWmLjziuV1=
+VmS02Lgh9TC4BtYMlMcWETBP8JnIZ84PHKkIFyutHKrSAOAB-ZFgzhWDZn4fXy4ny67PVTRS9aa=
+H7Iuabe1qUDa1Q4HzoARy0RaSJE=3D>
+
+
+
+
+--_000_PA4PR02MB6896AE0A79478BEAF659A3D294AB9PA4PR02MB6896eurp_
+Content-Type: text/html; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DWindows-1=
+252">
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<!--[if !mso]><style>v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style><![endif]--><style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Verdana;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:"Times New Roman \(Corps CS\)";
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-fareast-language:EN-US;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;
+	position:relative;
+	top:0pt;
+	mso-text-raise:0pt;
+	letter-spacing:0pt;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-fareast-language:EN-US;}
+.MsoPapDefault
+	{mso-style-type:export-only;}
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:70.85pt 70.85pt 70.85pt 70.85pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style>
+</head>
+<body lang=3D"FR" link=3D"#0563C1" vlink=3D"#954F72" style=3D"word-wrap:bre=
+ak-word">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span lang=3D"EN-US">*******************************=
+********************************************
+<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;We apologize if you receive multiple cop=
+ies of this CFP<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">*******************************=
+********************************************
+<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp; C&nbsp; A&nbsp; L&nbsp; L&nbsp;&nbsp;&nbsp;&nbsp; F O R&nbsp;&nbsp=
+;&nbsp;&nbsp;&nbsp;&nbsp; P A P E R S<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">The 34th International Conferen=
+ce on Database and Expert Systems Applications - DEXA2023<o:p></o:p></span>=
+</p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; August 28-30, 2023<o:p></o:p><=
+/span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Penang, Malaysia<o:p></o=
+:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp; </span><a href=3D"https://www.dexa.org/dexa2023"><span lang=3D"EN-=
+US">https://www.dexa.org/dexa2023</span></a><span lang=3D"EN-US"><o:p></o:p=
+></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp;&nbsp;&nbsp; </span>email: <a href=3D"mailto:dexa@iiwas.org">
+dexa@iiwas.org</a><o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp; Papers submission: <a href=3D"htt=
+ps://equinocs.springernature.com/service/DEXA2023">
+https://equinocs.springernature.com/service/DEXA2023</a><o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal"><o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;<o:p></o:p></p>
+<p class=3D"MsoNormal">**** IMPORTANT DATES ****<o:p></o:p></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Paper submission: 7 march 2023<=
+o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Notification of acceptance: 10 =
+May 2023<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Camera-ready copies due: 1 June=
+ 2023<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Conference days: 28-30 August 2=
+023<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">**** PUBLICATION ****<o:p></o:p=
+></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">All accepted DEXA2023 papers wi=
+ll be published by Springer in their Lecture Notes in Computer Science (LNC=
+S). LNCS volumes are indexed in the Conference Proceedings Citation Index (=
+CPCI), part of Clarivate Analytics=92
+ Web of Science; Scopus; EI Engineering Index; Google Scholar; DBLP; etc. S=
+elected high-quality papers, after revision and extension,&nbsp; will be in=
+vited to be published, in a special issue of Knowledge and Information Syst=
+ems (KAIS), Springer (IF =3D 3.161) and
+ Transactions of Large Scale Data and Knowledge Centered Systems (TLDKS), S=
+pringer.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">**** SCOPE ****<o:p></o:p></spa=
+n></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Database, information, and know=
+ledge systems have always been a core subject of computer science. The ever=
+ increasing need to distribute, exchange, and integrate data, information, =
+and knowledge has added further importance
+ to this subject. Advances in the field will help facilitate new avenues of=
+ communication, to proliferate interdisciplinary discovery, and to drive in=
+novation and commercial opportunity. Since 1990, DEXA has been an annual in=
+ternational conference which showcases
+ state-of-the-art research activities in database, information, and knowled=
+ge systems. DEXA provides a forum to present research results and to examin=
+e advanced applications in the field. The conference and its associated wor=
+kshops offer an opportunity for
+ developers, scientists, and users to extensively discuss requirements, pro=
+blems, and solutions in database, information, and knowledge systems.
+<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">DEXA 2023 invites research subm=
+issions on all topics related to database, information, and knowledge syste=
+ms including, but not limited to the points in the list below. We also welc=
+ome survey papers, provided that the
+ survey fills a void or goes beyond existing overview papers. <o:p></o:p></=
+span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">- Acquisition, Modelling, Manag=
+ement and Processing of Knowledge<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">- Authenticity, Privacy, Securi=
+ty, and Trust<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">- Availability, Reliability and=
+ Fault Tolerance<o:p></o:p></span></p>
+<p class=3D"MsoNormal">- Big Data Management and Analytics<o:p></o:p></p>
+<p class=3D"MsoNormal">- Consistency, Integrity,&nbsp; Quality of Data<o:p>=
+</o:p></p>
+<p class=3D"MsoNormal">- Constraint Modelling and Processing<o:p></o:p></p>
+<p class=3D"MsoNormal">- Cloud Computing and Database-as-a-Service<o:p></o:=
+p></p>
+<p class=3D"MsoNormal">- Database Federation and Integration, Interoperabil=
+ity, Multi-Databases<o:p></o:p></p>
+<p class=3D"MsoNormal">- Data and Information Networks<o:p></o:p></p>
+<p class=3D"MsoNormal">- Data and Information Semantics<o:p></o:p></p>
+<p class=3D"MsoNormal">- Data Integration, Metadata Management, and Interop=
+erability<o:p></o:p></p>
+<p class=3D"MsoNormal">- Data Structures and Data Management Algorithms<o:p=
+></o:p></p>
+<p class=3D"MsoNormal">- Database and Information System Architecture and P=
+erformance<o:p></o:p></p>
+<p class=3D"MsoNormal">- Data Streams, and Sensor Data<o:p></o:p></p>
+<p class=3D"MsoNormal">- Data Warehousing<o:p></o:p></p>
+<p class=3D"MsoNormal">- Decision Support Systems and Their Applications<o:=
+p></o:p></p>
+<p class=3D"MsoNormal">- Dependability, Reliability and Fault Tolerance<o:p=
+></o:p></p>
+<p class=3D"MsoNormal">- Digital Libraries, and Multimedia Databases<o:p></=
+o:p></p>
+<p class=3D"MsoNormal">- Distributed, Parallel, P2P, Grid, and Cloud Databa=
+ses<o:p></o:p></p>
+<p class=3D"MsoNormal">- Graph Databases<o:p></o:p></p>
+<p class=3D"MsoNormal">- Incomplete and Uncertain Data<o:p></o:p></p>
+<p class=3D"MsoNormal">- Information Retrieval<o:p></o:p></p>
+<p class=3D"MsoNormal">- Information and Database Systems and Their Applica=
+tions<o:p></o:p></p>
+<p class=3D"MsoNormal">- Mobile, Pervasive and Ubiquitous Data<o:p></o:p></=
+p>
+<p class=3D"MsoNormal">- Modelling, Automation and Optimisation of Processe=
+s<o:p></o:p></p>
+<p class=3D"MsoNormal">- NoSQL and NewSQL Databases<o:p></o:p></p>
+<p class=3D"MsoNormal">- Object, Object-Relational, and Deductive Databases=
+<o:p></o:p></p>
+<p class=3D"MsoNormal">- Provenance of Data and Information<o:p></o:p></p>
+<p class=3D"MsoNormal">- Semantic Web and Ontologies<o:p></o:p></p>
+<p class=3D"MsoNormal">- Social Networks, Social Web, Graph, and Personal I=
+nformation Management<o:p></o:p></p>
+<p class=3D"MsoNormal">- Statistical and Scientific Databases<o:p></o:p></p=
+>
+<p class=3D"MsoNormal">- Temporal, Spatial, and High Dimensional Databases<=
+o:p></o:p></p>
+<p class=3D"MsoNormal">- Query Processing and Transaction Management<o:p></=
+o:p></p>
+<p class=3D"MsoNormal">- User Interfaces to Databases and Information Syste=
+ms<o:p></o:p></p>
+<p class=3D"MsoNormal">- Visual Data Analytics, Data Mining, and Knowledge =
+Discovery<o:p></o:p></p>
+<p class=3D"MsoNormal">- WWW and Databases, Web Services<o:p></o:p></p>
+<p class=3D"MsoNormal">- Workflow Management and Databases<o:p></o:p></p>
+<p class=3D"MsoNormal">- XML and Semi-structured Data<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p></o:p></p>
+<p class=3D"MsoNormal">**** SUBMISSION GUIDELINES ****<o:p></o:p></p>
+<p class=3D"MsoNormal">Authors are invited to electronically submit origina=
+l research contributions or experience reports in English. DEXA will accept=
+ submissions of both short (up to 6 pages) and full papers (up to 15 pages =
+including references and appendixes).
+ DEXA reserves the right to accept submitted full papers only as short pape=
+rs, in which papers describe interesting and innovative ideas which still r=
+equire further technical development.<o:p></o:p></p>
+<p class=3D"MsoNormal">Any submission that significantly exceeds length lim=
+its or deviates from formatting requirements may be rejected without review=
+.<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">*** SUBMISSION PROCEDURE ***<o:p></o:p></p>
+<p class=3D"MsoNormal">Papers submission will be managed using EquinOCS Spr=
+inger Nature Conference Proceedings Submission System.<o:p></o:p></p>
+<p class=3D"MsoNormal">Authors should consult Springer=92s authors=92 instr=
+uctions (<a href=3D"https://www.springer.com/gp/computer-science/lncs/confe=
+rence-proceedings">https://www.springer.com/gp/computer-science/lncs/confer=
+ence-proceedings</a>...) and use the proceedings
+ templates, either for LaTeX or for Word, for the preparation of their pape=
+rs. <o:p>
+</o:p></p>
+<p class=3D"MsoNormal">Once you click on the submission link (<a href=3D"ht=
+tps://equinocs.springernature.com/service/DEXA2023">https://equinocs.spring=
+ernature.com/service/DEXA2023</a>), you will be guided to the EquinOCS Logi=
+n page, which will be open in your browser.
+ Click on the button =93Submit now=94. This will guide you directly to the =
+paper submission process. If you already have an account at EquinOCS you wi=
+ll be asked to Login. After Login you will be guided to the start page wher=
+e you can start with your submission.
+ If you do not have an account at EquinOCS yet, please follow the registrat=
+ion process. Once your Account has been created, an email will be sent to t=
+he email you have stated in the registration process. Please follow the ins=
+tructions in this email to activate
+ your account and start your submission.<o:p></o:p></p>
+<p class=3D"MsoNormal">Please refer to EquinOCS user guide (<a href=3D"http=
+s://support.springernature.com/en/support/solutions/articles/6000245">https=
+://support.springernature.com/en/support/solutions/articles/6000245</a>...)=
+ for more information.<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">**** REVIEW PROCESS ****<o:p></o:p></p>
+<p class=3D"MsoNormal">Submitted papers will be carefully evaluated based o=
+n originality, significance, technical soundness, and clarity of exposition=
+.<o:p></o:p></p>
+<p class=3D"MsoNormal">Duplicate submissions are not allowed and will be re=
+jected immediately without further review.
+<o:p></o:p></p>
+<p class=3D"MsoNormal">Authors are expected to agree to the following terms=
+: &quot;I understand that the submission must not overlap substantially wit=
+h any other paper that I am a co-author of or that is currently submitted e=
+lsewhere. Furthermore, previously published
+ papers with any overlap are cited prominently in this submission.&quot;<o:=
+p></o:p></p>
+<p class=3D"MsoNormal">Questions about this policy or how it applies to a s=
+pecific paper should be directed to the PC Co-chairs.<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">**** ACCEPTED PAPERS ****<o:p></o:p></p>
+<p class=3D"MsoNormal">All accepted conference papers will be published in =
+a volume of &quot;Lecture Notes in Computer Science&quot; (LNCS) by Springe=
+r Verlag.&nbsp; Authors of all accepted papers must sign a Springer copyrig=
+ht release form. Papers are accepted with the understanding
+ that at least one author will register for the conference to present the p=
+aper. Authors of selected papers presented at the conference will be invite=
+d to submit extended versions of their papers for publication in Knowledge =
+and Information Systems (KAIS),
+ Springer (IF =3D 3.161) and Transactions of Large Scale Data and Knowledge=
+ Centered Systems (TLDKS), Springer. The submitted extended versions will u=
+ndergo a further review process.<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">**** Program Committee Chair ****<o:p></o:p></p>
+<p class=3D"MsoNormal">- Christine Strauss, University of Vienna, Austria<o=
+:p></o:p></p>
+<p class=3D"MsoNormal">- Toshiyuki Amagasa, University of Tsukuba, Japan<o:=
+p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Program Committees please refer to DEXA2023 website<=
+o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p></o:p></p>
+<p class=3D"MsoNormal">For further inquiries, please contact <a href=3D"mai=
+lto:dexa@iiwas.org">
+dexa@iiwas.org</a><o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<div>
+<table class=3D"MsoNormalTable" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0" width=3D"0">
+<tbody>
+<tr>
+<td style=3D"padding:0cm 0cm 0cm 0cm">
+<table class=3D"MsoNormalTable" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0">
+<tbody>
+<tr>
+<td style=3D"padding:0cm 0cm 0cm 0cm">
+<table class=3D"MsoNormalTable" border=3D"0" cellspacing=3D"7" cellpadding=
+=3D"0">
+<tbody>
+<tr>
+<td width=3D"70" style=3D"width:52.5pt;padding:0cm 0cm 0cm 0cm">
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt;mso-fareast-language=
+:FR"><img border=3D"0" id=3D"_x0000_i1030" src=3D"https://storage.letsignit=
+.com/5bbf3d27229c7c0001b516ac/278212470197336937301099848979050892918.png">=
+<o:p></o:p></span></p>
+</td>
+<td style=3D"padding:0cm 0cm 0cm 0cm">
+<p class=3D"MsoNormal" style=3D"line-height:110%"><b><span style=3D"font-si=
+ze:9.0pt;line-height:110%;font-family:&quot;Verdana&quot;,sans-serif;color:=
+#CE1052;mso-fareast-language:FR">Nicolas TRAVERS</span></b><span style=3D"f=
+ont-size:9.0pt;line-height:110%;font-family:&quot;Verdana&quot;,sans-serif;=
+color:#CE1052;mso-fareast-language:FR"><br>
+</span><b><span style=3D"font-size:9.0pt;line-height:110%;font-family:&quot=
+;Verdana&quot;,sans-serif;color:black;mso-fareast-language:FR">Enseignant C=
+hercheur - Responsable Groupe Digital</span></b><span style=3D"font-size:9.=
+0pt;line-height:110%;font-family:&quot;Verdana&quot;,sans-serif;color:black=
+;mso-fareast-language:FR"><br>
+D=E9partement Informatique, Big Data et Objets Connect=E9s<br>
++33 1 81 00 28 33 <br>
+https://www.linkedin.com/in/traversn/</span><span style=3D"font-size:11.0pt=
+;line-height:110%;font-family:&quot;Verdana&quot;,sans-serif;mso-fareast-la=
+nguage:FR"><o:p></o:p></span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"padding:0cm 0cm 0cm 0cm"></td>
+<td style=3D"padding:0cm 0cm 0cm 0cm">
+<table class=3D"MsoNormalTable" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0">
+<tbody>
+<tr>
+<td style=3D"padding:0cm 0cm 0cm 0cm">
+<p class=3D"MsoNormal"><i><span style=3D"font-size:9.0pt;font-family:&quot;=
+Verdana&quot;,sans-serif;color:black;mso-fareast-language:FR">Retrouvez-nou=
+s sur
+<b><a href=3D"https://cloud.letsignit.com/collect/bc/5f476b7d8afa650009d761=
+f9?p=3DnP2-ScO6-vNP5RaGcPvyEKdWgVGNlodC4kLGsvUnUpY0qmRs1JsFfkWJSF8ZWmLjziuV=
+1VmS02Lgh9TC4BtYMlMcWETBP8JnIZ84PHKkIFx9xJqVZnPBRoZGBzbPB0LrFBNOY9SMkZqJWdD=
+oUo-I_A=3D=3D"><span style=3D"color:black;text-decoration:none">esilv.fr</s=
+pan></a></b></span></i><b><span style=3D"font-size:9.0pt;font-family:&quot;=
+Verdana&quot;,sans-serif;color:black;mso-fareast-language:FR">
+</span></b><span style=3D"font-size:11.0pt;mso-fareast-language:FR"><o:p></=
+o:p></span></p>
+</td>
+</tr>
+<tr style=3D"height:18.0pt">
+<td style=3D"padding:0cm 0cm 0cm 0cm;height:18.0pt">
+<p class=3D"MsoNormal"><a href=3D"https://cloud.letsignit.com/collect/bc/5f=
+476b7d8afa650009d761f9?p=3DnP2-ScO6-vNP5RaGcPvyEKdWgVGNlodC4kLGsvUnUpY0qmRs=
+1JsFfkWJSF8ZWmLjziuV1VmS02Lgh9TC4BtYMlMcWETBP8JnIZ84PHKkIFx8wg0uYZ_mx-0p-Sq=
+UD9zxH_wpHvr3HJbo8rf42lEFKLe1qUDa1Q4HzoARy0RaSJE=3D"><span style=3D"font-si=
+ze:11.0pt;color:blue;mso-fareast-language:FR;text-decoration:none"><img bor=
+der=3D"0" width=3D"16" height=3D"16" style=3D"width:.1666in;height:.1666in"=
+ id=3D"_x0000_i1029" src=3D"https://storage.letsignit.com/5bbf3d27229c7c000=
+1b516ac/logo_5bbf3d27229c7c0001b516ac_fa26d4badf2c6377bc99410d39ab3e86.png"=
+></span></a><a href=3D"https://cloud.letsignit.com/collect/bc/5f476b7d8afa6=
+50009d761f9?p=3DnP2-ScO6-vNP5RaGcPvyEKdWgVGNlodC4kLGsvUnUpY0qmRs1JsFfkWJSF8=
+ZWmLjziuV1VmS02Lgh9TC4BtYMlMcWETBP8JnIZ84PHKkIFxKXiwuqfzBeDt2YPLQU_LXxkXxV4=
+oEwyI9-Tkv5FnNRlYEwTri5GCAEuWuGYaPbtegN0xp_92SxjeCfEve9-1sFHnoU3SHtB3yapAJZ=
+BEA4BQTTmPUjJGaiVnQ6FKPiPw=3D"><span style=3D"font-size:11.0pt;color:blue;m=
+so-fareast-language:FR;text-decoration:none"><img border=3D"0" width=3D"16"=
+ height=3D"16" style=3D"width:.1666in;height:.1666in" id=3D"_x0000_i1028" s=
+rc=3D"https://storage.letsignit.com/5bbf3d27229c7c0001b516ac/logo_5bbf3d272=
+29c7c0001b516ac_30a7735a477788d7833988f38fa47b90.png"></span></a><a href=3D=
+"https://cloud.letsignit.com/collect/bc/5f476b7d8afa650009d761f9?p=3DnP2-Sc=
+O6-vNP5RaGcPvyEKdWgVGNlodC4kLGsvUnUpY0qmRs1JsFfkWJSF8ZWmLjziuV1VmS02Lgh9TC4=
+BtYMlMcWETBP8JnIZ84PHKkIFwHnZyp88uYMbvJZYe9aL6XcfRYYbZaA10M4tWvj48RALe1PGvn=
+Ib4ZwDS_BGVRGeA=3D"><span style=3D"font-size:11.0pt;color:blue;mso-fareast-=
+language:FR;text-decoration:none"><img border=3D"0" width=3D"16" height=3D"=
+16" style=3D"width:.1666in;height:.1666in" id=3D"_x0000_i1027" src=3D"https=
+://storage.letsignit.com/5bbf3d27229c7c0001b516ac/logo_5bbf3d27229c7c0001b5=
+16ac_959dfa6c5ceef1acde39b485b1e8493e.png"></span></a><a href=3D"https://cl=
+oud.letsignit.com/collect/bc/5f476b7d8afa650009d761f9?p=3DnP2-ScO6-vNP5RaGc=
+PvyEKdWgVGNlodC4kLGsvUnUpY0qmRs1JsFfkWJSF8ZWmLjziuV1VmS02Lgh9TC4BtYMlMcWETB=
+P8JnIZ84PHKkIFxJ0i4jG_JgSzSvg9PdlsgSeMMfclztB4ZtafNRo1rPUIbYm4BW5Gcin3MBUUW=
+u7FS19qDAVrq5mZGEMii1SehZ0cBQIKMNHCo_nd3X9_OAn-45bNiqwGBfDlo2AMQ5VWZc4027l8=
+EcWt5oIB9OkF0F"><span style=3D"font-size:11.0pt;color:blue;mso-fareast-lang=
+uage:FR;text-decoration:none"><img border=3D"0" width=3D"16" height=3D"16" =
+style=3D"width:.1666in;height:.1666in" id=3D"_x0000_i1026" src=3D"https://s=
+torage.letsignit.com/5bbf3d27229c7c0001b516ac/logo_5bbf3d27229c7c0001b516ac=
+_c4b2fc296b83f99e6fc2b58a412ed46c.png"></span></a><a href=3D"https://cloud.=
+letsignit.com/collect/bc/5f476b7d8afa650009d761f9?p=3DnP2-ScO6-vNP5RaGcPvyE=
+KdWgVGNlodC4kLGsvUnUpY0qmRs1JsFfkWJSF8ZWmLjziuV1VmS02Lgh9TC4BtYMlMcWETBP8Jn=
+IZ84PHKkIFyutHKrSAOAB-ZFgzhWDZn4fXy4ny67PVTRS9aaH7Iuabe1qUDa1Q4HzoARy0RaSJE=
+=3D"><span style=3D"font-size:11.0pt;color:blue;mso-fareast-language:FR;tex=
+t-decoration:none"><img border=3D"0" width=3D"16" height=3D"16" style=3D"wi=
+dth:.1666in;height:.1666in" id=3D"_x0000_i1025" src=3D"https://storage.lets=
+ignit.com/5bbf3d27229c7c0001b516ac/logo_5bbf3d27229c7c0001b516ac_f357ead540=
+d478d5ef45625e199c4e1d.png"></span></a><span style=3D"font-size:11.0pt;mso-=
+fareast-language:FR"><o:p></o:p></span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td style=3D"border:none;border-top:solid #CE1052 2.25pt;padding:0cm 0cm 0c=
+m 0cm"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt;display:none;mso-far=
+east-language:FR"><o:p>&nbsp;</o:p></span></p>
+<table class=3D"MsoNormalTable" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0" width=3D"0">
+<tbody>
+<tr>
+<td style=3D"padding:0cm 0cm 0cm 0cm">
+<div id=3D"LSI_marker">
+<p class=3D"MsoNormal"><span style=3D"font-size:1.0pt;mso-fareast-language:=
+FR">&nbsp;<o:p></o:p></span></p>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+</body>
+</html>
+
+--_000_PA4PR02MB6896AE0A79478BEAF659A3D294AB9PA4PR02MB6896eurp_--

@@ -1,0 +1,507 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from bouncesmtp2.univ-nantes.fr (BounceSMTP2.univ-nantes.prive [172.20.12.67])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id BB00E14014ED
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Sun, 16 Jan 2022 18:28:02 +0100 (CET)
+Received: from mx3.d101.univ-nantes.fr (MX3.univ-nantes.fr [193.52.101.137])
+	by bouncesmtp2.univ-nantes.fr (Postfix) with ESMTP id B2D635F92
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Sun, 16 Jan 2022 18:28:02 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTP id A7B36208E3
+	for <liste-egc@polytech.univ-nantes.fr>; Sun, 16 Jan 2022 18:28:02 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -12.791
+X-Spam-Level:
+X-Spam-Status: No, score=-12.791 tagged_above=-1000 required=5
+	tests=[CRM114_GOOD=-5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+	MANGLED_SIDE=2.3, RCVD_IN_DNSWL_MED=-10, RCVD_IN_WSFF=0.01,
+	SPF_HELO_PASS=-0.001, SPF_PASS=-0.001, UN_PHISHING_PW=0.1]
+	autolearn=disabled
+X-CRM114-Status: GOOD ( 16.9108 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=univ-lyon2.fr
+Received: from mx3.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 7x2HbEI9igsl for <liste-egc@polytech.univ-nantes.fr>;
+	Sun, 16 Jan 2022 18:28:00 +0100 (CET)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from smtp.univ-lyon2.fr (smtp.univ-lyon2.fr [159.84.182.45])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTPS id 2B123208E1
+	for <liste-egc@polytech.univ-nantes.fr>; Sun, 16 Jan 2022 18:28:00 +0100 (CET)
+Received: from ru.univ-lyon2.fr (localhost [127.0.0.1])
+	by smtp.univ-lyon2.fr (Postfix) with ESMTP id C7927139859
+	for <liste-egc@polytech.univ-nantes.fr>; Sun, 16 Jan 2022 18:27:59 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=univ-lyon2.fr;
+	s=201509-490482f6; t=1642354079;
+	bh=PK+QPm35UdaCG5TtNHqmZHnJFl8m6zES5J3hgQmsoOU=;
+	h=From:To:Subject:Date:References:In-Reply-To;
+	b=M42HzjiUWMTSTiuGeMmf5L7qwSzX1q3NYxTe9LdyUOnH3AzuGqAc/eGmoM5XMwqNd
+	 +QSuBQ3luAFImum32FGn2H5oKgTGO5OejhXyWkX15hClLo+ROCN4WkFEnXwYHzgxQR
+	 DvTD9CFpc7SC9CeoAdWRcYyDg3WVEavisqF7EEg17uxGgjrzBUwhoXuV1iaJgo1bsl
+	 OYsqimhN7ldLrmqTk3s/y7Nj9AaWWVq3dO38+y4KIYrBFq8IDZtY9RoSv2JsUViQCt
+	 5k6h9C0P3s/8ZcF9kk06xRmlrtkLZku9Ovz82M8+k2AHAE2woYzdtN7LWCRC/2ThJi
+	 dHjaDzcl58USw==
+X-Virus-Scanned: amavisd-new at univ-lyon2.fr
+Received: from amavis.at.univ-lyon2.fr ([127.0.0.1])
+	by ru.univ-lyon2.fr (smtp.univ-lyon2.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id JCUmiup_T0Kx for <liste-egc@polytech.univ-nantes.fr>;
+	Sun, 16 Jan 2022 18:27:59 +0100 (CET)
+Received: from EXCHG-8-Q.ADLYON2.UNIV-LYON2.FR (exchg-8-q.univ-lyon2.fr [159.84.182.199])
+	by smtp.univ-lyon2.fr (Postfix) with ESMTP
+	for <liste-egc@polytech.univ-nantes.fr>; Sun, 16 Jan 2022 18:27:59 +0100 (CET)
+Received: from EXCHG-4-B.ADLYON2.UNIV-LYON2.FR (159.84.182.215) by
+ EXCHG-8-Q.ADLYON2.UNIV-LYON2.FR (159.84.182.199) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.7; Sun, 16 Jan 2022 18:27:58 +0100
+Received: from EXCHG-4-B.ADLYON2.UNIV-LYON2.FR ([fe80::4d6c:30f7:c138:45e6])
+ by EXCHG-4-B.ADLYON2.UNIV-LYON2.FR ([fe80::4d6c:30f7:c138:45e6%4]) with mapi
+ id 15.01.2375.007; Sun, 16 Jan 2022 18:27:58 +0100
+From: Cecile Favre <cecile.favre@univ-lyon2.fr>
+To: "liste-egc@polytech.univ-nantes.fr" <liste-egc@polytech.univ-nantes.fr>
+Thread-Topic: =?windows-1256?Q?Appel_=E0_communication_-_Inforsid_2022?=
+Thread-Index: AdgK/i2SRhDaVYbcTuWslD3V9sVi8wAAC2Ow
+Date: Sun, 16 Jan 2022 17:27:58 +0000
+Message-ID: <29b96a343fae4a93a01968911538788d@univ-lyon2.fr>
+References: <7931440375004a82acc43b42f7ca6e97@univ-lyon2.fr>
+In-Reply-To: <7931440375004a82acc43b42f7ca6e97@univ-lyon2.fr>
+Accept-Language: fr-FR, en-US
+Content-Language: fr-FR
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+Content-Type: multipart/alternative;
+	boundary="_000_29b96a343fae4a93a01968911538788dunivlyon2fr_"
+MIME-Version: 1.0
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Appel =?WINDOWS-1256?Q?=E0?= communication - Inforsid
+ 2022
+
+--_000_29b96a343fae4a93a01968911538788dunivlyon2fr_
+Content-Type: text/plain; charset="windows-1256"
+Content-Transfer-Encoding: quoted-printable
+
+Inforsid 2022 vous adresse ses meilleurs v=9Cux scientifiques, p=E9dagogiqu=
+es et personnels !
+
+Nous vous rappelons l'appel =E0 communication ci-dessous !
+
+
+Appel =E0 communication
+
+40=E8me Congr=E8s INFORSID 2022
+
+Dijon, 31 mai-3 Juin 2022
+
+https://inforsid2022.sciencesconf.org/
+
+
+
+Depuis 1982, le congr=E8s annuel INFORSID (INFormatique des ORganisations e=
+t Syst=E8mes d'Information et de D=E9cision) constitue le lieu d'=E9change =
+privil=E9gi=E9 entre chercheurs et praticiens pour identifier et explorer l=
+es probl=E9matiques, les opportunit=E9s et les solutions que les SI apporte=
+nt ou absorbent. C'est aussi l'occasion de partager et de diffuser les exp=
+=E9riences de mise en =9Cuvre des m=E9thodes, mod=E8les, outils et solution=
+s li=E9s aux nouvelles technologies. Les SI sont omnipr=E9sents au sens o=
+=F9 aucun domaine d'activit=E9 n'y =E9chappe. Aussi, dans certains secteurs=
+ (sant=E9, finance, agriculture, environnement, culture, logistique, etc.),=
+ les SI posent des d=E9fis qui sont propres =E0 leurs secteurs, ouvrant ain=
+si des champs d=92=E9tude sp=E9cifiques.
+
+En 2022, le congr=E8s INFORSID se tiendra =E0 Dijon du 31 mai au 3 juin. No=
+us sollicitons, comme chaque ann=E9e, la pr=E9sentation de travaux de reche=
+rche r=E9cents, de d=E9veloppements industriels et d'exp=E9riences signific=
+atives dans le domaine de l'ing=E9nierie et des syst=E8mes d'information, m=
+ais =E9galement des travaux plus exploratoires, ou simplement une id=E9e su=
+r laquelle d=E9battre.
+
+Les th=E9matiques vis=E9es sont les suivantes (sans que cette liste ne soit=
+ exhaustive) :
+
+=95    SI et Sciences de conception (Design)
+
+=95    Gouvernance et management des SI
+
+=95    SI et Donn=E9es Massives (Big Data)
+
+=95    SI et Sciences de Donn=E9es
+
+=95    SI et Interaction Humaine
+
+=95    S=E9curit=E9 des SI, Respect de la vie priv=E9e et Ethique
+
+=95   R=E9flexions sur l=92interaction Homme-Homme et la responsabilit=E9 d=
+ans un environnement virtuel
+
+=95    Sciences des services, Ing=E9nierie des processus et SI
+
+=95    Ing=E9nierie des documents et des connaissances
+
+=95    SI et Entreprises du futur
+
+=95    SI D=E9di=E9s
+
+=95    Enseignement et Recherche en SI
+
+
+DATES IMPORTANTES
+
+Date limite de r=E9ception des r=E9sum=E9s :  07 F=E9vrier 2022
+
+Date limite de r=E9ception des articles : 21 f=E9vrier 2022
+
+Notification aux auteurs :    4 avril 2022
+
+Date limite de r=E9ception des textes d=E9finitifs :  25 avril 2022
+
+Dates du congr=E8s :  31 mai- 3 juin 2022
+
+SOUMISSION
+
+Trois types de soumission sont possibles :
+
+=95    Session Recherche : articles longs (12 =E0 16 pages) ou articles cou=
+rts (4 =E0 6 pages).
+
+=95    Session internationale (2 pages) : articles publi=E9s dans de tr=E8s=
+ bonnes conf=E9rences ou revues internationales dans l'ann=E9e 2021 et soum=
+is pour pr=E9sentation lors de la conf=E9rence. L'objectif est de faire par=
+tager avec la communaut=E9 nationale les travaux les plus r=E9cents m=EAme =
+si ceux-ci ont d=E9j=E0 =E9t=E9 publi=E9s
+
+=95    Session D=E9mos (2-4 pages) : Pr=E9sentation d'outils, prototypes, m=
+aquettes, de travaux ou projets en cours, d'exp=E9rimentations ou jeux de d=
+onn=E9es de r=E9f=E9rence, etc.
+
+Les articles devront se conformer au mod=E8le Herm=E8s-Lavoisier disponible=
+ sur le site https://inforsid2022.sciencesconf.org/
+
+Les articles doivent =EAtre soumis en format PDF sur le site : https://easy=
+chair.org/conferences/?conf=3Dinf22
+
+La langue officielle du congr=E8s est le fran=E7ais. Toutefois le congr=E8s=
+ est ouvert aux contributions de langue anglaise.
+
+EVALUATION ET PUBLICATION
+
+Tous les articles seront =E9valu=E9s par trois lecteurs du Comit=E9 de prog=
+ramme. Les articles s=E9lectionn=E9s seront publi=E9s dans les actes du con=
+gr=E8s et feront l'objet d'une pr=E9sentation. Un article soumis =E0 INFORS=
+ID 2021 ne doit pas =EAtre dans un processus d=92=E9valuation dans une autr=
+e conf=E9rence ou journal. Toute double soumission sera refus=E9e.
+
+Apr=E8s la conf=E9rence les auteurs des meilleurs articles seront invit=E9s=
+ =E0 soumettre une version =E9tendue dans ISTE Editions vers la Revue Ouver=
+te d'Ing=E9nierie des Syst=E8mes d'Information (https://www.openscience.fr/=
+Revue-ouverte-d-ingenierie-des-systemes-d-information), suivant le processu=
+s de s=E9lection propre =E0 la revue.
+
+
+--_000_29b96a343fae4a93a01968911538788dunivlyon2fr_
+Content-Type: text/html; charset="windows-1256"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dwindows-1=
+256">
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+h1
+	{mso-style-priority:9;
+	mso-style-link:"Titre 1 Car";
+	mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	font-size:24.0pt;
+	font-family:"Calibri",sans-serif;
+	font-weight:bold;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+span.Titre1Car
+	{mso-style-name:"Titre 1 Car";
+	mso-style-priority:9;
+	mso-style-link:"Titre 1";
+	font-family:"Calibri",sans-serif;
+	mso-fareast-language:FR;
+	font-weight:bold;}
+p.msonormal0, li.msonormal0, div.msonormal0
+	{mso-style-name:msonormal;
+	mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	font-size:12.0pt;
+	font-family:"Times New Roman",serif;}
+span.EmailStyle19
+	{mso-style-type:personal;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+span.EmailStyle20
+	{mso-style-type:personal;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+span.EmailStyle21
+	{mso-style-type:personal;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+span.EmailStyle23
+	{mso-style-type:personal-reply;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-size:10.0pt;}
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:70.85pt 70.85pt 70.85pt 70.85pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"FR" link=3D"#0563C1" vlink=3D"#954F72">
+<div class=3D"WordSection1">
+<p><b>Inforsid 2022 </b>vous adresse ses meilleurs v=9Cux scientifiques, p=
+=E9dagogiques et personnels !<o:p></o:p></p>
+<p>Nous vous rappelons l'appel =E0 communication ci-dessous !<o:p></o:p></p=
+>
+<h1 style=3D"mso-margin-top-alt:0cm;margin-right:0cm;margin-bottom:24.0pt;m=
+argin-left:0cm" id=3D"docs-internal-guid-2f5508c5-7fff-c06c-9a09-49a0705273=
+0e">
+<o:p>&nbsp;</o:p></h1>
+<h1 style=3D"mso-margin-top-alt:0cm;margin-right:0cm;margin-bottom:8.0pt;ma=
+rgin-left:0cm" id=3D"docs-internal-guid-2f5508c5-7fff-c06c-9a09-49a07052730=
+e">
+<span style=3D"font-size:18.0pt;color:black">Appel =E0 communication</span>=
+<o:p></o:p></h1>
+<p style=3D"mso-margin-top-alt:0cm;margin-right:0cm;margin-bottom:8.0pt;mar=
+gin-left:0cm">
+<b><span style=3D"color:black">40=E8me Congr=E8s INFORSID 2022</span></b><s=
+pan style=3D"color:black"><o:p></o:p></span></p>
+<p style=3D"mso-margin-top-alt:0cm;margin-right:0cm;margin-bottom:8.0pt;mar=
+gin-left:0cm">
+<b><span style=3D"font-size:9.0pt;color:black">Dijon, 31 mai-3 Juin 2022<o:=
+p></o:p></span></b></p>
+<p style=3D"mso-margin-top-alt:0cm;margin-right:0cm;margin-bottom:8.0pt;mar=
+gin-left:0cm">
+<a href=3D"https://inforsid2022.sciencesconf.org/"><span style=3D"font-size=
+:8.0pt;font-family:&quot;Arial&quot;,sans-serif">https://inforsid2022.scien=
+cesconf.org/</span></a><span class=3D"MsoHyperlink"><span style=3D"font-siz=
+e:8.0pt;color:black"><o:p></o:p></span></span></p>
+<p style=3D"mso-margin-top-alt:0cm;margin-right:0cm;margin-bottom:8.0pt;mar=
+gin-left:0cm">
+<span class=3D"MsoHyperlink"><span style=3D"font-size:8.0pt;color:black"><o=
+:p><span style=3D"text-decoration:none">&nbsp;</span></o:p></span></span></=
+p>
+<p style=3D"mso-margin-top-alt:0cm;margin-right:0cm;margin-bottom:8.0pt;mar=
+gin-left:0cm;text-align:justify">
+<span style=3D"color:black">Depuis 1982, le congr=E8s annuel INFORSID (INFo=
+rmatique des ORganisations et Syst=E8mes d'Information et de D=E9cision) co=
+nstitue le lieu d'=E9change privil=E9gi=E9 entre chercheurs et praticiens p=
+our identifier et explorer les probl=E9matiques,
+ les opportunit=E9s et les solutions que les SI apportent ou absorbent. C'e=
+st aussi l'occasion de partager et de diffuser les exp=E9riences de mise en=
+ =9Cuvre des m=E9thodes, mod=E8les, outils et solutions li=E9s aux nouvelle=
+s technologies. Les SI sont omnipr=E9sents au
+ sens o=F9 aucun domaine d'activit=E9 n'y =E9chappe. Aussi, dans certains s=
+ecteurs (sant=E9, finance, agriculture, environnement, culture, logistique,=
+ etc.), les SI posent des d=E9fis qui sont propres =E0 leurs secteurs, ouvr=
+ant ainsi des champs d=92=E9tude sp=E9cifiques.&nbsp;</span><o:p></o:p></p>
+<p style=3D"mso-margin-top-alt:0cm;margin-right:0cm;margin-bottom:8.0pt;mar=
+gin-left:0cm;text-align:justify">
+<span style=3D"color:black">En 2022, le congr=E8s INFORSID se tiendra =E0 D=
+ijon du <b>31 mai au 3 juin.</b> Nous sollicitons, comme chaque ann=E9e, la=
+ pr=E9sentation de travaux de recherche r=E9cents, de d=E9veloppements indu=
+striels et d'exp=E9riences significatives dans le
+ domaine de l'ing=E9nierie et des syst=E8mes d'information, mais =E9galemen=
+t des travaux plus exploratoires, ou simplement une id=E9e sur laquelle d=
+=E9battre.</span><o:p></o:p></p>
+<p style=3D"mso-margin-top-alt:0cm;margin-right:0cm;margin-bottom:8.0pt;mar=
+gin-left:0cm;text-align:justify">
+<span style=3D"color:black">Les th=E9matiques vis=E9es sont les suivantes (=
+sans que cette liste ne soit exhaustive) :</span><o:p></o:p></p>
+<p style=3D"mso-margin-top-alt:6.0pt;margin-right:0cm;margin-bottom:0cm;mar=
+gin-left:0cm;margin-bottom:.0001pt;text-align:justify">
+<span style=3D"color:black">=95&nbsp;&nbsp;&nbsp; SI et Sciences de concept=
+ion (Design)</span><o:p></o:p></p>
+<p style=3D"mso-margin-top-alt:6.0pt;margin-right:0cm;margin-bottom:0cm;mar=
+gin-left:0cm;margin-bottom:.0001pt;text-align:justify">
+<span style=3D"color:black">=95&nbsp;&nbsp;&nbsp; Gouvernance et management=
+ des SI&nbsp;</span><o:p></o:p></p>
+<p style=3D"mso-margin-top-alt:6.0pt;margin-right:0cm;margin-bottom:0cm;mar=
+gin-left:0cm;margin-bottom:.0001pt;text-align:justify">
+<span style=3D"color:black">=95&nbsp;&nbsp;&nbsp; SI et Donn=E9es Massives =
+(Big Data)</span><o:p></o:p></p>
+<p style=3D"mso-margin-top-alt:6.0pt;margin-right:0cm;margin-bottom:0cm;mar=
+gin-left:0cm;margin-bottom:.0001pt;text-align:justify">
+<span style=3D"color:black">=95&nbsp;&nbsp;&nbsp; SI et Sciences de Donn=E9=
+es&nbsp;</span><o:p></o:p></p>
+<p style=3D"mso-margin-top-alt:6.0pt;margin-right:0cm;margin-bottom:0cm;mar=
+gin-left:0cm;margin-bottom:.0001pt;text-align:justify">
+<span style=3D"color:black">=95&nbsp;&nbsp;&nbsp; SI et Interaction Humaine=
+&nbsp;</span><o:p></o:p></p>
+<p style=3D"mso-margin-top-alt:6.0pt;margin-right:0cm;margin-bottom:0cm;mar=
+gin-left:0cm;margin-bottom:.0001pt;text-align:justify">
+<span style=3D"color:black">=95&nbsp;&nbsp;&nbsp; S=E9curit=E9 des SI, Resp=
+ect de la vie priv=E9e et Ethique&nbsp;</span><o:p></o:p></p>
+<p style=3D"mso-margin-top-alt:6.0pt;margin-right:0cm;margin-bottom:0cm;mar=
+gin-left:0cm;margin-bottom:.0001pt;text-align:justify">
+<span style=3D"color:black">=95&nbsp;&nbsp;&nbsp;R=E9flexions sur l=92inter=
+action Homme-Homme et la responsabilit=E9 dans un environnement virtuel
+</span><o:p></o:p></p>
+<p style=3D"mso-margin-top-alt:6.0pt;margin-right:0cm;margin-bottom:0cm;mar=
+gin-left:0cm;margin-bottom:.0001pt;text-align:justify">
+<span style=3D"color:black">=95&nbsp;&nbsp;&nbsp; Sciences des services, In=
+g=E9nierie des processus et SI</span><o:p></o:p></p>
+<p style=3D"mso-margin-top-alt:6.0pt;margin-right:0cm;margin-bottom:0cm;mar=
+gin-left:0cm;margin-bottom:.0001pt;text-align:justify">
+<span style=3D"color:black">=95&nbsp;&nbsp;&nbsp; Ing=E9nierie des document=
+s et des connaissances</span><o:p></o:p></p>
+<p style=3D"mso-margin-top-alt:6.0pt;margin-right:0cm;margin-bottom:0cm;mar=
+gin-left:0cm;margin-bottom:.0001pt;text-align:justify">
+<span style=3D"color:black">=95&nbsp;&nbsp;&nbsp; SI et Entreprises du futu=
+r&nbsp;</span><o:p></o:p></p>
+<p style=3D"mso-margin-top-alt:6.0pt;margin-right:0cm;margin-bottom:0cm;mar=
+gin-left:0cm;margin-bottom:.0001pt;text-align:justify">
+<span style=3D"color:black">=95&nbsp;&nbsp;&nbsp; SI D=E9di=E9s&nbsp;</span=
+><o:p></o:p></p>
+<p style=3D"mso-margin-top-alt:6.0pt;margin-right:0cm;margin-bottom:0cm;mar=
+gin-left:0cm;margin-bottom:.0001pt;text-align:justify">
+<span style=3D"color:black">=95&nbsp;&nbsp;&nbsp; Enseignement et Recherche=
+ en SI&nbsp;</span><o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<div style=3D"border-top:solid black 1.0pt;border-left:none;border-bottom:s=
+olid black 1.0pt;border-right:none;padding:1.0pt 0cm 1.0pt 0cm">
+<p style=3D"mso-margin-top-alt:6.0pt;margin-right:0cm;margin-bottom:6.0pt;m=
+argin-left:0cm">
+<span style=3D"color:black">DATES IMPORTANTES</span><o:p></o:p></p>
+</div>
+<p style=3D"mso-margin-top-alt:6.0pt;margin-right:0cm;margin-bottom:0cm;mar=
+gin-left:0cm;margin-bottom:.0001pt">
+<span style=3D"color:black">Date limite de r=E9ception des r=E9sum=E9s :&nb=
+sp;&nbsp;07 F=E9vrier 2022&nbsp;</span><o:p></o:p></p>
+<p style=3D"mso-margin-top-alt:0cm;margin-right:0cm;margin-bottom:14.0pt;ma=
+rgin-left:0cm">
+<span style=3D"color:black">Date limite de r=E9ception des articles :&nbsp;=
+21 f=E9vrier 2022&nbsp;<o:p></o:p></span></p>
+<p style=3D"mso-margin-top-alt:0cm;margin-right:0cm;margin-bottom:14.0pt;ma=
+rgin-left:0cm">
+<span style=3D"color:black">Notification aux auteurs :&nbsp;&nbsp;&nbsp; 4 =
+avril 2022<o:p></o:p></span></p>
+<p style=3D"mso-margin-top-alt:0cm;margin-right:0cm;margin-bottom:14.0pt;ma=
+rgin-left:0cm">
+<span style=3D"color:black">Date limite de r=E9ception des textes d=E9finit=
+ifs :&nbsp; 25 avril 2022<o:p></o:p></span></p>
+<p style=3D"mso-margin-top-alt:0cm;margin-right:0cm;margin-bottom:14.0pt;ma=
+rgin-left:0cm">
+<span style=3D"color:black">Dates du congr=E8s :&nbsp; 31 mai- 3 juin 2022<=
+/span><o:p></o:p></p>
+<div style=3D"border-top:solid black 1.0pt;border-left:none;border-bottom:s=
+olid black 1.0pt;border-right:none;padding:1.0pt 0cm 1.0pt 0cm">
+<p style=3D"mso-margin-top-alt:6.0pt;margin-right:0cm;margin-bottom:6.0pt;m=
+argin-left:0cm">
+<span style=3D"color:black">SOUMISSION</span><o:p></o:p></p>
+</div>
+<p style=3D"mso-margin-top-alt:6.0pt;margin-right:0cm;margin-bottom:6.0pt;m=
+argin-left:0cm">
+<span style=3D"color:black">Trois types de soumission sont possibles :</spa=
+n><o:p></o:p></p>
+<p style=3D"mso-margin-top-alt:6.0pt;margin-right:0cm;margin-bottom:6.0pt;m=
+argin-left:0cm;text-align:justify">
+<span style=3D"color:black">=95&nbsp;&nbsp;&nbsp; <b>Session Recherche</b> =
+: articles longs (12 =E0 16 pages) ou articles courts (4 =E0 6 pages).&nbsp=
+;</span><o:p></o:p></p>
+<p style=3D"mso-margin-top-alt:6.0pt;margin-right:0cm;margin-bottom:6.0pt;m=
+argin-left:0cm;text-align:justify">
+<span style=3D"color:black">=95&nbsp;&nbsp;&nbsp; <b>Session internationale=
+</b> (2 pages) : articles publi=E9s dans de tr=E8s bonnes conf=E9rences ou =
+revues internationales dans l'ann=E9e 2021 et soumis pour pr=E9sentation lo=
+rs de la conf=E9rence. L'objectif est de faire partager avec la
+ communaut=E9 nationale les travaux les plus r=E9cents m=EAme si ceux-ci on=
+t d=E9j=E0 =E9t=E9 publi=E9s</span><o:p></o:p></p>
+<p style=3D"mso-margin-top-alt:6.0pt;margin-right:0cm;margin-bottom:6.0pt;m=
+argin-left:0cm;text-align:justify">
+<span style=3D"color:black">=95&nbsp;&nbsp;&nbsp; <b>Session D=E9mos </b>(2=
+-4 pages) : Pr=E9sentation d'outils, prototypes, maquettes, de travaux ou p=
+rojets en cours, d'exp=E9rimentations ou jeux de donn=E9es de r=E9f=E9rence=
+, etc.</span><o:p></o:p></p>
+<p style=3D"mso-margin-top-alt:6.0pt;margin-right:0cm;margin-bottom:6.0pt;m=
+argin-left:0cm">
+<span style=3D"color:black">Les articles devront se conformer au mod=E8le H=
+erm=E8s-Lavoisier disponible sur le site
+</span><a href=3D"https://inforsid2022.sciencesconf.org/"><span style=3D"fo=
+nt-family:&quot;Arial&quot;,sans-serif">https://inforsid2022.sciencesconf.o=
+rg/</span></a><o:p></o:p></p>
+<p style=3D"mso-margin-top-alt:6.0pt;margin-right:0cm;margin-bottom:6.0pt;m=
+argin-left:0cm">
+<span style=3D"color:black">Les articles doivent =EAtre soumis en format PD=
+F sur le site&nbsp;:
+</span><a href=3D"https://easychair.org/conferences/?conf=3Dinf22">https://=
+easychair.org/conferences/?conf=3Dinf22</a><o:p></o:p></p>
+<p style=3D"mso-margin-top-alt:0cm;margin-right:0cm;margin-bottom:8.0pt;mar=
+gin-left:0cm">
+<span style=3D"color:black">La langue officielle du congr=E8s est le fran=
+=E7ais. Toutefois le congr=E8s est ouvert aux contributions de langue angla=
+ise.</span><o:p></o:p></p>
+<div style=3D"border-top:solid black 1.0pt;border-left:none;border-bottom:s=
+olid black 1.0pt;border-right:none;padding:1.0pt 0cm 1.0pt 0cm">
+<p style=3D"mso-margin-top-alt:6.0pt;margin-right:0cm;margin-bottom:6.0pt;m=
+argin-left:0cm">
+<span style=3D"color:black">EVALUATION ET PUBLICATION</span><o:p></o:p></p>
+</div>
+<p style=3D"mso-margin-top-alt:0cm;margin-right:0cm;margin-bottom:8.0pt;mar=
+gin-left:0cm;text-align:justify">
+<span style=3D"color:black">Tous les articles seront =E9valu=E9s par trois =
+lecteurs du Comit=E9 de programme. Les articles s=E9lectionn=E9s seront pub=
+li=E9s dans les actes du congr=E8s et feront l'objet d'une pr=E9sentation. =
+Un article soumis =E0 INFORSID 2021 ne doit pas =EAtre
+ dans un processus d=92=E9valuation dans une autre conf=E9rence ou journal.=
+ Toute double soumission sera refus=E9e.</span><o:p></o:p></p>
+<p style=3D"mso-margin-top-alt:0cm;margin-right:0cm;margin-bottom:8.0pt;mar=
+gin-left:0cm;text-align:justify">
+<span style=3D"color:black">Apr=E8s la conf=E9rence les auteurs des meilleu=
+rs articles seront invit=E9s =E0 soumettre une version =E9tendue dans ISTE =
+Editions vers la Revue Ouverte d'Ing=E9nierie des Syst=E8mes d'Information =
+(</span><a href=3D"https://www.openscience.fr/Revue-ouverte-d-ingenierie-de=
+s-systemes-d-information">https://www.openscience.fr/Revue-ouverte-d-ingeni=
+erie-des-systemes-d-information</a><span style=3D"color:black">),
+ suivant le processus de s=E9lection propre =E0 la revue.</span><o:p></o:p>=
+</p>
+<p class=3D"MsoNormal"><span style=3D"mso-fareast-language:EN-US"><o:p>&nbs=
+p;</o:p></span></p>
+</div>
+</body>
+</html>
+
+--_000_29b96a343fae4a93a01968911538788dunivlyon2fr_--

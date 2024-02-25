@@ -1,0 +1,422 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (BounceSMTP1.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id 574BB14006F3
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Fri, 18 Feb 2022 21:43:14 +0100 (CET)
+Received: from mx1.d101.univ-nantes.fr (MX1.univ-nantes.fr [193.52.101.135])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id 503D26D19C0
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Fri, 18 Feb 2022 21:43:14 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx1.d101.univ-nantes.fr (Postfix) with ESMTP id 4524F4821A80
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 18 Feb 2022 21:43:14 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 0.273
+X-Spam-Level:
+X-Spam-Status: No, score=0.273 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+	FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+	HTML_MESSAGE=0.001, RCVD_IN_WSFF=0.01, SPF_HELO_NONE=0.001,
+	SPF_PASS=-0.001, T_KAM_HTML_FONT_INVALID=0.01, UN_PHISHING_PW=0.1,
+	URIBL_BLOCKED=0.001] autolearn=disabled
+X-CRM114-Status: UNSURE ( 0.7102 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=gmail.com
+Received: from mx1.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id r_DMOiOgs_Oi for <liste-egc@polytech.univ-nantes.fr>;
+	Fri, 18 Feb 2022 21:43:11 +0100 (CET)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
+	by mx1.d101.univ-nantes.fr (Postfix) with ESMTPS id A5D0B47EC04E
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 18 Feb 2022 21:43:11 +0100 (CET)
+Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-2d641c31776so78699167b3.12
+        for <liste-egc@polytech.univ-nantes.fr>; Fri, 18 Feb 2022 12:43:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=mAJDesscsBA+GueuZQ6/LAqyW/9MURqNWoBG/LdO5qs=;
+        b=CYzlsLYhW0gZvm8xWXwhJEWtjUMoX6jnj7/J3/HJiE0NLCE8WKxm3bUY0MoV/o7LMr
+         3e2mgjPFzmhZ9I94tANwez/X48EOaY4NCMQDn9Wq9tLkquwqY3Ya7fV2OiVLcpX8YVnt
+         8WL50y6f3Rf668a4mHp7QToxQpBMKt8EXQ/vd8XGpyz3XRGOLEfrKd0Af6MglZvssE3d
+         P9MGzLF7xKyigN0wQlN8p5iiMeRncQ79MB92fGJT8sS6iQ/hgQgkjzUeahZ2z4e1g4Nk
+         iYxa8zecDSjJwJaA1lhvguc72btMHeblKnZ1mLEMVqcebqFI6gPjk8RfaHdjouiUyEGH
+         o1kA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=mAJDesscsBA+GueuZQ6/LAqyW/9MURqNWoBG/LdO5qs=;
+        b=wpwj7QV4R7Ouv9t2/UV6CYi73S1cp/e/gwzunwThbMlTsyWZUFdVglAAemMweFgonq
+         p4N54c5cYC4uxhjZUouakL8Vi2SheUIayxRdOpmlD8XNEHO/mm5kLajFxRU1wvTPeQDw
+         3gNT6I5BmFE/Xb6d1nSn2HmXOTykuU6NniouEKfWJRFPTNDyKNBmpup2XtJEJ324lmTe
+         ZIz7VmOXwUxxG6lJZ9ytDjYB3FYJns2F/V2P6urn70EddhlVKpFQPO25VZwuigx69VWI
+         71ZRH+fb3+PW4TheXt7K3M8luS/+VS1fAm2WprPmZFyFRhWo3eEsNmrL7NZl6kKr0N7C
+         kh3Q==
+X-Gm-Message-State: AOAM532haYJJpiJQ7h/T7yASrXaTX2Sqm8WQeDd5U9eVQlPJLag0Kudn
+	Z0Cp2qKlFxuISV/BcbTMpuLIOEO4fWjtYpvX05GvE8Ouwi/WLw==
+X-Google-Smtp-Source: ABdhPJzW7T15IZIRa4+t9wGFrHzT3qnEfmqxFId/mU9TDWQbuk8ntxsrvsJNy5xjCLOHSuwmi641xWOGWDA0He8iwAA=
+X-Received: by 2002:a0d:c847:0:b0:2d6:9010:5721 with SMTP id
+ k68-20020a0dc847000000b002d690105721mr9259428ywd.380.1645216990307; Fri, 18
+ Feb 2022 12:43:10 -0800 (PST)
+MIME-Version: 1.0
+From: Liana ERMAKOVA <liana.ermakova.87@gmail.com>
+Date: Fri, 18 Feb 2022 21:42:35 +0100
+Message-ID: <CAKdaRbB146GJBzfHMGEgsybbSDmtQvnSa5rto7KpbHM96k02PQ@mail.gmail.com>
+To: liste-egc@polytech.univ-nantes.fr
+Content-Type: multipart/alternative; boundary="000000000000492b5005d850ee5e"
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] 1st call-for-participation JOKER@CLEF: Automatic
+ Wordplay and Humour Translation Task
+
+--000000000000492b5005d850ee5e
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+***Sorry for cross posting***
+
+1st Call for Participation =E2=80=93 JOKER Track @ CLEF 2022:
+
+Automatic Wordplay and Humour Translation
+
+
+http://joker-project.com/
+Deadlines
+
+Data & guidelines release: February - March 2022
+
+Run submission: 22 April 2022
+
+Draft paper submission: 27 May 2022
+
+CLEF conference: 5=E2=80=938 September 2022
+
+
+Context
+
+Humour remains one of the most difficult aspects of intercultural
+communication: understanding humour often requires understanding implicit
+cultural references and/or double meanings, and this raises the question of
+its (un)translatability. Wordplay is a common source of humour due to its
+attention-getting and subversive character. The translation of humour and
+wordplay is therefore in high demand. Modern translation depends heavily on
+technological aids, yet few works have treated the automation of humour and
+wordplay translation, or the creation of humour corpora. The goal of the
+JOKER workshop is to bring together translators and computer scientists to
+work on an evaluation framework for wordplay, including data and metric
+development, and to foster work on automatic methods for wordplay
+translation.
+Tasks
+
+We invite you to submit both automatic and manual runs! Manual intervention
+should be reported.
+
+   -
+
+   Task 1: =D0=A1lassify and explain instances of wordplay.
+   -
+
+   Task 2: Translate single words containing wordplay.
+   -
+
+   Task 3: Translate entire phrases containing wordplay.
+   -
+
+   Unshared task: We welcome any other type of submission that uses our
+   data as an open task.
+
+How to participate
+
+Sign up at the CLEF website (
+https://clef2022-labs-registration.dei.unipd.it/). All team members should
+join the JOKER mailing list (https://groups.google.com/u/4/g/joker-project)=
+.
+The data will be made available to all registered participants.
+
+
+Contacts
+
+JOKER website: http://joker-project.com/
+
+CLEF website:
+https://clef2022.clef-initiative.eu/index.php
+
+Registration: https://clef2022-labs-registration.dei.unipd.it/
+
+Email: contact@joker-project.com
+
+Twitter: https://twitter.com/joker_research
+
+Google Group: https://groups.google.com/u/4/g/joker-project
+
+--000000000000492b5005d850ee5e
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><p style=3D"line-height:1.38;text-align:center;margin-top:=
+0pt;margin-bottom:0pt"><span style=3D"font-size:17pt;font-family:&quot;Time=
+s New Roman&quot;;color:rgb(0,0,0);background-color:transparent;font-weight=
+:700;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-al=
+ign:baseline;white-space:pre-wrap">***Sorry for cross posting***</span></p>=
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align:center;margin-top:0pt;m=
+argin-bottom:0pt"><span style=3D"font-size:17pt;font-family:&quot;Times New=
+ Roman&quot;;color:rgb(0,0,0);background-color:transparent;font-weight:700;=
+font-variant-numeric:normal;font-variant-east-asian:normal;vertical-align:b=
+aseline;white-space:pre-wrap">1st Call for Participation =E2=80=93 JOKER Tr=
+ack @ CLEF 2022:=C2=A0</span></p><p dir=3D"ltr" style=3D"line-height:1.38;t=
+ext-align:center;margin-top:0pt;margin-bottom:10pt"><span style=3D"font-siz=
+e:17pt;font-family:&quot;Times New Roman&quot;;color:rgb(0,0,0);background-=
+color:transparent;font-weight:700;font-variant-numeric:normal;font-variant-=
+east-asian:normal;vertical-align:baseline;white-space:pre-wrap">Automatic W=
+ordplay and Humour Translation</span></p><p dir=3D"ltr" style=3D"line-heigh=
+t:1.2;text-align:center;margin-top:0pt;margin-bottom:6pt"><span id=3D"gmail=
+-m_6561986465661987734gmail-m_-3428212369260926813gmail-docs-internal-guid-=
+0f8c8554-7fff-30da-8e51-2d237fc3e531"></span><br></p><p dir=3D"ltr" style=
+=3D"line-height:1.2;text-align:center;margin-top:0pt;margin-bottom:6pt"><a =
+href=3D"http://joker-project.com/" target=3D"_blank" style=3D"text-decorati=
+on-line:none"><span style=3D"font-size:11pt;font-family:&quot;Times New Rom=
+an&quot;;background-color:transparent;font-variant-numeric:normal;font-vari=
+ant-east-asian:normal;text-decoration-line:underline;vertical-align:baselin=
+e;white-space:pre-wrap">http://joker-project.com/</span></a></p><h1 dir=3D"=
+ltr" style=3D"font-family:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;lin=
+e-height:1.38;margin-top:0pt;margin-bottom:6pt"><span style=3D"font-size:14=
+pt;font-family:Arial;color:rgb(0,0,0);background-color:transparent;font-var=
+iant-numeric:normal;font-variant-east-asian:normal;vertical-align:baseline;=
+white-space:pre-wrap">Deadlines</span></h1><p dir=3D"ltr" style=3D"font-fam=
+ily:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;line-height:1.2;text-alig=
+n:justify;margin-top:0pt;margin-bottom:6pt"><span style=3D"font-size:11pt;f=
+ont-family:&quot;Times New Roman&quot;;color:rgb(0,0,0);font-variant-numeri=
+c:normal;font-variant-east-asian:normal;vertical-align:baseline;white-space=
+:pre-wrap">Data &amp; guidelines release: </span><span style=3D"font-size:1=
+1pt;font-family:&quot;Times New Roman&quot;;color:rgb(0,0,0);font-weight:70=
+0;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-align=
+:baseline;white-space:pre-wrap">February - March 2022</span></p><p dir=3D"l=
+tr" style=3D"font-family:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;line=
+-height:1.2;text-align:justify;margin-top:0pt;margin-bottom:6pt"><span styl=
+e=3D"font-variant-numeric:normal;font-variant-east-asian:normal;font-size:1=
+1pt;font-family:&quot;Times New Roman&quot;;color:rgb(0,0,0);vertical-align=
+:baseline;white-space:pre-wrap">Run submission: </span><span style=3D"font-=
+variant-numeric:normal;font-variant-east-asian:normal;font-size:11pt;font-f=
+amily:&quot;Times New Roman&quot;;color:rgb(0,0,0);font-weight:700;vertical=
+-align:baseline;white-space:pre-wrap">22 April 2022</span><span style=3D"fo=
+nt-variant-numeric:normal;font-variant-east-asian:normal;font-size:11pt;fon=
+t-family:&quot;Times New Roman&quot;;color:rgb(0,0,0);vertical-align:baseli=
+ne;white-space:pre-wrap">=C2=A0</span><br></p><p dir=3D"ltr" style=3D"font-=
+family:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;line-height:1.2;text-a=
+lign:justify;margin-top:0pt;margin-bottom:6pt"><span style=3D"font-variant-=
+numeric:normal;font-variant-east-asian:normal;font-size:11pt;font-family:&q=
+uot;Times New Roman&quot;;color:rgb(0,0,0);vertical-align:baseline;white-sp=
+ace:pre-wrap">Draft paper submission:</span><span style=3D"font-variant-num=
+eric:normal;font-variant-east-asian:normal;font-size:11pt;font-family:&quot=
+;Times New Roman&quot;;color:rgb(0,0,0);font-weight:700;vertical-align:base=
+line;white-space:pre-wrap"> 27 May 2022</span><br></p><p dir=3D"ltr" style=
+=3D"font-family:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;line-height:1=
+.2;text-align:justify;margin-top:0pt;margin-bottom:6pt"><span style=3D"font=
+-variant-numeric:normal;font-variant-east-asian:normal;font-size:11pt;font-=
+family:&quot;Times New Roman&quot;;color:rgb(0,0,0);vertical-align:baseline=
+;white-space:pre-wrap">CLEF conference: </span><span style=3D"font-variant-=
+numeric:normal;font-variant-east-asian:normal;font-size:11pt;font-family:&q=
+uot;Times New Roman&quot;;color:rgb(0,0,0);font-weight:700;vertical-align:b=
+aseline;white-space:pre-wrap">5=E2=80=938 September 2022</span><br></p><p d=
+ir=3D"ltr" style=3D"font-family:Roboto,RobotoDraft,Helvetica,Arial,sans-ser=
+if;line-height:1.2;text-align:justify;margin-top:0pt;margin-bottom:6pt"><sp=
+an style=3D"font-variant-numeric:normal;font-variant-east-asian:normal;font=
+-size:11pt;font-family:&quot;Times New Roman&quot;;color:rgb(0,0,0);font-we=
+ight:700;vertical-align:baseline;white-space:pre-wrap"><br></span></p><h1 d=
+ir=3D"ltr" style=3D"line-height:1.2;text-align:justify;margin-top:0pt;margi=
+n-bottom:6pt"><span style=3D"font-size:14pt;font-family:Arial;color:rgb(0,0=
+,0);background-color:transparent;font-variant-numeric:normal;font-variant-e=
+ast-asian:normal;vertical-align:baseline;white-space:pre-wrap">Context</spa=
+n></h1><p dir=3D"ltr" style=3D"line-height:1.38;text-align:justify;margin-t=
+op:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;font-family:&quot;T=
+imes New Roman&quot;;color:rgb(0,0,0);background-color:transparent;font-var=
+iant-numeric:normal;font-variant-east-asian:normal;vertical-align:baseline;=
+white-space:pre-wrap">Humour remains one of the most difficult aspects of i=
+ntercultural communication: understanding humour often requires understandi=
+ng implicit cultural references and/or double meanings, and this raises the=
+ question of its (un)translatability. Wordplay is a common source of humour=
+ due to its attention-getting and subversive character. The translation of =
+humour and wordplay is therefore in high demand. Modern translation depends=
+ heavily on technological aids, yet few works have treated the automation o=
+f humour and wordplay translation, or the creation of humour corpora. The g=
+oal of the JOKER workshop is to bring together translators and computer sci=
+entists to work on an evaluation framework for wordplay, including data and=
+ metric development, and to foster work on automatic methods for wordplay t=
+ranslation.</span></p><h1 dir=3D"ltr" style=3D"line-height:1.2;margin-top:6=
+pt;margin-bottom:6pt"><span style=3D"font-size:14pt;font-family:Arial;color=
+:rgb(0,0,0);background-color:transparent;font-variant-numeric:normal;font-v=
+ariant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap">Task=
+s</span></h1><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin=
+-bottom:0pt"><span style=3D"font-size:11pt;font-family:&quot;Times New Roma=
+n&quot;;color:rgb(0,0,0);background-color:transparent;font-variant-numeric:=
+normal;font-variant-east-asian:normal;vertical-align:baseline;white-space:p=
+re-wrap">We invite you to submit both automatic and manual runs! Manual int=
+ervention should be reported.</span></p><ul style=3D"margin-top:0px;margin-=
+bottom:0px"><li dir=3D"ltr" style=3D"margin-left:15px;list-style-type:disc;=
+font-size:11pt;font-family:&quot;Trebuchet MS&quot;;color:rgb(0,0,0);backgr=
+ound-color:transparent;font-variant-numeric:normal;font-variant-east-asian:=
+normal;vertical-align:baseline;white-space:pre-wrap"><p dir=3D"ltr" role=3D=
+"presentation" style=3D"line-height:1.38;margin-top:11pt;margin-bottom:0pt"=
+><span style=3D"font-size:11pt;font-family:&quot;Times New Roman&quot;;back=
+ground-color:transparent;font-weight:700;font-variant-numeric:normal;font-v=
+ariant-east-asian:normal;vertical-align:baseline">Task 1:</span><span style=
+=3D"font-size:11pt;font-family:&quot;Times New Roman&quot;;background-color=
+:transparent;font-variant-numeric:normal;font-variant-east-asian:normal;ver=
+tical-align:baseline"> =D0=A1lassify and explain instances of wordplay.</sp=
+an></p></li><li dir=3D"ltr" style=3D"margin-left:15px;list-style-type:disc;=
+font-size:11pt;font-family:&quot;Trebuchet MS&quot;;color:rgb(0,0,0);backgr=
+ound-color:transparent;font-variant-numeric:normal;font-variant-east-asian:=
+normal;vertical-align:baseline;white-space:pre-wrap"><p dir=3D"ltr" role=3D=
+"presentation" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt">=
+<span style=3D"font-size:11pt;font-family:&quot;Times New Roman&quot;;backg=
+round-color:transparent;font-weight:700;font-variant-numeric:normal;font-va=
+riant-east-asian:normal;vertical-align:baseline">Task 2:</span><span style=
+=3D"font-size:11pt;font-family:&quot;Times New Roman&quot;;background-color=
+:transparent;font-variant-numeric:normal;font-variant-east-asian:normal;ver=
+tical-align:baseline"> Translate single words containing wordplay.</span></=
+p></li><li dir=3D"ltr" style=3D"margin-left:15px;list-style-type:disc;font-=
+size:11pt;font-family:&quot;Trebuchet MS&quot;;color:rgb(0,0,0);background-=
+color:transparent;font-variant-numeric:normal;font-variant-east-asian:norma=
+l;vertical-align:baseline;white-space:pre-wrap"><p dir=3D"ltr" role=3D"pres=
+entation" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><span=
+ style=3D"font-size:11pt;font-family:&quot;Times New Roman&quot;;background=
+-color:transparent;font-weight:700;font-variant-numeric:normal;font-variant=
+-east-asian:normal;vertical-align:baseline">Task 3:</span><span style=3D"fo=
+nt-size:11pt;font-family:&quot;Times New Roman&quot;;background-color:trans=
+parent;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-=
+align:baseline"> Translate entire phrases containing wordplay.</span></p></=
+li><li dir=3D"ltr" style=3D"margin-left:15px;list-style-type:disc;font-size=
+:11pt;font-family:&quot;Trebuchet MS&quot;;color:rgb(0,0,0);background-colo=
+r:transparent;font-variant-numeric:normal;font-variant-east-asian:normal;ve=
+rtical-align:baseline;white-space:pre-wrap"><p dir=3D"ltr" role=3D"presenta=
+tion" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:6pt"><span sty=
+le=3D"font-size:11pt;font-family:&quot;Times New Roman&quot;;background-col=
+or:transparent;font-weight:700;font-variant-numeric:normal;font-variant-eas=
+t-asian:normal;vertical-align:baseline">Unshared task: </span><span style=
+=3D"font-size:11pt;font-family:&quot;Times New Roman&quot;;background-color=
+:transparent;font-variant-numeric:normal;font-variant-east-asian:normal;ver=
+tical-align:baseline">We welcome any other type of submission that uses our=
+ data as an open task.</span></p></li></ul><h1 dir=3D"ltr" style=3D"line-he=
+ight:1.38;margin-top:10pt;margin-bottom:6pt"><span style=3D"font-size:14pt;=
+font-family:Arial;color:rgb(0,0,0);background-color:transparent;font-varian=
+t-numeric:normal;font-variant-east-asian:normal;vertical-align:baseline;whi=
+te-space:pre-wrap">How to participate</span></h1><p dir=3D"ltr" style=3D"li=
+ne-height:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:1=
+1pt;font-family:&quot;Times New Roman&quot;;color:rgb(0,0,0);background-col=
+or:transparent;font-variant-numeric:normal;font-variant-east-asian:normal;v=
+ertical-align:baseline;white-space:pre-wrap">Sign up at the CLEF website (<=
+/span><a href=3D"https://clef2022-labs-registration.dei.unipd.it/" target=
+=3D"_blank" style=3D"text-decoration-line:none"><span style=3D"font-size:11=
+pt;font-family:&quot;Times New Roman&quot;;font-variant-numeric:normal;font=
+-variant-east-asian:normal;text-decoration-line:underline;vertical-align:ba=
+seline;white-space:pre-wrap">https://clef2022-labs-registration.dei.unipd.i=
+t/</span></a><span style=3D"font-size:11pt;font-family:&quot;Times New Roma=
+n&quot;;color:rgb(0,0,0);background-color:transparent;font-variant-numeric:=
+normal;font-variant-east-asian:normal;vertical-align:baseline;white-space:p=
+re-wrap">). All team members should join the JOKER mailing list (</span><a =
+href=3D"https://groups.google.com/u/4/g/joker-project" target=3D"_blank" st=
+yle=3D"text-decoration-line:none"><span style=3D"font-size:11pt;font-family=
+:&quot;Times New Roman&quot;;background-color:transparent;font-variant-nume=
+ric:normal;font-variant-east-asian:normal;text-decoration-line:underline;ve=
+rtical-align:baseline;white-space:pre-wrap">https://groups.google.com/u/4/g=
+/joker-project</span></a><span style=3D"font-size:11pt;font-family:&quot;Ti=
+mes New Roman&quot;;color:rgb(0,0,0);background-color:transparent;font-vari=
+ant-numeric:normal;font-variant-east-asian:normal;vertical-align:baseline;w=
+hite-space:pre-wrap">). The data will be made available to all registered p=
+articipants.<br></span></p><p dir=3D"ltr" style=3D"line-height:1.38;margin-=
+top:0pt;margin-bottom:0pt"><br></p><h1 dir=3D"ltr" style=3D"font-family:Rob=
+oto,RobotoDraft,Helvetica,Arial,sans-serif;line-height:1.38;margin-top:0pt;=
+margin-bottom:6pt"><span style=3D"font-size:14pt;font-family:Arial;color:rg=
+b(0,0,0);background-color:transparent;font-variant-numeric:normal;font-vari=
+ant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap">Contact=
+s</span></h1><p dir=3D"ltr" style=3D"font-family:Roboto,RobotoDraft,Helveti=
+ca,Arial,sans-serif;line-height:1.2;text-align:justify;margin-top:0pt;margi=
+n-bottom:6pt"><span style=3D"font-size:11pt;font-family:&quot;Times New Rom=
+an&quot;;color:rgb(0,0,0);background-color:transparent;font-variant-numeric=
+:normal;font-variant-east-asian:normal;vertical-align:baseline;white-space:=
+pre-wrap">JOKER website: </span><a href=3D"http://joker-project.com/" targe=
+t=3D"_blank" style=3D"text-decoration-line:none"><span style=3D"font-size:1=
+1pt;font-family:&quot;Times New Roman&quot;;background-color:transparent;fo=
+nt-variant-numeric:normal;font-variant-east-asian:normal;text-decoration-li=
+ne:underline;vertical-align:baseline;white-space:pre-wrap">http://joker-pro=
+ject.com/</span></a><span style=3D"font-size:11pt;font-family:&quot;Times N=
+ew Roman&quot;;color:rgb(0,0,0);background-color:transparent;font-variant-n=
+umeric:normal;font-variant-east-asian:normal;vertical-align:baseline;white-=
+space:pre-wrap">=C2=A0=C2=A0=C2=A0=C2=A0</span></p><p dir=3D"ltr" style=3D"=
+font-family:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;line-height:1.2;t=
+ext-align:justify;margin-top:0pt;margin-bottom:6pt"><span style=3D"font-siz=
+e:11pt;font-family:&quot;Times New Roman&quot;;color:rgb(0,0,0);background-=
+color:transparent;font-variant-numeric:normal;font-variant-east-asian:norma=
+l;vertical-align:baseline;white-space:pre-wrap">CLEF </span><span style=3D"=
+font-size:11pt;font-family:&quot;Times New Roman&quot;;color:rgb(0,0,0);fon=
+t-variant-numeric:normal;font-variant-east-asian:normal;vertical-align:base=
+line;white-space:pre-wrap">website</span><span style=3D"font-size:11pt;font=
+-family:&quot;Times New Roman&quot;;color:rgb(0,0,0);background-color:trans=
+parent;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-=
+align:baseline;white-space:pre-wrap">:</span><span style=3D"font-size:11pt;=
+font-family:&quot;Times New Roman&quot;;color:rgb(0,0,0);background-color:t=
+ransparent;font-variant-numeric:normal;font-variant-east-asian:normal;verti=
+cal-align:baseline;white-space:pre-wrap"><br></span><a href=3D"https://clef=
+2022.clef-initiative.eu/index.php" target=3D"_blank" style=3D"text-decorati=
+on-line:none"><span style=3D"font-size:11pt;font-family:&quot;Times New Rom=
+an&quot;;background-color:transparent;font-variant-numeric:normal;font-vari=
+ant-east-asian:normal;text-decoration-line:underline;vertical-align:baselin=
+e;white-space:pre-wrap">https://clef2022.clef-initiative.eu/index.php</span=
+></a><span style=3D"font-size:11pt;font-family:&quot;Times New Roman&quot;;=
+color:rgb(0,0,0);background-color:transparent;font-variant-numeric:normal;f=
+ont-variant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap"=
+>=C2=A0=C2=A0</span></p><p dir=3D"ltr" style=3D"font-family:Roboto,RobotoDr=
+aft,Helvetica,Arial,sans-serif;line-height:1.2;text-align:justify;margin-to=
+p:0pt;margin-bottom:6pt"><span style=3D"font-size:11pt;font-family:&quot;Ti=
+mes New Roman&quot;;color:rgb(0,0,0);font-variant-numeric:normal;font-varia=
+nt-east-asian:normal;vertical-align:baseline;white-space:pre-wrap">Registra=
+tion: </span><a href=3D"https://clef2022-labs-registration.dei.unipd.it/" t=
+arget=3D"_blank" style=3D"text-decoration-line:none"><span style=3D"font-si=
+ze:11pt;font-family:&quot;Times New Roman&quot;;font-variant-numeric:normal=
+;font-variant-east-asian:normal;text-decoration-line:underline;vertical-ali=
+gn:baseline;white-space:pre-wrap">https://clef2022-labs-registration.dei.un=
+ipd.it/</span></a></p><p dir=3D"ltr" style=3D"font-family:Roboto,RobotoDraf=
+t,Helvetica,Arial,sans-serif;line-height:1.2;text-align:justify;margin-top:=
+0pt;margin-bottom:6pt"><span style=3D"font-size:11pt;font-family:&quot;Time=
+s New Roman&quot;;color:rgb(0,0,0);background-color:transparent;font-varian=
+t-numeric:normal;font-variant-east-asian:normal;vertical-align:baseline;whi=
+te-space:pre-wrap">Email: </span><a href=3D"mailto:contact@joker-project.co=
+m" target=3D"_blank" style=3D"text-decoration-line:none"><span style=3D"fon=
+t-size:11pt;font-family:&quot;Times New Roman&quot;;background-color:transp=
+arent;font-variant-numeric:normal;font-variant-east-asian:normal;text-decor=
+ation-line:underline;vertical-align:baseline;white-space:pre-wrap">contact@=
+joker-project.com</span></a><span style=3D"font-size:11pt;font-family:&quot=
+;Times New Roman&quot;;color:rgb(0,0,0);background-color:transparent;font-v=
+ariant-numeric:normal;font-variant-east-asian:normal;vertical-align:baselin=
+e;white-space:pre-wrap">=C2=A0=C2=A0</span></p><p dir=3D"ltr" style=3D"font=
+-family:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;line-height:1.2;text-=
+align:justify;margin-top:0pt;margin-bottom:6pt"><span style=3D"font-size:11=
+pt;font-family:&quot;Times New Roman&quot;;color:rgb(0,0,0);background-colo=
+r:transparent;font-variant-numeric:normal;font-variant-east-asian:normal;ve=
+rtical-align:baseline;white-space:pre-wrap">Twitter: </span><a href=3D"http=
+s://twitter.com/joker_research" target=3D"_blank" style=3D"text-decoration-=
+line:none"><span style=3D"font-size:11pt;font-family:&quot;Times New Roman&=
+quot;;background-color:transparent;font-variant-numeric:normal;font-variant=
+-east-asian:normal;text-decoration-line:underline;vertical-align:baseline;w=
+hite-space:pre-wrap">https://twitter.com/joker_research</span></a><span sty=
+le=3D"font-size:11pt;font-family:&quot;Times New Roman&quot;;color:rgb(0,0,=
+0);background-color:transparent;font-variant-numeric:normal;font-variant-ea=
+st-asian:normal;vertical-align:baseline;white-space:pre-wrap">=C2=A0=C2=A0<=
+/span></p><p dir=3D"ltr" style=3D"font-family:Roboto,RobotoDraft,Helvetica,=
+Arial,sans-serif;line-height:1.2;margin-top:0pt;margin-bottom:0pt"><span st=
+yle=3D"font-size:11pt;font-family:&quot;Times New Roman&quot;;color:rgb(0,0=
+,0);background-color:transparent;font-variant-numeric:normal;font-variant-e=
+ast-asian:normal;vertical-align:baseline;white-space:pre-wrap">Google Group=
+: </span><a href=3D"https://groups.google.com/u/4/g/joker-project" target=
+=3D"_blank" style=3D"text-decoration-line:none"><span style=3D"font-size:11=
+pt;font-family:&quot;Times New Roman&quot;;background-color:transparent;fon=
+t-variant-numeric:normal;font-variant-east-asian:normal;text-decoration-lin=
+e:underline;vertical-align:baseline;white-space:pre-wrap">https://groups.go=
+ogle.com/u/4/g/joker-project</span></a><span style=3D"font-size:11pt;font-f=
+amily:&quot;Times New Roman&quot;;color:rgb(0,0,0);background-color:transpa=
+rent;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-al=
+ign:baseline;white-space:pre-wrap">=C2=A0</span></p></div>
+
+--000000000000492b5005d850ee5e--

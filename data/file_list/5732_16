@@ -1,0 +1,480 @@
+Return-Path: <r.interdonato@dimes.unical.it>
+X-Original-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa6.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (BounceSMTP1.univ-nantes.prive [172.20.12.66])
+	by sympa6.univ-nantes.prive (Postfix) with ESMTP id 67C672292950
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Fri,  6 Dec 2019 09:39:46 +0100 (CET)
+Received: from mx3.d101.univ-nantes.fr (MX3.univ-nantes.fr [193.52.101.137])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id 662586D1AB8
+	for <polytech_liste-egc@sympa6.univ-nantes.prive>; Fri,  6 Dec 2019 09:39:46 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTP id 5CCD84098F9D
+	for <liste-egc@polytech.univ-nantes.fr>; Fri,  6 Dec 2019 09:39:46 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: -4.879
+X-Spam-Level:
+X-Spam-Status: No, score=-4.879 tagged_above=-1000 required=5
+	tests=[CRM114_GOOD=-5, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_WSFF=0.01,
+	SPF_PASS=-0.001, T_KAM_HTML_FONT_INVALID=0.01, UN_PHISHING_PW=0.1,
+	URIBL_BLOCKED=0.001] autolearn=disabled
+X-CRM114-Status: GOOD ( 5.5168 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=dimes-unical-it.20150623.gappssmtp.com
+Received: from mx3.d101.univ-nantes.fr ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id NgfTK7TFsXca for <liste-egc@polytech.univ-nantes.fr>;
+	Fri,  6 Dec 2019 09:39:43 +0100 (CET)
+X-Greylist: from auto-whitelisted by SQLgrey-1.6.7
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+	by mx3.d101.univ-nantes.fr (Postfix) with ESMTPS id 3300D40A10CE
+	for <liste-egc@polytech.univ-nantes.fr>; Fri,  6 Dec 2019 09:39:43 +0100 (CET)
+Received: by mail-lf1-x135.google.com with SMTP id m30so4617137lfp.8
+        for <liste-egc@polytech.univ-nantes.fr>; Fri, 06 Dec 2019 00:39:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dimes-unical-it.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=vZifD18gDphbxxnoZ2oY8YNfAQjzPar5CJy8QWt7hbs=;
+        b=JfA4+EsFsLbN+dBzMg3puUIOT/6an1+hzYtAsaU3LgJEG7yoUAbbcQAZoEBKAPwDrA
+         97+alHpMEONnRPfV3y8NbYUjjyjHFqPetLH2/O4qEYXn10erXj4q3AOCMULOHoG02Vcf
+         tmPKZTmSBSOutsEn1Hgs5Hf+yi/okj4XdTxwEkUc77giJGZVsqjFgy170hliF4mbhHsd
+         BA65XKzUnLTuBLUVIblRCBWOlI3fFr6mP1LHWynG6ILcIt8orlJ0sR38aH3g/XneU/me
+         LJOYqKMYbZimXIwEGIZDWggljG6dfO41x9laD6rIZlacrhcFJsa8C/3S+qPyjFEobBOP
+         pgAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=vZifD18gDphbxxnoZ2oY8YNfAQjzPar5CJy8QWt7hbs=;
+        b=ApwMn/N6/rnG1aGHgrl9Wkwy+cH27Y6vFlVlyMrtixhorGPVJOQ7hdyHZ/Nq/v4HUd
+         6zlTfo/nPQtyH/cjKAJXmGLo2EI+PUsTkZ385IJs3BwkCWWuejA5ZcS8JoWZPVxKKS4E
+         ZMtb18mbv0zKpe8umE6o+a260qU0dXIb/113WwDmsFHwZNCPbQdS3yxNAv3KlviJsi2P
+         rv9fGeDA/5e4dwQaj+GvRM6Rdcw9lc6+UcmnkcsTdmRmDCgiBCPXDijK62BtK0r4EtlF
+         aXlX1mT/3htUdb0ot6g4/e0FvkzTogJ4CJMLjEsGGZVfzDCNDmFTWOcNWtsSe31PnpFY
+         KdQQ==
+X-Gm-Message-State: APjAAAVbeHQnU0ll0FyZholngkFsgm0f/K3tVHfb8SSUBrDLok8TSEFD
+	xzMR6B19zFEkz+FL3brKDOsVAsfIuF0oCE1tlW6ddk1oh4g=
+X-Google-Smtp-Source: APXvYqx8iyS7RIkbEK9VlK14DuunC2PVIdNM3FoR2UIp3TFp3pU4eFvSxaZDXmygCS/tNZc58eAv7QUqvMRkuUlIJ5c=
+X-Received: by 2002:ac2:489b:: with SMTP id x27mr7683192lfc.130.1575621582037;
+ Fri, 06 Dec 2019 00:39:42 -0800 (PST)
+MIME-Version: 1.0
+From: Roberto Interdonato <rinterdonato@dimes.unical.it>
+Date: Fri, 6 Dec 2019 09:39:29 +0100
+Message-ID: <CAG4i7in+q5N_MQVFFGigm70ntZNAki6L+15E4UXyLc6wA04Ujg@mail.gmail.com>
+To: liste-egc@polytech.univ-nantes.fr
+Content-Type: multipart/alternative; boundary="000000000000b2b9d9059904fc6a"
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] CfP: "Machine Learning for Earth Observation Data",
+ Special Issue of Machine Learning Journal (Springer)
+
+--000000000000b2b9d9059904fc6a
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+CALL FOR PAPERS: Machine Learning Journal (Springer)
+
+Special Issue on Machine Learning for Earth Observation Data
+
+Direct link to the Special Issue:
+https://www.springer.com/journal/10994/updates/17467992
+
+GUEST EDITORS (Listed alphabetically)
+
+* Thomas Corpetti, CNRS, LETG-Rennes COSTEL UMR 6554 CNRS, Rennes, France
+
+* Dino Ienco, INRAE, UMR Tetis, Montpellier, France
+
+* Roberto Interdonato, CIRAD, UMR Tetis, Montpellier, France
+
+* S=C3=A9bastien Lef=C3=A8vre, Univ. Bretagne-Sud, UMR 6074, IRISA, Vannes,=
+ France
+
+* Minh-Tan Pham, Univ. Bretagne-Sud, UMR 6074, IRISA, Vannes, France
+
+The huge amount of data currently produced by modern Earth Observation (EO)
+missions has raised up new challenges for the Remote Sensing communities.
+EO sensors are now able to offer (very) high spatial resolution images with
+revisit time frequencies never achieved before, by means of a large family
+of signals (i.e. multi-(hyper)spectral optical, radar, LiDAR, Digital
+Surface Models, etc..).
+
+In this context, modern machine learning techniques (i.e. deep learning,
+domain adaptation, semi-supervised approach, time series analysis, active
+learning) can play a crucial role to deal with such amount of
+heterogeneous, multi-scale and multi-modal data. For example, leveraging
+Machine Learning approaches for the analysis of EO data is crucial for
+precision agriculture and food risk prevention, mapping biodiversity,
+monitoring climate changes, understanding temporal trajectories for the
+evolution of natural habitats, carbon capture and sequestration, disaster
+management and generally, manage resources in a territory and provide more
+accurate information on environmental and anthropic phenomena. Such
+applications demand the study, the conception and the development of new
+machine learning approaches especially tailored for Earth Observation Data
+in order to face numerous challenges  such as spatial and temporal domain
+adaptation, transfer learning, time series analysis,
+multi-source/multi-view information. Such applications may include
+unsupervised, weakly-supervised and supervised scenarios with, probably,
+noisy and scarce data. Unfortunately, there is still a lack of interaction
+between domain experts and machine learning researchers. The two
+communities, currently, are not yet able to structure themselves around
+these issues due to a lack of mutual knowledge.
+
+The Special Issue will supply the opportunity to raise the awareness of the
+Machine Learning community about issues and challenges related to Earth
+Observation Data and, at the same time, it will attract people from the
+Earth Observation community to get in touch with the Machine Learning
+community and the Machine Learning journal.
+
+
+This special issue is a follow up of the MACLEAN19 workshop (
+http://ceur-ws.org/Vol-2466/) but it is open to new original research
+submissions in the area of Machine Learning for Earth Observation Data.
+
+Topics of the special issue include but are not limited to:
+
+* Supervised Classification of Multi(Hyper)-spectral data
+
+* Supervised Classification of Satellite Image Time Series data
+
+* Clustering of EO Data
+
+* Deep Learning approaches to deal with EO Data
+
+* Machine Learning approaches for the analysis of multi-scale EO Data
+
+* Machine Learning approaches for the analysis of multi-source EO Data
+
+* Semi-supervised classification approaches for EO Data
+
+* Active learning for EO Data
+
+* Transfer Learning and Domain Adaptation for EO Data
+
+* Bayesian machine learning for EO Data
+
+* Dimensionality Reduction and Feature Selection for EO Data
+
+* Graphicals models for EO Data
+
+* Structured output learning for EO Data
+
+* Multiple instance learning for EO Data
+
+* Multi-task learning for EO Data
+
+* Online learning for EO Data
+
+* Embedding and Latent factor for EO Data
+
+IMPORTANT DATES
+
+* December 1st, 2019: Submission System Opening
+
+* April 1st, 2020: Submission System Closing
+
+* July 1st, 2020: First Round of Review
+
+* October 1st, 2020: Resubmission of the manuscripts
+
+* December 1st, 2021: Second Round of Review
+
+* February 1st, 2021: Resubmission of the manuscripts
+
+* March 1st ,2021: Final Decision and Publication
+
+
+
+SUBMISSION GUIDELINES
+
+o For paper submission, please go to the Machine Learning journal website
+https://www.springer.com/journal/10994 and select this special issue
+
+o Authors should follow the "Instructions for Authors"
+
+
+
+
+--=20
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Roberto Interdonato, PhD
+Research Scientist
+CIRAD
+UMR TETIS
+Montpellier
+France
+email: roberto.interdonato@cirad.fr
+tel: +33 (0) 467558615
+ =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+--000000000000b2b9d9059904fc6a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><span id=3D"gmail-docs-internal-guid-cadc=
+de45-7fff-16f0-7a5d-261491fa55d1"><p dir=3D"ltr" style=3D"line-height:1.38;=
+margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;font-family=
+:Arial;color:rgb(0,0,0);background-color:transparent;font-variant-numeric:n=
+ormal;font-variant-east-asian:normal;vertical-align:baseline;white-space:pr=
+e-wrap">CALL FOR PAPERS: </span><span style=3D"font-size:11pt;font-family:A=
+rial;color:rgb(0,0,255);background-color:transparent;font-weight:700;font-v=
+ariant-numeric:normal;font-variant-east-asian:normal;vertical-align:baselin=
+e;white-space:pre-wrap">Machine Learning Journal (Springer)</span></p><p di=
+r=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><span=
+ style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);background-colo=
+r:transparent;font-weight:700;font-variant-numeric:normal;font-variant-east=
+-asian:normal;vertical-align:baseline;white-space:pre-wrap">Special Issue o=
+n Machine Learning for Earth Observation Data</span></p><p dir=3D"ltr" styl=
+e=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"font=
+-size:11pt;font-family:Arial;color:rgb(0,0,0);background-color:transparent;=
+font-variant-numeric:normal;font-variant-east-asian:normal;vertical-align:b=
+aseline;white-space:pre-wrap">Direct link to the Special Issue: </span><a h=
+ref=3D"https://www.springer.com/journal/10994/updates/17467992" style=3D"te=
+xt-decoration-line:none"><span style=3D"font-size:12pt;font-family:&quot;Ti=
+mes New Roman&quot;;color:rgb(128,0,128);background-color:transparent;font-=
+variant-numeric:normal;font-variant-east-asian:normal;text-decoration-line:=
+underline;vertical-align:baseline;white-space:pre-wrap">https://www.springe=
+r.com/journal/10994/updates/17467992</span></a></p><br><p dir=3D"ltr" style=
+=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-=
+size:11pt;font-family:Arial;color:rgb(0,0,0);background-color:transparent;f=
+ont-weight:700;font-variant-numeric:normal;font-variant-east-asian:normal;v=
+ertical-align:baseline;white-space:pre-wrap">GUEST EDITORS (Listed alphabet=
+ically)</span></p><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;m=
+argin-bottom:0pt"><span style=3D"font-size:11pt;font-family:Arial;color:rgb=
+(0,0,0);background-color:transparent;font-variant-numeric:normal;font-varia=
+nt-east-asian:normal;vertical-align:baseline;white-space:pre-wrap">* Thomas=
+ Corpetti, CNRS, LETG-Rennes COSTEL UMR 6554 CNRS, Rennes, France</span></p=
+><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"=
+><span style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);backgroun=
+d-color:transparent;font-variant-numeric:normal;font-variant-east-asian:nor=
+mal;vertical-align:baseline;white-space:pre-wrap">* Dino Ienco, INRAE, UMR =
+Tetis, Montpellier, France</span></p><p dir=3D"ltr" style=3D"line-height:1.=
+38;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;font-fam=
+ily:Arial;color:rgb(0,0,0);background-color:transparent;font-variant-numeri=
+c:normal;font-variant-east-asian:normal;vertical-align:baseline;white-space=
+:pre-wrap">* Roberto Interdonato, CIRAD, UMR Tetis, Montpellier, France</sp=
+an></p><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-botto=
+m:0pt"><span style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);bac=
+kground-color:transparent;font-variant-numeric:normal;font-variant-east-asi=
+an:normal;vertical-align:baseline;white-space:pre-wrap">* S=C3=A9bastien Le=
+f=C3=A8vre, Univ. Bretagne-Sud, UMR 6074, IRISA, Vannes, France</span></p><=
+p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><=
+span style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);background-=
+color:transparent;font-variant-numeric:normal;font-variant-east-asian:norma=
+l;vertical-align:baseline;white-space:pre-wrap">* Minh-Tan Pham, Univ. Bret=
+agne-Sud, UMR 6074, IRISA, Vannes, France</span></p><br><p dir=3D"ltr" styl=
+e=3D"line-height:1.38;text-align:justify;margin-top:0pt;margin-bottom:0pt">=
+<span style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);background=
+-color:transparent;font-variant-numeric:normal;font-variant-east-asian:norm=
+al;vertical-align:baseline;white-space:pre-wrap">The huge amount of data cu=
+rrently produced by modern Earth Observation (EO) missions has raised up ne=
+w challenges for the Remote Sensing communities. EO sensors are now able to=
+ offer (very) high spatial resolution images with revisit time frequencies =
+never achieved before, by means of a large family of signals (i.e. multi-(h=
+yper)spectral optical, radar, LiDAR, Digital Surface Models, etc..).=C2=A0<=
+/span></p><br><p dir=3D"ltr" style=3D"line-height:1.38;text-align:justify;m=
+argin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;font-family:=
+Arial;color:rgb(0,0,0);background-color:transparent;font-variant-numeric:no=
+rmal;font-variant-east-asian:normal;vertical-align:baseline;white-space:pre=
+-wrap">In this context, modern machine learning techniques (i.e. deep learn=
+ing, domain adaptation, semi-supervised approach, time series analysis, act=
+ive learning) can play a crucial role to deal with such amount of heterogen=
+eous, multi-scale and multi-modal data. For example, leveraging Machine Lea=
+rning approaches for the analysis of EO data is crucial for precision agric=
+ulture and food risk prevention, mapping biodiversity, monitoring climate c=
+hanges, understanding temporal trajectories for the evolution of natural ha=
+bitats, carbon capture and sequestration, disaster management and generally=
+, manage resources in a territory and provide more accurate information on =
+environmental and anthropic phenomena. Such applications demand the study, =
+the conception and the development of new machine learning approaches espec=
+ially tailored for Earth Observation Data in order to face numerous challen=
+ges=C2=A0 such as spatial and temporal domain adaptation, transfer learning=
+, time series analysis, multi-source/multi-view information. Such applicati=
+ons may include unsupervised, weakly-supervised and supervised scenarios wi=
+th, probably, noisy and scarce data. Unfortunately, there is still a lack o=
+f interaction between domain experts and machine learning researchers. The =
+two communities, currently, are not yet able to structure themselves around=
+ these issues due to a lack of mutual knowledge.</span></p><br><p dir=3D"lt=
+r" style=3D"line-height:1.38;text-align:justify;margin-top:0pt;margin-botto=
+m:0pt"><span style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);bac=
+kground-color:transparent;font-variant-numeric:normal;font-variant-east-asi=
+an:normal;vertical-align:baseline;white-space:pre-wrap">The Special Issue w=
+ill supply the opportunity to raise the awareness of the Machine Learning c=
+ommunity about issues and challenges related to Earth Observation Data and,=
+ at the same time, it will attract people from the Earth Observation commun=
+ity to get in touch with the Machine Learning community and the Machine Lea=
+rning journal.</span></p><br><br><p dir=3D"ltr" style=3D"line-height:1.38;t=
+ext-align:justify;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-siz=
+e:11pt;font-family:Arial;color:rgb(0,0,0);background-color:transparent;font=
+-variant-numeric:normal;font-variant-east-asian:normal;vertical-align:basel=
+ine;white-space:pre-wrap">This special issue is a follow up of the MACLEAN1=
+9 workshop (<a href=3D"http://ceur-ws.org/Vol-2466/">http://ceur-ws.org/Vol=
+-2466/</a>) but it is open to new original research submissions in the area=
+ of Machine Learning for Earth Observation Data.=C2=A0</span></p><br><p dir=
+=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><span =
+style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);background-color=
+:transparent;font-variant-numeric:normal;font-variant-east-asian:normal;ver=
+tical-align:baseline;white-space:pre-wrap">Topics of the special issue incl=
+ude but are not limited to:</span><span style=3D"font-size:11pt;font-family=
+:Arial;color:rgb(0,0,0);background-color:transparent;font-variant-numeric:n=
+ormal;font-variant-east-asian:normal;vertical-align:baseline;white-space:pr=
+e-wrap"><br><br></span></p><p dir=3D"ltr" style=3D"line-height:1.38;margin-=
+top:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;font-family:Arial;=
+color:rgb(0,0,0);background-color:transparent;font-weight:700;font-variant-=
+numeric:normal;font-variant-east-asian:normal;vertical-align:baseline;white=
+-space:pre-wrap">* Supervised Classification of Multi(Hyper)-spectral data<=
+/span></p><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bo=
+ttom:0pt"><span style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);=
+background-color:transparent;font-weight:700;font-variant-numeric:normal;fo=
+nt-variant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap">=
+* Supervised Classification of Satellite Image Time Series data</span></p><=
+p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><=
+span style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);background-=
+color:transparent;font-weight:700;font-variant-numeric:normal;font-variant-=
+east-asian:normal;vertical-align:baseline;white-space:pre-wrap">* Clusterin=
+g of EO Data</span></p><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:=
+0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;font-family:Arial;colo=
+r:rgb(0,0,0);background-color:transparent;font-weight:700;font-variant-nume=
+ric:normal;font-variant-east-asian:normal;vertical-align:baseline;white-spa=
+ce:pre-wrap">* Deep Learning approaches to deal with EO Data</span></p><p d=
+ir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><spa=
+n style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);background-col=
+or:transparent;font-weight:700;font-variant-numeric:normal;font-variant-eas=
+t-asian:normal;vertical-align:baseline;white-space:pre-wrap">* Machine Lear=
+ning approaches for the analysis of multi-scale EO Data</span></p><p dir=3D=
+"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><span sty=
+le=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);background-color:tr=
+ansparent;font-weight:700;font-variant-numeric:normal;font-variant-east-asi=
+an:normal;vertical-align:baseline;white-space:pre-wrap">* Machine Learning =
+approaches for the analysis of multi-source EO Data</span></p><p dir=3D"ltr=
+" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><span style=
+=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);background-color:tran=
+sparent;font-weight:700;font-variant-numeric:normal;font-variant-east-asian=
+:normal;vertical-align:baseline;white-space:pre-wrap">* Semi-supervised cla=
+ssification approaches for EO Data</span></p><p dir=3D"ltr" style=3D"line-h=
+eight:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;=
+font-family:Arial;color:rgb(0,0,0);background-color:transparent;font-weight=
+:700;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-al=
+ign:baseline;white-space:pre-wrap">* Active learning for EO Data</span></p>=
+<p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt">=
+<span style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);background=
+-color:transparent;font-weight:700;font-variant-numeric:normal;font-variant=
+-east-asian:normal;vertical-align:baseline;white-space:pre-wrap">* Transfer=
+ Learning and Domain Adaptation for EO Data</span></p><p dir=3D"ltr" style=
+=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-=
+size:11pt;font-family:Arial;color:rgb(0,0,0);background-color:transparent;f=
+ont-weight:700;font-variant-numeric:normal;font-variant-east-asian:normal;v=
+ertical-align:baseline;white-space:pre-wrap">* Bayesian machine learning fo=
+r EO Data</span></p><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt=
+;margin-bottom:0pt"><span style=3D"font-size:11pt;font-family:Arial;color:r=
+gb(0,0,0);background-color:transparent;font-weight:700;font-variant-numeric=
+:normal;font-variant-east-asian:normal;vertical-align:baseline;white-space:=
+pre-wrap">* Dimensionality Reduction and Feature Selection for EO Data</spa=
+n></p><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom=
+:0pt"><span style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);back=
+ground-color:transparent;font-weight:700;font-variant-numeric:normal;font-v=
+ariant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap">* Gr=
+aphicals models for EO Data</span></p><p dir=3D"ltr" style=3D"line-height:1=
+.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;font-fa=
+mily:Arial;color:rgb(0,0,0);background-color:transparent;font-weight:700;fo=
+nt-variant-numeric:normal;font-variant-east-asian:normal;vertical-align:bas=
+eline;white-space:pre-wrap">* Structured output learning for EO Data</span>=
+</p><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0=
+pt"><span style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);backgr=
+ound-color:transparent;font-weight:700;font-variant-numeric:normal;font-var=
+iant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap">* Mult=
+iple instance learning for EO Data</span></p><p dir=3D"ltr" style=3D"line-h=
+eight:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;=
+font-family:Arial;color:rgb(0,0,0);background-color:transparent;font-weight=
+:700;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-al=
+ign:baseline;white-space:pre-wrap">* Multi-task learning for EO Data</span>=
+</p><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0=
+pt"><span style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);backgr=
+ound-color:transparent;font-weight:700;font-variant-numeric:normal;font-var=
+iant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap">* Onli=
+ne learning for EO Data</span></p><p dir=3D"ltr" style=3D"line-height:1.38;=
+margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;font-family=
+:Arial;color:rgb(0,0,0);background-color:transparent;font-weight:700;font-v=
+ariant-numeric:normal;font-variant-east-asian:normal;vertical-align:baselin=
+e;white-space:pre-wrap">* Embedding and Latent factor for EO Data</span></p=
+><br><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:=
+0pt"><span style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);backg=
+round-color:transparent;font-variant-numeric:normal;font-variant-east-asian=
+:normal;text-decoration-line:underline;vertical-align:baseline;white-space:=
+pre-wrap">IMPORTANT DATES</span><span style=3D"font-size:11pt;font-family:A=
+rial;color:rgb(0,0,0);background-color:transparent;font-variant-numeric:nor=
+mal;font-variant-east-asian:normal;vertical-align:baseline;white-space:pre-=
+wrap"><br><br></span></p><p dir=3D"ltr" style=3D"line-height:1.38;margin-to=
+p:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;font-family:Arial;co=
+lor:rgb(0,0,0);background-color:transparent;font-weight:700;font-variant-nu=
+meric:normal;font-variant-east-asian:normal;vertical-align:baseline;white-s=
+pace:pre-wrap">* December 1st, 2019: Submission System Opening</span></p><p=
+ dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><s=
+pan style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);background-c=
+olor:transparent;font-weight:700;font-variant-numeric:normal;font-variant-e=
+ast-asian:normal;vertical-align:baseline;white-space:pre-wrap">* April 1st,=
+ 2020: Submission System Closing</span></p><p dir=3D"ltr" style=3D"line-hei=
+ght:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;fo=
+nt-family:Arial;color:rgb(0,0,0);background-color:transparent;font-weight:7=
+00;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-alig=
+n:baseline;white-space:pre-wrap">* July 1st, 2020: First Round of Review</s=
+pan></p><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bott=
+om:0pt"><span style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);ba=
+ckground-color:transparent;font-weight:700;font-variant-numeric:normal;font=
+-variant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap">* =
+October 1st, 2020: Resubmission of the manuscripts</span></p><p dir=3D"ltr"=
+ style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D=
+"font-size:11pt;font-family:Arial;color:rgb(0,0,0);background-color:transpa=
+rent;font-weight:700;font-variant-numeric:normal;font-variant-east-asian:no=
+rmal;vertical-align:baseline;white-space:pre-wrap">* December 1st, 2021: Se=
+cond Round of Review</span></p><p dir=3D"ltr" style=3D"line-height:1.38;mar=
+gin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;font-family:Ar=
+ial;color:rgb(0,0,0);background-color:transparent;font-weight:700;font-vari=
+ant-numeric:normal;font-variant-east-asian:normal;vertical-align:baseline;w=
+hite-space:pre-wrap">* February 1st, 2021: Resubmission of the manuscripts<=
+/span></p><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bo=
+ttom:0pt"><span style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);=
+background-color:transparent;font-weight:700;font-variant-numeric:normal;fo=
+nt-variant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap">=
+* March 1st ,2021: Final Decision and Publication</span></p><br><br><br><p =
+dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><sp=
+an style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);background-co=
+lor:transparent;font-variant-numeric:normal;font-variant-east-asian:normal;=
+vertical-align:baseline;white-space:pre-wrap">SUBMISSION GUIDELINES</span><=
+span style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);background-=
+color:transparent;font-variant-numeric:normal;font-variant-east-asian:norma=
+l;vertical-align:baseline;white-space:pre-wrap"><br><br></span></p><p dir=
+=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><span =
+style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);background-color=
+:transparent;font-variant-numeric:normal;font-variant-east-asian:normal;ver=
+tical-align:baseline;white-space:pre-wrap">o For paper submission, please g=
+o to the Machine Learning journal website <a href=3D"https://www.springer.c=
+om/journal/10994">https://www.springer.com/journal/10994</a> and select thi=
+s special issue</span></p><p dir=3D"ltr" style=3D"line-height:1.38;margin-t=
+op:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;font-family:Arial;c=
+olor:rgb(0,0,0);background-color:transparent;font-variant-numeric:normal;fo=
+nt-variant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap">=
+o Authors should follow the &quot;Instructions for Authors&quot;</span></p>=
+<br><br><br></span><div><br></div>-- <br><div dir=3D"ltr" class=3D"gmail_si=
+gnature"><div dir=3D"ltr"><div><div dir=3D"ltr"><div><div dir=3D"ltr"><div>=
+<div dir=3D"ltr"><div><div dir=3D"ltr"><div dir=3D"ltr"><br><span><font col=
+or=3D"#999999">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+<br>
+Roberto Interdonato, PhD<br><div dir=3D"ltr">Research Scientist=C2=A0</div>=
+<div dir=3D"ltr">CIRAD=C2=A0</div><div dir=3D"ltr">UMR TETIS</div>Montpelli=
+er</font></span></div><div dir=3D"ltr"><span><font color=3D"#999999">France=
+<br></font><font color=3D"#999999">
+email:=C2=A0</font></span><span style=3D"color:rgb(85,85,85);white-space:no=
+wrap"><a href=3D"mailto:roberto.interdonato@cirad.fr" target=3D"_blank">rob=
+erto.interdonato@cirad.fr</a><br></span><span style=3D"color:rgb(153,153,15=
+3)">tel: +33 (0) 467558615</span></div><div><span><font color=3D"#999999">=
+=C2=A0=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</font><b=
+r></span></div></div></div></div></div></div></div></div></div></div></div>=
+</div></div>
+
+--000000000000b2b9d9059904fc6a--

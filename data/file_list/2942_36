@@ -1,0 +1,534 @@
+Return-Path: <p_bruneau@hotmail.com>
+X-Original-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Delivered-To: polytech_liste-egc@sympa62.u12.univ-nantes.prive
+Received: from BounceSmtp1.univ-nantes.fr (bouncesmtp1.u12.univ-nantes.prive [172.20.12.66])
+	by sympa62.u12.univ-nantes.prive (Postfix) with ESMTP id C3D9814017DD
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Fri, 18 Nov 2022 13:34:11 +0100 (CET)
+Received: from mx3.localdomain (MX3.univ-nantes.fr [193.52.101.137])
+	by BounceSmtp1.univ-nantes.fr (Postfix) with ESMTP id C00196F95
+	for <polytech_liste-egc@sympa62.u12.univ-nantes.prive>; Fri, 18 Nov 2022 13:34:11 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mx3.localdomain (Postfix) with ESMTP id B744B207BF
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 18 Nov 2022 13:34:11 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at univ-nantes.fr
+X-Spam-Flag: NO
+X-Spam-Score: 0.123
+X-Spam-Level:
+X-Spam-Status: No, score=0.123 tagged_above=-1000 required=5
+	tests=[CRM114_UNSURE=0.1, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+	HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_WSFF=0.01,
+	SPF_HELO_NONE=0.001, SPF_PASS=-0.001, T_KAM_HTML_FONT_INVALID=0.01,
+	UN_PHISHING_COMPTE=0.1, UN_PHISHING_PW=0.1, URIBL_BLOCKED=0.001]
+	autolearn=disabled
+X-CRM114-Status: UNSURE ( 3.4342 )
+X-CRM114-CacheID: 
+Authentication-Results: univ-nantes.fr (amavisd-new); dkim=pass (2048-bit key)
+	header.d=gmail.com
+Received: from mx3.localdomain ([127.0.0.1])
+	by localhost (univ-nantes.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 0ZZwwkZGcQJg for <liste-egc@polytech.univ-nantes.fr>;
+	Fri, 18 Nov 2022 13:34:09 +0100 (CET)
+X-Greylist: domain auto-whitelisted by SQLgrey-1.6.7
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+	by mx3.localdomain (Postfix) with ESMTPS id 7ABCC20739
+	for <liste-egc@polytech.univ-nantes.fr>; Fri, 18 Nov 2022 13:34:09 +0100 (CET)
+Received: by mail-wr1-x434.google.com with SMTP id cl5so9032238wrb.9
+        for <liste-egc@polytech.univ-nantes.fr>; Fri, 18 Nov 2022 04:34:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=JgTf3eyPm2qYsh0G9N9G5eQQFCBqHmocyTtln16TutY=;
+        b=OQ9SasyEhMR6k+Ixp7ArYxwN+fHwGuYifq5YCrmNZqV6qnWSzPEyZPgr0Ec8iZ63wi
+         aKqBhOu9VL9qBS7Qoj7LSTl9InifZZ5XguIWgCcyzyk4NxARe4X7oMpQgwJ5mzz7mOsc
+         8o/MbtaFvIyrmDtKzr0ZgEQDPVr5UEZrb2sIgwr9WLCeZnCO4WfQdG92Bt718oA/3W/Y
+         o9Gf/8Qal8Qj2prY1dMAF5mNqwdPoe/7IWECP7NbJiha7AE+aOXL+BdWvC0E7AJaZsWv
+         EApfJ22M8zY+u3KcNaKMs6CMO/Xke7m6UZ+Xw8ClmDPkRrurZWwoT2HrUS4m8VIJPDkW
+         Ka8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=JgTf3eyPm2qYsh0G9N9G5eQQFCBqHmocyTtln16TutY=;
+        b=hb9Ey5vmjhebXmE7NhipWcSRsohfl3+0Evj6dIsBa+y+rNS1oICXEAMKl+dV/t/IdA
+         wNknL4K/9aJodljyx6ORONHA5/Fc7MbA8mA26IcC/Cn+Sy5PAzFXBFBrmq60YZxZLPOZ
+         EJxCLGhxgTZEQVaDpR5fyWMUB1bo3tNjgzf2TxutSYUKQA1HoPDZyvOCzlNUmm81cvng
+         PSRTwPrlq/L/JJjhWblxAaf1ZFZ5TUG0s86Jywt8oNhgseV4DsyZJ+DYPcjWkJPAHco8
+         vMEf6F+PHH+dKTFkCc4qHyhVFtNI6LBtAO9UTt6Wg2MsOs23oEzqft6a+dC8WbIKMhqS
+         KEFw==
+X-Gm-Message-State: ANoB5pm42ctvHxanKULq5fffrfKAmLUZ4bjTZ6h4LhTiNE/92DX518rw
+	+HCJgYJD5oLp1/R3pt6JvyCSll3PJFhW/KRQts110Z7nbg==
+X-Google-Smtp-Source: AA0mqf7Db/k/CpYDoqFjU2DD2oapmzawuD3n7rFSCrSlPgOF6wcf6m88uGpWEq+3fk2zF3E6xPMD2DxdgTaxZeS7IhY=
+X-Received: by 2002:adf:ed86:0:b0:236:4930:2468 with SMTP id
+ c6-20020adfed86000000b0023649302468mr4039283wro.221.1668774847268; Fri, 18
+ Nov 2022 04:34:07 -0800 (PST)
+MIME-Version: 1.0
+From: imen Megdiche <imen.megdiche@gmail.com>
+Date: Fri, 18 Nov 2022 13:33:55 +0100
+Message-ID: <CANaAHyZ7Xp=+xgXHbJN9PCGCRVWbhAHtA4f+rtS+x4Ncb=MDrQ@mail.gmail.com>
+To: liste-egc@polytech.univ-nantes.fr
+Content-Type: multipart/alternative; boundary="000000000000fb4cf205edbdeb6a"
+X-Validation-by: p_bruneau@hotmail.com
+Subject: [liste-egc] Postdoc - IRIT - APPRENTISSAGE FEDERE SUR LES DONNEES
+ DE MOBILITE
+
+--000000000000fb4cf205edbdeb6a
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+*Contexte et probl=C3=A9matique*
+
+Le projet VILAGIL ambitionne de cr=C3=A9er un =C3=A9cosyst=C3=A8me capable =
+de r=C3=A9pondre aux
+besoins de la mobilit=C3=A9 pour la r=C3=A9gion Occitanie, et plus largemen=
+t de
+contribuer au d=C3=A9veloppement d=E2=80=99innovations dans le domaine de l=
+a ville
+intelligente =C2=BB. Dans le cadre de ce projet, l=E2=80=99action =C2=AB Da=
+ta et Mobilit=C3=A9 =C2=BB
+con=C3=A7oit et d=C3=A9veloppe des m=C3=A9canismes d=E2=80=99int=C3=A9grati=
+on automatique et d=E2=80=99acc=C3=A8s
+f=C3=A9d=C3=A9r=C3=A9s aux donn=C3=A9es de mobilit=C3=A9. Ces donn=C3=A9es =
+sont fournies par les
+partenaires non acad=C3=A9miques du projet tels que Toulouse Metropole, Sic=
+oval,
+Tiss=C3=A9o Collectivit=C3=A9 ; dans certains cas ces donn=C3=A9es seront d=
+istribu=C3=A9es sur
+les diff=C3=A9rents sites des partenaires sans possibilit=C3=A9 de les int=
+=C3=A9grer de
+mani=C3=A8re centralis=C3=A9e. L=E2=80=99offre de postdoc cible donc partic=
+uli=C3=A8rement la
+probl=C3=A9matique de l=E2=80=99=E2=80=99apprentissages f=C3=A9d=C3=A9r=C3=
+=A9s (=C2=AB federated learning =C2=BB) afin de
+d=C3=A9velopper des algorithmes d=E2=80=99apprentissage automatique dirig=
+=C3=A9s par ces
+donn=C3=A9es.
+
+*Objectifs*
+
+Vu la forte h=C3=A9t=C3=A9rogni=C3=A8t=C3=A9 des donn=C3=A9es collect=C3=A9=
+es dans le projet VILAGIL
+(donn=C3=A9es de capteurs dans la ville images et vid=C3=A9os de surveillan=
+ce,
+donn=C3=A9es de v=C3=A9hicules autonomes, etc), nous souhaitons proposer un=
+e
+architecture d=E2=80=99apprentissage f=C3=A9d=C3=A9r=C3=A9 qui consid=C3=A8=
+re les clients de donn=C3=A9es en
+fonction de leur nature (cross-device / cross-silo), et de la nature de
+distribution des donn=C3=A9es ( verticale / horizontale ). Cette architectu=
+re
+devrait assurer =C3=A0 terme un apprentissage personnalis=C3=A9 pour chacun=
+ des
+clients et une =C3=A9quit=C3=A9 par rapport =C3=A0 la collaboration dans l=
+=E2=80=99 apprentissage.
+
+
+Nous envisageons d=E2=80=99=C3=A9laborer cette architecture en combinant =
+=C3=A0 la fois une
+premi=C3=A8re =C3=A9tape de clustering de clients  et une deuxi=C3=A8me =C3=
+=A9tape
+d=E2=80=99apprentissage machine f=C3=A9d=C3=A9r=C3=A9. Le clustering des cl=
+ients est souvent
+appliqu=C3=A9 dans l=E2=80=99objectif d=E2=80=99identifier un sous ensemble=
+ de clients qui
+auraient des mod=C3=A8les d=E2=80=99apprentissage similaires sans divulguer=
+ leurs
+donn=C3=A9es. Les approches [1] et [2] proposent des m=C3=A9thodes appliqu=
+=C3=A9es dans le
+cadre de donn=C3=A9es non-IID qui calculent les similarit=C3=A9s qu=E2=80=
+=99il y aurait entre
+les param=C3=A8tres de mod=C3=A8les pour regrouper les clients.   L=E2=80=
+=99objectif de ses
+approches est de personnaliser les mod=C3=A8les au niveau des n=C5=93uds lo=
+caux en
+tenant compte de distributions h=C3=A9t=C3=A9rog=C3=A8nes dans les donn=C3=
+=A9es.  En
+s=E2=80=99inspirant des travaux r=C3=A9cents de [1], [2] l =E2=80=99archite=
+cture propos=C3=A9e
+devrait =C3=AAtre compar=C3=A9e exp=C3=A9rimentalement par rapport =C3=A0 d=
+=E2=80=99autres approches
+existantes de la litt=C3=A9rature [3] et d=C3=A9montrant son int=C3=A9r=C3=
+=AAt.
+
+Le postdoc aura pour mission :
+
+-          De d=C3=A9velopper une preuve de concept pour d=C3=A9montrer
+l=E2=80=99architecture sur des jeux de donn=C3=A9es identifi=C3=A9s pertine=
+nts par rapport au
+projet (jeux de donn=C3=A9es r=C3=A9els de partenaires et/ou jeux de donn=
+=C3=A9es issus de
+la litt=C3=A9rature scientifique du domaine).
+
+-          De participer =C3=A0 des r=C3=A9unions du porjet VILAGIL au nive=
+au de
+l=E2=80=99Action =C2=AB Data & Mobilit=C3=A9 =C2=BB et des r=C3=A9unions de=
+ coordinnation entre les
+diff=C3=A9rentes actions.
+
+-          De positionner ses travaux et les contributions par rapport =C3=
+=A0 la
+litt=C3=A9rature scientifique du domaine de l=E2=80=99apprentissage f=C3=A9=
+d=C3=A9r=C3=A9, et de
+publier les contributions dans des journaux et conf=C3=A9rences internation=
+ales
+de premier rang mondial
+
+*R=C3=A9f=C3=A9rences Bibliographiques*
+
+[1] Yoo, Joo Hun et al. =E2=80=9CPersonalized Federated Learning with Clust=
+ering:
+Non-IID Heart Rate Variability Data Application.=E2=80=9D *2021 Internation=
+al
+Conference on Information and Communication Technology Convergence
+(ICTC)* (2021):
+1046-1051.
+
+[2] Huang, Yutao et al. =E2=80=9CPersonalized Cross-Silo Federated Learning=
+ on
+Non-IID Data.=E2=80=9D *AAAI* (2021).
+
+[3] Hangyu Zhu, Jinjin Xu, Shiqing Liu, Yaochu Jin. Federated learning on
+non-IID data: A survey,  Neurocomputing, Volume 465, 2021, Pages 371-390,
+ISSN 0925-2312,
+
+
+
+*Encadrement et environnement*
+
+=C2=A7  *Laboratoire* : Institut de Recherche en Information de Toulouse, I=
+RIT,
+CNRS/UMR5505
+
+=C2=A7  *Direction scientifique* :
+
+Imen Megdiche, Equipe SIG (Imen.Megdiche@irit.fr)
+
+Andr=C3=A9 P=C3=A9ninou, Equipe SIG (Andre.Peninou@irit.fr)
+
+Olivier Teste, Equipe SIG (Olivier.Teste@irit.fr)
+
+=C2=A7  *Lieu de travail *: IRIT Site Paul Sabatier, 118 Route de Narbonne,
+31062 Toulouse, FRANCE
+
+=C2=A7  *Dur=C3=A9e* : 1 an
+
+=C2=A7  *D=C3=A9marrage *: possible d=C3=A8s janvier 2022 ( proc=C3=A9dure =
+FSD n=C3=A9cessaire c=C3=B4t=C3=A9
+IRIT)
+
+*Dossier de candidature *
+
+Nous recherchons un(e) candidat(e) motiv=C3=A9(e), force de propositions, a=
+vec
+un solide background en math=C3=A9matiques appliqu=C3=A9es et des connaissa=
+nces
+confirm=C3=A9es en IA.
+
+Les candidatures sont =C3=A0 envoyer =C3=A0 (imen.megdiche@irit.fr) et (
+olivier.teste@irit.fr) . Le dossier doit contenir :
+
+   - CV incluant les publications scientifiques
+   - Lettre de motivation
+   - Copie du dernier dipl=C3=B4me
+   - Pr=C3=A9-rapport et rapport de soutenance de th=C3=A8se
+   - Une exp=C3=A9rience en federated learning serait un atout.
+
+--000000000000fb4cf205edbdeb6a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><p class=3D"MsoNormal" style=3D"line-height:normal;margin:=
+10pt 0cm;text-align:justify;font-size:11pt;font-family:Calibri,sans-serif">=
+<b><span style=3D"font-size:14pt">Contexte et probl=C3=A9matique</span></b>=
+</p>
+
+<p class=3D"MsoNormal" style=3D"text-indent:1cm;margin:10pt 0cm;text-align:=
+justify;line-height:115%;font-size:11pt;font-family:Calibri,sans-serif"><sp=
+an style=3D"font-family:&quot;Cambria Math&quot;,serif">Le projet
+VILAGIL ambitionne de cr=C3=A9er un =C3=A9cosyst=C3=A8me capable de r=C3=A9=
+pondre aux besoins de la
+mobilit=C3=A9 pour la r=C3=A9gion Occitanie, et plus largement de contribue=
+r au d=C3=A9veloppement
+d=E2=80=99innovations dans le domaine de la ville intelligente=C2=A0=C2=BB.=
+ Dans le cadre de
+ce projet, l=E2=80=99action =C2=AB=C2=A0Data et Mobilit=C3=A9=C2=A0=C2=BB c=
+on=C3=A7oit et d=C3=A9veloppe des
+m=C3=A9canismes d=E2=80=99int=C3=A9gration automatique et d=E2=80=99acc=C3=
+=A8s f=C3=A9d=C3=A9r=C3=A9s aux donn=C3=A9es de mobilit=C3=A9.
+Ces donn=C3=A9es sont fournies par les partenaires non acad=C3=A9miques du =
+projet tels
+que Toulouse Metropole, Sicoval, Tiss=C3=A9o Collectivit=C3=A9=C2=A0; dans =
+certains cas
+ces donn=C3=A9es seront distribu=C3=A9es sur les diff=C3=A9rents sites des =
+partenaires sans
+possibilit=C3=A9 de les int=C3=A9grer de mani=C3=A8re centralis=C3=A9e. L=
+=E2=80=99offre de postdoc cible donc
+particuli=C3=A8rement la probl=C3=A9matique de l=E2=80=99=E2=80=99apprentis=
+sages f=C3=A9d=C3=A9r=C3=A9s (=C2=AB=C2=A0federated
+learning=C2=A0=C2=BB) afin de d=C3=A9velopper des algorithmes d=E2=80=99app=
+rentissage automatique
+dirig=C3=A9s par ces donn=C3=A9es. </span></p>
+
+<p class=3D"MsoNormal" style=3D"line-height:normal;margin:10pt 0cm;text-ali=
+gn:justify;font-size:11pt;font-family:Calibri,sans-serif"><b><span style=3D=
+"font-size:14pt">Objectifs</span></b></p>
+
+<p class=3D"MsoNormal" style=3D"text-indent:1cm;margin:10pt 0cm;text-align:=
+justify;line-height:115%;font-size:11pt;font-family:Calibri,sans-serif"><sp=
+an style=3D"font-family:&quot;Cambria Math&quot;,serif">Vu la
+forte h=C3=A9t=C3=A9rogni=C3=A8t=C3=A9 des donn=C3=A9es collect=C3=A9es dan=
+s le projet VILAGIL (donn=C3=A9es de
+capteurs dans la ville images et vid=C3=A9os de surveillance, donn=C3=A9es =
+de v=C3=A9hicules
+autonomes, etc), nous souhaitons proposer une architecture d=E2=80=99appren=
+tissage
+f=C3=A9d=C3=A9r=C3=A9 qui consid=C3=A8re les clients de donn=C3=A9es en fon=
+ction de leur nature
+(cross-device / cross-silo), et de la nature de distribution des donn=C3=A9=
+es (
+verticale / horizontale ). Cette architecture devrait assurer =C3=A0 terme =
+un
+apprentissage personnalis=C3=A9 pour chacun des clients et une =C3=A9quit=
+=C3=A9 par rapport =C3=A0
+la collaboration dans l=E2=80=99 apprentissage. =C2=A0</span></p>
+
+<p class=3D"MsoNormal" style=3D"text-indent:1cm;margin:10pt 0cm;text-align:=
+justify;line-height:115%;font-size:11pt;font-family:Calibri,sans-serif"><sp=
+an style=3D"font-family:&quot;Cambria Math&quot;,serif">Nous
+envisageons d=E2=80=99=C3=A9laborer cette architecture en combinant =C3=A0 =
+la fois une premi=C3=A8re
+=C3=A9tape de clustering de clients=C2=A0 et une
+deuxi=C3=A8me =C3=A9tape d=E2=80=99apprentissage machine f=C3=A9d=C3=A9r=C3=
+=A9. Le clustering des clients est
+souvent appliqu=C3=A9 dans l=E2=80=99objectif d=E2=80=99identifier un sous =
+ensemble de clients qui
+auraient des mod=C3=A8les d=E2=80=99apprentissage similaires sans divulguer=
+ leurs donn=C3=A9es.
+Les approches [1] et [2] proposent des m=C3=A9thodes appliqu=C3=A9es dans l=
+e cadre de
+donn=C3=A9es non-IID qui calculent les similarit=C3=A9s qu=E2=80=99il y aur=
+ait entre les
+param=C3=A8tres de mod=C3=A8les pour regrouper les clients.=C2=A0=C2=A0 L=
+=E2=80=99objectif de ses approches est de
+personnaliser les mod=C3=A8les au niveau des n=C5=93uds locaux en tenant co=
+mpte de
+distributions h=C3=A9t=C3=A9rog=C3=A8nes dans les donn=C3=A9es.=C2=A0 En s=
+=E2=80=99inspirant des travaux r=C3=A9cents de [1], [2]
+l =E2=80=99architecture propos=C3=A9e devrait =C3=AAtre compar=C3=A9e exp=
+=C3=A9rimentalement par rapport =C3=A0
+d=E2=80=99autres approches existantes de la litt=C3=A9rature [3] et d=C3=A9=
+montrant son int=C3=A9r=C3=AAt. =C2=A0=C2=A0</span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:10pt 0cm;text-align:justify;line-hei=
+ght:115%;font-size:11pt;font-family:Calibri,sans-serif"><span style=3D"font=
+-family:&quot;Cambria Math&quot;,serif">Le postdoc aura pour mission : </sp=
+an></p>
+
+<p class=3D"MsoNormal" style=3D"margin:10pt 0cm 10pt 20.5pt;text-align:just=
+ify;line-height:115%;font-size:11pt;font-family:Calibri,sans-serif"><span s=
+tyle=3D"font-family:&quot;Cambria Math&quot;,serif">-<span style=3D"font-va=
+riant-numeric:normal;font-variant-east-asian:normal;font-stretch:normal;fon=
+t-size:7pt;line-height:normal;font-family:&quot;Times New Roman&quot;">=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+</span></span><span style=3D"font-family:&quot;Cambria Math&quot;,serif">De
+d=C3=A9velopper une preuve de concept pour d=C3=A9montrer l=E2=80=99archite=
+cture sur des jeux de
+donn=C3=A9es identifi=C3=A9s pertinents par rapport au projet (jeux de donn=
+=C3=A9es r=C3=A9els de
+partenaires et/ou jeux de donn=C3=A9es issus de la litt=C3=A9rature scienti=
+fique du
+domaine). </span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:10pt 0cm 10pt 20.5pt;text-align:just=
+ify;line-height:115%;font-size:11pt;font-family:Calibri,sans-serif"><span s=
+tyle=3D"font-family:&quot;Cambria Math&quot;,serif">-<span style=3D"font-va=
+riant-numeric:normal;font-variant-east-asian:normal;font-stretch:normal;fon=
+t-size:7pt;line-height:normal;font-family:&quot;Times New Roman&quot;">=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+</span></span><span style=3D"font-family:&quot;Cambria Math&quot;,serif">De
+participer =C3=A0 des r=C3=A9unions du porjet VILAGIL au niveau de l=E2=80=
+=99Action =C2=AB=C2=A0Data
+&amp; Mobilit=C3=A9=C2=A0=C2=BB et des r=C3=A9unions de coordinnation entre=
+ les diff=C3=A9rentes
+actions.</span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:10pt 0cm 10pt 20.5pt;text-align:just=
+ify;line-height:115%;font-size:11pt;font-family:Calibri,sans-serif"><span s=
+tyle=3D"font-family:&quot;Cambria Math&quot;,serif">-<span style=3D"font-va=
+riant-numeric:normal;font-variant-east-asian:normal;font-stretch:normal;fon=
+t-size:7pt;line-height:normal;font-family:&quot;Times New Roman&quot;">=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+</span></span><span style=3D"font-family:&quot;Cambria Math&quot;,serif">De
+positionner ses travaux et les contributions par rapport =C3=A0 la litt=C3=
+=A9rature scientifique
+du domaine de l=E2=80=99apprentissage f=C3=A9d=C3=A9r=C3=A9, et de publier =
+les contributions dans des
+journaux et conf=C3=A9rences internationales de premier rang mondial</span>=
+</p>
+
+<p class=3D"MsoNormal" style=3D"text-indent:1cm;margin:10pt 0cm;text-align:=
+justify;line-height:115%;font-size:11pt;font-family:Calibri,sans-serif"><b>=
+<span style=3D"font-size:14pt;line-height:115%">R=C3=A9f=C3=A9rences
+Bibliographiques</span></b></p>
+
+<p class=3D"MsoNormal" style=3D"margin:10pt 0cm;text-align:justify;line-hei=
+ght:115%;font-size:11pt;font-family:Calibri,sans-serif"><span style=3D"font=
+-size:10pt;line-height:115%;color:black">[1] Yoo, Joo Hun et al. </span><sp=
+an lang=3D"EN-GB" style=3D"font-size:10pt;line-height:115%;color:black">=E2=
+=80=9CPersonalized Federated Learning with
+Clustering: Non-IID Heart Rate Variability Data Application.=E2=80=9D=C2=A0=
+<i>2021
+International Conference on Information and Communication Technology
+Convergence (ICTC)</i>=C2=A0(2021): 1046-1051.</span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:10pt 0cm;text-align:justify;line-hei=
+ght:115%;font-size:11pt;font-family:Calibri,sans-serif"><span lang=3D"EN-GB=
+" style=3D"font-size:10pt;line-height:115%;color:black">[2] Huang,
+Yutao et al. =E2=80=9CPersonalized Cross-Silo Federated Learning on Non-IID
+Data.=E2=80=9D=C2=A0<i>AAAI</i>=C2=A0(2021).</span></p>
+
+<p style=3D"margin:0cm 0cm 10pt;text-align:justify;font-size:12pt;font-fami=
+ly:&quot;Times New Roman&quot;,serif"><span lang=3D"EN-GB" style=3D"font-si=
+ze:10pt;font-family:Calibri,sans-serif;color:black">[3] Hangyu Zhu, Jinjin =
+Xu, Shiqing Liu,
+Yaochu Jin. Federated learning on non-IID data: A survey,=C2=A0 Neurocomput=
+ing, Volume 465, 2021, Pages
+371-390, ISSN 0925-2312,</span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:10pt 0cm;text-align:justify;line-hei=
+ght:115%;font-size:11pt;font-family:Calibri,sans-serif"><span lang=3D"EN-GB=
+" style=3D"font-size:10pt;line-height:115%;color:black">=C2=A0</span></p>
+
+<p class=3D"MsoNormal" style=3D"line-height:normal;margin:10pt 0cm;text-ali=
+gn:justify;font-size:11pt;font-family:Calibri,sans-serif"><b><span lang=3D"=
+EN-US" style=3D"font-size:14pt">Encadrement
+et environnement</span></b></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm 0cm 0cm 35.7pt;text-align:justif=
+y;line-height:115%;font-size:11pt;font-family:Calibri,sans-serif"><span sty=
+le=3D"line-height:115%;font-family:Wingdings">=C2=A7<span style=3D"font-var=
+iant-numeric:normal;font-variant-east-asian:normal;font-stretch:normal;font=
+-size:7pt;line-height:normal;font-family:&quot;Times New Roman&quot;">=C2=
+=A0
+</span></span><b><span style=3D"line-height:115%;font-family:&quot;Cambria =
+Math&quot;,serif">Laboratoire</span></b><span style=3D"line-height:115%;fon=
+t-family:&quot;Cambria Math&quot;,serif">=C2=A0:
+Institut de Recherche en Information de Toulouse, IRIT, CNRS/UMR5505</span>=
+</p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm 0cm 0cm 35.7pt;text-align:justif=
+y;line-height:115%;font-size:11pt;font-family:Calibri,sans-serif"><span sty=
+le=3D"line-height:115%;font-family:Wingdings">=C2=A7<span style=3D"font-var=
+iant-numeric:normal;font-variant-east-asian:normal;font-stretch:normal;font=
+-size:7pt;line-height:normal;font-family:&quot;Times New Roman&quot;">=C2=
+=A0
+</span></span><b><span style=3D"line-height:115%;font-family:&quot;Cambria =
+Math&quot;,serif">Direction scientifique</span></b><span style=3D"line-heig=
+ht:115%;font-family:&quot;Cambria Math&quot;,serif">=C2=A0:</span></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpFirst" style=3D"margin:0cm 0cm 10pt;t=
+ext-indent:35.4pt;text-align:justify;font-size:14pt;font-family:Arial,sans-=
+serif;font-weight:bold;text-decoration-line:underline"><span style=3D"font-=
+size:11pt;font-family:&quot;Cambria Math&quot;,serif;font-weight:normal;tex=
+t-decoration-line:none">Imen Megdiche,
+Equipe SIG (<a href=3D"mailto:Imen.Megdiche@irit.fr">Imen.Megdiche@irit.fr<=
+/a>)</span></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpMiddle" style=3D"margin:0cm 0cm 10pt;=
+text-indent:35.4pt;text-align:justify;font-size:14pt;font-family:Arial,sans=
+-serif;font-weight:bold;text-decoration-line:underline"><span style=3D"font=
+-size:11pt;font-family:&quot;Cambria Math&quot;,serif;font-weight:normal;te=
+xt-decoration-line:none">Andr=C3=A9 P=C3=A9ninou,
+Equipe SIG (<a href=3D"mailto:Andre.Peninou@irit.fr"><span style=3D"color:w=
+indowtext;text-decoration-line:none">Andre.Peninou@irit.fr</span></a>)</spa=
+n></p>
+
+<p class=3D"gmail-MsoListParagraphCxSpLast" style=3D"margin:0cm 0cm 0cm 1cm=
+;text-indent:7.1pt;text-align:justify;font-size:14pt;font-family:Arial,sans=
+-serif;font-weight:bold;text-decoration-line:underline"><span style=3D"font=
+-size:11pt;font-family:&quot;Cambria Math&quot;,serif;font-weight:normal;te=
+xt-decoration-line:none">Olivier Teste,
+Equipe SIG (<a href=3D"mailto:Olivier.Teste@irit.fr"><span style=3D"color:w=
+indowtext;text-decoration-line:none">Olivier.Teste@irit.fr</span></a>)</spa=
+n></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm 0cm 0cm 35.7pt;text-align:justif=
+y;line-height:115%;font-size:11pt;font-family:Calibri,sans-serif"><span sty=
+le=3D"line-height:115%;font-family:Wingdings">=C2=A7<span style=3D"font-var=
+iant-numeric:normal;font-variant-east-asian:normal;font-stretch:normal;font=
+-size:7pt;line-height:normal;font-family:&quot;Times New Roman&quot;">=C2=
+=A0
+</span></span><b><span style=3D"line-height:115%;font-family:&quot;Cambria =
+Math&quot;,serif">Lieu de travail=C2=A0</span></b><span style=3D"line-heigh=
+t:115%;font-family:&quot;Cambria Math&quot;,serif">: IRIT
+Site Paul Sabatier, 118 Route de Narbonne, 31062 Toulouse, FRANCE</span></p=
+>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm 0cm 0cm 35.7pt;text-align:justif=
+y;line-height:115%;font-size:11pt;font-family:Calibri,sans-serif"><span sty=
+le=3D"line-height:115%;font-family:Wingdings">=C2=A7<span style=3D"font-var=
+iant-numeric:normal;font-variant-east-asian:normal;font-stretch:normal;font=
+-size:7pt;line-height:normal;font-family:&quot;Times New Roman&quot;">=C2=
+=A0
+</span></span><b><span style=3D"line-height:115%;font-family:&quot;Cambria =
+Math&quot;,serif">Dur=C3=A9e</span></b><span style=3D"line-height:115%;font=
+-family:&quot;Cambria Math&quot;,serif">=C2=A0: 1
+an</span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm 0cm 0cm 35.7pt;text-align:justif=
+y;line-height:115%;font-size:11pt;font-family:Calibri,sans-serif"><span sty=
+le=3D"line-height:115%;font-family:Wingdings">=C2=A7<span style=3D"font-var=
+iant-numeric:normal;font-variant-east-asian:normal;font-stretch:normal;font=
+-size:7pt;line-height:normal;font-family:&quot;Times New Roman&quot;">=C2=
+=A0
+</span></span><b><span style=3D"line-height:115%;font-family:&quot;Cambria =
+Math&quot;,serif">D=C3=A9marrage=C2=A0</span></b><span style=3D"line-height=
+:115%;font-family:&quot;Cambria Math&quot;,serif">:=C2=A0</span><span style=
+=3D"font-family:&quot;Cambria Math&quot;,serif;font-size:14.6667px">possibl=
+e d=C3=A8s janvier 2022 ( proc=C3=A9dure FSD n=C3=A9cessaire c=C3=B4t=C3=A9=
+ IRIT)=C2=A0</span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:10pt 0cm;text-align:justify;line-hei=
+ght:115%;font-size:11pt;font-family:Calibri,sans-serif"><b><span style=3D"f=
+ont-size:14pt;line-height:115%">Dossier de candidature </span></b></p>
+
+<p class=3D"MsoNormal" style=3D"margin:10pt 0cm;text-align:justify;line-hei=
+ght:115%;font-size:11pt;font-family:Calibri,sans-serif"><span style=3D"font=
+-family:&quot;Cambria Math&quot;,serif">Nous recherchons un(e)
+candidat(e) motiv=C3=A9(e), force de propositions, avec un solide backgroun=
+d en math=C3=A9matiques
+appliqu=C3=A9es et des connaissances confirm=C3=A9es en IA. </span></p>
+
+<p class=3D"MsoNormal" style=3D"margin:10pt 0cm;text-align:justify;line-hei=
+ght:115%;font-size:11pt;font-family:Calibri,sans-serif"><span style=3D"font=
+-family:&quot;Cambria Math&quot;,serif">Les candidatures sont =C3=A0 envoye=
+r
+=C3=A0 (<a href=3D"mailto:imen.megdiche@irit.fr"><span style=3D"color:windo=
+wtext;text-decoration-line:none">imen.megdiche@irit.fr</span></a>) et
+(<a href=3D"mailto:olivier.teste@irit.fr">olivier.teste@irit.fr</a>) . Le d=
+ossier doit contenir=C2=A0: </span></p>
+
+<ul style=3D"margin-top:0cm;margin-bottom:0cm" type=3D"square">
+ <li class=3D"MsoNormal" style=3D"margin:10pt 0cm;text-align:justify;line-h=
+eight:115%;font-size:11pt;font-family:Calibri,sans-serif"><span style=3D"fo=
+nt-family:&quot;Cambria Math&quot;,serif">CV incluant les publications scie=
+ntifiques</span></li>
+ <li class=3D"MsoNormal" style=3D"margin:10pt 0cm;text-align:justify;line-h=
+eight:115%;font-size:11pt;font-family:Calibri,sans-serif"><span style=3D"fo=
+nt-family:&quot;Cambria Math&quot;,serif">Lettre de motivation </span></li>
+ <li class=3D"MsoNormal" style=3D"margin:10pt 0cm;text-align:justify;line-h=
+eight:115%;font-size:11pt;font-family:Calibri,sans-serif"><span style=3D"fo=
+nt-family:&quot;Cambria Math&quot;,serif">Copie du dernier dipl=C3=B4me </s=
+pan></li>
+ <li class=3D"MsoNormal" style=3D"margin:10pt 0cm;text-align:justify;line-h=
+eight:115%;font-size:11pt;font-family:Calibri,sans-serif"><span style=3D"fo=
+nt-family:&quot;Cambria Math&quot;,serif">Pr=C3=A9-rapport et rapport de so=
+utenance de th=C3=A8se </span></li>
+ <li class=3D"MsoNormal" style=3D"margin:10pt 0cm;text-align:justify;line-h=
+eight:115%;font-size:11pt;font-family:Calibri,sans-serif"><span style=3D"fo=
+nt-family:&quot;Cambria Math&quot;,serif">Une exp=C3=A9rience en federated =
+learning serait un atout.=C2=A0</span></li>
+</ul></div>
+
+--000000000000fb4cf205edbdeb6a--
